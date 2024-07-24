@@ -1,0 +1,7 @@
+@mixin badge($background: var(--color-highlight), $size: 0.75rem) {
+  padding: 2px 4px !important;
+  border-radius: var(--border-radius);
+  background: $background;
+  color: #fff;
+  font-size: $size;
+}
