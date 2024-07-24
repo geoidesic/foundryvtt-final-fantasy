@@ -1,3 +1,4 @@
+import { LOG_PREFIX } from './constants.ts';
 
 export const log = {
   ASSERT: 1, ERROR: 2, WARN: 3, INFO: 4, DEBUG: 5, VERBOSE: 6,

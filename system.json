@@ -1,7 +1,7 @@
 {
-  "id": "<SYSTEM_ID",
-  "title": "<SYSTEM_TITLE>",
-  "description": "<SYSTEM_DESCRIPTION",
+  "id": "foundryvtt-final-fantasy",
+  "title": "Final Fantasy 15 RPG",
+  "description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV",
   "authors": [
     {
       "name": "Noel da Costa",
@@ -9,10 +9,10 @@
       "flags": {}
     }
   ],
-  "url": "https://github.com/<GITHUB_PATH>",
-  "readme": "https://github.com/<GITHUB_PATH>/releases/download/latest/README.md",
-  "bugs": "https://github.com/<GITHUB_PATH>/issues",
-  "changelog": "https://github.com/<GITHUB_PATH>/releases/download/latest/CHANGELOG.md",
+  "url": "https://github.com/geoidesic/foundryvtt-final-fantasy",
+  "readme": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/README.md",
+  "bugs": "https://github.com/geoidesic/foundryvtt-final-fantasy/issues",
+  "changelog": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/CHANGELOG.md",
   "version": "0.0.1",
   "compatibility": {
     "minimum": "11",
@@ -25,7 +25,7 @@
   "packs": [
     {
       "name": "jobs",
-      "label": "<SYSTEM_SHORTCODE> Jobs",
+      "label": "FF15 Jobs",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -33,23 +33,15 @@
     },
     {
       "name": "actors",
-      "label": "<SYSTEM_SHORTCODE> Pregenerated Characters",
+      "label": "FF15 Pregenerated Characters",
       "type": "Actor",
       "ownership": {
         "PLAYER": "OBSERVER"
       }
     },
     {
-      "name": "conditions",
-      "label": "<SYSTEM_SHORTCODE> Conditions",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
-    },
-    {
       "name": "rolltables",
-      "label": "<SYSTEM_SHORTCODE> Roll Tables",
+      "label": "FF15 Roll Tables",
       "type": "RollTable",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -57,21 +49,12 @@
     },
     {
       "name": "rules",
-      "label": "<SYSTEM_SHORTCODE> Rules",
+      "label": "FF15 Rules",
       "type": "JournalEntry",
       "ownership": {
         "PLAYER": "OBSERVER"
       }
     }
-  ],
-  "packFolders": [
-    // {
-    //   "name": "Equipment",
-    //   "packs": [
-    //     "equipment",
-    //     "magic-items"
-    //   ]
-    // }
   ],
   "styles": [
     "style.css"
@@ -84,8 +67,8 @@
       "flags": {}
     }
   ],
-  "manifest": "https://github.com/geoidesic/<GITHUB_PATH>/releases/download/latest/system.json",
-  "download": "https://github.com/geoidesic/<GITHUB_PATH>/releases/download/latest/titan.zip",
+  "manifest": "https://github.com/geoidesic/geoidesic/foundryvtt-final-fantasy/releases/download/latest/system.json",
+  "download": "https://github.com/geoidesic/geoidesic/foundryvtt-final-fantasy/releases/download/latest/titan.zip",
   "gridSize": {
     "units": "ft",
     "distance": 5
