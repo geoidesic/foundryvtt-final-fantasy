@@ -14,7 +14,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       width: 440,
       height: 828,
-      minWidth: 626,
+      minWidth: 660,
       classes: [SYSTEM_CODE],
 
       dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],

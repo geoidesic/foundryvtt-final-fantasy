@@ -138,31 +138,31 @@
   &:disabled 
     cursor: default
     background: var(--button-background-disabled)
-  
-
-
 
   &:hover 
     &:not(:disabled) 
       background: radial-gradient(var(--sheet-color), transparent)
     
   
-@mixin white-shadow-header
+@mixin white-shadow-header($font-size: var(--size-md-h))
   .header
       position: relative
-      font-size: 2em
+      font-size: $font-size
       color: #fff
       text-shadow: 0 3px 3px #000
 
 
-@mixin white-shadow-underscore
-  .header
-      &:after
-        content: ''
-        position: absolute
-        left: 0
-        bottom: -0.1em // Adjust as needed to position the underline correctly
-        width: 100%
-        height: 2px // Adjust the thickness of the underline
-        background-color: currentColor // Use the same color as the text
-        box-shadow: 0 3px 3px #000 // Apply shadow to the underline
+@mixin white-shadow-underscore($height: 2px, $color: #fff, $shadow-color: #000, $shadow-depth: 3px, $bottom: -0.1em, $left: 0, $width: 100%, $border-width: 0px)
+  position: relative // Ensure the element is positioned relative to use absolute positioning for the pseudo-element
+  .underscore
+    &:after
+      content: ''
+      position: absolute
+      left: $left
+      border: $border-width solid transparent // Ensure the underline is visible
+      border-radius: 4px
+      bottom: $bottom // Adjust as needed to position the underline correctly
+      width: $width
+      height: $height // Use the passed height
+      background-color: $color // Use the passed color
+      box-shadow: 0 $shadow-depth $shadow-depth $shadow-color // Apply shadow to the underline
