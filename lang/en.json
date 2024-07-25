@@ -1,10 +1,14 @@
 {
   "FF15": {
-    "Title": "Final Fantasy TTRPG!",
+    "Title": "Final Fantasy TTRPG",
     "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
     "Welcome": {
       "To": "Welcome to the",
-      "Introduction": "Introduction"
+      "Introduction": "Introduction",
+      "Released": "was released June 2024",
+      "Issues": "If you have any issues, please report them on ",
+      "Github": "GitHub.",
+      "CreatedBy": "system is created by "
     },
     "SystemName": "Final Fantasy",
     "Setting": {

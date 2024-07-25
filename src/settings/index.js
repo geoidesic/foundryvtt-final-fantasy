@@ -1,4 +1,5 @@
-import { SYSTEM_ID } from "~/src/helpers/constants";
+import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
+import { localize } from "#runtime/svelte/helper";
 
 export function registerSettings() {
 
@@ -10,8 +11,8 @@ export function registerSettings() {
 
 function dontShowWelcome() {
   game.settings.register(SYSTEM_ID, 'dontShowWelcome', {
-    name: game.i18n.localize('GAS.Setting.DontShowWelcome.Name'),
-    hint: game.i18n.localize('GAS.Setting.DontShowWelcome.Hint'),
+    name: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Name`),
+    hint: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Hint`),
     scope: 'user',
     config: true,
     default: false,
