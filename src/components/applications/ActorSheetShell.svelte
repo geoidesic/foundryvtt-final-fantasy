@@ -9,6 +9,7 @@
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import Attributes from "~/src/components/pages/actor/Attributes.svelte";
   import Profile from "~/src/components/pages/actor/Profile.svelte";
+  import Inventory from "~/src/components/pages/actor/Inventory.svelte";
 
 
   export let elementRoot; //- passed in by SvelteApplication
@@ -62,6 +63,7 @@
   const defaultTabs = [
     { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes },
     { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile },
+    { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory },
     // { label: "Abilities", id: "abilities", component: Abilities },
     // { label: "Journal", id: "journal", component: Journal },
   ];
