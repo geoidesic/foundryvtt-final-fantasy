@@ -3,10 +3,6 @@ import { onMount } from 'svelte';
 import { ASSET_PATH } from '~/src/helpers/constants';
 
 import Corner from '~/src/components/atoms/PortraitFrame/corner.svelte';
-import TopLeft from '~/src/components/atoms/PortraitFrame/top-left.svelte';
-import TopRight from '~/src/components/atoms/PortraitFrame/top-right.svelte';
-import BottomLeft from '~/src/components/atoms/PortraitFrame/bottom-left.svelte';
-import BottomRight from '~/src/components/atoms/PortraitFrame/bottom-right.svelte';
 
 let strokeColor="#514030";
 

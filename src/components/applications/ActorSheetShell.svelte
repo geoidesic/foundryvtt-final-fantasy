@@ -6,7 +6,7 @@
   import { getActorOwner, ucfirst } from "~/src/helpers/utility";
   import { localize } from "#runtime/svelte/helper";
 
-  import PortraitFrame from "~/src/components/atoms/PortraitFrame.svelte";
+  import AttributeBlock from "~/src/components/organisms/AttributeBlock.svelte";
 
   // import Shield from "~/components/Shield.svelte";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
@@ -108,7 +108,7 @@
 <template lang="pug">
   ApplicationShell(bind:elementRoot bind:stylesApp)
     .FF15
-      PortraitFrame
+      AttributeBlock
 </template>
 
 <style lang="sass">
