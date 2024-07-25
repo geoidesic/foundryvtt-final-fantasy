@@ -1,4 +1,4 @@
-import { LOG_PREFIX } from './constants.ts';
+import { LOG_PREFIX } from './constants';
 
 export const log = {
   ASSERT: 1, ERROR: 2, WARN: 3, INFO: 4, DEBUG: 5, VERBOSE: 6,
@@ -14,6 +14,9 @@ export const log = {
   get level() { return this.loggingLevel; }
 };
 
+export function localize(string) {
+  return game.i18n.localize(`${SYSTEM_ID}.${string}`);
+}
 
 export function isNumber(value) {
   return typeof value === 'number' && isFinite(value);

@@ -3,7 +3,7 @@
   import { fade, scale }        from 'svelte/transition';
   import { ApplicationShell }   from '#runtime/svelte/component/core';
   import { localize } from "#runtime/svelte/helper";
-  import { SYSTEM_ID, SYSTEM_NAME } from "~/src/helpers/constants";
+  import { SYSTEM_ID } from "~/src/helpers/constants";
 
   export let elementRoot = void 0;
   export let version = void 0;
@@ -34,8 +34,8 @@
       .logo-background
         .texture
         img(src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
-      p Welcome to the {SYSTEM_NAME} TTRPG!
-      h1 Introduction
+      p {localize('FF15.Welcome.To')} 
+      h1 {localize('FF15.Welcome.Introduction')}
       p The 
         a(href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html") Final Fantasy TTRPG 
         | was released mid-year 2024 

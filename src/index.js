@@ -2,8 +2,8 @@ import './styles/Variables.sass';
 import './styles/Main.sass';
 import './styles/MarginsAndPadding.sass';
 
-import { SYSTEM_ID } from "~/src/helpers/constants"
 import { log } from "~/src/helpers/utility"
+import { SYSTEM_ID } from "~/src/helpers/constants"
 import { registerSettings } from "~/src/settings"
 import WelcomeApplication from "~/src/components/applications/WelcomeApplication"
 import FF15Actor from '~/src/extensions/actor.js'

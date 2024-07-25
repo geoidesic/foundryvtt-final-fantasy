@@ -1,5 +1,11 @@
 {
   "FF15": {
+    "Title": "Final Fantasy TTRPG!",
+    "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
+    "Welcome": {
+      "To": "Welcome to the",
+      "Introduction": "Introduction"
+    },
     "SystemName": "Final Fantasy",
     "Setting": {
       "DontShowWelcome": {
