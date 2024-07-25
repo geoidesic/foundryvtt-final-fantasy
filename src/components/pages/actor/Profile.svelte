@@ -6,9 +6,17 @@ import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContain
 </script>
 <template lang='pug'>
 ScrollingContainer
-  ProseMirror( attr="system.biography.profile" )
+  .flexcol.background
+    ProseMirror( attr="system.biography.profile" )
 
 </template>
 <style lang='sass'>
   @import '../../../styles/Mixins.sass'
+  .background
+    text-align: left
+    min-height: 100%
+    width: 100%
+    position: relative
+    overflow: hidden
+    border: 4px ridge var(--border-color)
 </style>
