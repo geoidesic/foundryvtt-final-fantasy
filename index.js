@@ -39,6 +39,9 @@ var __privateMethod = (obj, member, method) => {
 };
 var __superGet = (cls, obj, key) => __reflectGet(__getProtoOf(cls), key, obj);
 var _getFocusableSelectors, getFocusableSelectors_fn, _regexPixels, _cssRule, _docKey, _selector, _styleElement, _version, _options, _default, _stores, _animationData, _finishedPromise, _willFinish, _voidControl, _data, _position, _instanceCount, _cleanup, _addAnimation, addAnimation_fn, _cleanupInstance, cleanupInstance_fn, _animationControls, _finishedPromise2, _voidControl2, _isPosition, isPosition_fn, _element, _height, _lock, _width, _data2, _dataSaved, _position2, _transforms, _boundingRect, _corners, _mat4, _originTranslations, _orderList, _enabled, _validatorData, _mapUnsubscribe, _constrain, _element2, _enabled2, _height2, _lock2, _width2, _constrain2, _element3, _enabled3, _height3, _lock3, _width3, _positionInitial, _positionValidators, _data3, _animate, _enabled4, _options2, _parent, _positionChangeSet, _stores2, _styleCache, _subscriptions, _transforms2, _updateElementData, _updateElementPromise, _validators, _validatorData2, _state, _updatePosition, updatePosition_fn, _ease, _easeOptions, _subscriptions2, _updateSubscribers, updateSubscribers_fn, _application, _dataSaved2, _applicationShellHolder, _svelteData, _storageStores, _stores3, _getDeserialize, getDeserialize_fn, _getSerialize, getSerialize_fn, _createStore, createStore_fn, _getStore, getStore_fn, _application2, _initialized, _sessionStorage, _storeAppOptions, _storeAppOptionsUpdate, _dataUIState, _storeUIState, _storeUIStateUpdate, _storeUnsubscribe, _storesInitialize, storesInitialize_fn, _storesSubscribe, storesSubscribe_fn, _storesUnsubscribe, storesUnsubscribe_fn, _visibleApps, _applicationShellHolder2, _applicationState, _elementTarget, _elementContent, _initialZIndex, _onMount, _position3, _reactive, _svelteData2, _getSvelteData, _stores4, _updateApplicationShell, updateApplicationShell_fn;
+const Variables = "";
+const Main = "";
+const MarginsAndPadding = "";
 const SYSTEM_ID = "foundryvtt-final-fantasy";
 const LOG_PREFIX = "FF15 |";
 const log = {
@@ -12706,76 +12709,74 @@ cssVariables.setProperties({
 }, false);
 const WelcomeAppShell_svelte_svelte_type_style_lang = "";
 function create_default_slot(ctx) {
+  let div7;
   let main;
-  let img;
-  let img_src_value;
+  let div1;
   let p0;
   let h10;
   let p1;
   let h11;
   let p2;
+  let div4;
   let div2;
-  let div0;
   let input;
-  let div1;
+  let div3;
   let span2;
   let footer;
   let mounted;
   let dispose;
   return {
     c() {
+      div7 = element("div");
       main = element("main");
-      img = element("img");
+      div1 = element("div");
+      div1.innerHTML = `<div class="texture svelte-gff15-1oy7vff"></div><img src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;" class="svelte-gff15-1oy7vff"/>`;
       p0 = element("p");
       p0.textContent = "Welcome to the Final Fantasy TTRPG!";
       h10 = element("h1");
       h10.textContent = "Introduction";
       p1 = element("p");
-      p1.textContent = "The Final Fantasy TTRPG was released mid-year 2024 https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html";
+      p1.innerHTML = `The <a href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html">Final Fantasy TTRPG </a>was released mid-year 2024 `;
       h11 = element("h1");
       h11.textContent = "Help";
       p2 = element("p");
       p2.innerHTML = `<span>If you have any issues, please report them on the </span><a href="https://github.com/geoidesic/foundryvtt-actor-studio/issues">github</a><span> page.</span>`;
+      div4 = element("div");
       div2 = element("div");
-      div0 = element("div");
       input = element("input");
-      div1 = element("div");
+      div3 = element("div");
       span2 = element("span");
       span2.textContent = `${localize("FF15.Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
-      footer.innerHTML = `<p>FF15 FoundryVTT system is created by </p><a href="https://www.round-table.games" class="svelte-gff15-1wkx21b">Round Table Games</a>`;
-      if (!src_url_equal(img.src, img_src_value = "systems/foundryvtt-final-fantas/assets/FF-logo.png"))
-        attr(img, "src", img_src_value);
-      attr(img, "alt", "Final Fantasy XIV RPG Logo");
-      set_style(img, "height", "100%");
-      set_style(img, "max-height", "50px");
-      set_style(img, "border", "none");
-      set_style(img, "width", "auto");
+      footer.innerHTML = `<div class="flex2 right"><img class="pt-sm white svelte-gff15-1oy7vff" src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/></div><div class="flex2 left pt-sm"><h4>FF15 FoundryVTT system is created by </h4><a href="https://www.round-table.games" class="svelte-gff15-1oy7vff">Round Table Games ©2024</a></div>`;
+      attr(div1, "class", "logo-background svelte-gff15-1oy7vff");
       attr(input, "type", "checkbox");
       attr(input, "label", localize("FF15.Setting.DontShowWelcome.Name"));
-      attr(div0, "class", "flex0");
-      attr(div1, "class", "flex");
-      attr(div2, "class", "flexrow inset justify-flexrow-vertical");
-      attr(div2, "data-tooltip", localize("FF15.Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-gff15-1wkx21b");
-      attr(footer, "class", "svelte-gff15-1wkx21b");
+      attr(div2, "class", "flex0");
+      attr(div3, "class", "flex");
+      attr(div4, "class", "flexrow inset justify-flexrow-vertical");
+      attr(div4, "data-tooltip", localize("FF15.Setting.DontShowWelcome.Hint"));
+      attr(main, "class", "svelte-gff15-1oy7vff");
+      attr(footer, "class", "svelte-gff15-1oy7vff");
+      attr(div7, "class", "FF15");
     },
     m(target, anchor) {
-      insert(target, main, anchor);
-      append(main, img);
+      insert(target, div7, anchor);
+      append(div7, main);
+      append(main, div1);
       append(main, p0);
       append(main, h10);
       append(main, p1);
       append(main, h11);
       append(main, p2);
-      append(main, div2);
-      append(div2, div0);
-      append(div0, input);
+      append(main, div4);
+      append(div4, div2);
+      append(div2, input);
       input.checked = /*dontShowWelcome*/
       ctx[1];
-      append(div2, div1);
-      append(div1, span2);
-      insert(target, footer, anchor);
+      append(div4, div3);
+      append(div3, span2);
+      append(div7, footer);
       if (!mounted) {
         dispose = [
           listen(
@@ -12803,8 +12804,7 @@ function create_default_slot(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(main);
-        detach(footer);
+        detach(div7);
       }
       mounted = false;
       run_all(dispose);
@@ -15016,9 +15016,9 @@ const _WelcomeApplication = class _WelcomeApplication extends SvelteApplication 
       classes: ["gas-actor-studio"],
       resizable: true,
       minimizable: true,
-      width: 220,
-      height: 400,
-      headerIcon: "modules/foundryvtt-actor-studio/assets/actor-studio-logo-dragon-white.svg",
+      width: 600,
+      height: 600,
+      // headerIcon: 'modules/foundryvtt-actor-studio/assets/actor-studio-logo-dragon-white.svg',
       title: game.i18n.localize("FF15.SystemName") + " v" + version,
       svelte: {
         class: WelcomeAppShell,
@@ -15040,6 +15040,9 @@ Hooks.once("init", async (a, b, c) => {
   log.d(`Starting System ${SYSTEM_ID}`);
   CONFIG.debug.hooks = true;
   registerSettings();
+  game.system.config = {
+    test: "test"
+  };
   Hooks.call("gff15.initIsComplete");
 });
 Hooks.once("ready", async () => {

@@ -58,7 +58,7 @@
           a(href="https://www.round-table.games") Round Table Games ©2024
 </template>
 <style lang="sass">
-  @import "../../styles/Mixins.scss"
+  @import "../../styles/Mixins.sass"
  
   main
     @include inset
@@ -79,9 +79,10 @@
         width: 100%
         height: 100%
         background-image: url("systems/foundryvtt-final-fantasy/assets/diamonds.png")
+        // background-image: url("systems/foundryvtt-final-fantasy/assets/royal-tile.png")
         background-size: 80%
         background-repeat: repeat
-        opacity: 0.1
+        opacity: 0.2
         z-index: 1
 
       img

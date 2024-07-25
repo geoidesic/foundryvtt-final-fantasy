@@ -8,13 +8,48 @@
     "templates": {
       "common": {
         "attributes": {
-          "STR": 0,
-          "AGL": 0,
-          "HLT": 0,
-          "CHA": 0,
-          "INT": 0,
-          "PER": 0
+          "primary": {
+            "str": {
+              "val": 0
+            },
+            "dex": {
+              "val": 0
+            },
+            "vit": {
+              "val": 0
+            },
+            "int": {
+              "val": 0
+            },
+            "mnd": {
+              "val": 0
+            }
+          },
+          "secondary": {
+            "defence": {
+              "val": 0
+            },
+            "magicDefence": {
+              "val": 0
+            },
+            "vigilance": {
+              "val": 0
+            },
+            "speed": {
+              "val": 0
+            }
+          },
+          "maxMp": {
+            "val": 0
+          },
+          "maxHp": {
+            "val": 0,
+            "barrier": 0
+          }
         }
+      },
+      "biography": {
+        "profile": ""
       }
     },
     "PC": {
