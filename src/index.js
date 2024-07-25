@@ -8,7 +8,7 @@ import { registerSettings } from "~/src/settings"
 import WelcomeApplication from "~/src/components/applications/WelcomeApplication"
 import FF15Actor from '~/src/extensions/actor.js'
 import FF15ActorSheet from "~/src/components/applications/ActorSheet";
-import systemconfig from "~/src/helpers/systemconfig.json"
+import systemconfig from "~/src/helpers/systemconfig.ts"
 
 
 //- global logging
