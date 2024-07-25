@@ -28,7 +28,7 @@ onMount(() => {
     display: flex
     min-width: 100px
     min-height: 100px
-    border: 4px solid var(--border-color) // Matching CSS border
+    border: 3px solid var(--border-color) // Matching CSS border
     box-shadow: inset 0 0 30px 30px var(--border-shadow)
 
     border-radius: 17px

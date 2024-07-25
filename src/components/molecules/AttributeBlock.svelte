@@ -15,4 +15,8 @@ import SecondaryAttributes from "~/src/components/molecules/SecondaryAttributes.
 </template>
 <style lang='sass'>
   @import '../../styles/Mixins.sass'
+
+  .molecule
+    border: 5px ridge var(--border-color)
+    height: 100%
 </style>

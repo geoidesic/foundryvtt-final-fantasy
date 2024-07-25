@@ -30,32 +30,31 @@
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot)
-    .FF15
-      main
-        .logo-background
-          .texture
-          img(src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
-        p Welcome to the {SYSTEM_NAME} TTRPG!
-        h1 Introduction
-        p The 
-          a(href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html") Final Fantasy TTRPG 
-          | was released mid-year 2024 
-        h1 Help
-        p 
-          span If you have any issues, please report them on the 
-          a(href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues") github
-          span &nbsp;page.
-        .flexrow.inset.justify-flexrow-vertical(data-tooltip="{localize('FF15.Setting.DontShowWelcome.Hint')}")
-          .flex0
-            input(type="checkbox" on:change="{handleChange}" label="{localize('FF15.Setting.DontShowWelcome.Name')}" bind:checked="{dontShowWelcome}") 
-          .flex
-            span {localize('FF15.Setting.DontShowWelcome.Name')}
-      footer
-        .flex2.right
-          img.pt-sm.white(src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;")
-        .flex2.left.pt-sm
-          h4 FF15 FoundryVTT system is created by 
-          a(href="https://www.round-table.games") Round Table Games ©2024
+    main
+      .logo-background
+        .texture
+        img(src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
+      p Welcome to the {SYSTEM_NAME} TTRPG!
+      h1 Introduction
+      p The 
+        a(href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html") Final Fantasy TTRPG 
+        | was released mid-year 2024 
+      h1 Help
+      p 
+        span If you have any issues, please report them on the 
+        a(href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues") github
+        span &nbsp;page.
+      .flexrow.inset.justify-flexrow-vertical(data-tooltip="{localize('FF15.Setting.DontShowWelcome.Hint')}")
+        .flex0
+          input(type="checkbox" on:change="{handleChange}" label="{localize('FF15.Setting.DontShowWelcome.Name')}" bind:checked="{dontShowWelcome}") 
+        .flex
+          span {localize('FF15.Setting.DontShowWelcome.Name')}
+    footer
+      .flex2.right
+        img.pt-sm.white(src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;")
+      .flex2.left.pt-sm
+        h4 FF15 FoundryVTT system is created by 
+        a(href="https://www.round-table.games") Round Table Games ©2024
 </template>
 <style lang="sass">
   @import "../../styles/Mixins.sass"
