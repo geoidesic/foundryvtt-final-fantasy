@@ -99,7 +99,10 @@
         //   &:not(:disabled) 
         //     clip-path: var(--tjs-icon-button-clip-path-hover, var(--tjs-icon-button-clip-path, none))
 
-        &.active 
+        &.active
+          --button-border-style: ridge
+          --button-border-color: var(--border-color)
+
           // background: var(--border-color)
           // color: var(--border-color)
 
