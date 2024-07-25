@@ -2,7 +2,7 @@
 import { onMount } from 'svelte';
 </script>
 <template lang='pug'>
-  .component 
+  .level-and-job 
     .row
       .level LV50 
       .job DPS/BARD
@@ -11,6 +11,7 @@ import { onMount } from 'svelte';
 <style lang='sass'>
   @import '../../styles/Mixins.sass'
   .row
+    text-align: left
     border: 5px ridge var(--border-color)
     padding: 1rem
   .level
