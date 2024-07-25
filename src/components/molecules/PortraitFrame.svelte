@@ -14,10 +14,10 @@ onMount(() => {
 .atom
   .frame
     img(src="{ASSET_PATH}/portraits/witch2.webp")
-    Corner.corner.bottom-right(strokeColor="{strokeColor}")
-    Corner.corner.bottom-left( flip="horizontal" strokeColor="{strokeColor}")
-    Corner.corner.top-right(flip="vertical" strokeColor="{strokeColor}")
-    Corner.corner.top-left( flip="both" strokeColor="{strokeColor}")
+    Corner.corner.bottom-right(strokeColor="{strokeColor}" size="50")
+    Corner.corner.bottom-left( flip="horizontal" strokeColor="{strokeColor}" size="50")
+    Corner.corner.top-right(flip="vertical" strokeColor="{strokeColor}" size="50")
+    Corner.corner.top-left( flip="both" strokeColor="{strokeColor}" size="50")
 </template>
 
 <style lang='sass'>

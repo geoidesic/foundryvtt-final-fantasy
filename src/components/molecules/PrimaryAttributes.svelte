@@ -1,11 +1,8 @@
 <script>
 import { onMount } from 'svelte';
-import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
-
 </script>
 <template lang='pug'>
-  .organism
-    PortraitFrame
+  .molecule A
     
 </template>
 <style lang='sass'>

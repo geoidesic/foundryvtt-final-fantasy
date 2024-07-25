@@ -98,6 +98,7 @@
     filter: invert(1)
     
   footer
+    border-top: 8px ridge var(--border-shadow)
     display: grid
     grid-column-gap: 1rem
     grid-template-columns: 1fr 1.5fr

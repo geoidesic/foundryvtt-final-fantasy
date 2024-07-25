@@ -1,5 +1,6 @@
 import ActorSheetShell from "./ActorSheetShell.svelte";
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
+import { SYSTEM_CODE } from "~/src/helpers/constants";
 
 export default class FF15ActorSheet extends SvelteDocumentSheet {
 
@@ -14,6 +15,8 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
       width: 440,
       height: 828,
       minWidth: 626,
+      classes: [SYSTEM_CODE],
+
       dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
       svelte: {
         class: ActorSheetShell,

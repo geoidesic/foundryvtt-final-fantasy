@@ -6,7 +6,7 @@
   import { getActorOwner, ucfirst } from "~/src/helpers/utility";
   import { localize } from "#runtime/svelte/helper";
 
-  import AttributeBlock from "~/src/components/organisms/AttributeBlock.svelte";
+  import AttributeSection from "~/src/components/organisms/AttributeSection.svelte";
 
   // import Shield from "~/components/Shield.svelte";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
@@ -107,8 +107,7 @@
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot bind:stylesApp)
-    .FF15
-      AttributeBlock
+    AttributeSection
 </template>
 
 <style lang="sass">
