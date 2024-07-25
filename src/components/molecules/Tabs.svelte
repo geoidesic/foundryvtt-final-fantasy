@@ -93,6 +93,7 @@
         &:hover 
           --button-border-style: ridge
           --button-border-color: var(--border-color)
+          box-shadow: 0 -3px 10px var(--color-shadow-primary)
 
         //   // color: var(--border-color)
         //   box-shadow: none
@@ -102,6 +103,7 @@
         &.active
           --button-border-style: ridge
           --button-border-color: var(--border-color)
+          box-shadow: 0 -3px 10px var(--color-shadow-primary)
 
           // background: var(--border-color)
           // color: var(--border-color)
