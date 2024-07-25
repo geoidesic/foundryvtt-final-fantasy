@@ -12,7 +12,19 @@
   border-radius: 0.4rem
   box-shadow: 0 0 5px rgba(165,42,42,0.3) inset
 
+@mixin cornice
+  svg
+    width: var(--size)
+    height: var(--size)
+    stroke: currentColor
+    fill: none
+    transform: rotate(var(--rotation))
+    transform-origin: center
+  path
+    stroke-width: var(--stroke-width)
 
+  circle
+    fill: currentColor
 
 @mixin flex-row 
   display: flex
