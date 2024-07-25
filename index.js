@@ -38,13 +38,15 @@ var __privateMethod = (obj, member, method) => {
   return method;
 };
 var __superGet = (cls, obj, key) => __reflectGet(__getProtoOf(cls), key, obj);
-var _getFocusableSelectors, getFocusableSelectors_fn, _regexPixels, _cssRule, _docKey, _selector, _styleElement, _version, _options, _default, _stores, _animationData, _finishedPromise, _willFinish, _voidControl, _data, _position, _instanceCount, _cleanup, _addAnimation, addAnimation_fn, _cleanupInstance, cleanupInstance_fn, _animationControls, _finishedPromise2, _voidControl2, _isPosition, isPosition_fn, _element, _height, _lock, _width, _data2, _dataSaved, _position2, _transforms, _boundingRect, _corners, _mat4, _originTranslations, _orderList, _enabled, _validatorData, _mapUnsubscribe, _constrain, _element2, _enabled2, _height2, _lock2, _width2, _constrain2, _element3, _enabled3, _height3, _lock3, _width3, _positionInitial, _positionValidators, _data3, _animate, _enabled4, _options2, _parent, _positionChangeSet, _stores2, _styleCache, _subscriptions, _transforms2, _updateElementData, _updateElementPromise, _validators, _validatorData2, _state, _updatePosition, updatePosition_fn, _ease, _easeOptions, _subscriptions2, _updateSubscribers, updateSubscribers_fn, _application, _dataSaved2, _applicationShellHolder, _svelteData, _storageStores, _stores3, _getDeserialize, getDeserialize_fn, _getSerialize, getSerialize_fn, _createStore, createStore_fn, _getStore, getStore_fn, _application2, _initialized, _sessionStorage, _storeAppOptions, _storeAppOptionsUpdate, _dataUIState, _storeUIState, _storeUIStateUpdate, _storeUnsubscribe, _storesInitialize, storesInitialize_fn, _storesSubscribe, storesSubscribe_fn, _storesUnsubscribe, storesUnsubscribe_fn, _visibleApps, _applicationShellHolder2, _applicationState, _elementTarget, _elementContent, _initialZIndex, _onMount, _position3, _reactive, _svelteData2, _getSvelteData, _stores4, _updateApplicationShell, updateApplicationShell_fn;
+var _getFocusableSelectors, getFocusableSelectors_fn, _regexPixels, _cssRule, _docKey, _selector, _styleElement, _version, _regexUuidv, _options, _default, _stores, _animationData, _finishedPromise, _willFinish, _voidControl, _data, _position, _instanceCount, _cleanup, _addAnimation, addAnimation_fn, _cleanupInstance, cleanupInstance_fn, _animationControls, _finishedPromise2, _voidControl2, _isPosition, isPosition_fn, _element, _height, _lock, _width, _data2, _dataSaved, _position2, _transforms, _boundingRect, _corners, _mat4, _originTranslations, _orderList, _enabled, _validatorData, _mapUnsubscribe, _constrain, _element2, _enabled2, _height2, _lock2, _width2, _constrain2, _element3, _enabled3, _height3, _lock3, _width3, _positionInitial, _positionValidators, _data3, _animate, _enabled4, _options2, _parent, _positionChangeSet, _stores2, _styleCache, _subscriptions, _transforms2, _updateElementData, _updateElementPromise, _validators, _validatorData2, _state, _updatePosition, updatePosition_fn, _ease, _easeOptions, _subscriptions2, _updateSubscribers, updateSubscribers_fn, _application, _dataSaved2, _applicationShellHolder, _svelteData, _storageStores, _stores3, _getDeserialize, getDeserialize_fn, _getSerialize, getSerialize_fn, _createStore, createStore_fn, _getStore, getStore_fn, _application2, _initialized, _sessionStorage, _storeAppOptions, _storeAppOptionsUpdate, _dataUIState, _storeUIState, _storeUIStateUpdate, _storeUnsubscribe, _storesInitialize, storesInitialize_fn, _storesSubscribe, storesSubscribe_fn, _storesUnsubscribe, storesUnsubscribe_fn, _visibleApps, _applicationShellHolder2, _applicationState, _elementTarget, _elementContent, _initialZIndex, _onMount, _position3, _reactive, _svelteData2, _getSvelteData, _stores4, _updateApplicationShell, updateApplicationShell_fn, _hostData, _DerivedReducerCtor, _parentIndex, _derived, _destroyed, _filtersData, _indexUpdate, _mapUnsubscribe2, _sortData, _indexUpdate2, _unsubscribe, _indexData, _map, _derived2, _derivedPublicAPI, _filters, _filtersData2, _index, _indexPublicAPI, _reversed, _sort, _sortData2, _subscriptions3, _destroyed2, _updateSubscribers2, updateSubscribers_fn2, _map2, _derived3, _derivedPublicAPI2, _filters2, _filtersData3, _index2, _indexPublicAPI2, _reversed2, _sort2, _sortData3, _subscriptions4, _destroyed3, _updateSubscribers3, updateSubscribers_fn3, _renderContextRegex, _name, _document, _collectionToDocName, _embeddedNames, _document2, _embeddedStoreManager, _embeddedAPI, _uuidv4, _options3, _subscriptions5, _updateOptions, _deleted, deleted_fn, _updateSubscribers4, updateSubscribers_fn4, _setDocument, setDocument_fn, _documentStore, _storeUnsubscribe2, _handleDocUpdate, handleDocUpdate_fn;
 const Variables = "";
 const Main = "";
 const MarginsAndPadding = "";
 const SYSTEM_ID = "foundryvtt-final-fantasy";
-const LOG_PREFIX = "FF15 |";
-const log = {
+const SYSTEM_CODE = "FF15";
+const LOG_PREFIX = `${SYSTEM_CODE} |`;
+const ASSET_PATH = `systems/${SYSTEM_ID}/assets`;
+const log$1 = {
   ASSERT: 1,
   ERROR: 2,
   WARN: 3,
@@ -203,6 +205,14 @@ function get_all_dirty_from_scope($$scope) {
   return -1;
 }
 __name(get_all_dirty_from_scope, "get_all_dirty_from_scope");
+function exclude_internal_props(props) {
+  const result = {};
+  for (const k in props)
+    if (k[0] !== "$")
+      result[k] = props[k];
+  return result;
+}
+__name(exclude_internal_props, "exclude_internal_props");
 function action_destroyer(action_result) {
   return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
 }
@@ -333,6 +343,12 @@ function attr(node, attribute, value) {
     node.setAttribute(attribute, value);
 }
 __name(attr, "attr");
+function set_svg_attributes(node, attributes) {
+  for (const key in attributes) {
+    attr(node, key, attributes[key]);
+  }
+}
+__name(set_svg_attributes, "set_svg_attributes");
 function children(element2) {
   return Array.from(element2.childNodes);
 }
@@ -1061,6 +1077,21 @@ function hasGetter(object, accessor) {
   return false;
 }
 __name(hasGetter, "hasGetter");
+function hasPrototype(target, Prototype) {
+  if (typeof target !== "function") {
+    return false;
+  }
+  if (target === Prototype) {
+    return true;
+  }
+  for (let proto = Object.getPrototypeOf(target); proto; proto = Object.getPrototypeOf(proto)) {
+    if (proto === Prototype) {
+      return true;
+    }
+  }
+  return false;
+}
+__name(hasPrototype, "hasPrototype");
 function isIterable(value) {
   if (value === null || value === void 0 || typeof value !== "object") {
     return false;
@@ -1685,6 +1716,63 @@ _version = new WeakMap();
 __name(_TJSStyleManager, "TJSStyleManager");
 let TJSStyleManager = _TJSStyleManager;
 const cssVariables = new TJSStyleManager({ docKey: "#__trl-root-styles", version: 1 });
+const _Hashing = class _Hashing {
+  /**
+   * Provides a solid string hashing algorithm.
+   *
+   * Sourced from: https://stackoverflow.com/a/52171480
+   *
+   * @param {string}   str - String to hash.
+   *
+   * @param {number}   seed - A seed value altering the hash.
+   *
+   * @returns {number} Hash code.
+   */
+  static hashCode(str, seed = 0) {
+    if (typeof str !== "string") {
+      return 0;
+    }
+    let h1 = 3735928559 ^ seed, h2 = 1103547991 ^ seed;
+    for (let ch, i = 0; i < str.length; i++) {
+      ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ h1 >>> 16, 2246822507) ^ Math.imul(h2 ^ h2 >>> 13, 3266489909);
+    h2 = Math.imul(h2 ^ h2 >>> 16, 2246822507) ^ Math.imul(h1 ^ h1 >>> 13, 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+  }
+  /**
+   * Validates that the given string is formatted as a UUIDv4 string.
+   *
+   * @param {string}   uuid - UUID string to test.
+   *
+   * @returns {boolean} Is UUIDv4 string.
+   */
+  static isUuidv4(uuid) {
+    return __privateGet(this, _regexUuidv).test(uuid);
+  }
+  /**
+   * Generates a UUID v4 compliant ID. Please use a complete UUID generation package for guaranteed compliance.
+   *
+   * This code is an evolution of the following Gist.
+   * https://gist.github.com/jed/982883
+   *
+   * There is a public domain / free copy license attached to it that is not a standard OSS license...
+   * https://gist.github.com/jed/982883#file-license-txt
+   *
+   * @returns {string} UUIDv4
+   */
+  static uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (globalThis.crypto ?? globalThis.msCrypto).getRandomValues(
+      new Uint8Array(1)
+    )[0] & 15 >> c / 4).toString(16));
+  }
+};
+_regexUuidv = new WeakMap();
+__name(_Hashing, "Hashing");
+__privateAdd(_Hashing, _regexUuidv, /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
+let Hashing = _Hashing;
 function isUpdatableStore(store) {
   if (store === null || store === void 0) {
     return false;
@@ -10376,7 +10464,7 @@ function create_if_block$2(ctx) {
         /*label*/
         ctx[3]
       );
-      attr(span, "class", "svelte-gff15-166l8wd");
+      attr(span, "class", "svelte-FF15-166l8wd");
       toggle_class(
         span,
         "has-icon",
@@ -10414,7 +10502,7 @@ function create_if_block$2(ctx) {
   };
 }
 __name(create_if_block$2, "create_if_block$2");
-function create_fragment$5(ctx) {
+function create_fragment$g(ctx) {
   let a;
   let html_tag;
   let html_anchor;
@@ -10435,7 +10523,7 @@ function create_fragment$5(ctx) {
         if_block.c();
       html_tag.a = html_anchor;
       attr(a, "class", a_class_value = "header-button " + /*button*/
-      ctx[0].class + " svelte-gff15-166l8wd");
+      ctx[0].class + " svelte-FF15-166l8wd");
       attr(
         a,
         "aria-label",
@@ -10517,7 +10605,7 @@ function create_fragment$5(ctx) {
       }
       if (dirty & /*button*/
       1 && a_class_value !== (a_class_value = "header-button " + /*button*/
-      ctx2[0].class + " svelte-gff15-166l8wd")) {
+      ctx2[0].class + " svelte-FF15-166l8wd")) {
         attr(a, "class", a_class_value);
       }
       if (dirty & /*label*/
@@ -10559,9 +10647,9 @@ function create_fragment$5(ctx) {
     }
   };
 }
-__name(create_fragment$5, "create_fragment$5");
+__name(create_fragment$g, "create_fragment$g");
 const s_REGEX_HTML = /^\s*<.*>$/;
-function instance$5($$self, $$props, $$invalidate) {
+function instance$d($$self, $$props, $$invalidate) {
   let title;
   let icon;
   let label;
@@ -10647,11 +10735,11 @@ function instance$5($$self, $$props, $$invalidate) {
     title
   ];
 }
-__name(instance$5, "instance$5");
+__name(instance$d, "instance$d");
 const _TJSHeaderButton = class _TJSHeaderButton extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$5, create_fragment$5, safe_not_equal, { button: 0 });
+    init(this, options, instance$d, create_fragment$g, safe_not_equal, { button: 0 });
   }
   get button() {
     return this.$$.ctx[0];
@@ -10665,12 +10753,12 @@ __name(_TJSHeaderButton, "TJSHeaderButton");
 let TJSHeaderButton = _TJSHeaderButton;
 const TJSHeaderButton$1 = TJSHeaderButton;
 const TJSApplicationHeader_svelte_svelte_type_style_lang = "";
-function get_each_context(ctx, list, i) {
+function get_each_context$1(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[31] = list[i];
   return child_ctx;
 }
-__name(get_each_context, "get_each_context");
+__name(get_each_context$1, "get_each_context$1");
 function get_each_context_1(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[31] = list[i];
@@ -10683,7 +10771,7 @@ function create_if_block$1(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "tjs-app-icon keep-minimized svelte-gff15-1wviwl9");
+      attr(img, "class", "tjs-app-icon keep-minimized svelte-FF15-1wviwl9");
       if (!src_url_equal(img.src, img_src_value = /*$storeHeaderIcon*/
       ctx[6]))
         attr(img, "src", img_src_value);
@@ -10800,7 +10888,7 @@ function create_each_block_1(ctx) {
   };
 }
 __name(create_each_block_1, "create_each_block_1");
-function create_each_block(ctx) {
+function create_each_block$1(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -10892,7 +10980,7 @@ function create_each_block(ctx) {
     }
   };
 }
-__name(create_each_block, "create_each_block");
+__name(create_each_block$1, "create_each_block$1");
 function create_key_block(ctx) {
   let header;
   let t0;
@@ -10930,7 +11018,7 @@ function create_key_block(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
   }
   const out_1 = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -10953,15 +11041,15 @@ function create_key_block(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(h4, "class", "window-title svelte-gff15-1wviwl9");
+      attr(h4, "class", "window-title svelte-FF15-1wviwl9");
       set_style(
         h4,
         "display",
         /*displayHeaderTitle*/
         ctx[4]
       );
-      attr(span, "class", "tjs-window-header-spacer keep-minimized svelte-gff15-1wviwl9");
-      attr(header, "class", "window-header flexrow svelte-gff15-1wviwl9");
+      attr(span, "class", "tjs-window-header-spacer keep-minimized svelte-FF15-1wviwl9");
+      attr(header, "class", "window-header flexrow svelte-FF15-1wviwl9");
     },
     m(target, anchor) {
       insert(target, header, anchor);
@@ -11073,12 +11161,12 @@ function create_key_block(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context(ctx2, each_value, i);
+          const child_ctx = get_each_context$1(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block(child_ctx);
+            each_blocks[i] = create_each_block$1(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(header, null);
@@ -11141,7 +11229,7 @@ function create_key_block(ctx) {
   };
 }
 __name(create_key_block, "create_key_block");
-function create_fragment$4(ctx) {
+function create_fragment$f(ctx) {
   let previous_key = (
     /*draggable*/
     ctx[0]
@@ -11192,8 +11280,8 @@ function create_fragment$4(ctx) {
     }
   };
 }
-__name(create_fragment$4, "create_fragment$4");
-function instance$4($$self, $$props, $$invalidate) {
+__name(create_fragment$f, "create_fragment$f");
+function instance$c($$self, $$props, $$invalidate) {
   let $focusKeep;
   let $focusAuto;
   let $elementRoot;
@@ -11352,25 +11440,25 @@ function instance$4($$self, $$props, $$invalidate) {
     $storeDraggable
   ];
 }
-__name(instance$4, "instance$4");
+__name(instance$c, "instance$c");
 const _TJSApplicationHeader = class _TJSApplicationHeader extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$4, create_fragment$4, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
+    init(this, options, instance$c, create_fragment$f, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
   }
 };
 __name(_TJSApplicationHeader, "TJSApplicationHeader");
 let TJSApplicationHeader = _TJSApplicationHeader;
 const TJSApplicationHeader$1 = TJSApplicationHeader;
 const TJSFocusWrap_svelte_svelte_type_style_lang = "";
-function create_fragment$3(ctx) {
+function create_fragment$e(ctx) {
   let div;
   let mounted;
   let dispose;
   return {
     c() {
       div = element("div");
-      attr(div, "class", "tjs-focus-wrap svelte-gff15-kjcljd");
+      attr(div, "class", "tjs-focus-wrap svelte-FF15-kjcljd");
       attr(div, "tabindex", "0");
     },
     m(target, anchor) {
@@ -11399,8 +11487,8 @@ function create_fragment$3(ctx) {
     }
   };
 }
-__name(create_fragment$3, "create_fragment$3");
-function instance$3($$self, $$props, $$invalidate) {
+__name(create_fragment$e, "create_fragment$e");
+function instance$b($$self, $$props, $$invalidate) {
   let { elementRoot = void 0 } = $$props;
   let { enabled = true } = $$props;
   let ignoreElements, wrapEl;
@@ -11441,18 +11529,18 @@ function instance$3($$self, $$props, $$invalidate) {
   };
   return [wrapEl, onFocus, elementRoot, enabled, div_binding];
 }
-__name(instance$3, "instance$3");
+__name(instance$b, "instance$b");
 const _TJSFocusWrap = class _TJSFocusWrap extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$3, create_fragment$3, safe_not_equal, { elementRoot: 2, enabled: 3 });
+    init(this, options, instance$b, create_fragment$e, safe_not_equal, { elementRoot: 2, enabled: 3 });
   }
 };
 __name(_TJSFocusWrap, "TJSFocusWrap");
 let TJSFocusWrap = _TJSFocusWrap;
 const TJSFocusWrap$1 = TJSFocusWrap;
 const ResizableHandle_svelte_svelte_type_style_lang = "";
-function create_fragment$2(ctx) {
+function create_fragment$d(ctx) {
   let div;
   let resizable_action;
   let mounted;
@@ -11460,8 +11548,8 @@ function create_fragment$2(ctx) {
   return {
     c() {
       div = element("div");
-      div.innerHTML = `<i class="fas fa-arrows-alt-h svelte-gff15-14lnpz8"></i>`;
-      attr(div, "class", "window-resizable-handle svelte-gff15-14lnpz8");
+      div.innerHTML = `<i class="fas fa-arrows-alt-h svelte-FF15-14lnpz8"></i>`;
+      attr(div, "class", "window-resizable-handle svelte-FF15-14lnpz8");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -11507,8 +11595,8 @@ function create_fragment$2(ctx) {
     }
   };
 }
-__name(create_fragment$2, "create_fragment$2");
-function instance$2($$self, $$props, $$invalidate) {
+__name(create_fragment$d, "create_fragment$d");
+function instance$a($$self, $$props, $$invalidate) {
   let $storeElementRoot;
   let $storeMinimized;
   let $storeResizable;
@@ -11641,11 +11729,11 @@ function instance$2($$self, $$props, $$invalidate) {
     div_binding
   ];
 }
-__name(instance$2, "instance$2");
+__name(instance$a, "instance$a");
 const _ResizableHandle = class _ResizableHandle extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$2, create_fragment$2, safe_not_equal, { isResizable: 7 });
+    init(this, options, instance$a, create_fragment$d, safe_not_equal, { isResizable: 7 });
   }
 };
 __name(_ResizableHandle, "ResizableHandle");
@@ -11717,12 +11805,12 @@ function create_else_block(ctx) {
       create_component(resizablehandle.$$.fragment);
       t2 = space();
       create_component(tjsfocuswrap.$$.fragment);
-      attr(section, "class", "window-content svelte-gff15-oz81f7");
+      attr(section, "class", "window-content svelte-FF15-oz81f7");
       attr(section, "tabindex", "-1");
       attr(div, "id", div_id_value = /*application*/
       ctx[10].id);
       attr(div, "class", div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-gff15-oz81f7");
+      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7");
       attr(div, "data-appid", div_data_appid_value = /*application*/
       ctx[10].appId);
       attr(div, "role", "application");
@@ -11860,7 +11948,7 @@ function create_else_block(ctx) {
       }
       if (!current || dirty[0] & /*application*/
       1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
-      ctx2[10].options.classes.join(" ") + " svelte-gff15-oz81f7")) {
+      ctx2[10].options.classes.join(" ") + " svelte-FF15-oz81f7")) {
         attr(div, "class", div_class_value);
       }
       if (!current || dirty[0] & /*application*/
@@ -11970,12 +12058,12 @@ function create_if_block(ctx) {
       create_component(resizablehandle.$$.fragment);
       t2 = space();
       create_component(tjsfocuswrap.$$.fragment);
-      attr(section, "class", "window-content svelte-gff15-oz81f7");
+      attr(section, "class", "window-content svelte-FF15-oz81f7");
       attr(section, "tabindex", "-1");
       attr(div, "id", div_id_value = /*application*/
       ctx[10].id);
       attr(div, "class", div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-gff15-oz81f7");
+      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7");
       attr(div, "data-appid", div_data_appid_value = /*application*/
       ctx[10].appId);
       attr(div, "role", "application");
@@ -12110,7 +12198,7 @@ function create_if_block(ctx) {
       }
       if (!current || dirty[0] & /*application*/
       1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-gff15-oz81f7")) {
+      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7")) {
         attr(div, "class", div_class_value);
       }
       if (!current || dirty[0] & /*application*/
@@ -12184,7 +12272,7 @@ function create_if_block(ctx) {
   };
 }
 __name(create_if_block, "create_if_block");
-function create_fragment$1(ctx) {
+function create_fragment$c(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
@@ -12253,8 +12341,8 @@ function create_fragment$1(ctx) {
     }
   };
 }
-__name(create_fragment$1, "create_fragment$1");
-function instance$1($$self, $$props, $$invalidate) {
+__name(create_fragment$c, "create_fragment$c");
+function instance$9($$self, $$props, $$invalidate) {
   let $focusKeep;
   let $focusAuto;
   let $minimized;
@@ -12553,15 +12641,15 @@ function instance$1($$self, $$props, $$invalidate) {
     div_binding_1
   ];
 }
-__name(instance$1, "instance$1");
+__name(instance$9, "instance$9");
 const _ApplicationShell = class _ApplicationShell extends SvelteComponent {
   constructor(options) {
     super();
     init(
       this,
       options,
-      instance$1,
-      create_fragment$1,
+      instance$9,
+      create_fragment$c,
       safe_not_equal,
       {
         elementContent: 0,
@@ -12708,8 +12796,7 @@ cssVariables.setProperties({
   "--tjs-app-background": `url("${globalThis.foundry.utils.getRoute("/ui/denim075.png")}")`
 }, false);
 const WelcomeAppShell_svelte_svelte_type_style_lang = "";
-function create_default_slot(ctx) {
-  let div7;
+function create_default_slot$1(ctx) {
   let main;
   let div1;
   let p0;
@@ -12727,20 +12814,19 @@ function create_default_slot(ctx) {
   let dispose;
   return {
     c() {
-      div7 = element("div");
       main = element("main");
       div1 = element("div");
-      div1.innerHTML = `<div class="texture svelte-gff15-1oy7vff"></div><img src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;" class="svelte-gff15-1oy7vff"/>`;
+      div1.innerHTML = `<div class="texture svelte-FF15-1njk00a"></div><img src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;" class="svelte-FF15-1njk00a"/>`;
       p0 = element("p");
-      p0.textContent = "Welcome to the Final Fantasy TTRPG!";
+      p0.textContent = `${localize("FF15.Welcome.To")} `;
       h10 = element("h1");
-      h10.textContent = "Introduction";
+      h10.textContent = `${localize("FF15.Welcome.Introduction")}`;
       p1 = element("p");
       p1.innerHTML = `The <a href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html">Final Fantasy TTRPG </a>was released mid-year 2024 `;
       h11 = element("h1");
       h11.textContent = "Help";
       p2 = element("p");
-      p2.innerHTML = `<span>If you have any issues, please report them on the </span><a href="https://github.com/geoidesic/foundryvtt-actor-studio/issues">github</a><span> page.</span>`;
+      p2.innerHTML = `<span>If you have any issues, please report them on the </span><a href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues">github</a><span> page.</span>`;
       div4 = element("div");
       div2 = element("div");
       input = element("input");
@@ -12748,21 +12834,19 @@ function create_default_slot(ctx) {
       span2 = element("span");
       span2.textContent = `${localize("FF15.Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
-      footer.innerHTML = `<div class="flex2 right"><img class="pt-sm white svelte-gff15-1oy7vff" src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/></div><div class="flex2 left pt-sm"><h4>FF15 FoundryVTT system is created by </h4><a href="https://www.round-table.games" class="svelte-gff15-1oy7vff">Round Table Games ©2024</a></div>`;
-      attr(div1, "class", "logo-background svelte-gff15-1oy7vff");
+      footer.innerHTML = `<div class="flex2 right"><img class="pt-sm white svelte-FF15-1njk00a" src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/></div><div class="flex2 left pt-sm"><h4>FF15 FoundryVTT system is created by </h4><a href="https://www.round-table.games" class="svelte-FF15-1njk00a">Round Table Games ©2024</a></div>`;
+      attr(div1, "class", "logo-background svelte-FF15-1njk00a");
       attr(input, "type", "checkbox");
       attr(input, "label", localize("FF15.Setting.DontShowWelcome.Name"));
       attr(div2, "class", "flex0");
       attr(div3, "class", "flex");
       attr(div4, "class", "flexrow inset justify-flexrow-vertical");
       attr(div4, "data-tooltip", localize("FF15.Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-gff15-1oy7vff");
-      attr(footer, "class", "svelte-gff15-1oy7vff");
-      attr(div7, "class", "FF15");
+      attr(main, "class", "svelte-FF15-1njk00a");
+      attr(footer, "class", "svelte-FF15-1njk00a");
     },
     m(target, anchor) {
-      insert(target, div7, anchor);
-      append(div7, main);
+      insert(target, main, anchor);
       append(main, div1);
       append(main, p0);
       append(main, h10);
@@ -12776,7 +12860,7 @@ function create_default_slot(ctx) {
       ctx[1];
       append(div4, div3);
       append(div3, span2);
-      append(div7, footer);
+      insert(target, footer, anchor);
       if (!mounted) {
         dispose = [
           listen(
@@ -12804,15 +12888,16 @@ function create_default_slot(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div7);
+        detach(main);
+        detach(footer);
       }
       mounted = false;
       run_all(dispose);
     }
   };
 }
-__name(create_default_slot, "create_default_slot");
-function create_fragment(ctx) {
+__name(create_default_slot$1, "create_default_slot$1");
+function create_fragment$b(ctx) {
   let applicationshell;
   let updating_elementRoot;
   let current;
@@ -12821,7 +12906,7 @@ function create_fragment(ctx) {
   }
   __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
   let applicationshell_props = {
-    $$slots: { default: [create_default_slot] },
+    $$slots: { default: [create_default_slot$1] },
     $$scope: { ctx }
   };
   if (
@@ -12871,8 +12956,8 @@ function create_fragment(ctx) {
     }
   };
 }
-__name(create_fragment, "create_fragment");
-function instance($$self, $$props, $$invalidate) {
+__name(create_fragment$b, "create_fragment$b");
+function instance$8($$self, $$props, $$invalidate) {
   let dontShowWelcome2;
   let { elementRoot = void 0 } = $$props;
   let { version: version2 = void 0 } = $$props;
@@ -12917,11 +13002,11 @@ function instance($$self, $$props, $$invalidate) {
     applicationshell_elementRoot_binding
   ];
 }
-__name(instance, "instance");
+__name(instance$8, "instance$8");
 const _WelcomeAppShell = class _WelcomeAppShell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, version: 3 });
+    init(this, options, instance$8, create_fragment$b, safe_not_equal, { elementRoot: 0, version: 3 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -15012,14 +15097,14 @@ const _WelcomeApplication = class _WelcomeApplication extends SvelteApplication 
    */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      id: "foundryvtt-actor-studio-welcome",
-      classes: ["gas-actor-studio"],
+      id: `${SYSTEM_ID}--welcome`,
+      classes: [SYSTEM_CODE],
       resizable: true,
       minimizable: true,
       width: 600,
-      height: 600,
+      height: 700,
       // headerIcon: 'modules/foundryvtt-actor-studio/assets/actor-studio-logo-dragon-white.svg',
-      title: game.i18n.localize("FF15.SystemName") + " v" + version,
+      title: game.i18n.localize(`${SYSTEM_CODE}.SystemName`) + " v" + version,
       svelte: {
         class: WelcomeAppShell,
         target: document.body,
@@ -15034,15 +15119,3338 @@ const _WelcomeApplication = class _WelcomeApplication extends SvelteApplication 
 };
 __name(_WelcomeApplication, "WelcomeApplication");
 let WelcomeApplication = _WelcomeApplication;
-window.log = log;
-log.level = log.DEBUG;
+const _FF15Actor = class _FF15Actor extends Actor {
+  constructor(data = {}, context) {
+    super(data, context);
+  }
+  /** @override */
+  prepareData() {
+    super.prepareData();
+  }
+  /** @override */
+  prepareBaseData() {
+    super.prepareBaseData();
+  }
+  /**
+   * @override
+   * Augment the basic actor data with additional dynamic data. Typically,
+   * you'll want to handle most of your calculated/derived data in this step.
+   * Data calculated in this step should generally not exist in template.json
+   * (such as ability modifiers rather than ability scores) and should be
+   * available both inside and outside of character sheets (such as if an actor
+   * is queried and has a roll executed directly from it).
+  */
+  prepareDerivedData() {
+    super.prepareDerivedData();
+  }
+  async _onDrop(event) {
+    console.log("_onDrop in the actor.js", event);
+  }
+};
+__name(_FF15Actor, "FF15Actor");
+let FF15Actor = _FF15Actor;
+const corner_svelte_svelte_type_style_lang = "";
+function create_fragment$a(ctx) {
+  let svg;
+  let g;
+  let path0;
+  let path1;
+  let svg_style_value;
+  let svg_levels = [
+    /*$$props*/
+    ctx[6],
+    { xmlns: "http://www.w3.org/2000/svg" },
+    { viewBox: "0 0 106 114" },
+    {
+      style: svg_style_value = "--size: " + /*size*/
+      ctx[0] + "px; --stroke-width: " + /*strokeWidth*/
+      ctx[1] + "px; transform: scaleX(" + /*flip*/
+      (ctx[5] === "horizontal" || /*flip*/
+      ctx[5] === "both" ? "-1" : "1") + ") scaleY(" + /*flip*/
+      (ctx[5] === "vertical" || /*flip*/
+      ctx[5] === "both" ? "-1" : "1") + ") rotate(" + /*rotation*/
+      ctx[3] + "deg);"
+    }
+  ];
+  let svg_data = {};
+  for (let i = 0; i < svg_levels.length; i += 1) {
+    svg_data = assign(svg_data, svg_levels[i]);
+  }
+  return {
+    c() {
+      svg = svg_element("svg");
+      g = svg_element("g");
+      path0 = svg_element("path");
+      path1 = svg_element("path");
+      attr(path0, "d", "M81.3438 77.9688C81.1465 78.3361 81.0124 78.7302 80.8125 79.0938C81.1317 78.9786 81.4026 78.8896 81.7188 78.7812C81.5892 78.5192 81.4693 78.1846 81.3438 77.9688Z");
+      attr(path0, "class", "svelte-FF15-rp3qe1");
+      attr(path1, "d", "M105.562-0.09375L101.594 2.9375L101.562 9.40625C100.176 11.8292 96.6661 18.0195 94.4375 21.25C91.9565 24.844 85.5632 31.5625 85.5625 31.5625C85.5625 31.5625 86.2142 39.4735 85.5312 44.1875C84.9762 48.0195 83.0215 57.3338 81.6875 60.9688C80.0565 65.4144 78.969 68.6598 76.75 73.375C74.2739 74.1356 71.1542 75.7678 68.7188 77.0938C65.8498 78.6567 61.6277 82.2972 58.4688 84.2812C54.9897 86.4662 52.005 88.4043 48.25 90.6562C44.578 92.8583 40.7035 94.9483 37.1875 96.7812C33.9525 98.4692 31.748 99.4527 28.375 100.844C24.968 102.249 21.2595 103.187 17.6875 104.312C16.1979 104.781 14.8079 105.122 12.5 105.781L2.71875 105.812L0.21875 109.656L0 110L0.03125 114L99.0938 114L110 102.438L110 64.9375L110 0L105.562-0.09375ZM101.5 22.8438L101.375 69.1875C99.4872 69.1884 95.5264 69.1648 93.0625 69.5312C90.3515 69.9343 87.4145 70.324 84.8438 70.75C84.815 70.7548 84.779 70.7761 84.75 70.7812C84.7015 70.9048 84.674 71.0658 84.625 71.1875C84.5719 71.0159 84.5813 71.0035 84.5312 70.8438C84.5989 70.8305 84.6833 70.7931 84.75 70.7812C86.8489 65.4361 88.5838 58.421 89.9688 53.8125C91.1018 50.0435 91.6521 45.5913 91.9688 42.1562C92.2438 39.1772 91.8747 33.1875 91.875 33.1875C91.875 33.1875 96.4028 29.0543 97.5938 27.6562C98.8107 26.2262 100.412 24.2097 101.5 22.8438ZM94.6562 76.6562C97.516 76.6333 100.082 76.748 101.344 76.8125L101.281 99L95.1562 105.562L60.5625 105.656C62.7372 103.386 66.1864 99.8114 68.5625 97C69.5049 95.8849 70.4357 94.7502 71.375 93.625C71.6949 93.637 71.897 93.6024 72.1562 93.625C74.5343 93.832 78.4323 94.0907 81.1562 94.8438C83.7372 95.5577 88.5 98.1562 88.5 98.1562L90.2188 96.5C90.2188 96.5 88.273 93.0432 87.5 90.1562C86.749 87.3533 86.8763 80.8318 86.4062 77.9688C86.3789 77.8025 86.2852 77.5255 86.25 77.3438C88.6428 76.8397 91.7965 76.6792 94.6562 76.6562ZM81.3438 77.9688C81.4694 78.1846 81.5892 78.5192 81.7188 78.7812C81.9761 79.3017 82.2442 79.7392 82.4375 80.4062C82.7985 81.6513 82.6952 85.5942 83.0312 87.2812C83.4852 89.5562 84.2812 91.8438 84.2812 91.8438C84.2812 91.8438 81.3383 90.2571 79.7812 89.9688C79.1209 89.8468 76.606 89.2347 74.8438 89C75.4858 88.0766 76.1973 87.1987 76.75 86.2188C77.9875 84.0246 79.4247 81.6174 80.8125 79.0938C81.0124 78.7302 81.1465 78.3361 81.3438 77.9688ZM70.7188 83.9062C70.0811 84.8651 69.4293 85.9537 68.8125 86.7812C66.3415 90.0943 62.1708 94.7322 59.25 97.6562C56.9022 100.007 53.0594 103.512 50.6875 105.688L34.0625 105.719C36.1231 105.042 38.1655 104.468 40.125 103.594C43.643 102.024 47.9697 99.7545 51.7188 97.5312C55.5907 95.2352 60.3202 92.1225 63.375 89.8125C65.3525 88.3175 68.236 85.6926 70.7188 83.9062Z");
+      attr(path1, "class", "svelte-FF15-rp3qe1");
+      set_style(
+        g,
+        "fill",
+        /*fill*/
+        ctx[4]
+      );
+      set_style(
+        g,
+        "stroke",
+        /*strokeColor*/
+        ctx[2]
+      );
+      set_style(
+        g,
+        "stroke-width",
+        /*strokeWidth*/
+        ctx[1]
+      );
+      set_svg_attributes(svg, svg_data);
+      toggle_class(svg, "svelte-FF15-rp3qe1", true);
+    },
+    m(target, anchor) {
+      insert(target, svg, anchor);
+      append(svg, g);
+      append(g, path0);
+      append(g, path1);
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*fill*/
+      16) {
+        set_style(
+          g,
+          "fill",
+          /*fill*/
+          ctx2[4]
+        );
+      }
+      if (dirty & /*strokeColor*/
+      4) {
+        set_style(
+          g,
+          "stroke",
+          /*strokeColor*/
+          ctx2[2]
+        );
+      }
+      if (dirty & /*strokeWidth*/
+      2) {
+        set_style(
+          g,
+          "stroke-width",
+          /*strokeWidth*/
+          ctx2[1]
+        );
+      }
+      set_svg_attributes(svg, svg_data = get_spread_update(svg_levels, [
+        dirty & /*$$props*/
+        64 && /*$$props*/
+        ctx2[6],
+        { xmlns: "http://www.w3.org/2000/svg" },
+        { viewBox: "0 0 106 114" },
+        dirty & /*size, strokeWidth, flip, rotation*/
+        43 && svg_style_value !== (svg_style_value = "--size: " + /*size*/
+        ctx2[0] + "px; --stroke-width: " + /*strokeWidth*/
+        ctx2[1] + "px; transform: scaleX(" + /*flip*/
+        (ctx2[5] === "horizontal" || /*flip*/
+        ctx2[5] === "both" ? "-1" : "1") + ") scaleY(" + /*flip*/
+        (ctx2[5] === "vertical" || /*flip*/
+        ctx2[5] === "both" ? "-1" : "1") + ") rotate(" + /*rotation*/
+        ctx2[3] + "deg);") && { style: svg_style_value }
+      ]));
+      toggle_class(svg, "svelte-FF15-rp3qe1", true);
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(svg);
+      }
+    }
+  };
+}
+__name(create_fragment$a, "create_fragment$a");
+function instance$7($$self, $$props, $$invalidate) {
+  let { size = 100 } = $$props;
+  let { strokeWidth = 2 } = $$props;
+  let { strokeColor: strokeColor2 = "#000" } = $$props;
+  let { rotation = 0 } = $$props;
+  let { fill = "currentColor" } = $$props;
+  let { flip = "" } = $$props;
+  $$self.$$set = ($$new_props) => {
+    $$invalidate(6, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+    if ("size" in $$new_props)
+      $$invalidate(0, size = $$new_props.size);
+    if ("strokeWidth" in $$new_props)
+      $$invalidate(1, strokeWidth = $$new_props.strokeWidth);
+    if ("strokeColor" in $$new_props)
+      $$invalidate(2, strokeColor2 = $$new_props.strokeColor);
+    if ("rotation" in $$new_props)
+      $$invalidate(3, rotation = $$new_props.rotation);
+    if ("fill" in $$new_props)
+      $$invalidate(4, fill = $$new_props.fill);
+    if ("flip" in $$new_props)
+      $$invalidate(5, flip = $$new_props.flip);
+  };
+  $$props = exclude_internal_props($$props);
+  return [size, strokeWidth, strokeColor2, rotation, fill, flip, $$props];
+}
+__name(instance$7, "instance$7");
+const _Corner = class _Corner extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$7, create_fragment$a, safe_not_equal, {
+      size: 0,
+      strokeWidth: 1,
+      strokeColor: 2,
+      rotation: 3,
+      fill: 4,
+      flip: 5
+    });
+  }
+};
+__name(_Corner, "Corner");
+let Corner = _Corner;
+const PortraitFrame_svelte_svelte_type_style_lang = "";
+function create_fragment$9(ctx) {
+  let div1;
+  let div0;
+  let img;
+  let img_src_value;
+  let corner0;
+  let corner1;
+  let corner2;
+  let corner3;
+  let current;
+  corner0 = new Corner({
+    props: {
+      class: "corner bottom-right",
+      strokeColor,
+      size: "50"
+    }
+  });
+  corner1 = new Corner({
+    props: {
+      class: "corner bottom-left",
+      flip: "horizontal",
+      strokeColor,
+      size: "50"
+    }
+  });
+  corner2 = new Corner({
+    props: {
+      class: "corner top-right",
+      flip: "vertical",
+      strokeColor,
+      size: "50"
+    }
+  });
+  corner3 = new Corner({
+    props: {
+      class: "corner top-left",
+      flip: "both",
+      strokeColor,
+      size: "50"
+    }
+  });
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      img = element("img");
+      create_component(corner0.$$.fragment);
+      create_component(corner1.$$.fragment);
+      create_component(corner2.$$.fragment);
+      create_component(corner3.$$.fragment);
+      if (!src_url_equal(img.src, img_src_value = ASSET_PATH + "/portraits/witch2.webp"))
+        attr(img, "src", img_src_value);
+      attr(div0, "class", "frame svelte-FF15-1l2epk4");
+      attr(div1, "class", "atom");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      append(div0, img);
+      mount_component(corner0, div0, null);
+      mount_component(corner1, div0, null);
+      mount_component(corner2, div0, null);
+      mount_component(corner3, div0, null);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(corner0.$$.fragment, local);
+      transition_in(corner1.$$.fragment, local);
+      transition_in(corner2.$$.fragment, local);
+      transition_in(corner3.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(corner0.$$.fragment, local);
+      transition_out(corner1.$$.fragment, local);
+      transition_out(corner2.$$.fragment, local);
+      transition_out(corner3.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      destroy_component(corner0);
+      destroy_component(corner1);
+      destroy_component(corner2);
+      destroy_component(corner3);
+    }
+  };
+}
+__name(create_fragment$9, "create_fragment$9");
+let strokeColor = "#514030";
+function instance$6($$self) {
+  onMount(() => {
+    log.d("PortraitFrame mounted");
+  });
+  return [];
+}
+__name(instance$6, "instance$6");
+const _PortraitFrame = class _PortraitFrame extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$6, create_fragment$9, safe_not_equal, {});
+  }
+};
+__name(_PortraitFrame, "PortraitFrame");
+let PortraitFrame = _PortraitFrame;
+const Attribute_svelte_svelte_type_style_lang = "";
+function create_fragment$8(ctx) {
+  let div3;
+  let div2;
+  let div0;
+  let t0_value = (
+    /*uppercase*/
+    (ctx[2] ? (
+      /*code*/
+      ctx[0].toUpperCase()
+    ) : (
+      /*code*/
+      ctx[0]
+    )) + ""
+  );
+  let t0;
+  let t1;
+  let div1;
+  let t2;
+  return {
+    c() {
+      div3 = element("div");
+      div2 = element("div");
+      div0 = element("div");
+      t0 = text(t0_value);
+      t1 = space();
+      div1 = element("div");
+      t2 = text(
+        /*value*/
+        ctx[1]
+      );
+      attr(div0, "class", "flex2 header svelte-FF15-1hoh2n7");
+      attr(div1, "class", "flex0 header svelte-FF15-1hoh2n7");
+      attr(div2, "class", "underscore flexrow svelte-FF15-1hoh2n7");
+      attr(div3, "class", "component svelte-FF15-1hoh2n7");
+    },
+    m(target, anchor) {
+      insert(target, div3, anchor);
+      append(div3, div2);
+      append(div2, div0);
+      append(div0, t0);
+      append(div0, t1);
+      append(div2, div1);
+      append(div1, t2);
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*uppercase, code*/
+      5 && t0_value !== (t0_value = /*uppercase*/
+      (ctx2[2] ? (
+        /*code*/
+        ctx2[0].toUpperCase()
+      ) : (
+        /*code*/
+        ctx2[0]
+      )) + ""))
+        set_data(t0, t0_value);
+      if (dirty & /*value*/
+      2)
+        set_data(
+          t2,
+          /*value*/
+          ctx2[1]
+        );
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div3);
+      }
+    }
+  };
+}
+__name(create_fragment$8, "create_fragment$8");
+function instance$5($$self, $$props, $$invalidate) {
+  let { code } = $$props;
+  let { value } = $$props;
+  let { uppercase = false } = $$props;
+  onMount(() => {
+  });
+  $$self.$$set = ($$props2) => {
+    if ("code" in $$props2)
+      $$invalidate(0, code = $$props2.code);
+    if ("value" in $$props2)
+      $$invalidate(1, value = $$props2.value);
+    if ("uppercase" in $$props2)
+      $$invalidate(2, uppercase = $$props2.uppercase);
+  };
+  return [code, value, uppercase];
+}
+__name(instance$5, "instance$5");
+const _Attribute = class _Attribute extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$5, create_fragment$8, safe_not_equal, { code: 0, value: 1, uppercase: 2 });
+  }
+};
+__name(_Attribute, "Attribute");
+let Attribute = _Attribute;
+function get_each_context(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[1] = list[i].code;
+  child_ctx[2] = list[i].value;
+  child_ctx[4] = i;
+  return child_ctx;
+}
+__name(get_each_context, "get_each_context");
+function create_each_block(ctx) {
+  let attribute;
+  let current;
+  attribute = new Attribute({
+    props: {
+      code: (
+        /*code*/
+        ctx[1]
+      ),
+      value: (
+        /*value*/
+        ctx[2]
+      )
+    }
+  });
+  return {
+    c() {
+      create_component(attribute.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(attribute, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const attribute_changes = {};
+      if (dirty & /*data*/
+      1)
+        attribute_changes.code = /*code*/
+        ctx2[1];
+      if (dirty & /*data*/
+      1)
+        attribute_changes.value = /*value*/
+        ctx2[2];
+      attribute.$set(attribute_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(attribute.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(attribute.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(attribute, detaching);
+    }
+  };
+}
+__name(create_each_block, "create_each_block");
+function create_fragment$7(ctx) {
+  let div;
+  let current;
+  let each_value = ensure_array_like(
+    /*data*/
+    ctx[0]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+  }
+  const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  }), "out");
+  return {
+    c() {
+      div = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div, "class", "component");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div, null);
+        }
+      }
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*data*/
+      1) {
+        each_value = ensure_array_like(
+          /*data*/
+          ctx2[0]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(div, null);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+__name(create_fragment$7, "create_fragment$7");
+function instance$4($$self, $$props, $$invalidate) {
+  let { data } = $$props;
+  onMount(() => {
+  });
+  $$self.$$set = ($$props2) => {
+    if ("data" in $$props2)
+      $$invalidate(0, data = $$props2.data);
+  };
+  return [data];
+}
+__name(instance$4, "instance$4");
+const _AttributeCol = class _AttributeCol extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$4, create_fragment$7, safe_not_equal, { data: 0 });
+  }
+};
+__name(_AttributeCol, "AttributeCol");
+let AttributeCol = _AttributeCol;
+const PrimaryAttributes_svelte_svelte_type_style_lang = "";
+function create_fragment$6(ctx) {
+  let div1;
+  let div0;
+  let attributecol;
+  let current;
+  attributecol = new AttributeCol({ props: { data: (
+    /*data*/
+    ctx[0]
+  ) } });
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      div0.textContent = "Primary Attributes";
+      create_component(attributecol.$$.fragment);
+      attr(div0, "class", "flexrow header underscore mb-md svelte-FF15-981za0");
+      attr(div1, "class", "molecule svelte-FF15-981za0");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      mount_component(attributecol, div1, null);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(attributecol.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(attributecol.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      destroy_component(attributecol);
+    }
+  };
+}
+__name(create_fragment$6, "create_fragment$6");
+function instance$3($$self) {
+  let data = [
+    { code: "STR", value: "+2" },
+    { code: "DEX", value: "+5" },
+    { code: "VIT", value: "+3" },
+    { code: "INT", value: "+4" },
+    { code: "MND", value: "+3" }
+  ];
+  return [data];
+}
+__name(instance$3, "instance$3");
+const _PrimaryAttributes = class _PrimaryAttributes extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$3, create_fragment$6, safe_not_equal, {});
+  }
+};
+__name(_PrimaryAttributes, "PrimaryAttributes");
+let PrimaryAttributes = _PrimaryAttributes;
+const SecondaryAttributes_svelte_svelte_type_style_lang = "";
+function create_fragment$5(ctx) {
+  let div1;
+  let div0;
+  let attributecol;
+  let current;
+  attributecol = new AttributeCol({ props: { data: (
+    /*data*/
+    ctx[0]
+  ) } });
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      div0.textContent = "Secondary Attributes";
+      create_component(attributecol.$$.fragment);
+      attr(div0, "class", "flexrow header underscore mb-md svelte-FF15-981za0");
+      attr(div1, "class", "molecule svelte-FF15-981za0");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      mount_component(attributecol, div1, null);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(attributecol.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(attributecol.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      destroy_component(attributecol);
+    }
+  };
+}
+__name(create_fragment$5, "create_fragment$5");
+function instance$2($$self) {
+  let data = [
+    { code: "Defence", value: 14 },
+    { code: "Magic Defence", value: 14 },
+    { code: "Vigilance", value: 13 },
+    { code: "Speed", value: 5 }
+  ];
+  return [data];
+}
+__name(instance$2, "instance$2");
+const _SecondaryAttributes = class _SecondaryAttributes extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$2, create_fragment$5, safe_not_equal, {});
+  }
+};
+__name(_SecondaryAttributes, "SecondaryAttributes");
+let SecondaryAttributes = _SecondaryAttributes;
+const AttributeBlock_svelte_svelte_type_style_lang = "";
+function create_fragment$4(ctx) {
+  let div2;
+  let div0;
+  let primaryattributes;
+  let div1;
+  let secondaryattributes;
+  let current;
+  primaryattributes = new PrimaryAttributes({});
+  secondaryattributes = new SecondaryAttributes({});
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      create_component(primaryattributes.$$.fragment);
+      div1 = element("div");
+      create_component(secondaryattributes.$$.fragment);
+      attr(div0, "class", "flex");
+      attr(div1, "class", "flex");
+      attr(div2, "class", "molecule flexrow svelte-FF15-17wjzlw");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      mount_component(primaryattributes, div0, null);
+      append(div2, div1);
+      mount_component(secondaryattributes, div1, null);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(primaryattributes.$$.fragment, local);
+      transition_in(secondaryattributes.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(primaryattributes.$$.fragment, local);
+      transition_out(secondaryattributes.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(primaryattributes);
+      destroy_component(secondaryattributes);
+    }
+  };
+}
+__name(create_fragment$4, "create_fragment$4");
+const _AttributeBlock = class _AttributeBlock extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, null, create_fragment$4, safe_not_equal, {});
+  }
+};
+__name(_AttributeBlock, "AttributeBlock");
+let AttributeBlock = _AttributeBlock;
+const TitleBlock_svelte_svelte_type_style_lang = "";
+function create_fragment$3(ctx) {
+  let div3;
+  return {
+    c() {
+      div3 = element("div");
+      div3.innerHTML = `<div class="row svelte-FF15-1ft6kv2"><div class="level svelte-FF15-1ft6kv2">LV50 </div><div class="job svelte-FF15-1ft6kv2">DPS/BARD</div></div>`;
+      attr(div3, "class", "component");
+    },
+    m(target, anchor) {
+      insert(target, div3, anchor);
+    },
+    p: noop,
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div3);
+      }
+    }
+  };
+}
+__name(create_fragment$3, "create_fragment$3");
+const _TitleBlock = class _TitleBlock extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, null, create_fragment$3, safe_not_equal, {});
+  }
+};
+__name(_TitleBlock, "TitleBlock");
+let TitleBlock = _TitleBlock;
+const AttributeSection_svelte_svelte_type_style_lang = "";
+function create_fragment$2(ctx) {
+  let section;
+  let div4;
+  let div0;
+  let titleblock;
+  let div3;
+  let div1;
+  let attributeblock;
+  let div2;
+  let portraitframe;
+  let current;
+  titleblock = new TitleBlock({});
+  attributeblock = new AttributeBlock({});
+  portraitframe = new PortraitFrame({});
+  return {
+    c() {
+      section = element("section");
+      div4 = element("div");
+      div0 = element("div");
+      create_component(titleblock.$$.fragment);
+      div3 = element("div");
+      div1 = element("div");
+      create_component(attributeblock.$$.fragment);
+      div2 = element("div");
+      create_component(portraitframe.$$.fragment);
+      attr(div0, "class", "texture svelte-FF15-1u05227");
+      attr(div1, "class", "flex2");
+      attr(div2, "class", "flex1");
+      set_style(div2, "margin-right", "-2px");
+      set_style(div2, "z-index", "2");
+      attr(div3, "class", "flexrow");
+      attr(div4, "class", "flexcol background svelte-FF15-1u05227");
+      attr(section, "class", "organism");
+    },
+    m(target, anchor) {
+      insert(target, section, anchor);
+      append(section, div4);
+      append(div4, div0);
+      mount_component(titleblock, div4, null);
+      append(div4, div3);
+      append(div3, div1);
+      mount_component(attributeblock, div1, null);
+      append(div3, div2);
+      mount_component(portraitframe, div2, null);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(titleblock.$$.fragment, local);
+      transition_in(attributeblock.$$.fragment, local);
+      transition_in(portraitframe.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(titleblock.$$.fragment, local);
+      transition_out(attributeblock.$$.fragment, local);
+      transition_out(portraitframe.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(section);
+      }
+      destroy_component(titleblock);
+      destroy_component(attributeblock);
+      destroy_component(portraitframe);
+    }
+  };
+}
+__name(create_fragment$2, "create_fragment$2");
+const _AttributeSection = class _AttributeSection extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, null, create_fragment$2, safe_not_equal, {});
+  }
+};
+__name(_AttributeSection, "AttributeSection");
+let AttributeSection = _AttributeSection;
+const Tabs_svelte_svelte_type_style_lang = "";
+function create_default_slot(ctx) {
+  let attributesection;
+  let current;
+  attributesection = new AttributeSection({});
+  return {
+    c() {
+      create_component(attributesection.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(attributesection, target, anchor);
+      current = true;
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(attributesection.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(attributesection.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(attributesection, detaching);
+    }
+  };
+}
+__name(create_default_slot, "create_default_slot");
+function create_fragment$1(ctx) {
+  let applicationshell;
+  let updating_elementRoot;
+  let updating_stylesApp;
+  let current;
+  function applicationshell_elementRoot_binding(value) {
+    ctx[4](value);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  function applicationshell_stylesApp_binding(value) {
+    ctx[5](value);
+  }
+  __name(applicationshell_stylesApp_binding, "applicationshell_stylesApp_binding");
+  let applicationshell_props = {
+    $$slots: { default: [create_default_slot] },
+    $$scope: { ctx }
+  };
+  if (
+    /*elementRoot*/
+    ctx[0] !== void 0
+  ) {
+    applicationshell_props.elementRoot = /*elementRoot*/
+    ctx[0];
+  }
+  if (
+    /*stylesApp*/
+    ctx[2] !== void 0
+  ) {
+    applicationshell_props.stylesApp = /*stylesApp*/
+    ctx[2];
+  }
+  applicationshell = new ApplicationShell$1({ props: applicationshell_props });
+  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
+  binding_callbacks.push(() => bind(applicationshell, "stylesApp", applicationshell_stylesApp_binding));
+  return {
+    c() {
+      create_component(applicationshell.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(applicationshell, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const applicationshell_changes = {};
+      if (dirty & /*$$scope*/
+      32768) {
+        applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      if (!updating_elementRoot && dirty & /*elementRoot*/
+      1) {
+        updating_elementRoot = true;
+        applicationshell_changes.elementRoot = /*elementRoot*/
+        ctx2[0];
+        add_flush_callback(() => updating_elementRoot = false);
+      }
+      if (!updating_stylesApp && dirty & /*stylesApp*/
+      4) {
+        updating_stylesApp = true;
+        applicationshell_changes.stylesApp = /*stylesApp*/
+        ctx2[2];
+        add_flush_callback(() => updating_stylesApp = false);
+      }
+      applicationshell.$set(applicationshell_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(applicationshell.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(applicationshell.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(applicationshell, detaching);
+    }
+  };
+}
+__name(create_fragment$1, "create_fragment$1");
+function instance$1($$self, $$props, $$invalidate) {
+  let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(8, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
+  $$self.$$.on_destroy.push(() => $$unsubscribe_documentStore());
+  let { elementRoot } = $$props;
+  let { documentStore } = $$props;
+  $$subscribe_documentStore();
+  let { document: document2 } = $$props;
+  getContext("#external").application;
+  let stylesApp;
+  setContext("#doc", documentStore);
+  onMount(() => {
+    log.d($documentStore);
+  });
+  function applicationshell_elementRoot_binding(value) {
+    elementRoot = value;
+    $$invalidate(0, elementRoot);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  function applicationshell_stylesApp_binding(value) {
+    stylesApp = value;
+    $$invalidate(2, stylesApp);
+  }
+  __name(applicationshell_stylesApp_binding, "applicationshell_stylesApp_binding");
+  $$self.$$set = ($$props2) => {
+    if ("elementRoot" in $$props2)
+      $$invalidate(0, elementRoot = $$props2.elementRoot);
+    if ("documentStore" in $$props2)
+      $$subscribe_documentStore($$invalidate(1, documentStore = $$props2.documentStore));
+    if ("document" in $$props2)
+      $$invalidate(3, document2 = $$props2.document);
+  };
+  return [
+    elementRoot,
+    documentStore,
+    stylesApp,
+    document2,
+    applicationshell_elementRoot_binding,
+    applicationshell_stylesApp_binding
+  ];
+}
+__name(instance$1, "instance$1");
+const _ActorSheetShell = class _ActorSheetShell extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$1, create_fragment$1, safe_not_equal, {
+      elementRoot: 0,
+      documentStore: 1,
+      document: 3
+    });
+  }
+  get elementRoot() {
+    return this.$$.ctx[0];
+  }
+  set elementRoot(elementRoot) {
+    this.$$set({ elementRoot });
+    flush();
+  }
+  get documentStore() {
+    return this.$$.ctx[1];
+  }
+  set documentStore(documentStore) {
+    this.$$set({ documentStore });
+    flush();
+  }
+  get document() {
+    return this.$$.ctx[3];
+  }
+  set document(document2) {
+    this.$$set({ document: document2 });
+    flush();
+  }
+};
+__name(_ActorSheetShell, "ActorSheetShell");
+let ActorSheetShell = _ActorSheetShell;
+const _DynReducerUtils = class _DynReducerUtils {
+  /**
+   * Checks for array equality between two arrays of numbers.
+   *
+   * @param a - Array A
+   *
+   * @param b - Array B
+   *
+   * @returns Arrays are equal.
+   */
+  static arrayEquals(a, b) {
+    if (a === b) {
+      return true;
+    }
+    if (a === null || b === null) {
+      return false;
+    }
+    if (a.length !== b.length) {
+      return false;
+    }
+    for (let cntr = a.length; --cntr >= 0; ) {
+      if (a[cntr] !== b[cntr]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+   * Provides a solid string hashing algorithm.
+   *
+   * Sourced from: https://stackoverflow.com/a/52171480
+   *
+   * @param str - String to hash.
+   *
+   * @param seed - A seed value altering the hash.
+   *
+   * @returns Hash code.
+   */
+  static hashString(str, seed = 0) {
+    let h1 = 3735928559 ^ seed, h2 = 1103547991 ^ seed;
+    for (let ch, i = 0; i < str.length; i++) {
+      ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ h1 >>> 16, 2246822507) ^ Math.imul(h2 ^ h2 >>> 13, 3266489909);
+    h2 = Math.imul(h2 ^ h2 >>> 16, 2246822507) ^ Math.imul(h1 ^ h1 >>> 13, 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+  }
+  /**
+   * Converts an unknown value for hashing purposes in {@link AdapterIndexer.calcHashUpdate}.
+   *
+   * Currently objects / Map w/ object keys is not supported. Potentially can include `object-hash` to handle this
+   * case, but it is not common to use objects as keys in Maps.
+   *
+   * @param value - An unknown value to convert to a number.
+   */
+  static hashUnknown(value) {
+    if (value === null || value === void 0) {
+      return 0;
+    }
+    let result = 0;
+    switch (typeof value) {
+      case "boolean":
+        result = value ? 1 : 0;
+        break;
+      case "bigint":
+        result = Number(BigInt.asIntN(64, value));
+        break;
+      case "function":
+        result = this.hashString(value.name);
+        break;
+      case "number":
+        result = Number.isFinite(value) ? value : 0;
+        break;
+      case "object":
+        break;
+      case "string":
+        result = this.hashString(value);
+        break;
+      case "symbol":
+        result = this.hashString(Symbol.keyFor(value));
+        break;
+    }
+    return result;
+  }
+  /**
+   * @param target -
+   *
+   * @param Prototype -
+   *
+   * @returns target constructor function has Prototype.
+   */
+  static hasPrototype(target, Prototype) {
+    if (typeof target !== "function") {
+      return false;
+    }
+    if (target === Prototype) {
+      return true;
+    }
+    for (let proto = Object.getPrototypeOf(target); proto; proto = Object.getPrototypeOf(proto)) {
+      if (proto === Prototype) {
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
+   * Provides a utility method to determine if the given data is iterable / implements iterator protocol.
+   *
+   * @param data - Data to verify as iterable.
+   *
+   * @returns Is data iterable.
+   */
+  static isIterable(data) {
+    return data !== null && data !== void 0 && typeof data === "object" && typeof data[Symbol.iterator] === "function";
+  }
+};
+__name(_DynReducerUtils, "DynReducerUtils");
+let DynReducerUtils = _DynReducerUtils;
+const _AdapterDerived = class _AdapterDerived {
+  /**
+   * @param hostData - Hosted data structure.
+   *
+   * @param parentIndex - Any associated parent index API.
+   *
+   * @param DerivedReducerCtor - The default derived reducer constructor function.
+   */
+  constructor(hostData, parentIndex, DerivedReducerCtor) {
+    __privateAdd(this, _hostData, void 0);
+    __privateAdd(this, _DerivedReducerCtor, void 0);
+    __privateAdd(this, _parentIndex, void 0);
+    __privateAdd(this, _derived, /* @__PURE__ */ new Map());
+    __privateAdd(this, _destroyed, false);
+    __privateSet(this, _hostData, hostData);
+    __privateSet(this, _parentIndex, parentIndex);
+    __privateSet(this, _DerivedReducerCtor, DerivedReducerCtor);
+    Object.freeze(this);
+  }
+  /**
+   * Creates a new derived reducer.
+   *
+   * @param options - Options defining the new derived reducer.
+   *
+   * @returns Newly created derived reducer.
+   */
+  create(options) {
+    if (__privateGet(this, _destroyed)) {
+      throw Error(`AdapterDerived.create error: this instance has been destroyed.`);
+    }
+    let name;
+    let rest = {};
+    let ctor;
+    const DerivedReducerCtor = __privateGet(this, _DerivedReducerCtor);
+    if (typeof options === "string") {
+      name = options;
+      ctor = DerivedReducerCtor;
+    } else if (typeof options === "function" && DynReducerUtils.hasPrototype(options, DerivedReducerCtor)) {
+      ctor = options;
+    } else if (typeof options === "object" && options !== null) {
+      ({ name, ctor = DerivedReducerCtor, ...rest } = options);
+    } else {
+      throw new TypeError(`AdapterDerived.create error: 'options' does not conform to allowed parameters.`);
+    }
+    if (!DynReducerUtils.hasPrototype(ctor, DerivedReducerCtor)) {
+      throw new TypeError(`AdapterDerived.create error: 'ctor' is not a '${DerivedReducerCtor?.name}'.`);
+    }
+    name = name ?? ctor?.name;
+    if (typeof name !== "string") {
+      throw new TypeError(`AdapterDerived.create error: 'name' is not a string.`);
+    }
+    const derivedReducer = new ctor(__privateGet(this, _hostData), __privateGet(this, _parentIndex), rest);
+    __privateGet(this, _derived).set(name, derivedReducer);
+    return derivedReducer;
+  }
+  /**
+   * Removes all derived reducers and associated subscriptions.
+   */
+  clear() {
+    if (__privateGet(this, _destroyed)) {
+      return;
+    }
+    for (const reducer of __privateGet(this, _derived).values()) {
+      reducer.destroy();
+    }
+    __privateGet(this, _derived).clear();
+  }
+  /**
+   * Deletes and destroys a derived reducer by name.
+   *
+   * @param name - Name of the derived reducer.
+   */
+  delete(name) {
+    if (__privateGet(this, _destroyed)) {
+      throw Error(`AdapterDerived.delete error: this instance has been destroyed.`);
+    }
+    const reducer = __privateGet(this, _derived).get(name);
+    if (reducer) {
+      reducer.destroy();
+    }
+    return __privateGet(this, _derived).delete(name);
+  }
+  /**
+   * Removes all derived reducers, subscriptions, and cleans up all resources.
+   */
+  destroy() {
+    if (__privateGet(this, _destroyed)) {
+      return;
+    }
+    this.clear();
+    __privateSet(this, _hostData, [null]);
+    __privateSet(this, _parentIndex, null);
+    __privateSet(this, _destroyed, true);
+  }
+  /**
+   * Returns an existing derived reducer.
+   *
+   * @param name - Name of derived reducer.
+   */
+  get(name) {
+    if (__privateGet(this, _destroyed)) {
+      throw Error(`AdapterDerived.get error: this instance has been destroyed.`);
+    }
+    return __privateGet(this, _derived).get(name);
+  }
+  /**
+   * Updates all managed derived reducer indexes.
+   *
+   * @param [force] - Force an update to subscribers.
+   */
+  update(force = false) {
+    if (__privateGet(this, _destroyed)) {
+      return;
+    }
+    for (const reducer of __privateGet(this, _derived).values()) {
+      reducer.index.update(force);
+    }
+  }
+};
+_hostData = new WeakMap();
+_DerivedReducerCtor = new WeakMap();
+_parentIndex = new WeakMap();
+_derived = new WeakMap();
+_destroyed = new WeakMap();
+__name(_AdapterDerived, "AdapterDerived");
+let AdapterDerived = _AdapterDerived;
+const _AdapterFilters = class _AdapterFilters {
+  /**
+   * @param indexUpdate - update function for the indexer.
+   *
+   * @param filtersAdapter - Stores the filter function data.
+   */
+  constructor(indexUpdate, filtersAdapter) {
+    __privateAdd(this, _filtersData, void 0);
+    __privateAdd(this, _indexUpdate, void 0);
+    __privateAdd(this, _mapUnsubscribe2, /* @__PURE__ */ new Map());
+    __privateSet(this, _indexUpdate, indexUpdate);
+    __privateSet(this, _filtersData, filtersAdapter);
+    Object.freeze(this);
+  }
+  /**
+   * @returns Returns the length of the filter data.
+   */
+  get length() {
+    return __privateGet(this, _filtersData).filters.length;
+  }
+  /**
+   * Provides an iterator for filters.
+   *
+   * @yields {DataFilter<T>}
+   */
+  *[Symbol.iterator]() {
+    if (__privateGet(this, _filtersData).filters.length === 0) {
+      return;
+    }
+    for (const entry of __privateGet(this, _filtersData).filters) {
+      yield { ...entry };
+    }
+  }
+  /**
+   * @param filters -
+   */
+  add(...filters) {
+    let subscribeCount = 0;
+    for (const filter of filters) {
+      const filterType = typeof filter;
+      if (filterType !== "function" && (filterType !== "object" || filter === null)) {
+        throw new TypeError(`AdapterFilters error: 'filter' is not a function or object.`);
+      }
+      let data = void 0;
+      let subscribeFn = void 0;
+      if (filterType === "function") {
+        data = {
+          id: void 0,
+          filter,
+          weight: 1
+        };
+        subscribeFn = filter.subscribe;
+      } else if (filterType === "object") {
+        if ("filter" in filter) {
+          if (typeof filter.filter !== "function") {
+            throw new TypeError(`AdapterFilters error: 'filter' attribute is not a function.`);
+          }
+          if (filter.weight !== void 0 && typeof filter.weight !== "number" || (filter.weight < 0 || filter.weight > 1)) {
+            throw new TypeError(`AdapterFilters error: 'weight' attribute is not a number between '0 - 1' inclusive.`);
+          }
+          data = {
+            id: filter.id !== void 0 ? filter.id : void 0,
+            filter: filter.filter,
+            weight: filter.weight || 1
+          };
+          subscribeFn = filter.filter.subscribe ?? filter.subscribe;
+        } else {
+          throw new TypeError(`AdapterFilters error: 'filter' attribute is not a function.`);
+        }
+      }
+      const index = __privateGet(this, _filtersData).filters.findIndex((value) => {
+        return data.weight < value.weight;
+      });
+      if (index >= 0) {
+        __privateGet(this, _filtersData).filters.splice(index, 0, data);
+      } else {
+        __privateGet(this, _filtersData).filters.push(data);
+      }
+      if (typeof subscribeFn === "function") {
+        const unsubscribe = subscribeFn(__privateGet(this, _indexUpdate));
+        if (typeof unsubscribe !== "function") {
+          throw new TypeError("AdapterFilters error: Filter has subscribe function, but no unsubscribe function is returned.");
+        }
+        if (__privateGet(this, _mapUnsubscribe2).has(data.filter)) {
+          throw new Error("AdapterFilters error: Filter added already has an unsubscribe function registered.");
+        }
+        __privateGet(this, _mapUnsubscribe2).set(data.filter, unsubscribe);
+        subscribeCount++;
+      }
+    }
+    if (subscribeCount < filters.length) {
+      __privateGet(this, _indexUpdate).call(this);
+    }
+  }
+  /**
+   * Clears and removes all filters.
+   */
+  clear() {
+    __privateGet(this, _filtersData).filters.length = 0;
+    for (const unsubscribe of __privateGet(this, _mapUnsubscribe2).values()) {
+      unsubscribe();
+    }
+    __privateGet(this, _mapUnsubscribe2).clear();
+    __privateGet(this, _indexUpdate).call(this);
+  }
+  /**
+   * @param filters -
+   */
+  remove(...filters) {
+    const length = __privateGet(this, _filtersData).filters.length;
+    if (length === 0) {
+      return;
+    }
+    for (const data of filters) {
+      const actualFilter = typeof data === "function" ? data : data !== null && typeof data === "object" ? data.filter : void 0;
+      if (!actualFilter) {
+        continue;
+      }
+      for (let cntr = __privateGet(this, _filtersData).filters.length; --cntr >= 0; ) {
+        if (__privateGet(this, _filtersData).filters[cntr].filter === actualFilter) {
+          __privateGet(this, _filtersData).filters.splice(cntr, 1);
+          let unsubscribe = void 0;
+          if (typeof (unsubscribe = __privateGet(this, _mapUnsubscribe2).get(actualFilter)) === "function") {
+            unsubscribe();
+            __privateGet(this, _mapUnsubscribe2).delete(actualFilter);
+          }
+        }
+      }
+    }
+    if (length !== __privateGet(this, _filtersData).filters.length) {
+      __privateGet(this, _indexUpdate).call(this);
+    }
+  }
+  /**
+   * Remove filters by the provided callback. The callback takes 3 parameters: `id`, `filter`, and `weight`.
+   * Any truthy value returned will remove that filter.
+   *
+   * @param callback - Callback function to evaluate each filter entry.
+   */
+  removeBy(callback) {
+    const length = __privateGet(this, _filtersData).filters.length;
+    if (length === 0) {
+      return;
+    }
+    if (typeof callback !== "function") {
+      throw new TypeError(`AdapterFilters error: 'callback' is not a function.`);
+    }
+    __privateGet(this, _filtersData).filters = __privateGet(this, _filtersData).filters.filter((data) => {
+      const remove = callback.call(callback, { ...data });
+      if (remove) {
+        let unsubscribe;
+        if (typeof (unsubscribe = __privateGet(this, _mapUnsubscribe2).get(data.filter)) === "function") {
+          unsubscribe();
+          __privateGet(this, _mapUnsubscribe2).delete(data.filter);
+        }
+      }
+      return !remove;
+    });
+    if (length !== __privateGet(this, _filtersData).filters.length) {
+      __privateGet(this, _indexUpdate).call(this);
+    }
+  }
+  /**
+   * @param ids - Removes filters by ID.
+   */
+  removeById(...ids) {
+    const length = __privateGet(this, _filtersData).filters.length;
+    if (length === 0) {
+      return;
+    }
+    __privateGet(this, _filtersData).filters = __privateGet(this, _filtersData).filters.filter((data) => {
+      let remove = 0;
+      for (const id of ids) {
+        remove |= data.id === id ? 1 : 0;
+      }
+      if (!!remove) {
+        let unsubscribe;
+        if (typeof (unsubscribe = __privateGet(this, _mapUnsubscribe2).get(data.filter)) === "function") {
+          unsubscribe();
+          __privateGet(this, _mapUnsubscribe2).delete(data.filter);
+        }
+      }
+      return !remove;
+    });
+    if (length !== __privateGet(this, _filtersData).filters.length) {
+      __privateGet(this, _indexUpdate).call(this);
+    }
+  }
+};
+_filtersData = new WeakMap();
+_indexUpdate = new WeakMap();
+_mapUnsubscribe2 = new WeakMap();
+__name(_AdapterFilters, "AdapterFilters");
+let AdapterFilters = _AdapterFilters;
+const _AdapterIndexer = class _AdapterIndexer {
+  derivedAdapter;
+  filtersData;
+  hostData;
+  hostUpdate;
+  indexData;
+  sortData;
+  sortFn;
+  destroyed = false;
+  /**
+   * @param hostData - Hosted data structure.
+   *
+   * @param hostUpdate - Host update function invoked on index updates.
+   *
+   * @param [parentIndexer] - Any associated parent index API.
+   *
+   * @returns Indexer adapter instance.
+   */
+  constructor(hostData, hostUpdate, parentIndexer) {
+    this.hostData = hostData;
+    this.hostUpdate = hostUpdate;
+    this.indexData = { index: null, hash: null, reversed: false, parent: parentIndexer };
+  }
+  /**
+   * @returns Returns whether the index is active.
+   */
+  get active() {
+    return this.filtersData.filters.length > 0 || this.sortData.compareFn !== null || this.indexData.parent?.active === true;
+  }
+  /**
+   * @returns Returns length of reduced index.
+   */
+  get length() {
+    return this.indexData.index ? this.indexData.index.length : 0;
+  }
+  /* c8 ignore start */
+  /**
+   * @returns Returns reversed state.
+   */
+  get reversed() {
+    return this.indexData.reversed;
+  }
+  /* c8 ignore end */
+  /**
+   * @param reversed - New reversed state.
+   */
+  set reversed(reversed) {
+    this.indexData.reversed = reversed;
+  }
+  // -------------------------------------------------------------------------------------------------------------------
+  /**
+   * Calculates a new hash value for the new index array if any. If the new index array is null then the hash value
+   * is set to null. Set calculated new hash value to the index adapter hash value.
+   *
+   * After hash generation compare old and new hash values and perform an update if they are different. If they are
+   * equal check for array equality between the old and new index array and perform an update if they are not equal.
+   *
+   * @param oldIndex - Old index array.
+   *
+   * @param oldHash - Old index hash value.
+   *
+   * @param [force=false] - When true forces an update to subscribers.
+   */
+  calcHashUpdate(oldIndex, oldHash, force = false) {
+    const actualForce = typeof force === "boolean" ? force : (
+      /* c8 ignore next */
+      false
+    );
+    let newHash = null;
+    const newIndex = this.indexData.index;
+    if (newIndex) {
+      for (let cntr = newIndex.length; --cntr >= 0; ) {
+        newHash ^= DynReducerUtils.hashUnknown(newIndex[cntr]) + 2654435769 + (newHash << 6) + (newHash >> 2);
+      }
+    }
+    this.indexData.hash = newHash;
+    if (actualForce || (oldHash === newHash ? !DynReducerUtils.arrayEquals(oldIndex, newIndex) : true)) {
+      this.hostUpdate();
+    }
+  }
+  /**
+   * Destroys all resources.
+   */
+  destroy() {
+    if (this.destroyed) {
+      return;
+    }
+    this.indexData.index = null;
+    this.indexData.hash = null;
+    this.indexData.reversed = null;
+    this.indexData.parent = null;
+    this.destroyed = true;
+  }
+  /**
+   * Store associated filter and sort data that are constructed after the indexer.
+   *
+   * @param filtersData - Associated AdapterFilters instance.
+   *
+   * @param sortData - Associated AdapterSort instance.
+   *
+   * @param derivedAdapter - Associated AdapterDerived instance.
+   */
+  initAdapters(filtersData, sortData, derivedAdapter) {
+    this.filtersData = filtersData;
+    this.sortData = sortData;
+    this.derivedAdapter = derivedAdapter;
+    this.sortFn = this.createSortFn();
+  }
+};
+__name(_AdapterIndexer, "AdapterIndexer");
+let AdapterIndexer = _AdapterIndexer;
+const _AdapterSort = class _AdapterSort {
+  /**
+   * @param indexUpdate - Function to update indexer.
+   *
+   * @param sortData - Storage for compare function.
+   */
+  constructor(indexUpdate, sortData) {
+    __privateAdd(this, _sortData, void 0);
+    __privateAdd(this, _indexUpdate2, void 0);
+    __privateAdd(this, _unsubscribe, void 0);
+    __privateSet(this, _indexUpdate2, indexUpdate);
+    __privateSet(this, _sortData, sortData);
+    Object.freeze(this);
+  }
+  /**
+   * Clears & removes any assigned sort function and triggers an index update.
+   */
+  clear() {
+    const oldCompareFn = __privateGet(this, _sortData).compareFn;
+    __privateGet(this, _sortData).compareFn = null;
+    if (typeof __privateGet(this, _unsubscribe) === "function") {
+      __privateGet(this, _unsubscribe).call(this);
+      __privateSet(this, _unsubscribe, void 0);
+    }
+    if (typeof oldCompareFn === "function") {
+      __privateGet(this, _indexUpdate2).call(this);
+    }
+  }
+  /**
+   * @param data - A callback function that compares two values. Return > 0 to sort b before a;
+   * < 0 to sort a before b; or 0 to keep original order of a & b.
+   *
+   * Note: You can set a compare function that also has a subscribe function attached as the `subscribe` attribute.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#parameters
+   */
+  set(data) {
+    if (typeof __privateGet(this, _unsubscribe) === "function") {
+      __privateGet(this, _unsubscribe).call(this);
+      __privateSet(this, _unsubscribe, void 0);
+    }
+    let compareFn = void 0;
+    let subscribeFn = void 0;
+    switch (typeof data) {
+      case "function":
+        compareFn = data;
+        subscribeFn = data.subscribe;
+        break;
+      case "object":
+        if (data === null) {
+          break;
+        }
+        if (typeof data.compare !== "function") {
+          throw new TypeError(`AdapterSort error: 'compare' attribute is not a function.`);
+        }
+        compareFn = data.compare;
+        subscribeFn = data.compare.subscribe ?? data.subscribe;
+        break;
+    }
+    if (typeof compareFn === "function") {
+      __privateGet(this, _sortData).compareFn = compareFn;
+    } else {
+      const oldCompareFn = __privateGet(this, _sortData).compareFn;
+      __privateGet(this, _sortData).compareFn = null;
+      if (typeof oldCompareFn === "function") {
+        __privateGet(this, _indexUpdate2).call(this);
+      }
+      return;
+    }
+    if (typeof subscribeFn === "function") {
+      __privateSet(this, _unsubscribe, subscribeFn(__privateGet(this, _indexUpdate2)));
+      if (typeof __privateGet(this, _unsubscribe) !== "function") {
+        throw new Error(`AdapterSort error: sort has 'subscribe' function, but no 'unsubscribe' function is returned.`);
+      }
+    } else {
+      __privateGet(this, _indexUpdate2).call(this);
+    }
+  }
+};
+_sortData = new WeakMap();
+_indexUpdate2 = new WeakMap();
+_unsubscribe = new WeakMap();
+__name(_AdapterSort, "AdapterSort");
+let AdapterSort = _AdapterSort;
+const _IndexerAPI = class _IndexerAPI {
+  constructor(adapterIndexer) {
+    __privateAdd(this, _indexData, void 0);
+    /**
+     * Provides a getter to determine if the index is active.
+     */
+    __publicField(this, "active");
+    /**
+     * Provides length of reduced / indexed elements.
+     */
+    __publicField(this, "length");
+    /**
+     * Manually invoke an update of the index.
+     *
+     * @param force - Force update to any subscribers.
+     */
+    __publicField(this, "update");
+    __privateSet(this, _indexData, adapterIndexer.indexData);
+    this.update = adapterIndexer.update.bind(adapterIndexer);
+    Object.defineProperties(this, {
+      active: { get: () => adapterIndexer.active },
+      length: { get: () => adapterIndexer.length }
+    });
+    Object.freeze(this);
+  }
+  /**
+   * - Current hash value of the index.
+   */
+  get hash() {
+    return __privateGet(this, _indexData).hash;
+  }
+  /**
+   * Provides an iterator over the index array.
+   *
+   * @yields {K}
+   */
+  *[Symbol.iterator]() {
+    const indexData = __privateGet(this, _indexData);
+    if (!indexData.index) {
+      return;
+    }
+    const reversed = indexData.reversed;
+    const length = indexData.index.length;
+    if (reversed) {
+      for (let cntr = length; --cntr >= 0; ) {
+        yield indexData.index[cntr];
+      }
+    } else {
+      for (let cntr = 0; cntr < length; cntr++) {
+        yield indexData.index[cntr];
+      }
+    }
+  }
+};
+_indexData = new WeakMap();
+__name(_IndexerAPI, "IndexerAPI");
+let IndexerAPI = _IndexerAPI;
+const _DerivedAPI = class _DerivedAPI {
+  /**
+   * Removes all derived reducers and associated subscriptions.
+   */
+  clear;
+  /**
+   * @param options - Options for creating a reducer.
+   *
+   * @returns Newly created derived reducer.
+   */
+  create;
+  /**
+   * Deletes and destroys a derived reducer.
+   *
+   * @param name - Name of the derived reducer
+   */
+  delete;
+  /**
+   * Removes all derived reducers, associated subscriptions, and cleans up all resources.
+   */
+  destroy;
+  /**
+   * Returns an existing derived reducer.
+   *
+   * @param name - Name of derived reducer.
+   */
+  get;
+  constructor(adapterDerived) {
+    this.clear = adapterDerived.clear.bind(adapterDerived);
+    this.create = adapterDerived.create.bind(adapterDerived);
+    this.delete = adapterDerived.delete.bind(adapterDerived);
+    this.destroy = adapterDerived.destroy.bind(adapterDerived);
+    this.get = adapterDerived.get.bind(adapterDerived);
+    Object.freeze(this);
+  }
+};
+__name(_DerivedAPI, "DerivedAPI");
+let DerivedAPI = _DerivedAPI;
+const _Indexer = class _Indexer extends AdapterIndexer {
+  /**
+   * @inheritDoc
+   */
+  createSortFn() {
+    return (a, b) => this.sortData.compareFn(this.hostData[0].get(a), this.hostData[0].get(b));
+  }
+  /**
+   * Provides the custom filter / reduce step that is ~25-40% faster than implementing with `Array.reduce`.
+   *
+   * Note: Other loop unrolling techniques like Duff's Device gave a slight faster lower bound on large data sets,
+   * but the maintenance factor is not worth the extra complication.
+   *
+   * @returns New filtered index array.
+   */
+  reduceImpl() {
+    const data = [];
+    const map = this.hostData[0];
+    if (!map) {
+      return data;
+    }
+    const filters = this.filtersData.filters;
+    let include = true;
+    const parentIndex = this.indexData.parent;
+    if (DynReducerUtils.isIterable(parentIndex) && parentIndex.active) {
+      for (const key of parentIndex) {
+        const value = map.get(key);
+        include = true;
+        for (let filCntr = 0, filLength = filters.length; filCntr < filLength; filCntr++) {
+          if (!filters[filCntr].filter(value)) {
+            include = false;
+            break;
+          }
+        }
+        if (include) {
+          data.push(key);
+        }
+      }
+    } else {
+      for (const key of map.keys()) {
+        include = true;
+        const value = map.get(key);
+        for (let filCntr = 0, filLength = filters.length; filCntr < filLength; filCntr++) {
+          if (!filters[filCntr].filter(value)) {
+            include = false;
+            break;
+          }
+        }
+        if (include) {
+          data.push(key);
+        }
+      }
+    }
+    return data;
+  }
+  /**
+   * Update the reducer indexes. If there are changes subscribers are notified. If data order is changed externally
+   * pass in true to force an update to subscribers.
+   *
+   * @param [force=false] - When true forces an update to subscribers.
+   */
+  update(force = false) {
+    if (this.destroyed) {
+      return;
+    }
+    const oldIndex = this.indexData.index;
+    const oldHash = this.indexData.hash;
+    const map = this.hostData[0];
+    const parentIndex = this.indexData.parent;
+    if (this.filtersData.filters.length === 0 && !this.sortData.compareFn || this.indexData.index && map?.size !== this.indexData.index.length) {
+      this.indexData.index = null;
+    }
+    if (this.filtersData.filters.length > 0) {
+      this.indexData.index = this.reduceImpl();
+    }
+    if (!this.indexData.index && parentIndex?.active) {
+      this.indexData.index = [...parentIndex];
+    }
+    if (this.sortData.compareFn && map instanceof Map) {
+      if (!this.indexData.index) {
+        this.indexData.index = this.indexData.index = [...map.keys()];
+      }
+      this.indexData.index.sort(this.sortFn);
+    }
+    this.calcHashUpdate(oldIndex, oldHash, force);
+    this.derivedAdapter?.update(force);
+  }
+};
+__name(_Indexer, "Indexer");
+let Indexer = _Indexer;
+const _DynMapReducerDerived = class _DynMapReducerDerived {
+  /**
+   * @param map - Data host Map.
+   *
+   * @param parentIndex - Parent indexer.
+   *
+   * @param options - Any filters and sort functions to apply.
+   */
+  constructor(map, parentIndex, options) {
+    /**
+     * Updates subscribers on changes.
+     */
+    __privateAdd(this, _updateSubscribers2);
+    __privateAdd(this, _map, void 0);
+    __privateAdd(this, _derived2, void 0);
+    __privateAdd(this, _derivedPublicAPI, void 0);
+    __privateAdd(this, _filters, void 0);
+    __privateAdd(this, _filtersData2, { filters: [] });
+    __privateAdd(this, _index, void 0);
+    __privateAdd(this, _indexPublicAPI, void 0);
+    __privateAdd(this, _reversed, false);
+    __privateAdd(this, _sort, void 0);
+    __privateAdd(this, _sortData2, { compareFn: null });
+    __privateAdd(this, _subscriptions3, []);
+    __privateAdd(this, _destroyed2, false);
+    __privateSet(this, _map, map);
+    __privateSet(this, _index, new Indexer(__privateGet(this, _map), __privateMethod(this, _updateSubscribers2, updateSubscribers_fn2).bind(this), parentIndex));
+    __privateSet(this, _indexPublicAPI, new IndexerAPI(__privateGet(this, _index)));
+    __privateSet(this, _filters, new AdapterFilters(__privateGet(this, _indexPublicAPI).update, __privateGet(this, _filtersData2)));
+    __privateSet(this, _sort, new AdapterSort(__privateGet(this, _indexPublicAPI).update, __privateGet(this, _sortData2)));
+    __privateSet(this, _derived2, new AdapterDerived(__privateGet(this, _map), __privateGet(this, _indexPublicAPI), _DynMapReducerDerived));
+    __privateSet(this, _derivedPublicAPI, new DerivedAPI(__privateGet(this, _derived2)));
+    __privateGet(this, _index).initAdapters(__privateGet(this, _filtersData2), __privateGet(this, _sortData2), __privateGet(this, _derived2));
+    let filters = void 0;
+    let sort = void 0;
+    if (options !== void 0 && ("filters" in options || "sort" in options)) {
+      if (options.filters !== void 0) {
+        if (DynReducerUtils.isIterable(options.filters)) {
+          filters = options.filters;
+        } else {
+          throw new TypeError(`DerivedMapReducer error (DataDerivedOptions): 'filters' attribute is not iterable.`);
+        }
+      }
+      if (options.sort !== void 0) {
+        if (typeof options.sort === "function") {
+          sort = options.sort;
+        } else if (typeof options.sort === "object" && options.sort !== null) {
+          sort = options.sort;
+        } else {
+          throw new TypeError(`DerivedMapReducer error (DataDerivedOptions): 'sort' attribute is not a function or object.`);
+        }
+      }
+    }
+    if (filters) {
+      this.filters.add(...filters);
+    }
+    if (sort) {
+      this.sort.set(sort);
+    }
+    this.initialize();
+  }
+  /**
+   * Returns the internal data of this instance. Be careful!
+   *
+   * Note: The returned map is the same map set by the main reducer. If any changes are performed to the data
+   * externally do invoke {@link IndexerAPI.update} with `true` to recalculate the index and notify all subscribers.
+   *
+   * @returns The internal data.
+   */
+  get data() {
+    return __privateGet(this, _map)[0];
+  }
+  /**
+   * @returns Derived public API.
+   */
+  get derived() {
+    return __privateGet(this, _derivedPublicAPI);
+  }
+  /**
+   * @returns The filters adapter.
+   */
+  get filters() {
+    return __privateGet(this, _filters);
+  }
+  /**
+   * Returns the Indexer public API.
+   *
+   * @returns Indexer API - is also iterable.
+   */
+  get index() {
+    return __privateGet(this, _indexPublicAPI);
+  }
+  /**
+   * Returns whether this derived reducer is destroyed.
+   */
+  get destroyed() {
+    return __privateGet(this, _destroyed2);
+  }
+  /**
+   * @returns Main data / items length or indexed length.
+   */
+  get length() {
+    const map = __privateGet(this, _map)[0];
+    return __privateGet(this, _index).active ? this.index.length : map ? map.size : 0;
+  }
+  /**
+   * @returns Gets current reversed state.
+   */
+  get reversed() {
+    return __privateGet(this, _reversed);
+  }
+  /**
+   * @returns The sort adapter.
+   */
+  get sort() {
+    return __privateGet(this, _sort);
+  }
+  /**
+   * Sets reversed state and notifies subscribers.
+   *
+   * @param reversed - New reversed state.
+   */
+  set reversed(reversed) {
+    if (typeof reversed !== "boolean") {
+      throw new TypeError(`DerivedMapReducer.reversed error: 'reversed' is not a boolean.`);
+    }
+    __privateSet(this, _reversed, reversed);
+    __privateGet(this, _index).reversed = reversed;
+    this.index.update(true);
+  }
+  /**
+   * Removes all derived reducers, subscriptions, and cleans up all resources.
+   */
+  destroy() {
+    __privateSet(this, _destroyed2, true);
+    __privateSet(this, _map, [null]);
+    __privateGet(this, _index).update(true);
+    __privateGet(this, _subscriptions3).length = 0;
+    __privateGet(this, _derived2).destroy();
+    __privateGet(this, _index).destroy();
+    __privateGet(this, _filters).clear();
+    __privateGet(this, _sort).clear();
+  }
+  /**
+   * Provides a callback for custom derived reducers to initialize any data / custom configuration. This allows
+   * child classes to avoid implementing the constructor.
+   *
+   * @protected
+   */
+  initialize() {
+  }
+  /**
+   * Provides an iterator for data stored in DerivedMapReducer.
+   *
+   * @yields {T}
+   */
+  *[Symbol.iterator]() {
+    const map = __privateGet(this, _map)[0];
+    if (__privateGet(this, _destroyed2) || map === null || map?.size === 0) {
+      return;
+    }
+    if (__privateGet(this, _index).active) {
+      for (const key of this.index) {
+        yield map.get(key);
+      }
+    } else {
+      if (this.reversed) {
+        const values = [...map.values()];
+        for (let cntr = values.length; --cntr >= 0; ) {
+          yield values[cntr];
+        }
+      } else {
+        for (const value of map.values()) {
+          yield value;
+        }
+      }
+    }
+  }
+  // -------------------------------------------------------------------------------------------------------------------
+  /**
+   * Subscribe to this DerivedMapReducer.
+   *
+   * @param handler - Callback function that is invoked on update / changes. Receives `this` reference.
+   *
+   * @returns Unsubscribe function.
+   */
+  subscribe(handler) {
+    __privateGet(this, _subscriptions3).push(handler);
+    handler(this);
+    return () => {
+      const index = __privateGet(this, _subscriptions3).findIndex((sub) => sub === handler);
+      if (index >= 0) {
+        __privateGet(this, _subscriptions3).splice(index, 1);
+      }
+    };
+  }
+};
+_map = new WeakMap();
+_derived2 = new WeakMap();
+_derivedPublicAPI = new WeakMap();
+_filters = new WeakMap();
+_filtersData2 = new WeakMap();
+_index = new WeakMap();
+_indexPublicAPI = new WeakMap();
+_reversed = new WeakMap();
+_sort = new WeakMap();
+_sortData2 = new WeakMap();
+_subscriptions3 = new WeakMap();
+_destroyed2 = new WeakMap();
+_updateSubscribers2 = new WeakSet();
+updateSubscribers_fn2 = /* @__PURE__ */ __name(function() {
+  for (let cntr = 0; cntr < __privateGet(this, _subscriptions3).length; cntr++) {
+    __privateGet(this, _subscriptions3)[cntr](this);
+  }
+}, "#updateSubscribers");
+__name(_DynMapReducerDerived, "DynMapReducerDerived");
+let DynMapReducerDerived = _DynMapReducerDerived;
+const _DynMapReducer = class _DynMapReducer {
+  /**
+   * Initializes DynMapReducer. Any iterable is supported for initial data. Take note that if `data` is an array it
+   * will be used as the host array and not copied. All non-array iterables otherwise create a new array / copy.
+   *
+   * @param [data] - Data iterable to store if array or copy otherwise.
+   */
+  constructor(data) {
+    /**
+     * Updates subscribers on changes.
+     */
+    __privateAdd(this, _updateSubscribers3);
+    __privateAdd(this, _map2, [null]);
+    __privateAdd(this, _derived3, void 0);
+    __privateAdd(this, _derivedPublicAPI2, void 0);
+    __privateAdd(this, _filters2, void 0);
+    __privateAdd(this, _filtersData3, { filters: [] });
+    __privateAdd(this, _index2, void 0);
+    __privateAdd(this, _indexPublicAPI2, void 0);
+    __privateAdd(this, _reversed2, false);
+    __privateAdd(this, _sort2, void 0);
+    __privateAdd(this, _sortData3, { compareFn: null });
+    __privateAdd(this, _subscriptions4, []);
+    __privateAdd(this, _destroyed3, false);
+    let dataMap = void 0;
+    let filters = void 0;
+    let sort = void 0;
+    if (data === null) {
+      throw new TypeError(`DynMapReducer error: 'data' is not an object or Map.`);
+    }
+    if (data !== void 0 && typeof data !== "object" && !(data instanceof Map)) {
+      throw new TypeError(`DynMapReducer error: 'data' is not an object or Map.`);
+    }
+    if (data !== void 0 && data instanceof Map) {
+      dataMap = data;
+    } else if (data !== void 0 && ("data" in data || "filters" in data || "sort" in data)) {
+      if (data.data !== void 0 && !(data.data instanceof Map)) {
+        throw new TypeError(`DynMapReducer error (DataDynMap): 'data' attribute is not a Map.`);
+      }
+      dataMap = data.data;
+      if (data.filters !== void 0) {
+        if (DynReducerUtils.isIterable(data.filters)) {
+          filters = data.filters;
+        } else {
+          throw new TypeError(`DynMapReducer error (DataDynMap): 'filters' attribute is not iterable.`);
+        }
+      }
+      if (data.sort !== void 0) {
+        if (typeof data.sort === "function") {
+          sort = data.sort;
+        } else if (typeof data.sort === "object" && data.sort !== null) {
+          sort = data.sort;
+        } else {
+          throw new TypeError(`DynMapReducer error (DataDynMap): 'sort' attribute is not a function or object.`);
+        }
+      }
+    }
+    if (dataMap) {
+      __privateGet(this, _map2)[0] = dataMap;
+    }
+    __privateSet(this, _index2, new Indexer(__privateGet(this, _map2), __privateMethod(this, _updateSubscribers3, updateSubscribers_fn3).bind(this)));
+    __privateSet(this, _indexPublicAPI2, new IndexerAPI(__privateGet(this, _index2)));
+    __privateSet(this, _filters2, new AdapterFilters(__privateGet(this, _indexPublicAPI2).update, __privateGet(this, _filtersData3)));
+    __privateSet(this, _sort2, new AdapterSort(__privateGet(this, _indexPublicAPI2).update, __privateGet(this, _sortData3)));
+    __privateSet(this, _derived3, new AdapterDerived(__privateGet(this, _map2), __privateGet(this, _indexPublicAPI2), DynMapReducerDerived));
+    __privateSet(this, _derivedPublicAPI2, new DerivedAPI(__privateGet(this, _derived3)));
+    __privateGet(this, _index2).initAdapters(__privateGet(this, _filtersData3), __privateGet(this, _sortData3), __privateGet(this, _derived3));
+    if (filters) {
+      this.filters.add(...filters);
+    }
+    if (sort) {
+      this.sort.set(sort);
+    }
+    this.initialize();
+  }
+  /**
+   * Returns the internal data of this instance. Be careful!
+   *
+   * Note: When a map is set as data then that map is used as the internal data. If any changes are
+   * performed to the data externally do invoke {@link AdapterIndexer.index.update} with `true` to recalculate the
+   * index and notify all subscribers.
+   *
+   * @returns The internal data.
+   */
+  get data() {
+    return __privateGet(this, _map2)[0];
+  }
+  /**
+   * @returns Derived public API.
+   */
+  get derived() {
+    return __privateGet(this, _derivedPublicAPI2);
+  }
+  /**
+   * @returns The filters adapter.
+   */
+  get filters() {
+    return __privateGet(this, _filters2);
+  }
+  /**
+   * @returns Returns the Indexer public API.
+   */
+  get index() {
+    return __privateGet(this, _indexPublicAPI2);
+  }
+  /**
+   * Returns whether this instance is destroyed.
+   */
+  get destroyed() {
+    return __privateGet(this, _destroyed3);
+  }
+  /**
+   * Gets the main data / items length.
+   *
+   * @returns {number} Main data / items length.
+   */
+  get length() {
+    const map = __privateGet(this, _map2)[0];
+    return __privateGet(this, _index2).active ? __privateGet(this, _indexPublicAPI2).length : map ? map.size : 0;
+  }
+  /**
+   * Gets current reversed state.
+   *
+   * @returns {boolean} Reversed state.
+   */
+  get reversed() {
+    return __privateGet(this, _reversed2);
+  }
+  /**
+   * @returns The sort adapter.
+   */
+  get sort() {
+    return __privateGet(this, _sort2);
+  }
+  /**
+   * Sets reversed state and notifies subscribers.
+   *
+   * @param reversed - New reversed state.
+   */
+  set reversed(reversed) {
+    if (typeof reversed !== "boolean") {
+      throw new TypeError(`DynMapReducer.reversed error: 'reversed' is not a boolean.`);
+    }
+    __privateSet(this, _reversed2, reversed);
+    __privateGet(this, _index2).reversed = reversed;
+    this.index.update(true);
+  }
+  /**
+   * Removes all derived reducers, subscriptions, and cleans up all resources.
+   */
+  destroy() {
+    if (__privateGet(this, _destroyed3)) {
+      return;
+    }
+    __privateSet(this, _destroyed3, true);
+    __privateGet(this, _derived3).destroy();
+    __privateSet(this, _map2, [null]);
+    this.index.update(true);
+    __privateGet(this, _subscriptions4).length = 0;
+    __privateGet(this, _index2).destroy();
+    __privateGet(this, _filters2).clear();
+    __privateGet(this, _sort2).clear();
+  }
+  /**
+   * Provides a callback for custom reducers to initialize any data / custom configuration. This allows
+   * child classes to avoid implementing the constructor.
+   *
+   * @protected
+   */
+  initialize() {
+  }
+  /**
+   * Removes internal data and pushes new data. This does not destroy any initial array set to internal data unless
+   * `replace` is set to true.
+   *
+   * @param data - New data to set to internal data.
+   *
+   * @param replace=false - New data to set to internal data.
+   */
+  setData(data, replace = false) {
+    if (data !== null && !(data instanceof Map)) {
+      throw new TypeError(`DynMapReducer.setData error: 'data' is not iterable.`);
+    }
+    if (typeof replace !== "boolean") {
+      throw new TypeError(`DynMapReducer.setData error: 'replace' is not a boolean.`);
+    }
+    const map = __privateGet(this, _map2)[0];
+    if (!(map instanceof Map) || replace) {
+      __privateGet(this, _map2)[0] = data instanceof Map ? data : null;
+    } else if (data instanceof Map && map instanceof Map) {
+      const removeKeySet = new Set(map.keys());
+      for (const key of data.keys()) {
+        map.set(key, data.get(key));
+        if (removeKeySet.has(key)) {
+          removeKeySet.delete(key);
+        }
+      }
+      for (const key of removeKeySet) {
+        map.delete(key);
+      }
+    } else if (data === null) {
+      __privateGet(this, _map2)[0] = null;
+    }
+    this.index.update(true);
+  }
+  /**
+   * Add a subscriber to this DynMapReducer instance.
+   *
+   * @param handler - Callback function that is invoked on update / changes. Receives `this` reference.
+   *
+   * @returns Unsubscribe function.
+   */
+  subscribe(handler) {
+    __privateGet(this, _subscriptions4).push(handler);
+    handler(this);
+    return () => {
+      const index = __privateGet(this, _subscriptions4).findIndex((sub) => sub === handler);
+      if (index >= 0) {
+        __privateGet(this, _subscriptions4).splice(index, 1);
+      }
+    };
+  }
+  /**
+   * Provides an iterator for data stored in DynMapReducer.
+   *
+   * @yields {T}
+   */
+  *[Symbol.iterator]() {
+    const map = __privateGet(this, _map2)[0];
+    if (__privateGet(this, _destroyed3) || map === null || map?.size === 0) {
+      return;
+    }
+    if (__privateGet(this, _index2).active) {
+      for (const key of this.index) {
+        yield map.get(key);
+      }
+    } else {
+      if (this.reversed) {
+        const values = [...map.values()];
+        for (let cntr = values.length; --cntr >= 0; ) {
+          yield values[cntr];
+        }
+      } else {
+        for (const value of map.values()) {
+          yield value;
+        }
+      }
+    }
+  }
+};
+_map2 = new WeakMap();
+_derived3 = new WeakMap();
+_derivedPublicAPI2 = new WeakMap();
+_filters2 = new WeakMap();
+_filtersData3 = new WeakMap();
+_index2 = new WeakMap();
+_indexPublicAPI2 = new WeakMap();
+_reversed2 = new WeakMap();
+_sort2 = new WeakMap();
+_sortData3 = new WeakMap();
+_subscriptions4 = new WeakMap();
+_destroyed3 = new WeakMap();
+_updateSubscribers3 = new WeakSet();
+updateSubscribers_fn3 = /* @__PURE__ */ __name(function() {
+  for (let cntr = 0; cntr < __privateGet(this, _subscriptions4).length; cntr++) {
+    __privateGet(this, _subscriptions4)[cntr](this);
+  }
+}, "#updateSubscribers");
+__name(_DynMapReducer, "DynMapReducer");
+let DynMapReducer = _DynMapReducer;
+const _EmbeddedStoreManager = class _EmbeddedStoreManager {
+  /**
+   * @param {foundry.abstract.Document[]} document - The associated document holder.
+   */
+  constructor(document2) {
+    /**
+     * @type {Map<string, EmbeddedCollectionData<any>>}
+     */
+    __privateAdd(this, _name, /* @__PURE__ */ new Map());
+    /**
+     * @type {foundry.abstract.Document[]}
+     */
+    __privateAdd(this, _document, void 0);
+    /**
+     * @type {Map<string, string>}
+     */
+    __privateAdd(this, _collectionToDocName, /* @__PURE__ */ new Map());
+    /**
+     * @type {Set<string>}
+     */
+    __privateAdd(this, _embeddedNames, /* @__PURE__ */ new Set());
+    __privateSet(this, _document, document2);
+    this.handleDocChange();
+    Object.seal(this);
+  }
+  /**
+   * @template [T=import('./types').NamedDocumentConstructor]
+   *
+   * @param {T} FoundryDoc - A Foundry document class / constructor.
+   *
+   * @param {import('#runtime/svelte/store/reducer').DynOptionsMapCreate<string, T>} options - DynMapReducer
+   *        creation options.
+   *
+   * @returns {import('#runtime/svelte/store/reducer').DynMapReducer<string, T>} DynMapReducer instance.
+   */
+  create(FoundryDoc, options) {
+    const docName = FoundryDoc?.documentName;
+    if (typeof docName !== "string") {
+      throw new TypeError(
+        `EmbeddedStoreManager.create error: 'FoundryDoc' does not have a valid 'documentName' property.`
+      );
+    }
+    const doc = __privateGet(this, _document)[0];
+    let collection = null;
+    if (doc) {
+      try {
+        collection = doc.getEmbeddedCollection(docName);
+      } catch (err) {
+        console.warn(`EmbeddedStoreManager.create error: No valid embedded collection for: ${docName}`);
+      }
+    }
+    let embeddedData;
+    if (!__privateGet(this, _name).has(docName)) {
+      embeddedData = {
+        collection,
+        stores: /* @__PURE__ */ new Map()
+      };
+      __privateGet(this, _name).set(docName, embeddedData);
+    } else {
+      embeddedData = __privateGet(this, _name).get(docName);
+    }
+    let name;
+    let rest = {};
+    let ctor;
+    if (typeof options === "string") {
+      name = options;
+      ctor = DynMapReducer;
+    } else if (typeof options === "function" && hasPrototype(options, DynMapReducer)) {
+      ctor = options;
+    } else if (isObject(options)) {
+      ({ name, ctor = DynMapReducer, ...rest } = options);
+    } else {
+      throw new TypeError(`EmbeddedStoreManager.create error: 'options' does not conform to allowed parameters.`);
+    }
+    if (!hasPrototype(ctor, DynMapReducer)) {
+      throw new TypeError(`EmbeddedStoreManager.create error: 'ctor' is not a 'DynMapReducer'.`);
+    }
+    name = name ?? ctor?.name;
+    if (typeof name !== "string") {
+      throw new TypeError(`EmbeddedStoreManager.create error: 'name' is not a string.`);
+    }
+    if (embeddedData.stores.has(name)) {
+      return embeddedData.stores.get(name);
+    } else {
+      const storeOptions = collection ? { data: collection, ...rest } : { ...rest };
+      const store = new ctor(storeOptions);
+      embeddedData.stores.set(name, store);
+      return store;
+    }
+  }
+  /**
+   * @template [T=import('./types').NamedDocumentConstructor]
+   *
+   * Destroys and removes embedded collection stores. Invoking this method with no parameters destroys all stores.
+   * Invoking with an embedded name destroys all stores for that particular collection. If you provide an embedded and
+   * store name just that particular store is destroyed and removed.
+   *
+   * @param {T}   [FoundryDoc] - A Foundry document class / constructor.
+   *
+   * @param {string}   [storeName] - Specific store name.
+   *
+   * @returns {boolean} One or more stores destroyed?
+   */
+  destroy(FoundryDoc, storeName) {
+    let count = 0;
+    if (FoundryDoc === void 0) {
+      for (const embeddedData of __privateGet(this, _name).values()) {
+        embeddedData.collection = null;
+        for (const store of embeddedData.stores.values()) {
+          store.destroy();
+          count++;
+        }
+      }
+      __privateGet(this, _name).clear();
+    } else {
+      const docName = FoundryDoc?.documentName;
+      if (typeof docName !== "string") {
+        throw new TypeError(
+          `EmbeddedStoreManager.delete error: 'FoundryDoc' does not have a valid 'documentName' property.`
+        );
+      }
+      if (storeName === void 0) {
+        const embeddedData = __privateGet(this, _name).get(docName);
+        if (embeddedData) {
+          embeddedData.collection = null;
+          for (const store of embeddedData.stores.values()) {
+            store.destroy();
+            count++;
+          }
+        }
+        __privateGet(this, _name).delete(docName);
+      } else if (storeName === "string") {
+        const embeddedData = __privateGet(this, _name).get(docName);
+        if (embeddedData) {
+          const store = embeddedData.stores.get(storeName);
+          if (store) {
+            store.destroy();
+            count++;
+          }
+        }
+      }
+    }
+    return count > 0;
+  }
+  /**
+   * @template [T=import('./types').NamedDocumentConstructor]
+   *
+   * @param {T} FoundryDoc - A Foundry document class / constructor.
+   *
+   * @param {string} storeName - Name of the embedded collection to retrieve.
+   *
+   * @returns {import('#runtime/svelte/store/reducer').DynMapReducer<string, InstanceType<T>>} DynMapReducer
+   *          instance.
+   */
+  get(FoundryDoc, storeName) {
+    const docName = FoundryDoc?.documentName;
+    if (typeof docName !== "string") {
+      throw new TypeError(
+        `EmbeddedStoreManager.get error: 'FoundryDoc' does not have a valid 'documentName' property.`
+      );
+    }
+    if (!__privateGet(this, _name).has(docName)) {
+      return void 0;
+    }
+    return __privateGet(this, _name).get(docName).stores.get(storeName);
+  }
+  /**
+   * Updates all existing embedded collection stores with the associated embedded collection
+   */
+  handleDocChange() {
+    const doc = __privateGet(this, _document)[0];
+    if (doc instanceof globalThis.foundry.abstract.Document) {
+      const existingEmbeddedNames = new Set(__privateGet(this, _name).keys());
+      const embeddedNames = Object.entries(doc.constructor?.metadata?.embedded ?? []);
+      __privateGet(this, _collectionToDocName).clear();
+      __privateGet(this, _embeddedNames).clear();
+      for (const [docName, collectionName] of embeddedNames) {
+        existingEmbeddedNames.delete(docName);
+        __privateGet(this, _embeddedNames).add(`create${docName}`);
+        __privateGet(this, _embeddedNames).add(`delete${docName}`);
+        __privateGet(this, _embeddedNames).add(`update${docName}`);
+        __privateGet(this, _embeddedNames).add(`create.${collectionName}`);
+        __privateGet(this, _embeddedNames).add(`delete.${collectionName}`);
+        __privateGet(this, _embeddedNames).add(`update.${collectionName}`);
+        __privateGet(this, _embeddedNames).add(`create${collectionName}`);
+        __privateGet(this, _embeddedNames).add(`delete${collectionName}`);
+        __privateGet(this, _embeddedNames).add(`update${collectionName}`);
+        __privateGet(this, _collectionToDocName).set(docName, docName);
+        __privateGet(this, _collectionToDocName).set(collectionName, docName);
+        let collection = null;
+        try {
+          collection = doc.getEmbeddedCollection(docName);
+        } catch (err) {
+          console.warn(`EmbeddedStoreManager.handleDocUpdate error: No valid embedded collection for: ${docName}`);
+        }
+        const embeddedData = __privateGet(this, _name).get(docName);
+        if (embeddedData) {
+          embeddedData.collection = collection;
+          for (const store of embeddedData.stores.values()) {
+            store.setData(collection, true);
+          }
+        }
+      }
+      for (const embeddedName of existingEmbeddedNames) {
+        const embeddedData = __privateGet(this, _name).get(embeddedName);
+        if (embeddedData) {
+          embeddedData.collection = null;
+          for (const store of embeddedData.stores.values()) {
+            store.setData(null, true);
+          }
+        }
+      }
+    } else {
+      __privateGet(this, _collectionToDocName).clear();
+      __privateGet(this, _embeddedNames).clear();
+      for (const embeddedData of __privateGet(this, _name).values()) {
+        embeddedData.collection = null;
+        for (const store of embeddedData.stores.values()) {
+          store.setData(null, true);
+        }
+      }
+    }
+  }
+  /**
+   * Handles updates to embedded stores parsing the render context for valid embedded store types.
+   *
+   * On create, delete, update parse the type being modified then force index updates for the embedded type.
+   *
+   * @param {string}   renderContext - render context update from document.
+   */
+  handleUpdate(renderContext) {
+    if (!__privateGet(this, _embeddedNames).has(renderContext)) {
+      return;
+    }
+    const match = __privateGet(_EmbeddedStoreManager, _renderContextRegex).exec(renderContext);
+    if (match) {
+      const docOrCollectionName = match.groups.name;
+      const embeddedName = __privateGet(this, _collectionToDocName).get(docOrCollectionName);
+      if (!__privateGet(this, _name).has(embeddedName)) {
+        return;
+      }
+      for (const store of __privateGet(this, _name).get(embeddedName).stores.values()) {
+        store.index.update(true);
+      }
+    }
+  }
+};
+_renderContextRegex = new WeakMap();
+_name = new WeakMap();
+_document = new WeakMap();
+_collectionToDocName = new WeakMap();
+_embeddedNames = new WeakMap();
+__name(_EmbeddedStoreManager, "EmbeddedStoreManager");
+/**
+ * RegExp for detecting CRUD updates for renderContext.
+ *
+ * @type {RegExp}
+ */
+__privateAdd(_EmbeddedStoreManager, _renderContextRegex, /(?<action>create|delete|update)(?<sep>\.?)(?<name>\w+)/);
+let EmbeddedStoreManager = _EmbeddedStoreManager;
+const _TJSDocument = class _TJSDocument {
+  /**
+   * @param {T | TJSDocumentOptions}  [document] - Document to wrap or TJSDocumentOptions.
+   *
+   * @param {TJSDocumentOptions}      [options] - TJSDocument options.
+   */
+  constructor(document2, options = {}) {
+    /**
+     * Handles cleanup when the document is deleted. Invoking any optional delete function set in the constructor.
+     *
+     * @returns {Promise<void>}
+     */
+    __privateAdd(this, _deleted);
+    /**
+     * @param {boolean}  [force] - unused - signature from Foundry render function.
+     *
+     * @param {object}   [options] - Options from render call; will have document update context.
+     */
+    __privateAdd(this, _updateSubscribers4);
+    /**
+     *
+     * @param {T | undefined} doc -
+     */
+    __privateAdd(this, _setDocument);
+    /**
+     * @type {T[]}
+     */
+    __privateAdd(this, _document2, [void 0]);
+    /**
+     * @type {EmbeddedStoreManager}
+     */
+    __privateAdd(this, _embeddedStoreManager, void 0);
+    /**
+     * @type {import('./types').EmbeddedAPI}
+     */
+    __privateAdd(this, _embeddedAPI, void 0);
+    /**
+     * @type {string}
+     */
+    __privateAdd(this, _uuidv4, void 0);
+    /**
+     * @type {TJSDocumentOptions}
+     */
+    __privateAdd(this, _options3, { delete: void 0, preDelete: void 0 });
+    /**
+     * @type {((value: T, updateOptions?: TJSDocumentUpdateOptions) => void)[]}
+     */
+    __privateAdd(this, _subscriptions5, []);
+    /**
+     * @type {TJSDocumentUpdateOptions}
+     */
+    __privateAdd(this, _updateOptions, void 0);
+    __privateSet(this, _uuidv4, `tjs-document-${Hashing.uuidv4()}`);
+    if (isPlainObject(document2)) {
+      this.setOptions(document2);
+    } else {
+      this.setOptions(options);
+      this.set(document2);
+    }
+  }
+  /**
+   * @returns {import('./types').EmbeddedAPI} Embedded store manager.
+   */
+  get embedded() {
+    if (!__privateGet(this, _embeddedAPI)) {
+      __privateSet(this, _embeddedStoreManager, new EmbeddedStoreManager(__privateGet(this, _document2)));
+      __privateSet(this, _embeddedAPI, {
+        create: (doc, options) => __privateGet(this, _embeddedStoreManager).create(doc, options),
+        destroy: (doc, storeName) => __privateGet(this, _embeddedStoreManager).destroy(doc, storeName),
+        get: (doc, storeName) => __privateGet(this, _embeddedStoreManager).get(doc, storeName)
+      });
+    }
+    return __privateGet(this, _embeddedAPI);
+  }
+  /**
+   * Returns the options passed on last update.
+   *
+   * @returns {TJSDocumentUpdateOptions} Last update options.
+   */
+  get updateOptions() {
+    return __privateGet(this, _updateOptions) ?? {};
+  }
+  /**
+   * Returns the UUID assigned to this store.
+   *
+   * @returns {string} UUID
+   */
+  get uuidv4() {
+    return __privateGet(this, _uuidv4);
+  }
+  /**
+   * Completely removes all internal subscribers, any optional delete callback, and unregisters from the
+   * ClientDocumentMixin `apps` tracking object.
+   */
+  destroy() {
+    const doc = __privateGet(this, _document2)[0];
+    if (__privateGet(this, _embeddedStoreManager)) {
+      __privateGet(this, _embeddedStoreManager).destroy();
+      __privateSet(this, _embeddedStoreManager, void 0);
+      __privateSet(this, _embeddedAPI, void 0);
+    }
+    if (doc instanceof globalThis.foundry.abstract.Document) {
+      delete doc?.apps[__privateGet(this, _uuidv4)];
+      __privateMethod(this, _setDocument, setDocument_fn).call(this, void 0);
+    }
+    __privateGet(this, _options3).delete = void 0;
+    __privateGet(this, _subscriptions5).length = 0;
+  }
+  /**
+   * @returns {T} Current document
+   */
+  get() {
+    return __privateGet(this, _document2)[0];
+  }
+  /**
+   * Attempts to create a Foundry UUID from standard drop data. This may not work for all systems.
+   *
+   * @param {object}   data - Drop transfer data.
+   *
+   * @param {object}   [opts] - Optional parameters.
+   *
+   * @param {boolean}  [opts.actor=true] - Accept actor owned documents.
+   *
+   * @param {boolean}  [opts.compendium=true] - Accept compendium documents.
+   *
+   * @param {boolean}  [opts.world=true] - Accept world documents.
+   *
+   * @param {string[]|undefined}   [opts.types] - Require the `data.type` to match entry in `types`.
+   *
+   * @returns {string|undefined} Foundry UUID for drop data.
+   */
+  static getUUIDFromDataTransfer(data, { actor = true, compendium = true, world = true, types = void 0 } = {}) {
+    if (!isObject(data)) {
+      return void 0;
+    }
+    if (Array.isArray(types) && !types.includes(data.type)) {
+      return void 0;
+    }
+    let uuid = void 0;
+    if (typeof data.uuid === "string") {
+      const isCompendium = data.uuid.startsWith("Compendium");
+      if (isCompendium && compendium) {
+        uuid = data.uuid;
+      } else if (world) {
+        uuid = data.uuid;
+      }
+    } else {
+      if (actor && world && data.actorId && data.type) {
+        uuid = `Actor.${data.actorId}.${data.type}.${data.data._id}`;
+      } else if (typeof data.id === "string") {
+        if (compendium && typeof data.pack === "string") {
+          uuid = `Compendium.${data.pack}.${data.id}`;
+        } else if (world) {
+          uuid = `${data.type}.${data.id}`;
+        }
+      }
+    }
+    return uuid;
+  }
+  /**
+   * @param {T | undefined}  document - New document to set.
+   *
+   * @param {TJSDocumentUpdateOptions}   [options] - New document update options to set.
+   */
+  set(document2, options = {}) {
+    if (__privateGet(this, _document2)[0]) {
+      delete __privateGet(this, _document2)[0].apps[__privateGet(this, _uuidv4)];
+    }
+    if (document2 !== void 0 && !(document2 instanceof globalThis.foundry.abstract.Document)) {
+      throw new TypeError(`TJSDocument set error: 'document' is not a valid Document or undefined.`);
+    }
+    if (!isObject(options)) {
+      throw new TypeError(`TJSDocument set error: 'options' is not an object.`);
+    }
+    if (document2 instanceof globalThis.foundry.abstract.Document) {
+      document2.apps[__privateGet(this, _uuidv4)] = {
+        close: __privateMethod(this, _deleted, deleted_fn).bind(this),
+        render: __privateMethod(this, _updateSubscribers4, updateSubscribers_fn4).bind(this)
+      };
+    }
+    __privateMethod(this, _setDocument, setDocument_fn).call(this, document2);
+    __privateSet(this, _updateOptions, options);
+    __privateMethod(this, _updateSubscribers4, updateSubscribers_fn4).call(this);
+  }
+  /**
+   * Potentially sets new document from data transfer object.
+   *
+   * @param {object}   data - Document transfer data.
+   *
+   * @param {{ actor?: boolean, compendium?: boolean, world?: boolean, types?: string[] } & TJSDocumentOptions}   [options] - Optional
+   *        parameters.
+   *
+   * @returns {Promise<boolean>} Returns true if new document set from data transfer blob.
+   */
+  async setFromDataTransfer(data, options) {
+    return this.setFromUUID(_TJSDocument.getUUIDFromDataTransfer(data, options), options);
+  }
+  /**
+   * Sets the document by Foundry UUID performing a lookup and setting the document if found.
+   *
+   * @param {string}   uuid - A Foundry UUID to lookup.
+   *
+   * @param {TJSDocumentOptions}   [options] - New document update options to set.
+   *
+   * @returns {Promise<boolean>} True if successfully set document from UUID.
+   */
+  async setFromUUID(uuid, options = {}) {
+    if (typeof uuid !== "string" || uuid.length === 0) {
+      return false;
+    }
+    try {
+      const doc = await globalThis.fromUuid(uuid);
+      if (doc) {
+        this.set(doc, options);
+        return true;
+      }
+    } catch (err) {
+    }
+    return false;
+  }
+  /**
+   * Sets options for this document wrapper / store.
+   *
+   * @param {TJSDocumentOptions}   options - Options for TJSDocument.
+   */
+  setOptions(options) {
+    if (!isObject(options)) {
+      throw new TypeError(`TJSDocument error: 'options' is not a plain object.`);
+    }
+    if (options.delete !== void 0 && typeof options.delete !== "function") {
+      throw new TypeError(`TJSDocument error: 'delete' attribute in options is not a function.`);
+    }
+    if (options.preDelete !== void 0 && typeof options.preDelete !== "function") {
+      throw new TypeError(`TJSDocument error: 'preDelete' attribute in options is not a function.`);
+    }
+    if (options.delete === void 0 || typeof options.delete === "function") {
+      __privateGet(this, _options3).delete = options.delete;
+    }
+    if (options.preDelete === void 0 || typeof options.preDelete === "function") {
+      __privateGet(this, _options3).preDelete = options.preDelete;
+    }
+  }
+  /**
+   * @param {(value: T, updateOptions?: TJSDocumentUpdateOptions) => void} handler - Callback function that is
+   * invoked on update / changes.
+   *
+   * @returns {import('svelte/store').Unsubscriber} Unsubscribe function.
+   */
+  subscribe(handler) {
+    __privateGet(this, _subscriptions5).push(handler);
+    const updateOptions = { action: "subscribe", data: void 0 };
+    handler(__privateGet(this, _document2)[0], updateOptions);
+    return () => {
+      const index = __privateGet(this, _subscriptions5).findIndex((sub) => sub === handler);
+      if (index >= 0) {
+        __privateGet(this, _subscriptions5).splice(index, 1);
+      }
+    };
+  }
+};
+_document2 = new WeakMap();
+_embeddedStoreManager = new WeakMap();
+_embeddedAPI = new WeakMap();
+_uuidv4 = new WeakMap();
+_options3 = new WeakMap();
+_subscriptions5 = new WeakMap();
+_updateOptions = new WeakMap();
+_deleted = new WeakSet();
+deleted_fn = /* @__PURE__ */ __name(async function() {
+  const doc = __privateGet(this, _document2)[0];
+  if (doc instanceof globalThis.foundry.abstract.Document && !doc?.collection?.has(doc.id)) {
+    delete doc?.apps[__privateGet(this, _uuidv4)];
+    __privateMethod(this, _setDocument, setDocument_fn).call(this, void 0);
+    if (typeof __privateGet(this, _options3).preDelete === "function") {
+      await __privateGet(this, _options3).preDelete(doc);
+    }
+    __privateMethod(this, _updateSubscribers4, updateSubscribers_fn4).call(this, false, { action: "delete", data: void 0 });
+    if (typeof __privateGet(this, _options3).delete === "function") {
+      await __privateGet(this, _options3).delete(doc);
+    }
+    __privateSet(this, _updateOptions, void 0);
+  }
+}, "#deleted");
+_updateSubscribers4 = new WeakSet();
+updateSubscribers_fn4 = /* @__PURE__ */ __name(function(force = false, options = {}) {
+  __privateSet(this, _updateOptions, options);
+  const doc = __privateGet(this, _document2)[0];
+  for (let cntr = 0; cntr < __privateGet(this, _subscriptions5).length; cntr++) {
+    __privateGet(this, _subscriptions5)[cntr](doc, options);
+  }
+  if (__privateGet(this, _embeddedStoreManager)) {
+    __privateGet(this, _embeddedStoreManager).handleUpdate(options.renderContext);
+  }
+}, "#updateSubscribers");
+_setDocument = new WeakSet();
+setDocument_fn = /* @__PURE__ */ __name(function(doc) {
+  __privateGet(this, _document2)[0] = doc;
+  if (__privateGet(this, _embeddedStoreManager)) {
+    __privateGet(this, _embeddedStoreManager).handleDocChange();
+  }
+}, "#setDocument");
+__name(_TJSDocument, "TJSDocument");
+let TJSDocument = _TJSDocument;
+function create_fragment(ctx) {
+  let applicationshell;
+  let updating_elementRoot;
+  let current;
+  function applicationshell_elementRoot_binding(value) {
+    ctx[1](value);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  let applicationshell_props = {};
+  if (
+    /*elementRoot*/
+    ctx[0] !== void 0
+  ) {
+    applicationshell_props.elementRoot = /*elementRoot*/
+    ctx[0];
+  }
+  applicationshell = new ApplicationShell$1({ props: applicationshell_props });
+  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
+  return {
+    c() {
+      create_component(applicationshell.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(applicationshell, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const applicationshell_changes = {};
+      if (!updating_elementRoot && dirty & /*elementRoot*/
+      1) {
+        updating_elementRoot = true;
+        applicationshell_changes.elementRoot = /*elementRoot*/
+        ctx2[0];
+        add_flush_callback(() => updating_elementRoot = false);
+      }
+      applicationshell.$set(applicationshell_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(applicationshell.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(applicationshell.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(applicationshell, detaching);
+    }
+  };
+}
+__name(create_fragment, "create_fragment");
+function instance($$self, $$props, $$invalidate) {
+  let { elementRoot } = $$props;
+  function applicationshell_elementRoot_binding(value) {
+    elementRoot = value;
+    $$invalidate(0, elementRoot);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  $$self.$$set = ($$props2) => {
+    if ("elementRoot" in $$props2)
+      $$invalidate(0, elementRoot = $$props2.elementRoot);
+  };
+  return [elementRoot, applicationshell_elementRoot_binding];
+}
+__name(instance, "instance");
+const _DocumentShell = class _DocumentShell extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0 });
+  }
+  get elementRoot() {
+    return this.$$.ctx[0];
+  }
+  set elementRoot(elementRoot) {
+    this.$$set({ elementRoot });
+    flush();
+  }
+};
+__name(_DocumentShell, "DocumentShell");
+let DocumentShell = _DocumentShell;
+const _SvelteDocumentSheet = class _SvelteDocumentSheet extends SvelteApplication {
+  constructor(object) {
+    super(object);
+    /**
+     * Handles any changes to document.
+     *
+     * @param {foundry.abstract.Document}  doc -
+     *
+     * @param {object}                     options -
+     */
+    __privateAdd(this, _handleDocUpdate);
+    /**
+     * Document store that monitors updates to any assigned document.
+     *
+     * @type {TJSDocument<foundry.abstract.Document>}
+     */
+    __privateAdd(this, _documentStore, new TJSDocument(void 0, { delete: this.close.bind(this) }));
+    /**
+     * Holds the document unsubscription function.
+     *
+     * @type {Function}
+     */
+    __privateAdd(this, _storeUnsubscribe2, void 0);
+    Object.defineProperty(this.reactive, "document", {
+      get: () => __privateGet(this, _documentStore).get(),
+      set: (document2) => {
+        __privateGet(this, _documentStore).set(document2);
+      }
+    });
+    this.reactive.document = object;
+    console.log(object);
+  }
+  /**
+   * Default Application options
+   *
+   * @returns {object} options - Application options.
+   * @see https://foundryvtt.com/api/Application.html#options
+   */
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      title: "No Document Assigned",
+      width: 800,
+      height: 600,
+      resizable: true,
+      minimizable: true,
+      dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
+      svelte: {
+        class: DocumentShell,
+        target: document.body,
+        // You can assign a function that is invoked with MyItemApp instance as `this`.
+        props: function() {
+          return { documentStore: __privateGet(this, _documentStore), document: this.reactive.document };
+        }
+      }
+    });
+  }
+  _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+    buttons.unshift({
+      class: "configure-sheet",
+      icon: "fas fa-cog",
+      title: "open sheet configurator",
+      onclick: (ev) => this._onConfigureSheet(ev)
+    });
+    return buttons;
+  }
+  _onConfigureSheet(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    new DocumentSheetConfig(this.reactive.document, {
+      top: this.position.top + 40,
+      left: this.position.left + (this.position.width - _SvelteDocumentSheet.defaultOptions.width) / 2
+    }).render(true);
+  }
+  async close(options = {}) {
+    await super.close(options);
+    if (__privateGet(this, _storeUnsubscribe2)) {
+      __privateGet(this, _storeUnsubscribe2).call(this);
+      __privateSet(this, _storeUnsubscribe2, void 0);
+    }
+  }
+  async prepareBaseData() {
+  }
+  render(force = false, options = {}) {
+    if (!__privateGet(this, _storeUnsubscribe2)) {
+      __privateSet(this, _storeUnsubscribe2, __privateGet(this, _documentStore).subscribe(__privateMethod(this, _handleDocUpdate, handleDocUpdate_fn).bind(this)));
+    }
+    super.render(force, options);
+    return this;
+  }
+};
+_documentStore = new WeakMap();
+_storeUnsubscribe2 = new WeakMap();
+_handleDocUpdate = new WeakSet();
+handleDocUpdate_fn = /* @__PURE__ */ __name(async function(doc, options) {
+  const { action, data, documentType } = options;
+  if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
+    this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assigned";
+  }
+}, "#handleDocUpdate");
+__name(_SvelteDocumentSheet, "SvelteDocumentSheet");
+let SvelteDocumentSheet = _SvelteDocumentSheet;
+const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
+  /**
+   * Default Application options
+   *
+   * @returns {object} options - Application options.
+   * @see https://foundryvtt.com/api/Application.html#options
+   */
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      width: 440,
+      height: 828,
+      minWidth: 660,
+      classes: [SYSTEM_CODE],
+      dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
+      svelte: {
+        class: ActorSheetShell,
+        target: document.body
+      }
+    });
+  }
+  _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+    const canConfigure = game.user.isGM || this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE");
+    if (this.reactive.document.documentName === "Actor") {
+      if (canConfigure) {
+        buttons.splice(1, 0, {
+          label: this.token ? "Token" : "TOKEN.TitlePrototype",
+          class: "configure-token",
+          icon: "fas fa-user-circle",
+          onclick: (ev) => this._onConfigureToken(ev)
+        });
+      }
+    }
+    return buttons;
+  }
+  /**
+   * Drag&Drop handling
+   */
+  _canDragStart(selector) {
+    return true;
+  }
+  _canDragDrop(selector) {
+    return this.reactive.document.isOwner || game.user.isGM;
+  }
+  _onDragOver(event) {
+  }
+  _onDragStart(event) {
+    {
+      const li = event.currentTarget;
+      if (event.target.classList.contains("content-link")) {
+        return;
+      }
+      let dragData;
+      if (li.dataset.itemId) {
+        const item = this.actor.items.get(li.dataset.itemId);
+        dragData = item.toDragData();
+      }
+      if (li.dataset.effectId) {
+        const effect = this.actor.effects.get(li.dataset.effectId);
+        dragData = effect.toDragData();
+      }
+      if (!dragData) {
+        return;
+      }
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    }
+  }
+  async _onDrop(event) {
+    const data = TextEditor.getDragEventData(event);
+    const actor = this.reactive.document;
+    console.log("event", event);
+    console.log("data", data);
+    console.log("actor", actor);
+    if (actor.documentName !== "Actor") {
+      return;
+    }
+    const allowed = Hooks.call("dropActorSheetData", actor, this, data);
+    if (allowed === false) {
+      return;
+    }
+    switch (data.type) {
+      case "ActiveEffect": {
+        return this._onDropActiveEffect(event, data);
+      }
+      case "Actor": {
+        return this._onDropActor(event, data);
+      }
+      case "Item": {
+        return this._onDropItem(event, data);
+      }
+      case "Folder": {
+        return this._onDropFolder(event, data);
+      }
+      default: {
+        console.error(`Surge | Impossible type "${data.type}" in _onDrop.`);
+        return;
+      }
+    }
+  }
+  async _onDropActiveEffect(event, data) {
+    console.log("_onDropActiveEffect");
+    console.log("data", data);
+    const actor = this.reactive.document;
+    const effect = await ActiveEffect.implementation.fromDropData(data);
+    console.log("effect", effect);
+    if (!actor.isOwner || !effect) {
+      return false;
+    }
+    if (actor.uuid === effect.parent.uuid) {
+      return false;
+    }
+    return ActiveEffect.create(effect.toObject(), { parent: actor });
+  }
+  async _onDropActor(event, data) {
+    const actor = this.reactive.document;
+    if (!actor.isOwner) {
+      return false;
+    }
+  }
+  async _onDropItem(event, data, ignoreValidation = false) {
+    console.log("_onDropItem", data);
+    const actor = this.reactive.document;
+    if (!actor.isOwner) {
+      return false;
+    }
+    const item = await Item.implementation.fromDropData(data);
+    const itemData = item.toObject();
+    console.log("itemData", itemData);
+    console.log("itemData.type", itemData.type);
+    const itemEffects = Array.from(itemData.effects);
+    console.log("itemEffects", itemEffects);
+    if (actor.uuid === item.parent?.uuid) {
+      return this._onSortItem(event, itemData);
+    }
+    return this._onDropItemCreate(itemData);
+  }
+  async _onDropFolder(event, data) {
+    const actor = this.reactive.document;
+    const folder = await Folder.implementation.fromDropData(data);
+    if (!folder && data.documentName !== "Item" && !actor.isOwner && data.uuid != "Compendium.surge.skills.Folder.CcxCapkN4Pvspsen") {
+      return [];
+    }
+    if (folder.contents.length) {
+      for (let item of folder.contents) {
+        await this._onDropItem(event, item, true);
+      }
+    }
+  }
+  async _onDropItemCreate(itemData) {
+    this.reactive.document;
+  }
+  _onSortItem(event, itemData) {
+    const actor = this.reactive.document;
+    const items = actor.items;
+    const source = items.get(itemData._id);
+    const dropTarget = event.target.closest("[data-item-id]");
+    const target = items.get(dropTarget.dataset.itemId);
+    if (source.id === target.id) {
+      return;
+    }
+    const siblings = [];
+    for (let el of dropTarget.parentElement.children) {
+      const siblingId = el.dataset.itemId;
+      if (siblingId && siblingId !== source.id) {
+        siblings.push(items.get(el.dataset.itemId));
+      }
+    }
+    const sortUpdates = SortingHelpers.performIntegerSort(source, { target, siblings });
+    const updateData = sortUpdates.map((u) => {
+      const update2 = u.update;
+      update2._id = u.target.data._id;
+      return update2;
+    });
+    return actor.updateEmbeddedDocuments("Item", updateData);
+  }
+  _onConfigureToken(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    const actor = this.reactive.document;
+    const token = actor.isToken ? actor.token : actor.prototypeToken;
+    new CONFIG.Token.prototypeSheetClass(token, {
+      left: Math.max(this.position.left - 560 - 10, 10),
+      top: this.position.top
+    }).render(true);
+  }
+};
+__name(_FF15ActorSheet, "FF15ActorSheet");
+let FF15ActorSheet = _FF15ActorSheet;
+const systemconfig = {
+  "CR": {
+    "easy": 5,
+    "average": 10,
+    "hard": 15,
+    "very": 20,
+    "extreme": 25,
+    "impossible": 30
+  },
+  "size": {
+    "small": 1,
+    "medium": 1,
+    "large": 2,
+    "huge": 3,
+    "colossal": 4
+  },
+  attributes: {
+    primary: [
+      "str",
+      "dex",
+      "vit",
+      "int",
+      "mnd"
+    ],
+    secondary: [
+      "defence",
+      "magicDefence",
+      "vigilance",
+      "speed"
+    ]
+  }
+};
+window.log = log$1;
+log$1.level = log$1.DEBUG;
+CONFIG.Actor.documentClass = FF15Actor;
 Hooks.once("init", async (a, b, c) => {
-  log.d(`Starting System ${SYSTEM_ID}`);
+  log$1.d(`Starting System ${SYSTEM_ID}`);
   CONFIG.debug.hooks = true;
   registerSettings();
-  game.system.config = {
-    test: "test"
-  };
+  game.system.config = systemconfig;
+  log$1.d(game.system.id);
+  log$1.d(game.system.config);
+  Actors.registerSheet("foundryvtt-final-fantasy", FF15ActorSheet, {
+    makeDefault: true
+  });
   Hooks.call("gff15.initIsComplete");
 });
 Hooks.once("ready", async () => {

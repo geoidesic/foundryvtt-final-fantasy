@@ -116,25 +116,27 @@
 
 
 @mixin button 
-  box-sizing: border-box
-  display: flex
-  flex-direction: row
-  align-items: center
-  justify-content: center
-  text-align: center
-  border-style: var(--button-border-style)
-  border-radius: var(--button-border-radius)
-  border-width: var(--button-border-width)
-  border-color: var(--button-border-color)
-  background: var(--button-background)
-  font-size: var(--button-font-size)
-  font-weight: var(--button-font-weight)
-  padding: var(--button-padding)
-  color: var(--button-color)
-  line-height: var(--button-line-height)
-  margin: 0
-  background-color: transparent
 
+  & 
+    box-sizing: border-box
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+    text-align: center
+    border-style: var(--button-border-style)
+    border-radius: var(--button-border-radius)
+    border-width: var(--button-border-width)
+    border-color: var(--button-border-color)
+    background: var(--button-background)
+    font-size: var(--button-font-size)
+    font-weight: var(--button-font-weight)
+    padding: var(--button-padding)
+    color: var(--button-color)
+    line-height: var(--button-line-height)
+    margin: 0
+    background-color: transparent
+    
   &:disabled 
     cursor: default
     background: var(--button-background-disabled)
@@ -144,25 +146,28 @@
       background: radial-gradient(var(--sheet-color), transparent)
     
   
+  
 @mixin white-shadow-header($font-size: var(--size-md-h))
   .header
-      position: relative
-      font-size: $font-size
-      color: #fff
-      text-shadow: 0 3px 3px #000
+    position: relative
+    font-size: $font-size
+    color: #fff
+    text-shadow: 0 3px 3px #000
 
 
 @mixin white-shadow-underscore($height: 2px, $color: #fff, $shadow-color: #000, $shadow-depth: 3px, $bottom: -0.1em, $left: 0, $width: 100%, $border-width: 0px)
-  position: relative // Ensure the element is positioned relative to use absolute positioning for the pseudo-element
   .underscore
     &:after
       content: ''
       position: absolute
       left: $left
-      border: $border-width solid transparent // Ensure the underline is visible
+      border: $border-width solid transparent 
       border-radius: 4px
-      bottom: $bottom // Adjust as needed to position the underline correctly
+      bottom: $bottom 
       width: $width
-      height: $height // Use the passed height
-      background-color: $color // Use the passed color
-      box-shadow: 0 $shadow-depth $shadow-depth $shadow-color // Apply shadow to the underline
+      height: $height 
+      background-color: $color 
+      box-shadow: 0 $shadow-depth $shadow-depth $shadow-color 
+
+  &
+    position: relative 

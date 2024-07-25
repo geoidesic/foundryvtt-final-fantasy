@@ -72,7 +72,6 @@
       flex: 0
 
       button 
-        @include button
         --button-border-radius: 5px
         --button-line-height: var(--tab-line-height)
         --button-font-size: var(--tab-font-size)
@@ -98,4 +97,6 @@
           background: var(--player-color)
           color: var(--player-contrast)
 
+        @include button
+        
 </style>
