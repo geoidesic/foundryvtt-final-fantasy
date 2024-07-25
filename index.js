@@ -38,7 +38,7 @@ var __privateMethod = (obj, member, method) => {
   return method;
 };
 var __superGet = (cls, obj, key) => __reflectGet(__getProtoOf(cls), key, obj);
-var _getFocusableSelectors, getFocusableSelectors_fn, _regexPixels, _cssRule, _docKey, _selector, _styleElement, _version, _regexUuidv, _options, _default, _stores, _animationData, _finishedPromise, _willFinish, _voidControl, _data, _position, _instanceCount, _cleanup, _addAnimation, addAnimation_fn, _cleanupInstance, cleanupInstance_fn, _animationControls, _finishedPromise2, _voidControl2, _isPosition, isPosition_fn, _element, _height, _lock, _width, _data2, _dataSaved, _position2, _transforms, _boundingRect, _corners, _mat4, _originTranslations, _orderList, _enabled, _validatorData, _mapUnsubscribe, _constrain, _element2, _enabled2, _height2, _lock2, _width2, _constrain2, _element3, _enabled3, _height3, _lock3, _width3, _positionInitial, _positionValidators, _data3, _animate, _enabled4, _options2, _parent, _positionChangeSet, _stores2, _styleCache, _subscriptions, _transforms2, _updateElementData, _updateElementPromise, _validators, _validatorData2, _state, _updatePosition, updatePosition_fn, _ease, _easeOptions, _subscriptions2, _updateSubscribers, updateSubscribers_fn, _application, _dataSaved2, _applicationShellHolder, _svelteData, _storageStores, _stores3, _getDeserialize, getDeserialize_fn, _getSerialize, getSerialize_fn, _createStore, createStore_fn, _getStore, getStore_fn, _application2, _initialized, _sessionStorage, _storeAppOptions, _storeAppOptionsUpdate, _dataUIState, _storeUIState, _storeUIStateUpdate, _storeUnsubscribe, _storesInitialize, storesInitialize_fn, _storesSubscribe, storesSubscribe_fn, _storesUnsubscribe, storesUnsubscribe_fn, _visibleApps, _applicationShellHolder2, _applicationState, _elementTarget, _elementContent, _initialZIndex, _onMount, _position3, _reactive, _svelteData2, _getSvelteData, _stores4, _updateApplicationShell, updateApplicationShell_fn, _hostData, _DerivedReducerCtor, _parentIndex, _derived, _destroyed, _filtersData, _indexUpdate, _mapUnsubscribe2, _sortData, _indexUpdate2, _unsubscribe, _indexData, _map, _derived2, _derivedPublicAPI, _filters, _filtersData2, _index, _indexPublicAPI, _reversed, _sort, _sortData2, _subscriptions3, _destroyed2, _updateSubscribers2, updateSubscribers_fn2, _map2, _derived3, _derivedPublicAPI2, _filters2, _filtersData3, _index2, _indexPublicAPI2, _reversed2, _sort2, _sortData3, _subscriptions4, _destroyed3, _updateSubscribers3, updateSubscribers_fn3, _renderContextRegex, _name, _document, _collectionToDocName, _embeddedNames, _document2, _embeddedStoreManager, _embeddedAPI, _uuidv4, _options3, _subscriptions5, _updateOptions, _deleted, deleted_fn, _updateSubscribers4, updateSubscribers_fn4, _setDocument, setDocument_fn, _documentStore, _storeUnsubscribe2, _handleDocUpdate, handleDocUpdate_fn;
+var _getFocusableSelectors, getFocusableSelectors_fn, _regexPixels, _cssRule, _docKey, _selector, _styleElement, _version, _regexUuidv, _options, _default, _stores, _animationData, _finishedPromise, _willFinish, _voidControl, _data, _position, _instanceCount, _cleanup, _addAnimation, addAnimation_fn, _cleanupInstance, cleanupInstance_fn, _animationControls, _finishedPromise2, _voidControl2, _isPosition, isPosition_fn, _element, _height, _lock, _width, _data2, _dataSaved, _position2, _transforms, _boundingRect, _corners, _mat4, _originTranslations, _orderList, _enabled, _validatorData, _mapUnsubscribe, _constrain, _element2, _enabled2, _height2, _lock2, _width2, _constrain2, _element3, _enabled3, _height3, _lock3, _width3, _positionInitial, _positionValidators, _data3, _animate, _enabled4, _options2, _parent, _positionChangeSet, _stores2, _styleCache, _subscriptions, _transforms2, _updateElementData, _updateElementPromise, _validators, _validatorData2, _state, _updatePosition, updatePosition_fn, _ease, _easeOptions, _subscriptions2, _updateSubscribers, updateSubscribers_fn, _application, _dataSaved2, _applicationShellHolder, _svelteData, _storageStores, _stores3, _getDeserialize, getDeserialize_fn, _getSerialize, getSerialize_fn, _createStore, createStore_fn, _getStore, getStore_fn, _application2, _initialized, _sessionStorage, _storeAppOptions, _storeAppOptionsUpdate, _dataUIState, _storeUIState, _storeUIStateUpdate, _storeUnsubscribe, _storesInitialize, storesInitialize_fn, _storesSubscribe, storesSubscribe_fn, _storesUnsubscribe, storesUnsubscribe_fn, _visibleApps, _applicationShellHolder2, _applicationState, _elementTarget, _elementContent, _initialZIndex, _onMount, _position3, _reactive, _svelteData2, _getSvelteData, _stores4, _updateApplicationShell, updateApplicationShell_fn, _sheet, _sheetMap, _initialized2, _initialize, initialize_fn, _hostData, _DerivedReducerCtor, _parentIndex, _derived, _destroyed, _filtersData, _indexUpdate, _mapUnsubscribe2, _sortData, _indexUpdate2, _unsubscribe, _indexData, _map, _derived2, _derivedPublicAPI, _filters, _filtersData2, _index, _indexPublicAPI, _reversed, _sort, _sortData2, _subscriptions3, _destroyed2, _updateSubscribers2, updateSubscribers_fn2, _map2, _derived3, _derivedPublicAPI2, _filters2, _filtersData3, _index2, _indexPublicAPI2, _reversed2, _sort2, _sortData3, _subscriptions4, _destroyed3, _updateSubscribers3, updateSubscribers_fn3, _renderContextRegex, _name, _document, _collectionToDocName, _embeddedNames, _document2, _embeddedStoreManager, _embeddedAPI, _uuidv4, _options3, _subscriptions5, _updateOptions, _deleted, deleted_fn, _updateSubscribers4, updateSubscribers_fn4, _setDocument, setDocument_fn, _onQuit, _s_UUID_REGEX, _transformUUID, transformUUID_fn, _a, _documentStore, _storeUnsubscribe2, _handleDocUpdate, handleDocUpdate_fn;
 const Variables = "";
 const Main = "";
 const MarginsAndPadding = "";
@@ -72,14 +72,167 @@ const log$1 = {
     return this.loggingLevel;
   }
 };
+const s_TAG_OBJECT = "[object Object]";
+function deepMerge(target = {}, ...sourceObj) {
+  if (Object.prototype.toString.call(target) !== s_TAG_OBJECT) {
+    throw new TypeError(`deepMerge error: 'target' is not an 'object'.`);
+  }
+  for (let cntr = 0; cntr < sourceObj.length; cntr++) {
+    if (Object.prototype.toString.call(sourceObj[cntr]) !== s_TAG_OBJECT) {
+      throw new TypeError(`deepMerge error: 'sourceObj[${cntr}]' is not an 'object'.`);
+    }
+  }
+  return _deepMerge(target, ...sourceObj);
+}
+__name(deepMerge, "deepMerge");
+function hasGetter(object, accessor) {
+  if (typeof object !== "object" || object === null || object === void 0) {
+    return false;
+  }
+  const iDescriptor = Object.getOwnPropertyDescriptor(object, accessor);
+  if (iDescriptor !== void 0 && iDescriptor.get !== void 0) {
+    return true;
+  }
+  for (let o = Object.getPrototypeOf(object); o; o = Object.getPrototypeOf(o)) {
+    const descriptor = Object.getOwnPropertyDescriptor(o, accessor);
+    if (descriptor !== void 0 && descriptor.get !== void 0) {
+      return true;
+    }
+  }
+  return false;
+}
+__name(hasGetter, "hasGetter");
+function hasPrototype(target, Prototype) {
+  if (typeof target !== "function") {
+    return false;
+  }
+  if (target === Prototype) {
+    return true;
+  }
+  for (let proto = Object.getPrototypeOf(target); proto; proto = Object.getPrototypeOf(proto)) {
+    if (proto === Prototype) {
+      return true;
+    }
+  }
+  return false;
+}
+__name(hasPrototype, "hasPrototype");
+function isIterable(value) {
+  if (value === null || value === void 0 || typeof value !== "object") {
+    return false;
+  }
+  return Symbol.iterator in value;
+}
+__name(isIterable, "isIterable");
+function isObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+__name(isObject, "isObject");
+function isPlainObject(value) {
+  if (Object.prototype.toString.call(value) !== s_TAG_OBJECT) {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(value);
+  return prototype === null || prototype === Object.prototype;
+}
+__name(isPlainObject, "isPlainObject");
+function safeAccess(data, accessor, defaultValue) {
+  if (typeof data !== "object") {
+    return defaultValue;
+  }
+  if (typeof accessor !== "string") {
+    return defaultValue;
+  }
+  const access = accessor.split(".");
+  for (let cntr = 0; cntr < access.length; cntr++) {
+    if (typeof data[access[cntr]] === "undefined" || data[access[cntr]] === null) {
+      return defaultValue;
+    }
+    data = data[access[cntr]];
+  }
+  return data;
+}
+__name(safeAccess, "safeAccess");
+function safeSet(data, accessor, value, operation = "set", createMissing = true) {
+  if (typeof data !== "object") {
+    throw new TypeError(`safeSet Error: 'data' is not an 'object'.`);
+  }
+  if (typeof accessor !== "string") {
+    throw new TypeError(`safeSet Error: 'accessor' is not a 'string'.`);
+  }
+  const access = accessor.split(".");
+  for (let cntr = 0; cntr < access.length; cntr++) {
+    if (Array.isArray(data)) {
+      const number = +access[cntr];
+      if (!Number.isInteger(number) || number < 0) {
+        return false;
+      }
+    }
+    if (cntr === access.length - 1) {
+      switch (operation) {
+        case "add":
+          data[access[cntr]] += value;
+          break;
+        case "div":
+          data[access[cntr]] /= value;
+          break;
+        case "mult":
+          data[access[cntr]] *= value;
+          break;
+        case "set":
+          data[access[cntr]] = value;
+          break;
+        case "set-undefined":
+          if (typeof data[access[cntr]] === "undefined") {
+            data[access[cntr]] = value;
+          }
+          break;
+        case "sub":
+          data[access[cntr]] -= value;
+          break;
+      }
+    } else {
+      if (createMissing && typeof data[access[cntr]] === "undefined") {
+        data[access[cntr]] = {};
+      }
+      if (data[access[cntr]] === null || typeof data[access[cntr]] !== "object") {
+        return false;
+      }
+      data = data[access[cntr]];
+    }
+  }
+  return true;
+}
+__name(safeSet, "safeSet");
+function _deepMerge(target = {}, ...sourceObj) {
+  for (let cntr = 0; cntr < sourceObj.length; cntr++) {
+    const obj = sourceObj[cntr];
+    for (const prop in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+        if (prop.startsWith("-=")) {
+          delete target[prop.slice(2)];
+          continue;
+        }
+        target[prop] = Object.prototype.hasOwnProperty.call(target, prop) && target[prop]?.constructor === Object && obj[prop]?.constructor === Object ? _deepMerge({}, target[prop], obj[prop]) : obj[prop];
+      }
+    }
+  }
+  return target;
+}
+__name(_deepMerge, "_deepMerge");
+function localize(stringId, data) {
+  const result = !isObject(data) ? globalThis.game.i18n.localize(stringId) : globalThis.game.i18n.format(stringId, data);
+  return result !== void 0 ? result : "";
+}
+__name(localize, "localize");
 function registerSettings() {
   dontShowWelcome();
 }
 __name(registerSettings, "registerSettings");
 function dontShowWelcome() {
   game.settings.register(SYSTEM_ID, "dontShowWelcome", {
-    name: game.i18n.localize("GAS.Setting.DontShowWelcome.Name"),
-    hint: game.i18n.localize("GAS.Setting.DontShowWelcome.Hint"),
+    name: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Name`),
+    hint: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Hint`),
     scope: "user",
     config: true,
     default: false,
@@ -213,6 +366,19 @@ function exclude_internal_props(props) {
   return result;
 }
 __name(exclude_internal_props, "exclude_internal_props");
+function compute_rest_props(props, keys) {
+  const rest = {};
+  keys = new Set(keys);
+  for (const k in props)
+    if (!keys.has(k) && k[0] !== "$")
+      rest[k] = props[k];
+  return rest;
+}
+__name(compute_rest_props, "compute_rest_props");
+function null_to_empty(value) {
+  return value == null ? "" : value;
+}
+__name(null_to_empty, "null_to_empty");
 function action_destroyer(action_result) {
   return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
 }
@@ -548,6 +714,30 @@ function onMount(fn) {
   get_current_component().$$.on_mount.push(fn);
 }
 __name(onMount, "onMount");
+function onDestroy(fn) {
+  get_current_component().$$.on_destroy.push(fn);
+}
+__name(onDestroy, "onDestroy");
+function createEventDispatcher() {
+  const component = get_current_component();
+  return (type, detail, { cancelable = false } = {}) => {
+    const callbacks = component.$$.callbacks[type];
+    if (callbacks) {
+      const event = custom_event(
+        /** @type {string} */
+        type,
+        detail,
+        { cancelable }
+      );
+      callbacks.slice().forEach((fn) => {
+        fn.call(component, event);
+      });
+      return !event.defaultPrevented;
+    }
+    return true;
+  };
+}
+__name(createEventDispatcher, "createEventDispatcher");
 function setContext(key, context) {
   get_current_component().$$.context.set(key, context);
   return context;
@@ -570,6 +760,11 @@ function schedule_update() {
   }
 }
 __name(schedule_update, "schedule_update");
+function tick() {
+  schedule_update();
+  return resolved_promise;
+}
+__name(tick, "tick");
 function add_render_callback(fn) {
   render_callbacks.push(fn);
 }
@@ -716,12 +911,12 @@ function create_in_transition(node, fn, params) {
       delay = 0,
       duration = 300,
       easing = identity,
-      tick = noop,
+      tick: tick2 = noop,
       css
     } = config || null_transition;
     if (css)
       animation_name = create_rule(node, 0, 1, duration, delay, easing, css, uid++);
-    tick(0, 1);
+    tick2(0, 1);
     const start_time = now() + delay;
     const end_time = start_time + duration;
     if (task)
@@ -731,14 +926,14 @@ function create_in_transition(node, fn, params) {
     task = loop((now2) => {
       if (running) {
         if (now2 >= end_time) {
-          tick(1, 0);
+          tick2(1, 0);
           dispatch(node, true, "end");
           cleanup();
           return running = false;
         }
         if (now2 >= start_time) {
           const t = easing((now2 - start_time) / duration);
-          tick(t, 1 - t);
+          tick2(t, 1 - t);
         }
       }
       return running;
@@ -784,7 +979,7 @@ function create_out_transition(node, fn, params) {
       delay = 0,
       duration = 300,
       easing = identity,
-      tick = noop,
+      tick: tick2 = noop,
       css
     } = config || null_transition;
     if (css)
@@ -800,7 +995,7 @@ function create_out_transition(node, fn, params) {
     loop((now2) => {
       if (running) {
         if (now2 >= end_time) {
-          tick(0, 1);
+          tick2(0, 1);
           dispatch(node, false, "end");
           if (!--group.r) {
             run_all(group.c);
@@ -809,7 +1004,7 @@ function create_out_transition(node, fn, params) {
         }
         if (now2 >= start_time) {
           const t = easing((now2 - start_time) / duration);
-          tick(1 - t, t);
+          tick2(1 - t, t);
         }
       }
       return running;
@@ -841,6 +1036,135 @@ function create_out_transition(node, fn, params) {
   };
 }
 __name(create_out_transition, "create_out_transition");
+function create_bidirectional_transition(node, fn, params, intro) {
+  const options = { direction: "both" };
+  let config = fn(node, params, options);
+  let t = intro ? 0 : 1;
+  let running_program = null;
+  let pending_program = null;
+  let animation_name = null;
+  let original_inert_value;
+  function clear_animation() {
+    if (animation_name)
+      delete_rule(node, animation_name);
+  }
+  __name(clear_animation, "clear_animation");
+  function init2(program, duration) {
+    const d = (
+      /** @type {Program['d']} */
+      program.b - t
+    );
+    duration *= Math.abs(d);
+    return {
+      a: t,
+      b: program.b,
+      d,
+      duration,
+      start: program.start,
+      end: program.start + duration,
+      group: program.group
+    };
+  }
+  __name(init2, "init");
+  function go(b) {
+    const {
+      delay = 0,
+      duration = 300,
+      easing = identity,
+      tick: tick2 = noop,
+      css
+    } = config || null_transition;
+    const program = {
+      start: now() + delay,
+      b
+    };
+    if (!b) {
+      program.group = outros;
+      outros.r += 1;
+    }
+    if ("inert" in node) {
+      if (b) {
+        if (original_inert_value !== void 0) {
+          node.inert = original_inert_value;
+        }
+      } else {
+        original_inert_value = /** @type {HTMLElement} */
+        node.inert;
+        node.inert = true;
+      }
+    }
+    if (running_program || pending_program) {
+      pending_program = program;
+    } else {
+      if (css) {
+        clear_animation();
+        animation_name = create_rule(node, t, b, duration, delay, easing, css);
+      }
+      if (b)
+        tick2(0, 1);
+      running_program = init2(program, duration);
+      add_render_callback(() => dispatch(node, b, "start"));
+      loop((now2) => {
+        if (pending_program && now2 > pending_program.start) {
+          running_program = init2(pending_program, duration);
+          pending_program = null;
+          dispatch(node, running_program.b, "start");
+          if (css) {
+            clear_animation();
+            animation_name = create_rule(
+              node,
+              t,
+              running_program.b,
+              running_program.duration,
+              0,
+              easing,
+              config.css
+            );
+          }
+        }
+        if (running_program) {
+          if (now2 >= running_program.end) {
+            tick2(t = running_program.b, 1 - t);
+            dispatch(node, running_program.b, "end");
+            if (!pending_program) {
+              if (running_program.b) {
+                clear_animation();
+              } else {
+                if (!--running_program.group.r)
+                  run_all(running_program.group.c);
+              }
+            }
+            running_program = null;
+          } else if (now2 >= running_program.start) {
+            const p = now2 - running_program.start;
+            t = running_program.a + running_program.d * easing(p / running_program.duration);
+            tick2(t, 1 - t);
+          }
+        }
+        return !!(running_program || pending_program);
+      });
+    }
+  }
+  __name(go, "go");
+  return {
+    run(b) {
+      if (is_function(config)) {
+        wait().then(() => {
+          const opts = { direction: b ? "in" : "out" };
+          config = config(opts);
+          go(b);
+        });
+      } else {
+        go(b);
+      }
+    },
+    end() {
+      clear_animation();
+      running_program = pending_program = null;
+    }
+  };
+}
+__name(create_bidirectional_transition, "create_bidirectional_transition");
 function ensure_array_like(array_like_or_iterator) {
   return array_like_or_iterator?.length !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
 }
@@ -1047,154 +1371,6 @@ function cubicOut(t) {
   return f * f * f + 1;
 }
 __name(cubicOut, "cubicOut");
-const s_TAG_OBJECT = "[object Object]";
-function deepMerge(target = {}, ...sourceObj) {
-  if (Object.prototype.toString.call(target) !== s_TAG_OBJECT) {
-    throw new TypeError(`deepMerge error: 'target' is not an 'object'.`);
-  }
-  for (let cntr = 0; cntr < sourceObj.length; cntr++) {
-    if (Object.prototype.toString.call(sourceObj[cntr]) !== s_TAG_OBJECT) {
-      throw new TypeError(`deepMerge error: 'sourceObj[${cntr}]' is not an 'object'.`);
-    }
-  }
-  return _deepMerge(target, ...sourceObj);
-}
-__name(deepMerge, "deepMerge");
-function hasGetter(object, accessor) {
-  if (typeof object !== "object" || object === null || object === void 0) {
-    return false;
-  }
-  const iDescriptor = Object.getOwnPropertyDescriptor(object, accessor);
-  if (iDescriptor !== void 0 && iDescriptor.get !== void 0) {
-    return true;
-  }
-  for (let o = Object.getPrototypeOf(object); o; o = Object.getPrototypeOf(o)) {
-    const descriptor = Object.getOwnPropertyDescriptor(o, accessor);
-    if (descriptor !== void 0 && descriptor.get !== void 0) {
-      return true;
-    }
-  }
-  return false;
-}
-__name(hasGetter, "hasGetter");
-function hasPrototype(target, Prototype) {
-  if (typeof target !== "function") {
-    return false;
-  }
-  if (target === Prototype) {
-    return true;
-  }
-  for (let proto = Object.getPrototypeOf(target); proto; proto = Object.getPrototypeOf(proto)) {
-    if (proto === Prototype) {
-      return true;
-    }
-  }
-  return false;
-}
-__name(hasPrototype, "hasPrototype");
-function isIterable(value) {
-  if (value === null || value === void 0 || typeof value !== "object") {
-    return false;
-  }
-  return Symbol.iterator in value;
-}
-__name(isIterable, "isIterable");
-function isObject(value) {
-  return value !== null && typeof value === "object" && !Array.isArray(value);
-}
-__name(isObject, "isObject");
-function isPlainObject(value) {
-  if (Object.prototype.toString.call(value) !== s_TAG_OBJECT) {
-    return false;
-  }
-  const prototype = Object.getPrototypeOf(value);
-  return prototype === null || prototype === Object.prototype;
-}
-__name(isPlainObject, "isPlainObject");
-function safeAccess(data, accessor, defaultValue) {
-  if (typeof data !== "object") {
-    return defaultValue;
-  }
-  if (typeof accessor !== "string") {
-    return defaultValue;
-  }
-  const access = accessor.split(".");
-  for (let cntr = 0; cntr < access.length; cntr++) {
-    if (typeof data[access[cntr]] === "undefined" || data[access[cntr]] === null) {
-      return defaultValue;
-    }
-    data = data[access[cntr]];
-  }
-  return data;
-}
-__name(safeAccess, "safeAccess");
-function safeSet(data, accessor, value, operation = "set", createMissing = true) {
-  if (typeof data !== "object") {
-    throw new TypeError(`safeSet Error: 'data' is not an 'object'.`);
-  }
-  if (typeof accessor !== "string") {
-    throw new TypeError(`safeSet Error: 'accessor' is not a 'string'.`);
-  }
-  const access = accessor.split(".");
-  for (let cntr = 0; cntr < access.length; cntr++) {
-    if (Array.isArray(data)) {
-      const number = +access[cntr];
-      if (!Number.isInteger(number) || number < 0) {
-        return false;
-      }
-    }
-    if (cntr === access.length - 1) {
-      switch (operation) {
-        case "add":
-          data[access[cntr]] += value;
-          break;
-        case "div":
-          data[access[cntr]] /= value;
-          break;
-        case "mult":
-          data[access[cntr]] *= value;
-          break;
-        case "set":
-          data[access[cntr]] = value;
-          break;
-        case "set-undefined":
-          if (typeof data[access[cntr]] === "undefined") {
-            data[access[cntr]] = value;
-          }
-          break;
-        case "sub":
-          data[access[cntr]] -= value;
-          break;
-      }
-    } else {
-      if (createMissing && typeof data[access[cntr]] === "undefined") {
-        data[access[cntr]] = {};
-      }
-      if (data[access[cntr]] === null || typeof data[access[cntr]] !== "object") {
-        return false;
-      }
-      data = data[access[cntr]];
-    }
-  }
-  return true;
-}
-__name(safeSet, "safeSet");
-function _deepMerge(target = {}, ...sourceObj) {
-  for (let cntr = 0; cntr < sourceObj.length; cntr++) {
-    const obj = sourceObj[cntr];
-    for (const prop in obj) {
-      if (Object.prototype.hasOwnProperty.call(obj, prop)) {
-        if (prop.startsWith("-=")) {
-          delete target[prop.slice(2)];
-          continue;
-        }
-        target[prop] = Object.prototype.hasOwnProperty.call(target, prop) && target[prop]?.constructor === Object && obj[prop]?.constructor === Object ? _deepMerge({}, target[prop], obj[prop]) : obj[prop];
-      }
-    }
-  }
-  return target;
-}
-__name(_deepMerge, "_deepMerge");
 const _A11yHelper = class _A11yHelper {
   /**
    * Apply focus to the HTMLElement targets in a given A11yFocusSource data object. An iterable list `options.focusEl`
@@ -1715,7 +1891,7 @@ _styleElement = new WeakMap();
 _version = new WeakMap();
 __name(_TJSStyleManager, "TJSStyleManager");
 let TJSStyleManager = _TJSStyleManager;
-const cssVariables = new TJSStyleManager({ docKey: "#__trl-root-styles", version: 1 });
+const cssVariables$1 = new TJSStyleManager({ docKey: "#__trl-root-styles", version: 1 });
 const _Hashing = class _Hashing {
   /**
    * Provides a solid string hashing algorithm.
@@ -1773,6 +1949,62 @@ _regexUuidv = new WeakMap();
 __name(_Hashing, "Hashing");
 __privateAdd(_Hashing, _regexUuidv, /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
 let Hashing = _Hashing;
+const _Timing = class _Timing {
+  /**
+   * Wraps a callback in a debounced timeout.
+   *
+   * Delay execution of the callback function until the function has not been called for the given delay in milliseconds.
+   *
+   * @param {Function} callback - A function to execute once the debounced threshold has been passed.
+   *
+   * @param {number}   delay - An amount of time in milliseconds to delay.
+   *
+   * @returns {Function} A wrapped function that can be called to debounce execution.
+   */
+  static debounce(callback, delay) {
+    let timeoutId;
+    return function(...args) {
+      globalThis.clearTimeout(timeoutId);
+      timeoutId = globalThis.setTimeout(() => {
+        callback.apply(this, args);
+      }, delay);
+    };
+  }
+  /**
+   * @param {object}   opts - Optional parameters.
+   *
+   * @param {Function} opts.single - Single click callback.
+   *
+   * @param {Function} opts.double - Double click callback.
+   *
+   * @param {number}   [opts.delay=400] - Double click delay.
+   *
+   * @returns {(event: Event) => void} The gated double-click handler.
+   */
+  static doubleClick({ single, double, delay = 400 }) {
+    let clicks = 0;
+    let timeoutId;
+    return (event) => {
+      clicks++;
+      if (clicks === 1) {
+        timeoutId = globalThis.setTimeout(() => {
+          if (typeof single === "function") {
+            single(event);
+          }
+          clicks = 0;
+        }, delay);
+      } else {
+        globalThis.clearTimeout(timeoutId);
+        if (typeof double === "function") {
+          double(event);
+        }
+        clicks = 0;
+      }
+    };
+  }
+};
+__name(_Timing, "Timing");
+let Timing = _Timing;
 function isUpdatableStore(store) {
   if (store === null || store === void 0) {
     return false;
@@ -2358,11 +2590,6 @@ ${JSON.stringify(config)}`
   return {};
 }
 __name(s_PROCESS_PROPS, "s_PROCESS_PROPS");
-function localize(stringId, data) {
-  const result = !isObject(data) ? globalThis.game.i18n.localize(stringId) : globalThis.game.i18n.format(stringId, data);
-  return result !== void 0 ? result : "";
-}
-__name(localize, "localize");
 function writableDerived(origins, derive, reflect, initial) {
   var childDerivedSetter, originValues, blockNextDerive = false;
   var reflectOldValues = reflect.length >= 2;
@@ -10454,7 +10681,7 @@ __name(_DraggableOptions, "DraggableOptions");
 let DraggableOptions = _DraggableOptions;
 draggable.options = (options) => new DraggableOptions(options);
 const TJSHeaderButton_svelte_svelte_type_style_lang = "";
-function create_if_block$2(ctx) {
+function create_if_block$4(ctx) {
   let span;
   let t;
   return {
@@ -10501,8 +10728,8 @@ function create_if_block$2(ctx) {
     }
   };
 }
-__name(create_if_block$2, "create_if_block$2");
-function create_fragment$g(ctx) {
+__name(create_if_block$4, "create_if_block$4");
+function create_fragment$q(ctx) {
   let a;
   let html_tag;
   let html_anchor;
@@ -10512,7 +10739,7 @@ function create_fragment$g(ctx) {
   let dispose;
   let if_block = (
     /*label*/
-    ctx[3] && create_if_block$2(ctx)
+    ctx[3] && create_if_block$4(ctx)
   );
   return {
     c() {
@@ -10595,7 +10822,7 @@ function create_fragment$g(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$2(ctx2);
+          if_block = create_if_block$4(ctx2);
           if_block.c();
           if_block.m(a, null);
         }
@@ -10647,9 +10874,9 @@ function create_fragment$g(ctx) {
     }
   };
 }
-__name(create_fragment$g, "create_fragment$g");
+__name(create_fragment$q, "create_fragment$q");
 const s_REGEX_HTML = /^\s*<.*>$/;
-function instance$d($$self, $$props, $$invalidate) {
+function instance$i($$self, $$props, $$invalidate) {
   let title;
   let icon;
   let label;
@@ -10735,11 +10962,11 @@ function instance$d($$self, $$props, $$invalidate) {
     title
   ];
 }
-__name(instance$d, "instance$d");
+__name(instance$i, "instance$i");
 const _TJSHeaderButton = class _TJSHeaderButton extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$d, create_fragment$g, safe_not_equal, { button: 0 });
+    init(this, options, instance$i, create_fragment$q, safe_not_equal, { button: 0 });
   }
   get button() {
     return this.$$.ctx[0];
@@ -10753,19 +10980,19 @@ __name(_TJSHeaderButton, "TJSHeaderButton");
 let TJSHeaderButton = _TJSHeaderButton;
 const TJSHeaderButton$1 = TJSHeaderButton;
 const TJSApplicationHeader_svelte_svelte_type_style_lang = "";
-function get_each_context$1(ctx, list, i) {
+function get_each_context$2(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[31] = list[i];
   return child_ctx;
 }
-__name(get_each_context$1, "get_each_context$1");
-function get_each_context_1(ctx, list, i) {
+__name(get_each_context$2, "get_each_context$2");
+function get_each_context_1$1(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[31] = list[i];
   return child_ctx;
 }
-__name(get_each_context_1, "get_each_context_1");
-function create_if_block$1(ctx) {
+__name(get_each_context_1$1, "get_each_context_1$1");
+function create_if_block$3(ctx) {
   let img;
   let img_src_value;
   return {
@@ -10794,8 +11021,8 @@ function create_if_block$1(ctx) {
     }
   };
 }
-__name(create_if_block$1, "create_if_block$1");
-function create_each_block_1(ctx) {
+__name(create_if_block$3, "create_if_block$3");
+function create_each_block_1$1(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -10887,8 +11114,8 @@ function create_each_block_1(ctx) {
     }
   };
 }
-__name(create_each_block_1, "create_each_block_1");
-function create_each_block$1(ctx) {
+__name(create_each_block_1$1, "create_each_block_1$1");
+function create_each_block$2(ctx) {
   let switch_instance;
   let switch_instance_anchor;
   let current;
@@ -10980,7 +11207,7 @@ function create_each_block$1(ctx) {
     }
   };
 }
-__name(create_each_block$1, "create_each_block$1");
+__name(create_each_block$2, "create_each_block$2");
 function create_key_block(ctx) {
   let header;
   let t0;
@@ -11000,14 +11227,14 @@ function create_key_block(ctx) {
   let mounted;
   let dispose;
   let if_block = typeof /*$storeHeaderIcon*/
-  ctx[6] === "string" && create_if_block$1(ctx);
+  ctx[6] === "string" && create_if_block$3(ctx);
   let each_value_1 = ensure_array_like(
     /*buttonsLeft*/
     ctx[1]
   );
   let each_blocks_1 = [];
   for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    each_blocks_1[i] = create_each_block_1$1(get_each_context_1$1(ctx, each_value_1, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks_1[i], 1, 1, () => {
     each_blocks_1[i] = null;
@@ -11018,7 +11245,7 @@ function create_key_block(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+    each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
   }
   const out_1 = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -11105,7 +11332,7 @@ function create_key_block(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$1(ctx2);
+          if_block = create_if_block$3(ctx2);
           if_block.c();
           if_block.m(header, t0);
         }
@@ -11136,12 +11363,12 @@ function create_key_block(ctx) {
         );
         let i;
         for (i = 0; i < each_value_1.length; i += 1) {
-          const child_ctx = get_each_context_1(ctx2, each_value_1, i);
+          const child_ctx = get_each_context_1$1(ctx2, each_value_1, i);
           if (each_blocks_1[i]) {
             each_blocks_1[i].p(child_ctx, dirty);
             transition_in(each_blocks_1[i], 1);
           } else {
-            each_blocks_1[i] = create_each_block_1(child_ctx);
+            each_blocks_1[i] = create_each_block_1$1(child_ctx);
             each_blocks_1[i].c();
             transition_in(each_blocks_1[i], 1);
             each_blocks_1[i].m(header, t3);
@@ -11161,12 +11388,12 @@ function create_key_block(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$1(ctx2, each_value, i);
+          const child_ctx = get_each_context$2(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block$1(child_ctx);
+            each_blocks[i] = create_each_block$2(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(header, null);
@@ -11229,7 +11456,7 @@ function create_key_block(ctx) {
   };
 }
 __name(create_key_block, "create_key_block");
-function create_fragment$f(ctx) {
+function create_fragment$p(ctx) {
   let previous_key = (
     /*draggable*/
     ctx[0]
@@ -11280,8 +11507,8 @@ function create_fragment$f(ctx) {
     }
   };
 }
-__name(create_fragment$f, "create_fragment$f");
-function instance$c($$self, $$props, $$invalidate) {
+__name(create_fragment$p, "create_fragment$p");
+function instance$h($$self, $$props, $$invalidate) {
   let $focusKeep;
   let $focusAuto;
   let $elementRoot;
@@ -11440,18 +11667,18 @@ function instance$c($$self, $$props, $$invalidate) {
     $storeDraggable
   ];
 }
-__name(instance$c, "instance$c");
+__name(instance$h, "instance$h");
 const _TJSApplicationHeader = class _TJSApplicationHeader extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$c, create_fragment$f, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
+    init(this, options, instance$h, create_fragment$p, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
   }
 };
 __name(_TJSApplicationHeader, "TJSApplicationHeader");
 let TJSApplicationHeader = _TJSApplicationHeader;
 const TJSApplicationHeader$1 = TJSApplicationHeader;
 const TJSFocusWrap_svelte_svelte_type_style_lang = "";
-function create_fragment$e(ctx) {
+function create_fragment$o(ctx) {
   let div;
   let mounted;
   let dispose;
@@ -11487,8 +11714,8 @@ function create_fragment$e(ctx) {
     }
   };
 }
-__name(create_fragment$e, "create_fragment$e");
-function instance$b($$self, $$props, $$invalidate) {
+__name(create_fragment$o, "create_fragment$o");
+function instance$g($$self, $$props, $$invalidate) {
   let { elementRoot = void 0 } = $$props;
   let { enabled = true } = $$props;
   let ignoreElements, wrapEl;
@@ -11529,18 +11756,18 @@ function instance$b($$self, $$props, $$invalidate) {
   };
   return [wrapEl, onFocus, elementRoot, enabled, div_binding];
 }
-__name(instance$b, "instance$b");
+__name(instance$g, "instance$g");
 const _TJSFocusWrap = class _TJSFocusWrap extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$b, create_fragment$e, safe_not_equal, { elementRoot: 2, enabled: 3 });
+    init(this, options, instance$g, create_fragment$o, safe_not_equal, { elementRoot: 2, enabled: 3 });
   }
 };
 __name(_TJSFocusWrap, "TJSFocusWrap");
 let TJSFocusWrap = _TJSFocusWrap;
 const TJSFocusWrap$1 = TJSFocusWrap;
 const ResizableHandle_svelte_svelte_type_style_lang = "";
-function create_fragment$d(ctx) {
+function create_fragment$n(ctx) {
   let div;
   let resizable_action;
   let mounted;
@@ -11595,8 +11822,8 @@ function create_fragment$d(ctx) {
     }
   };
 }
-__name(create_fragment$d, "create_fragment$d");
-function instance$a($$self, $$props, $$invalidate) {
+__name(create_fragment$n, "create_fragment$n");
+function instance$f($$self, $$props, $$invalidate) {
   let $storeElementRoot;
   let $storeMinimized;
   let $storeResizable;
@@ -11729,18 +11956,18 @@ function instance$a($$self, $$props, $$invalidate) {
     div_binding
   ];
 }
-__name(instance$a, "instance$a");
+__name(instance$f, "instance$f");
 const _ResizableHandle = class _ResizableHandle extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$a, create_fragment$d, safe_not_equal, { isResizable: 7 });
+    init(this, options, instance$f, create_fragment$n, safe_not_equal, { isResizable: 7 });
   }
 };
 __name(_ResizableHandle, "ResizableHandle");
 let ResizableHandle = _ResizableHandle;
 const ResizableHandle$1 = ResizableHandle;
 const ApplicationShell_svelte_svelte_type_style_lang = "";
-function create_else_block(ctx) {
+function create_else_block$1(ctx) {
   let div;
   let tjsapplicationheader;
   let t0;
@@ -11996,8 +12223,8 @@ function create_else_block(ctx) {
     }
   };
 }
-__name(create_else_block, "create_else_block");
-function create_if_block(ctx) {
+__name(create_else_block$1, "create_else_block$1");
+function create_if_block$2(ctx) {
   let div;
   let tjsapplicationheader;
   let t0;
@@ -12271,13 +12498,13 @@ function create_if_block(ctx) {
     }
   };
 }
-__name(create_if_block, "create_if_block");
-function create_fragment$c(ctx) {
+__name(create_if_block$2, "create_if_block$2");
+function create_fragment$m(ctx) {
   let current_block_type_index;
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block, create_else_block];
+  const if_block_creators = [create_if_block$2, create_else_block$1];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -12341,8 +12568,8 @@ function create_fragment$c(ctx) {
     }
   };
 }
-__name(create_fragment$c, "create_fragment$c");
-function instance$9($$self, $$props, $$invalidate) {
+__name(create_fragment$m, "create_fragment$m");
+function instance$e($$self, $$props, $$invalidate) {
   let $focusKeep;
   let $focusAuto;
   let $minimized;
@@ -12641,15 +12868,15 @@ function instance$9($$self, $$props, $$invalidate) {
     div_binding_1
   ];
 }
-__name(instance$9, "instance$9");
+__name(instance$e, "instance$e");
 const _ApplicationShell = class _ApplicationShell extends SvelteComponent {
   constructor(options) {
     super();
     init(
       this,
       options,
-      instance$9,
-      create_fragment$c,
+      instance$e,
+      create_fragment$m,
       safe_not_equal,
       {
         elementContent: 0,
@@ -12789,27 +13016,37 @@ const _ApplicationShell = class _ApplicationShell extends SvelteComponent {
 __name(_ApplicationShell, "ApplicationShell");
 let ApplicationShell = _ApplicationShell;
 const ApplicationShell$1 = ApplicationShell;
-cssVariables.setProperties({
+cssVariables$1.setProperties({
   // Anchor text shadow / header buttons
   "--tjs-default-text-shadow-focus-hover": "0 0 8px var(--color-shadow-primary)",
   // TJSApplicationShell app background.
   "--tjs-app-background": `url("${globalThis.foundry.utils.getRoute("/ui/denim075.png")}")`
 }, false);
 const WelcomeAppShell_svelte_svelte_type_style_lang = "";
-function create_default_slot$1(ctx) {
+function create_default_slot$2(ctx) {
   let main;
   let div1;
   let p0;
   let h10;
   let p1;
+  let a0;
+  let t6;
+  let t7_value = localize(`${SYSTEM_CODE}.Welcome.Released`) + "";
+  let t7;
   let h11;
   let p2;
+  let span0;
+  let a1;
   let div4;
   let div2;
   let input;
   let div3;
-  let span2;
+  let span1;
   let footer;
+  let div5;
+  let div6;
+  let h4;
+  let a2;
   let mounted;
   let dispose;
   return {
@@ -12818,24 +13055,38 @@ function create_default_slot$1(ctx) {
       div1 = element("div");
       div1.innerHTML = `<div class="texture svelte-FF15-1njk00a"></div><img src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;" class="svelte-FF15-1njk00a"/>`;
       p0 = element("p");
-      p0.textContent = `${localize("FF15.Welcome.To")} `;
+      p0.textContent = `${localize("FF15.Welcome.To")} ${localize(`${SYSTEM_CODE}.Title`)}!`;
       h10 = element("h1");
       h10.textContent = `${localize("FF15.Welcome.Introduction")}`;
       p1 = element("p");
-      p1.innerHTML = `The <a href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html">Final Fantasy TTRPG </a>was released mid-year 2024 `;
+      a0 = element("a");
+      a0.textContent = `${localize(`${SYSTEM_CODE}.Title`)}`;
+      t6 = text(" ");
+      t7 = text(t7_value);
       h11 = element("h1");
       h11.textContent = "Help";
       p2 = element("p");
-      p2.innerHTML = `<span>If you have any issues, please report them on the </span><a href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues">github</a><span> page.</span>`;
+      span0 = element("span");
+      span0.textContent = `${localize("FF15.Welcome.Issues")}`;
+      a1 = element("a");
+      a1.textContent = `${localize("FF15.Welcome.Github")}`;
       div4 = element("div");
       div2 = element("div");
       input = element("input");
       div3 = element("div");
-      span2 = element("span");
-      span2.textContent = `${localize("FF15.Setting.DontShowWelcome.Name")}`;
+      span1 = element("span");
+      span1.textContent = `${localize("FF15.Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
-      footer.innerHTML = `<div class="flex2 right"><img class="pt-sm white svelte-FF15-1njk00a" src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/></div><div class="flex2 left pt-sm"><h4>FF15 FoundryVTT system is created by </h4><a href="https://www.round-table.games" class="svelte-FF15-1njk00a">Round Table Games ©2024</a></div>`;
+      div5 = element("div");
+      div5.innerHTML = `<img class="pt-sm white svelte-FF15-1njk00a" src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
+      div6 = element("div");
+      h4 = element("h4");
+      h4.textContent = `${localize(`${SYSTEM_CODE}.Title`)} ${localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
+      a2 = element("a");
+      a2.textContent = "Round Table Games ©2024";
       attr(div1, "class", "logo-background svelte-FF15-1njk00a");
+      attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
+      attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
       attr(input, "type", "checkbox");
       attr(input, "label", localize("FF15.Setting.DontShowWelcome.Name"));
       attr(div2, "class", "flex0");
@@ -12843,6 +13094,10 @@ function create_default_slot$1(ctx) {
       attr(div4, "class", "flexrow inset justify-flexrow-vertical");
       attr(div4, "data-tooltip", localize("FF15.Setting.DontShowWelcome.Hint"));
       attr(main, "class", "svelte-FF15-1njk00a");
+      attr(div5, "class", "flex2 right");
+      attr(a2, "href", "https://www.round-table.games");
+      attr(a2, "class", "svelte-FF15-1njk00a");
+      attr(div6, "class", "flex2 left pt-sm");
       attr(footer, "class", "svelte-FF15-1njk00a");
     },
     m(target, anchor) {
@@ -12851,16 +13106,25 @@ function create_default_slot$1(ctx) {
       append(main, p0);
       append(main, h10);
       append(main, p1);
+      append(p1, a0);
+      append(p1, t6);
+      append(p1, t7);
       append(main, h11);
       append(main, p2);
+      append(p2, span0);
+      append(p2, a1);
       append(main, div4);
       append(div4, div2);
       append(div2, input);
       input.checked = /*dontShowWelcome*/
       ctx[1];
       append(div4, div3);
-      append(div3, span2);
+      append(div3, span1);
       insert(target, footer, anchor);
+      append(footer, div5);
+      append(footer, div6);
+      append(div6, h4);
+      append(div6, a2);
       if (!mounted) {
         dispose = [
           listen(
@@ -12896,8 +13160,8 @@ function create_default_slot$1(ctx) {
     }
   };
 }
-__name(create_default_slot$1, "create_default_slot$1");
-function create_fragment$b(ctx) {
+__name(create_default_slot$2, "create_default_slot$2");
+function create_fragment$l(ctx) {
   let applicationshell;
   let updating_elementRoot;
   let current;
@@ -12906,7 +13170,7 @@ function create_fragment$b(ctx) {
   }
   __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
   let applicationshell_props = {
-    $$slots: { default: [create_default_slot$1] },
+    $$slots: { default: [create_default_slot$2] },
     $$scope: { ctx }
   };
   if (
@@ -12956,8 +13220,8 @@ function create_fragment$b(ctx) {
     }
   };
 }
-__name(create_fragment$b, "create_fragment$b");
-function instance$8($$self, $$props, $$invalidate) {
+__name(create_fragment$l, "create_fragment$l");
+function instance$d($$self, $$props, $$invalidate) {
   let dontShowWelcome2;
   let { elementRoot = void 0 } = $$props;
   let { version: version2 = void 0 } = $$props;
@@ -13002,11 +13266,11 @@ function instance$8($$self, $$props, $$invalidate) {
     applicationshell_elementRoot_binding
   ];
 }
-__name(instance$8, "instance$8");
+__name(instance$d, "instance$d");
 const _WelcomeAppShell = class _WelcomeAppShell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$8, create_fragment$b, safe_not_equal, { elementRoot: 0, version: 3 });
+    init(this, options, instance$d, create_fragment$l, safe_not_equal, { elementRoot: 0, version: 3 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -15149,8 +15413,521 @@ const _FF15Actor = class _FF15Actor extends Actor {
 };
 __name(_FF15Actor, "FF15Actor");
 let FF15Actor = _FF15Actor;
+function ripple({
+  duration = 600,
+  background = "rgba(255, 255, 255, 0.7)",
+  events = ["click", "keyup"],
+  keyCode = "Enter",
+  debounce
+} = {}) {
+  return (element2) => {
+    function createRipple(e) {
+      const elementRect = element2.getBoundingClientRect();
+      const diameter = Math.max(elementRect.width, elementRect.height);
+      const radius = diameter / 2;
+      const left = e.clientX ? `${e.clientX - (elementRect.left + radius)}px` : "0";
+      const top = e.clientY ? `${e.clientY - (elementRect.top + radius)}px` : "0";
+      const span = document.createElement("span");
+      span.style.position = "absolute";
+      span.style.width = `${diameter}px`;
+      span.style.height = `${diameter}px`;
+      span.style.left = left;
+      span.style.top = top;
+      span.style.background = `var(--tjs-action-ripple-background, ${background})`;
+      span.style.borderRadius = "50%";
+      span.style.pointerEvents = "none";
+      span.style.transform = "translateZ(-1px)";
+      element2.prepend(span);
+      const animation = span.animate(
+        [
+          {
+            // from
+            transform: "scale(.7)",
+            opacity: 0.5,
+            filter: "blur(2px)"
+          },
+          {
+            // to
+            transform: "scale(4)",
+            opacity: 0,
+            filter: "blur(5px)"
+          }
+        ],
+        duration
+      );
+      animation.onfinish = () => {
+        if (span && span.isConnected) {
+          span.remove();
+        }
+      };
+    }
+    __name(createRipple, "createRipple");
+    function keyHandler(event) {
+      if (event?.code === keyCode) {
+        createRipple(event);
+      }
+    }
+    __name(keyHandler, "keyHandler");
+    const eventFn = Number.isInteger(debounce) && debounce > 0 ? Timing.debounce(createRipple, debounce) : createRipple;
+    const keyEventFn = Number.isInteger(debounce) && debounce > 0 ? Timing.debounce(keyHandler, debounce) : keyHandler;
+    for (const event of events) {
+      if (["keydown", "keyup"].includes(event)) {
+        element2.addEventListener(event, keyEventFn);
+      } else {
+        element2.addEventListener(event, eventFn);
+      }
+    }
+    return {
+      destroy: () => {
+        for (const event of events) {
+          if (["keydown", "keyup"].includes(event)) {
+            element2.removeEventListener(event, keyEventFn);
+          } else {
+            element2.removeEventListener(event, eventFn);
+          }
+        }
+      }
+    };
+  };
+}
+__name(ripple, "ripple");
+const Tabs_svelte_svelte_type_style_lang = "";
+function get_each_context$1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[5] = list[i];
+  return child_ctx;
+}
+__name(get_each_context$1, "get_each_context$1");
+function get_each_context_1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[5] = list[i];
+  return child_ctx;
+}
+__name(get_each_context_1, "get_each_context_1");
+function create_each_block_1(ctx) {
+  let button;
+  let t_value = (
+    /*tab*/
+    ctx[5].label + ""
+  );
+  let t;
+  let button_class_value;
+  let button_transition;
+  let current;
+  let mounted;
+  let dispose;
+  function click_handler() {
+    return (
+      /*click_handler*/
+      ctx[4](
+        /*tab*/
+        ctx[5]
+      )
+    );
+  }
+  __name(click_handler, "click_handler");
+  return {
+    c() {
+      button = element("button");
+      t = text(t_value);
+      attr(button, "class", button_class_value = null_to_empty(
+        /*tab*/
+        ctx[5].id === /*activeTab*/
+        ctx[0] ? "active" : ""
+      ) + " svelte-FF15-1nncqkk");
+    },
+    m(target, anchor) {
+      insert(target, button, anchor);
+      append(button, t);
+      current = true;
+      if (!mounted) {
+        dispose = listen(button, "click", prevent_default(click_handler));
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if ((!current || dirty & /*tabs*/
+      2) && t_value !== (t_value = /*tab*/
+      ctx[5].label + ""))
+        set_data(t, t_value);
+      if (!current || dirty & /*tabs, activeTab*/
+      3 && button_class_value !== (button_class_value = null_to_empty(
+        /*tab*/
+        ctx[5].id === /*activeTab*/
+        ctx[0] ? "active" : ""
+      ) + " svelte-FF15-1nncqkk")) {
+        attr(button, "class", button_class_value);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      if (local) {
+        add_render_callback(() => {
+          if (!current)
+            return;
+          if (!button_transition)
+            button_transition = create_bidirectional_transition(
+              button,
+              /*efx*/
+              ctx[3],
+              {},
+              true
+            );
+          button_transition.run(1);
+        });
+      }
+      current = true;
+    },
+    o(local) {
+      if (local) {
+        if (!button_transition)
+          button_transition = create_bidirectional_transition(
+            button,
+            /*efx*/
+            ctx[3],
+            {},
+            false
+          );
+        button_transition.run(0);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button);
+      }
+      if (detaching && button_transition)
+        button_transition.end();
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_each_block_1, "create_each_block_1");
+function create_if_block$1(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  var switch_value = (
+    /*tab*/
+    ctx[5].component
+  );
+  function switch_props(ctx2, dirty) {
+    return { props: { sheet: (
+      /*sheet*/
+      ctx2[2]
+    ) } };
+  }
+  __name(switch_props, "switch_props");
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+  }
+  return {
+    c() {
+      if (switch_instance)
+        create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
+    },
+    m(target, anchor) {
+      if (switch_instance)
+        mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*tabs*/
+      2 && switch_value !== (switch_value = /*tab*/
+      ctx2[5].component)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2));
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = {};
+        if (dirty & /*sheet*/
+        4)
+          switch_instance_changes.sheet = /*sheet*/
+          ctx2[2];
+        switch_instance.$set(switch_instance_changes);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      if (switch_instance)
+        transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance)
+        transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance)
+        destroy_component(switch_instance, detaching);
+    }
+  };
+}
+__name(create_if_block$1, "create_if_block$1");
+function create_each_block$1(ctx) {
+  let if_block_anchor;
+  let current;
+  let if_block = (
+    /*tab*/
+    ctx[5].id === /*activeTab*/
+    ctx[0] && create_if_block$1(ctx)
+  );
+  return {
+    c() {
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (
+        /*tab*/
+        ctx2[5].id === /*activeTab*/
+        ctx2[0]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty & /*tabs, activeTab*/
+          3) {
+            transition_in(if_block, 1);
+          }
+        } else {
+          if_block = create_if_block$1(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
+        }
+      } else if (if_block) {
+        group_outros();
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
+        });
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if (if_block)
+        if_block.d(detaching);
+    }
+  };
+}
+__name(create_each_block$1, "create_each_block$1");
+function create_fragment$k(ctx) {
+  let div2;
+  let div0;
+  let div1;
+  let current;
+  let each_value_1 = ensure_array_like(
+    /*tabs*/
+    ctx[1]
+  );
+  let each_blocks_1 = [];
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+  }
+  const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks_1[i], 1, 1, () => {
+    each_blocks_1[i] = null;
+  }), "out");
+  let each_value = ensure_array_like(
+    /*tabs*/
+    ctx[1]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+  }
+  const out_1 = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  }), "out_1");
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].c();
+      }
+      div1 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div0, "class", "tabs-list svelte-FF15-1nncqkk");
+      attr(div1, "class", "tab-content svelte-FF15-1nncqkk");
+      attr(div2, "class", "tabs svelte-FF15-1nncqkk");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        if (each_blocks_1[i]) {
+          each_blocks_1[i].m(div0, null);
+        }
+      }
+      append(div2, div1);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div1, null);
+        }
+      }
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*tabs, activeTab*/
+      3) {
+        each_value_1 = ensure_array_like(
+          /*tabs*/
+          ctx2[1]
+        );
+        let i;
+        for (i = 0; i < each_value_1.length; i += 1) {
+          const child_ctx = get_each_context_1(ctx2, each_value_1, i);
+          if (each_blocks_1[i]) {
+            each_blocks_1[i].p(child_ctx, dirty);
+            transition_in(each_blocks_1[i], 1);
+          } else {
+            each_blocks_1[i] = create_each_block_1(child_ctx);
+            each_blocks_1[i].c();
+            transition_in(each_blocks_1[i], 1);
+            each_blocks_1[i].m(div0, null);
+          }
+        }
+        group_outros();
+        for (i = each_value_1.length; i < each_blocks_1.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+      if (dirty & /*tabs, sheet, activeTab*/
+      7) {
+        each_value = ensure_array_like(
+          /*tabs*/
+          ctx2[1]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$1(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block$1(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(div1, null);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out_1(i);
+        }
+        check_outros();
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      for (let i = 0; i < each_value_1.length; i += 1) {
+        transition_in(each_blocks_1[i]);
+      }
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks_1 = each_blocks_1.filter(Boolean);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        transition_out(each_blocks_1[i]);
+      }
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_each(each_blocks_1, detaching);
+      destroy_each(each_blocks, detaching);
+    }
+  };
+}
+__name(create_fragment$k, "create_fragment$k");
+function instance$c($$self, $$props, $$invalidate) {
+  let { tabs = [] } = $$props;
+  let { sheet } = $$props;
+  let { activeTab: activeTab2 = void 0 } = $$props;
+  let { efx = ripple() } = $$props;
+  onMount(() => {
+    $$invalidate(0, activeTab2 = tabs[0].id);
+    log.d("Tabs", tabs);
+  });
+  const click_handler = /* @__PURE__ */ __name((tab) => $$invalidate(0, activeTab2 = tab.id), "click_handler");
+  $$self.$$set = ($$props2) => {
+    if ("tabs" in $$props2)
+      $$invalidate(1, tabs = $$props2.tabs);
+    if ("sheet" in $$props2)
+      $$invalidate(2, sheet = $$props2.sheet);
+    if ("activeTab" in $$props2)
+      $$invalidate(0, activeTab2 = $$props2.activeTab);
+    if ("efx" in $$props2)
+      $$invalidate(3, efx = $$props2.efx);
+  };
+  return [activeTab2, tabs, sheet, efx, click_handler];
+}
+__name(instance$c, "instance$c");
+const _Tabs = class _Tabs extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$c, create_fragment$k, safe_not_equal, { tabs: 1, sheet: 2, activeTab: 0, efx: 3 });
+  }
+};
+__name(_Tabs, "Tabs");
+let Tabs = _Tabs;
 const corner_svelte_svelte_type_style_lang = "";
-function create_fragment$a(ctx) {
+function create_fragment$j(ctx) {
   let svg;
   let g;
   let path0;
@@ -15268,8 +16045,8 @@ function create_fragment$a(ctx) {
     }
   };
 }
-__name(create_fragment$a, "create_fragment$a");
-function instance$7($$self, $$props, $$invalidate) {
+__name(create_fragment$j, "create_fragment$j");
+function instance$b($$self, $$props, $$invalidate) {
   let { size = 100 } = $$props;
   let { strokeWidth = 2 } = $$props;
   let { strokeColor: strokeColor2 = "#000" } = $$props;
@@ -15294,11 +16071,11 @@ function instance$7($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [size, strokeWidth, strokeColor2, rotation, fill, flip, $$props];
 }
-__name(instance$7, "instance$7");
+__name(instance$b, "instance$b");
 const _Corner = class _Corner extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$7, create_fragment$a, safe_not_equal, {
+    init(this, options, instance$b, create_fragment$j, safe_not_equal, {
       size: 0,
       strokeWidth: 1,
       strokeColor: 2,
@@ -15311,7 +16088,7 @@ const _Corner = class _Corner extends SvelteComponent {
 __name(_Corner, "Corner");
 let Corner = _Corner;
 const PortraitFrame_svelte_svelte_type_style_lang = "";
-function create_fragment$9(ctx) {
+function create_fragment$i(ctx) {
   let div1;
   let div0;
   let img;
@@ -15404,25 +16181,25 @@ function create_fragment$9(ctx) {
     }
   };
 }
-__name(create_fragment$9, "create_fragment$9");
+__name(create_fragment$i, "create_fragment$i");
 let strokeColor = "#514030";
-function instance$6($$self) {
+function instance$a($$self) {
   onMount(() => {
     log.d("PortraitFrame mounted");
   });
   return [];
 }
-__name(instance$6, "instance$6");
+__name(instance$a, "instance$a");
 const _PortraitFrame = class _PortraitFrame extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$6, create_fragment$9, safe_not_equal, {});
+    init(this, options, instance$a, create_fragment$i, safe_not_equal, {});
   }
 };
 __name(_PortraitFrame, "PortraitFrame");
 let PortraitFrame = _PortraitFrame;
 const Attribute_svelte_svelte_type_style_lang = "";
-function create_fragment$8(ctx) {
+function create_fragment$h(ctx) {
   let div3;
   let div2;
   let div0;
@@ -15452,10 +16229,10 @@ function create_fragment$8(ctx) {
         /*value*/
         ctx[1]
       );
-      attr(div0, "class", "flex2 header svelte-FF15-1hoh2n7");
-      attr(div1, "class", "flex0 header svelte-FF15-1hoh2n7");
-      attr(div2, "class", "underscore flexrow svelte-FF15-1hoh2n7");
-      attr(div3, "class", "component svelte-FF15-1hoh2n7");
+      attr(div0, "class", "flex2 header svelte-FF15-14kvs1q");
+      attr(div1, "class", "flex0 header svelte-FF15-14kvs1q");
+      attr(div2, "class", "underscore flexrow svelte-FF15-14kvs1q");
+      attr(div3, "class", "attribute svelte-FF15-14kvs1q");
     },
     m(target, anchor) {
       insert(target, div3, anchor);
@@ -15494,8 +16271,8 @@ function create_fragment$8(ctx) {
     }
   };
 }
-__name(create_fragment$8, "create_fragment$8");
-function instance$5($$self, $$props, $$invalidate) {
+__name(create_fragment$h, "create_fragment$h");
+function instance$9($$self, $$props, $$invalidate) {
   let { code } = $$props;
   let { value } = $$props;
   let { uppercase = false } = $$props;
@@ -15511,11 +16288,11 @@ function instance$5($$self, $$props, $$invalidate) {
   };
   return [code, value, uppercase];
 }
-__name(instance$5, "instance$5");
+__name(instance$9, "instance$9");
 const _Attribute = class _Attribute extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$5, create_fragment$8, safe_not_equal, { code: 0, value: 1, uppercase: 2 });
+    init(this, options, instance$9, create_fragment$h, safe_not_equal, { code: 0, value: 1, uppercase: 2 });
   }
 };
 __name(_Attribute, "Attribute");
@@ -15579,7 +16356,7 @@ function create_each_block(ctx) {
   };
 }
 __name(create_each_block, "create_each_block");
-function create_fragment$7(ctx) {
+function create_fragment$g(ctx) {
   let div;
   let current;
   let each_value = ensure_array_like(
@@ -15660,8 +16437,8 @@ function create_fragment$7(ctx) {
     }
   };
 }
-__name(create_fragment$7, "create_fragment$7");
-function instance$4($$self, $$props, $$invalidate) {
+__name(create_fragment$g, "create_fragment$g");
+function instance$8($$self, $$props, $$invalidate) {
   let { data } = $$props;
   onMount(() => {
   });
@@ -15671,17 +16448,17 @@ function instance$4($$self, $$props, $$invalidate) {
   };
   return [data];
 }
-__name(instance$4, "instance$4");
+__name(instance$8, "instance$8");
 const _AttributeCol = class _AttributeCol extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$4, create_fragment$7, safe_not_equal, { data: 0 });
+    init(this, options, instance$8, create_fragment$g, safe_not_equal, { data: 0 });
   }
 };
 __name(_AttributeCol, "AttributeCol");
 let AttributeCol = _AttributeCol;
 const PrimaryAttributes_svelte_svelte_type_style_lang = "";
-function create_fragment$6(ctx) {
+function create_fragment$f(ctx) {
   let div1;
   let div0;
   let attributecol;
@@ -15724,8 +16501,8 @@ function create_fragment$6(ctx) {
     }
   };
 }
-__name(create_fragment$6, "create_fragment$6");
-function instance$3($$self) {
+__name(create_fragment$f, "create_fragment$f");
+function instance$7($$self) {
   let data = [
     { code: "STR", value: "+2" },
     { code: "DEX", value: "+5" },
@@ -15735,17 +16512,17 @@ function instance$3($$self) {
   ];
   return [data];
 }
-__name(instance$3, "instance$3");
+__name(instance$7, "instance$7");
 const _PrimaryAttributes = class _PrimaryAttributes extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$3, create_fragment$6, safe_not_equal, {});
+    init(this, options, instance$7, create_fragment$f, safe_not_equal, {});
   }
 };
 __name(_PrimaryAttributes, "PrimaryAttributes");
 let PrimaryAttributes = _PrimaryAttributes;
 const SecondaryAttributes_svelte_svelte_type_style_lang = "";
-function create_fragment$5(ctx) {
+function create_fragment$e(ctx) {
   let div1;
   let div0;
   let attributecol;
@@ -15788,8 +16565,8 @@ function create_fragment$5(ctx) {
     }
   };
 }
-__name(create_fragment$5, "create_fragment$5");
-function instance$2($$self) {
+__name(create_fragment$e, "create_fragment$e");
+function instance$6($$self) {
   let data = [
     { code: "Defence", value: 14 },
     { code: "Magic Defence", value: 14 },
@@ -15798,17 +16575,17 @@ function instance$2($$self) {
   ];
   return [data];
 }
-__name(instance$2, "instance$2");
+__name(instance$6, "instance$6");
 const _SecondaryAttributes = class _SecondaryAttributes extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$2, create_fragment$5, safe_not_equal, {});
+    init(this, options, instance$6, create_fragment$e, safe_not_equal, {});
   }
 };
 __name(_SecondaryAttributes, "SecondaryAttributes");
 let SecondaryAttributes = _SecondaryAttributes;
 const AttributeBlock_svelte_svelte_type_style_lang = "";
-function create_fragment$4(ctx) {
+function create_fragment$d(ctx) {
   let div2;
   let div0;
   let primaryattributes;
@@ -15858,17 +16635,17 @@ function create_fragment$4(ctx) {
     }
   };
 }
-__name(create_fragment$4, "create_fragment$4");
+__name(create_fragment$d, "create_fragment$d");
 const _AttributeBlock = class _AttributeBlock extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, null, create_fragment$4, safe_not_equal, {});
+    init(this, options, null, create_fragment$d, safe_not_equal, {});
   }
 };
 __name(_AttributeBlock, "AttributeBlock");
 let AttributeBlock = _AttributeBlock;
 const TitleBlock_svelte_svelte_type_style_lang = "";
-function create_fragment$3(ctx) {
+function create_fragment$c(ctx) {
   let div3;
   return {
     c() {
@@ -15889,17 +16666,17 @@ function create_fragment$3(ctx) {
     }
   };
 }
-__name(create_fragment$3, "create_fragment$3");
+__name(create_fragment$c, "create_fragment$c");
 const _TitleBlock = class _TitleBlock extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, null, create_fragment$3, safe_not_equal, {});
+    init(this, options, null, create_fragment$c, safe_not_equal, {});
   }
 };
 __name(_TitleBlock, "TitleBlock");
 let TitleBlock = _TitleBlock;
 const AttributeSection_svelte_svelte_type_style_lang = "";
-function create_fragment$2(ctx) {
+function create_fragment$b(ctx) {
   let section;
   let div4;
   let div0;
@@ -15970,198 +16747,408 @@ function create_fragment$2(ctx) {
     }
   };
 }
-__name(create_fragment$2, "create_fragment$2");
+__name(create_fragment$b, "create_fragment$b");
 const _AttributeSection = class _AttributeSection extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, null, create_fragment$2, safe_not_equal, {});
+    init(this, options, null, create_fragment$b, safe_not_equal, {});
   }
 };
 __name(_AttributeSection, "AttributeSection");
 let AttributeSection = _AttributeSection;
-const Tabs_svelte_svelte_type_style_lang = "";
-function create_default_slot(ctx) {
-  let attributesection;
-  let current;
-  attributesection = new AttributeSection({});
+const HP_svelte_svelte_type_style_lang = "";
+function create_fragment$a(ctx) {
+  let div3;
+  let div0;
+  let div1;
+  let t1_value = (
+    /*$actor*/
+    ctx[0].system.HP.max + ""
+  );
+  let t1;
+  let div2;
+  let t2_value = (
+    /*$actor*/
+    ctx[0].system.HP.val + ""
+  );
+  let t2;
   return {
     c() {
-      create_component(attributesection.$$.fragment);
+      div3 = element("div");
+      div0 = element("div");
+      div0.textContent = "HP";
+      div1 = element("div");
+      t1 = text(t1_value);
+      div2 = element("div");
+      t2 = text(t2_value);
+      attr(div0, "class", "flex header svelte-FF15-1ca69mp");
+      attr(div1, "class", "flex max");
+      attr(div2, "class", "flex val");
+      attr(div3, "class", "hp flexrow");
     },
     m(target, anchor) {
-      mount_component(attributesection, target, anchor);
+      insert(target, div3, anchor);
+      append(div3, div0);
+      append(div3, div1);
+      append(div1, t1);
+      append(div3, div2);
+      append(div2, t2);
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*$actor*/
+      1 && t1_value !== (t1_value = /*$actor*/
+      ctx2[0].system.HP.max + ""))
+        set_data(t1, t1_value);
+      if (dirty & /*$actor*/
+      1 && t2_value !== (t2_value = /*$actor*/
+      ctx2[0].system.HP.val + ""))
+        set_data(t2, t2_value);
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div3);
+      }
+    }
+  };
+}
+__name(create_fragment$a, "create_fragment$a");
+function instance$5($$self, $$props, $$invalidate) {
+  let $actor;
+  const actor = getContext("#doc");
+  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
+  onMount(() => {
+    console.log("HP mounted");
+    console.log($actor);
+  });
+  return [$actor, actor];
+}
+__name(instance$5, "instance$5");
+const _HP = class _HP extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$5, create_fragment$a, safe_not_equal, {});
+  }
+};
+__name(_HP, "HP");
+let HP = _HP;
+const MP_svelte_svelte_type_style_lang = "";
+function create_fragment$9(ctx) {
+  let div2;
+  return {
+    c() {
+      div2 = element("div");
+      div2.innerHTML = `<div class="header svelte-FF15-1ca69mp">MP</div><div class="value"></div>`;
+      attr(div2, "class", "mp");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+    },
+    p: noop,
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+    }
+  };
+}
+__name(create_fragment$9, "create_fragment$9");
+const _MP = class _MP extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, null, create_fragment$9, safe_not_equal, {});
+  }
+};
+__name(_MP, "MP");
+let MP = _MP;
+const BP_svelte_svelte_type_style_lang = "";
+function create_fragment$8(ctx) {
+  let div2;
+  return {
+    c() {
+      div2 = element("div");
+      div2.innerHTML = `<div class="header svelte-FF15-1ca69mp">Barrier</div><div class="value"></div>`;
+      attr(div2, "class", "bp");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+    },
+    p: noop,
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+    }
+  };
+}
+__name(create_fragment$8, "create_fragment$8");
+const _BP = class _BP extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, null, create_fragment$8, safe_not_equal, {});
+  }
+};
+__name(_BP, "BP");
+let BP = _BP;
+const PointsSection_svelte_svelte_type_style_lang = "";
+function create_fragment$7(ctx) {
+  let section;
+  let div3;
+  let div0;
+  let hp;
+  let div1;
+  let mp;
+  let div2;
+  let bp;
+  let current;
+  hp = new HP({});
+  mp = new MP({});
+  bp = new BP({});
+  return {
+    c() {
+      section = element("section");
+      div3 = element("div");
+      div0 = element("div");
+      create_component(hp.$$.fragment);
+      div1 = element("div");
+      create_component(mp.$$.fragment);
+      div2 = element("div");
+      create_component(bp.$$.fragment);
+      attr(div0, "class", "flex hp pa-md svelte-FF15-1avv8ku");
+      attr(div1, "class", "flex mp pa-md svelte-FF15-1avv8ku");
+      attr(div2, "class", "flex bp pa-md svelte-FF15-1avv8ku");
+      attr(div3, "class", "flexrow section svelte-FF15-1avv8ku");
+      attr(section, "class", "organism");
+    },
+    m(target, anchor) {
+      insert(target, section, anchor);
+      append(section, div3);
+      append(div3, div0);
+      mount_component(hp, div0, null);
+      append(div3, div1);
+      mount_component(mp, div1, null);
+      append(div3, div2);
+      mount_component(bp, div2, null);
       current = true;
     },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(hp.$$.fragment, local);
+      transition_in(mp.$$.fragment, local);
+      transition_in(bp.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(hp.$$.fragment, local);
+      transition_out(mp.$$.fragment, local);
+      transition_out(bp.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(section);
+      }
+      destroy_component(hp);
+      destroy_component(mp);
+      destroy_component(bp);
+    }
+  };
+}
+__name(create_fragment$7, "create_fragment$7");
+const _PointsSection = class _PointsSection extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, null, create_fragment$7, safe_not_equal, {});
+  }
+};
+__name(_PointsSection, "PointsSection");
+let PointsSection = _PointsSection;
+function create_fragment$6(ctx) {
+  let div;
+  let attributesection;
+  let pointssection;
+  let current;
+  attributesection = new AttributeSection({});
+  pointssection = new PointsSection({});
+  return {
+    c() {
+      div = element("div");
+      create_component(attributesection.$$.fragment);
+      create_component(pointssection.$$.fragment);
+      attr(div, "class", "component");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(attributesection, div, null);
+      mount_component(pointssection, div, null);
+      current = true;
+    },
+    p: noop,
     i(local) {
       if (current)
         return;
       transition_in(attributesection.$$.fragment, local);
+      transition_in(pointssection.$$.fragment, local);
       current = true;
     },
     o(local) {
       transition_out(attributesection.$$.fragment, local);
+      transition_out(pointssection.$$.fragment, local);
       current = false;
     },
     d(detaching) {
-      destroy_component(attributesection, detaching);
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(attributesection);
+      destroy_component(pointssection);
     }
   };
 }
-__name(create_default_slot, "create_default_slot");
-function create_fragment$1(ctx) {
-  let applicationshell;
-  let updating_elementRoot;
-  let updating_stylesApp;
-  let current;
-  function applicationshell_elementRoot_binding(value) {
-    ctx[4](value);
-  }
-  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
-  function applicationshell_stylesApp_binding(value) {
-    ctx[5](value);
-  }
-  __name(applicationshell_stylesApp_binding, "applicationshell_stylesApp_binding");
-  let applicationshell_props = {
-    $$slots: { default: [create_default_slot] },
-    $$scope: { ctx }
-  };
-  if (
-    /*elementRoot*/
-    ctx[0] !== void 0
-  ) {
-    applicationshell_props.elementRoot = /*elementRoot*/
-    ctx[0];
-  }
-  if (
-    /*stylesApp*/
-    ctx[2] !== void 0
-  ) {
-    applicationshell_props.stylesApp = /*stylesApp*/
-    ctx[2];
-  }
-  applicationshell = new ApplicationShell$1({ props: applicationshell_props });
-  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
-  binding_callbacks.push(() => bind(applicationshell, "stylesApp", applicationshell_stylesApp_binding));
-  return {
-    c() {
-      create_component(applicationshell.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(applicationshell, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const applicationshell_changes = {};
-      if (dirty & /*$$scope*/
-      32768) {
-        applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      if (!updating_elementRoot && dirty & /*elementRoot*/
-      1) {
-        updating_elementRoot = true;
-        applicationshell_changes.elementRoot = /*elementRoot*/
-        ctx2[0];
-        add_flush_callback(() => updating_elementRoot = false);
-      }
-      if (!updating_stylesApp && dirty & /*stylesApp*/
-      4) {
-        updating_stylesApp = true;
-        applicationshell_changes.stylesApp = /*stylesApp*/
-        ctx2[2];
-        add_flush_callback(() => updating_stylesApp = false);
-      }
-      applicationshell.$set(applicationshell_changes);
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(applicationshell.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(applicationshell.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(applicationshell, detaching);
-    }
-  };
-}
-__name(create_fragment$1, "create_fragment$1");
-function instance$1($$self, $$props, $$invalidate) {
-  let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(8, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
-  $$self.$$.on_destroy.push(() => $$unsubscribe_documentStore());
-  let { elementRoot } = $$props;
-  let { documentStore } = $$props;
-  $$subscribe_documentStore();
-  let { document: document2 } = $$props;
-  getContext("#external").application;
-  let stylesApp;
-  setContext("#doc", documentStore);
-  onMount(() => {
-    log.d($documentStore);
-  });
-  function applicationshell_elementRoot_binding(value) {
-    elementRoot = value;
-    $$invalidate(0, elementRoot);
-  }
-  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
-  function applicationshell_stylesApp_binding(value) {
-    stylesApp = value;
-    $$invalidate(2, stylesApp);
-  }
-  __name(applicationshell_stylesApp_binding, "applicationshell_stylesApp_binding");
-  $$self.$$set = ($$props2) => {
-    if ("elementRoot" in $$props2)
-      $$invalidate(0, elementRoot = $$props2.elementRoot);
-    if ("documentStore" in $$props2)
-      $$subscribe_documentStore($$invalidate(1, documentStore = $$props2.documentStore));
-    if ("document" in $$props2)
-      $$invalidate(3, document2 = $$props2.document);
-  };
-  return [
-    elementRoot,
-    documentStore,
-    stylesApp,
-    document2,
-    applicationshell_elementRoot_binding,
-    applicationshell_stylesApp_binding
-  ];
-}
-__name(instance$1, "instance$1");
-const _ActorSheetShell = class _ActorSheetShell extends SvelteComponent {
+__name(create_fragment$6, "create_fragment$6");
+const _Attributes = class _Attributes extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$1, create_fragment$1, safe_not_equal, {
-      elementRoot: 0,
-      documentStore: 1,
-      document: 3
-    });
-  }
-  get elementRoot() {
-    return this.$$.ctx[0];
-  }
-  set elementRoot(elementRoot) {
-    this.$$set({ elementRoot });
-    flush();
-  }
-  get documentStore() {
-    return this.$$.ctx[1];
-  }
-  set documentStore(documentStore) {
-    this.$$set({ documentStore });
-    flush();
-  }
-  get document() {
-    return this.$$.ctx[3];
-  }
-  set document(document2) {
-    this.$$set({ document: document2 });
-    flush();
+    init(this, options, null, create_fragment$6, safe_not_equal, {});
   }
 };
-__name(_ActorSheetShell, "ActorSheetShell");
-let ActorSheetShell = _ActorSheetShell;
+__name(_Attributes, "Attributes");
+let Attributes = _Attributes;
+const _FoundryStyles = class _FoundryStyles {
+  /**
+   * Gets the properties object associated with the selector. Try and use a direct match otherwise all keys
+   * are iterated to find a selector string that includes the `selector`.
+   *
+   * @param {string}   selector - Selector to find.
+   *
+   * @returns { {[key: string]: string} } Properties object.
+   */
+  static getProperties(selector) {
+    if (!__privateGet(this, _initialized2)) {
+      __privateMethod(this, _initialize, initialize_fn).call(this);
+    }
+    if (__privateGet(this, _sheetMap).has(selector)) {
+      return __privateGet(this, _sheetMap).get(selector);
+    }
+    for (const key of __privateGet(this, _sheetMap).keys()) {
+      if (key.includes(selector)) {
+        return __privateGet(this, _sheetMap).get(key);
+      }
+    }
+    return void 0;
+  }
+  /**
+   * Gets a specific property value from the given `selector` and `property` key. Try and use a direct selector
+   * match otherwise all keys are iterated to find a selector string that includes `selector`.
+   *
+   * @param {string}   selector - Selector to find.
+   *
+   * @param {string}   property - Specific property to locate.
+   *
+   * @returns {string|undefined} Property value.
+   */
+  static getProperty(selector, property) {
+    if (!__privateGet(this, _initialized2)) {
+      __privateMethod(this, _initialize, initialize_fn).call(this);
+    }
+    if (__privateGet(this, _sheetMap).has(selector)) {
+      const data = __privateGet(this, _sheetMap).get(selector);
+      return isObject(data) && property in data ? data[property] : void 0;
+    }
+    for (const key of __privateGet(this, _sheetMap).keys()) {
+      if (key.includes(selector)) {
+        const data = __privateGet(this, _sheetMap).get(key);
+        if (isObject(data) && property in data) {
+          return data[property];
+        }
+      }
+    }
+    return void 0;
+  }
+};
+_sheet = new WeakMap();
+_sheetMap = new WeakMap();
+_initialized2 = new WeakMap();
+_initialize = new WeakSet();
+initialize_fn = /* @__PURE__ */ __name(function() {
+  __privateSet(this, _initialized2, true);
+  const styleSheets = Array.from(document.styleSheets).filter((entry) => entry.href !== null);
+  let sheet;
+  const foundryStyleSheet = globalThis.foundry.utils.getRoute("/css/style.css");
+  for (const styleSheet of styleSheets) {
+    let url;
+    try {
+      url = new URL(styleSheet.href);
+    } catch (err) {
+      continue;
+    }
+    if (typeof url.pathname === "string" && url.pathname === foundryStyleSheet) {
+      __privateSet(this, _sheet, sheet = styleSheet);
+      break;
+    }
+  }
+  if (!sheet) {
+    return;
+  }
+  for (const rule of sheet.cssRules) {
+    if (!(rule instanceof CSSStyleRule)) {
+      continue;
+    }
+    const obj = {};
+    for (const entry of rule.style.cssText.split(";")) {
+      const parts = entry.split(":");
+      if (parts.length < 2) {
+        continue;
+      }
+      obj[parts[0].trim()] = parts[1].trim();
+    }
+    __privateGet(this, _sheetMap).set(rule.selectorText, obj);
+  }
+}, "#initialize");
+/**
+ * Called once on initialization / first usage. Parses the core foundry style sheet.
+ */
+__privateAdd(_FoundryStyles, _initialize);
+__name(_FoundryStyles, "FoundryStyles");
+__privateAdd(_FoundryStyles, _sheet, void 0);
+/** @type {Map<string, {[key: string]: string}>} */
+__privateAdd(_FoundryStyles, _sheetMap, /* @__PURE__ */ new Map());
+__privateAdd(_FoundryStyles, _initialized2, false);
+let FoundryStyles = _FoundryStyles;
+const cssVariables = new TJSStyleManager({ docKey: "#__tjs-root-styles", version: 1 });
+const TJSIconButton_svelte_svelte_type_style_lang = "";
+const TJSToggleIconButton_svelte_svelte_type_style_lang = "";
+const TJSColordButton_svelte_svelte_type_style_lang = "";
+const FocusWrap_svelte_svelte_type_style_lang = "";
+const PickerIndicator_svelte_svelte_type_style_lang = "";
+const PickerWrapper_svelte_svelte_type_style_lang$1 = "";
+const SliderIndicator_svelte_svelte_type_style_lang = "";
+const SliderWrapper_svelte_svelte_type_style_lang = "";
+const TJSSvgFolder_svelte_svelte_type_style_lang = "";
+const AddOnPanel_svelte_svelte_type_style_lang = "";
+const ButtonBar_svelte_svelte_type_style_lang = "";
+const Input_svelte_svelte_type_style_lang = "";
+const MainLayout_svelte_svelte_type_style_lang = "";
+const Picker_svelte_svelte_type_style_lang = "";
+const SliderAlpha_svelte_svelte_type_style_lang = "";
+const SliderHue_svelte_svelte_type_style_lang = "";
+const TJSInputNumber_svelte_svelte_type_style_lang = "";
+const TJSInputText_svelte_svelte_type_style_lang = "";
+const TextInput_svelte_svelte_type_style_lang = "";
+const Wrapper_svelte_svelte_type_style_lang$1 = "";
+const PickerWrapper_svelte_svelte_type_style_lang = "";
+const Wrapper_svelte_svelte_type_style_lang = "";
+const TJSColordPicker_svelte_svelte_type_style_lang = "";
+const SavedColors_svelte_svelte_type_style_lang = "";
+const SavedColorsSummaryEnd_svelte_svelte_type_style_lang = "";
+const TJSScrollContainer_svelte_svelte_type_style_lang = "";
 const _DynReducerUtils = class _DynReducerUtils {
   /**
    * Checks for array equality between two arrays of numbers.
@@ -18032,6 +19019,1349 @@ setDocument_fn = /* @__PURE__ */ __name(function(doc) {
 }, "#setDocument");
 __name(_TJSDocument, "TJSDocument");
 let TJSDocument = _TJSDocument;
+const TJSContentEdit_svelte_svelte_type_style_lang = "";
+const _PMImpl = class _PMImpl {
+  /**
+   * Handles `options.initialSelection`: Sets the initial cursor / selection range to the start, end, or selects
+   * all text.
+   *
+   * @param {globalThis.EditorView}  view - PM editor view.
+   *
+   * @param {object}  options - TJSProseMirror options.
+   */
+  static setInitialSelection(view, options) {
+    const tr = view.state.tr;
+    const doc = tr.doc;
+    const initialSelection = options.initialSelection;
+    const type = initialSelection === "all" || initialSelection === "end" || initialSelection === "start" ? initialSelection : "start";
+    const minPos = globalThis.ProseMirror.TextSelection.atStart(doc).from;
+    const maxPos = globalThis.ProseMirror.TextSelection.atEnd(doc).to;
+    let transaction;
+    switch (type) {
+      case "all": {
+        const resolvedFrom = clamp(0, minPos, maxPos);
+        const resolvedEnd = clamp(doc.content.size, minPos, maxPos);
+        transaction = tr.setSelection(globalThis.ProseMirror.TextSelection.create(doc, resolvedFrom, resolvedEnd));
+        break;
+      }
+      case "end": {
+        const resolvedFrom = clamp(doc.content.size, minPos, maxPos);
+        const resolvedEnd = clamp(doc.content.size, minPos, maxPos);
+        transaction = tr.setSelection(globalThis.ProseMirror.TextSelection.create(doc, resolvedFrom, resolvedEnd));
+        break;
+      }
+      case "start": {
+        const resolvedFrom = clamp(0, minPos, maxPos);
+        const resolvedEnd = clamp(0, minPos, maxPos);
+        transaction = tr.setSelection(globalThis.ProseMirror.TextSelection.create(doc, resolvedFrom, resolvedEnd));
+        break;
+      }
+    }
+    if (transaction) {
+      transaction.scrollIntoView();
+      view.dispatch(transaction);
+    }
+  }
+};
+__name(_PMImpl, "PMImpl");
+let PMImpl = _PMImpl;
+const ProseMirrorKeyMaps = globalThis.ProseMirror ? globalThis.ProseMirror.ProseMirrorKeyMaps : class {
+};
+const _TJSKeyMaps = class _TJSKeyMaps extends ProseMirrorKeyMaps {
+  /**
+   * @param {globalThis.Schema}   schema - The ProseMirror schema to build keymaps for.
+   *
+   * @param {object}   [options] - Additional options to configure the plugin's behaviour.
+   *
+   * @param {Function} [options.onSave] - A function to call when Ctrl+S is pressed.
+   *
+   * @param {Function} [options.onQuit] - A function to call when Ctrl+Q is pressed.
+   */
+  constructor(schema, options) {
+    super(schema, options);
+    /** @type {Function} */
+    __privateAdd(this, _onQuit, void 0);
+    if (typeof options.onQuit === "function") {
+      __privateSet(this, _onQuit, options.onQuit);
+    }
+  }
+  // eslint-disable-next jsdoc/check-types
+  /**
+   * Swaps the Foundry default `Escape` / selectParentNode to `Mod-p` and enables `onQuit` function for `Escape`.
+   *
+   * @returns { {[key: string]: globalThis.ProseMirrorCommand} } ProseMirror keymap data.
+   */
+  buildMapping() {
+    const mapping = super.buildMapping();
+    if (__privateGet(this, _onQuit)) {
+      if (mapping["Escape"]) {
+        mapping["Mod-p"] = mapping["Escape"];
+      }
+      mapping["Escape"] = () => __privateGet(this, _onQuit).call(this);
+    }
+    return mapping;
+  }
+};
+_onQuit = new WeakMap();
+__name(_TJSKeyMaps, "TJSKeyMaps");
+let TJSKeyMaps = _TJSKeyMaps;
+const Plugin = globalThis.ProseMirror ? globalThis.ProseMirror.Plugin : class {
+};
+const _TJSPasteUUID = class _TJSPasteUUID {
+  constructor() {
+    /**
+     * Transforms pasted text. Check if pasted test matches the shape of a raw UUID. If so do a lookup and if a
+     * document is retrieved transform it to a document link.
+     *
+     * @param {string}   text - pasted text to transform.
+     *
+     * @returns {string} Potentially transformed pasted text.
+     */
+    __privateAdd(this, _transformUUID);
+  }
+  /**
+   * @returns {Plugin<any>} PM Plugin.
+   */
+  static build() {
+    const instance2 = new this();
+    return new Plugin({
+      // key: new PluginKey('tjsPasteRawUUID'), // TODO: Add back when exported by Foundry / ProseMirror bundle.
+      props: {
+        transformPastedText: (text2) => {
+          var _a2;
+          return __privateMethod(_a2 = instance2, _transformUUID, transformUUID_fn).call(_a2, text2);
+        }
+      }
+    });
+  }
+};
+_s_UUID_REGEX = new WeakMap();
+_transformUUID = new WeakSet();
+transformUUID_fn = /* @__PURE__ */ __name(function(text2) {
+  if (typeof text2 === "string") {
+    if (__privateGet(_TJSPasteUUID, _s_UUID_REGEX).test(text2)) {
+      const uuidDoc = globalThis.fromUuidSync(text2);
+      if (uuidDoc) {
+        text2 = `@UUID[${text2}]{${typeof uuidDoc.name === "string" ? uuidDoc.name : "Unknown"}}`;
+      }
+    }
+  }
+  return text2;
+}, "#transformUUID");
+__name(_TJSPasteUUID, "TJSPasteUUID");
+/**
+ * Defines a regex to check for the shape of a raw Foundry document UUID.
+ *
+ * @type {RegExp}
+ */
+__privateAdd(_TJSPasteUUID, _s_UUID_REGEX, /(\.).*([a-zA-Z0-9]{16})/);
+let TJSPasteUUID = _TJSPasteUUID;
+const TJSProseMirror_svelte_svelte_type_style_lang = "";
+function create_if_block_1(ctx) {
+  let a;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      a = element("a");
+      a.innerHTML = `<i class="fas fa-edit"></i>`;
+      attr(a, "class", "editor-edit svelte-FF15-10m2cp0");
+      attr(a, "role", "button");
+      attr(a, "tabindex", "-1");
+    },
+    m(target, anchor) {
+      insert(target, a, anchor);
+      if (!mounted) {
+        dispose = listen(
+          a,
+          "click",
+          /*click_handler*/
+          ctx[15]
+        );
+        mounted = true;
+      }
+    },
+    p: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(a);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_if_block_1, "create_if_block_1");
+function create_else_block(ctx) {
+  let div;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", "editor-enriched svelte-FF15-10m2cp0");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      div.innerHTML = /*enrichedContent*/
+      ctx[1];
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*enrichedContent*/
+      2)
+        div.innerHTML = /*enrichedContent*/
+        ctx2[1];
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
+}
+__name(create_else_block, "create_else_block");
+function create_if_block(ctx) {
+  let div;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", "editor-content svelte-FF15-10m2cp0");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      ctx[16](div);
+    },
+    p: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      ctx[16](null);
+    }
+  };
+}
+__name(create_if_block, "create_if_block");
+function create_fragment$5(ctx) {
+  let div;
+  let t;
+  let div_class_value;
+  let applyStyles_action;
+  let mounted;
+  let dispose;
+  let if_block0 = (
+    /*editorButton*/
+    ctx[5] && create_if_block_1(ctx)
+  );
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*editorActive*/
+      ctx2[3]
+    )
+      return create_if_block;
+    return create_else_block;
+  }
+  __name(select_block_type, "select_block_type");
+  let current_block_type = select_block_type(ctx);
+  let if_block1 = current_block_type(ctx);
+  return {
+    c() {
+      div = element("div");
+      if (if_block0)
+        if_block0.c();
+      t = space();
+      if_block1.c();
+      attr(div, "class", div_class_value = "editor prosemirror tjs-editor " + (Array.isArray(
+        /*options*/
+        ctx[0].classes
+      ) ? (
+        /*options*/
+        ctx[0].classes.join(" ")
+      ) : "") + " svelte-FF15-10m2cp0");
+      attr(div, "role", "textbox");
+      attr(div, "tabindex", "0");
+      toggle_class(
+        div,
+        "click-to-edit",
+        /*clickToEdit*/
+        ctx[2]
+      );
+      toggle_class(
+        div,
+        "editor-active",
+        /*editorActive*/
+        ctx[3]
+      );
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (if_block0)
+        if_block0.m(div, null);
+      append(div, t);
+      if_block1.m(div, null);
+      ctx[17](div);
+      if (!mounted) {
+        dispose = [
+          action_destroyer(applyStyles_action = applyStyles.call(
+            null,
+            div,
+            /*options*/
+            ctx[0].styles
+          )),
+          listen(
+            div,
+            "click",
+            /*onClick*/
+            ctx[9]
+          ),
+          listen(
+            div,
+            "keydown",
+            /*onKeydown*/
+            ctx[10]
+          ),
+          listen(
+            div,
+            "keyup",
+            /*onKeyup*/
+            ctx[11]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (
+        /*editorButton*/
+        ctx2[5]
+      ) {
+        if (if_block0) {
+          if_block0.p(ctx2, dirty);
+        } else {
+          if_block0 = create_if_block_1(ctx2);
+          if_block0.c();
+          if_block0.m(div, t);
+        }
+      } else if (if_block0) {
+        if_block0.d(1);
+        if_block0 = null;
+      }
+      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block1) {
+        if_block1.p(ctx2, dirty);
+      } else {
+        if_block1.d(1);
+        if_block1 = current_block_type(ctx2);
+        if (if_block1) {
+          if_block1.c();
+          if_block1.m(div, null);
+        }
+      }
+      if (dirty & /*options*/
+      1 && div_class_value !== (div_class_value = "editor prosemirror tjs-editor " + (Array.isArray(
+        /*options*/
+        ctx2[0].classes
+      ) ? (
+        /*options*/
+        ctx2[0].classes.join(" ")
+      ) : "") + " svelte-FF15-10m2cp0")) {
+        attr(div, "class", div_class_value);
+      }
+      if (applyStyles_action && is_function(applyStyles_action.update) && dirty & /*options*/
+      1)
+        applyStyles_action.update.call(
+          null,
+          /*options*/
+          ctx2[0].styles
+        );
+      if (dirty & /*options, clickToEdit*/
+      5) {
+        toggle_class(
+          div,
+          "click-to-edit",
+          /*clickToEdit*/
+          ctx2[2]
+        );
+      }
+      if (dirty & /*options, editorActive*/
+      9) {
+        toggle_class(
+          div,
+          "editor-active",
+          /*editorActive*/
+          ctx2[3]
+        );
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if (if_block0)
+        if_block0.d();
+      if_block1.d();
+      ctx[17](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_fragment$5, "create_fragment$5");
+function instance$4($$self, $$props, $$invalidate) {
+  let $doc;
+  let { content = "" } = $$props;
+  let { enrichedContent = "" } = $$props;
+  let { options = {} } = $$props;
+  const dispatch2 = createEventDispatcher();
+  const doc = new TJSDocument({ delete: onDocumentDeleted });
+  component_subscribe($$self, doc, (value) => $$invalidate(14, $doc = value));
+  let clickToEdit;
+  let editable = true;
+  let editorContentEl;
+  let editor;
+  let editorActive = false;
+  let editorButton;
+  let editorEl;
+  let keyCode;
+  let keyFocused = false;
+  onDestroy(() => {
+    if (editorActive) {
+      saveEditor({
+        remove: typeof options.button === "boolean" ? options.button : true
+      });
+    } else {
+      destroyEditor();
+    }
+  });
+  onMount(() => {
+    if (editable && !editorButton && !clickToEdit) {
+      initEditor();
+    }
+  });
+  function destroyEditor(fireCancel = true) {
+    if (editor) {
+      editor.destroy();
+      editor = void 0;
+      setTimeout(
+        () => {
+          $$invalidate(3, editorActive = false);
+        },
+        0
+      );
+      if (keyFocused) {
+        keyFocused = false;
+        setTimeout(
+          () => {
+            if (editorEl instanceof HTMLElement && editorEl?.isConnected) {
+              editorEl.focus();
+            }
+          },
+          100
+        );
+      }
+      if (fireCancel) {
+        dispatch2("editor:cancel");
+      }
+    }
+  }
+  __name(destroyEditor, "destroyEditor");
+  async function initEditor() {
+    const remove = typeof options.button === "boolean" ? options.button : true;
+    const editorOptions = {
+      ...options,
+      plugins: {
+        ...ProseMirror.defaultPlugins,
+        menu: ProseMirror.ProseMirrorMenu.build(ProseMirror.defaultSchema, {
+          destroyOnSave: remove,
+          onSave: () => saveEditor({ remove })
+        }),
+        keyMaps: TJSKeyMaps.build(ProseMirror.defaultSchema, {
+          onSave: () => saveEditor({ remove }),
+          onQuit: () => destroyEditor()
+        }),
+        tjsPasteRawUUID: TJSPasteUUID.build(),
+        ...isObject(options.plugins) ? options.plugins : {}
+      }
+    };
+    $$invalidate(3, editorActive = true);
+    await tick();
+    editor = await ProseMirrorEditor.create(editorContentEl, content, editorOptions);
+    const containerEl = editorEl.querySelector(".editor-container");
+    if (containerEl) {
+      containerEl.style = "margin: var(--tjs-editor-container-margin, 0)";
+    }
+    editor.view.focus();
+    PMImpl.setInitialSelection(editor.view, options);
+    dispatch2("editor:start");
+  }
+  __name(initEditor, "initEditor");
+  function onClick(event) {
+    if (!editorActive && clickToEdit) {
+      initEditor();
+    }
+  }
+  __name(onClick, "onClick");
+  async function onContentChanged(content2, enrichContent) {
+    if (typeof content2 === "string") {
+      if (enrichContent) {
+        $$invalidate(1, enrichedContent = await TextEditor.enrichHTML(content2, {
+          async: true,
+          secrets: globalThis.game.user.isGM
+        }));
+      } else {
+        $$invalidate(1, enrichedContent = content2);
+      }
+    } else {
+      $$invalidate(1, enrichedContent = "");
+    }
+    dispatch2("editor:enrichedContent", { enrichedContent });
+  }
+  __name(onContentChanged, "onContentChanged");
+  function onDocumentDeleted(document2) {
+    $$invalidate(0, options.document = void 0, options);
+    destroyEditor();
+    dispatch2("editor:document:deleted", { document: document2 });
+    $$invalidate(12, content = "");
+    $$invalidate(1, enrichedContent = "");
+  }
+  __name(onDocumentDeleted, "onDocumentDeleted");
+  function onKeydown(event) {
+    if (editorActive) {
+      if (event.code === "Escape" || event.code === "KeyS" && (event.ctrlKey || event.metaKey)) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    } else {
+      if (event.code === keyCode) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }
+  }
+  __name(onKeydown, "onKeydown");
+  function onKeyup(event) {
+    if (event.code === keyCode) {
+      if (!editorActive) {
+        keyFocused = true;
+        initEditor();
+      }
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+  __name(onKeyup, "onKeyup");
+  function saveEditor({ remove = true } = {}) {
+    if (editor) {
+      if (editor.isDirty()) {
+        let data = ProseMirror.dom.serializeString(editor.view.state.doc);
+        if (options?.DOMPurify && typeof options?.DOMPurify?.sanitizeWithVideo === "function") {
+          data = options.DOMPurify.sanitizeWithVideo(data);
+        }
+        if ($doc && options.fieldName) {
+          $doc.update({ [options.fieldName]: data });
+        } else {
+          $$invalidate(12, content = data);
+        }
+        dispatch2("editor:save", { content: data });
+      }
+      if (remove) {
+        destroyEditor(false);
+      }
+    }
+  }
+  __name(saveEditor, "saveEditor");
+  const click_handler = /* @__PURE__ */ __name(() => initEditor(), "click_handler");
+  function div_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      editorContentEl = $$value;
+      $$invalidate(4, editorContentEl);
+    });
+  }
+  __name(div_binding, "div_binding");
+  function div_binding_1($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      editorEl = $$value;
+      $$invalidate(6, editorEl);
+    });
+  }
+  __name(div_binding_1, "div_binding_1");
+  $$self.$$set = ($$props2) => {
+    if ("content" in $$props2)
+      $$invalidate(12, content = $$props2.content);
+    if ("enrichedContent" in $$props2)
+      $$invalidate(1, enrichedContent = $$props2.enrichedContent);
+    if ("options" in $$props2)
+      $$invalidate(0, options = $$props2.options);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*options, editable*/
+    8193) {
+      {
+        $$invalidate(13, editable = typeof options.editable === "boolean" ? options.editable : true);
+        if (!editable) {
+          destroyEditor();
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*editorActive, editable, options*/
+    8201) {
+      $$invalidate(2, clickToEdit = !editorActive && editable && (typeof options.clickToEdit === "boolean" ? options.clickToEdit : false));
+    }
+    if ($$self.$$.dirty & /*editorActive, editable, options, clickToEdit*/
+    8205) {
+      $$invalidate(5, editorButton = !editorActive && editable && (typeof options.button === "boolean" ? options.button : true) && !clickToEdit);
+    }
+    if ($$self.$$.dirty & /*options*/
+    1) {
+      keyCode = typeof options.keyCode === "string" ? options.keyCode : "Enter";
+    }
+    if ($$self.$$.dirty & /*options, $doc*/
+    16385) {
+      if (options.document !== void 0) {
+        if (!(options.document instanceof globalThis.foundry.abstract.Document)) {
+          throw new TypeError(`TJSProseMirror error: 'options.document' is not a Foundry document.`);
+        }
+        if (typeof options.fieldName !== "string") {
+          throw new TypeError(`TJSProseMirror error: 'options.document' is defined, but 'options.fieldName' is not a string.`);
+        }
+        if (options.document !== $doc) {
+          $$invalidate(1, enrichedContent = "");
+          $$invalidate(12, content = "");
+          destroyEditor();
+        }
+        doc.set(options.document);
+      } else {
+        if ($doc) {
+          $$invalidate(1, enrichedContent = "");
+          $$invalidate(12, content = "");
+          destroyEditor();
+          doc.set(void 0);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*$doc, options, content*/
+    20481) {
+      {
+        $$invalidate(12, content = $doc !== void 0 ? globalThis.foundry.utils.getProperty($doc, options.fieldName) : typeof content === "string" ? content : "");
+        onContentChanged(content, typeof options.enrichContent === "boolean" ? options.enrichContent : true);
+      }
+    }
+  };
+  return [
+    options,
+    enrichedContent,
+    clickToEdit,
+    editorActive,
+    editorContentEl,
+    editorButton,
+    editorEl,
+    doc,
+    initEditor,
+    onClick,
+    onKeydown,
+    onKeyup,
+    content,
+    editable,
+    $doc,
+    click_handler,
+    div_binding,
+    div_binding_1
+  ];
+}
+__name(instance$4, "instance$4");
+const _TJSProseMirror = class _TJSProseMirror extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$4, create_fragment$5, safe_not_equal, {
+      content: 12,
+      enrichedContent: 1,
+      options: 0
+    });
+  }
+};
+__name(_TJSProseMirror, "TJSProseMirror");
+let TJSProseMirror = _TJSProseMirror;
+const TJSTinyMCE_svelte_svelte_type_style_lang = "";
+const TJSIconFolder_svelte_svelte_type_style_lang = "";
+const TJSSelect_svelte_svelte_type_style_lang = "";
+const TJSToggleLabel_svelte_svelte_type_style_lang = "";
+const ResizeHitBox_svelte_svelte_type_style_lang = "";
+const SelectedBorder_svelte_svelte_type_style_lang = "";
+const PositionControl_svelte_svelte_type_style_lang = "";
+const TJSPositionControlLayer_svelte_svelte_type_style_lang = "";
+const TJSMenu_svelte_svelte_type_style_lang = "";
+const TJSContextMenuImpl_svelte_svelte_type_style_lang = "";
+const SettingEntry_svelte_svelte_type_style_lang = "";
+const TJSSettingsEdit_svelte_svelte_type_style_lang = "";
+const SectionColor_svelte_svelte_type_style_lang = "";
+cssVariables.setProperties({
+  // For components w/ transparent background checkered pattern.
+  "--tjs-checkerboard-background-dark": "rgb(205, 205, 205)",
+  "--tjs-checkerboard-background-10": `url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none"  viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="5" height="5" fill="transparent" /><rect x="5" y="5" width="5" height="5" fill="transparent" /><rect x="5" y="0" width="5" height="5" fill="white" /><rect x="0" y="5" width="5" height="5" fill="white" /></svg>') 0 0 / 10px 10px, var(--tjs-checkerboard-background-dark, rgb(205, 205, 205))`
+}, false);
+cssVariables.setProperties({
+  "--tjs-action-ripple-background": "rgba(0, 0, 0, 0.35)"
+}, false);
+cssVariables.setProperties({
+  "--tjs-icon-button-background-hover": "rgba(0, 0, 0, 0.10)",
+  "--tjs-icon-button-background-selected": "rgba(0, 0, 0, 0.20)"
+}, false);
+{
+  const props = FoundryStyles.getProperties('input[type="text"], input[type="number"]');
+  if (isObject(props)) {
+    cssVariables.setProperties({
+      "--tjs-input-background": "background" in props ? props.background : "rgba(0, 0, 0, 0.05)",
+      "--tjs-input-border": "border" in props ? props.border : "1px solid var(--color-border-light-tertiary)",
+      "--tjs-input-border-radius": "border-radius" in props ? props["border-radius"] : "3px",
+      "--tjs-input-height": "height" in props ? props.height : "var(--form-field-height)",
+      "--tjs-input-min-width": "min-width" in props ? props["min-width"] : "20px",
+      "--tjs-input-padding": "padding" in props ? props["padding"] : "1px 3px",
+      "--tjs-input-width": "width" in props ? props.width : "calc(100% - 2px)",
+      // Set default values that are only to be referenced and not set.
+      "--_tjs-default-input-height": "height" in props ? props.height : "var(--form-field-height)",
+      // Set directly / no lookup:
+      "--tjs-input-border-color": "var(--color-border-light-tertiary)"
+    }, false);
+  }
+}
+cssVariables.setProperties({
+  // `popup` is for components that are slightly elevated, but connected to an application;
+  // see: TJSMenu / TJSContextMenu / TJSColordPicker
+  "--tjs-default-popup-background": "var(--color-text-dark-header, #23221d)",
+  "--tjs-default-popup-border": "1px solid var(--color-border-dark, #000)",
+  "--tjs-default-popup-box-shadow": "0 0 2px var(--color-shadow-dark, #000)",
+  "--tjs-default-popup-primary-color": "var(--color-text-light-primary, #b5b3a4)",
+  "--tjs-default-popup-highlight-color": "var(--color-text-light-highlight, #f0f0e0)",
+  // `popover` is for components that are elevated and independent; see: TJSContextMenu
+  "--tjs-default-popover-border": "1px solid var(--color-border-dark, #000)",
+  "--tjs-default-popover-box-shadow": "0 0 10px var(--color-shadow-dark, #000)"
+}, false);
+Hooks.on("PopOut:loading", (app, popout) => {
+  if (app instanceof SvelteApplication) {
+    popout.document.addEventListener("DOMContentLoaded", () => cssVariables.clone(popout.document));
+  }
+});
+function create_fragment$4(ctx) {
+  let tjsprosemirror;
+  let updating_content;
+  let updating_enrichedContent;
+  let current;
+  const tjsprosemirror_spread_levels = [
+    { options: (
+      /*options*/
+      ctx[3]
+    ) },
+    /*$$restProps*/
+    ctx[4]
+  ];
+  function tjsprosemirror_content_binding(value) {
+    ctx[6](value);
+  }
+  __name(tjsprosemirror_content_binding, "tjsprosemirror_content_binding");
+  function tjsprosemirror_enrichedContent_binding(value) {
+    ctx[7](value);
+  }
+  __name(tjsprosemirror_enrichedContent_binding, "tjsprosemirror_enrichedContent_binding");
+  let tjsprosemirror_props = {};
+  for (let i = 0; i < tjsprosemirror_spread_levels.length; i += 1) {
+    tjsprosemirror_props = assign(tjsprosemirror_props, tjsprosemirror_spread_levels[i]);
+  }
+  if (
+    /*content*/
+    ctx[0] !== void 0
+  ) {
+    tjsprosemirror_props.content = /*content*/
+    ctx[0];
+  }
+  if (
+    /*enrichedContent*/
+    ctx[1] !== void 0
+  ) {
+    tjsprosemirror_props.enrichedContent = /*enrichedContent*/
+    ctx[1];
+  }
+  tjsprosemirror = new TJSProseMirror({ props: tjsprosemirror_props });
+  binding_callbacks.push(() => bind(tjsprosemirror, "content", tjsprosemirror_content_binding));
+  binding_callbacks.push(() => bind(tjsprosemirror, "enrichedContent", tjsprosemirror_enrichedContent_binding));
+  tjsprosemirror.$on(
+    "editor:cancel",
+    /*editor_cancel_handler*/
+    ctx[8]
+  );
+  tjsprosemirror.$on("editor:enrichedContent", doSomethingWithEnrichedContent);
+  tjsprosemirror.$on(
+    "editor:save",
+    /*editor_save_handler*/
+    ctx[9]
+  );
+  tjsprosemirror.$on(
+    "editor:start",
+    /*editor_start_handler*/
+    ctx[10]
+  );
+  return {
+    c() {
+      create_component(tjsprosemirror.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(tjsprosemirror, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const tjsprosemirror_changes = dirty & /*options, $$restProps*/
+      24 ? get_spread_update(tjsprosemirror_spread_levels, [
+        dirty & /*options*/
+        8 && { options: (
+          /*options*/
+          ctx2[3]
+        ) },
+        dirty & /*$$restProps*/
+        16 && get_spread_object(
+          /*$$restProps*/
+          ctx2[4]
+        )
+      ]) : {};
+      if (!updating_content && dirty & /*content*/
+      1) {
+        updating_content = true;
+        tjsprosemirror_changes.content = /*content*/
+        ctx2[0];
+        add_flush_callback(() => updating_content = false);
+      }
+      if (!updating_enrichedContent && dirty & /*enrichedContent*/
+      2) {
+        updating_enrichedContent = true;
+        tjsprosemirror_changes.enrichedContent = /*enrichedContent*/
+        ctx2[1];
+        add_flush_callback(() => updating_enrichedContent = false);
+      }
+      tjsprosemirror.$set(tjsprosemirror_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(tjsprosemirror.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(tjsprosemirror.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(tjsprosemirror, detaching);
+    }
+  };
+}
+__name(create_fragment$4, "create_fragment$4");
+function doSomethingWithEnrichedContent(event) {
+}
+__name(doSomethingWithEnrichedContent, "doSomethingWithEnrichedContent");
+function instance$3($$self, $$props, $$invalidate) {
+  const omit_props_names = ["content", "attr"];
+  let $$restProps = compute_rest_props($$props, omit_props_names);
+  let $doc;
+  let { content = "" } = $$props;
+  let { attr: attr2 = "" } = $$props;
+  const doc = getContext("#doc");
+  component_subscribe($$self, doc, (value) => $$invalidate(11, $doc = value));
+  console.log("$doc", $doc);
+  const options = {
+    document: $doc,
+    // An item to edit description; note: replace w/ valid doc.
+    fieldName: attr2
+    // Path to data in `a.b.c`; note: this is a v10 field name.
+  };
+  let enrichedContent;
+  function tjsprosemirror_content_binding(value) {
+    content = value;
+    $$invalidate(0, content);
+  }
+  __name(tjsprosemirror_content_binding, "tjsprosemirror_content_binding");
+  function tjsprosemirror_enrichedContent_binding(value) {
+    enrichedContent = value;
+    $$invalidate(1, enrichedContent);
+  }
+  __name(tjsprosemirror_enrichedContent_binding, "tjsprosemirror_enrichedContent_binding");
+  const editor_cancel_handler = /* @__PURE__ */ __name(() => console.log("! event - editor:cancel"), "editor_cancel_handler");
+  const editor_save_handler = /* @__PURE__ */ __name((event) => console.log(`! event - editor:save - ${event.detail.content}`), "editor_save_handler");
+  const editor_start_handler = /* @__PURE__ */ __name(() => console.log("! event - editor:start"), "editor_start_handler");
+  $$self.$$set = ($$new_props) => {
+    $$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
+    $$invalidate(4, $$restProps = compute_rest_props($$props, omit_props_names));
+    if ("content" in $$new_props)
+      $$invalidate(0, content = $$new_props.content);
+    if ("attr" in $$new_props)
+      $$invalidate(5, attr2 = $$new_props.attr);
+  };
+  return [
+    content,
+    enrichedContent,
+    doc,
+    options,
+    $$restProps,
+    attr2,
+    tjsprosemirror_content_binding,
+    tjsprosemirror_enrichedContent_binding,
+    editor_cancel_handler,
+    editor_save_handler,
+    editor_start_handler
+  ];
+}
+__name(instance$3, "instance$3");
+let ProseMirror$1 = (_a = class extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$3, create_fragment$4, safe_not_equal, { content: 0, attr: 5 });
+  }
+  get content() {
+    return this.$$.ctx[0];
+  }
+  set content(content) {
+    this.$$set({ content });
+    flush();
+  }
+  get attr() {
+    return this.$$.ctx[5];
+  }
+  set attr(attr2) {
+    this.$$set({ attr: attr2 });
+    flush();
+  }
+}, __name(_a, "ProseMirror"), _a);
+const ScrollingContainer_svelte_svelte_type_style_lang = "";
+function fallback_block(ctx) {
+  let t;
+  return {
+    c() {
+      t = text("Scrolling Content");
+    },
+    m(target, anchor) {
+      insert(target, t, anchor);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(t);
+      }
+    }
+  };
+}
+__name(fallback_block, "fallback_block");
+function create_fragment$3(ctx) {
+  let div1;
+  let div0;
+  let current;
+  let mounted;
+  let dispose;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[4].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[3],
+    null
+  );
+  const default_slot_or_fallback = default_slot || fallback_block();
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      if (default_slot_or_fallback)
+        default_slot_or_fallback.c();
+      attr(div0, "class", "content" + scrollClass + " svelte-FF15-1pg4qtf");
+      attr(div1, "class", "container svelte-FF15-1pg4qtf");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      if (default_slot_or_fallback) {
+        default_slot_or_fallback.m(div0, null);
+      }
+      current = true;
+      if (!mounted) {
+        dispose = [
+          listen(
+            div0,
+            "scroll",
+            /*onScroll*/
+            ctx[0]
+          ),
+          action_destroyer(
+            /*initialScroll*/
+            ctx[1].call(null, div0)
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        8)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[3],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[3]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[3],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot_or_fallback, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot_or_fallback, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      if (default_slot_or_fallback)
+        default_slot_or_fallback.d(detaching);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_fragment$3, "create_fragment$3");
+let scrollClass = "";
+function instance$2($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { scrollTop = 0 } = $$props;
+  function onScroll(event) {
+    $$invalidate(2, scrollTop = event.target.scrollTop);
+  }
+  __name(onScroll, "onScroll");
+  function initialScroll(node) {
+    node.scrollTop = scrollTop;
+    return;
+  }
+  __name(initialScroll, "initialScroll");
+  $$self.$$set = ($$props2) => {
+    if ("scrollTop" in $$props2)
+      $$invalidate(2, scrollTop = $$props2.scrollTop);
+    if ("$$scope" in $$props2)
+      $$invalidate(3, $$scope = $$props2.$$scope);
+  };
+  return [onScroll, initialScroll, scrollTop, $$scope, slots];
+}
+__name(instance$2, "instance$2");
+const _ScrollingContainer = class _ScrollingContainer extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$2, create_fragment$3, safe_not_equal, { scrollTop: 2 });
+  }
+};
+__name(_ScrollingContainer, "ScrollingContainer");
+let ScrollingContainer = _ScrollingContainer;
+function create_default_slot$1(ctx) {
+  let prosemirror;
+  let current;
+  prosemirror = new ProseMirror$1({
+    props: { attr: "system.biography.profile" }
+  });
+  return {
+    c() {
+      create_component(prosemirror.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(prosemirror, target, anchor);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(prosemirror.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(prosemirror.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(prosemirror, detaching);
+    }
+  };
+}
+__name(create_default_slot$1, "create_default_slot$1");
+function create_fragment$2(ctx) {
+  let scrollingcontainer;
+  let current;
+  scrollingcontainer = new ScrollingContainer({
+    props: {
+      $$slots: { default: [create_default_slot$1] },
+      $$scope: { ctx }
+    }
+  });
+  return {
+    c() {
+      create_component(scrollingcontainer.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(scrollingcontainer, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const scrollingcontainer_changes = {};
+      if (dirty & /*$$scope*/
+      1) {
+        scrollingcontainer_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      scrollingcontainer.$set(scrollingcontainer_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(scrollingcontainer.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(scrollingcontainer.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(scrollingcontainer, detaching);
+    }
+  };
+}
+__name(create_fragment$2, "create_fragment$2");
+const _Profile = class _Profile extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, null, create_fragment$2, safe_not_equal, {});
+  }
+};
+__name(_Profile, "Profile");
+let Profile = _Profile;
+function create_default_slot(ctx) {
+  let tabs_1;
+  let current;
+  tabs_1 = new Tabs({
+    props: { tabs: (
+      /*tabs*/
+      ctx[3]
+    ), activeTab }
+  });
+  return {
+    c() {
+      create_component(tabs_1.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(tabs_1, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const tabs_1_changes = {};
+      if (dirty & /*tabs*/
+      8)
+        tabs_1_changes.tabs = /*tabs*/
+        ctx2[3];
+      tabs_1.$set(tabs_1_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(tabs_1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(tabs_1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(tabs_1, detaching);
+    }
+  };
+}
+__name(create_default_slot, "create_default_slot");
+function create_fragment$1(ctx) {
+  let applicationshell;
+  let updating_elementRoot;
+  let updating_stylesApp;
+  let current;
+  function applicationshell_elementRoot_binding(value) {
+    ctx[5](value);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  function applicationshell_stylesApp_binding(value) {
+    ctx[6](value);
+  }
+  __name(applicationshell_stylesApp_binding, "applicationshell_stylesApp_binding");
+  let applicationshell_props = {
+    $$slots: { default: [create_default_slot] },
+    $$scope: { ctx }
+  };
+  if (
+    /*elementRoot*/
+    ctx[0] !== void 0
+  ) {
+    applicationshell_props.elementRoot = /*elementRoot*/
+    ctx[0];
+  }
+  if (
+    /*stylesApp*/
+    ctx[2] !== void 0
+  ) {
+    applicationshell_props.stylesApp = /*stylesApp*/
+    ctx[2];
+  }
+  applicationshell = new ApplicationShell$1({ props: applicationshell_props });
+  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
+  binding_callbacks.push(() => bind(applicationshell, "stylesApp", applicationshell_stylesApp_binding));
+  return {
+    c() {
+      create_component(applicationshell.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(applicationshell, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const applicationshell_changes = {};
+      if (dirty & /*$$scope, tabs*/
+      32776) {
+        applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      if (!updating_elementRoot && dirty & /*elementRoot*/
+      1) {
+        updating_elementRoot = true;
+        applicationshell_changes.elementRoot = /*elementRoot*/
+        ctx2[0];
+        add_flush_callback(() => updating_elementRoot = false);
+      }
+      if (!updating_stylesApp && dirty & /*stylesApp*/
+      4) {
+        updating_stylesApp = true;
+        applicationshell_changes.stylesApp = /*stylesApp*/
+        ctx2[2];
+        add_flush_callback(() => updating_stylesApp = false);
+      }
+      applicationshell.$set(applicationshell_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(applicationshell.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(applicationshell.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(applicationshell, detaching);
+    }
+  };
+}
+__name(create_fragment$1, "create_fragment$1");
+let activeTab = "attributes";
+function instance$1($$self, $$props, $$invalidate) {
+  let tabs;
+  let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(8, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
+  $$self.$$.on_destroy.push(() => $$unsubscribe_documentStore());
+  let { elementRoot } = $$props;
+  let { documentStore } = $$props;
+  $$subscribe_documentStore();
+  let { document: document2 } = $$props;
+  getContext("#external").application;
+  const defaultTabs = [
+    {
+      label: localize("FF15.Tabs.Attributes"),
+      id: "attributes",
+      component: Attributes
+    },
+    {
+      label: localize("FF15.Tabs.Profile"),
+      id: "profile",
+      component: Profile
+    }
+  ];
+  let stylesApp;
+  setContext("#doc", documentStore);
+  onMount(() => {
+    log.d($documentStore);
+  });
+  function applicationshell_elementRoot_binding(value) {
+    elementRoot = value;
+    $$invalidate(0, elementRoot);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  function applicationshell_stylesApp_binding(value) {
+    stylesApp = value;
+    $$invalidate(2, stylesApp);
+  }
+  __name(applicationshell_stylesApp_binding, "applicationshell_stylesApp_binding");
+  $$self.$$set = ($$props2) => {
+    if ("elementRoot" in $$props2)
+      $$invalidate(0, elementRoot = $$props2.elementRoot);
+    if ("documentStore" in $$props2)
+      $$subscribe_documentStore($$invalidate(1, documentStore = $$props2.documentStore));
+    if ("document" in $$props2)
+      $$invalidate(4, document2 = $$props2.document);
+  };
+  $$invalidate(3, tabs = defaultTabs);
+  return [
+    elementRoot,
+    documentStore,
+    stylesApp,
+    tabs,
+    document2,
+    applicationshell_elementRoot_binding,
+    applicationshell_stylesApp_binding
+  ];
+}
+__name(instance$1, "instance$1");
+const _ActorSheetShell = class _ActorSheetShell extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$1, create_fragment$1, safe_not_equal, {
+      elementRoot: 0,
+      documentStore: 1,
+      document: 4
+    });
+  }
+  get elementRoot() {
+    return this.$$.ctx[0];
+  }
+  set elementRoot(elementRoot) {
+    this.$$set({ elementRoot });
+    flush();
+  }
+  get documentStore() {
+    return this.$$.ctx[1];
+  }
+  set documentStore(documentStore) {
+    this.$$set({ documentStore });
+    flush();
+  }
+  get document() {
+    return this.$$.ctx[4];
+  }
+  set document(document2) {
+    this.$$set({ document: document2 });
+    flush();
+  }
+};
+__name(_ActorSheetShell, "ActorSheetShell");
+let ActorSheetShell = _ActorSheetShell;
 function create_fragment(ctx) {
   let applicationshell;
   let updating_elementRoot;

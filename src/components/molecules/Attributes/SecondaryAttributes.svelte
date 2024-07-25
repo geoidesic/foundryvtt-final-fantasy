@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import AttributeCol from "~/src/components/molecules/AttributeCol.svelte";
+  import AttributeCol from "~/src/components/molecules/Attributes/AttributeCol.svelte";
 
 
   let data = [
@@ -18,7 +18,7 @@
   </template>
 
   <style lang='sass'>
-    @import '../../styles/Mixins.sass'
+    @import '../../../styles/Mixins.sass'
   
     .molecule
       padding: 1em

@@ -38,13 +38,20 @@
             "speed": {
               "val": 0
             }
-          },
-          "maxMp": {
+          }
+        },
+        "points":{
+          "MP": {
+            "max": 5,
             "val": 0
           },
-          "maxHp": {
+          "HP": {
             "val": 0,
-            "barrier": 0
+            "max": 25
+          },
+          "BP": {
+            "val": 0,
+            "max": 5
           }
         }
       },

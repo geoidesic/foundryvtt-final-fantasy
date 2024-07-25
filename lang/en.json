@@ -1,4 +1,11 @@
 {
+  "TYPES": {
+    "Actor": {
+      "PC": "Player Character",
+      "NPC": "Non-Player Character",
+      "Monster": "Monster"
+    }
+  },
   "FF15": {
     "Title": "Final Fantasy TTRPG",
     "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
@@ -9,6 +16,10 @@
       "Issues": "If you have any issues, please report them on ",
       "Github": "GitHub.",
       "CreatedBy": "system is created by "
+    },
+    "Tabs": {
+      "Attributes": "Attributes",
+      "Profile": "Profile"
     },
     "SystemName": "Final Fantasy",
     "Setting": {

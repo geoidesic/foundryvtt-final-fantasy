@@ -6,11 +6,10 @@
   import { getActorOwner, ucfirst } from "~/src/helpers/utility";
   import { localize } from "#runtime/svelte/helper";
 
-  import AttributeSection from "~/src/components/organisms/AttributeSection.svelte";
-
-  // import Shield from "~/components/Shield.svelte";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
-  // import templates from "../../../template.json";
+  import Attributes from "~/src/components/pages/actor/Attributes.svelte";
+  import Profile from "~/src/components/pages/actor/Profile.svelte";
+
 
   export let elementRoot; //- passed in by SvelteApplication
   export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
@@ -61,8 +60,8 @@
 
   // Tabs
   const defaultTabs = [
-    // { label: "Attributes", id: "attributes", component: Attributes },
-    // { label: "Biography", id: "biography", component: Biography },
+    { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes },
+    { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile },
     // { label: "Abilities", id: "abilities", component: Abilities },
     // { label: "Journal", id: "journal", component: Journal },
   ];
@@ -107,7 +106,7 @@
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot bind:stylesApp)
-    AttributeSection
+    Tabs(tabs="{tabs}" activeTab="{activeTab}")
 </template>
 
 <style lang="sass">

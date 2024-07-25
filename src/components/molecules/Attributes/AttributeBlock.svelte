@@ -1,8 +1,8 @@
 <script>
 import { onMount } from 'svelte';
 import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
-import PrimaryAttributes from "~/src/components/molecules/PrimaryAttributes.svelte";
-import SecondaryAttributes from "~/src/components/molecules/SecondaryAttributes.svelte";
+import PrimaryAttributes from "~/src/components/molecules/Attributes/PrimaryAttributes.svelte";
+import SecondaryAttributes from "~/src/components/molecules/Attributes/SecondaryAttributes.svelte";
 
 </script>
 <template lang='pug'>
@@ -14,7 +14,7 @@ import SecondaryAttributes from "~/src/components/molecules/SecondaryAttributes.
     
 </template>
 <style lang='sass'>
-  @import '../../styles/Mixins.sass'
+  @import '../../../styles/Mixins.sass'
 
   .molecule
     border: 5px ridge var(--border-color)

@@ -13,5 +13,5 @@ onMount(() => {
       Attribute(code="{code}" value="{value}")  
 </template>
 <style lang='sass'>
-  @import '../../styles/Mixins.sass'
+  @import '../../../styles/Mixins.sass'
 </style>

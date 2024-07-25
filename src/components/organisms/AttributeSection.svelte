@@ -1,7 +1,7 @@
 <script>
 import { onMount } from 'svelte';
 import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
-import AttributeBlock from "~/src/components/molecules/AttributeBlock.svelte";
+import AttributeBlock from "~/src/components/molecules/Attributes/AttributeBlock.svelte";
 import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
 
 </script>
