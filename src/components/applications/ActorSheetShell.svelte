@@ -63,9 +63,9 @@
   // Tabs
   const defaultTabs = [
     { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes },
-    { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile },
     { label: localize("FF15.Tabs.Abilities"), id: "abilities", component: Abilities },
     { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory },
+    { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile },
     // { label: "Abilities", id: "abilities", component: Abilities },
     // { label: "Journal", id: "journal", component: Journal },
   ];

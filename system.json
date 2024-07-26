@@ -32,6 +32,14 @@
       }
     },
     {
+      "name": "abilities",
+      "label": "FF15 Abilities",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
       "name": "actors",
       "label": "FF15 Pregenerated Characters",
       "type": "Actor",
