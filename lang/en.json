@@ -4,6 +4,10 @@
       "PC": "Player Character",
       "NPC": "Non-Player Character",
       "Monster": "Monster"
+    },
+    "Item": {
+      "jobs": "Job",
+      "abilities": "Ability"
     }
   },
   "FF15": {

@@ -8,6 +8,7 @@ import { registerSettings } from "~/src/settings"
 import WelcomeApplication from "~/src/components/applications/WelcomeApplication"
 import FF15Actor from '~/src/extensions/actor.js'
 import FF15ActorSheet from "~/src/components/applications/ActorSheet";
+import FF15ItemSheet from "~/src/components/applications/ItemSheet";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 
 
@@ -35,6 +36,10 @@ Hooks.once("init", async (a, b, c) => {
   Actors.registerSheet("foundryvtt-final-fantasy", FF15ActorSheet, {
     makeDefault: true,
   });
+  Items.registerSheet("surge", FF15ItemSheet, {
+    makeDefault: true,
+  });
+
   
   Hooks.call("gff15.initIsComplete");
 });
