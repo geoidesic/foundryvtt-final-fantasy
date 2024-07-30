@@ -6,13 +6,20 @@
       "Monster": "Monster"
     },
     "Item": {
-      "jobs": "Job",
-      "abilities": "Ability"
+      "action": "Action",
+      "equipment": "Equipment",
+      "job": "Job",
+      "telegraph": "Telegraph",
+      "trait": "Trait"
     }
   },
   "FF15": {
     "Title": "Final Fantasy TTRPG",
     "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
+    "Types": {
+      "Item": "Item",
+      "Actor": "Actor"
+    },
     "Welcome": {
       "To": "Welcome to the",
       "Introduction": "Introduction",

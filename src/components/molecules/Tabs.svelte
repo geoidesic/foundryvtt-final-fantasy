@@ -46,8 +46,14 @@
     @include border
     height: 100%
     width: 100%
+
     .tab-content
       margin-top: -8px
+      z-index: 1
+      background: url(../ui/parchment.jpg) repeat
+      border: 1px solid transparent
+      border-radius: 10px
+
     .tabs-list 
       @include flex-row
       @include flex-space-evenly
@@ -59,6 +65,7 @@
       padding: 0.25rem
       height: 100%
       flex: 0
+      z-index: 0
 
       button 
         --button-border-radius: 5px

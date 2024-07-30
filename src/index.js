@@ -36,7 +36,7 @@ Hooks.once("init", async (a, b, c) => {
   Actors.registerSheet("foundryvtt-final-fantasy", FF15ActorSheet, {
     makeDefault: true,
   });
-  Items.registerSheet("surge", FF15ItemSheet, {
+  Items.registerSheet("foundryvtt-final-fantasy", FF15ItemSheet, {
     makeDefault: true,
   });
 

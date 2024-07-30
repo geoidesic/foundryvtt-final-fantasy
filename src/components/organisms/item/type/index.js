@@ -1,7 +1,7 @@
 export { default as ActionHeader } from "./action/Header.svelte";
 export { default as ActionTabs } from "./action/Tabs.svelte";
 export { default as EquipmentHeader } from "./equipment/Header.svelte";
-export { default as EquipmentTabs } from "./equipment/Tabs.svelte";
+export { default as EquipmentTabs } from "./equipment/EquipmentTabs.svelte";
 export { default as JobHeader } from "./job/Header.svelte";
 export { default as JobTabs } from "./job/Tabs.svelte";
 export { default as TelegraphHeader } from "./telegraph/Header.svelte";

@@ -99,7 +99,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
-      this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : doc?.name ?? "No Document Assigned";
+      this.reactive.title = doc?.isToken ? `[Token] ${doc?.name}` : `[${this.reactive.title}: ${doc?.type}] `+doc?.name ?? "No Document Assigned";
     }
   }
 

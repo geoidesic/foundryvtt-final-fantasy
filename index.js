@@ -20952,7 +20952,7 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
         return this._onDropFolder(event, data);
       }
       default: {
-        console.error(`Surge | Impossible type "${data.type}" in _onDrop.`);
+        log.e(`Impossible type "${data.type}" in _onDrop.`);
         return;
       }
     }
@@ -20997,7 +20997,7 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
   async _onDropFolder(event, data) {
     const actor = this.reactive.document;
     const folder = await Folder.implementation.fromDropData(data);
-    if (!folder && data.documentName !== "Item" && !actor.isOwner && data.uuid != "Compendium.surge.skills.Folder.CcxCapkN4Pvspsen") {
+    if (!folder && data.documentName !== "Item" && !actor.isOwner) {
       return [];
     }
     if (folder.contents.length) {
