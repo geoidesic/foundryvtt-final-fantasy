@@ -2,12 +2,13 @@ import { FFActorDataModel } from './baseActor';
 import { localize } from "#runtime/svelte/helper";
 
 const {
-  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField
+  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField
 } = foundry.data.fields;
 
 export class PCModel extends FFActorDataModel {
   static defineSchema() {
     return {
+      isEditing: new BooleanField({initial: false}),
       biography: new HTMLField(),
       points: new SchemaField({
         MP: new SchemaField({

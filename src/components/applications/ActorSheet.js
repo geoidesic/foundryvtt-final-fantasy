@@ -1,7 +1,7 @@
 import ActorSheetShell from "./ActorSheetShell.svelte";
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
-import { log } from "../../helpers/utility";
+import { localize } from "#runtime/svelte/helper";
 
 export default class FF15ActorSheet extends SvelteDocumentSheet {
 
@@ -18,6 +18,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
       minWidth: 660,
       id: `${SYSTEM_ID}--actor-sheet`,
       classes: [SYSTEM_CODE],
+      headerButtonNoLabel: game.settings.get(SYSTEM_ID, 'applicationWindowHeaderIconsOnly') || false, //- @why: without this the initial value on first load of this app after a page refresh will be wrong, despite a reactive setting in the .svelte template; I don't really know why
       dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
       svelte: {
         class: ActorSheetShell,
@@ -27,11 +28,13 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   _getHeaderButtons() {
+    log.d('_getHeaderButtons')
     const buttons = super._getHeaderButtons();
+    const storage = this.reactive.sessionStorage;
     const canConfigure = game.user.isGM || (this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE"));
     if (this.reactive.document.documentName === "Actor") {
       if (canConfigure) {
-        buttons.splice(1, 0, {
+        buttons.unshift({
           label: this.token ? "Token" : "TOKEN.TitlePrototype",
           class: "configure-token",
           icon: "fas fa-user-circle",
@@ -39,7 +42,42 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
         });
       }
     }
+    const canEdit = game.user.isGM || (this.reactive.document.isOwner);
+    if (canEdit) {
+      buttons.unshift({
+        label: localize("FF15.Types.Actor.HeaderButtons.Edit"),
+        class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
+        icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
+        // onclick: (ev) => this._onToggleEdit(ev),
+        onPress: (ev) => {
+          this._onToggleEdit(ev)
+        }
+      })
+    }
     return buttons;
+  }
+
+
+  _onToggleEdit(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    log.d('before', this.reactive.document.system.isEditing);
+    this.reactive.document.system.isEditing = !this.reactive.document.system.isEditing;
+    this.render();
+    log.d('after', this.reactive.document.system.isEditing);
+  }
+
+  _onConfigureToken(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    const actor = this.reactive.document;
+    const token = actor.isToken ? actor.token : actor.prototypeToken;
+    new CONFIG.Token.prototypeSheetClass(token, {
+      left: Math.max(this.position.left - 560 - 10, 10),
+      top: this.position.top,
+    }).render(true);
   }
 
   /**
@@ -201,7 +239,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   async _onDropItemCreate(itemData) {
     const actor = this.reactive.document;
 
-    
+
   }
 
   _onSortItem(event, itemData) {
@@ -237,18 +275,6 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
     // Perform the update
     return actor.updateEmbeddedDocuments("Item", updateData);
-  }
-
-  _onConfigureToken(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    const actor = this.reactive.document;
-    const token = actor.isToken ? actor.token : actor.prototypeToken;
-    new CONFIG.Token.prototypeSheetClass(token, {
-      left: Math.max(this.position.left - 560 - 10, 10),
-      top: this.position.top,
-    }).render(true);
   }
 }
 

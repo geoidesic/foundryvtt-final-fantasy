@@ -43,6 +43,9 @@
       },
       "Actor": {
         "Label": "Actor",
+        "HeaderButtons": {
+          "Edit": "Edit"
+        },
         "Types": {
           "PC": {
             "Label": "Player Character",
