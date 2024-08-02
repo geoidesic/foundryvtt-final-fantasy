@@ -4,7 +4,7 @@ const {
     HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField
 } = foundry.data.fields;
 
-export class JobDataModel extends FFItemDataModel {
+export class JobModel extends FFItemDataModel {
     static defineSchema() {
         return {
 
