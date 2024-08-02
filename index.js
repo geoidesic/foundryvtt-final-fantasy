@@ -261,6 +261,190 @@ function applicationWindowHeaderIconsOnly() {
   });
 }
 __name(applicationWindowHeaderIconsOnly, "applicationWindowHeaderIconsOnly");
+foundry.data.fields;
+const _FFTypeDataModel = class _FFTypeDataModel extends foundry.abstract.TypeDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_FFTypeDataModel, "FFTypeDataModel");
+let FFTypeDataModel = _FFTypeDataModel;
+foundry.data.fields;
+const _FFActorDataModel = class _FFActorDataModel extends FFTypeDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_FFActorDataModel, "FFActorDataModel");
+let FFActorDataModel = _FFActorDataModel;
+const {
+  HTMLField: HTMLField$2,
+  SchemaField: SchemaField$2,
+  NumberField: NumberField$2,
+  StringField: StringField$2,
+  FilePathField: FilePathField$2,
+  ArrayField: ArrayField$2
+} = foundry.data.fields;
+const _NPCModel = class _NPCModel extends FFActorDataModel {
+  static defineSchema() {
+    return {
+      description: new HTMLField$2()
+    };
+  }
+};
+__name(_NPCModel, "NPCModel");
+let NPCModel = _NPCModel;
+const {
+  HTMLField: HTMLField$1,
+  SchemaField: SchemaField$1,
+  NumberField: NumberField$1,
+  StringField: StringField$1,
+  FilePathField: FilePathField$1,
+  ArrayField: ArrayField$1
+} = foundry.data.fields;
+const _PCModel = class _PCModel extends FFActorDataModel {
+  static defineSchema() {
+    return {
+      biography: new HTMLField$1(),
+      points: new SchemaField$1({
+        MP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        HP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        BP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        })
+      }),
+      attributes: new SchemaField$1({
+        primary: new SchemaField$1({
+          str: new SchemaField$1({
+            //- @deprecated: I think `label` is in the wrong place? Should maybe just be in the svelte template as it is a constant, not data
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.str.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          dex: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.dex.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          vit: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vit.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          int: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.ing.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          mnd: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mnd.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          })
+        })
+      }),
+      secondary: new SchemaField$1({
+        def: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        mag: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        vig: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        spd: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        })
+      })
+    };
+  }
+};
+__name(_PCModel, "PCModel");
+let PCModel = _PCModel;
+const {
+  HTMLField,
+  SchemaField,
+  NumberField,
+  StringField,
+  FilePathField,
+  ArrayField
+} = foundry.data.fields;
+const _FFItemDataModel = class _FFItemDataModel extends FFTypeDataModel {
+  static defineSchema() {
+    return {
+      description: new HTMLField()
+    };
+  }
+};
+__name(_FFItemDataModel, "FFItemDataModel");
+let FFItemDataModel = _FFItemDataModel;
+foundry.data.fields;
+const _ActionModel = class _ActionModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_ActionModel, "ActionModel");
+let ActionModel = _ActionModel;
+foundry.data.fields;
+const _EquipmentModel = class _EquipmentModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_EquipmentModel, "EquipmentModel");
+let EquipmentModel = _EquipmentModel;
+foundry.data.fields;
+const _JobModel = class _JobModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_JobModel, "JobModel");
+let JobModel = _JobModel;
+foundry.data.fields;
+const _TelegraphModel = class _TelegraphModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_TelegraphModel, "TelegraphModel");
+let TelegraphModel = _TelegraphModel;
+foundry.data.fields;
+const _TraitModel = class _TraitModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_TraitModel, "TraitModel");
+let TraitModel = _TraitModel;
+function setupModels() {
+  CONFIG.Item.dataModels["job"] = JobModel;
+  CONFIG.Item.dataModels["Action"] = ActionModel;
+  CONFIG.Item.dataModels["Telegraph"] = TelegraphModel;
+  CONFIG.Item.dataModels["Trait"] = TraitModel;
+  CONFIG.Item.dataModels["Equipment"] = EquipmentModel;
+  CONFIG.Actor.dataModels["PC"] = PCModel;
+  CONFIG.Actor.dataModels["NPC"] = NPCModel;
+  r;
+}
+__name(setupModels, "setupModels");
 function noop() {
 }
 __name(noop, "noop");
@@ -20477,6 +20661,7 @@ const _Inventory = class _Inventory extends SvelteComponent {
 __name(_Inventory, "Inventory");
 let Inventory = _Inventory;
 function create_default_slot$1(ctx) {
+  let pre;
   let tabs_1;
   let current;
   tabs_1 = new Tabs$4({
@@ -20487,9 +20672,12 @@ function create_default_slot$1(ctx) {
   });
   return {
     c() {
+      pre = element("pre");
+      pre.textContent = `${game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly")}`;
       create_component(tabs_1.$$.fragment);
     },
     m(target, anchor) {
+      insert(target, pre, anchor);
       mount_component(tabs_1, target, anchor);
       current = true;
     },
@@ -20512,6 +20700,9 @@ function create_default_slot$1(ctx) {
       current = false;
     },
     d(detaching) {
+      if (detaching) {
+        detach(pre);
+      }
       destroy_component(tabs_1, detaching);
     }
   };
@@ -20562,7 +20753,7 @@ function create_fragment$f(ctx) {
     p(ctx2, [dirty]) {
       const applicationshell_changes = {};
       if (dirty & /*$$scope, tabs*/
-      65544) {
+      131080) {
         applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
       }
       if (!updating_elementRoot && dirty & /*elementRoot*/
@@ -20600,8 +20791,8 @@ __name(create_fragment$f, "create_fragment$f");
 let activeTab = "attributes";
 function instance$4($$self, $$props, $$invalidate) {
   let tabs;
+  let $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(8, $$value)), documentStore), "$$subscribe_documentStore");
   let $headerButtonNoLabel;
-  let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(9, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
   $$self.$$.on_destroy.push(() => $$unsubscribe_documentStore());
   let { elementRoot } = $$props;
   let { documentStore } = $$props;
@@ -20609,8 +20800,7 @@ function instance$4($$self, $$props, $$invalidate) {
   setContext("#doc", documentStore);
   const application = getContext("#external").application;
   const headerButtonNoLabel = application.reactive.storeAppOptions.headerButtonNoLabel;
-  component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(8, $headerButtonNoLabel = value));
-  log.d(headerButtonNoLabel);
+  component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(9, $headerButtonNoLabel = value));
   let stylesApp;
   const defaultTabs = [
     {
@@ -20634,9 +20824,7 @@ function instance$4($$self, $$props, $$invalidate) {
       component: Profile
     }
   ];
-  onMount(() => {
-    log.d($documentStore);
-    set_store_value(headerButtonNoLabel, $headerButtonNoLabel = true, $headerButtonNoLabel);
+  onMount(async () => {
   });
   function applicationshell_elementRoot_binding(value) {
     elementRoot = value;
@@ -20654,6 +20842,11 @@ function instance$4($$self, $$props, $$invalidate) {
     if ("documentStore" in $$props2)
       $$subscribe_documentStore($$invalidate(1, documentStore = $$props2.documentStore));
   };
+  if (game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly") == true) {
+    set_store_value(headerButtonNoLabel, $headerButtonNoLabel = true, $headerButtonNoLabel);
+  } else {
+    set_store_value(headerButtonNoLabel, $headerButtonNoLabel = false, $headerButtonNoLabel);
+  }
   $$invalidate(3, tabs = defaultTabs);
   return [
     elementRoot,
@@ -22184,7 +22377,7 @@ const _FF15ItemSheet = class _FF15ItemSheet extends SvelteDocumentSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: `${SYSTEM_ID}--item-shee-${generateRandomElementId()}`,
       classes: [SYSTEM_CODE],
-      title: game.i18n.localize(`${SYSTEM_CODE}.Types.Item`),
+      title: game.i18n.localize(`${SYSTEM_CODE}.Types.Item.Label`),
       width: 550,
       height: 500,
       minWidth: 400,
@@ -22236,6 +22429,7 @@ Hooks.once("init", async (a, b, c) => {
   log$1.d(`Starting System ${SYSTEM_ID}`);
   CONFIG.debug.hooks = true;
   registerSettings();
+  setupModels();
   game.system.config = systemconfig;
   log$1.d(game.system.id);
   log$1.d(game.system.config);
