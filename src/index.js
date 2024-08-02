@@ -39,7 +39,7 @@ CONFIG.Actor.documentClass = FF15Actor
 Hooks.once("init", async (a, b, c) => {
   log.d(`Starting System ${SYSTEM_ID}`);
 
-  CONFIG.debug.hooks = true;
+  // CONFIG.debug.hooks = true;
 
   registerSettings();
   setupModels();
