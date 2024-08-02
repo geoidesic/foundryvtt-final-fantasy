@@ -442,7 +442,6 @@ function setupModels() {
   CONFIG.Item.dataModels["Equipment"] = EquipmentModel;
   CONFIG.Actor.dataModels["PC"] = PCModel;
   CONFIG.Actor.dataModels["NPC"] = NPCModel;
-  r;
 }
 __name(setupModels, "setupModels");
 function noop() {

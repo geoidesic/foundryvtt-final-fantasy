@@ -19,4 +19,4 @@ export function setupModels() {
 
     CONFIG.Actor.dataModels["PC"] = PCModel;
     CONFIG.Actor.dataModels["NPC"] = NPCModel;
-r}
+}
