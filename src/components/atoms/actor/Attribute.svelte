@@ -1,9 +1,13 @@
 <script>
-import { onMount } from 'svelte';
+import { onMount, getContext } from 'svelte';
 
 export let code;
 export let value;
 export let uppercase = false;
+
+const actor = getContext('#doc');
+log.d('actor', actor);
+log.d('$actor', $actor?.system?.isEditing);
 
 onMount(() => {
 });
@@ -12,6 +16,10 @@ onMount(() => {
 <template lang='pug'>
   .attribute
     .underscore.flexrow
+      +if("!$actor?.system?.isEditing")
+        .flex.dice
+          i.fas.fa-dice(on:click!="{() => {alert('Rolling!')}}")
+
       .flex2.header {uppercase ? code.toUpperCase() : code} 
       .flex0.header {value}
     
@@ -27,5 +35,15 @@ onMount(() => {
       transform: scaleY(1.5)
       transform-origin: top
       text-align: left
-
+  .dice
+    z-index: 3
+    max-width: 1.4rem
+    color: white
+    cursor: pointer
+    transform: scaleY(0.75)
+    transform-origin: top
+    text-align: left
+    color: var(--border-color)
+    &:hover
+      color: var(--border-highlight)
 </style>

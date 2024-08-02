@@ -27,8 +27,15 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     });
   }
 
+  async close(options = {}) {
+    this.reactive.document.update({system: {isEditing: false}});
+    await super.close(options);
+  }
+
   _getHeaderButtons() {
     log.d('_getHeaderButtons')
+    log.d('isEditing', this.reactive.document.system.isEditing);
+
     const buttons = super._getHeaderButtons();
     const storage = this.reactive.sessionStorage;
     const canConfigure = game.user.isGM || (this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE"));
@@ -57,15 +64,14 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     return buttons;
   }
 
-
-  _onToggleEdit(event) {
+  async _onToggleEdit(event) {
+    log.d('_onToggleEdit')
     if (event) {
       event.preventDefault();
     }
-    log.d('before', this.reactive.document.system.isEditing);
-    this.reactive.document.system.isEditing = !this.reactive.document.system.isEditing;
+    await this.reactive.document.update({system: {isEditing: !this.reactive.document.system.isEditing}});
+    log.d('after toggle: isEditing', this.reactive.document.system.isEditing);
     this.render();
-    log.d('after', this.reactive.document.system.isEditing);
   }
 
   _onConfigureToken(event) {

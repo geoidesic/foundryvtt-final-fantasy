@@ -28,7 +28,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
     });
     this.reactive.document = object;
 
-    console.log(object);
+    log.d('isEditing', this.reactive.document.system.isEditing);
   }
 
   /**
@@ -50,7 +50,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
         target: document.body,
         // You can assign a function that is invoked with MyItemApp instance as `this`.
         props: function () {
-          return { documentStore: this.#documentStore, document: this.reactive.document };
+          return { documentStore: this.#documentStore, /* document: this.reactive.document */ /* @deprecated: useful to know about but confusing to use in the template */ };
         },
       },
     });

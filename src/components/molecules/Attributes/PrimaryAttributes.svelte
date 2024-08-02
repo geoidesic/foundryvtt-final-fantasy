@@ -3,17 +3,17 @@ import { onMount } from 'svelte';
 import AttributeCol from "~/src/components/molecules/Attributes/AttributeCol.svelte";
 
 let data = [
-  { code: 'STR', value: "+2" },
-  { code: 'DEX', value: "+5" },
-  { code: 'VIT', value: "+3" },
-  { code: 'INT', value: "+4" },
-  { code: 'MND', value: "+3" }
+  { code: 'str', value: "+2" },
+  { code: 'dex', value: "+5" },
+  { code: 'vit', value: "+3" },
+  { code: 'int', value: "+4" },
+  { code: 'mnd', value: "+3" }
 ]
 </script>
 <template lang='pug'>
   .molecule
     .flexrow.header.underscore.mb-md Primary Attributes
-    AttributeCol(data="{data}")
+    AttributeCol(uppercase="{true}" data="{data}")
 </template>
 <style lang='sass'>
   @import '../../../styles/Mixins.sass'
