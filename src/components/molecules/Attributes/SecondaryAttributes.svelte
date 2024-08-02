@@ -4,16 +4,16 @@
 
 
   let data = [
-  { code: 'Defence', value: 14 },
-  { code: 'Magic Defence', value: 14 },
-  { code: 'Vigilance', value: 13 },
-  { code: 'Speed', value: 5 }
+  { code: 'def' },
+  { code: 'mag' },
+  { code: 'vig' },
+  { code: 'spd' }
 ]
   </script>
   <template lang='pug'>
     .molecule
       .flexrow.header.underscore.mb-md Secondary Attributes
-      AttributeCol(data="{data}")
+      AttributeCol(data="{data}" key="secondary")
       
   </template>
 

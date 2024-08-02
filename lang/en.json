@@ -46,46 +46,58 @@
         "HeaderButtons": {
           "Edit": "Edit"
         },
+        "EditAttribute": {
+          "Tooltip": "Left click + / Right Click -"
+        },
         "Types": {
           "PC": {
             "Label": "Player Character",
             "Attributes": {
-              "Primary": {
+              "primary": {
                 "str": {
+                  "Abbreviation": "STR",
                   "Label": "Strength",
                   "Description": "A measure of physical power."
                 },
                 "dex": {
+                  "Abbreviation": "DEX",
                   "Label": "Dexterity",
                   "Description": "A measure of agility."
                 },
                 "vit": {
+                  "Abbreviation": "VIT",
                   "Label": "Vitality",
                   "Description": "A measure of physical endurance."
                 },
                 "int": {
+                  "Abbreviation": "INT",
                   "Label": "Intelligence",
                   "Description": "A measure of magical power."
                 },
                 "mnd": {
+                  "Abbreviation": "MND",
                   "Label": "Mind",
                   "Description": "A measure of mental power."
                 }
               },
-              "Secondary": {
+              "secondary": {
                 "def": {
+                  "Abbreviation": "DEF",
                   "Label": "Defence",
                   "Description": "A measure of physical resistance."
                 },
                 "mag": {
+                  "Abbreviation": "MAG",
                   "Label": "Magic Defence",
                   "Description": "A measure of magical resistance."
                 },
                 "vig": {
+                  "Abbreviation": "VIG",
                   "Label": "Vigilance",
                   "Description": "A measure of awareness."
                 },
                 "spd": {
+                  "Abbreviation": "SPD",
                   "Label": "Speed",
                   "Description": "A measure of quickness."
                 }
@@ -98,6 +110,7 @@
         }
       }
     },
+    
     "Welcome": {
       "To": "Welcome to the",
       "Introduction": "Introduction",
