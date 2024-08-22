@@ -12,10 +12,10 @@ import { TraitModel } from "../models/items/trait";
 export function setupModels() {
     // Setup models
     CONFIG.Item.dataModels["job"] = JobModel;
-    CONFIG.Item.dataModels["Action"] = ActionModel;
-    CONFIG.Item.dataModels["Telegraph"] = TelegraphModel;
-    CONFIG.Item.dataModels["Trait"] = TraitModel;
-    CONFIG.Item.dataModels["Equipment"] = EquipmentModel;
+    CONFIG.Item.dataModels["action"] = ActionModel;
+    CONFIG.Item.dataModels["telegraph"] = TelegraphModel;
+    CONFIG.Item.dataModels["trait"] = TraitModel;
+    CONFIG.Item.dataModels["equipment"] = EquipmentModel;
 
     CONFIG.Actor.dataModels["PC"] = PCModel;
     CONFIG.Actor.dataModels["NPC"] = NPCModel;
