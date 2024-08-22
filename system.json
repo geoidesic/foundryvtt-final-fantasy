@@ -40,6 +40,38 @@
       }
     },
     {
+      "name": "equipment",
+      "label": "FF15 Equipment",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
+      "name": "telegraphs",
+      "label": "FF15 Telegraphs",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
+      "name": "traits",
+      "label": "FF15 Traits",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
+      "name": "actions",
+      "label": "FF15 Actions",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
       "name": "actors",
       "label": "FF15 Pregenerated Characters",
       "type": "Actor",
