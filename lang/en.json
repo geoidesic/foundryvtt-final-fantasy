@@ -2,8 +2,7 @@
   "TYPES": {
     "Actor": {
       "PC": "Player Character",
-      "NPC": "Non-Player Character",
-      "Monster": "Monster"
+      "NPC": "Non-Player Character"
     },
     "Item": {
       "action": "Action",
@@ -17,32 +16,108 @@
     "Title": "Final Fantasy TTRPG",
     "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
     "Types": {
-      "Item": "Item",
-      "Actor": "Actor"
-    },
-    "Welcome": {
-      "To": "Welcome to the",
-      "Introduction": "Introduction",
-      "Released": "was released June 2024",
-      "Issues": "If you have any issues, please report them on ",
-      "Github": "GitHub.",
-      "CreatedBy": "system is created by "
-    },
-    "Tabs": {
-      "Attributes": "Attributes",
-      "Abilities": "Abilities",
-      "Inventory": "Inventory",
-      "Profile": "Profile"
-    },
-    "SystemName": "Final Fantasy",
-    "Setting": {
-      "DontShowWelcome": {
-        "Name": "Don't show this message again",
-        "Hint": "Don't show the welcome application when Foundry first loads. (You can always undo this via Configure Settings)."
+      "Item": {
+        "Label": "Item",
+        "Types": {
+          "action": {
+            "Label": "Action",
+            "Description": "An ability that can be used in combat."
+          },
+          "equipment": {
+            "Label": "Equipment",
+            "Description": "An item that can be equipped."
+          },
+          "job": {
+            "Label": "Job",
+            "Description": "A class that a character can be."
+          },
+          "telegraph": {
+            "Label": "Telegraph",
+            "Description": "A visual indicator of an ability."
+          },
+          "trait": {
+            "Label": "Trait",
+            "Description": "A passive ability."
+          }
+        }
       },
-      "applicationWindowHeaderIconsOnly": {
-        "Name": "Show App Header Icons Only",
-        "Hint": "Only show icons in the application window header. This will reduce the amount of space the header takes up."
+      "Actor": {
+        "Label": "Actor",
+        "Types": {
+          "PC": {
+            "Label": "Player Character",
+            "Attributes": {
+              "Primary": {
+                "str": {
+                  "Label": "Strength",
+                  "Description": "A measure of physical power."
+                },
+                "dex": {
+                  "Label": "Dexterity",
+                  "Description": "A measure of agility."
+                },
+                "vit": {
+                  "Label": "Vitality",
+                  "Description": "A measure of physical endurance."
+                },
+                "int": {
+                  "Label": "Intelligence",
+                  "Description": "A measure of magical power."
+                },
+                "mnd": {
+                  "Label": "Mind",
+                  "Description": "A measure of mental power."
+                }
+              },
+              "Secondary": {
+                "def": {
+                  "Label": "Defence",
+                  "Description": "A measure of physical resistance."
+                },
+                "mag": {
+                  "Label": "Magic Defence",
+                  "Description": "A measure of magical resistance."
+                },
+                "vig": {
+                  "Label": "Vigilance",
+                  "Description": "A measure of awareness."
+                },
+                "spd": {
+                  "Label": "Speed",
+                  "Description": "A measure of quickness."
+                }
+              }
+            },
+            "NPC": {
+              "Label": "Non-Player Character"
+            }
+          }
+        }
+      },
+      "Welcome": {
+        "To": "Welcome to the",
+        "Introduction": "Introduction",
+        "Released": "was released June 2024",
+        "Issues": "If you have any issues, please report them on ",
+        "Github": "GitHub.",
+        "CreatedBy": "system is created by "
+      },
+      "Tabs": {
+        "Attributes": "Attributes",
+        "Abilities": "Abilities",
+        "Inventory": "Inventory",
+        "Profile": "Profile"
+      },
+      "SystemName": "Final Fantasy",
+      "Setting": {
+        "DontShowWelcome": {
+          "Name": "Don't show this message again",
+          "Hint": "Don't show the welcome application when Foundry first loads. (You can always undo this via Configure Settings)."
+        },
+        "applicationWindowHeaderIconsOnly": {
+          "Name": "Show App Header Icons Only",
+          "Hint": "Only show icons in the application window header. This will reduce the amount of space the header takes up."
+        }
       }
     }
   }

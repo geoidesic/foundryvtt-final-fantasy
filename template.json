@@ -1,103 +1,15 @@
 {
   "Actor": {
-    "types": [
-      "PC",
-      "NPC",
-      "Monster"
-    ],
-    "templates": {
-      "common": {
-        "attributes": {
-          "primary": {
-            "str": {
-              "val": 0
-            },
-            "dex": {
-              "val": 0
-            },
-            "vit": {
-              "val": 0
-            },
-            "int": {
-              "val": 0
-            },
-            "mnd": {
-              "val": 0
-            }
-          },
-          "secondary": {
-            "defence": {
-              "val": 0
-            },
-            "magicDefence": {
-              "val": 0
-            },
-            "vigilance": {
-              "val": 0
-            },
-            "speed": {
-              "val": 0
-            }
-          }
-        },
-        "points":{
-          "MP": {
-            "max": 5,
-            "val": 0
-          },
-          "HP": {
-            "val": 0,
-            "max": 25
-          },
-          "BP": {
-            "val": 0,
-            "max": 5
-          }
-        }
+      "types": ["PC", "NPC"],
+      "PC": {
+        "htmlFields": ["biography"]
       },
-      "biography": {
-        "profile": ""
+      "NPC": {
+        "htmlFields": ["description"]
       }
-    },
-    "PC": {
-      "templates": [
-        "common"
-      ]
-    },
-    "NPC": {
-      "templates": [
-        "common"
-      ]
-    },
-    "Monster": {
-      "templates": [
-        "common"
-      ]
-    }
   },
   "Item": {
-    "types": [
-      "action",
-      "equipment",
-      "job",
-      "telegraph",
-      "trait"
-    ],
-    "templates": {
-      "base": {
-        "description": "",
-        "gmNotes": "",
-        "favourite": false,
-        "chatFlavour": "",
-        "code": null,
-        "sort": 0,
-        "tags": []
-      },
-      "jobs": {
-        "templates": [
-          "base"
-        ]
-      }
-    }
+      "types": ["job", "action", "equipment", "telegraph", "trait"],
+      "htmlFields": ["description"]
   }
 }

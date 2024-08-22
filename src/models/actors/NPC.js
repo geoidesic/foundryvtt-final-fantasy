@@ -1,11 +1,14 @@
+import { FFActorDataModel } from './baseActor';
+
 const {
   HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField
 } = foundry.data.fields;
 
-export class FFTypeDataModel extends foundry.abstract.TypeDataModel {
+export class NPCDataModel extends FFActorDataModel {
   static defineSchema() {
     return {
-
+      description: new HTMLField(),
     }
   }
 }
+

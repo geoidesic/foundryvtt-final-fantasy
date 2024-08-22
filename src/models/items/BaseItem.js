@@ -1,10 +1,12 @@
-import { IconDataModel } from "../BaseModel";
+import { FFDataModel } from '../baseModel';
+const {
+  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField
+} = foundry.data.fields;
 
-export class ItemModel extends IconDataModel {
-    // Some schema elements are consistent across all actor types. Define them here
-    static defineSchema() {
-        return {
-            
-        };
+export class FFItemDataModel extends FFDataModel {
+  static defineSchema() {
+    return {
+        description: new HTMLField(),
     }
+  }
 }

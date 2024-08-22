@@ -22087,7 +22087,7 @@ const _FF15ItemSheet = class _FF15ItemSheet extends SvelteDocumentSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: `${SYSTEM_ID}--item-shee-${generateRandomElementId()}`,
       classes: [SYSTEM_CODE],
-      title: game.i18n.localize(`${SYSTEM_CODE}.Types.Item`),
+      title: game.i18n.localize(`${SYSTEM_CODE}.Types.Item.Label`),
       width: 550,
       height: 500,
       minWidth: 400,
