@@ -2,8 +2,9 @@
 
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-  import { setContext, getContext, onMount } from "svelte";
+  import { setContext, getContext, onMount, tick } from "svelte";
   import { getActorOwner, ucfirst } from "~/src/helpers/utility";
+  import { SYSTEM_ID } from "~/src/helpers/constants";
   import { localize } from "#runtime/svelte/helper";
 
   import Tabs from "~/src/components/molecules/Tabs.svelte";
@@ -12,12 +13,31 @@
   import Profile from "~/src/components/pages/actor/Profile.svelte";
   import Inventory from "~/src/components/pages/actor/Inventory.svelte";
 
-
   export let elementRoot; //- passed in by SvelteApplication
   export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
-  export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
+  // export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
 
+  //- store a copy of the templates for usage as schemas in other places
+  setContext("#doc", documentStore);
+
+  const application = getContext("#external").application;
+  const headerButtonNoLabel = application.reactive.storeAppOptions.headerButtonNoLabel;
+
+
+  const setHeaderLabels = (value) => {
+    $headerButtonNoLabel = value;
+  };
+
+  $: if (game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly") == true) {
+    $headerButtonNoLabel = true;
+  } else {
+    $headerButtonNoLabel = false
+  }
+
+  // set the sheet color
+  let stylesApp;
   let _filePickerInstance = {};
+  let activeTab = "attributes";
 
   function _launchStandardProfileEditor(event) {
     const current = $documentStore.img;
@@ -38,12 +58,6 @@
     return _filePickerInstance.browse();
   }
 
-  const application = getContext("#external").application;
-  // console.log(application);
-
-  let activeTab =  "attributes";
-
-
   //- provide Tokenizer support
   function _editToken(event) {
     if (game.modules.has("vtta-tokenizer") && typeof Tokenizer !== "undefined") {
@@ -59,7 +73,6 @@
     }
   }
 
-
   // Tabs
   const defaultTabs = [
     { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes },
@@ -71,16 +84,6 @@
   ];
   // const pathsTab = { label: "Paths", id: "paths", component: Paths };
 
-  // $: tabs = hasPaths ? [...defaultTabs.slice(0, 3), pathsTab, ...defaultTabs.slice(3)] : defaultTabs;
-
-  $: tabs = defaultTabs;
-
-  // set the sheet color
-  let stylesApp;
-
-
-  //- store a copy of the templates for usage as schemas in other places
-  setContext("#doc", documentStore);
   // setContext("#templates", templates);
 
   // below is just for reference on creating active effects. This is handled natively in DocumentSheet.js
@@ -102,14 +105,18 @@
     }
   }
 
-  onMount(() => {
-    log.d($documentStore)
-   
+  // $: tabs = hasPaths ? [...defaultTabs.slice(0, 3), pathsTab, ...defaultTabs.slice(3)] : defaultTabs;
+
+  $: tabs = defaultTabs;
+
+  onMount(async () => {
+
   });
 </script>
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot bind:stylesApp)
+    pre {game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly")}
     Tabs(tabs="{tabs}" activeTab="{activeTab}")
 </template>
 

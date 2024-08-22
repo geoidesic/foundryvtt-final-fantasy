@@ -77,7 +77,11 @@
   },
   "Item": {
     "types": [
-      "jobs"
+      "action",
+      "equipment",
+      "job",
+      "telegraph",
+      "trait"
     ],
     "templates": {
       "base": {
@@ -87,20 +91,7 @@
         "chatFlavour": "",
         "code": null,
         "sort": 0,
-        "bookmarked": false,
-        "modifyingAttribute": "",
-        "modifyingTrait": "",
         "tags": []
-      },
-      "attributes": {
-        "attributes": {
-          "str": {
-            "std": 0,
-            "max": 0,
-            "cost": 0,
-            "canIncrease": true
-          }
-        }
       },
       "jobs": {
         "templates": [

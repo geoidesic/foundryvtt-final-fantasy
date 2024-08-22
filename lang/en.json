@@ -4,11 +4,22 @@
       "PC": "Player Character",
       "NPC": "Non-Player Character",
       "Monster": "Monster"
+    },
+    "Item": {
+      "action": "Action",
+      "equipment": "Equipment",
+      "job": "Job",
+      "telegraph": "Telegraph",
+      "trait": "Trait"
     }
   },
   "FF15": {
     "Title": "Final Fantasy TTRPG",
     "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
+    "Types": {
+      "Item": "Item",
+      "Actor": "Actor"
+    },
     "Welcome": {
       "To": "Welcome to the",
       "Introduction": "Introduction",
@@ -28,6 +39,10 @@
       "DontShowWelcome": {
         "Name": "Don't show this message again",
         "Hint": "Don't show the welcome application when Foundry first loads. (You can always undo this via Configure Settings)."
+      },
+      "applicationWindowHeaderIconsOnly": {
+        "Name": "Show App Header Icons Only",
+        "Hint": "Only show icons in the application window header. This will reduce the amount of space the header takes up."
       }
     }
   }

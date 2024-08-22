@@ -45,6 +45,16 @@ export const getPackFromUuid = async (uuid) => {
   return pack;
 }
 
+export function generateRandomElementId(length = 8) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+
+
 export function getActorOwner(actor) {
   const owners = getOwners(actor);
   if (owners.length === 0) {

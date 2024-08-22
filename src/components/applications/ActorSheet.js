@@ -1,6 +1,7 @@
 import ActorSheetShell from "./ActorSheetShell.svelte";
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
-import { SYSTEM_CODE } from "~/src/helpers/constants";
+import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
+import { log } from "../../helpers/utility";
 
 export default class FF15ActorSheet extends SvelteDocumentSheet {
 
@@ -15,8 +16,8 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
       width: 440,
       height: 828,
       minWidth: 660,
+      id: `${SYSTEM_ID}--actor-sheet`,
       classes: [SYSTEM_CODE],
-
       dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
       svelte: {
         class: ActorSheetShell,
@@ -123,7 +124,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
         return this._onDropFolder(event, data);
       }
       default: {
-        console.error(`Surge | Impossible type "${data.type}" in _onDrop.`);
+        log.e(`Impossible type "${data.type}" in _onDrop.`);
         return;
       }
     }
@@ -186,7 +187,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     const actor = this.reactive.document;
 
     const folder = await Folder.implementation.fromDropData(data);
-    if (!folder && data.documentName !== "Item" && !actor.isOwner && data.uuid != "Compendium.surge.skills.Folder.CcxCapkN4Pvspsen") {
+    if (!folder && data.documentName !== "Item" && !actor.isOwner) {
       return [];
     }
 

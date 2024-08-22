@@ -1,0 +1,149 @@
+<svelte:options accessors={true} />
+
+<script>
+import { onMount } from 'svelte';
+import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+import { setContext, getContext } from "svelte";
+import { ucfirst } from "~/src/helpers/Utility.js";
+import ItemInput from "~/src/components/atoms/item/ItemInput.svelte";
+import * as components from "~/src/components/organisms/item/type";
+
+export let elementRoot; //- passed in by SvelteApplication
+export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
+export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
+
+const headerMap = {
+    action: components.ActionHeader,
+    equipment: components.EquipmentHeader,
+    job: components.JobHeader,
+    telegraph: components.TelegraphHeader,
+    trait: components.TraitHeader
+  }
+  const tabMap = {
+    action: components.ActionTabs,
+    equipment: components.EquipmentTabs,
+    job: components.JobTabs,
+    telegraph: components.TelegraphTabs,
+    trait: components.TraitTabs
+  }
+
+  const application = getContext("#external").application;
+  let activeTab = "description";
+
+  setContext("#doc", documentStore);
+
+  $: item = $documentStore;
+
+  //- Profile Editor
+  let _filePickerInstance = {};
+
+  function _launchStandardProfileEditor(event) {
+    const current = $documentStore.img;
+    if (_filePickerInstance instanceof FilePicker && !_filePickerInstance?.rendered) {
+      _filePickerInstance.render(true);
+      return;
+    }
+    _filePickerInstance = new FilePicker({
+      type: "image",
+      current: current,
+      callback: (path) => {
+        $documentStore.update({ img: path });
+      },
+
+      top: application.position.top + 40,
+      left: application.position.left + 10,
+    });
+    return _filePickerInstance.browse();
+  }
+
+  //- provide Tokenizer support
+  function _editToken(event) {
+    _launchStandardProfileEditor(event);
+  }
+
+  async function handleDrop(event) {
+    const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+
+    let droppedItem;
+    let split = data.uuid.split(".");
+    let type = split[0];
+
+    if (type === "Item") {
+      console.log("handleDrop 1");
+
+      droppedItem = await game.items.get(split[1]);
+    } else if (type === "Compendium") {
+      console.log("handleDrop 2");
+      const compendiumName = `${split[1]}.${split[2]}`;
+      const pack = game.packs.get(compendiumName);
+      droppedItem = await pack.getDocument(split[4]);
+    }
+
+    if (droppedItem.type == "effect") {
+      console.log("handleDrop 3");
+      console.log(">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<");
+      console.log(droppedItem.effects);
+      const effects = Array.from(droppedItem.effects);
+      console.log("effects", effects);
+
+      //- get the effects from the item
+      //- add the effect from the item to this item
+      await $documentStore.createEmbeddedDocuments("ActiveEffect", effects);
+      console.log("$documentStore", $documentStore);
+    }
+  }
+</script>
+
+<template lang="pug">
+  ApplicationShell(bind:elementRoot)
+    header
+      .flexrow.gap-15
+        .profile-wrap.flex0
+          .profile
+            img.profile(src="{$documentStore.img}" data-tooltip="{$documentStore.name}" on:click="{_launchStandardProfileEditor}")
+          
+        .flex
+          .flexcol
+            .flex
+              ItemInput(className="lg transparent" attr="name" label="Name" placeholder="Item Name" maxlength="40")
+    section
+      .flexrow.gap-15
+        .flex1
+          .flexcol
+            table(style="text-align: center")
+              tr
+                td
+                  div {item.type} 
+            
+            svelte:component(this="{headerMap[item.type]}")
+        .flex4
+          svelte:component(this="{tabMap[item.type]}" bind:activeTab="{activeTab}")
+
+</template>
+
+<style lang='sass'>
+  @import '../../styles/Mixins.sass'
+
+  :global(.window-app .window-content)
+    display: block
+
+  .profile-wrap
+    width: 50px
+    /* position: relative */
+
+  .portrait img
+    display: block
+    width: 100%
+    height: 100%
+    -o-object-fit: cover
+    object-fit: cover
+    -o-object-position: top
+    object-position: top
+
+  img
+    border: none
+    min-width: 50px
+
+
+
+</style>
