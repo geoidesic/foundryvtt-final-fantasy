@@ -26179,24 +26179,22 @@ let Tabs = _Tabs;
 const ItemSheetShell_svelte_svelte_type_style_lang = "";
 function create_default_slot(ctx) {
   let header;
-  let div5;
-  let div1;
+  let section0;
   let div0;
+  let div1;
+  let div2;
   let img;
   let img_src_value;
   let img_data_tooltip_value;
-  let div4;
+  let section2;
+  let section1;
   let div3;
-  let div2;
-  let iteminput;
-  let section;
-  let div10;
-  let div8;
-  let div7;
+  let docinput;
+  let div5;
   let table;
   let tr;
   let td;
-  let div6;
+  let div4;
   let t0_value = (
     /*item*/
     ctx[4].type + ""
@@ -26204,17 +26202,16 @@ function create_default_slot(ctx) {
   let t0;
   let t1;
   let switch_instance0;
-  let div9;
+  let section3;
   let switch_instance1;
   let updating_activeTab;
   let current;
   let mounted;
   let dispose;
-  iteminput = new ItemInput({
+  docinput = new ItemInput({
     props: {
       className: "lg transparent",
       attr: "name",
-      label: "Name",
       placeholder: "Item Name",
       maxlength: "40"
     }
@@ -26234,7 +26231,7 @@ function create_default_slot(ctx) {
     switch_instance0 = construct_svelte_component(switch_value, switch_props());
   }
   function switch_instance1_activeTab_binding(value) {
-    ctx[9](value);
+    ctx[10](value);
   }
   __name(switch_instance1_activeTab_binding, "switch_instance1_activeTab_binding");
   var switch_value_1 = (
@@ -26263,80 +26260,90 @@ function create_default_slot(ctx) {
   return {
     c() {
       header = element("header");
-      div5 = element("div");
-      div1 = element("div");
+      section0 = element("section");
       div0 = element("div");
-      img = element("img");
-      div4 = element("div");
-      div3 = element("div");
+      div1 = element("div");
       div2 = element("div");
-      create_component(iteminput.$$.fragment);
-      section = element("section");
-      div10 = element("div");
-      div8 = element("div");
-      div7 = element("div");
+      img = element("img");
+      section2 = element("section");
+      section1 = element("section");
+      div3 = element("div");
+      create_component(docinput.$$.fragment);
+      div5 = element("div");
       table = element("table");
       tr = element("tr");
       td = element("td");
-      div6 = element("div");
+      div4 = element("div");
       t0 = text(t0_value);
       t1 = space();
       if (switch_instance0)
         create_component(switch_instance0.$$.fragment);
-      div9 = element("div");
+      section3 = element("section");
       if (switch_instance1)
         create_component(switch_instance1.$$.fragment);
-      attr(img, "class", "profile svelte-FF15-ic2070");
+      attr(div0, "class", "profile round");
+      attr(div1, "class", "profile-buttons");
+      attr(img, "class", "profile svelte-FF15-1q2ddmr");
       if (!src_url_equal(img.src, img_src_value = /*$documentStore*/
       ctx[2].img))
         attr(img, "src", img_src_value);
       attr(img, "data-tooltip", img_data_tooltip_value = /*$documentStore*/
       ctx[2].name);
-      attr(div0, "class", "profile");
-      attr(div1, "class", "profile-wrap flex0 svelte-FF15-ic2070");
-      attr(div2, "class", "flex");
-      attr(div3, "class", "flexcol");
-      attr(div4, "class", "flex");
-      attr(div5, "class", "flexrow gap-15");
+      attr(div2, "class", "portrait svelte-FF15-1q2ddmr");
+      attr(section0, "class", "profile-wrap");
+      attr(div3, "class", "flexcol flex3");
       set_style(table, "text-align", "center");
-      attr(div7, "class", "flexcol");
-      attr(div8, "class", "flex1");
-      attr(div9, "class", "flex4");
-      attr(div10, "class", "flexrow gap-15");
+      attr(div5, "class", "flex1 level-information svelte-FF15-1q2ddmr");
+      attr(section1, "class", "general-info flexrow");
+      attr(section2, "class", "item details");
+      attr(header, "class", "surge-defaultSheet-header");
+      attr(section3, "class", "sheet-body");
     },
     m(target, anchor) {
       insert(target, header, anchor);
-      append(header, div5);
-      append(div5, div1);
-      append(div1, div0);
-      append(div0, img);
-      append(div5, div4);
-      append(div4, div3);
-      append(div3, div2);
-      mount_component(iteminput, div2, null);
-      insert(target, section, anchor);
-      append(section, div10);
-      append(div10, div8);
-      append(div8, div7);
-      append(div7, table);
+      append(header, section0);
+      append(section0, div0);
+      append(section0, div1);
+      append(section0, div2);
+      append(div2, img);
+      append(header, section2);
+      append(section2, section1);
+      append(section1, div3);
+      mount_component(docinput, div3, null);
+      append(section1, div5);
+      append(div5, table);
       append(table, tr);
       append(tr, td);
-      append(td, div6);
-      append(div6, t0);
-      append(div6, t1);
+      append(td, div4);
+      append(div4, t0);
+      append(div4, t1);
       if (switch_instance0)
-        mount_component(switch_instance0, div7, null);
-      append(div10, div9);
+        mount_component(switch_instance0, section2, null);
+      insert(target, section3, anchor);
       if (switch_instance1)
-        mount_component(switch_instance1, div9, null);
+        mount_component(switch_instance1, section3, null);
       current = true;
       if (!mounted) {
-        dispose = listen(
-          img,
-          "click",
-          /*_launchStandardProfileEditor*/
-          ctx[7]
-        );
+        dispose = [
+          listen(
+            img,
+            "click",
+            /*_launchStandardProfileEditor*/
+            ctx[7]
+          ),
+          listen(
+            header,
+            "drop",
+            /*handleDrop*/
+            ctx[8]
+          ),
+          listen(
+            section3,
+            "drop",
+            /*handleDrop*/
+            ctx[8]
+          )
+        ];
         mounted = true;
       }
     },
@@ -26373,7 +26380,7 @@ function create_default_slot(ctx) {
           switch_instance0 = construct_svelte_component(switch_value, switch_props());
           create_component(switch_instance0.$$.fragment);
           transition_in(switch_instance0.$$.fragment, 1);
-          mount_component(switch_instance0, div7, null);
+          mount_component(switch_instance0, section2, null);
         } else {
           switch_instance0 = null;
         }
@@ -26397,7 +26404,7 @@ function create_default_slot(ctx) {
           binding_callbacks.push(() => bind(switch_instance1, "activeTab", switch_instance1_activeTab_binding));
           create_component(switch_instance1.$$.fragment);
           transition_in(switch_instance1.$$.fragment, 1);
-          mount_component(switch_instance1, div9, null);
+          mount_component(switch_instance1, section3, null);
         } else {
           switch_instance1 = null;
         }
@@ -26416,7 +26423,7 @@ function create_default_slot(ctx) {
     i(local) {
       if (current)
         return;
-      transition_in(iteminput.$$.fragment, local);
+      transition_in(docinput.$$.fragment, local);
       if (switch_instance0)
         transition_in(switch_instance0.$$.fragment, local);
       if (switch_instance1)
@@ -26424,7 +26431,7 @@ function create_default_slot(ctx) {
       current = true;
     },
     o(local) {
-      transition_out(iteminput.$$.fragment, local);
+      transition_out(docinput.$$.fragment, local);
       if (switch_instance0)
         transition_out(switch_instance0.$$.fragment, local);
       if (switch_instance1)
@@ -26434,15 +26441,15 @@ function create_default_slot(ctx) {
     d(detaching) {
       if (detaching) {
         detach(header);
-        detach(section);
+        detach(section3);
       }
-      destroy_component(iteminput);
+      destroy_component(docinput);
       if (switch_instance0)
         destroy_component(switch_instance0);
       if (switch_instance1)
         destroy_component(switch_instance1);
       mounted = false;
-      dispose();
+      run_all(dispose);
     }
   };
 }
@@ -26452,7 +26459,7 @@ function create_fragment(ctx) {
   let updating_elementRoot;
   let current;
   function applicationshell_elementRoot_binding(value) {
-    ctx[10](value);
+    ctx[11](value);
   }
   __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
   let applicationshell_props = {
@@ -26551,6 +26558,31 @@ function instance($$self, $$props, $$invalidate) {
     return _filePickerInstance.browse();
   }
   __name(_launchStandardProfileEditor, "_launchStandardProfileEditor");
+  async function handleDrop(event) {
+    const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+    let droppedItem;
+    let split = data.uuid.split(".");
+    let type = split[0];
+    if (type === "Item") {
+      console.log("handleDrop 1");
+      droppedItem = await game.items.get(split[1]);
+    } else if (type === "Compendium") {
+      console.log("handleDrop 2");
+      const compendiumName = `${split[1]}.${split[2]}`;
+      const pack = game.packs.get(compendiumName);
+      droppedItem = await pack.getDocument(split[4]);
+    }
+    if (droppedItem.type == "effect") {
+      console.log("handleDrop 3");
+      console.log(">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<");
+      console.log(droppedItem.effects);
+      const effects = Array.from(droppedItem.effects);
+      console.log("effects", effects);
+      await $documentStore.createEmbeddedDocuments("ActiveEffect", effects);
+      console.log("$documentStore", $documentStore);
+    }
+  }
+  __name(handleDrop, "handleDrop");
   function switch_instance1_activeTab_binding(value) {
     activeTab2 = value;
     $$invalidate(3, activeTab2);
@@ -26567,7 +26599,7 @@ function instance($$self, $$props, $$invalidate) {
     if ("documentStore" in $$props2)
       $$subscribe_documentStore($$invalidate(1, documentStore = $$props2.documentStore));
     if ("document" in $$props2)
-      $$invalidate(8, document2 = $$props2.document);
+      $$invalidate(9, document2 = $$props2.document);
   };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$documentStore*/
@@ -26584,6 +26616,7 @@ function instance($$self, $$props, $$invalidate) {
     headerMap,
     tabMap,
     _launchStandardProfileEditor,
+    handleDrop,
     document2,
     switch_instance1_activeTab_binding,
     applicationshell_elementRoot_binding
@@ -26596,7 +26629,7 @@ const _ItemSheetShell = class _ItemSheetShell extends SvelteComponent {
     init(this, options, instance, create_fragment, safe_not_equal, {
       elementRoot: 0,
       documentStore: 1,
-      document: 8
+      document: 9
     });
   }
   get elementRoot() {
@@ -26614,7 +26647,7 @@ const _ItemSheetShell = class _ItemSheetShell extends SvelteComponent {
     flush();
   }
   get document() {
-    return this.$$.ctx[8];
+    return this.$$.ctx[9];
   }
   set document(document2) {
     this.$$set({ document: document2 });
