@@ -261,6 +261,190 @@ function applicationWindowHeaderIconsOnly() {
   });
 }
 __name(applicationWindowHeaderIconsOnly, "applicationWindowHeaderIconsOnly");
+foundry.data.fields;
+const _FFTypeDataModel = class _FFTypeDataModel extends foundry.abstract.TypeDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_FFTypeDataModel, "FFTypeDataModel");
+let FFTypeDataModel = _FFTypeDataModel;
+foundry.data.fields;
+const _FFActorDataModel = class _FFActorDataModel extends FFTypeDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_FFActorDataModel, "FFActorDataModel");
+let FFActorDataModel = _FFActorDataModel;
+const {
+  HTMLField: HTMLField$2,
+  SchemaField: SchemaField$2,
+  NumberField: NumberField$2,
+  StringField: StringField$2,
+  FilePathField: FilePathField$2,
+  ArrayField: ArrayField$2
+} = foundry.data.fields;
+const _NPCModel = class _NPCModel extends FFActorDataModel {
+  static defineSchema() {
+    return {
+      description: new HTMLField$2()
+    };
+  }
+};
+__name(_NPCModel, "NPCModel");
+let NPCModel = _NPCModel;
+const {
+  HTMLField: HTMLField$1,
+  SchemaField: SchemaField$1,
+  NumberField: NumberField$1,
+  StringField: StringField$1,
+  FilePathField: FilePathField$1,
+  ArrayField: ArrayField$1
+} = foundry.data.fields;
+const _PCModel = class _PCModel extends FFActorDataModel {
+  static defineSchema() {
+    return {
+      biography: new HTMLField$1(),
+      points: new SchemaField$1({
+        MP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        HP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        BP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        })
+      }),
+      attributes: new SchemaField$1({
+        primary: new SchemaField$1({
+          str: new SchemaField$1({
+            //- @deprecated: I think `label` is in the wrong place? Should maybe just be in the svelte template as it is a constant, not data
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.str.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          dex: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.dex.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          vit: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vit.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          int: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.ing.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          mnd: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mnd.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          })
+        })
+      }),
+      secondary: new SchemaField$1({
+        def: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        mag: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        vig: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        spd: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        })
+      })
+    };
+  }
+};
+__name(_PCModel, "PCModel");
+let PCModel = _PCModel;
+const {
+  HTMLField,
+  SchemaField,
+  NumberField,
+  StringField,
+  FilePathField,
+  ArrayField
+} = foundry.data.fields;
+const _FFItemDataModel = class _FFItemDataModel extends FFTypeDataModel {
+  static defineSchema() {
+    return {
+      description: new HTMLField()
+    };
+  }
+};
+__name(_FFItemDataModel, "FFItemDataModel");
+let FFItemDataModel = _FFItemDataModel;
+foundry.data.fields;
+const _ActionModel = class _ActionModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_ActionModel, "ActionModel");
+let ActionModel = _ActionModel;
+foundry.data.fields;
+const _EquipmentModel = class _EquipmentModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_EquipmentModel, "EquipmentModel");
+let EquipmentModel = _EquipmentModel;
+foundry.data.fields;
+const _JobModel = class _JobModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_JobModel, "JobModel");
+let JobModel = _JobModel;
+foundry.data.fields;
+const _TelegraphModel = class _TelegraphModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_TelegraphModel, "TelegraphModel");
+let TelegraphModel = _TelegraphModel;
+foundry.data.fields;
+const _TraitModel = class _TraitModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_TraitModel, "TraitModel");
+let TraitModel = _TraitModel;
+function setupModels() {
+  CONFIG.Item.dataModels["job"] = JobModel;
+  CONFIG.Item.dataModels["Action"] = ActionModel;
+  CONFIG.Item.dataModels["Telegraph"] = TelegraphModel;
+  CONFIG.Item.dataModels["Trait"] = TraitModel;
+  CONFIG.Item.dataModels["Equipment"] = EquipmentModel;
+  CONFIG.Actor.dataModels["PC"] = PCModel;
+  CONFIG.Actor.dataModels["NPC"] = NPCModel;
+  r;
+}
+__name(setupModels, "setupModels");
 function noop() {
 }
 __name(noop, "noop");
@@ -22139,6 +22323,7 @@ Hooks.once("init", async (a, b, c) => {
   log$1.d(`Starting System ${SYSTEM_ID}`);
   CONFIG.debug.hooks = true;
   registerSettings();
+  setupModels();
   game.system.config = systemconfig;
   log$1.d(game.system.id);
   log$1.d(game.system.config);

@@ -5,7 +5,7 @@ const {
   HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField
 } = foundry.data.fields;
 
-export class PCDataModel extends FFActorDataModel {
+export class PCModel extends FFActorDataModel {
   static defineSchema() {
     return {
       biography: new HTMLField(),

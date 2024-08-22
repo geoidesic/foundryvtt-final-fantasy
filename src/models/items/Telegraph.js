@@ -4,7 +4,7 @@ const {
     HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField
 } = foundry.data.fields;
 
-export class TelegraphDataModel extends FFItemDataModel {
+export class TelegraphModel extends FFItemDataModel {
     static defineSchema() {
         return {
 
