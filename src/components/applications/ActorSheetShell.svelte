@@ -16,23 +16,27 @@
 
   export let elementRoot; //- passed in by SvelteApplication
   export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
-  // export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
+  export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
 
   //- store a copy of the templates for usage as schemas in other places
   setContext("#doc", documentStore);
 
   const application = getContext("#external").application;
   const applicationWindowHeaderIconsOnly = gameSettings.getStore('applicationWindowHeaderIconsOnly');
-  const headerButtonNoLabel = application.reactive.storeAppOptions.headerButtonNoLabel;
-  $: {
-   application.reactive.headerButtonNoLabel = $applicationWindowHeaderIconsOnly;
-  }
+  let headerButtonNoLabel = application.reactive.storeAppOptions.headerButtonNoLabel;
 
+  // Tabs
+  const defaultTabs = [
+    { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes },
+    { label: localize("FF15.Tabs.Abilities"), id: "abilities", component: Abilities },
+    { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory },
+    { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile },
+  ];
 
   // set the sheet color
   let stylesApp;
-  let _filePickerInstance = {};
   let activeTab = "attributes";
+  let _filePickerInstance = {};
 
   function _launchStandardProfileEditor(event) {
     const current = $documentStore.img;
@@ -68,19 +72,6 @@
     }
   }
 
-  // Tabs
-  const defaultTabs = [
-    { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes },
-    { label: localize("FF15.Tabs.Abilities"), id: "abilities", component: Abilities },
-    { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory },
-    { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile },
-    // { label: "Abilities", id: "abilities", component: Abilities },
-    // { label: "Journal", id: "journal", component: Journal },
-  ];
-  // const pathsTab = { label: "Paths", id: "paths", component: Paths };
-
-  // setContext("#templates", templates);
-
   // below is just for reference on creating active effects. This is handled natively in DocumentSheet.js
   async function handleDrop(event) {
     return;
@@ -100,9 +91,13 @@
     }
   }
 
-  // $: tabs = hasPaths ? [...defaultTabs.slice(0, 3), pathsTab, ...defaultTabs.slice(3)] : defaultTabs;
-
   $: tabs = defaultTabs;
+  // Use reactive statements to properly update the headerButtonNoLabel
+  $: $headerButtonNoLabel = $applicationWindowHeaderIconsOnly;
+
+  // Debugging the reactive flow
+  $: console.log('headerButtonNoLabel:', headerButtonNoLabel);
+  $: console.log('applicationWindowHeaderIconsOnly:', $applicationWindowHeaderIconsOnly);
 
   onMount(async () => {
 
@@ -111,7 +106,8 @@
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot bind:stylesApp)
-    pre applicationWindowHeaderIconsOnly? {$applicationWindowHeaderIconsOnly}
+    //- @why NB: do not remove this next element; it doesn't have to be `pre` can be any element, but without it the button animations defined in styles below will not work. I don't know why. It's magic.
+    pre(style="display: none") yo
     Tabs(tabs="{tabs}" activeTab="{activeTab}")
 </template>
 

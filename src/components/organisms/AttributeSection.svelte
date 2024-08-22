@@ -33,6 +33,8 @@ import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
       left: 0
       width: 100%
       height: 100%
+      pointer-events: none
+
       background-image: url("systems/foundryvtt-final-fantasy/assets/diamonds.png")
       // background-image: url("systems/foundryvtt-final-fantasy/assets/royal-tile.png")
       background-size: 40%
