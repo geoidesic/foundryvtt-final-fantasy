@@ -38,7 +38,7 @@ var __privateMethod = (obj, member, method) => {
   return method;
 };
 var __superGet = (cls, obj, key) => __reflectGet(__getProtoOf(cls), key, obj);
-var _getFocusableSelectors, getFocusableSelectors_fn, _regexPixels, _cssRule, _docKey, _selector, _styleElement, _version, _regexUuidv, _options, _default, _stores, _animationData, _finishedPromise, _willFinish, _voidControl, _data, _position, _instanceCount, _cleanup, _addAnimation, addAnimation_fn, _cleanupInstance, cleanupInstance_fn, _animationControls, _finishedPromise2, _voidControl2, _isPosition, isPosition_fn, _element, _height, _lock, _width, _data2, _dataSaved, _position2, _transforms, _boundingRect, _corners, _mat4, _originTranslations, _orderList, _enabled, _validatorData, _mapUnsubscribe, _constrain, _element2, _enabled2, _height2, _lock2, _width2, _constrain2, _element3, _enabled3, _height3, _lock3, _width3, _positionInitial, _positionValidators, _data3, _animate, _enabled4, _options2, _parent, _positionChangeSet, _stores2, _styleCache, _subscriptions, _transforms2, _updateElementData, _updateElementPromise, _validators, _validatorData2, _state, _updatePosition, updatePosition_fn, _ease, _easeOptions, _subscriptions2, _updateSubscribers, updateSubscribers_fn, _application, _dataSaved2, _applicationShellHolder, _svelteData, _storageStores, _stores3, _getDeserialize, getDeserialize_fn, _getSerialize, getSerialize_fn, _createStore, createStore_fn, _getStore, getStore_fn, _application2, _initialized, _sessionStorage, _storeAppOptions, _storeAppOptionsUpdate, _dataUIState, _storeUIState, _storeUIStateUpdate, _storeUnsubscribe, _storesInitialize, storesInitialize_fn, _storesSubscribe, storesSubscribe_fn, _storesUnsubscribe, storesUnsubscribe_fn, _visibleApps, _applicationShellHolder2, _applicationState, _elementTarget, _elementContent, _initialZIndex, _onMount, _position3, _reactive, _svelteData2, _getSvelteData, _stores4, _updateApplicationShell, updateApplicationShell_fn, _a, _sheet, _sheetMap, _initialized2, _initialize, initialize_fn, _hostData, _DerivedReducerCtor, _parentIndex, _derived, _destroyed, _filtersData, _indexUpdate, _mapUnsubscribe2, _sortData, _indexUpdate2, _unsubscribe, _indexData, _map, _derived2, _derivedPublicAPI, _filters, _filtersData2, _index, _indexPublicAPI, _reversed, _sort, _sortData2, _subscriptions3, _destroyed2, _updateSubscribers2, updateSubscribers_fn2, _map2, _derived3, _derivedPublicAPI2, _filters2, _filtersData3, _index2, _indexPublicAPI2, _reversed2, _sort2, _sortData3, _subscriptions4, _destroyed3, _updateSubscribers3, updateSubscribers_fn3, _renderContextRegex, _name, _document, _collectionToDocName, _embeddedNames, _document2, _embeddedStoreManager, _embeddedAPI, _uuidv4, _options3, _subscriptions5, _updateOptions, _deleted, deleted_fn, _updateSubscribers4, updateSubscribers_fn4, _setDocument, setDocument_fn, _onQuit, _s_UUID_REGEX, _transformUUID, transformUUID_fn, _b, _documentStore, _storeUnsubscribe2, _handleDocUpdate, handleDocUpdate_fn, _c, _d, _e, _f, _g, _h, _i, _j;
+var _regexUuidv, _getFocusableSelectors, getFocusableSelectors_fn, _regexPixels, _cssRule, _docKey, _selector, _styleElement, _version, _animationData, _finishedPromise, _willFinish, _voidControl, _data, _position, _instanceCount, _cleanup, _addAnimation, addAnimation_fn, _cleanupInstance, cleanupInstance_fn, _animationControls, _finishedPromise2, _voidControl2, _isPosition, isPosition_fn, _element, _height, _lock, _width, _data2, _dataSaved, _position2, _transforms, _boundingRect, _corners, _mat4, _originTranslations, _orderList, _enabled, _validatorData, _mapUnsubscribe, _constrain, _element2, _enabled2, _height2, _lock2, _width2, _constrain2, _element3, _enabled3, _height3, _lock3, _width3, _positionInitial, _positionValidators, _data3, _animate, _enabled4, _options, _parent, _positionChangeSet, _stores, _styleCache, _subscriptions, _transforms2, _updateElementData, _updateElementPromise, _validators, _validatorData2, _state, _updatePosition, updatePosition_fn, _ease, _easeOptions, _subscriptions2, _updateSubscribers, updateSubscribers_fn, _application, _dataSaved2, _applicationShellHolder, _svelteData, _storageStores, _stores2, _getDeserialize, getDeserialize_fn, _getSerialize, getSerialize_fn, _createStore, createStore_fn, _getStore, getStore_fn, _application2, _initialized, _sessionStorage, _storeAppOptions, _storeAppOptionsUpdate, _dataUIState, _storeUIState, _storeUIStateUpdate, _storeUnsubscribe, _storesInitialize, storesInitialize_fn, _storesSubscribe, storesSubscribe_fn, _storesUnsubscribe, storesUnsubscribe_fn, _visibleApps, _applicationShellHolder2, _applicationState, _elementTarget, _elementContent, _initialZIndex, _onMount, _position3, _reactive, _svelteData2, _getSvelteData, _stores3, _updateApplicationShell, updateApplicationShell_fn, _options2, _default, _stores4, _logging, _current, _application3, _internal, _updateComponent, updateComponent_fn, _data4, _managedPromise, _invokeFn, invokeFn_fn, _sections, _settings, _showSettings, _showSettingsSet, _stores5, _destroy, destroy_fn, _parseSettings, parseSettings_fn, _reloadConfirm, reloadConfirm_fn, _namespace, _settings2, _stores6, _uiControl, _createStore2, createStore_fn2, _getStore2, getStore_fn2, _a, _sheet, _sheetMap, _initialized2, _initialize, initialize_fn, _hostData, _DerivedReducerCtor, _parentIndex, _derived, _destroyed, _filtersData, _indexUpdate, _mapUnsubscribe2, _sortData, _indexUpdate2, _unsubscribe, _indexData, _map, _derived2, _derivedPublicAPI, _filters, _filtersData2, _index, _indexPublicAPI, _reversed, _sort, _sortData2, _subscriptions3, _destroyed2, _updateSubscribers2, updateSubscribers_fn2, _map2, _derived3, _derivedPublicAPI2, _filters2, _filtersData3, _index2, _indexPublicAPI2, _reversed2, _sort2, _sortData3, _subscriptions4, _destroyed3, _updateSubscribers3, updateSubscribers_fn3, _renderContextRegex, _name, _document, _collectionToDocName, _embeddedNames, _document2, _embeddedStoreManager, _embeddedAPI, _uuidv4, _options3, _subscriptions5, _updateOptions, _deleted, deleted_fn, _updateSubscribers4, updateSubscribers_fn4, _setDocument, setDocument_fn, _onQuit, _s_UUID_REGEX, _transformUUID, transformUUID_fn, _b, _documentStore, _storeUnsubscribe2, _handleDocUpdate, handleDocUpdate_fn, _c, _d, _e, _f, _g, _h, _i, _j;
 const Variables = "";
 const Main = "";
 const MarginsAndPadding = "";
@@ -81,6 +81,57 @@ function generateRandomElementId(length = 8) {
   return result;
 }
 __name(generateRandomElementId, "generateRandomElementId");
+function set(obj, key, val) {
+  if (typeof val.value === "object")
+    val.value = klona(val.value);
+  if (!val.enumerable || val.get || val.set || !val.configurable || !val.writable || key === "__proto__") {
+    Object.defineProperty(obj, key, val);
+  } else
+    obj[key] = val.value;
+}
+__name(set, "set");
+function klona(x) {
+  if (typeof x !== "object")
+    return x;
+  var i = 0, k, list, tmp, str = Object.prototype.toString.call(x);
+  if (str === "[object Object]") {
+    tmp = Object.create(x.__proto__ || null);
+  } else if (str === "[object Array]") {
+    tmp = Array(x.length);
+  } else if (str === "[object Set]") {
+    tmp = /* @__PURE__ */ new Set();
+    x.forEach(function(val) {
+      tmp.add(klona(val));
+    });
+  } else if (str === "[object Map]") {
+    tmp = /* @__PURE__ */ new Map();
+    x.forEach(function(val, key) {
+      tmp.set(klona(key), klona(val));
+    });
+  } else if (str === "[object Date]") {
+    tmp = /* @__PURE__ */ new Date(+x);
+  } else if (str === "[object RegExp]") {
+    tmp = new RegExp(x.source, x.flags);
+  } else if (str === "[object DataView]") {
+    tmp = new x.constructor(klona(x.buffer));
+  } else if (str === "[object ArrayBuffer]") {
+    tmp = x.slice(0);
+  } else if (str.slice(-6) === "Array]") {
+    tmp = new x.constructor(x);
+  }
+  if (tmp) {
+    for (list = Object.getOwnPropertySymbols(x); i < list.length; i++) {
+      set(tmp, list[i], Object.getOwnPropertyDescriptor(x, list[i]));
+    }
+    for (i = 0, list = Object.getOwnPropertyNames(x); i < list.length; i++) {
+      if (Object.hasOwnProperty.call(tmp, k = list[i]) && tmp[k] === x[k])
+        continue;
+      set(tmp, k, Object.getOwnPropertyDescriptor(x, k));
+    }
+  }
+  return tmp || x;
+}
+__name(klona, "klona");
 const s_TAG_OBJECT = "[object Object]";
 function deepMerge(target = {}, ...sourceObj) {
   if (Object.prototype.toString.call(target) !== s_TAG_OBJECT) {
@@ -234,217 +285,6 @@ function localize(stringId, data) {
   return result !== void 0 ? result : "";
 }
 __name(localize, "localize");
-function registerSettings() {
-  dontShowWelcome();
-  applicationWindowHeaderIconsOnly();
-}
-__name(registerSettings, "registerSettings");
-function dontShowWelcome() {
-  game.settings.register(SYSTEM_ID, "dontShowWelcome", {
-    name: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Name`),
-    hint: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Hint`),
-    scope: "user",
-    config: true,
-    default: false,
-    type: Boolean
-  });
-}
-__name(dontShowWelcome, "dontShowWelcome");
-function applicationWindowHeaderIconsOnly() {
-  game.settings.register(SYSTEM_ID, "applicationWindowHeaderIconsOnly", {
-    name: localize(`${SYSTEM_CODE}.Setting.applicationWindowHeaderIconsOnly.Name`),
-    hint: localize(`${SYSTEM_CODE}.Setting.applicationWindowHeaderIconsOnly.Hint`),
-    scope: "user",
-    config: true,
-    default: false,
-    type: Boolean
-  });
-}
-__name(applicationWindowHeaderIconsOnly, "applicationWindowHeaderIconsOnly");
-foundry.data.fields;
-const _FFTypeDataModel = class _FFTypeDataModel extends foundry.abstract.TypeDataModel {
-  static defineSchema() {
-    return {};
-  }
-};
-__name(_FFTypeDataModel, "FFTypeDataModel");
-let FFTypeDataModel = _FFTypeDataModel;
-foundry.data.fields;
-const _FFActorDataModel = class _FFActorDataModel extends FFTypeDataModel {
-  static defineSchema() {
-    return {};
-  }
-};
-__name(_FFActorDataModel, "FFActorDataModel");
-let FFActorDataModel = _FFActorDataModel;
-const {
-  HTMLField: HTMLField$2,
-  SchemaField: SchemaField$2,
-  NumberField: NumberField$2,
-  StringField: StringField$2,
-  FilePathField: FilePathField$2,
-  ArrayField: ArrayField$2
-} = foundry.data.fields;
-const _NPCModel = class _NPCModel extends FFActorDataModel {
-  static defineSchema() {
-    return {
-      description: new HTMLField$2()
-    };
-  }
-};
-__name(_NPCModel, "NPCModel");
-let NPCModel = _NPCModel;
-const {
-  HTMLField: HTMLField$1,
-  SchemaField: SchemaField$1,
-  NumberField: NumberField$1,
-  StringField: StringField$1,
-  FilePathField: FilePathField$1,
-  ArrayField: ArrayField$1
-} = foundry.data.fields;
-const _PCModel = class _PCModel extends FFActorDataModel {
-  static defineSchema() {
-    return {
-      biography: new HTMLField$1(),
-      points: new SchemaField$1({
-        MP: new SchemaField$1({
-          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        HP: new SchemaField$1({
-          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        BP: new SchemaField$1({
-          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        })
-      }),
-      attributes: new SchemaField$1({
-        primary: new SchemaField$1({
-          str: new SchemaField$1({
-            //- @deprecated: I think `label` is in the wrong place? Should maybe just be in the svelte template as it is a constant, not data
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.str.Label') }),
-            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          dex: new SchemaField$1({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.dex.Label') }),
-            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          vit: new SchemaField$1({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vit.Label') }),
-            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          int: new SchemaField$1({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.ing.Label') }),
-            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          mnd: new SchemaField$1({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mnd.Label') }),
-            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-          })
-        })
-      }),
-      secondary: new SchemaField$1({
-        def: new SchemaField$1({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
-          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        mag: new SchemaField$1({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
-          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        vig: new SchemaField$1({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
-          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        spd: new SchemaField$1({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
-          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        })
-      })
-    };
-  }
-};
-__name(_PCModel, "PCModel");
-let PCModel = _PCModel;
-const {
-  HTMLField,
-  SchemaField,
-  NumberField,
-  StringField,
-  FilePathField,
-  ArrayField
-} = foundry.data.fields;
-const _FFItemDataModel = class _FFItemDataModel extends FFTypeDataModel {
-  static defineSchema() {
-    return {
-      description: new HTMLField()
-    };
-  }
-};
-__name(_FFItemDataModel, "FFItemDataModel");
-let FFItemDataModel = _FFItemDataModel;
-foundry.data.fields;
-const _ActionModel = class _ActionModel extends FFItemDataModel {
-  static defineSchema() {
-    return {};
-  }
-};
-__name(_ActionModel, "ActionModel");
-let ActionModel = _ActionModel;
-foundry.data.fields;
-const _EquipmentModel = class _EquipmentModel extends FFItemDataModel {
-  static defineSchema() {
-    return {};
-  }
-};
-__name(_EquipmentModel, "EquipmentModel");
-let EquipmentModel = _EquipmentModel;
-foundry.data.fields;
-const _JobModel = class _JobModel extends FFItemDataModel {
-  static defineSchema() {
-    return {};
-  }
-};
-__name(_JobModel, "JobModel");
-let JobModel = _JobModel;
-foundry.data.fields;
-const _TelegraphModel = class _TelegraphModel extends FFItemDataModel {
-  static defineSchema() {
-    return {};
-  }
-};
-__name(_TelegraphModel, "TelegraphModel");
-let TelegraphModel = _TelegraphModel;
-foundry.data.fields;
-const _TraitModel = class _TraitModel extends FFItemDataModel {
-  static defineSchema() {
-    return {};
-  }
-};
-__name(_TraitModel, "TraitModel");
-let TraitModel = _TraitModel;
-function setupModels() {
-  CONFIG.Item.dataModels["job"] = JobModel;
-  CONFIG.Item.dataModels["Action"] = ActionModel;
-  CONFIG.Item.dataModels["Telegraph"] = TelegraphModel;
-  CONFIG.Item.dataModels["Trait"] = TraitModel;
-  CONFIG.Item.dataModels["Equipment"] = EquipmentModel;
-  CONFIG.Actor.dataModels["PC"] = PCModel;
-  CONFIG.Actor.dataModels["NPC"] = NPCModel;
-  r;
-}
-__name(setupModels, "setupModels");
 function noop() {
 }
 __name(noop, "noop");
@@ -584,11 +424,6 @@ function null_to_empty(value) {
   return value == null ? "" : value;
 }
 __name(null_to_empty, "null_to_empty");
-function set_store_value(store, ret, value) {
-  store.set(value);
-  return ret;
-}
-__name(set_store_value, "set_store_value");
 function action_destroyer(action_result) {
   return action_result && is_function(action_result.destroy) ? action_result.destroy : noop;
 }
@@ -1379,6 +1214,82 @@ function ensure_array_like(array_like_or_iterator) {
   return array_like_or_iterator?.length !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
 }
 __name(ensure_array_like, "ensure_array_like");
+function destroy_block(block, lookup) {
+  block.d(1);
+  lookup.delete(block.key);
+}
+__name(destroy_block, "destroy_block");
+function update_keyed_each(old_blocks, dirty, get_key, dynamic, ctx, list, lookup, node, destroy, create_each_block2, next, get_context) {
+  let o = old_blocks.length;
+  let n = list.length;
+  let i = o;
+  const old_indexes = {};
+  while (i--)
+    old_indexes[old_blocks[i].key] = i;
+  const new_blocks = [];
+  const new_lookup = /* @__PURE__ */ new Map();
+  const deltas = /* @__PURE__ */ new Map();
+  const updates = [];
+  i = n;
+  while (i--) {
+    const child_ctx = get_context(ctx, list, i);
+    const key = get_key(child_ctx);
+    let block = lookup.get(key);
+    if (!block) {
+      block = create_each_block2(key, child_ctx);
+      block.c();
+    } else if (dynamic) {
+      updates.push(() => block.p(child_ctx, dirty));
+    }
+    new_lookup.set(key, new_blocks[i] = block);
+    if (key in old_indexes)
+      deltas.set(key, Math.abs(i - old_indexes[key]));
+  }
+  const will_move = /* @__PURE__ */ new Set();
+  const did_move = /* @__PURE__ */ new Set();
+  function insert2(block) {
+    transition_in(block, 1);
+    block.m(node, next);
+    lookup.set(block.key, block);
+    next = block.first;
+    n--;
+  }
+  __name(insert2, "insert");
+  while (o && n) {
+    const new_block = new_blocks[n - 1];
+    const old_block = old_blocks[o - 1];
+    const new_key = new_block.key;
+    const old_key = old_block.key;
+    if (new_block === old_block) {
+      next = new_block.first;
+      o--;
+      n--;
+    } else if (!new_lookup.has(old_key)) {
+      destroy(old_block, lookup);
+      o--;
+    } else if (!lookup.has(new_key) || will_move.has(new_key)) {
+      insert2(new_block);
+    } else if (did_move.has(old_key)) {
+      o--;
+    } else if (deltas.get(new_key) > deltas.get(old_key)) {
+      did_move.add(new_key);
+      insert2(new_block);
+    } else {
+      will_move.add(old_key);
+      o--;
+    }
+  }
+  while (o--) {
+    const old_block = old_blocks[o];
+    if (!new_lookup.has(old_block.key))
+      destroy(old_block, lookup);
+  }
+  while (n)
+    insert2(new_blocks[n - 1]);
+  run_all(updates);
+  return new_blocks;
+}
+__name(update_keyed_each, "update_keyed_each");
 function get_spread_update(levels, updates) {
   const update2 = {};
   const to_null_out = {};
@@ -1574,13 +1485,728 @@ const _SvelteComponent = class _SvelteComponent {
 __name(_SvelteComponent, "SvelteComponent");
 let SvelteComponent = _SvelteComponent;
 const PUBLIC_VERSION = "4";
-if (typeof window !== "undefined")
-  (window.__svelte || (window.__svelte = { v: /* @__PURE__ */ new Set() })).v.add(PUBLIC_VERSION);
+const subscriber_queue = [];
+function readable(value, start) {
+  return {
+    subscribe: writable(value, start).subscribe
+  };
+}
+__name(readable, "readable");
+function writable(value, start = noop) {
+  let stop;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set2(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  __name(set2, "set");
+  function update2(fn) {
+    set2(fn(value));
+  }
+  __name(update2, "update");
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set2, update2) || noop;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0 && stop) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  __name(subscribe2, "subscribe");
+  return { set: set2, update: update2, subscribe: subscribe2 };
+}
+__name(writable, "writable");
+function derived(stores, fn, initial_value) {
+  const single = !Array.isArray(stores);
+  const stores_array = single ? [stores] : stores;
+  if (!stores_array.every(Boolean)) {
+    throw new Error("derived() expects stores as input, got a falsy value");
+  }
+  const auto = fn.length < 2;
+  return readable(initial_value, (set2, update2) => {
+    let started = false;
+    const values = [];
+    let pending = 0;
+    let cleanup = noop;
+    const sync = /* @__PURE__ */ __name(() => {
+      if (pending) {
+        return;
+      }
+      cleanup();
+      const result = fn(single ? values[0] : values, set2, update2);
+      if (auto) {
+        set2(result);
+      } else {
+        cleanup = is_function(result) ? result : noop;
+      }
+    }, "sync");
+    const unsubscribers = stores_array.map(
+      (store, i) => subscribe(
+        store,
+        (value) => {
+          values[i] = value;
+          pending &= ~(1 << i);
+          if (started) {
+            sync();
+          }
+        },
+        () => {
+          pending |= 1 << i;
+        }
+      )
+    );
+    started = true;
+    sync();
+    return /* @__PURE__ */ __name(function stop() {
+      run_all(unsubscribers);
+      cleanup();
+      started = false;
+    }, "stop");
+  });
+}
+__name(derived, "derived");
+function isUpdatableStore(store) {
+  if (store === null || store === void 0) {
+    return false;
+  }
+  switch (typeof store) {
+    case "function":
+    case "object":
+      return typeof store.subscribe === "function" && typeof store.update === "function";
+  }
+  return false;
+}
+__name(isUpdatableStore, "isUpdatableStore");
+function isWritableStore(store) {
+  if (store === null || store === void 0) {
+    return false;
+  }
+  switch (typeof store) {
+    case "function":
+    case "object":
+      return typeof store.subscribe === "function" && typeof store.set === "function";
+  }
+  return false;
+}
+__name(isWritableStore, "isWritableStore");
+function subscribeIgnoreFirst(store, update2) {
+  let firedFirst = false;
+  return store.subscribe((value) => {
+    if (!firedFirst) {
+      firedFirst = true;
+    } else {
+      update2(value);
+    }
+  });
+}
+__name(subscribeIgnoreFirst, "subscribeIgnoreFirst");
+const _Hashing = class _Hashing {
+  /**
+   * Provides a solid string hashing algorithm.
+   *
+   * Sourced from: https://stackoverflow.com/a/52171480
+   *
+   * @param {string}   str - String to hash.
+   *
+   * @param {number}   seed - A seed value altering the hash.
+   *
+   * @returns {number} Hash code.
+   */
+  static hashCode(str, seed = 0) {
+    if (typeof str !== "string") {
+      return 0;
+    }
+    let h1 = 3735928559 ^ seed, h2 = 1103547991 ^ seed;
+    for (let ch, i = 0; i < str.length; i++) {
+      ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ h1 >>> 16, 2246822507) ^ Math.imul(h2 ^ h2 >>> 13, 3266489909);
+    h2 = Math.imul(h2 ^ h2 >>> 16, 2246822507) ^ Math.imul(h1 ^ h1 >>> 13, 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+  }
+  /**
+   * Validates that the given string is formatted as a UUIDv4 string.
+   *
+   * @param {string}   uuid - UUID string to test.
+   *
+   * @returns {boolean} Is UUIDv4 string.
+   */
+  static isUuidv4(uuid) {
+    return __privateGet(this, _regexUuidv).test(uuid);
+  }
+  /**
+   * Generates a UUID v4 compliant ID. Please use a complete UUID generation package for guaranteed compliance.
+   *
+   * This code is an evolution of the following Gist.
+   * https://gist.github.com/jed/982883
+   *
+   * There is a public domain / free copy license attached to it that is not a standard OSS license...
+   * https://gist.github.com/jed/982883#file-license-txt
+   *
+   * @returns {string} UUIDv4
+   */
+  static uuidv4() {
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (globalThis.crypto ?? globalThis.msCrypto).getRandomValues(
+      new Uint8Array(1)
+    )[0] & 15 >> c / 4).toString(16));
+  }
+};
+_regexUuidv = new WeakMap();
+__name(_Hashing, "Hashing");
+__privateAdd(_Hashing, _regexUuidv, /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
+let Hashing = _Hashing;
+const _Timing = class _Timing {
+  /**
+   * Wraps a callback in a debounced timeout.
+   *
+   * Delay execution of the callback function until the function has not been called for the given delay in milliseconds.
+   *
+   * @param {Function} callback - A function to execute once the debounced threshold has been passed.
+   *
+   * @param {number}   delay - An amount of time in milliseconds to delay.
+   *
+   * @returns {Function} A wrapped function that can be called to debounce execution.
+   */
+  static debounce(callback, delay) {
+    let timeoutId;
+    return function(...args) {
+      globalThis.clearTimeout(timeoutId);
+      timeoutId = globalThis.setTimeout(() => {
+        callback.apply(this, args);
+      }, delay);
+    };
+  }
+  /**
+   * @param {object}   opts - Optional parameters.
+   *
+   * @param {Function} opts.single - Single click callback.
+   *
+   * @param {Function} opts.double - Double click callback.
+   *
+   * @param {number}   [opts.delay=400] - Double click delay.
+   *
+   * @returns {(event: Event) => void} The gated double-click handler.
+   */
+  static doubleClick({ single, double, delay = 400 }) {
+    let clicks = 0;
+    let timeoutId;
+    return (event) => {
+      clicks++;
+      if (clicks === 1) {
+        timeoutId = globalThis.setTimeout(() => {
+          if (typeof single === "function") {
+            single(event);
+          }
+          clicks = 0;
+        }, delay);
+      } else {
+        globalThis.clearTimeout(timeoutId);
+        if (typeof double === "function") {
+          double(event);
+        }
+        clicks = 0;
+      }
+    };
+  }
+};
+__name(_Timing, "Timing");
+let Timing = _Timing;
+function ripple({
+  duration = 600,
+  background = "rgba(255, 255, 255, 0.7)",
+  events = ["click", "keyup"],
+  keyCode = "Enter",
+  debounce
+} = {}) {
+  return (element2) => {
+    function createRipple(e) {
+      const elementRect = element2.getBoundingClientRect();
+      const diameter = Math.max(elementRect.width, elementRect.height);
+      const radius = diameter / 2;
+      const left = e.clientX ? `${e.clientX - (elementRect.left + radius)}px` : "0";
+      const top = e.clientY ? `${e.clientY - (elementRect.top + radius)}px` : "0";
+      const span = document.createElement("span");
+      span.style.position = "absolute";
+      span.style.width = `${diameter}px`;
+      span.style.height = `${diameter}px`;
+      span.style.left = left;
+      span.style.top = top;
+      span.style.background = `var(--tjs-action-ripple-background, ${background})`;
+      span.style.borderRadius = "50%";
+      span.style.pointerEvents = "none";
+      span.style.transform = "translateZ(-1px)";
+      element2.prepend(span);
+      const animation = span.animate(
+        [
+          {
+            // from
+            transform: "scale(.7)",
+            opacity: 0.5,
+            filter: "blur(2px)"
+          },
+          {
+            // to
+            transform: "scale(4)",
+            opacity: 0,
+            filter: "blur(5px)"
+          }
+        ],
+        duration
+      );
+      animation.onfinish = () => {
+        if (span && span.isConnected) {
+          span.remove();
+        }
+      };
+    }
+    __name(createRipple, "createRipple");
+    function keyHandler(event) {
+      if (event?.code === keyCode) {
+        createRipple(event);
+      }
+    }
+    __name(keyHandler, "keyHandler");
+    const eventFn = Number.isInteger(debounce) && debounce > 0 ? Timing.debounce(createRipple, debounce) : createRipple;
+    const keyEventFn = Number.isInteger(debounce) && debounce > 0 ? Timing.debounce(keyHandler, debounce) : keyHandler;
+    for (const event of events) {
+      if (["keydown", "keyup"].includes(event)) {
+        element2.addEventListener(event, keyEventFn);
+      } else {
+        element2.addEventListener(event, eventFn);
+      }
+    }
+    return {
+      destroy: () => {
+        for (const event of events) {
+          if (["keydown", "keyup"].includes(event)) {
+            element2.removeEventListener(event, keyEventFn);
+          } else {
+            element2.removeEventListener(event, eventFn);
+          }
+        }
+      }
+    };
+  };
+}
+__name(ripple, "ripple");
+function rippleFocus({ duration = 300, background = "rgba(255, 255, 255, 0.7)", selectors } = {}) {
+  return (element2) => {
+    const targetEl = typeof selectors === "string" ? element2.querySelector(selectors) : element2.firstChild instanceof HTMLElement ? element2.firstChild : element2;
+    let span = void 0;
+    let clientX = -1;
+    let clientY = -1;
+    function blurRipple() {
+      if (!(span instanceof HTMLElement) || document.activeElement === targetEl) {
+        return;
+      }
+      const animation = span.animate(
+        [
+          {
+            // from
+            transform: "scale(3)",
+            opacity: 0.3
+          },
+          {
+            // to
+            transform: "scale(.7)",
+            opacity: 0
+          }
+        ],
+        {
+          duration,
+          fill: "forwards"
+        }
+      );
+      animation.onfinish = () => {
+        clientX = clientY = -1;
+        if (span && span.isConnected) {
+          span.remove();
+        }
+        span = void 0;
+      };
+    }
+    __name(blurRipple, "blurRipple");
+    function focusRipple() {
+      if (span instanceof HTMLElement) {
+        return;
+      }
+      const elementRect = element2.getBoundingClientRect();
+      const actualX = clientX >= 0 ? clientX : elementRect.left + elementRect.width / 2;
+      const actualY = clientX >= 0 ? clientY : elementRect.top + elementRect.height / 2;
+      const diameter = Math.max(elementRect.width, elementRect.height);
+      const radius = diameter / 2;
+      const left = `${actualX - (elementRect.left + radius)}px`;
+      const top = `${actualY - (elementRect.top + radius)}px`;
+      span = document.createElement("span");
+      span.style.position = "absolute";
+      span.style.width = `${diameter}px`;
+      span.style.height = `${diameter}px`;
+      span.style.left = left;
+      span.style.top = top;
+      span.style.background = `var(--tjs-action-ripple-background-focus, var(--tjs-action-ripple-background, ${background}))`;
+      span.style.borderRadius = "50%";
+      span.style.pointerEvents = "none";
+      span.style.transform = "translateZ(-1px)";
+      element2.prepend(span);
+      span.animate(
+        [
+          {
+            // from
+            transform: "scale(.7)",
+            opacity: 0.5
+          },
+          {
+            // to
+            transform: "scale(3)",
+            opacity: 0.3
+          }
+        ],
+        {
+          duration,
+          fill: "forwards"
+        }
+      );
+    }
+    __name(focusRipple, "focusRipple");
+    function onPointerDown(e) {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    __name(onPointerDown, "onPointerDown");
+    targetEl.addEventListener("pointerdown", onPointerDown);
+    targetEl.addEventListener("blur", blurRipple);
+    targetEl.addEventListener("focus", focusRipple);
+    return {
+      destroy: () => {
+        targetEl.removeEventListener("pointerdown", onPointerDown);
+        targetEl.removeEventListener("blur", blurRipple);
+        targetEl.removeEventListener("focus", focusRipple);
+      }
+    };
+  };
+}
+__name(rippleFocus, "rippleFocus");
+function isHMRProxy(comp) {
+  const instanceName = comp?.constructor?.name;
+  if (typeof instanceName === "string" && (instanceName.startsWith("Proxy<") || instanceName === "ProxyComponent")) {
+    return true;
+  }
+  const prototypeName = comp?.prototype?.constructor?.name;
+  return typeof prototypeName === "string" && (prototypeName.startsWith("Proxy<") || prototypeName === "ProxyComponent");
+}
+__name(isHMRProxy, "isHMRProxy");
+function isSvelteComponent(comp) {
+  if (comp === null || comp === void 0 || typeof comp !== "function") {
+    return false;
+  }
+  const prototypeName = comp?.prototype?.constructor?.name;
+  if (typeof prototypeName === "string" && (prototypeName.startsWith("Proxy<") || prototypeName === "ProxyComponent")) {
+    return true;
+  }
+  return typeof window !== "undefined" ? typeof comp.prototype.$destroy === "function" && typeof comp.prototype.$on === "function" : (
+    // client-side
+    typeof comp.render === "function"
+  );
+}
+__name(isSvelteComponent, "isSvelteComponent");
+async function outroAndDestroy(instance2) {
+  return new Promise((resolve) => {
+    if (instance2.$$.fragment && instance2.$$.fragment.o) {
+      group_outros();
+      transition_out(instance2.$$.fragment, 0, 0, () => {
+        instance2.$destroy();
+        resolve();
+      });
+      check_outros();
+    } else {
+      instance2.$destroy();
+      resolve();
+    }
+  });
+}
+__name(outroAndDestroy, "outroAndDestroy");
+function parseTJSSvelteConfig(config, thisArg = void 0) {
+  if (!isObject(config)) {
+    throw new TypeError(`parseSvelteConfig - 'config' is not an object:
+${JSON.stringify(config)}.`);
+  }
+  if (!isSvelteComponent(config.class)) {
+    throw new TypeError(
+      `parseSvelteConfig - 'class' is not a Svelte component constructor for config:
+${JSON.stringify(config)}.`
+    );
+  }
+  if (config.hydrate !== void 0 && typeof config.hydrate !== "boolean") {
+    throw new TypeError(
+      `parseSvelteConfig - 'hydrate' is not a boolean for config:
+${JSON.stringify(config)}.`
+    );
+  }
+  if (config.intro !== void 0 && typeof config.intro !== "boolean") {
+    throw new TypeError(
+      `parseSvelteConfig - 'intro' is not a boolean for config:
+${JSON.stringify(config)}.`
+    );
+  }
+  if (config.target !== void 0 && typeof config.target !== "string" && !(config.target instanceof HTMLElement) && !(config.target instanceof ShadowRoot) && !(config.target instanceof DocumentFragment)) {
+    throw new TypeError(
+      `parseSvelteConfig - 'target' is not a string, HTMLElement, ShadowRoot, or DocumentFragment for config:
+${JSON.stringify(config)}.`
+    );
+  }
+  if (config.anchor !== void 0 && typeof config.anchor !== "string" && !(config.anchor instanceof HTMLElement) && !(config.anchor instanceof ShadowRoot) && !(config.anchor instanceof DocumentFragment)) {
+    throw new TypeError(
+      `parseSvelteConfig - 'anchor' is not a string, HTMLElement, ShadowRoot, or DocumentFragment for config:
+${JSON.stringify(config)}.`
+    );
+  }
+  if (config.context !== void 0 && typeof config.context !== "function" && !(config.context instanceof Map) && !isObject(config.context)) {
+    throw new TypeError(
+      `parseSvelteConfig - 'context' is not a Map, function or object for config:
+${JSON.stringify(config)}.`
+    );
+  }
+  if (config.selectorTarget !== void 0 && typeof config.selectorTarget !== "string") {
+    throw new TypeError(
+      `parseSvelteConfig - 'selectorTarget' is not a string for config:
+${JSON.stringify(config)}.`
+    );
+  }
+  if (config.options !== void 0 && !isObject(config.options)) {
+    throw new TypeError(
+      `parseSvelteConfig - 'options' is not an object for config:
+${JSON.stringify(config)}.`
+    );
+  }
+  if (config.options !== void 0) {
+    if (config.options.injectApp !== void 0 && typeof config.options.injectApp !== "boolean") {
+      throw new TypeError(
+        `parseSvelteConfig - 'options.injectApp' is not a boolean for config:
+${JSON.stringify(config)}.`
+      );
+    }
+    if (config.options.injectEventbus !== void 0 && typeof config.options.injectEventbus !== "boolean") {
+      throw new TypeError(
+        `parseSvelteConfig - 'options.injectEventbus' is not a boolean for config:
+${JSON.stringify(config)}.`
+      );
+    }
+    if (config.options.selectorElement !== void 0 && typeof config.options.selectorElement !== "string") {
+      throw new TypeError(
+        `parseSvelteConfig - 'selectorElement' is not a string for config:
+${JSON.stringify(config)}.`
+      );
+    }
+  }
+  const svelteConfig = { ...config };
+  delete svelteConfig.options;
+  let externalContext = {};
+  if (typeof svelteConfig.context === "function") {
+    const contextFunc = svelteConfig.context;
+    delete svelteConfig.context;
+    const result = contextFunc.call(thisArg);
+    if (isObject(result)) {
+      externalContext = { ...result };
+    } else {
+      throw new Error(`parseSvelteConfig - 'context' is a function that did not return an object for config:
+${JSON.stringify(config)}`);
+    }
+  } else if (svelteConfig.context instanceof Map) {
+    externalContext = Object.fromEntries(svelteConfig.context);
+    delete svelteConfig.context;
+  } else if (isObject(svelteConfig.context)) {
+    externalContext = svelteConfig.context;
+    delete svelteConfig.context;
+  }
+  svelteConfig.props = s_PROCESS_PROPS(svelteConfig.props, thisArg, config);
+  if (Array.isArray(svelteConfig.children)) {
+    const children2 = [];
+    for (let cntr = 0; cntr < svelteConfig.children.length; cntr++) {
+      const child = svelteConfig.children[cntr];
+      if (!isSvelteComponent(child.class)) {
+        throw new Error(`parseSvelteConfig - 'class' is not a Svelte component for child[${cntr}] for config:
+${JSON.stringify(config)}`);
+      }
+      child.props = s_PROCESS_PROPS(child.props, thisArg, config);
+      children2.push(child);
+    }
+    if (children2.length > 0) {
+      externalContext.children = children2;
+    }
+    delete svelteConfig.children;
+  } else if (isObject(svelteConfig.children)) {
+    if (!isSvelteComponent(svelteConfig.children.class)) {
+      throw new Error(`parseSvelteConfig - 'class' is not a Svelte component for children object for config:
+${JSON.stringify(config)}`);
+    }
+    svelteConfig.children.props = s_PROCESS_PROPS(svelteConfig.children.props, thisArg, config);
+    externalContext.children = [svelteConfig.children];
+    delete svelteConfig.children;
+  }
+  if (!(svelteConfig.context instanceof Map)) {
+    svelteConfig.context = /* @__PURE__ */ new Map();
+  }
+  svelteConfig.context.set("#external", externalContext);
+  return svelteConfig;
+}
+__name(parseTJSSvelteConfig, "parseTJSSvelteConfig");
+function s_PROCESS_PROPS(props, thisArg, config) {
+  if (typeof props === "function") {
+    const result = props.call(thisArg);
+    if (isObject(result)) {
+      return result;
+    } else {
+      throw new Error(`parseSvelteConfig - 'props' is a function that did not return an object for config:
+${JSON.stringify(config)}`);
+    }
+  } else if (isObject(props)) {
+    return props;
+  } else if (props !== void 0) {
+    throw new Error(
+      `parseSvelteConfig - 'props' is not a function or an object for config:
+${JSON.stringify(config)}`
+    );
+  }
+  return {};
+}
+__name(s_PROCESS_PROPS, "s_PROCESS_PROPS");
+function writableDerived(origins, derive, reflect, initial) {
+  var childDerivedSetter, originValues, blockNextDerive = false;
+  var reflectOldValues = reflect.length >= 2;
+  var wrappedDerive = /* @__PURE__ */ __name((got, set2, update3) => {
+    childDerivedSetter = set2;
+    if (reflectOldValues) {
+      originValues = got;
+    }
+    if (!blockNextDerive) {
+      let returned = derive(got, set2, update3);
+      if (derive.length < 2) {
+        set2(returned);
+      } else {
+        return returned;
+      }
+    }
+    blockNextDerive = false;
+  }, "wrappedDerive");
+  var childDerived = derived(origins, wrappedDerive, initial);
+  var singleOrigin = !Array.isArray(origins);
+  function doReflect(reflecting) {
+    var setWith = reflect(reflecting, originValues);
+    if (singleOrigin) {
+      blockNextDerive = true;
+      origins.set(setWith);
+    } else {
+      setWith.forEach((value, i) => {
+        blockNextDerive = true;
+        origins[i].set(value);
+      });
+    }
+    blockNextDerive = false;
+  }
+  __name(doReflect, "doReflect");
+  var tryingSet = false;
+  function update2(fn) {
+    var isUpdated, mutatedBySubscriptions, oldValue, newValue;
+    if (tryingSet) {
+      newValue = fn(get_store_value(childDerived));
+      childDerivedSetter(newValue);
+      return;
+    }
+    var unsubscribe = childDerived.subscribe((value) => {
+      if (!tryingSet) {
+        oldValue = value;
+      } else if (!isUpdated) {
+        isUpdated = true;
+      } else {
+        mutatedBySubscriptions = true;
+      }
+    });
+    newValue = fn(oldValue);
+    tryingSet = true;
+    childDerivedSetter(newValue);
+    unsubscribe();
+    tryingSet = false;
+    if (mutatedBySubscriptions) {
+      newValue = get_store_value(childDerived);
+    }
+    if (isUpdated) {
+      doReflect(newValue);
+    }
+  }
+  __name(update2, "update");
+  return {
+    subscribe: childDerived.subscribe,
+    set(value) {
+      update2(() => value);
+    },
+    update: update2
+  };
+}
+__name(writableDerived, "writableDerived");
+function propertyStore(origin, propName) {
+  if (!Array.isArray(propName)) {
+    return writableDerived(
+      origin,
+      (object) => object[propName],
+      (reflecting, object) => {
+        object[propName] = reflecting;
+        return object;
+      }
+    );
+  } else {
+    let props = propName.concat();
+    return writableDerived(
+      origin,
+      (value) => {
+        for (let i = 0; i < props.length; ++i) {
+          value = value[props[i]];
+        }
+        return value;
+      },
+      (reflecting, object) => {
+        let target = object;
+        for (let i = 0; i < props.length - 1; ++i) {
+          target = target[props[i]];
+        }
+        target[props[props.length - 1]] = reflecting;
+        return object;
+      }
+    );
+  }
+}
+__name(propertyStore, "propertyStore");
 function cubicOut(t) {
   const f = t - 1;
   return f * f * f + 1;
 }
 __name(cubicOut, "cubicOut");
+function lerp(start, end, amount) {
+  return (1 - amount) * start + amount * end;
+}
+__name(lerp, "lerp");
 const _A11yHelper = class _A11yHelper {
   /**
    * Apply focus to the HTMLElement targets in a given A11yFocusSource data object. An iterable list `options.focusEl`
@@ -2101,810 +2727,6 @@ _styleElement = new WeakMap();
 _version = new WeakMap();
 __name(_TJSStyleManager, "TJSStyleManager");
 let TJSStyleManager = _TJSStyleManager;
-const cssVariables$1 = new TJSStyleManager({ docKey: "#__trl-root-styles", version: 1 });
-const _Hashing = class _Hashing {
-  /**
-   * Provides a solid string hashing algorithm.
-   *
-   * Sourced from: https://stackoverflow.com/a/52171480
-   *
-   * @param {string}   str - String to hash.
-   *
-   * @param {number}   seed - A seed value altering the hash.
-   *
-   * @returns {number} Hash code.
-   */
-  static hashCode(str, seed = 0) {
-    if (typeof str !== "string") {
-      return 0;
-    }
-    let h1 = 3735928559 ^ seed, h2 = 1103547991 ^ seed;
-    for (let ch, i = 0; i < str.length; i++) {
-      ch = str.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
-    }
-    h1 = Math.imul(h1 ^ h1 >>> 16, 2246822507) ^ Math.imul(h2 ^ h2 >>> 13, 3266489909);
-    h2 = Math.imul(h2 ^ h2 >>> 16, 2246822507) ^ Math.imul(h1 ^ h1 >>> 13, 3266489909);
-    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
-  }
-  /**
-   * Validates that the given string is formatted as a UUIDv4 string.
-   *
-   * @param {string}   uuid - UUID string to test.
-   *
-   * @returns {boolean} Is UUIDv4 string.
-   */
-  static isUuidv4(uuid) {
-    return __privateGet(this, _regexUuidv).test(uuid);
-  }
-  /**
-   * Generates a UUID v4 compliant ID. Please use a complete UUID generation package for guaranteed compliance.
-   *
-   * This code is an evolution of the following Gist.
-   * https://gist.github.com/jed/982883
-   *
-   * There is a public domain / free copy license attached to it that is not a standard OSS license...
-   * https://gist.github.com/jed/982883#file-license-txt
-   *
-   * @returns {string} UUIDv4
-   */
-  static uuidv4() {
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (globalThis.crypto ?? globalThis.msCrypto).getRandomValues(
-      new Uint8Array(1)
-    )[0] & 15 >> c / 4).toString(16));
-  }
-};
-_regexUuidv = new WeakMap();
-__name(_Hashing, "Hashing");
-__privateAdd(_Hashing, _regexUuidv, /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
-let Hashing = _Hashing;
-const _Timing = class _Timing {
-  /**
-   * Wraps a callback in a debounced timeout.
-   *
-   * Delay execution of the callback function until the function has not been called for the given delay in milliseconds.
-   *
-   * @param {Function} callback - A function to execute once the debounced threshold has been passed.
-   *
-   * @param {number}   delay - An amount of time in milliseconds to delay.
-   *
-   * @returns {Function} A wrapped function that can be called to debounce execution.
-   */
-  static debounce(callback, delay) {
-    let timeoutId;
-    return function(...args) {
-      globalThis.clearTimeout(timeoutId);
-      timeoutId = globalThis.setTimeout(() => {
-        callback.apply(this, args);
-      }, delay);
-    };
-  }
-  /**
-   * @param {object}   opts - Optional parameters.
-   *
-   * @param {Function} opts.single - Single click callback.
-   *
-   * @param {Function} opts.double - Double click callback.
-   *
-   * @param {number}   [opts.delay=400] - Double click delay.
-   *
-   * @returns {(event: Event) => void} The gated double-click handler.
-   */
-  static doubleClick({ single, double, delay = 400 }) {
-    let clicks = 0;
-    let timeoutId;
-    return (event) => {
-      clicks++;
-      if (clicks === 1) {
-        timeoutId = globalThis.setTimeout(() => {
-          if (typeof single === "function") {
-            single(event);
-          }
-          clicks = 0;
-        }, delay);
-      } else {
-        globalThis.clearTimeout(timeoutId);
-        if (typeof double === "function") {
-          double(event);
-        }
-        clicks = 0;
-      }
-    };
-  }
-};
-__name(_Timing, "Timing");
-let Timing = _Timing;
-function isUpdatableStore(store) {
-  if (store === null || store === void 0) {
-    return false;
-  }
-  switch (typeof store) {
-    case "function":
-    case "object":
-      return typeof store.subscribe === "function" && typeof store.update === "function";
-  }
-  return false;
-}
-__name(isUpdatableStore, "isUpdatableStore");
-function subscribeIgnoreFirst(store, update2) {
-  let firedFirst = false;
-  return store.subscribe((value) => {
-    if (!firedFirst) {
-      firedFirst = true;
-    } else {
-      update2(value);
-    }
-  });
-}
-__name(subscribeIgnoreFirst, "subscribeIgnoreFirst");
-function resizeObserver(node, target) {
-  ResizeObserverManager.add(node, target);
-  return {
-    /**
-     * @param {ResizeObserverTarget} newTarget - An object or function to update with observed width & height changes.
-     */
-    update: (newTarget) => {
-      ResizeObserverManager.remove(node, target);
-      target = newTarget;
-      ResizeObserverManager.add(node, target);
-    },
-    destroy: () => {
-      ResizeObserverManager.remove(node, target);
-    }
-  };
-}
-__name(resizeObserver, "resizeObserver");
-resizeObserver.updateCache = function(el) {
-  if (!(el instanceof HTMLElement)) {
-    throw new TypeError(`resizeObserverUpdate error: 'el' is not an HTMLElement.`);
-  }
-  const subscribers = s_MAP.get(el);
-  if (Array.isArray(subscribers)) {
-    const computed = globalThis.getComputedStyle(el);
-    const borderBottom = StyleParse.pixels(el.style.borderBottom) ?? StyleParse.pixels(computed.borderBottom) ?? 0;
-    const borderLeft = StyleParse.pixels(el.style.borderLeft) ?? StyleParse.pixels(computed.borderLeft) ?? 0;
-    const borderRight = StyleParse.pixels(el.style.borderRight) ?? StyleParse.pixels(computed.borderRight) ?? 0;
-    const borderTop = StyleParse.pixels(el.style.borderTop) ?? StyleParse.pixels(computed.borderTop) ?? 0;
-    const paddingBottom = StyleParse.pixels(el.style.paddingBottom) ?? StyleParse.pixels(computed.paddingBottom) ?? 0;
-    const paddingLeft = StyleParse.pixels(el.style.paddingLeft) ?? StyleParse.pixels(computed.paddingLeft) ?? 0;
-    const paddingRight = StyleParse.pixels(el.style.paddingRight) ?? StyleParse.pixels(computed.paddingRight) ?? 0;
-    const paddingTop = StyleParse.pixels(el.style.paddingTop) ?? StyleParse.pixels(computed.paddingTop) ?? 0;
-    const additionalWidth = borderLeft + borderRight + paddingLeft + paddingRight;
-    const additionalHeight = borderTop + borderBottom + paddingTop + paddingBottom;
-    for (const subscriber of subscribers) {
-      subscriber.styles.additionalWidth = additionalWidth;
-      subscriber.styles.additionalHeight = additionalHeight;
-      s_UPDATE_SUBSCRIBER(subscriber, subscriber.contentWidth, subscriber.contentHeight);
-    }
-  }
-};
-const s_MAP = /* @__PURE__ */ new Map();
-const _ResizeObserverManager = class _ResizeObserverManager {
-  /**
-   * Add an HTMLElement and ResizeObserverTarget instance for monitoring. Create cached style attributes for the
-   * given element include border & padding dimensions for offset width / height calculations.
-   *
-   * @param {HTMLElement}    el - The element to observe.
-   *
-   * @param {ResizeObserverTarget} target - A target that contains one of several mechanisms for updating resize data.
-   */
-  static add(el, target) {
-    const updateType = s_GET_UPDATE_TYPE(target);
-    if (updateType === 0) {
-      throw new Error(`'target' does not match supported ResizeObserverManager update mechanisms.`);
-    }
-    const computed = globalThis.getComputedStyle(el);
-    const borderBottom = StyleParse.pixels(el.style.borderBottom) ?? StyleParse.pixels(computed.borderBottom) ?? 0;
-    const borderLeft = StyleParse.pixels(el.style.borderLeft) ?? StyleParse.pixels(computed.borderLeft) ?? 0;
-    const borderRight = StyleParse.pixels(el.style.borderRight) ?? StyleParse.pixels(computed.borderRight) ?? 0;
-    const borderTop = StyleParse.pixels(el.style.borderTop) ?? StyleParse.pixels(computed.borderTop) ?? 0;
-    const paddingBottom = StyleParse.pixels(el.style.paddingBottom) ?? StyleParse.pixels(computed.paddingBottom) ?? 0;
-    const paddingLeft = StyleParse.pixels(el.style.paddingLeft) ?? StyleParse.pixels(computed.paddingLeft) ?? 0;
-    const paddingRight = StyleParse.pixels(el.style.paddingRight) ?? StyleParse.pixels(computed.paddingRight) ?? 0;
-    const paddingTop = StyleParse.pixels(el.style.paddingTop) ?? StyleParse.pixels(computed.paddingTop) ?? 0;
-    const data = {
-      updateType,
-      target,
-      // Stores most recent contentRect.width and contentRect.height values from ResizeObserver.
-      contentWidth: 0,
-      contentHeight: 0,
-      // Convenience data for total border & padding for offset width & height calculations.
-      styles: {
-        additionalWidth: borderLeft + borderRight + paddingLeft + paddingRight,
-        additionalHeight: borderTop + borderBottom + paddingTop + paddingBottom
-      }
-    };
-    if (s_MAP.has(el)) {
-      const subscribers = s_MAP.get(el);
-      subscribers.push(data);
-    } else {
-      s_MAP.set(el, [data]);
-    }
-    s_RESIZE_OBSERVER.observe(el);
-  }
-  /**
-   * Removes all targets from monitoring when just an element is provided otherwise removes a specific target
-   * from the monitoring map. If no more targets remain then the element is removed from monitoring.
-   *
-   * @param {HTMLElement}          el - Element to remove from monitoring.
-   *
-   * @param {ResizeObserverTarget} [target] - A specific target to remove from monitoring.
-   */
-  static remove(el, target = void 0) {
-    const subscribers = s_MAP.get(el);
-    if (Array.isArray(subscribers)) {
-      const index = subscribers.findIndex((entry) => entry.target === target);
-      if (index >= 0) {
-        s_UPDATE_SUBSCRIBER(subscribers[index], void 0, void 0);
-        subscribers.splice(index, 1);
-      }
-      if (subscribers.length === 0) {
-        s_MAP.delete(el);
-        s_RESIZE_OBSERVER.unobserve(el);
-      }
-    }
-  }
-};
-__name(_ResizeObserverManager, "ResizeObserverManager");
-let ResizeObserverManager = _ResizeObserverManager;
-const s_UPDATE_TYPES = {
-  none: 0,
-  attribute: 1,
-  function: 2,
-  resizeObserved: 3,
-  setContentBounds: 4,
-  setDimension: 5,
-  storeObject: 6,
-  storesObject: 7
-};
-const s_RESIZE_OBSERVER = new ResizeObserver((entries) => {
-  for (const entry of entries) {
-    const subscribers = s_MAP.get(entry?.target);
-    if (Array.isArray(subscribers)) {
-      const contentWidth = entry.contentRect.width;
-      const contentHeight = entry.contentRect.height;
-      for (const subscriber of subscribers) {
-        s_UPDATE_SUBSCRIBER(subscriber, contentWidth, contentHeight);
-      }
-    }
-  }
-});
-function s_GET_UPDATE_TYPE(target) {
-  if (target?.resizeObserved instanceof Function) {
-    return s_UPDATE_TYPES.resizeObserved;
-  }
-  if (target?.setDimension instanceof Function) {
-    return s_UPDATE_TYPES.setDimension;
-  }
-  if (target?.setContentBounds instanceof Function) {
-    return s_UPDATE_TYPES.setContentBounds;
-  }
-  const targetType = typeof target;
-  if (targetType !== null && (targetType === "object" || targetType === "function")) {
-    if (isUpdatableStore(target.resizeObserved)) {
-      return s_UPDATE_TYPES.storeObject;
-    }
-    const stores = target?.stores;
-    if (isObject(stores) || typeof stores === "function") {
-      if (isUpdatableStore(stores.resizeObserved)) {
-        return s_UPDATE_TYPES.storesObject;
-      }
-    }
-  }
-  if (targetType !== null && targetType === "object") {
-    return s_UPDATE_TYPES.attribute;
-  }
-  if (targetType === "function") {
-    return s_UPDATE_TYPES.function;
-  }
-  return s_UPDATE_TYPES.none;
-}
-__name(s_GET_UPDATE_TYPE, "s_GET_UPDATE_TYPE");
-function s_UPDATE_SUBSCRIBER(subscriber, contentWidth, contentHeight) {
-  const styles = subscriber.styles;
-  subscriber.contentWidth = contentWidth;
-  subscriber.contentHeight = contentHeight;
-  const offsetWidth = Number.isFinite(contentWidth) ? contentWidth + styles.additionalWidth : void 0;
-  const offsetHeight = Number.isFinite(contentHeight) ? contentHeight + styles.additionalHeight : void 0;
-  const target = subscriber.target;
-  switch (subscriber.updateType) {
-    case s_UPDATE_TYPES.attribute:
-      target.contentWidth = contentWidth;
-      target.contentHeight = contentHeight;
-      target.offsetWidth = offsetWidth;
-      target.offsetHeight = offsetHeight;
-      break;
-    case s_UPDATE_TYPES.function:
-      target?.(offsetWidth, offsetHeight, contentWidth, contentHeight);
-      break;
-    case s_UPDATE_TYPES.resizeObserved:
-      target.resizeObserved?.(offsetWidth, offsetHeight, contentWidth, contentHeight);
-      break;
-    case s_UPDATE_TYPES.setContentBounds:
-      target.setContentBounds?.(contentWidth, contentHeight);
-      break;
-    case s_UPDATE_TYPES.setDimension:
-      target.setDimension?.(offsetWidth, offsetHeight);
-      break;
-    case s_UPDATE_TYPES.storeObject:
-      target.resizeObserved.update((object) => {
-        object.contentHeight = contentHeight;
-        object.contentWidth = contentWidth;
-        object.offsetHeight = offsetHeight;
-        object.offsetWidth = offsetWidth;
-        return object;
-      });
-      break;
-    case s_UPDATE_TYPES.storesObject:
-      target.stores.resizeObserved.update((object) => {
-        object.contentHeight = contentHeight;
-        object.contentWidth = contentWidth;
-        object.offsetHeight = offsetHeight;
-        object.offsetWidth = offsetWidth;
-        return object;
-      });
-      break;
-  }
-}
-__name(s_UPDATE_SUBSCRIBER, "s_UPDATE_SUBSCRIBER");
-function applyStyles(node, properties) {
-  function setProperties() {
-    if (!isObject(properties)) {
-      return;
-    }
-    for (const prop of Object.keys(properties)) {
-      node.style.setProperty(`${prop}`, properties[prop]);
-    }
-  }
-  __name(setProperties, "setProperties");
-  setProperties();
-  return {
-    /**
-     * @param {Record<string, string>}  newProperties - Key / value object of properties to set.
-     */
-    update: (newProperties) => {
-      properties = newProperties;
-      setProperties();
-    }
-  };
-}
-__name(applyStyles, "applyStyles");
-function lerp(start, end, amount) {
-  return (1 - amount) * start + amount * end;
-}
-__name(lerp, "lerp");
-const _TJSDefaultTransition = class _TJSDefaultTransition {
-  /**
-   * @returns {() => undefined} Default empty transition.
-   */
-  static get default() {
-    return __privateGet(this, _default);
-  }
-  /**
-   * @returns {{}} Default empty options.
-   */
-  static get options() {
-    return __privateGet(this, _options);
-  }
-};
-_options = new WeakMap();
-_default = new WeakMap();
-__name(_TJSDefaultTransition, "TJSDefaultTransition");
-__privateAdd(_TJSDefaultTransition, _options, {});
-__privateAdd(_TJSDefaultTransition, _default, /* @__PURE__ */ __name(() => void 0, "#default"));
-let TJSDefaultTransition = _TJSDefaultTransition;
-const subscriber_queue = [];
-function readable(value, start) {
-  return {
-    subscribe: writable(value, start).subscribe
-  };
-}
-__name(readable, "readable");
-function writable(value, start = noop) {
-  let stop;
-  const subscribers = /* @__PURE__ */ new Set();
-  function set(new_value) {
-    if (safe_not_equal(value, new_value)) {
-      value = new_value;
-      if (stop) {
-        const run_queue = !subscriber_queue.length;
-        for (const subscriber of subscribers) {
-          subscriber[1]();
-          subscriber_queue.push(subscriber, value);
-        }
-        if (run_queue) {
-          for (let i = 0; i < subscriber_queue.length; i += 2) {
-            subscriber_queue[i][0](subscriber_queue[i + 1]);
-          }
-          subscriber_queue.length = 0;
-        }
-      }
-    }
-  }
-  __name(set, "set");
-  function update2(fn) {
-    set(fn(value));
-  }
-  __name(update2, "update");
-  function subscribe2(run2, invalidate = noop) {
-    const subscriber = [run2, invalidate];
-    subscribers.add(subscriber);
-    if (subscribers.size === 1) {
-      stop = start(set, update2) || noop;
-    }
-    run2(value);
-    return () => {
-      subscribers.delete(subscriber);
-      if (subscribers.size === 0 && stop) {
-        stop();
-        stop = null;
-      }
-    };
-  }
-  __name(subscribe2, "subscribe");
-  return { set, update: update2, subscribe: subscribe2 };
-}
-__name(writable, "writable");
-function derived(stores, fn, initial_value) {
-  const single = !Array.isArray(stores);
-  const stores_array = single ? [stores] : stores;
-  if (!stores_array.every(Boolean)) {
-    throw new Error("derived() expects stores as input, got a falsy value");
-  }
-  const auto = fn.length < 2;
-  return readable(initial_value, (set, update2) => {
-    let started = false;
-    const values = [];
-    let pending = 0;
-    let cleanup = noop;
-    const sync = /* @__PURE__ */ __name(() => {
-      if (pending) {
-        return;
-      }
-      cleanup();
-      const result = fn(single ? values[0] : values, set, update2);
-      if (auto) {
-        set(result);
-      } else {
-        cleanup = is_function(result) ? result : noop;
-      }
-    }, "sync");
-    const unsubscribers = stores_array.map(
-      (store, i) => subscribe(
-        store,
-        (value) => {
-          values[i] = value;
-          pending &= ~(1 << i);
-          if (started) {
-            sync();
-          }
-        },
-        () => {
-          pending |= 1 << i;
-        }
-      )
-    );
-    started = true;
-    sync();
-    return /* @__PURE__ */ __name(function stop() {
-      run_all(unsubscribers);
-      cleanup();
-      started = false;
-    }, "stop");
-  });
-}
-__name(derived, "derived");
-const _AppShellContextInternal = class _AppShellContextInternal {
-  constructor() {
-    /** @type {InternalAppStores} */
-    __privateAdd(this, _stores, void 0);
-    __privateSet(this, _stores, {
-      elementContent: writable(void 0),
-      elementRoot: writable(void 0)
-    });
-    Object.freeze(__privateGet(this, _stores));
-    Object.seal(this);
-  }
-  /**
-   * @returns {InternalAppStores} The internal context stores for elementContent / elementRoot
-   */
-  get stores() {
-    return __privateGet(this, _stores);
-  }
-};
-_stores = new WeakMap();
-__name(_AppShellContextInternal, "AppShellContextInternal");
-let AppShellContextInternal = _AppShellContextInternal;
-function isHMRProxy(comp) {
-  const instanceName = comp?.constructor?.name;
-  if (typeof instanceName === "string" && (instanceName.startsWith("Proxy<") || instanceName === "ProxyComponent")) {
-    return true;
-  }
-  const prototypeName = comp?.prototype?.constructor?.name;
-  return typeof prototypeName === "string" && (prototypeName.startsWith("Proxy<") || prototypeName === "ProxyComponent");
-}
-__name(isHMRProxy, "isHMRProxy");
-function isSvelteComponent(comp) {
-  if (comp === null || comp === void 0 || typeof comp !== "function") {
-    return false;
-  }
-  const prototypeName = comp?.prototype?.constructor?.name;
-  if (typeof prototypeName === "string" && (prototypeName.startsWith("Proxy<") || prototypeName === "ProxyComponent")) {
-    return true;
-  }
-  return typeof window !== "undefined" ? typeof comp.prototype.$destroy === "function" && typeof comp.prototype.$on === "function" : (
-    // client-side
-    typeof comp.render === "function"
-  );
-}
-__name(isSvelteComponent, "isSvelteComponent");
-async function outroAndDestroy(instance2) {
-  return new Promise((resolve) => {
-    if (instance2.$$.fragment && instance2.$$.fragment.o) {
-      group_outros();
-      transition_out(instance2.$$.fragment, 0, 0, () => {
-        instance2.$destroy();
-        resolve();
-      });
-      check_outros();
-    } else {
-      instance2.$destroy();
-      resolve();
-    }
-  });
-}
-__name(outroAndDestroy, "outroAndDestroy");
-function parseTJSSvelteConfig(config, thisArg = void 0) {
-  if (!isObject(config)) {
-    throw new TypeError(`parseSvelteConfig - 'config' is not an object:
-${JSON.stringify(config)}.`);
-  }
-  if (!isSvelteComponent(config.class)) {
-    throw new TypeError(
-      `parseSvelteConfig - 'class' is not a Svelte component constructor for config:
-${JSON.stringify(config)}.`
-    );
-  }
-  if (config.hydrate !== void 0 && typeof config.hydrate !== "boolean") {
-    throw new TypeError(
-      `parseSvelteConfig - 'hydrate' is not a boolean for config:
-${JSON.stringify(config)}.`
-    );
-  }
-  if (config.intro !== void 0 && typeof config.intro !== "boolean") {
-    throw new TypeError(
-      `parseSvelteConfig - 'intro' is not a boolean for config:
-${JSON.stringify(config)}.`
-    );
-  }
-  if (config.target !== void 0 && typeof config.target !== "string" && !(config.target instanceof HTMLElement) && !(config.target instanceof ShadowRoot) && !(config.target instanceof DocumentFragment)) {
-    throw new TypeError(
-      `parseSvelteConfig - 'target' is not a string, HTMLElement, ShadowRoot, or DocumentFragment for config:
-${JSON.stringify(config)}.`
-    );
-  }
-  if (config.anchor !== void 0 && typeof config.anchor !== "string" && !(config.anchor instanceof HTMLElement) && !(config.anchor instanceof ShadowRoot) && !(config.anchor instanceof DocumentFragment)) {
-    throw new TypeError(
-      `parseSvelteConfig - 'anchor' is not a string, HTMLElement, ShadowRoot, or DocumentFragment for config:
-${JSON.stringify(config)}.`
-    );
-  }
-  if (config.context !== void 0 && typeof config.context !== "function" && !(config.context instanceof Map) && !isObject(config.context)) {
-    throw new TypeError(
-      `parseSvelteConfig - 'context' is not a Map, function or object for config:
-${JSON.stringify(config)}.`
-    );
-  }
-  if (config.selectorTarget !== void 0 && typeof config.selectorTarget !== "string") {
-    throw new TypeError(
-      `parseSvelteConfig - 'selectorTarget' is not a string for config:
-${JSON.stringify(config)}.`
-    );
-  }
-  if (config.options !== void 0 && !isObject(config.options)) {
-    throw new TypeError(
-      `parseSvelteConfig - 'options' is not an object for config:
-${JSON.stringify(config)}.`
-    );
-  }
-  if (config.options !== void 0) {
-    if (config.options.injectApp !== void 0 && typeof config.options.injectApp !== "boolean") {
-      throw new TypeError(
-        `parseSvelteConfig - 'options.injectApp' is not a boolean for config:
-${JSON.stringify(config)}.`
-      );
-    }
-    if (config.options.injectEventbus !== void 0 && typeof config.options.injectEventbus !== "boolean") {
-      throw new TypeError(
-        `parseSvelteConfig - 'options.injectEventbus' is not a boolean for config:
-${JSON.stringify(config)}.`
-      );
-    }
-    if (config.options.selectorElement !== void 0 && typeof config.options.selectorElement !== "string") {
-      throw new TypeError(
-        `parseSvelteConfig - 'selectorElement' is not a string for config:
-${JSON.stringify(config)}.`
-      );
-    }
-  }
-  const svelteConfig = { ...config };
-  delete svelteConfig.options;
-  let externalContext = {};
-  if (typeof svelteConfig.context === "function") {
-    const contextFunc = svelteConfig.context;
-    delete svelteConfig.context;
-    const result = contextFunc.call(thisArg);
-    if (isObject(result)) {
-      externalContext = { ...result };
-    } else {
-      throw new Error(`parseSvelteConfig - 'context' is a function that did not return an object for config:
-${JSON.stringify(config)}`);
-    }
-  } else if (svelteConfig.context instanceof Map) {
-    externalContext = Object.fromEntries(svelteConfig.context);
-    delete svelteConfig.context;
-  } else if (isObject(svelteConfig.context)) {
-    externalContext = svelteConfig.context;
-    delete svelteConfig.context;
-  }
-  svelteConfig.props = s_PROCESS_PROPS(svelteConfig.props, thisArg, config);
-  if (Array.isArray(svelteConfig.children)) {
-    const children2 = [];
-    for (let cntr = 0; cntr < svelteConfig.children.length; cntr++) {
-      const child = svelteConfig.children[cntr];
-      if (!isSvelteComponent(child.class)) {
-        throw new Error(`parseSvelteConfig - 'class' is not a Svelte component for child[${cntr}] for config:
-${JSON.stringify(config)}`);
-      }
-      child.props = s_PROCESS_PROPS(child.props, thisArg, config);
-      children2.push(child);
-    }
-    if (children2.length > 0) {
-      externalContext.children = children2;
-    }
-    delete svelteConfig.children;
-  } else if (isObject(svelteConfig.children)) {
-    if (!isSvelteComponent(svelteConfig.children.class)) {
-      throw new Error(`parseSvelteConfig - 'class' is not a Svelte component for children object for config:
-${JSON.stringify(config)}`);
-    }
-    svelteConfig.children.props = s_PROCESS_PROPS(svelteConfig.children.props, thisArg, config);
-    externalContext.children = [svelteConfig.children];
-    delete svelteConfig.children;
-  }
-  if (!(svelteConfig.context instanceof Map)) {
-    svelteConfig.context = /* @__PURE__ */ new Map();
-  }
-  svelteConfig.context.set("#external", externalContext);
-  return svelteConfig;
-}
-__name(parseTJSSvelteConfig, "parseTJSSvelteConfig");
-function s_PROCESS_PROPS(props, thisArg, config) {
-  if (typeof props === "function") {
-    const result = props.call(thisArg);
-    if (isObject(result)) {
-      return result;
-    } else {
-      throw new Error(`parseSvelteConfig - 'props' is a function that did not return an object for config:
-${JSON.stringify(config)}`);
-    }
-  } else if (isObject(props)) {
-    return props;
-  } else if (props !== void 0) {
-    throw new Error(
-      `parseSvelteConfig - 'props' is not a function or an object for config:
-${JSON.stringify(config)}`
-    );
-  }
-  return {};
-}
-__name(s_PROCESS_PROPS, "s_PROCESS_PROPS");
-function writableDerived(origins, derive, reflect, initial) {
-  var childDerivedSetter, originValues, blockNextDerive = false;
-  var reflectOldValues = reflect.length >= 2;
-  var wrappedDerive = /* @__PURE__ */ __name((got, set, update3) => {
-    childDerivedSetter = set;
-    if (reflectOldValues) {
-      originValues = got;
-    }
-    if (!blockNextDerive) {
-      let returned = derive(got, set, update3);
-      if (derive.length < 2) {
-        set(returned);
-      } else {
-        return returned;
-      }
-    }
-    blockNextDerive = false;
-  }, "wrappedDerive");
-  var childDerived = derived(origins, wrappedDerive, initial);
-  var singleOrigin = !Array.isArray(origins);
-  function doReflect(reflecting) {
-    var setWith = reflect(reflecting, originValues);
-    if (singleOrigin) {
-      blockNextDerive = true;
-      origins.set(setWith);
-    } else {
-      setWith.forEach((value, i) => {
-        blockNextDerive = true;
-        origins[i].set(value);
-      });
-    }
-    blockNextDerive = false;
-  }
-  __name(doReflect, "doReflect");
-  var tryingSet = false;
-  function update2(fn) {
-    var isUpdated, mutatedBySubscriptions, oldValue, newValue;
-    if (tryingSet) {
-      newValue = fn(get_store_value(childDerived));
-      childDerivedSetter(newValue);
-      return;
-    }
-    var unsubscribe = childDerived.subscribe((value) => {
-      if (!tryingSet) {
-        oldValue = value;
-      } else if (!isUpdated) {
-        isUpdated = true;
-      } else {
-        mutatedBySubscriptions = true;
-      }
-    });
-    newValue = fn(oldValue);
-    tryingSet = true;
-    childDerivedSetter(newValue);
-    unsubscribe();
-    tryingSet = false;
-    if (mutatedBySubscriptions) {
-      newValue = get_store_value(childDerived);
-    }
-    if (isUpdated) {
-      doReflect(newValue);
-    }
-  }
-  __name(update2, "update");
-  return {
-    subscribe: childDerived.subscribe,
-    set(value) {
-      update2(() => value);
-    },
-    update: update2
-  };
-}
-__name(writableDerived, "writableDerived");
-function propertyStore(origin, propName) {
-  if (!Array.isArray(propName)) {
-    return writableDerived(
-      origin,
-      (object) => object[propName],
-      (reflecting, object) => {
-        object[propName] = reflecting;
-        return object;
-      }
-    );
-  } else {
-    let props = propName.concat();
-    return writableDerived(
-      origin,
-      (value) => {
-        for (let i = 0; i < props.length; ++i) {
-          value = value[props[i]];
-        }
-        return value;
-      },
-      (reflecting, object) => {
-        let target = object;
-        for (let i = 0; i < props.length - 1; ++i) {
-          target = target[props[i]];
-        }
-        target[props[props.length - 1]] = reflecting;
-        return object;
-      }
-    );
-  }
-}
-__name(propertyStore, "propertyStore");
 const EPSILON = 1e-6;
 const IDENTITY_4X4 = new Float32Array([
   1,
@@ -9577,7 +9399,7 @@ const _TJSPosition = class _TJSPosition {
      *
      * @type {import('./').TJSPositionOptions}
      */
-    __privateAdd(this, _options2, {
+    __privateAdd(this, _options, {
       calculateTransform: false,
       initialHelper: void 0,
       ortho: true,
@@ -9598,7 +9420,7 @@ const _TJSPosition = class _TJSPosition {
     /**
      * @type {import('./').TJSPositionStores}
      */
-    __privateAdd(this, _stores2, void 0);
+    __privateAdd(this, _stores, void 0);
     /**
      * Stores an instance of the computer styles for the target element.
      *
@@ -9648,17 +9470,17 @@ const _TJSPosition = class _TJSPosition {
     const updateData = new UpdateElementData();
     updateData.changeSet = __privateGet(this, _positionChangeSet);
     updateData.data = __privateGet(this, _data3);
-    updateData.options = __privateGet(this, _options2);
+    updateData.options = __privateGet(this, _options);
     updateData.styleCache = __privateGet(this, _styleCache);
     updateData.subscriptions = __privateGet(this, _subscriptions);
     updateData.transforms = __privateGet(this, _transforms2);
     __privateSet(this, _updateElementData, updateData);
     if (isObject(options)) {
       if (typeof options.calculateTransform === "boolean") {
-        __privateGet(this, _options2).calculateTransform = options.calculateTransform;
+        __privateGet(this, _options).calculateTransform = options.calculateTransform;
       }
       if (typeof options.ortho === "boolean") {
-        __privateGet(this, _options2).ortho = options.ortho;
+        __privateGet(this, _options).ortho = options.ortho;
       }
       if (Number.isFinite(options.height) || options.height === "auto" || options.height === "inherit" || options.height === null) {
         data.height = updateData.dimensionData.height = typeof options.height === "number" ? Math.round(options.height) : options.height;
@@ -9712,7 +9534,7 @@ const _TJSPosition = class _TJSPosition {
         data.zIndex = typeof options.zIndex === "number" ? Math.round(options.zIndex) : options.zIndex;
       }
     }
-    __privateSet(this, _stores2, {
+    __privateSet(this, _stores, {
       // The main properties for manipulating TJSPosition.
       height: propertyStore(this, "height"),
       left: propertyStore(this, "left"),
@@ -9743,14 +9565,14 @@ const _TJSPosition = class _TJSPosition {
       // Protected store that should only be set by resizeObserver action.
       resizeObserved: __privateGet(this, _styleCache).stores.resizeObserved
     });
-    subscribeIgnoreFirst(__privateGet(this, _stores2).resizeObserved, (resizeData) => {
+    subscribeIgnoreFirst(__privateGet(this, _stores).resizeObserved, (resizeData) => {
       const parent2 = __privateGet(this, _parent);
       const el = parent2 instanceof HTMLElement ? parent2 : parent2?.elementTarget;
       if (el instanceof HTMLElement && Number.isFinite(resizeData?.offsetWidth) && Number.isFinite(resizeData?.offsetHeight)) {
         this.set(data);
       }
     });
-    __privateGet(this, _stores2).transformOrigin.values = transformOrigins;
+    __privateGet(this, _stores).transformOrigin.values = transformOrigins;
     [__privateWrapper(this, _validators)._, __privateWrapper(this, _validatorData2)._] = new AdapterValidators();
     if (options?.initial || options?.positionInitial) {
       const initialHelper = options.initial ?? options.positionInitial;
@@ -9759,7 +9581,7 @@ const _TJSPosition = class _TJSPosition {
           `'options.initial' position helper does not contain 'getLeft' and / or 'getTop' functions.`
         );
       }
-      __privateGet(this, _options2).initialHelper = options.initial;
+      __privateGet(this, _options).initialHelper = options.initial;
     }
     if (options?.validator) {
       if (isIterable(options?.validator)) {
@@ -9816,7 +9638,7 @@ const _TJSPosition = class _TJSPosition {
       throw new TypeError(`'position' is not an instance of Position.`);
     }
     const newPosition = new _TJSPosition(options);
-    __privateSet(newPosition, _options2, Object.assign({}, __privateGet(position, _options2), options));
+    __privateSet(newPosition, _options, Object.assign({}, __privateGet(position, _options), options));
     __privateGet(newPosition, _validators).add(...__privateGet(position, _validators));
     newPosition.set(__privateGet(position, _data3));
     return newPosition;
@@ -9883,7 +9705,7 @@ const _TJSPosition = class _TJSPosition {
    * @returns {import('./').TJSPositionStores} Derived / writable stores.
    */
   get stores() {
-    return __privateGet(this, _stores2);
+    return __privateGet(this, _stores);
   }
   /**
    * Returns the transform data for the readable store.
@@ -10041,111 +9863,111 @@ const _TJSPosition = class _TJSPosition {
    * @param {number|string|null} height -
    */
   set height(height) {
-    __privateGet(this, _stores2).height.set(height);
+    __privateGet(this, _stores).height.set(height);
   }
   /**
    * @param {number|string|null} left -
    */
   set left(left) {
-    __privateGet(this, _stores2).left.set(left);
+    __privateGet(this, _stores).left.set(left);
   }
   /**
    * @param {number|string|null} maxHeight -
    */
   set maxHeight(maxHeight) {
-    __privateGet(this, _stores2).maxHeight.set(maxHeight);
+    __privateGet(this, _stores).maxHeight.set(maxHeight);
   }
   /**
    * @param {number|string|null} maxWidth -
    */
   set maxWidth(maxWidth) {
-    __privateGet(this, _stores2).maxWidth.set(maxWidth);
+    __privateGet(this, _stores).maxWidth.set(maxWidth);
   }
   /**
    * @param {number|string|null} minHeight -
    */
   set minHeight(minHeight) {
-    __privateGet(this, _stores2).minHeight.set(minHeight);
+    __privateGet(this, _stores).minHeight.set(minHeight);
   }
   /**
    * @param {number|string|null} minWidth -
    */
   set minWidth(minWidth) {
-    __privateGet(this, _stores2).minWidth.set(minWidth);
+    __privateGet(this, _stores).minWidth.set(minWidth);
   }
   /**
    * @param {number|string|null} rotateX -
    */
   set rotateX(rotateX) {
-    __privateGet(this, _stores2).rotateX.set(rotateX);
+    __privateGet(this, _stores).rotateX.set(rotateX);
   }
   /**
    * @param {number|string|null} rotateY -
    */
   set rotateY(rotateY) {
-    __privateGet(this, _stores2).rotateY.set(rotateY);
+    __privateGet(this, _stores).rotateY.set(rotateY);
   }
   /**
    * @param {number|string|null} rotateZ -
    */
   set rotateZ(rotateZ) {
-    __privateGet(this, _stores2).rotateZ.set(rotateZ);
+    __privateGet(this, _stores).rotateZ.set(rotateZ);
   }
   /**
    * @param {number|string|null} rotateZ - alias for rotateZ
    */
   set rotation(rotateZ) {
-    __privateGet(this, _stores2).rotateZ.set(rotateZ);
+    __privateGet(this, _stores).rotateZ.set(rotateZ);
   }
   /**
    * @param {number|string|null} scale -
    */
   set scale(scale) {
-    __privateGet(this, _stores2).scale.set(scale);
+    __privateGet(this, _stores).scale.set(scale);
   }
   /**
    * @param {number|string|null} top -
    */
   set top(top) {
-    __privateGet(this, _stores2).top.set(top);
+    __privateGet(this, _stores).top.set(top);
   }
   /**
    * @param {import('./').TJSTransformOrigin} transformOrigin -
    */
   set transformOrigin(transformOrigin) {
     if (transformOrigins.includes(transformOrigin)) {
-      __privateGet(this, _stores2).transformOrigin.set(transformOrigin);
+      __privateGet(this, _stores).transformOrigin.set(transformOrigin);
     }
   }
   /**
    * @param {number|string|null} translateX -
    */
   set translateX(translateX) {
-    __privateGet(this, _stores2).translateX.set(translateX);
+    __privateGet(this, _stores).translateX.set(translateX);
   }
   /**
    * @param {number|string|null} translateY -
    */
   set translateY(translateY) {
-    __privateGet(this, _stores2).translateY.set(translateY);
+    __privateGet(this, _stores).translateY.set(translateY);
   }
   /**
    * @param {number|string|null} translateZ -
    */
   set translateZ(translateZ) {
-    __privateGet(this, _stores2).translateZ.set(translateZ);
+    __privateGet(this, _stores).translateZ.set(translateZ);
   }
   /**
    * @param {number|string|null} width -
    */
   set width(width) {
-    __privateGet(this, _stores2).width.set(width);
+    __privateGet(this, _stores).width.set(width);
   }
   /**
    * @param {number|string|null} zIndex -
    */
   set zIndex(zIndex) {
-    __privateGet(this, _stores2).zIndex.set(zIndex);
+    __privateGet(this, _stores).zIndex.set(zIndex);
   }
   /**
    * Assigns current position to object passed into method.
@@ -10403,10 +10225,10 @@ _positionValidators = new WeakMap();
 _data3 = new WeakMap();
 _animate = new WeakMap();
 _enabled4 = new WeakMap();
-_options2 = new WeakMap();
+_options = new WeakMap();
 _parent = new WeakMap();
 _positionChangeSet = new WeakMap();
-_stores2 = new WeakMap();
+_stores = new WeakMap();
 _styleCache = new WeakMap();
 _subscriptions = new WeakMap();
 _transforms2 = new WeakMap();
@@ -10471,12 +10293,12 @@ updatePosition_fn = /* @__PURE__ */ __name(function({
   if (Number.isFinite(left)) {
     currentPosition.left = left;
   } else if (!Number.isFinite(currentPosition.left)) {
-    currentPosition.left = typeof __privateGet(this, _options2).initialHelper?.getLeft === "function" ? __privateGet(this, _options2).initialHelper.getLeft(width) : 0;
+    currentPosition.left = typeof __privateGet(this, _options).initialHelper?.getLeft === "function" ? __privateGet(this, _options).initialHelper.getLeft(width) : 0;
   }
   if (Number.isFinite(top)) {
     currentPosition.top = top;
   } else if (!Number.isFinite(currentPosition.top)) {
-    currentPosition.top = typeof __privateGet(this, _options2).initialHelper?.getTop === "function" ? __privateGet(this, _options2).initialHelper.getTop(height) : 0;
+    currentPosition.top = typeof __privateGet(this, _options).initialHelper?.getTop === "function" ? __privateGet(this, _options).initialHelper.getTop(height) : 0;
   }
   if (Number.isFinite(maxHeight) || maxHeight === null) {
     currentPosition.maxHeight = Number.isFinite(maxHeight) ? Math.round(maxHeight) : null;
@@ -10890,2615 +10712,6 @@ updateSubscribers_fn = /* @__PURE__ */ __name(function() {
 __name(_DraggableOptions, "DraggableOptions");
 let DraggableOptions = _DraggableOptions;
 draggable.options = (options) => new DraggableOptions(options);
-const TJSHeaderButton_svelte_svelte_type_style_lang = "";
-function create_if_block$5(ctx) {
-  let span;
-  let t;
-  return {
-    c() {
-      span = element("span");
-      t = text(
-        /*label*/
-        ctx[3]
-      );
-      attr(span, "class", "svelte-FF15-166l8wd");
-      toggle_class(
-        span,
-        "has-icon",
-        /*icon*/
-        ctx[4] !== void 0
-      );
-    },
-    m(target, anchor) {
-      insert(target, span, anchor);
-      append(span, t);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*label*/
-      8)
-        set_data(
-          t,
-          /*label*/
-          ctx2[3]
-        );
-      if (dirty & /*icon*/
-      16) {
-        toggle_class(
-          span,
-          "has-icon",
-          /*icon*/
-          ctx2[4] !== void 0
-        );
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(span);
-      }
-    }
-  };
-}
-__name(create_if_block$5, "create_if_block$5");
-function create_fragment$E(ctx) {
-  let a;
-  let html_tag;
-  let html_anchor;
-  let a_class_value;
-  let applyStyles_action;
-  let mounted;
-  let dispose;
-  let if_block = (
-    /*label*/
-    ctx[3] && create_if_block$5(ctx)
-  );
-  return {
-    c() {
-      a = element("a");
-      html_tag = new HtmlTag(false);
-      html_anchor = empty();
-      if (if_block)
-        if_block.c();
-      html_tag.a = html_anchor;
-      attr(a, "class", a_class_value = "header-button " + /*button*/
-      ctx[0].class + " svelte-FF15-166l8wd");
-      attr(
-        a,
-        "aria-label",
-        /*label*/
-        ctx[3]
-      );
-      attr(a, "tabindex", "0");
-      attr(a, "role", "button");
-      toggle_class(
-        a,
-        "keep-minimized",
-        /*keepMinimized*/
-        ctx[2]
-      );
-    },
-    m(target, anchor) {
-      insert(target, a, anchor);
-      html_tag.m(
-        /*icon*/
-        ctx[4],
-        a
-      );
-      append(a, html_anchor);
-      if (if_block)
-        if_block.m(a, null);
-      if (!mounted) {
-        dispose = [
-          listen(a, "click", stop_propagation(prevent_default(
-            /*onClick*/
-            ctx[5]
-          ))),
-          listen(a, "contextmenu", stop_propagation(prevent_default(
-            /*onContextMenu*/
-            ctx[6]
-          ))),
-          listen(
-            a,
-            "keydown",
-            /*onKeydown*/
-            ctx[7]
-          ),
-          listen(
-            a,
-            "keyup",
-            /*onKeyup*/
-            ctx[8]
-          ),
-          action_destroyer(applyStyles_action = applyStyles.call(
-            null,
-            a,
-            /*styles*/
-            ctx[1]
-          ))
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, [dirty]) {
-      if (dirty & /*icon*/
-      16)
-        html_tag.p(
-          /*icon*/
-          ctx2[4]
-        );
-      if (
-        /*label*/
-        ctx2[3]
-      ) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
-        } else {
-          if_block = create_if_block$5(ctx2);
-          if_block.c();
-          if_block.m(a, null);
-        }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
-      }
-      if (dirty & /*button*/
-      1 && a_class_value !== (a_class_value = "header-button " + /*button*/
-      ctx2[0].class + " svelte-FF15-166l8wd")) {
-        attr(a, "class", a_class_value);
-      }
-      if (dirty & /*label*/
-      8) {
-        attr(
-          a,
-          "aria-label",
-          /*label*/
-          ctx2[3]
-        );
-      }
-      if (applyStyles_action && is_function(applyStyles_action.update) && dirty & /*styles*/
-      2)
-        applyStyles_action.update.call(
-          null,
-          /*styles*/
-          ctx2[1]
-        );
-      if (dirty & /*button, keepMinimized*/
-      5) {
-        toggle_class(
-          a,
-          "keep-minimized",
-          /*keepMinimized*/
-          ctx2[2]
-        );
-      }
-    },
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(a);
-      }
-      if (if_block)
-        if_block.d();
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-__name(create_fragment$E, "create_fragment$E");
-const s_REGEX_HTML = /^\s*<.*>$/;
-function instance$m($$self, $$props, $$invalidate) {
-  let title;
-  let icon;
-  let label;
-  let keepMinimized;
-  let keyCode;
-  let styles;
-  let { button = void 0 } = $$props;
-  function onClick(event) {
-    const invoke = button?.onPress ?? button?.onclick;
-    if (typeof invoke === "function") {
-      invoke.call(button, event);
-      $$invalidate(0, button);
-    }
-  }
-  __name(onClick, "onClick");
-  function onContextMenu(event) {
-    const invoke = button?.onContextMenu;
-    if (typeof invoke === "function") {
-      invoke.call(button, event);
-      $$invalidate(0, button);
-    }
-  }
-  __name(onContextMenu, "onContextMenu");
-  function onKeydown(event) {
-    if (event.code === keyCode) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  }
-  __name(onKeydown, "onKeydown");
-  function onKeyup(event) {
-    if (event.code === keyCode) {
-      const invoke = button.onPress ?? button.onclick;
-      if (typeof invoke === "function") {
-        invoke.call(button, event);
-        $$invalidate(0, button);
-      }
-      event.preventDefault();
-      event.stopPropagation();
-    }
-  }
-  __name(onKeyup, "onKeyup");
-  $$self.$$set = ($$props2) => {
-    if ("button" in $$props2)
-      $$invalidate(0, button = $$props2.button);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*button*/
-    1) {
-      $$invalidate(9, title = isObject(button) && typeof button.title === "string" ? localize(button.title) : "");
-    }
-    if ($$self.$$.dirty & /*button, title*/
-    513) {
-      $$invalidate(4, icon = isObject(button) && typeof button.icon !== "string" ? void 0 : s_REGEX_HTML.test(button.icon) ? button.icon : `<i class="${button.icon}" title="${title}"></i>`);
-    }
-    if ($$self.$$.dirty & /*button*/
-    1) {
-      $$invalidate(3, label = isObject(button) && typeof button.label === "string" ? localize(button.label) : void 0);
-    }
-    if ($$self.$$.dirty & /*button*/
-    1) {
-      $$invalidate(2, keepMinimized = isObject(button) && typeof button.keepMinimized === "boolean" ? button.keepMinimized : false);
-    }
-    if ($$self.$$.dirty & /*button*/
-    1) {
-      keyCode = isObject(button) && typeof button.keyCode === "string" ? button.keyCode : "Enter";
-    }
-    if ($$self.$$.dirty & /*button*/
-    1) {
-      $$invalidate(1, styles = isObject(button) && isObject(button.styles) ? button.styles : void 0);
-    }
-  };
-  return [
-    button,
-    styles,
-    keepMinimized,
-    label,
-    icon,
-    onClick,
-    onContextMenu,
-    onKeydown,
-    onKeyup,
-    title
-  ];
-}
-__name(instance$m, "instance$m");
-const _TJSHeaderButton = class _TJSHeaderButton extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$m, create_fragment$E, safe_not_equal, { button: 0 });
-  }
-  get button() {
-    return this.$$.ctx[0];
-  }
-  set button(button) {
-    this.$$set({ button });
-    flush();
-  }
-};
-__name(_TJSHeaderButton, "TJSHeaderButton");
-let TJSHeaderButton = _TJSHeaderButton;
-const TJSHeaderButton$1 = TJSHeaderButton;
-const TJSApplicationHeader_svelte_svelte_type_style_lang = "";
-function get_each_context$2(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[31] = list[i];
-  return child_ctx;
-}
-__name(get_each_context$2, "get_each_context$2");
-function get_each_context_1$1(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[31] = list[i];
-  return child_ctx;
-}
-__name(get_each_context_1$1, "get_each_context_1$1");
-function create_if_block$4(ctx) {
-  let img;
-  let img_src_value;
-  return {
-    c() {
-      img = element("img");
-      attr(img, "class", "tjs-app-icon keep-minimized svelte-FF15-1wviwl9");
-      if (!src_url_equal(img.src, img_src_value = /*$storeHeaderIcon*/
-      ctx[6]))
-        attr(img, "src", img_src_value);
-      attr(img, "alt", "icon");
-    },
-    m(target, anchor) {
-      insert(target, img, anchor);
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*$storeHeaderIcon*/
-      64 && !src_url_equal(img.src, img_src_value = /*$storeHeaderIcon*/
-      ctx2[6])) {
-        attr(img, "src", img_src_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(img);
-      }
-    }
-  };
-}
-__name(create_if_block$4, "create_if_block$4");
-function create_each_block_1$1(ctx) {
-  let switch_instance;
-  let switch_instance_anchor;
-  let current;
-  const switch_instance_spread_levels = [
-    /*button*/
-    ctx[31].props
-  ];
-  var switch_value = (
-    /*button*/
-    ctx[31].class
-  );
-  function switch_props(ctx2, dirty) {
-    let switch_instance_props = {};
-    for (let i = 0; i < switch_instance_spread_levels.length; i += 1) {
-      switch_instance_props = assign(switch_instance_props, switch_instance_spread_levels[i]);
-    }
-    if (dirty !== void 0 && dirty[0] & /*buttonsLeft*/
-    2) {
-      switch_instance_props = assign(switch_instance_props, get_spread_update(switch_instance_spread_levels, [get_spread_object(
-        /*button*/
-        ctx2[31].props
-      )]));
-    }
-    return { props: switch_instance_props };
-  }
-  __name(switch_props, "switch_props");
-  if (switch_value) {
-    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
-  }
-  return {
-    c() {
-      if (switch_instance)
-        create_component(switch_instance.$$.fragment);
-      switch_instance_anchor = empty();
-    },
-    m(target, anchor) {
-      if (switch_instance)
-        mount_component(switch_instance, target, anchor);
-      insert(target, switch_instance_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*buttonsLeft*/
-      2 && switch_value !== (switch_value = /*button*/
-      ctx2[31].class)) {
-        if (switch_instance) {
-          group_outros();
-          const old_component = switch_instance;
-          transition_out(old_component.$$.fragment, 1, 0, () => {
-            destroy_component(old_component, 1);
-          });
-          check_outros();
-        }
-        if (switch_value) {
-          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
-          create_component(switch_instance.$$.fragment);
-          transition_in(switch_instance.$$.fragment, 1);
-          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
-        } else {
-          switch_instance = null;
-        }
-      } else if (switch_value) {
-        const switch_instance_changes = dirty[0] & /*buttonsLeft*/
-        2 ? get_spread_update(switch_instance_spread_levels, [get_spread_object(
-          /*button*/
-          ctx2[31].props
-        )]) : {};
-        switch_instance.$set(switch_instance_changes);
-      }
-    },
-    i(local) {
-      if (current)
-        return;
-      if (switch_instance)
-        transition_in(switch_instance.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      if (switch_instance)
-        transition_out(switch_instance.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(switch_instance_anchor);
-      }
-      if (switch_instance)
-        destroy_component(switch_instance, detaching);
-    }
-  };
-}
-__name(create_each_block_1$1, "create_each_block_1$1");
-function create_each_block$2(ctx) {
-  let switch_instance;
-  let switch_instance_anchor;
-  let current;
-  const switch_instance_spread_levels = [
-    /*button*/
-    ctx[31].props
-  ];
-  var switch_value = (
-    /*button*/
-    ctx[31].class
-  );
-  function switch_props(ctx2, dirty) {
-    let switch_instance_props = {};
-    for (let i = 0; i < switch_instance_spread_levels.length; i += 1) {
-      switch_instance_props = assign(switch_instance_props, switch_instance_spread_levels[i]);
-    }
-    if (dirty !== void 0 && dirty[0] & /*buttonsRight*/
-    4) {
-      switch_instance_props = assign(switch_instance_props, get_spread_update(switch_instance_spread_levels, [get_spread_object(
-        /*button*/
-        ctx2[31].props
-      )]));
-    }
-    return { props: switch_instance_props };
-  }
-  __name(switch_props, "switch_props");
-  if (switch_value) {
-    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
-  }
-  return {
-    c() {
-      if (switch_instance)
-        create_component(switch_instance.$$.fragment);
-      switch_instance_anchor = empty();
-    },
-    m(target, anchor) {
-      if (switch_instance)
-        mount_component(switch_instance, target, anchor);
-      insert(target, switch_instance_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*buttonsRight*/
-      4 && switch_value !== (switch_value = /*button*/
-      ctx2[31].class)) {
-        if (switch_instance) {
-          group_outros();
-          const old_component = switch_instance;
-          transition_out(old_component.$$.fragment, 1, 0, () => {
-            destroy_component(old_component, 1);
-          });
-          check_outros();
-        }
-        if (switch_value) {
-          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
-          create_component(switch_instance.$$.fragment);
-          transition_in(switch_instance.$$.fragment, 1);
-          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
-        } else {
-          switch_instance = null;
-        }
-      } else if (switch_value) {
-        const switch_instance_changes = dirty[0] & /*buttonsRight*/
-        4 ? get_spread_update(switch_instance_spread_levels, [get_spread_object(
-          /*button*/
-          ctx2[31].props
-        )]) : {};
-        switch_instance.$set(switch_instance_changes);
-      }
-    },
-    i(local) {
-      if (current)
-        return;
-      if (switch_instance)
-        transition_in(switch_instance.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      if (switch_instance)
-        transition_out(switch_instance.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(switch_instance_anchor);
-      }
-      if (switch_instance)
-        destroy_component(switch_instance, detaching);
-    }
-  };
-}
-__name(create_each_block$2, "create_each_block$2");
-function create_key_block(ctx) {
-  let header;
-  let t0;
-  let h4;
-  let t1_value = localize(
-    /*$storeTitle*/
-    ctx[7]
-  ) + "";
-  let t1;
-  let t2;
-  let t3;
-  let span;
-  let t4;
-  let draggable_action;
-  let minimizable_action;
-  let current;
-  let mounted;
-  let dispose;
-  let if_block = typeof /*$storeHeaderIcon*/
-  ctx[6] === "string" && create_if_block$4(ctx);
-  let each_value_1 = ensure_array_like(
-    /*buttonsLeft*/
-    ctx[1]
-  );
-  let each_blocks_1 = [];
-  for (let i = 0; i < each_value_1.length; i += 1) {
-    each_blocks_1[i] = create_each_block_1$1(get_each_context_1$1(ctx, each_value_1, i));
-  }
-  const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks_1[i], 1, 1, () => {
-    each_blocks_1[i] = null;
-  }), "out");
-  let each_value = ensure_array_like(
-    /*buttonsRight*/
-    ctx[2]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
-  }
-  const out_1 = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
-    each_blocks[i] = null;
-  }), "out_1");
-  return {
-    c() {
-      header = element("header");
-      if (if_block)
-        if_block.c();
-      t0 = space();
-      h4 = element("h4");
-      t1 = text(t1_value);
-      t2 = space();
-      for (let i = 0; i < each_blocks_1.length; i += 1) {
-        each_blocks_1[i].c();
-      }
-      t3 = space();
-      span = element("span");
-      t4 = space();
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(h4, "class", "window-title svelte-FF15-1wviwl9");
-      set_style(
-        h4,
-        "display",
-        /*displayHeaderTitle*/
-        ctx[4]
-      );
-      attr(span, "class", "tjs-window-header-spacer keep-minimized svelte-FF15-1wviwl9");
-      attr(header, "class", "window-header flexrow svelte-FF15-1wviwl9");
-    },
-    m(target, anchor) {
-      insert(target, header, anchor);
-      if (if_block)
-        if_block.m(header, null);
-      append(header, t0);
-      append(header, h4);
-      append(h4, t1);
-      append(header, t2);
-      for (let i = 0; i < each_blocks_1.length; i += 1) {
-        if (each_blocks_1[i]) {
-          each_blocks_1[i].m(header, null);
-        }
-      }
-      append(header, t3);
-      append(header, span);
-      append(header, t4);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(header, null);
-        }
-      }
-      current = true;
-      if (!mounted) {
-        dispose = [
-          action_destroyer(draggable_action = /*draggable*/
-          ctx[0].call(
-            null,
-            header,
-            /*dragOptions*/
-            ctx[3]
-          )),
-          action_destroyer(minimizable_action = /*minimizable*/
-          ctx[18].call(
-            null,
-            header,
-            /*$storeMinimizable*/
-            ctx[5]
-          )),
-          listen(
-            header,
-            "pointerdown",
-            /*onPointerdown*/
-            ctx[19]
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (typeof /*$storeHeaderIcon*/
-      ctx2[6] === "string") {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
-        } else {
-          if_block = create_if_block$4(ctx2);
-          if_block.c();
-          if_block.m(header, t0);
-        }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
-      }
-      if ((!current || dirty[0] & /*$storeTitle*/
-      128) && t1_value !== (t1_value = localize(
-        /*$storeTitle*/
-        ctx2[7]
-      ) + ""))
-        set_data(t1, t1_value);
-      if (dirty[0] & /*displayHeaderTitle*/
-      16) {
-        set_style(
-          h4,
-          "display",
-          /*displayHeaderTitle*/
-          ctx2[4]
-        );
-      }
-      if (dirty[0] & /*buttonsLeft*/
-      2) {
-        each_value_1 = ensure_array_like(
-          /*buttonsLeft*/
-          ctx2[1]
-        );
-        let i;
-        for (i = 0; i < each_value_1.length; i += 1) {
-          const child_ctx = get_each_context_1$1(ctx2, each_value_1, i);
-          if (each_blocks_1[i]) {
-            each_blocks_1[i].p(child_ctx, dirty);
-            transition_in(each_blocks_1[i], 1);
-          } else {
-            each_blocks_1[i] = create_each_block_1$1(child_ctx);
-            each_blocks_1[i].c();
-            transition_in(each_blocks_1[i], 1);
-            each_blocks_1[i].m(header, t3);
-          }
-        }
-        group_outros();
-        for (i = each_value_1.length; i < each_blocks_1.length; i += 1) {
-          out(i);
-        }
-        check_outros();
-      }
-      if (dirty[0] & /*buttonsRight*/
-      4) {
-        each_value = ensure_array_like(
-          /*buttonsRight*/
-          ctx2[2]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$2(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-            transition_in(each_blocks[i], 1);
-          } else {
-            each_blocks[i] = create_each_block$2(child_ctx);
-            each_blocks[i].c();
-            transition_in(each_blocks[i], 1);
-            each_blocks[i].m(header, null);
-          }
-        }
-        group_outros();
-        for (i = each_value.length; i < each_blocks.length; i += 1) {
-          out_1(i);
-        }
-        check_outros();
-      }
-      if (draggable_action && is_function(draggable_action.update) && dirty[0] & /*dragOptions*/
-      8)
-        draggable_action.update.call(
-          null,
-          /*dragOptions*/
-          ctx2[3]
-        );
-      if (minimizable_action && is_function(minimizable_action.update) && dirty[0] & /*$storeMinimizable*/
-      32)
-        minimizable_action.update.call(
-          null,
-          /*$storeMinimizable*/
-          ctx2[5]
-        );
-    },
-    i(local) {
-      if (current)
-        return;
-      for (let i = 0; i < each_value_1.length; i += 1) {
-        transition_in(each_blocks_1[i]);
-      }
-      for (let i = 0; i < each_value.length; i += 1) {
-        transition_in(each_blocks[i]);
-      }
-      current = true;
-    },
-    o(local) {
-      each_blocks_1 = each_blocks_1.filter(Boolean);
-      for (let i = 0; i < each_blocks_1.length; i += 1) {
-        transition_out(each_blocks_1[i]);
-      }
-      each_blocks = each_blocks.filter(Boolean);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        transition_out(each_blocks[i]);
-      }
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(header);
-      }
-      if (if_block)
-        if_block.d();
-      destroy_each(each_blocks_1, detaching);
-      destroy_each(each_blocks, detaching);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-__name(create_key_block, "create_key_block");
-function create_fragment$D(ctx) {
-  let previous_key = (
-    /*draggable*/
-    ctx[0]
-  );
-  let key_block_anchor;
-  let current;
-  let key_block = create_key_block(ctx);
-  return {
-    c() {
-      key_block.c();
-      key_block_anchor = empty();
-    },
-    m(target, anchor) {
-      key_block.m(target, anchor);
-      insert(target, key_block_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      if (dirty[0] & /*draggable*/
-      1 && safe_not_equal(previous_key, previous_key = /*draggable*/
-      ctx2[0])) {
-        group_outros();
-        transition_out(key_block, 1, 1, noop);
-        check_outros();
-        key_block = create_key_block(ctx2);
-        key_block.c();
-        transition_in(key_block, 1);
-        key_block.m(key_block_anchor.parentNode, key_block_anchor);
-      } else {
-        key_block.p(ctx2, dirty);
-      }
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(key_block);
-      current = true;
-    },
-    o(local) {
-      transition_out(key_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(key_block_anchor);
-      }
-      key_block.d(detaching);
-    }
-  };
-}
-__name(create_fragment$D, "create_fragment$D");
-function instance$l($$self, $$props, $$invalidate) {
-  let $focusKeep;
-  let $focusAuto;
-  let $elementRoot;
-  let $storeHeaderButtons;
-  let $storeMinimized;
-  let $storeHeaderNoTitleMinimized;
-  let $storeDraggable;
-  let $storeMinimizable;
-  let $storeHeaderIcon;
-  let $storeTitle;
-  let { draggable: draggable$1 = void 0 } = $$props;
-  let { draggableOptions = void 0 } = $$props;
-  const { application } = getContext("#external");
-  const { focusAuto, focusKeep } = application.reactive.storeAppOptions;
-  component_subscribe($$self, focusAuto, (value) => $$invalidate(26, $focusAuto = value));
-  component_subscribe($$self, focusKeep, (value) => $$invalidate(25, $focusKeep = value));
-  const { elementRoot } = getContext("#internal").stores;
-  component_subscribe($$self, elementRoot, (value) => $$invalidate(27, $elementRoot = value));
-  const storeTitle = application.reactive.storeAppOptions.title;
-  component_subscribe($$self, storeTitle, (value) => $$invalidate(7, $storeTitle = value));
-  const storeDraggable = application.reactive.storeAppOptions.draggable;
-  component_subscribe($$self, storeDraggable, (value) => $$invalidate(24, $storeDraggable = value));
-  const storeDragging = application.reactive.storeUIState.dragging;
-  const storeHeaderButtons = application.reactive.storeUIState.headerButtons;
-  component_subscribe($$self, storeHeaderButtons, (value) => $$invalidate(21, $storeHeaderButtons = value));
-  const storeHeaderIcon = application.reactive.storeAppOptions.headerIcon;
-  component_subscribe($$self, storeHeaderIcon, (value) => $$invalidate(6, $storeHeaderIcon = value));
-  const storeHeaderNoTitleMinimized = application.reactive.storeAppOptions.headerNoTitleMinimized;
-  component_subscribe($$self, storeHeaderNoTitleMinimized, (value) => $$invalidate(23, $storeHeaderNoTitleMinimized = value));
-  const storeMinimizable = application.reactive.storeAppOptions.minimizable;
-  component_subscribe($$self, storeMinimizable, (value) => $$invalidate(5, $storeMinimizable = value));
-  const storeMinimized = application.reactive.storeUIState.minimized;
-  component_subscribe($$self, storeMinimized, (value) => $$invalidate(22, $storeMinimized = value));
-  const s_DRAG_TARGET_CLASSLIST = Object.freeze(["tjs-app-icon", "tjs-window-header-spacer", "window-header", "window-title"]);
-  let dragOptions;
-  let displayHeaderTitle;
-  let buttonsLeft;
-  let buttonsRight;
-  function minimizable(node, booleanStore) {
-    const callback = /* @__PURE__ */ __name((event) => {
-      if (event.target.classList.contains("window-title") || event.target.classList.contains("window-header") || event.target.classList.contains("keep-minimized")) {
-        application._onToggleMinimize(event);
-      }
-    }, "callback");
-    function activateListeners() {
-      node.addEventListener("dblclick", callback);
-    }
-    __name(activateListeners, "activateListeners");
-    function removeListeners() {
-      node.removeEventListener("dblclick", callback);
-    }
-    __name(removeListeners, "removeListeners");
-    if (booleanStore) {
-      activateListeners();
-    }
-    return {
-      update: (booleanStore2) => {
-        if (booleanStore2) {
-          activateListeners();
-        } else {
-          removeListeners();
-        }
-      },
-      destroy: () => removeListeners()
-    };
-  }
-  __name(minimizable, "minimizable");
-  function onPointerdown(event) {
-    const rootEl = $elementRoot;
-    if ($focusAuto && rootEl instanceof HTMLElement && rootEl?.isConnected) {
-      if ($focusKeep) {
-        const focusOutside = document.activeElement instanceof HTMLElement && !rootEl.contains(document.activeElement);
-        if (focusOutside) {
-          rootEl.focus();
-        } else {
-          event.preventDefault();
-        }
-      } else {
-        rootEl.focus();
-      }
-    }
-  }
-  __name(onPointerdown, "onPointerdown");
-  $$self.$$set = ($$props2) => {
-    if ("draggable" in $$props2)
-      $$invalidate(0, draggable$1 = $$props2.draggable);
-    if ("draggableOptions" in $$props2)
-      $$invalidate(20, draggableOptions = $$props2.draggableOptions);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty[0] & /*draggable*/
-    1) {
-      $$invalidate(0, draggable$1 = typeof draggable$1 === "function" ? draggable$1 : draggable);
-    }
-    if ($$self.$$.dirty[0] & /*draggableOptions, $storeDraggable*/
-    17825792) {
-      $$invalidate(3, dragOptions = Object.assign(
-        {},
-        {
-          ease: true,
-          easeOptions: { duration: 0.06, ease: cubicOut }
-        },
-        isObject(draggableOptions) ? draggableOptions : {},
-        {
-          position: application.position,
-          active: $storeDraggable,
-          storeDragging,
-          hasTargetClassList: s_DRAG_TARGET_CLASSLIST
-        }
-      ));
-    }
-    if ($$self.$$.dirty[0] & /*$storeHeaderNoTitleMinimized, $storeMinimized*/
-    12582912) {
-      $$invalidate(4, displayHeaderTitle = $storeHeaderNoTitleMinimized && $storeMinimized ? "none" : null);
-    }
-    if ($$self.$$.dirty[0] & /*$storeHeaderButtons, buttonsLeft, buttonsRight*/
-    2097158) {
-      {
-        $$invalidate(1, buttonsLeft = []);
-        $$invalidate(2, buttonsRight = []);
-        for (const button of $storeHeaderButtons) {
-          const buttonsList = typeof button?.alignLeft === "boolean" && button?.alignLeft ? buttonsLeft : buttonsRight;
-          buttonsList.push(isSvelteComponent(button) ? { class: button, props: {} } : {
-            class: TJSHeaderButton$1,
-            props: { button }
-          });
-        }
-      }
-    }
-  };
-  return [
-    draggable$1,
-    buttonsLeft,
-    buttonsRight,
-    dragOptions,
-    displayHeaderTitle,
-    $storeMinimizable,
-    $storeHeaderIcon,
-    $storeTitle,
-    focusAuto,
-    focusKeep,
-    elementRoot,
-    storeTitle,
-    storeDraggable,
-    storeHeaderButtons,
-    storeHeaderIcon,
-    storeHeaderNoTitleMinimized,
-    storeMinimizable,
-    storeMinimized,
-    minimizable,
-    onPointerdown,
-    draggableOptions,
-    $storeHeaderButtons,
-    $storeMinimized,
-    $storeHeaderNoTitleMinimized,
-    $storeDraggable
-  ];
-}
-__name(instance$l, "instance$l");
-const _TJSApplicationHeader = class _TJSApplicationHeader extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$l, create_fragment$D, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
-  }
-};
-__name(_TJSApplicationHeader, "TJSApplicationHeader");
-let TJSApplicationHeader = _TJSApplicationHeader;
-const TJSApplicationHeader$1 = TJSApplicationHeader;
-const TJSFocusWrap_svelte_svelte_type_style_lang = "";
-function create_fragment$C(ctx) {
-  let div;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      div = element("div");
-      attr(div, "class", "tjs-focus-wrap svelte-FF15-kjcljd");
-      attr(div, "tabindex", "0");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      ctx[4](div);
-      if (!mounted) {
-        dispose = listen(
-          div,
-          "focus",
-          /*onFocus*/
-          ctx[1]
-        );
-        mounted = true;
-      }
-    },
-    p: noop,
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      ctx[4](null);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_fragment$C, "create_fragment$C");
-function instance$k($$self, $$props, $$invalidate) {
-  let { elementRoot = void 0 } = $$props;
-  let { enabled = true } = $$props;
-  let ignoreElements, wrapEl;
-  function onFocus() {
-    if (!enabled) {
-      return;
-    }
-    if (elementRoot instanceof HTMLElement) {
-      const firstFocusEl = A11yHelper.getFirstFocusableElement(elementRoot, ignoreElements);
-      if (firstFocusEl instanceof HTMLElement && firstFocusEl !== wrapEl) {
-        firstFocusEl.focus();
-      } else {
-        elementRoot.focus();
-      }
-    }
-  }
-  __name(onFocus, "onFocus");
-  function div_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      wrapEl = $$value;
-      $$invalidate(0, wrapEl);
-    });
-  }
-  __name(div_binding, "div_binding");
-  $$self.$$set = ($$props2) => {
-    if ("elementRoot" in $$props2)
-      $$invalidate(2, elementRoot = $$props2.elementRoot);
-    if ("enabled" in $$props2)
-      $$invalidate(3, enabled = $$props2.enabled);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*wrapEl*/
-    1) {
-      if (wrapEl) {
-        ignoreElements = /* @__PURE__ */ new Set([wrapEl]);
-      }
-    }
-  };
-  return [wrapEl, onFocus, elementRoot, enabled, div_binding];
-}
-__name(instance$k, "instance$k");
-const _TJSFocusWrap = class _TJSFocusWrap extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$k, create_fragment$C, safe_not_equal, { elementRoot: 2, enabled: 3 });
-  }
-};
-__name(_TJSFocusWrap, "TJSFocusWrap");
-let TJSFocusWrap = _TJSFocusWrap;
-const TJSFocusWrap$1 = TJSFocusWrap;
-const ResizableHandle_svelte_svelte_type_style_lang = "";
-function create_fragment$B(ctx) {
-  let div;
-  let resizable_action;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      div = element("div");
-      div.innerHTML = `<i class="fas fa-arrows-alt-h svelte-FF15-14lnpz8"></i>`;
-      attr(div, "class", "window-resizable-handle svelte-FF15-14lnpz8");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      ctx[10](div);
-      if (!mounted) {
-        dispose = action_destroyer(resizable_action = /*resizable*/
-        ctx[6].call(null, div, {
-          active: (
-            /*$storeResizable*/
-            ctx[1]
-          ),
-          storeResizing: (
-            /*storeResizing*/
-            ctx[5]
-          )
-        }));
-        mounted = true;
-      }
-    },
-    p(ctx2, [dirty]) {
-      if (resizable_action && is_function(resizable_action.update) && dirty & /*$storeResizable*/
-      2)
-        resizable_action.update.call(null, {
-          active: (
-            /*$storeResizable*/
-            ctx2[1]
-          ),
-          storeResizing: (
-            /*storeResizing*/
-            ctx2[5]
-          )
-        });
-    },
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      ctx[10](null);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_fragment$B, "create_fragment$B");
-function instance$j($$self, $$props, $$invalidate) {
-  let $storeElementRoot;
-  let $storeMinimized;
-  let $storeResizable;
-  let { isResizable = false } = $$props;
-  const application = getContext("#external").application;
-  const storeElementRoot = getContext("#internal").stores.elementRoot;
-  component_subscribe($$self, storeElementRoot, (value) => $$invalidate(8, $storeElementRoot = value));
-  const storeResizable = application.reactive.storeAppOptions.resizable;
-  component_subscribe($$self, storeResizable, (value) => $$invalidate(1, $storeResizable = value));
-  const storeMinimized = application.reactive.storeUIState.minimized;
-  component_subscribe($$self, storeMinimized, (value) => $$invalidate(9, $storeMinimized = value));
-  const storeResizing = application.reactive.storeUIState.resizing;
-  let elementResize;
-  function resizable(node, { active: active2 = true, storeResizing: storeResizing2 = void 0 } = {}) {
-    let position = null;
-    let initialPosition = {};
-    let resizing = false;
-    const handlers = {
-      resizeDown: ["pointerdown", (e) => onResizePointerDown(e), false],
-      resizeMove: ["pointermove", (e) => onResizePointerMove(e), false],
-      resizeUp: ["pointerup", (e) => onResizePointerUp(e), false]
-    };
-    function activateListeners() {
-      node.addEventListener(...handlers.resizeDown);
-      $$invalidate(7, isResizable = true);
-      node.style.display = "block";
-    }
-    __name(activateListeners, "activateListeners");
-    function removeListeners() {
-      if (typeof storeResizing2?.set === "function") {
-        storeResizing2.set(false);
-      }
-      node.removeEventListener(...handlers.resizeDown);
-      node.removeEventListener(...handlers.resizeMove);
-      node.removeEventListener(...handlers.resizeUp);
-      node.style.display = "none";
-      $$invalidate(7, isResizable = false);
-    }
-    __name(removeListeners, "removeListeners");
-    if (active2) {
-      activateListeners();
-    } else {
-      node.style.display = "none";
-    }
-    function onResizePointerDown(event) {
-      event.preventDefault();
-      resizing = false;
-      position = application.position.get();
-      if (position.height === "auto") {
-        position.height = $storeElementRoot.clientHeight;
-      }
-      if (position.width === "auto") {
-        position.width = $storeElementRoot.clientWidth;
-      }
-      initialPosition = { x: event.clientX, y: event.clientY };
-      node.addEventListener(...handlers.resizeMove);
-      node.addEventListener(...handlers.resizeUp);
-      node.setPointerCapture(event.pointerId);
-    }
-    __name(onResizePointerDown, "onResizePointerDown");
-    function onResizePointerMove(event) {
-      event.preventDefault();
-      if (!resizing && typeof storeResizing2?.set === "function") {
-        resizing = true;
-        storeResizing2.set(true);
-      }
-      application.position.set({
-        width: position.width + (event.clientX - initialPosition.x),
-        height: position.height + (event.clientY - initialPosition.y)
-      });
-    }
-    __name(onResizePointerMove, "onResizePointerMove");
-    function onResizePointerUp(event) {
-      resizing = false;
-      if (typeof storeResizing2?.set === "function") {
-        storeResizing2.set(false);
-      }
-      event.preventDefault();
-      node.removeEventListener(...handlers.resizeMove);
-      node.removeEventListener(...handlers.resizeUp);
-      application?._onResize?.(event);
-    }
-    __name(onResizePointerUp, "onResizePointerUp");
-    return {
-      update: ({ active: active3 }) => {
-        if (active3) {
-          activateListeners();
-        } else {
-          removeListeners();
-        }
-      },
-      destroy: () => removeListeners()
-    };
-  }
-  __name(resizable, "resizable");
-  function div_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      elementResize = $$value;
-      $$invalidate(0, elementResize), $$invalidate(7, isResizable), $$invalidate(9, $storeMinimized), $$invalidate(8, $storeElementRoot);
-    });
-  }
-  __name(div_binding, "div_binding");
-  $$self.$$set = ($$props2) => {
-    if ("isResizable" in $$props2)
-      $$invalidate(7, isResizable = $$props2.isResizable);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*elementResize, isResizable, $storeMinimized, $storeElementRoot*/
-    897) {
-      if (elementResize) {
-        $$invalidate(0, elementResize.style.display = isResizable && !$storeMinimized ? "block" : "none", elementResize);
-        const elementRoot = $storeElementRoot;
-        if (elementRoot) {
-          elementRoot.classList[isResizable ? "add" : "remove"]("resizable");
-        }
-      }
-    }
-  };
-  return [
-    elementResize,
-    $storeResizable,
-    storeElementRoot,
-    storeResizable,
-    storeMinimized,
-    storeResizing,
-    resizable,
-    isResizable,
-    $storeElementRoot,
-    $storeMinimized,
-    div_binding
-  ];
-}
-__name(instance$j, "instance$j");
-const _ResizableHandle = class _ResizableHandle extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$j, create_fragment$B, safe_not_equal, { isResizable: 7 });
-  }
-};
-__name(_ResizableHandle, "ResizableHandle");
-let ResizableHandle = _ResizableHandle;
-const ResizableHandle$1 = ResizableHandle;
-const ApplicationShell_svelte_svelte_type_style_lang = "";
-function create_else_block$1(ctx) {
-  let div;
-  let tjsapplicationheader;
-  let t0;
-  let section;
-  let applyStyles_action;
-  let t1;
-  let resizablehandle;
-  let t2;
-  let tjsfocuswrap;
-  let div_id_value;
-  let div_class_value;
-  let div_data_appid_value;
-  let applyStyles_action_1;
-  let current;
-  let mounted;
-  let dispose;
-  tjsapplicationheader = new TJSApplicationHeader$1({
-    props: {
-      draggable: (
-        /*draggable*/
-        ctx[6]
-      ),
-      draggableOptions: (
-        /*draggableOptions*/
-        ctx[7]
-      )
-    }
-  });
-  const default_slot_template = (
-    /*#slots*/
-    ctx[36].default
-  );
-  const default_slot = create_slot(
-    default_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[35],
-    null
-  );
-  resizablehandle = new ResizableHandle$1({});
-  tjsfocuswrap = new TJSFocusWrap$1({
-    props: {
-      elementRoot: (
-        /*elementRoot*/
-        ctx[1]
-      ),
-      enabled: (
-        /*focusWrapEnabled*/
-        ctx[11]
-      )
-    }
-  });
-  return {
-    c() {
-      div = element("div");
-      create_component(tjsapplicationheader.$$.fragment);
-      t0 = space();
-      section = element("section");
-      if (default_slot)
-        default_slot.c();
-      t1 = space();
-      create_component(resizablehandle.$$.fragment);
-      t2 = space();
-      create_component(tjsfocuswrap.$$.fragment);
-      attr(section, "class", "window-content svelte-FF15-oz81f7");
-      attr(section, "tabindex", "-1");
-      attr(div, "id", div_id_value = /*application*/
-      ctx[10].id);
-      attr(div, "class", div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7");
-      attr(div, "data-appid", div_data_appid_value = /*application*/
-      ctx[10].appId);
-      attr(div, "role", "application");
-      attr(div, "tabindex", "-1");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      mount_component(tjsapplicationheader, div, null);
-      append(div, t0);
-      append(div, section);
-      if (default_slot) {
-        default_slot.m(section, null);
-      }
-      ctx[39](section);
-      append(div, t1);
-      mount_component(resizablehandle, div, null);
-      append(div, t2);
-      mount_component(tjsfocuswrap, div, null);
-      ctx[40](div);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(
-            section,
-            "pointerdown",
-            /*onPointerdownContent*/
-            ctx[21]
-          ),
-          action_destroyer(applyStyles_action = applyStyles.call(
-            null,
-            section,
-            /*stylesContent*/
-            ctx[9]
-          )),
-          action_destroyer(
-            /*contentResizeObserver*/
-            ctx[13].call(
-              null,
-              section,
-              /*resizeObservedContent*/
-              ctx[22]
-            )
-          ),
-          listen(div, "close:popup", stop_propagation(prevent_default(
-            /*onClosePopup*/
-            ctx[18]
-          ))),
-          listen(
-            div,
-            "keydown",
-            /*onKeydown*/
-            ctx[19],
-            true
-          ),
-          listen(
-            div,
-            "pointerdown",
-            /*onPointerdownApp*/
-            ctx[20]
-          ),
-          action_destroyer(applyStyles_action_1 = applyStyles.call(
-            null,
-            div,
-            /*stylesApp*/
-            ctx[8]
-          )),
-          action_destroyer(
-            /*appResizeObserver*/
-            ctx[12].call(
-              null,
-              div,
-              /*resizeObservedApp*/
-              ctx[23]
-            )
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      const tjsapplicationheader_changes = {};
-      if (dirty[0] & /*draggable*/
-      64)
-        tjsapplicationheader_changes.draggable = /*draggable*/
-        ctx2[6];
-      if (dirty[0] & /*draggableOptions*/
-      128)
-        tjsapplicationheader_changes.draggableOptions = /*draggableOptions*/
-        ctx2[7];
-      tjsapplicationheader.$set(tjsapplicationheader_changes);
-      if (default_slot) {
-        if (default_slot.p && (!current || dirty[1] & /*$$scope*/
-        16)) {
-          update_slot_base(
-            default_slot,
-            default_slot_template,
-            ctx2,
-            /*$$scope*/
-            ctx2[35],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx2[35]
-            ) : get_slot_changes(
-              default_slot_template,
-              /*$$scope*/
-              ctx2[35],
-              dirty,
-              null
-            ),
-            null
-          );
-        }
-      }
-      if (applyStyles_action && is_function(applyStyles_action.update) && dirty[0] & /*stylesContent*/
-      512)
-        applyStyles_action.update.call(
-          null,
-          /*stylesContent*/
-          ctx2[9]
-        );
-      const tjsfocuswrap_changes = {};
-      if (dirty[0] & /*elementRoot*/
-      2)
-        tjsfocuswrap_changes.elementRoot = /*elementRoot*/
-        ctx2[1];
-      if (dirty[0] & /*focusWrapEnabled*/
-      2048)
-        tjsfocuswrap_changes.enabled = /*focusWrapEnabled*/
-        ctx2[11];
-      tjsfocuswrap.$set(tjsfocuswrap_changes);
-      if (!current || dirty[0] & /*application*/
-      1024 && div_id_value !== (div_id_value = /*application*/
-      ctx2[10].id)) {
-        attr(div, "id", div_id_value);
-      }
-      if (!current || dirty[0] & /*application*/
-      1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
-      ctx2[10].options.classes.join(" ") + " svelte-FF15-oz81f7")) {
-        attr(div, "class", div_class_value);
-      }
-      if (!current || dirty[0] & /*application*/
-      1024 && div_data_appid_value !== (div_data_appid_value = /*application*/
-      ctx2[10].appId)) {
-        attr(div, "data-appid", div_data_appid_value);
-      }
-      if (applyStyles_action_1 && is_function(applyStyles_action_1.update) && dirty[0] & /*stylesApp*/
-      256)
-        applyStyles_action_1.update.call(
-          null,
-          /*stylesApp*/
-          ctx2[8]
-        );
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(tjsapplicationheader.$$.fragment, local);
-      transition_in(default_slot, local);
-      transition_in(resizablehandle.$$.fragment, local);
-      transition_in(tjsfocuswrap.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(tjsapplicationheader.$$.fragment, local);
-      transition_out(default_slot, local);
-      transition_out(resizablehandle.$$.fragment, local);
-      transition_out(tjsfocuswrap.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      destroy_component(tjsapplicationheader);
-      if (default_slot)
-        default_slot.d(detaching);
-      ctx[39](null);
-      destroy_component(resizablehandle);
-      destroy_component(tjsfocuswrap);
-      ctx[40](null);
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-__name(create_else_block$1, "create_else_block$1");
-function create_if_block$3(ctx) {
-  let div;
-  let tjsapplicationheader;
-  let t0;
-  let section;
-  let applyStyles_action;
-  let t1;
-  let resizablehandle;
-  let t2;
-  let tjsfocuswrap;
-  let div_id_value;
-  let div_class_value;
-  let div_data_appid_value;
-  let applyStyles_action_1;
-  let div_intro;
-  let div_outro;
-  let current;
-  let mounted;
-  let dispose;
-  tjsapplicationheader = new TJSApplicationHeader$1({
-    props: {
-      draggable: (
-        /*draggable*/
-        ctx[6]
-      ),
-      draggableOptions: (
-        /*draggableOptions*/
-        ctx[7]
-      )
-    }
-  });
-  const default_slot_template = (
-    /*#slots*/
-    ctx[36].default
-  );
-  const default_slot = create_slot(
-    default_slot_template,
-    ctx,
-    /*$$scope*/
-    ctx[35],
-    null
-  );
-  resizablehandle = new ResizableHandle$1({});
-  tjsfocuswrap = new TJSFocusWrap$1({
-    props: { elementRoot: (
-      /*elementRoot*/
-      ctx[1]
-    ) }
-  });
-  return {
-    c() {
-      div = element("div");
-      create_component(tjsapplicationheader.$$.fragment);
-      t0 = space();
-      section = element("section");
-      if (default_slot)
-        default_slot.c();
-      t1 = space();
-      create_component(resizablehandle.$$.fragment);
-      t2 = space();
-      create_component(tjsfocuswrap.$$.fragment);
-      attr(section, "class", "window-content svelte-FF15-oz81f7");
-      attr(section, "tabindex", "-1");
-      attr(div, "id", div_id_value = /*application*/
-      ctx[10].id);
-      attr(div, "class", div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7");
-      attr(div, "data-appid", div_data_appid_value = /*application*/
-      ctx[10].appId);
-      attr(div, "role", "application");
-      attr(div, "tabindex", "-1");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      mount_component(tjsapplicationheader, div, null);
-      append(div, t0);
-      append(div, section);
-      if (default_slot) {
-        default_slot.m(section, null);
-      }
-      ctx[37](section);
-      append(div, t1);
-      mount_component(resizablehandle, div, null);
-      append(div, t2);
-      mount_component(tjsfocuswrap, div, null);
-      ctx[38](div);
-      current = true;
-      if (!mounted) {
-        dispose = [
-          listen(
-            section,
-            "pointerdown",
-            /*onPointerdownContent*/
-            ctx[21]
-          ),
-          action_destroyer(applyStyles_action = applyStyles.call(
-            null,
-            section,
-            /*stylesContent*/
-            ctx[9]
-          )),
-          action_destroyer(
-            /*contentResizeObserver*/
-            ctx[13].call(
-              null,
-              section,
-              /*resizeObservedContent*/
-              ctx[22]
-            )
-          ),
-          listen(div, "close:popup", stop_propagation(prevent_default(
-            /*onClosePopup*/
-            ctx[18]
-          ))),
-          listen(
-            div,
-            "keydown",
-            /*onKeydown*/
-            ctx[19],
-            true
-          ),
-          listen(
-            div,
-            "pointerdown",
-            /*onPointerdownApp*/
-            ctx[20]
-          ),
-          action_destroyer(applyStyles_action_1 = applyStyles.call(
-            null,
-            div,
-            /*stylesApp*/
-            ctx[8]
-          )),
-          action_destroyer(
-            /*appResizeObserver*/
-            ctx[12].call(
-              null,
-              div,
-              /*resizeObservedApp*/
-              ctx[23]
-            )
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      const tjsapplicationheader_changes = {};
-      if (dirty[0] & /*draggable*/
-      64)
-        tjsapplicationheader_changes.draggable = /*draggable*/
-        ctx[6];
-      if (dirty[0] & /*draggableOptions*/
-      128)
-        tjsapplicationheader_changes.draggableOptions = /*draggableOptions*/
-        ctx[7];
-      tjsapplicationheader.$set(tjsapplicationheader_changes);
-      if (default_slot) {
-        if (default_slot.p && (!current || dirty[1] & /*$$scope*/
-        16)) {
-          update_slot_base(
-            default_slot,
-            default_slot_template,
-            ctx,
-            /*$$scope*/
-            ctx[35],
-            !current ? get_all_dirty_from_scope(
-              /*$$scope*/
-              ctx[35]
-            ) : get_slot_changes(
-              default_slot_template,
-              /*$$scope*/
-              ctx[35],
-              dirty,
-              null
-            ),
-            null
-          );
-        }
-      }
-      if (applyStyles_action && is_function(applyStyles_action.update) && dirty[0] & /*stylesContent*/
-      512)
-        applyStyles_action.update.call(
-          null,
-          /*stylesContent*/
-          ctx[9]
-        );
-      const tjsfocuswrap_changes = {};
-      if (dirty[0] & /*elementRoot*/
-      2)
-        tjsfocuswrap_changes.elementRoot = /*elementRoot*/
-        ctx[1];
-      tjsfocuswrap.$set(tjsfocuswrap_changes);
-      if (!current || dirty[0] & /*application*/
-      1024 && div_id_value !== (div_id_value = /*application*/
-      ctx[10].id)) {
-        attr(div, "id", div_id_value);
-      }
-      if (!current || dirty[0] & /*application*/
-      1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7")) {
-        attr(div, "class", div_class_value);
-      }
-      if (!current || dirty[0] & /*application*/
-      1024 && div_data_appid_value !== (div_data_appid_value = /*application*/
-      ctx[10].appId)) {
-        attr(div, "data-appid", div_data_appid_value);
-      }
-      if (applyStyles_action_1 && is_function(applyStyles_action_1.update) && dirty[0] & /*stylesApp*/
-      256)
-        applyStyles_action_1.update.call(
-          null,
-          /*stylesApp*/
-          ctx[8]
-        );
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(tjsapplicationheader.$$.fragment, local);
-      transition_in(default_slot, local);
-      transition_in(resizablehandle.$$.fragment, local);
-      transition_in(tjsfocuswrap.$$.fragment, local);
-      add_render_callback(() => {
-        if (!current)
-          return;
-        if (div_outro)
-          div_outro.end(1);
-        div_intro = create_in_transition(
-          div,
-          /*inTransition*/
-          ctx[2],
-          /*inTransitionOptions*/
-          ctx[4]
-        );
-        div_intro.start();
-      });
-      current = true;
-    },
-    o(local) {
-      transition_out(tjsapplicationheader.$$.fragment, local);
-      transition_out(default_slot, local);
-      transition_out(resizablehandle.$$.fragment, local);
-      transition_out(tjsfocuswrap.$$.fragment, local);
-      if (div_intro)
-        div_intro.invalidate();
-      div_outro = create_out_transition(
-        div,
-        /*outTransition*/
-        ctx[3],
-        /*outTransitionOptions*/
-        ctx[5]
-      );
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      destroy_component(tjsapplicationheader);
-      if (default_slot)
-        default_slot.d(detaching);
-      ctx[37](null);
-      destroy_component(resizablehandle);
-      destroy_component(tjsfocuswrap);
-      ctx[38](null);
-      if (detaching && div_outro)
-        div_outro.end();
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-__name(create_if_block$3, "create_if_block$3");
-function create_fragment$A(ctx) {
-  let current_block_type_index;
-  let if_block;
-  let if_block_anchor;
-  let current;
-  const if_block_creators = [create_if_block$3, create_else_block$1];
-  const if_blocks = [];
-  function select_block_type(ctx2, dirty) {
-    if (
-      /*inTransition*/
-      ctx2[2] !== TJSDefaultTransition.default || /*outTransition*/
-      ctx2[3] !== TJSDefaultTransition.default
-    )
-      return 0;
-    return 1;
-  }
-  __name(select_block_type, "select_block_type");
-  current_block_type_index = select_block_type(ctx);
-  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-  return {
-    c() {
-      if_block.c();
-      if_block_anchor = empty();
-    },
-    m(target, anchor) {
-      if_blocks[current_block_type_index].m(target, anchor);
-      insert(target, if_block_anchor, anchor);
-      current = true;
-    },
-    p(ctx2, dirty) {
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type(ctx2);
-      if (current_block_type_index === previous_block_index) {
-        if_blocks[current_block_type_index].p(ctx2, dirty);
-      } else {
-        group_outros();
-        transition_out(if_blocks[previous_block_index], 1, 1, () => {
-          if_blocks[previous_block_index] = null;
-        });
-        check_outros();
-        if_block = if_blocks[current_block_type_index];
-        if (!if_block) {
-          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
-          if_block.c();
-        } else {
-          if_block.p(ctx2, dirty);
-        }
-        transition_in(if_block, 1);
-        if_block.m(if_block_anchor.parentNode, if_block_anchor);
-      }
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(if_block);
-      current = true;
-    },
-    o(local) {
-      transition_out(if_block);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(if_block_anchor);
-      }
-      if_blocks[current_block_type_index].d(detaching);
-    }
-  };
-}
-__name(create_fragment$A, "create_fragment$A");
-function instance$i($$self, $$props, $$invalidate) {
-  let $focusKeep;
-  let $focusAuto;
-  let $minimized;
-  let $focusTrap;
-  let { $$slots: slots = {}, $$scope } = $$props;
-  let { elementContent = void 0 } = $$props;
-  let { elementRoot = void 0 } = $$props;
-  let { draggable: draggable2 = void 0 } = $$props;
-  let { draggableOptions = void 0 } = $$props;
-  let { stylesApp = void 0 } = $$props;
-  let { stylesContent = void 0 } = $$props;
-  let { appOffsetHeight = false } = $$props;
-  let { appOffsetWidth = false } = $$props;
-  const appResizeObserver = !!appOffsetHeight || !!appOffsetWidth ? resizeObserver : () => null;
-  let { contentOffsetHeight = false } = $$props;
-  let { contentOffsetWidth = false } = $$props;
-  const contentResizeObserver = !!contentOffsetHeight || !!contentOffsetWidth ? resizeObserver : () => null;
-  const internal = new AppShellContextInternal();
-  const s_IGNORE_CLASSES = { ignoreClasses: ["tjs-focus-wrap"] };
-  setContext("#internal", internal);
-  const { application } = getContext("#external");
-  const { focusAuto, focusKeep, focusTrap } = application.reactive.storeAppOptions;
-  component_subscribe($$self, focusAuto, (value) => $$invalidate(32, $focusAuto = value));
-  component_subscribe($$self, focusKeep, (value) => $$invalidate(41, $focusKeep = value));
-  component_subscribe($$self, focusTrap, (value) => $$invalidate(34, $focusTrap = value));
-  const { minimized } = application.reactive.storeUIState;
-  component_subscribe($$self, minimized, (value) => $$invalidate(33, $minimized = value));
-  let focusWrapEnabled;
-  let { transition = TJSDefaultTransition.default } = $$props;
-  let { inTransition = TJSDefaultTransition.default } = $$props;
-  let { outTransition = TJSDefaultTransition.default } = $$props;
-  let { transitionOptions = void 0 } = $$props;
-  let { inTransitionOptions = TJSDefaultTransition.options } = $$props;
-  let { outTransitionOptions = TJSDefaultTransition.options } = $$props;
-  let oldTransition = TJSDefaultTransition.default;
-  let oldTransitionOptions = void 0;
-  onMount(() => elementRoot.focus());
-  function onClosePopup(event) {
-    if (!$focusAuto) {
-      return;
-    }
-    const targetEl = event?.detail?.target;
-    if (!(targetEl instanceof HTMLElement)) {
-      return;
-    }
-    if (A11yHelper.isFocusable(targetEl)) {
-      return;
-    }
-    const elementRootContains = elementRoot.contains(targetEl);
-    if (targetEl === elementRoot) {
-      elementRoot.focus();
-    } else if (targetEl === elementContent) {
-      elementContent.focus();
-    } else if (elementRootContains) {
-      if (elementContent.contains(targetEl)) {
-        elementContent.focus();
-      } else {
-        elementRoot.focus();
-      }
-    }
-  }
-  __name(onClosePopup, "onClosePopup");
-  function onKeydown(event) {
-    if ((event.target === elementRoot || event.target === elementContent) && KeyboardManager && KeyboardManager?._getMatchingActions?.(KeyboardManager?.getKeyboardEventContext?.(event))?.length) {
-      event.target?.blur();
-      return;
-    }
-    if (focusWrapEnabled && event.shiftKey && event.code === "Tab") {
-      const allFocusable = A11yHelper.getFocusableElements(elementRoot, s_IGNORE_CLASSES);
-      const firstFocusEl = allFocusable.length > 0 ? allFocusable[0] : void 0;
-      const lastFocusEl = allFocusable.length > 0 ? allFocusable[allFocusable.length - 1] : void 0;
-      if (elementRoot === document.activeElement || firstFocusEl === document.activeElement) {
-        if (lastFocusEl instanceof HTMLElement && firstFocusEl !== lastFocusEl) {
-          lastFocusEl.focus();
-        }
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    }
-    if (typeof application?.options?.popOut === "boolean" && application.options.popOut && application !== globalThis.ui?.activeWindow) {
-      application.bringToTop.call(application);
-    }
-  }
-  __name(onKeydown, "onKeydown");
-  function onPointerdownApp() {
-    if (typeof application?.options?.popOut === "boolean" && application.options.popOut && application !== globalThis.ui?.activeWindow) {
-      application.bringToTop.call(application);
-    }
-  }
-  __name(onPointerdownApp, "onPointerdownApp");
-  function onPointerdownContent(event) {
-    const focusable = A11yHelper.isFocusable(event.target);
-    if (!focusable && $focusAuto) {
-      if ($focusKeep) {
-        const focusOutside = document.activeElement instanceof HTMLElement && !elementRoot.contains(document.activeElement);
-        if (focusOutside) {
-          elementContent.focus();
-        } else {
-          event.preventDefault();
-        }
-      } else {
-        elementContent.focus();
-      }
-    }
-  }
-  __name(onPointerdownContent, "onPointerdownContent");
-  function resizeObservedContent(offsetWidth, offsetHeight) {
-    $$invalidate(27, contentOffsetWidth = offsetWidth);
-    $$invalidate(26, contentOffsetHeight = offsetHeight);
-  }
-  __name(resizeObservedContent, "resizeObservedContent");
-  function resizeObservedApp(offsetWidth, offsetHeight, contentWidth, contentHeight) {
-    application.position.stores.resizeObserved.update((object) => {
-      object.contentWidth = contentWidth;
-      object.contentHeight = contentHeight;
-      object.offsetWidth = offsetWidth;
-      object.offsetHeight = offsetHeight;
-      return object;
-    });
-    $$invalidate(24, appOffsetHeight = offsetHeight);
-    $$invalidate(25, appOffsetWidth = offsetWidth);
-  }
-  __name(resizeObservedApp, "resizeObservedApp");
-  function section_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      elementContent = $$value;
-      $$invalidate(0, elementContent);
-    });
-  }
-  __name(section_binding, "section_binding");
-  function div_binding($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      elementRoot = $$value;
-      $$invalidate(1, elementRoot);
-    });
-  }
-  __name(div_binding, "div_binding");
-  function section_binding_1($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      elementContent = $$value;
-      $$invalidate(0, elementContent);
-    });
-  }
-  __name(section_binding_1, "section_binding_1");
-  function div_binding_1($$value) {
-    binding_callbacks[$$value ? "unshift" : "push"](() => {
-      elementRoot = $$value;
-      $$invalidate(1, elementRoot);
-    });
-  }
-  __name(div_binding_1, "div_binding_1");
-  $$self.$$set = ($$props2) => {
-    if ("elementContent" in $$props2)
-      $$invalidate(0, elementContent = $$props2.elementContent);
-    if ("elementRoot" in $$props2)
-      $$invalidate(1, elementRoot = $$props2.elementRoot);
-    if ("draggable" in $$props2)
-      $$invalidate(6, draggable2 = $$props2.draggable);
-    if ("draggableOptions" in $$props2)
-      $$invalidate(7, draggableOptions = $$props2.draggableOptions);
-    if ("stylesApp" in $$props2)
-      $$invalidate(8, stylesApp = $$props2.stylesApp);
-    if ("stylesContent" in $$props2)
-      $$invalidate(9, stylesContent = $$props2.stylesContent);
-    if ("appOffsetHeight" in $$props2)
-      $$invalidate(24, appOffsetHeight = $$props2.appOffsetHeight);
-    if ("appOffsetWidth" in $$props2)
-      $$invalidate(25, appOffsetWidth = $$props2.appOffsetWidth);
-    if ("contentOffsetHeight" in $$props2)
-      $$invalidate(26, contentOffsetHeight = $$props2.contentOffsetHeight);
-    if ("contentOffsetWidth" in $$props2)
-      $$invalidate(27, contentOffsetWidth = $$props2.contentOffsetWidth);
-    if ("transition" in $$props2)
-      $$invalidate(28, transition = $$props2.transition);
-    if ("inTransition" in $$props2)
-      $$invalidate(2, inTransition = $$props2.inTransition);
-    if ("outTransition" in $$props2)
-      $$invalidate(3, outTransition = $$props2.outTransition);
-    if ("transitionOptions" in $$props2)
-      $$invalidate(29, transitionOptions = $$props2.transitionOptions);
-    if ("inTransitionOptions" in $$props2)
-      $$invalidate(4, inTransitionOptions = $$props2.inTransitionOptions);
-    if ("outTransitionOptions" in $$props2)
-      $$invalidate(5, outTransitionOptions = $$props2.outTransitionOptions);
-    if ("$$scope" in $$props2)
-      $$invalidate(35, $$scope = $$props2.$$scope);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty[0] & /*elementContent*/
-    1) {
-      if (elementContent !== void 0 && elementContent !== null) {
-        getContext("#internal").stores.elementContent.set(elementContent);
-      }
-    }
-    if ($$self.$$.dirty[0] & /*elementRoot*/
-    2) {
-      if (elementRoot !== void 0 && elementRoot !== null) {
-        getContext("#internal").stores.elementRoot.set(elementRoot);
-      }
-    }
-    if ($$self.$$.dirty[1] & /*$focusAuto, $focusTrap, $minimized*/
-    14) {
-      $$invalidate(11, focusWrapEnabled = $focusAuto && $focusTrap && !$minimized);
-    }
-    if ($$self.$$.dirty[0] & /*oldTransition, transition*/
-    1342177280) {
-      if (oldTransition !== transition) {
-        const newTransition = typeof transition === "function" ? transition : TJSDefaultTransition.default;
-        $$invalidate(2, inTransition = newTransition);
-        $$invalidate(3, outTransition = newTransition);
-        $$invalidate(30, oldTransition = newTransition);
-      }
-    }
-    if ($$self.$$.dirty[0] & /*transitionOptions*/
-    536870912 | $$self.$$.dirty[1] & /*oldTransitionOptions*/
-    1) {
-      if (oldTransitionOptions !== transitionOptions) {
-        const newOptions = transitionOptions !== TJSDefaultTransition.options && isObject(transitionOptions) ? transitionOptions : TJSDefaultTransition.options;
-        $$invalidate(4, inTransitionOptions = newOptions);
-        $$invalidate(5, outTransitionOptions = newOptions);
-        $$invalidate(31, oldTransitionOptions = newOptions);
-      }
-    }
-    if ($$self.$$.dirty[0] & /*inTransition*/
-    4) {
-      if (typeof inTransition !== "function") {
-        $$invalidate(2, inTransition = TJSDefaultTransition.default);
-      }
-    }
-    if ($$self.$$.dirty[0] & /*outTransition, application*/
-    1032) {
-      {
-        if (typeof outTransition !== "function") {
-          $$invalidate(3, outTransition = TJSDefaultTransition.default);
-        }
-        const defaultCloseAnimation = application?.options?.defaultCloseAnimation;
-        if (typeof defaultCloseAnimation === "boolean" && defaultCloseAnimation && outTransition !== TJSDefaultTransition.default) {
-          $$invalidate(10, application.options.defaultCloseAnimation = false, application);
-        }
-      }
-    }
-    if ($$self.$$.dirty[0] & /*inTransitionOptions*/
-    16) {
-      if (!isObject(inTransitionOptions)) {
-        $$invalidate(4, inTransitionOptions = TJSDefaultTransition.options);
-      }
-    }
-    if ($$self.$$.dirty[0] & /*outTransitionOptions*/
-    32) {
-      if (!isObject(outTransitionOptions)) {
-        $$invalidate(5, outTransitionOptions = TJSDefaultTransition.options);
-      }
-    }
-  };
-  return [
-    elementContent,
-    elementRoot,
-    inTransition,
-    outTransition,
-    inTransitionOptions,
-    outTransitionOptions,
-    draggable2,
-    draggableOptions,
-    stylesApp,
-    stylesContent,
-    application,
-    focusWrapEnabled,
-    appResizeObserver,
-    contentResizeObserver,
-    focusAuto,
-    focusKeep,
-    focusTrap,
-    minimized,
-    onClosePopup,
-    onKeydown,
-    onPointerdownApp,
-    onPointerdownContent,
-    resizeObservedContent,
-    resizeObservedApp,
-    appOffsetHeight,
-    appOffsetWidth,
-    contentOffsetHeight,
-    contentOffsetWidth,
-    transition,
-    transitionOptions,
-    oldTransition,
-    oldTransitionOptions,
-    $focusAuto,
-    $minimized,
-    $focusTrap,
-    $$scope,
-    slots,
-    section_binding,
-    div_binding,
-    section_binding_1,
-    div_binding_1
-  ];
-}
-__name(instance$i, "instance$i");
-const _ApplicationShell = class _ApplicationShell extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(
-      this,
-      options,
-      instance$i,
-      create_fragment$A,
-      safe_not_equal,
-      {
-        elementContent: 0,
-        elementRoot: 1,
-        draggable: 6,
-        draggableOptions: 7,
-        stylesApp: 8,
-        stylesContent: 9,
-        appOffsetHeight: 24,
-        appOffsetWidth: 25,
-        contentOffsetHeight: 26,
-        contentOffsetWidth: 27,
-        transition: 28,
-        inTransition: 2,
-        outTransition: 3,
-        transitionOptions: 29,
-        inTransitionOptions: 4,
-        outTransitionOptions: 5
-      },
-      null,
-      [-1, -1]
-    );
-  }
-  get elementContent() {
-    return this.$$.ctx[0];
-  }
-  set elementContent(elementContent) {
-    this.$$set({ elementContent });
-    flush();
-  }
-  get elementRoot() {
-    return this.$$.ctx[1];
-  }
-  set elementRoot(elementRoot) {
-    this.$$set({ elementRoot });
-    flush();
-  }
-  get draggable() {
-    return this.$$.ctx[6];
-  }
-  set draggable(draggable2) {
-    this.$$set({ draggable: draggable2 });
-    flush();
-  }
-  get draggableOptions() {
-    return this.$$.ctx[7];
-  }
-  set draggableOptions(draggableOptions) {
-    this.$$set({ draggableOptions });
-    flush();
-  }
-  get stylesApp() {
-    return this.$$.ctx[8];
-  }
-  set stylesApp(stylesApp) {
-    this.$$set({ stylesApp });
-    flush();
-  }
-  get stylesContent() {
-    return this.$$.ctx[9];
-  }
-  set stylesContent(stylesContent) {
-    this.$$set({ stylesContent });
-    flush();
-  }
-  get appOffsetHeight() {
-    return this.$$.ctx[24];
-  }
-  set appOffsetHeight(appOffsetHeight) {
-    this.$$set({ appOffsetHeight });
-    flush();
-  }
-  get appOffsetWidth() {
-    return this.$$.ctx[25];
-  }
-  set appOffsetWidth(appOffsetWidth) {
-    this.$$set({ appOffsetWidth });
-    flush();
-  }
-  get contentOffsetHeight() {
-    return this.$$.ctx[26];
-  }
-  set contentOffsetHeight(contentOffsetHeight) {
-    this.$$set({ contentOffsetHeight });
-    flush();
-  }
-  get contentOffsetWidth() {
-    return this.$$.ctx[27];
-  }
-  set contentOffsetWidth(contentOffsetWidth) {
-    this.$$set({ contentOffsetWidth });
-    flush();
-  }
-  get transition() {
-    return this.$$.ctx[28];
-  }
-  set transition(transition) {
-    this.$$set({ transition });
-    flush();
-  }
-  get inTransition() {
-    return this.$$.ctx[2];
-  }
-  set inTransition(inTransition) {
-    this.$$set({ inTransition });
-    flush();
-  }
-  get outTransition() {
-    return this.$$.ctx[3];
-  }
-  set outTransition(outTransition) {
-    this.$$set({ outTransition });
-    flush();
-  }
-  get transitionOptions() {
-    return this.$$.ctx[29];
-  }
-  set transitionOptions(transitionOptions) {
-    this.$$set({ transitionOptions });
-    flush();
-  }
-  get inTransitionOptions() {
-    return this.$$.ctx[4];
-  }
-  set inTransitionOptions(inTransitionOptions) {
-    this.$$set({ inTransitionOptions });
-    flush();
-  }
-  get outTransitionOptions() {
-    return this.$$.ctx[5];
-  }
-  set outTransitionOptions(outTransitionOptions) {
-    this.$$set({ outTransitionOptions });
-    flush();
-  }
-};
-__name(_ApplicationShell, "ApplicationShell");
-let ApplicationShell = _ApplicationShell;
-const ApplicationShell$1 = ApplicationShell;
-cssVariables$1.setProperties({
-  // Anchor text shadow / header buttons
-  "--tjs-default-text-shadow-focus-hover": "0 0 8px var(--color-shadow-primary)",
-  // TJSApplicationShell app background.
-  "--tjs-app-background": `url("${globalThis.foundry.utils.getRoute("/ui/denim075.png")}")`
-}, false);
-const WelcomeAppShell_svelte_svelte_type_style_lang = "";
-function create_default_slot$5(ctx) {
-  let main;
-  let div1;
-  let p0;
-  let h10;
-  let p1;
-  let a0;
-  let t6;
-  let t7_value = localize(`${SYSTEM_CODE}.Welcome.Released`) + "";
-  let t7;
-  let h11;
-  let p2;
-  let span0;
-  let a1;
-  let div4;
-  let div2;
-  let input;
-  let div3;
-  let span1;
-  let footer;
-  let div5;
-  let div6;
-  let h4;
-  let a2;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      main = element("main");
-      div1 = element("div");
-      div1.innerHTML = `<div class="texture svelte-FF15-1njk00a"></div><img src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;" class="svelte-FF15-1njk00a"/>`;
-      p0 = element("p");
-      p0.textContent = `${localize("FF15.Welcome.To")} ${localize(`${SYSTEM_CODE}.Title`)}!`;
-      h10 = element("h1");
-      h10.textContent = `${localize("FF15.Welcome.Introduction")}`;
-      p1 = element("p");
-      a0 = element("a");
-      a0.textContent = `${localize(`${SYSTEM_CODE}.Title`)}`;
-      t6 = text(" ");
-      t7 = text(t7_value);
-      h11 = element("h1");
-      h11.textContent = "Help";
-      p2 = element("p");
-      span0 = element("span");
-      span0.textContent = `${localize("FF15.Welcome.Issues")}`;
-      a1 = element("a");
-      a1.textContent = `${localize("FF15.Welcome.Github")}`;
-      div4 = element("div");
-      div2 = element("div");
-      input = element("input");
-      div3 = element("div");
-      span1 = element("span");
-      span1.textContent = `${localize("FF15.Setting.DontShowWelcome.Name")}`;
-      footer = element("footer");
-      div5 = element("div");
-      div5.innerHTML = `<img class="pt-sm white svelte-FF15-1njk00a" src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
-      div6 = element("div");
-      h4 = element("h4");
-      h4.textContent = `${localize(`${SYSTEM_CODE}.Title`)} ${localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
-      a2 = element("a");
-      a2.textContent = "Round Table Games ©2024";
-      attr(div1, "class", "logo-background svelte-FF15-1njk00a");
-      attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
-      attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
-      attr(input, "type", "checkbox");
-      attr(input, "label", localize("FF15.Setting.DontShowWelcome.Name"));
-      attr(div2, "class", "flex0");
-      attr(div3, "class", "flex");
-      attr(div4, "class", "flexrow inset justify-flexrow-vertical");
-      attr(div4, "data-tooltip", localize("FF15.Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-FF15-1njk00a");
-      attr(div5, "class", "flex2 right");
-      attr(a2, "href", "https://www.round-table.games");
-      attr(a2, "class", "svelte-FF15-1njk00a");
-      attr(div6, "class", "flex2 left pt-sm");
-      attr(footer, "class", "svelte-FF15-1njk00a");
-    },
-    m(target, anchor) {
-      insert(target, main, anchor);
-      append(main, div1);
-      append(main, p0);
-      append(main, h10);
-      append(main, p1);
-      append(p1, a0);
-      append(p1, t6);
-      append(p1, t7);
-      append(main, h11);
-      append(main, p2);
-      append(p2, span0);
-      append(p2, a1);
-      append(main, div4);
-      append(div4, div2);
-      append(div2, input);
-      input.checked = /*dontShowWelcome*/
-      ctx[1];
-      append(div4, div3);
-      append(div3, span1);
-      insert(target, footer, anchor);
-      append(footer, div5);
-      append(footer, div6);
-      append(div6, h4);
-      append(div6, a2);
-      if (!mounted) {
-        dispose = [
-          listen(
-            input,
-            "change",
-            /*handleChange*/
-            ctx[2]
-          ),
-          listen(
-            input,
-            "change",
-            /*input_change_handler*/
-            ctx[5]
-          )
-        ];
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*dontShowWelcome*/
-      2) {
-        input.checked = /*dontShowWelcome*/
-        ctx2[1];
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(main);
-        detach(footer);
-      }
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-__name(create_default_slot$5, "create_default_slot$5");
-function create_fragment$z(ctx) {
-  let applicationshell;
-  let updating_elementRoot;
-  let current;
-  function applicationshell_elementRoot_binding(value) {
-    ctx[6](value);
-  }
-  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
-  let applicationshell_props = {
-    $$slots: { default: [create_default_slot$5] },
-    $$scope: { ctx }
-  };
-  if (
-    /*elementRoot*/
-    ctx[0] !== void 0
-  ) {
-    applicationshell_props.elementRoot = /*elementRoot*/
-    ctx[0];
-  }
-  applicationshell = new ApplicationShell$1({ props: applicationshell_props });
-  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
-  return {
-    c() {
-      create_component(applicationshell.$$.fragment);
-    },
-    m(target, anchor) {
-      mount_component(applicationshell, target, anchor);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      const applicationshell_changes = {};
-      if (dirty & /*$$scope, dontShowWelcome*/
-      258) {
-        applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
-      }
-      if (!updating_elementRoot && dirty & /*elementRoot*/
-      1) {
-        updating_elementRoot = true;
-        applicationshell_changes.elementRoot = /*elementRoot*/
-        ctx2[0];
-        add_flush_callback(() => updating_elementRoot = false);
-      }
-      applicationshell.$set(applicationshell_changes);
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(applicationshell.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(applicationshell.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      destroy_component(applicationshell, detaching);
-    }
-  };
-}
-__name(create_fragment$z, "create_fragment$z");
-function instance$h($$self, $$props, $$invalidate) {
-  let dontShowWelcome2;
-  let { elementRoot = void 0 } = $$props;
-  let { version: version2 = void 0 } = $$props;
-  const application = getContext("#external").application;
-  const handleChange = /* @__PURE__ */ __name((event) => {
-    game.settings.set(SYSTEM_ID, "dontShowWelcome", event.target.checked);
-  }, "handleChange");
-  let draggable2 = application.reactive.draggable;
-  draggable2 = true;
-  onMount(async () => {
-  });
-  function input_change_handler() {
-    dontShowWelcome2 = this.checked;
-    $$invalidate(1, dontShowWelcome2);
-  }
-  __name(input_change_handler, "input_change_handler");
-  function applicationshell_elementRoot_binding(value) {
-    elementRoot = value;
-    $$invalidate(0, elementRoot);
-  }
-  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
-  $$self.$$set = ($$props2) => {
-    if ("elementRoot" in $$props2)
-      $$invalidate(0, elementRoot = $$props2.elementRoot);
-    if ("version" in $$props2)
-      $$invalidate(3, version2 = $$props2.version);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*draggable*/
-    16) {
-      application.reactive.draggable = draggable2;
-    }
-  };
-  $$invalidate(1, dontShowWelcome2 = game.settings.get(SYSTEM_ID, "dontShowWelcome"));
-  return [
-    elementRoot,
-    dontShowWelcome2,
-    handleChange,
-    version2,
-    draggable2,
-    input_change_handler,
-    applicationshell_elementRoot_binding
-  ];
-}
-__name(instance$h, "instance$h");
-const _WelcomeAppShell = class _WelcomeAppShell extends SvelteComponent {
-  constructor(options) {
-    super();
-    init(this, options, instance$h, create_fragment$z, safe_not_equal, { elementRoot: 0, version: 3 });
-  }
-  get elementRoot() {
-    return this.$$.ctx[0];
-  }
-  set elementRoot(elementRoot) {
-    this.$$set({ elementRoot });
-    flush();
-  }
-  get version() {
-    return this.$$.ctx[3];
-  }
-  set version(version2) {
-    this.$$set({ version: version2 });
-    flush();
-  }
-};
-__name(_WelcomeAppShell, "WelcomeAppShell");
-let WelcomeAppShell = _WelcomeAppShell;
 const _ApplicationState = class _ApplicationState {
   /**
    * @param {T}   application - The application.
@@ -13868,7 +11081,7 @@ function storeGenerator({ storage, serialize = JSON.stringify, deserialize = JSO
         }
         return ogSet(new_value);
       }, "wrap_set"), /* @__PURE__ */ __name(function wrap_update(fn) {
-        set(fn(get_store_value(ogStore)));
+        set2(fn(get_store_value(ogStore)));
       }, "wrap_update"));
     }
     __name(wrap_start, "wrap_start");
@@ -13883,22 +11096,22 @@ function storeGenerator({ storage, serialize = JSON.stringify, deserialize = JSO
       storage.setItem(key, serialize(value));
     }
     const ogStore = writable(value, start ? wrap_start : void 0);
-    function set(new_value) {
+    function set2(new_value) {
       if (storage) {
         storage.setItem(key, serialize(new_value));
       }
       ogStore.set(new_value);
     }
-    __name(set, "set");
+    __name(set2, "set");
     function update2(fn) {
-      set(fn(get_store_value(ogStore)));
+      set2(fn(get_store_value(ogStore)));
     }
     __name(update2, "update");
     function subscribe2(run2, invalidate) {
       return ogStore.subscribe(run2, invalidate);
     }
     __name(subscribe2, "subscribe");
-    return { set, update: update2, subscribe: subscribe2 };
+    return { set: set2, update: update2, subscribe: subscribe2 };
   }
   __name(storageWritable, "storageWritable");
   function storageDerived(key, stores, fn, initial_value) {
@@ -13910,7 +11123,7 @@ function storeGenerator({ storage, serialize = JSON.stringify, deserialize = JSO
       } catch (err) {
       }
     }
-    return storageReadable(key, initial_value, (set, update2) => {
+    return storageReadable(key, initial_value, (set2, update2) => {
       let inited = false;
       const values = [];
       let pending = 0;
@@ -13922,9 +11135,9 @@ function storeGenerator({ storage, serialize = JSON.stringify, deserialize = JSO
         cleanup?.();
         const input = single ? values[0] : values;
         if (isSimpleDeriver(fn)) {
-          set(fn(input));
+          set2(fn(input));
         } else {
-          const result = fn(input, set, update2);
+          const result = fn(input, set2, update2);
           if (typeof result === "function") {
             cleanup = result;
           }
@@ -14014,7 +11227,7 @@ const _TJSWebStorage = class _TJSWebStorage {
      *    serialize?: (value: any, ...rest: any[]) => string
      * }>)}
      */
-    __privateAdd(this, _stores3, /* @__PURE__ */ new Map());
+    __privateAdd(this, _stores2, /* @__PURE__ */ new Map());
     __privateSet(this, _storageStores, storageStores);
   }
   /**
@@ -14094,14 +11307,14 @@ const _TJSWebStorage = class _TJSWebStorage {
   }
 };
 _storageStores = new WeakMap();
-_stores3 = new WeakMap();
+_stores2 = new WeakMap();
 _getDeserialize = new WeakSet();
 getDeserialize_fn = /* @__PURE__ */ __name(function(key) {
-  return __privateGet(this, _stores3).get(key)?.deserialize ?? __privateGet(this, _storageStores).deserialize;
+  return __privateGet(this, _stores2).get(key)?.deserialize ?? __privateGet(this, _storageStores).deserialize;
 }, "#getDeserialize");
 _getSerialize = new WeakSet();
 getSerialize_fn = /* @__PURE__ */ __name(function(key) {
-  return __privateGet(this, _stores3).get(key)?.serialize ?? __privateGet(this, _storageStores).serialize;
+  return __privateGet(this, _stores2).get(key)?.serialize ?? __privateGet(this, _storageStores).serialize;
 }, "#getSerialize");
 _createStore = new WeakSet();
 createStore_fn = /* @__PURE__ */ __name(function(key, defaultValue = void 0, storageStores) {
@@ -14118,12 +11331,12 @@ createStore_fn = /* @__PURE__ */ __name(function(key, defaultValue = void 0, sto
 }, "#createStore");
 _getStore = new WeakSet();
 getStore_fn = /* @__PURE__ */ __name(function(key, defaultValue = void 0, storageStores) {
-  const storeEntry = __privateGet(this, _stores3).get(key);
+  const storeEntry = __privateGet(this, _stores2).get(key);
   if (storeEntry) {
     return storeEntry.store;
   }
   const store = __privateMethod(this, _createStore, createStore_fn).call(this, key, defaultValue, storageStores);
-  __privateGet(this, _stores3).set(key, {
+  __privateGet(this, _stores2).set(key, {
     store,
     deserialize: storageStores?.deserialize,
     serialize: storageStores?.serialize
@@ -14650,8 +11863,8 @@ storesInitialize_fn = /* @__PURE__ */ __name(function() {
   const storeUIState = {
     subscribe: writableUIOptions.subscribe,
     dragging: propertyStore(writableUIOptions, "dragging"),
-    headerButtons: derived(writableUIOptions, ($options, set) => set($options.headerButtons)),
-    minimized: derived(writableUIOptions, ($options, set) => set($options.minimized)),
+    headerButtons: derived(writableUIOptions, ($options, set2) => set2($options.headerButtons)),
+    minimized: derived(writableUIOptions, ($options, set2) => set2($options.minimized)),
     resizing: propertyStore(writableUIOptions, "resizing")
   };
   Object.freeze(storeUIState);
@@ -14925,7 +12138,7 @@ const _SvelteApplication = class _SvelteApplication extends Application {
      *
      * @type {import('./internal/state-reactive/SvelteReactive').SvelteReactiveStores}
      */
-    __privateAdd(this, _stores4, void 0);
+    __privateAdd(this, _stores3, void 0);
     __privateSet(this, _applicationState, new ApplicationState(this));
     __privateSet(this, _position3, new TJSPosition(this, {
       ...this.position,
@@ -14944,7 +12157,7 @@ const _SvelteApplication = class _SvelteApplication extends Application {
       }
     });
     __privateSet(this, _reactive, new SvelteReactive(this));
-    __privateSet(this, _stores4, __privateGet(this, _reactive).initialize());
+    __privateSet(this, _stores3, __privateGet(this, _reactive).initialize());
   }
   /**
    * Specifies the default options that SvelteApplication supports.
@@ -15097,7 +12310,7 @@ const _SvelteApplication = class _SvelteApplication extends Application {
     if (!options.force && ![states.RENDERED, states.ERROR].includes(this._state)) {
       return;
     }
-    __privateGet(this, _stores4).unsubscribe();
+    __privateGet(this, _stores3).unsubscribe();
     this._state = states.CLOSING;
     const el = __privateGet(this, _elementTarget);
     if (!el) {
@@ -15150,7 +12363,7 @@ const _SvelteApplication = class _SvelteApplication extends Application {
     this._scrollPositions = null;
     this._state = states.CLOSED;
     __privateSet(this, _onMount, false);
-    __privateGet(this, _stores4).uiStateUpdate((storeOptions) => deepMerge(storeOptions, { minimized: this._minimized }));
+    __privateGet(this, _stores3).uiStateUpdate((storeOptions) => deepMerge(storeOptions, { minimized: this._minimized }));
     A11yHelper.applyFocusSource(this.options.focusSource);
     delete this.options.focusSource;
   }
@@ -15255,7 +12468,7 @@ const _SvelteApplication = class _SvelteApplication extends Application {
     if (typeof this.options.positionable === "boolean" && this.options.positionable) {
       __privateGet(this, _elementTarget).style.zIndex = typeof this.options.zIndex === "number" ? this.options.zIndex : __privateGet(this, _initialZIndex) ?? 95;
     }
-    __privateGet(this, _stores4).subscribe();
+    __privateGet(this, _stores3).subscribe();
   }
   /**
    * Provides a mechanism to update the UI options store for maximized.
@@ -15325,7 +12538,7 @@ const _SvelteApplication = class _SvelteApplication extends Application {
         content.children[cntr].style.overflow = null;
       }
     }, 50);
-    __privateGet(this, _stores4).uiStateUpdate((options) => deepMerge(options, { minimized: false }));
+    __privateGet(this, _stores3).uiStateUpdate((options) => deepMerge(options, { minimized: false }));
   }
   /**
    * Provides a mechanism to update the UI options store for minimized.
@@ -15345,7 +12558,7 @@ const _SvelteApplication = class _SvelteApplication extends Application {
     if (!this.rendered || !this.popOut || [true, null].includes(this._minimized)) {
       return;
     }
-    __privateGet(this, _stores4).uiStateUpdate((options) => deepMerge(options, { minimized: true }));
+    __privateGet(this, _stores3).uiStateUpdate((options) => deepMerge(options, { minimized: true }));
     this._minimized = null;
     const durationMS = duration * 1e3;
     const element2 = this.elementTarget;
@@ -15524,7 +12737,7 @@ _position3 = new WeakMap();
 _reactive = new WeakMap();
 _svelteData2 = new WeakMap();
 _getSvelteData = new WeakMap();
-_stores4 = new WeakMap();
+_stores3 = new WeakMap();
 _updateApplicationShell = new WeakSet();
 updateApplicationShell_fn = /* @__PURE__ */ __name(function() {
   const applicationShell = this.svelte.applicationShell;
@@ -15546,6 +12759,5763 @@ updateApplicationShell_fn = /* @__PURE__ */ __name(function() {
 }, "#updateApplicationShell");
 __name(_SvelteApplication, "SvelteApplication");
 let SvelteApplication = _SvelteApplication;
+const cssVariables$1 = new TJSStyleManager({ docKey: "#__trl-root-styles", version: 1 });
+if (typeof window !== "undefined")
+  (window.__svelte || (window.__svelte = { v: /* @__PURE__ */ new Set() })).v.add(PUBLIC_VERSION);
+function resizeObserver(node, target) {
+  ResizeObserverManager.add(node, target);
+  return {
+    /**
+     * @param {ResizeObserverTarget} newTarget - An object or function to update with observed width & height changes.
+     */
+    update: (newTarget) => {
+      ResizeObserverManager.remove(node, target);
+      target = newTarget;
+      ResizeObserverManager.add(node, target);
+    },
+    destroy: () => {
+      ResizeObserverManager.remove(node, target);
+    }
+  };
+}
+__name(resizeObserver, "resizeObserver");
+resizeObserver.updateCache = function(el) {
+  if (!(el instanceof HTMLElement)) {
+    throw new TypeError(`resizeObserverUpdate error: 'el' is not an HTMLElement.`);
+  }
+  const subscribers = s_MAP.get(el);
+  if (Array.isArray(subscribers)) {
+    const computed = globalThis.getComputedStyle(el);
+    const borderBottom = StyleParse.pixels(el.style.borderBottom) ?? StyleParse.pixels(computed.borderBottom) ?? 0;
+    const borderLeft = StyleParse.pixels(el.style.borderLeft) ?? StyleParse.pixels(computed.borderLeft) ?? 0;
+    const borderRight = StyleParse.pixels(el.style.borderRight) ?? StyleParse.pixels(computed.borderRight) ?? 0;
+    const borderTop = StyleParse.pixels(el.style.borderTop) ?? StyleParse.pixels(computed.borderTop) ?? 0;
+    const paddingBottom = StyleParse.pixels(el.style.paddingBottom) ?? StyleParse.pixels(computed.paddingBottom) ?? 0;
+    const paddingLeft = StyleParse.pixels(el.style.paddingLeft) ?? StyleParse.pixels(computed.paddingLeft) ?? 0;
+    const paddingRight = StyleParse.pixels(el.style.paddingRight) ?? StyleParse.pixels(computed.paddingRight) ?? 0;
+    const paddingTop = StyleParse.pixels(el.style.paddingTop) ?? StyleParse.pixels(computed.paddingTop) ?? 0;
+    const additionalWidth = borderLeft + borderRight + paddingLeft + paddingRight;
+    const additionalHeight = borderTop + borderBottom + paddingTop + paddingBottom;
+    for (const subscriber of subscribers) {
+      subscriber.styles.additionalWidth = additionalWidth;
+      subscriber.styles.additionalHeight = additionalHeight;
+      s_UPDATE_SUBSCRIBER(subscriber, subscriber.contentWidth, subscriber.contentHeight);
+    }
+  }
+};
+const s_MAP = /* @__PURE__ */ new Map();
+const _ResizeObserverManager = class _ResizeObserverManager {
+  /**
+   * Add an HTMLElement and ResizeObserverTarget instance for monitoring. Create cached style attributes for the
+   * given element include border & padding dimensions for offset width / height calculations.
+   *
+   * @param {HTMLElement}    el - The element to observe.
+   *
+   * @param {ResizeObserverTarget} target - A target that contains one of several mechanisms for updating resize data.
+   */
+  static add(el, target) {
+    const updateType = s_GET_UPDATE_TYPE(target);
+    if (updateType === 0) {
+      throw new Error(`'target' does not match supported ResizeObserverManager update mechanisms.`);
+    }
+    const computed = globalThis.getComputedStyle(el);
+    const borderBottom = StyleParse.pixels(el.style.borderBottom) ?? StyleParse.pixels(computed.borderBottom) ?? 0;
+    const borderLeft = StyleParse.pixels(el.style.borderLeft) ?? StyleParse.pixels(computed.borderLeft) ?? 0;
+    const borderRight = StyleParse.pixels(el.style.borderRight) ?? StyleParse.pixels(computed.borderRight) ?? 0;
+    const borderTop = StyleParse.pixels(el.style.borderTop) ?? StyleParse.pixels(computed.borderTop) ?? 0;
+    const paddingBottom = StyleParse.pixels(el.style.paddingBottom) ?? StyleParse.pixels(computed.paddingBottom) ?? 0;
+    const paddingLeft = StyleParse.pixels(el.style.paddingLeft) ?? StyleParse.pixels(computed.paddingLeft) ?? 0;
+    const paddingRight = StyleParse.pixels(el.style.paddingRight) ?? StyleParse.pixels(computed.paddingRight) ?? 0;
+    const paddingTop = StyleParse.pixels(el.style.paddingTop) ?? StyleParse.pixels(computed.paddingTop) ?? 0;
+    const data = {
+      updateType,
+      target,
+      // Stores most recent contentRect.width and contentRect.height values from ResizeObserver.
+      contentWidth: 0,
+      contentHeight: 0,
+      // Convenience data for total border & padding for offset width & height calculations.
+      styles: {
+        additionalWidth: borderLeft + borderRight + paddingLeft + paddingRight,
+        additionalHeight: borderTop + borderBottom + paddingTop + paddingBottom
+      }
+    };
+    if (s_MAP.has(el)) {
+      const subscribers = s_MAP.get(el);
+      subscribers.push(data);
+    } else {
+      s_MAP.set(el, [data]);
+    }
+    s_RESIZE_OBSERVER.observe(el);
+  }
+  /**
+   * Removes all targets from monitoring when just an element is provided otherwise removes a specific target
+   * from the monitoring map. If no more targets remain then the element is removed from monitoring.
+   *
+   * @param {HTMLElement}          el - Element to remove from monitoring.
+   *
+   * @param {ResizeObserverTarget} [target] - A specific target to remove from monitoring.
+   */
+  static remove(el, target = void 0) {
+    const subscribers = s_MAP.get(el);
+    if (Array.isArray(subscribers)) {
+      const index = subscribers.findIndex((entry) => entry.target === target);
+      if (index >= 0) {
+        s_UPDATE_SUBSCRIBER(subscribers[index], void 0, void 0);
+        subscribers.splice(index, 1);
+      }
+      if (subscribers.length === 0) {
+        s_MAP.delete(el);
+        s_RESIZE_OBSERVER.unobserve(el);
+      }
+    }
+  }
+};
+__name(_ResizeObserverManager, "ResizeObserverManager");
+let ResizeObserverManager = _ResizeObserverManager;
+const s_UPDATE_TYPES = {
+  none: 0,
+  attribute: 1,
+  function: 2,
+  resizeObserved: 3,
+  setContentBounds: 4,
+  setDimension: 5,
+  storeObject: 6,
+  storesObject: 7
+};
+const s_RESIZE_OBSERVER = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    const subscribers = s_MAP.get(entry?.target);
+    if (Array.isArray(subscribers)) {
+      const contentWidth = entry.contentRect.width;
+      const contentHeight = entry.contentRect.height;
+      for (const subscriber of subscribers) {
+        s_UPDATE_SUBSCRIBER(subscriber, contentWidth, contentHeight);
+      }
+    }
+  }
+});
+function s_GET_UPDATE_TYPE(target) {
+  if (target?.resizeObserved instanceof Function) {
+    return s_UPDATE_TYPES.resizeObserved;
+  }
+  if (target?.setDimension instanceof Function) {
+    return s_UPDATE_TYPES.setDimension;
+  }
+  if (target?.setContentBounds instanceof Function) {
+    return s_UPDATE_TYPES.setContentBounds;
+  }
+  const targetType = typeof target;
+  if (targetType !== null && (targetType === "object" || targetType === "function")) {
+    if (isUpdatableStore(target.resizeObserved)) {
+      return s_UPDATE_TYPES.storeObject;
+    }
+    const stores = target?.stores;
+    if (isObject(stores) || typeof stores === "function") {
+      if (isUpdatableStore(stores.resizeObserved)) {
+        return s_UPDATE_TYPES.storesObject;
+      }
+    }
+  }
+  if (targetType !== null && targetType === "object") {
+    return s_UPDATE_TYPES.attribute;
+  }
+  if (targetType === "function") {
+    return s_UPDATE_TYPES.function;
+  }
+  return s_UPDATE_TYPES.none;
+}
+__name(s_GET_UPDATE_TYPE, "s_GET_UPDATE_TYPE");
+function s_UPDATE_SUBSCRIBER(subscriber, contentWidth, contentHeight) {
+  const styles = subscriber.styles;
+  subscriber.contentWidth = contentWidth;
+  subscriber.contentHeight = contentHeight;
+  const offsetWidth = Number.isFinite(contentWidth) ? contentWidth + styles.additionalWidth : void 0;
+  const offsetHeight = Number.isFinite(contentHeight) ? contentHeight + styles.additionalHeight : void 0;
+  const target = subscriber.target;
+  switch (subscriber.updateType) {
+    case s_UPDATE_TYPES.attribute:
+      target.contentWidth = contentWidth;
+      target.contentHeight = contentHeight;
+      target.offsetWidth = offsetWidth;
+      target.offsetHeight = offsetHeight;
+      break;
+    case s_UPDATE_TYPES.function:
+      target?.(offsetWidth, offsetHeight, contentWidth, contentHeight);
+      break;
+    case s_UPDATE_TYPES.resizeObserved:
+      target.resizeObserved?.(offsetWidth, offsetHeight, contentWidth, contentHeight);
+      break;
+    case s_UPDATE_TYPES.setContentBounds:
+      target.setContentBounds?.(contentWidth, contentHeight);
+      break;
+    case s_UPDATE_TYPES.setDimension:
+      target.setDimension?.(offsetWidth, offsetHeight);
+      break;
+    case s_UPDATE_TYPES.storeObject:
+      target.resizeObserved.update((object) => {
+        object.contentHeight = contentHeight;
+        object.contentWidth = contentWidth;
+        object.offsetHeight = offsetHeight;
+        object.offsetWidth = offsetWidth;
+        return object;
+      });
+      break;
+    case s_UPDATE_TYPES.storesObject:
+      target.stores.resizeObserved.update((object) => {
+        object.contentHeight = contentHeight;
+        object.contentWidth = contentWidth;
+        object.offsetHeight = offsetHeight;
+        object.offsetWidth = offsetWidth;
+        return object;
+      });
+      break;
+  }
+}
+__name(s_UPDATE_SUBSCRIBER, "s_UPDATE_SUBSCRIBER");
+function applyStyles(node, properties) {
+  function setProperties() {
+    if (!isObject(properties)) {
+      return;
+    }
+    for (const prop of Object.keys(properties)) {
+      node.style.setProperty(`${prop}`, properties[prop]);
+    }
+  }
+  __name(setProperties, "setProperties");
+  setProperties();
+  return {
+    /**
+     * @param {Record<string, string>}  newProperties - Key / value object of properties to set.
+     */
+    update: (newProperties) => {
+      properties = newProperties;
+      setProperties();
+    }
+  };
+}
+__name(applyStyles, "applyStyles");
+function fade(node, { delay = 0, duration = 400, easing = identity } = {}) {
+  const o = +getComputedStyle(node).opacity;
+  return {
+    delay,
+    duration,
+    easing,
+    css: (t) => `opacity: ${t * o}`
+  };
+}
+__name(fade, "fade");
+const _TJSDefaultTransition = class _TJSDefaultTransition {
+  /**
+   * @returns {() => undefined} Default empty transition.
+   */
+  static get default() {
+    return __privateGet(this, _default);
+  }
+  /**
+   * @returns {{}} Default empty options.
+   */
+  static get options() {
+    return __privateGet(this, _options2);
+  }
+};
+_options2 = new WeakMap();
+_default = new WeakMap();
+__name(_TJSDefaultTransition, "TJSDefaultTransition");
+__privateAdd(_TJSDefaultTransition, _options2, {});
+__privateAdd(_TJSDefaultTransition, _default, /* @__PURE__ */ __name(() => void 0, "#default"));
+let TJSDefaultTransition = _TJSDefaultTransition;
+const TJSGlassPane_svelte_svelte_type_style_lang = "";
+function create_else_block$3(ctx) {
+  let div;
+  let applyStyles_action;
+  let div_intro;
+  let div_outro;
+  let current;
+  let mounted;
+  let dispose;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[20].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[19],
+    null
+  );
+  return {
+    c() {
+      div = element("div");
+      if (default_slot)
+        default_slot.c();
+      attr(div, "class", "tjs-glass-pane-background svelte-FF15-hqedxf");
+      set_style(
+        div,
+        "background",
+        /*background*/
+        ctx[5]
+      );
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (default_slot) {
+        default_slot.m(div, null);
+      }
+      ctx[23](div);
+      current = true;
+      if (!mounted) {
+        dispose = action_destroyer(applyStyles_action = applyStyles.call(
+          null,
+          div,
+          /*styles*/
+          ctx[7]
+        ));
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        524288)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx,
+            /*$$scope*/
+            ctx[19],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx[19]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx[19],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (applyStyles_action && is_function(applyStyles_action.update) && dirty & /*styles*/
+      128)
+        applyStyles_action.update.call(
+          null,
+          /*styles*/
+          ctx[7]
+        );
+      if (dirty & /*background*/
+      32) {
+        set_style(
+          div,
+          "background",
+          /*background*/
+          ctx[5]
+        );
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(default_slot, local);
+      add_render_callback(() => {
+        if (!current)
+          return;
+        if (div_outro)
+          div_outro.end(1);
+        div_intro = create_in_transition(
+          div,
+          /*inTransition*/
+          ctx[1],
+          /*inTransitionOptions*/
+          ctx[3]
+        );
+        div_intro.start();
+      });
+      current = true;
+    },
+    o(local) {
+      transition_out(default_slot, local);
+      if (div_intro)
+        div_intro.invalidate();
+      div_outro = create_out_transition(
+        div,
+        /*outTransition*/
+        ctx[2],
+        /*outTransitionOptions*/
+        ctx[4]
+      );
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if (default_slot)
+        default_slot.d(detaching);
+      ctx[23](null);
+      if (detaching && div_outro)
+        div_outro.end();
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_else_block$3, "create_else_block$3");
+function create_if_block$8(ctx) {
+  let div0;
+  let applyStyles_action;
+  let div0_intro;
+  let div0_outro;
+  let t;
+  let div1;
+  let current;
+  let mounted;
+  let dispose;
+  const default_slot_template = (
+    /*#slots*/
+    ctx[20].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[19],
+    null
+  );
+  return {
+    c() {
+      div0 = element("div");
+      t = space();
+      div1 = element("div");
+      if (default_slot)
+        default_slot.c();
+      attr(div0, "class", "tjs-glass-pane-background svelte-FF15-hqedxf");
+      set_style(
+        div0,
+        "background",
+        /*background*/
+        ctx[5]
+      );
+      attr(div1, "class", "tjs-glass-pane-container svelte-FF15-hqedxf");
+    },
+    m(target, anchor) {
+      insert(target, div0, anchor);
+      ctx[21](div0);
+      insert(target, t, anchor);
+      insert(target, div1, anchor);
+      if (default_slot) {
+        default_slot.m(div1, null);
+      }
+      ctx[22](div1);
+      current = true;
+      if (!mounted) {
+        dispose = action_destroyer(applyStyles_action = applyStyles.call(
+          null,
+          div0,
+          /*styles*/
+          ctx[7]
+        ));
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (applyStyles_action && is_function(applyStyles_action.update) && dirty & /*styles*/
+      128)
+        applyStyles_action.update.call(
+          null,
+          /*styles*/
+          ctx[7]
+        );
+      if (dirty & /*background*/
+      32) {
+        set_style(
+          div0,
+          "background",
+          /*background*/
+          ctx[5]
+        );
+      }
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty & /*$$scope*/
+        524288)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx,
+            /*$$scope*/
+            ctx[19],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx[19]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx[19],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      add_render_callback(() => {
+        if (!current)
+          return;
+        if (div0_outro)
+          div0_outro.end(1);
+        div0_intro = create_in_transition(
+          div0,
+          /*inTransition*/
+          ctx[1],
+          /*inTransitionOptions*/
+          ctx[3]
+        );
+        div0_intro.start();
+      });
+      transition_in(default_slot, local);
+      current = true;
+    },
+    o(local) {
+      if (div0_intro)
+        div0_intro.invalidate();
+      div0_outro = create_out_transition(
+        div0,
+        /*outTransition*/
+        ctx[2],
+        /*outTransitionOptions*/
+        ctx[4]
+      );
+      transition_out(default_slot, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div0);
+        detach(t);
+        detach(div1);
+      }
+      ctx[21](null);
+      if (detaching && div0_outro)
+        div0_outro.end();
+      if (default_slot)
+        default_slot.d(detaching);
+      ctx[22](null);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_if_block$8, "create_if_block$8");
+function create_fragment$H(ctx) {
+  let div;
+  let current_block_type_index;
+  let if_block;
+  let current;
+  let mounted;
+  let dispose;
+  const if_block_creators = [create_if_block$8, create_else_block$3];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*slotSeparate*/
+      ctx2[0]
+    )
+      return 0;
+    return 1;
+  }
+  __name(select_block_type, "select_block_type");
+  current_block_type_index = select_block_type(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      div = element("div");
+      if_block.c();
+      attr(
+        div,
+        "id",
+        /*id*/
+        ctx[6]
+      );
+      attr(div, "class", "tjs-glass-pane svelte-FF15-hqedxf");
+      set_style(
+        div,
+        "z-index",
+        /*zIndex*/
+        ctx[8]
+      );
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if_blocks[current_block_type_index].m(div, null);
+      ctx[24](div);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          listen(
+            window,
+            "contextmenu",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "dblclick",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "keydown",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "keyup",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "mousedown",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "mousemove",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "mouseup",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "pointerdown",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "pointermove",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "pointerup",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "touchend",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "touchmove",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "touchstart",
+            /*swallow*/
+            ctx[12],
+            true
+          ),
+          listen(
+            window,
+            "wheel",
+            /*swallow*/
+            ctx[12],
+            true
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(div, null);
+      }
+      if (!current || dirty & /*id*/
+      64) {
+        attr(
+          div,
+          "id",
+          /*id*/
+          ctx2[6]
+        );
+      }
+      if (dirty & /*zIndex*/
+      256) {
+        set_style(
+          div,
+          "z-index",
+          /*zIndex*/
+          ctx2[8]
+        );
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      if_blocks[current_block_type_index].d();
+      ctx[24](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_fragment$H, "create_fragment$H");
+function instance$p($$self, $$props, $$invalidate) {
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { background = "#50505080" } = $$props;
+  let { captureInput = true } = $$props;
+  let { closeOnInput = void 0 } = $$props;
+  let { id = void 0 } = $$props;
+  let { slotSeparate = void 0 } = $$props;
+  let { styles = void 0 } = $$props;
+  let { zIndex = Number.MAX_SAFE_INTEGER } = $$props;
+  const dispatch2 = createEventDispatcher();
+  let backgroundEl, containerEl, glassPaneEl;
+  let { transition = void 0 } = $$props;
+  let { inTransition = void 0 } = $$props;
+  let { outTransition = void 0 } = $$props;
+  let { transitionOptions = void 0 } = $$props;
+  let { inTransitionOptions = TJSDefaultTransition.options } = $$props;
+  let { outTransitionOptions = TJSDefaultTransition.options } = $$props;
+  let oldTransition = void 0;
+  let oldTransitionOptions = void 0;
+  function swallow(event) {
+    const targetEl = event.target;
+    if (targetEl !== glassPaneEl && targetEl !== backgroundEl && targetEl !== containerEl && glassPaneEl.contains(targetEl)) {
+      return;
+    }
+    if (captureInput) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+    if (event?.type === "pointerdown" && closeOnInput) {
+      dispatch2("close:glasspane");
+    }
+  }
+  __name(swallow, "swallow");
+  function div0_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      backgroundEl = $$value;
+      $$invalidate(9, backgroundEl);
+    });
+  }
+  __name(div0_binding, "div0_binding");
+  function div1_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      containerEl = $$value;
+      $$invalidate(10, containerEl);
+    });
+  }
+  __name(div1_binding, "div1_binding");
+  function div_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      backgroundEl = $$value;
+      $$invalidate(9, backgroundEl);
+    });
+  }
+  __name(div_binding, "div_binding");
+  function div_binding_1($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      glassPaneEl = $$value;
+      $$invalidate(11, glassPaneEl);
+    });
+  }
+  __name(div_binding_1, "div_binding_1");
+  $$self.$$set = ($$props2) => {
+    if ("background" in $$props2)
+      $$invalidate(5, background = $$props2.background);
+    if ("captureInput" in $$props2)
+      $$invalidate(13, captureInput = $$props2.captureInput);
+    if ("closeOnInput" in $$props2)
+      $$invalidate(14, closeOnInput = $$props2.closeOnInput);
+    if ("id" in $$props2)
+      $$invalidate(6, id = $$props2.id);
+    if ("slotSeparate" in $$props2)
+      $$invalidate(0, slotSeparate = $$props2.slotSeparate);
+    if ("styles" in $$props2)
+      $$invalidate(7, styles = $$props2.styles);
+    if ("zIndex" in $$props2)
+      $$invalidate(8, zIndex = $$props2.zIndex);
+    if ("transition" in $$props2)
+      $$invalidate(15, transition = $$props2.transition);
+    if ("inTransition" in $$props2)
+      $$invalidate(1, inTransition = $$props2.inTransition);
+    if ("outTransition" in $$props2)
+      $$invalidate(2, outTransition = $$props2.outTransition);
+    if ("transitionOptions" in $$props2)
+      $$invalidate(16, transitionOptions = $$props2.transitionOptions);
+    if ("inTransitionOptions" in $$props2)
+      $$invalidate(3, inTransitionOptions = $$props2.inTransitionOptions);
+    if ("outTransitionOptions" in $$props2)
+      $$invalidate(4, outTransitionOptions = $$props2.outTransitionOptions);
+    if ("$$scope" in $$props2)
+      $$invalidate(19, $$scope = $$props2.$$scope);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*slotSeparate*/
+    1) {
+      $$invalidate(0, slotSeparate = typeof slotSeparate === "boolean" ? slotSeparate : false);
+    }
+    if ($$self.$$.dirty & /*oldTransition, transition*/
+    163840) {
+      if (oldTransition !== transition) {
+        const newTransition = typeof transition === "function" ? transition : void 0;
+        $$invalidate(1, inTransition = newTransition);
+        $$invalidate(2, outTransition = newTransition);
+        $$invalidate(17, oldTransition = newTransition);
+      }
+    }
+    if ($$self.$$.dirty & /*oldTransitionOptions, transitionOptions*/
+    327680) {
+      if (oldTransitionOptions !== transitionOptions) {
+        const newOptions = transitionOptions !== TJSDefaultTransition.options && isObject(transitionOptions) ? transitionOptions : TJSDefaultTransition.options;
+        $$invalidate(3, inTransitionOptions = newOptions);
+        $$invalidate(4, outTransitionOptions = newOptions);
+        $$invalidate(18, oldTransitionOptions = newOptions);
+      }
+    }
+    if ($$self.$$.dirty & /*inTransition*/
+    2) {
+      if (typeof inTransition !== "function") {
+        $$invalidate(1, inTransition = void 0);
+      }
+    }
+    if ($$self.$$.dirty & /*outTransition*/
+    4) {
+      if (typeof outTransition !== "function") {
+        $$invalidate(2, outTransition = void 0);
+      }
+    }
+    if ($$self.$$.dirty & /*inTransitionOptions*/
+    8) {
+      if (!isObject(inTransitionOptions)) {
+        $$invalidate(3, inTransitionOptions = TJSDefaultTransition.options);
+      }
+    }
+    if ($$self.$$.dirty & /*outTransitionOptions*/
+    16) {
+      if (!isObject(outTransitionOptions)) {
+        $$invalidate(4, outTransitionOptions = TJSDefaultTransition.options);
+      }
+    }
+  };
+  return [
+    slotSeparate,
+    inTransition,
+    outTransition,
+    inTransitionOptions,
+    outTransitionOptions,
+    background,
+    id,
+    styles,
+    zIndex,
+    backgroundEl,
+    containerEl,
+    glassPaneEl,
+    swallow,
+    captureInput,
+    closeOnInput,
+    transition,
+    transitionOptions,
+    oldTransition,
+    oldTransitionOptions,
+    $$scope,
+    slots,
+    div0_binding,
+    div1_binding,
+    div_binding,
+    div_binding_1
+  ];
+}
+__name(instance$p, "instance$p");
+const _TJSGlassPane = class _TJSGlassPane extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$p, create_fragment$H, safe_not_equal, {
+      background: 5,
+      captureInput: 13,
+      closeOnInput: 14,
+      id: 6,
+      slotSeparate: 0,
+      styles: 7,
+      zIndex: 8,
+      transition: 15,
+      inTransition: 1,
+      outTransition: 2,
+      transitionOptions: 16,
+      inTransitionOptions: 3,
+      outTransitionOptions: 4
+    });
+  }
+};
+__name(_TJSGlassPane, "TJSGlassPane");
+let TJSGlassPane = _TJSGlassPane;
+const TJSGlassPane$1 = TJSGlassPane;
+const _AppShellContextInternal = class _AppShellContextInternal {
+  constructor() {
+    /** @type {InternalAppStores} */
+    __privateAdd(this, _stores4, void 0);
+    __privateSet(this, _stores4, {
+      elementContent: writable(void 0),
+      elementRoot: writable(void 0)
+    });
+    Object.freeze(__privateGet(this, _stores4));
+    Object.seal(this);
+  }
+  /**
+   * @returns {InternalAppStores} The internal context stores for elementContent / elementRoot
+   */
+  get stores() {
+    return __privateGet(this, _stores4);
+  }
+};
+_stores4 = new WeakMap();
+__name(_AppShellContextInternal, "AppShellContextInternal");
+let AppShellContextInternal = _AppShellContextInternal;
+const TJSHeaderButton_svelte_svelte_type_style_lang = "";
+function create_if_block$7(ctx) {
+  let span;
+  let t;
+  return {
+    c() {
+      span = element("span");
+      t = text(
+        /*label*/
+        ctx[3]
+      );
+      attr(span, "class", "svelte-FF15-166l8wd");
+      toggle_class(
+        span,
+        "has-icon",
+        /*icon*/
+        ctx[4] !== void 0
+      );
+    },
+    m(target, anchor) {
+      insert(target, span, anchor);
+      append(span, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*label*/
+      8)
+        set_data(
+          t,
+          /*label*/
+          ctx2[3]
+        );
+      if (dirty & /*icon*/
+      16) {
+        toggle_class(
+          span,
+          "has-icon",
+          /*icon*/
+          ctx2[4] !== void 0
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(span);
+      }
+    }
+  };
+}
+__name(create_if_block$7, "create_if_block$7");
+function create_fragment$G(ctx) {
+  let a;
+  let html_tag;
+  let html_anchor;
+  let a_class_value;
+  let applyStyles_action;
+  let mounted;
+  let dispose;
+  let if_block = (
+    /*label*/
+    ctx[3] && create_if_block$7(ctx)
+  );
+  return {
+    c() {
+      a = element("a");
+      html_tag = new HtmlTag(false);
+      html_anchor = empty();
+      if (if_block)
+        if_block.c();
+      html_tag.a = html_anchor;
+      attr(a, "class", a_class_value = "header-button " + /*button*/
+      ctx[0].class + " svelte-FF15-166l8wd");
+      attr(
+        a,
+        "aria-label",
+        /*label*/
+        ctx[3]
+      );
+      attr(a, "tabindex", "0");
+      attr(a, "role", "button");
+      toggle_class(
+        a,
+        "keep-minimized",
+        /*keepMinimized*/
+        ctx[2]
+      );
+    },
+    m(target, anchor) {
+      insert(target, a, anchor);
+      html_tag.m(
+        /*icon*/
+        ctx[4],
+        a
+      );
+      append(a, html_anchor);
+      if (if_block)
+        if_block.m(a, null);
+      if (!mounted) {
+        dispose = [
+          listen(a, "click", stop_propagation(prevent_default(
+            /*onClick*/
+            ctx[5]
+          ))),
+          listen(a, "contextmenu", stop_propagation(prevent_default(
+            /*onContextMenu*/
+            ctx[6]
+          ))),
+          listen(
+            a,
+            "keydown",
+            /*onKeydown*/
+            ctx[7]
+          ),
+          listen(
+            a,
+            "keyup",
+            /*onKeyup*/
+            ctx[8]
+          ),
+          action_destroyer(applyStyles_action = applyStyles.call(
+            null,
+            a,
+            /*styles*/
+            ctx[1]
+          ))
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (dirty & /*icon*/
+      16)
+        html_tag.p(
+          /*icon*/
+          ctx2[4]
+        );
+      if (
+        /*label*/
+        ctx2[3]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block$7(ctx2);
+          if_block.c();
+          if_block.m(a, null);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      if (dirty & /*button*/
+      1 && a_class_value !== (a_class_value = "header-button " + /*button*/
+      ctx2[0].class + " svelte-FF15-166l8wd")) {
+        attr(a, "class", a_class_value);
+      }
+      if (dirty & /*label*/
+      8) {
+        attr(
+          a,
+          "aria-label",
+          /*label*/
+          ctx2[3]
+        );
+      }
+      if (applyStyles_action && is_function(applyStyles_action.update) && dirty & /*styles*/
+      2)
+        applyStyles_action.update.call(
+          null,
+          /*styles*/
+          ctx2[1]
+        );
+      if (dirty & /*button, keepMinimized*/
+      5) {
+        toggle_class(
+          a,
+          "keep-minimized",
+          /*keepMinimized*/
+          ctx2[2]
+        );
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(a);
+      }
+      if (if_block)
+        if_block.d();
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_fragment$G, "create_fragment$G");
+const s_REGEX_HTML$1 = /^\s*<.*>$/;
+function instance$o($$self, $$props, $$invalidate) {
+  let title;
+  let icon;
+  let label;
+  let keepMinimized;
+  let keyCode;
+  let styles;
+  let { button = void 0 } = $$props;
+  function onClick(event) {
+    const invoke = button?.onPress ?? button?.onclick;
+    if (typeof invoke === "function") {
+      invoke.call(button, event);
+      $$invalidate(0, button);
+    }
+  }
+  __name(onClick, "onClick");
+  function onContextMenu(event) {
+    const invoke = button?.onContextMenu;
+    if (typeof invoke === "function") {
+      invoke.call(button, event);
+      $$invalidate(0, button);
+    }
+  }
+  __name(onContextMenu, "onContextMenu");
+  function onKeydown(event) {
+    if (event.code === keyCode) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+  __name(onKeydown, "onKeydown");
+  function onKeyup(event) {
+    if (event.code === keyCode) {
+      const invoke = button.onPress ?? button.onclick;
+      if (typeof invoke === "function") {
+        invoke.call(button, event);
+        $$invalidate(0, button);
+      }
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+  __name(onKeyup, "onKeyup");
+  $$self.$$set = ($$props2) => {
+    if ("button" in $$props2)
+      $$invalidate(0, button = $$props2.button);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*button*/
+    1) {
+      $$invalidate(9, title = isObject(button) && typeof button.title === "string" ? localize(button.title) : "");
+    }
+    if ($$self.$$.dirty & /*button, title*/
+    513) {
+      $$invalidate(4, icon = isObject(button) && typeof button.icon !== "string" ? void 0 : s_REGEX_HTML$1.test(button.icon) ? button.icon : `<i class="${button.icon}" title="${title}"></i>`);
+    }
+    if ($$self.$$.dirty & /*button*/
+    1) {
+      $$invalidate(3, label = isObject(button) && typeof button.label === "string" ? localize(button.label) : void 0);
+    }
+    if ($$self.$$.dirty & /*button*/
+    1) {
+      $$invalidate(2, keepMinimized = isObject(button) && typeof button.keepMinimized === "boolean" ? button.keepMinimized : false);
+    }
+    if ($$self.$$.dirty & /*button*/
+    1) {
+      keyCode = isObject(button) && typeof button.keyCode === "string" ? button.keyCode : "Enter";
+    }
+    if ($$self.$$.dirty & /*button*/
+    1) {
+      $$invalidate(1, styles = isObject(button) && isObject(button.styles) ? button.styles : void 0);
+    }
+  };
+  return [
+    button,
+    styles,
+    keepMinimized,
+    label,
+    icon,
+    onClick,
+    onContextMenu,
+    onKeydown,
+    onKeyup,
+    title
+  ];
+}
+__name(instance$o, "instance$o");
+const _TJSHeaderButton = class _TJSHeaderButton extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$o, create_fragment$G, safe_not_equal, { button: 0 });
+  }
+  get button() {
+    return this.$$.ctx[0];
+  }
+  set button(button) {
+    this.$$set({ button });
+    flush();
+  }
+};
+__name(_TJSHeaderButton, "TJSHeaderButton");
+let TJSHeaderButton = _TJSHeaderButton;
+const TJSHeaderButton$1 = TJSHeaderButton;
+const TJSApplicationHeader_svelte_svelte_type_style_lang = "";
+function get_each_context$3(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[31] = list[i];
+  return child_ctx;
+}
+__name(get_each_context$3, "get_each_context$3");
+function get_each_context_1$1(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[31] = list[i];
+  return child_ctx;
+}
+__name(get_each_context_1$1, "get_each_context_1$1");
+function create_if_block$6(ctx) {
+  let img;
+  let img_src_value;
+  return {
+    c() {
+      img = element("img");
+      attr(img, "class", "tjs-app-icon keep-minimized svelte-FF15-1wviwl9");
+      if (!src_url_equal(img.src, img_src_value = /*$storeHeaderIcon*/
+      ctx[6]))
+        attr(img, "src", img_src_value);
+      attr(img, "alt", "icon");
+    },
+    m(target, anchor) {
+      insert(target, img, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*$storeHeaderIcon*/
+      64 && !src_url_equal(img.src, img_src_value = /*$storeHeaderIcon*/
+      ctx2[6])) {
+        attr(img, "src", img_src_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(img);
+      }
+    }
+  };
+}
+__name(create_if_block$6, "create_if_block$6");
+function create_each_block_1$1(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  const switch_instance_spread_levels = [
+    /*button*/
+    ctx[31].props
+  ];
+  var switch_value = (
+    /*button*/
+    ctx[31].class
+  );
+  function switch_props(ctx2, dirty) {
+    let switch_instance_props = {};
+    for (let i = 0; i < switch_instance_spread_levels.length; i += 1) {
+      switch_instance_props = assign(switch_instance_props, switch_instance_spread_levels[i]);
+    }
+    if (dirty !== void 0 && dirty[0] & /*buttonsLeft*/
+    2) {
+      switch_instance_props = assign(switch_instance_props, get_spread_update(switch_instance_spread_levels, [get_spread_object(
+        /*button*/
+        ctx2[31].props
+      )]));
+    }
+    return { props: switch_instance_props };
+  }
+  __name(switch_props, "switch_props");
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+  }
+  return {
+    c() {
+      if (switch_instance)
+        create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
+    },
+    m(target, anchor) {
+      if (switch_instance)
+        mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*buttonsLeft*/
+      2 && switch_value !== (switch_value = /*button*/
+      ctx2[31].class)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = dirty[0] & /*buttonsLeft*/
+        2 ? get_spread_update(switch_instance_spread_levels, [get_spread_object(
+          /*button*/
+          ctx2[31].props
+        )]) : {};
+        switch_instance.$set(switch_instance_changes);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      if (switch_instance)
+        transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance)
+        transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance)
+        destroy_component(switch_instance, detaching);
+    }
+  };
+}
+__name(create_each_block_1$1, "create_each_block_1$1");
+function create_each_block$3(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  const switch_instance_spread_levels = [
+    /*button*/
+    ctx[31].props
+  ];
+  var switch_value = (
+    /*button*/
+    ctx[31].class
+  );
+  function switch_props(ctx2, dirty) {
+    let switch_instance_props = {};
+    for (let i = 0; i < switch_instance_spread_levels.length; i += 1) {
+      switch_instance_props = assign(switch_instance_props, switch_instance_spread_levels[i]);
+    }
+    if (dirty !== void 0 && dirty[0] & /*buttonsRight*/
+    4) {
+      switch_instance_props = assign(switch_instance_props, get_spread_update(switch_instance_spread_levels, [get_spread_object(
+        /*button*/
+        ctx2[31].props
+      )]));
+    }
+    return { props: switch_instance_props };
+  }
+  __name(switch_props, "switch_props");
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+  }
+  return {
+    c() {
+      if (switch_instance)
+        create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
+    },
+    m(target, anchor) {
+      if (switch_instance)
+        mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*buttonsRight*/
+      4 && switch_value !== (switch_value = /*button*/
+      ctx2[31].class)) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = dirty[0] & /*buttonsRight*/
+        4 ? get_spread_update(switch_instance_spread_levels, [get_spread_object(
+          /*button*/
+          ctx2[31].props
+        )]) : {};
+        switch_instance.$set(switch_instance_changes);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      if (switch_instance)
+        transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance)
+        transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      if (switch_instance)
+        destroy_component(switch_instance, detaching);
+    }
+  };
+}
+__name(create_each_block$3, "create_each_block$3");
+function create_key_block(ctx) {
+  let header;
+  let t0;
+  let h4;
+  let t1_value = localize(
+    /*$storeTitle*/
+    ctx[7]
+  ) + "";
+  let t1;
+  let t2;
+  let t3;
+  let span;
+  let t4;
+  let draggable_action;
+  let minimizable_action;
+  let current;
+  let mounted;
+  let dispose;
+  let if_block = typeof /*$storeHeaderIcon*/
+  ctx[6] === "string" && create_if_block$6(ctx);
+  let each_value_1 = ensure_array_like(
+    /*buttonsLeft*/
+    ctx[1]
+  );
+  let each_blocks_1 = [];
+  for (let i = 0; i < each_value_1.length; i += 1) {
+    each_blocks_1[i] = create_each_block_1$1(get_each_context_1$1(ctx, each_value_1, i));
+  }
+  const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks_1[i], 1, 1, () => {
+    each_blocks_1[i] = null;
+  }), "out");
+  let each_value = ensure_array_like(
+    /*buttonsRight*/
+    ctx[2]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block$3(get_each_context$3(ctx, each_value, i));
+  }
+  const out_1 = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
+    each_blocks[i] = null;
+  }), "out_1");
+  return {
+    c() {
+      header = element("header");
+      if (if_block)
+        if_block.c();
+      t0 = space();
+      h4 = element("h4");
+      t1 = text(t1_value);
+      t2 = space();
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        each_blocks_1[i].c();
+      }
+      t3 = space();
+      span = element("span");
+      t4 = space();
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(h4, "class", "window-title svelte-FF15-1wviwl9");
+      set_style(
+        h4,
+        "display",
+        /*displayHeaderTitle*/
+        ctx[4]
+      );
+      attr(span, "class", "tjs-window-header-spacer keep-minimized svelte-FF15-1wviwl9");
+      attr(header, "class", "window-header flexrow svelte-FF15-1wviwl9");
+    },
+    m(target, anchor) {
+      insert(target, header, anchor);
+      if (if_block)
+        if_block.m(header, null);
+      append(header, t0);
+      append(header, h4);
+      append(h4, t1);
+      append(header, t2);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        if (each_blocks_1[i]) {
+          each_blocks_1[i].m(header, null);
+        }
+      }
+      append(header, t3);
+      append(header, span);
+      append(header, t4);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(header, null);
+        }
+      }
+      current = true;
+      if (!mounted) {
+        dispose = [
+          action_destroyer(draggable_action = /*draggable*/
+          ctx[0].call(
+            null,
+            header,
+            /*dragOptions*/
+            ctx[3]
+          )),
+          action_destroyer(minimizable_action = /*minimizable*/
+          ctx[18].call(
+            null,
+            header,
+            /*$storeMinimizable*/
+            ctx[5]
+          )),
+          listen(
+            header,
+            "pointerdown",
+            /*onPointerdown*/
+            ctx[19]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (typeof /*$storeHeaderIcon*/
+      ctx2[6] === "string") {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block$6(ctx2);
+          if_block.c();
+          if_block.m(header, t0);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      if ((!current || dirty[0] & /*$storeTitle*/
+      128) && t1_value !== (t1_value = localize(
+        /*$storeTitle*/
+        ctx2[7]
+      ) + ""))
+        set_data(t1, t1_value);
+      if (dirty[0] & /*displayHeaderTitle*/
+      16) {
+        set_style(
+          h4,
+          "display",
+          /*displayHeaderTitle*/
+          ctx2[4]
+        );
+      }
+      if (dirty[0] & /*buttonsLeft*/
+      2) {
+        each_value_1 = ensure_array_like(
+          /*buttonsLeft*/
+          ctx2[1]
+        );
+        let i;
+        for (i = 0; i < each_value_1.length; i += 1) {
+          const child_ctx = get_each_context_1$1(ctx2, each_value_1, i);
+          if (each_blocks_1[i]) {
+            each_blocks_1[i].p(child_ctx, dirty);
+            transition_in(each_blocks_1[i], 1);
+          } else {
+            each_blocks_1[i] = create_each_block_1$1(child_ctx);
+            each_blocks_1[i].c();
+            transition_in(each_blocks_1[i], 1);
+            each_blocks_1[i].m(header, t3);
+          }
+        }
+        group_outros();
+        for (i = each_value_1.length; i < each_blocks_1.length; i += 1) {
+          out(i);
+        }
+        check_outros();
+      }
+      if (dirty[0] & /*buttonsRight*/
+      4) {
+        each_value = ensure_array_like(
+          /*buttonsRight*/
+          ctx2[2]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context$3(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+            transition_in(each_blocks[i], 1);
+          } else {
+            each_blocks[i] = create_each_block$3(child_ctx);
+            each_blocks[i].c();
+            transition_in(each_blocks[i], 1);
+            each_blocks[i].m(header, null);
+          }
+        }
+        group_outros();
+        for (i = each_value.length; i < each_blocks.length; i += 1) {
+          out_1(i);
+        }
+        check_outros();
+      }
+      if (draggable_action && is_function(draggable_action.update) && dirty[0] & /*dragOptions*/
+      8)
+        draggable_action.update.call(
+          null,
+          /*dragOptions*/
+          ctx2[3]
+        );
+      if (minimizable_action && is_function(minimizable_action.update) && dirty[0] & /*$storeMinimizable*/
+      32)
+        minimizable_action.update.call(
+          null,
+          /*$storeMinimizable*/
+          ctx2[5]
+        );
+    },
+    i(local) {
+      if (current)
+        return;
+      for (let i = 0; i < each_value_1.length; i += 1) {
+        transition_in(each_blocks_1[i]);
+      }
+      for (let i = 0; i < each_value.length; i += 1) {
+        transition_in(each_blocks[i]);
+      }
+      current = true;
+    },
+    o(local) {
+      each_blocks_1 = each_blocks_1.filter(Boolean);
+      for (let i = 0; i < each_blocks_1.length; i += 1) {
+        transition_out(each_blocks_1[i]);
+      }
+      each_blocks = each_blocks.filter(Boolean);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        transition_out(each_blocks[i]);
+      }
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(header);
+      }
+      if (if_block)
+        if_block.d();
+      destroy_each(each_blocks_1, detaching);
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_key_block, "create_key_block");
+function create_fragment$F(ctx) {
+  let previous_key = (
+    /*draggable*/
+    ctx[0]
+  );
+  let key_block_anchor;
+  let current;
+  let key_block = create_key_block(ctx);
+  return {
+    c() {
+      key_block.c();
+      key_block_anchor = empty();
+    },
+    m(target, anchor) {
+      key_block.m(target, anchor);
+      insert(target, key_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty[0] & /*draggable*/
+      1 && safe_not_equal(previous_key, previous_key = /*draggable*/
+      ctx2[0])) {
+        group_outros();
+        transition_out(key_block, 1, 1, noop);
+        check_outros();
+        key_block = create_key_block(ctx2);
+        key_block.c();
+        transition_in(key_block, 1);
+        key_block.m(key_block_anchor.parentNode, key_block_anchor);
+      } else {
+        key_block.p(ctx2, dirty);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(key_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(key_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(key_block_anchor);
+      }
+      key_block.d(detaching);
+    }
+  };
+}
+__name(create_fragment$F, "create_fragment$F");
+function instance$n($$self, $$props, $$invalidate) {
+  let $focusKeep;
+  let $focusAuto;
+  let $elementRoot;
+  let $storeHeaderButtons;
+  let $storeMinimized;
+  let $storeHeaderNoTitleMinimized;
+  let $storeDraggable;
+  let $storeMinimizable;
+  let $storeHeaderIcon;
+  let $storeTitle;
+  let { draggable: draggable$1 = void 0 } = $$props;
+  let { draggableOptions = void 0 } = $$props;
+  const { application } = getContext("#external");
+  const { focusAuto, focusKeep } = application.reactive.storeAppOptions;
+  component_subscribe($$self, focusAuto, (value) => $$invalidate(26, $focusAuto = value));
+  component_subscribe($$self, focusKeep, (value) => $$invalidate(25, $focusKeep = value));
+  const { elementRoot } = getContext("#internal").stores;
+  component_subscribe($$self, elementRoot, (value) => $$invalidate(27, $elementRoot = value));
+  const storeTitle = application.reactive.storeAppOptions.title;
+  component_subscribe($$self, storeTitle, (value) => $$invalidate(7, $storeTitle = value));
+  const storeDraggable = application.reactive.storeAppOptions.draggable;
+  component_subscribe($$self, storeDraggable, (value) => $$invalidate(24, $storeDraggable = value));
+  const storeDragging = application.reactive.storeUIState.dragging;
+  const storeHeaderButtons = application.reactive.storeUIState.headerButtons;
+  component_subscribe($$self, storeHeaderButtons, (value) => $$invalidate(21, $storeHeaderButtons = value));
+  const storeHeaderIcon = application.reactive.storeAppOptions.headerIcon;
+  component_subscribe($$self, storeHeaderIcon, (value) => $$invalidate(6, $storeHeaderIcon = value));
+  const storeHeaderNoTitleMinimized = application.reactive.storeAppOptions.headerNoTitleMinimized;
+  component_subscribe($$self, storeHeaderNoTitleMinimized, (value) => $$invalidate(23, $storeHeaderNoTitleMinimized = value));
+  const storeMinimizable = application.reactive.storeAppOptions.minimizable;
+  component_subscribe($$self, storeMinimizable, (value) => $$invalidate(5, $storeMinimizable = value));
+  const storeMinimized = application.reactive.storeUIState.minimized;
+  component_subscribe($$self, storeMinimized, (value) => $$invalidate(22, $storeMinimized = value));
+  const s_DRAG_TARGET_CLASSLIST = Object.freeze(["tjs-app-icon", "tjs-window-header-spacer", "window-header", "window-title"]);
+  let dragOptions;
+  let displayHeaderTitle;
+  let buttonsLeft;
+  let buttonsRight;
+  function minimizable(node, booleanStore) {
+    const callback = /* @__PURE__ */ __name((event) => {
+      if (event.target.classList.contains("window-title") || event.target.classList.contains("window-header") || event.target.classList.contains("keep-minimized")) {
+        application._onToggleMinimize(event);
+      }
+    }, "callback");
+    function activateListeners() {
+      node.addEventListener("dblclick", callback);
+    }
+    __name(activateListeners, "activateListeners");
+    function removeListeners() {
+      node.removeEventListener("dblclick", callback);
+    }
+    __name(removeListeners, "removeListeners");
+    if (booleanStore) {
+      activateListeners();
+    }
+    return {
+      update: (booleanStore2) => {
+        if (booleanStore2) {
+          activateListeners();
+        } else {
+          removeListeners();
+        }
+      },
+      destroy: () => removeListeners()
+    };
+  }
+  __name(minimizable, "minimizable");
+  function onPointerdown(event) {
+    const rootEl = $elementRoot;
+    if ($focusAuto && rootEl instanceof HTMLElement && rootEl?.isConnected) {
+      if ($focusKeep) {
+        const focusOutside = document.activeElement instanceof HTMLElement && !rootEl.contains(document.activeElement);
+        if (focusOutside) {
+          rootEl.focus();
+        } else {
+          event.preventDefault();
+        }
+      } else {
+        rootEl.focus();
+      }
+    }
+  }
+  __name(onPointerdown, "onPointerdown");
+  $$self.$$set = ($$props2) => {
+    if ("draggable" in $$props2)
+      $$invalidate(0, draggable$1 = $$props2.draggable);
+    if ("draggableOptions" in $$props2)
+      $$invalidate(20, draggableOptions = $$props2.draggableOptions);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[0] & /*draggable*/
+    1) {
+      $$invalidate(0, draggable$1 = typeof draggable$1 === "function" ? draggable$1 : draggable);
+    }
+    if ($$self.$$.dirty[0] & /*draggableOptions, $storeDraggable*/
+    17825792) {
+      $$invalidate(3, dragOptions = Object.assign(
+        {},
+        {
+          ease: true,
+          easeOptions: { duration: 0.06, ease: cubicOut }
+        },
+        isObject(draggableOptions) ? draggableOptions : {},
+        {
+          position: application.position,
+          active: $storeDraggable,
+          storeDragging,
+          hasTargetClassList: s_DRAG_TARGET_CLASSLIST
+        }
+      ));
+    }
+    if ($$self.$$.dirty[0] & /*$storeHeaderNoTitleMinimized, $storeMinimized*/
+    12582912) {
+      $$invalidate(4, displayHeaderTitle = $storeHeaderNoTitleMinimized && $storeMinimized ? "none" : null);
+    }
+    if ($$self.$$.dirty[0] & /*$storeHeaderButtons, buttonsLeft, buttonsRight*/
+    2097158) {
+      {
+        $$invalidate(1, buttonsLeft = []);
+        $$invalidate(2, buttonsRight = []);
+        for (const button of $storeHeaderButtons) {
+          const buttonsList = typeof button?.alignLeft === "boolean" && button?.alignLeft ? buttonsLeft : buttonsRight;
+          buttonsList.push(isSvelteComponent(button) ? { class: button, props: {} } : {
+            class: TJSHeaderButton$1,
+            props: { button }
+          });
+        }
+      }
+    }
+  };
+  return [
+    draggable$1,
+    buttonsLeft,
+    buttonsRight,
+    dragOptions,
+    displayHeaderTitle,
+    $storeMinimizable,
+    $storeHeaderIcon,
+    $storeTitle,
+    focusAuto,
+    focusKeep,
+    elementRoot,
+    storeTitle,
+    storeDraggable,
+    storeHeaderButtons,
+    storeHeaderIcon,
+    storeHeaderNoTitleMinimized,
+    storeMinimizable,
+    storeMinimized,
+    minimizable,
+    onPointerdown,
+    draggableOptions,
+    $storeHeaderButtons,
+    $storeMinimized,
+    $storeHeaderNoTitleMinimized,
+    $storeDraggable
+  ];
+}
+__name(instance$n, "instance$n");
+const _TJSApplicationHeader = class _TJSApplicationHeader extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$n, create_fragment$F, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
+  }
+};
+__name(_TJSApplicationHeader, "TJSApplicationHeader");
+let TJSApplicationHeader = _TJSApplicationHeader;
+const TJSApplicationHeader$1 = TJSApplicationHeader;
+const TJSFocusWrap_svelte_svelte_type_style_lang = "";
+function create_fragment$E(ctx) {
+  let div;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      attr(div, "class", "tjs-focus-wrap svelte-FF15-kjcljd");
+      attr(div, "tabindex", "0");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      ctx[4](div);
+      if (!mounted) {
+        dispose = listen(
+          div,
+          "focus",
+          /*onFocus*/
+          ctx[1]
+        );
+        mounted = true;
+      }
+    },
+    p: noop,
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      ctx[4](null);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_fragment$E, "create_fragment$E");
+function instance$m($$self, $$props, $$invalidate) {
+  let { elementRoot = void 0 } = $$props;
+  let { enabled = true } = $$props;
+  let ignoreElements, wrapEl;
+  function onFocus() {
+    if (!enabled) {
+      return;
+    }
+    if (elementRoot instanceof HTMLElement) {
+      const firstFocusEl = A11yHelper.getFirstFocusableElement(elementRoot, ignoreElements);
+      if (firstFocusEl instanceof HTMLElement && firstFocusEl !== wrapEl) {
+        firstFocusEl.focus();
+      } else {
+        elementRoot.focus();
+      }
+    }
+  }
+  __name(onFocus, "onFocus");
+  function div_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      wrapEl = $$value;
+      $$invalidate(0, wrapEl);
+    });
+  }
+  __name(div_binding, "div_binding");
+  $$self.$$set = ($$props2) => {
+    if ("elementRoot" in $$props2)
+      $$invalidate(2, elementRoot = $$props2.elementRoot);
+    if ("enabled" in $$props2)
+      $$invalidate(3, enabled = $$props2.enabled);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*wrapEl*/
+    1) {
+      if (wrapEl) {
+        ignoreElements = /* @__PURE__ */ new Set([wrapEl]);
+      }
+    }
+  };
+  return [wrapEl, onFocus, elementRoot, enabled, div_binding];
+}
+__name(instance$m, "instance$m");
+const _TJSFocusWrap = class _TJSFocusWrap extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$m, create_fragment$E, safe_not_equal, { elementRoot: 2, enabled: 3 });
+  }
+};
+__name(_TJSFocusWrap, "TJSFocusWrap");
+let TJSFocusWrap = _TJSFocusWrap;
+const TJSFocusWrap$1 = TJSFocusWrap;
+const ResizableHandle_svelte_svelte_type_style_lang = "";
+function create_fragment$D(ctx) {
+  let div;
+  let resizable_action;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      div.innerHTML = `<i class="fas fa-arrows-alt-h svelte-FF15-14lnpz8"></i>`;
+      attr(div, "class", "window-resizable-handle svelte-FF15-14lnpz8");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      ctx[10](div);
+      if (!mounted) {
+        dispose = action_destroyer(resizable_action = /*resizable*/
+        ctx[6].call(null, div, {
+          active: (
+            /*$storeResizable*/
+            ctx[1]
+          ),
+          storeResizing: (
+            /*storeResizing*/
+            ctx[5]
+          )
+        }));
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (resizable_action && is_function(resizable_action.update) && dirty & /*$storeResizable*/
+      2)
+        resizable_action.update.call(null, {
+          active: (
+            /*$storeResizable*/
+            ctx2[1]
+          ),
+          storeResizing: (
+            /*storeResizing*/
+            ctx2[5]
+          )
+        });
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      ctx[10](null);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_fragment$D, "create_fragment$D");
+function instance$l($$self, $$props, $$invalidate) {
+  let $storeElementRoot;
+  let $storeMinimized;
+  let $storeResizable;
+  let { isResizable = false } = $$props;
+  const application = getContext("#external").application;
+  const storeElementRoot = getContext("#internal").stores.elementRoot;
+  component_subscribe($$self, storeElementRoot, (value) => $$invalidate(8, $storeElementRoot = value));
+  const storeResizable = application.reactive.storeAppOptions.resizable;
+  component_subscribe($$self, storeResizable, (value) => $$invalidate(1, $storeResizable = value));
+  const storeMinimized = application.reactive.storeUIState.minimized;
+  component_subscribe($$self, storeMinimized, (value) => $$invalidate(9, $storeMinimized = value));
+  const storeResizing = application.reactive.storeUIState.resizing;
+  let elementResize;
+  function resizable(node, { active: active2 = true, storeResizing: storeResizing2 = void 0 } = {}) {
+    let position = null;
+    let initialPosition = {};
+    let resizing = false;
+    const handlers = {
+      resizeDown: ["pointerdown", (e) => onResizePointerDown(e), false],
+      resizeMove: ["pointermove", (e) => onResizePointerMove(e), false],
+      resizeUp: ["pointerup", (e) => onResizePointerUp(e), false]
+    };
+    function activateListeners() {
+      node.addEventListener(...handlers.resizeDown);
+      $$invalidate(7, isResizable = true);
+      node.style.display = "block";
+    }
+    __name(activateListeners, "activateListeners");
+    function removeListeners() {
+      if (typeof storeResizing2?.set === "function") {
+        storeResizing2.set(false);
+      }
+      node.removeEventListener(...handlers.resizeDown);
+      node.removeEventListener(...handlers.resizeMove);
+      node.removeEventListener(...handlers.resizeUp);
+      node.style.display = "none";
+      $$invalidate(7, isResizable = false);
+    }
+    __name(removeListeners, "removeListeners");
+    if (active2) {
+      activateListeners();
+    } else {
+      node.style.display = "none";
+    }
+    function onResizePointerDown(event) {
+      event.preventDefault();
+      resizing = false;
+      position = application.position.get();
+      if (position.height === "auto") {
+        position.height = $storeElementRoot.clientHeight;
+      }
+      if (position.width === "auto") {
+        position.width = $storeElementRoot.clientWidth;
+      }
+      initialPosition = { x: event.clientX, y: event.clientY };
+      node.addEventListener(...handlers.resizeMove);
+      node.addEventListener(...handlers.resizeUp);
+      node.setPointerCapture(event.pointerId);
+    }
+    __name(onResizePointerDown, "onResizePointerDown");
+    function onResizePointerMove(event) {
+      event.preventDefault();
+      if (!resizing && typeof storeResizing2?.set === "function") {
+        resizing = true;
+        storeResizing2.set(true);
+      }
+      application.position.set({
+        width: position.width + (event.clientX - initialPosition.x),
+        height: position.height + (event.clientY - initialPosition.y)
+      });
+    }
+    __name(onResizePointerMove, "onResizePointerMove");
+    function onResizePointerUp(event) {
+      resizing = false;
+      if (typeof storeResizing2?.set === "function") {
+        storeResizing2.set(false);
+      }
+      event.preventDefault();
+      node.removeEventListener(...handlers.resizeMove);
+      node.removeEventListener(...handlers.resizeUp);
+      application?._onResize?.(event);
+    }
+    __name(onResizePointerUp, "onResizePointerUp");
+    return {
+      update: ({ active: active3 }) => {
+        if (active3) {
+          activateListeners();
+        } else {
+          removeListeners();
+        }
+      },
+      destroy: () => removeListeners()
+    };
+  }
+  __name(resizable, "resizable");
+  function div_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      elementResize = $$value;
+      $$invalidate(0, elementResize), $$invalidate(7, isResizable), $$invalidate(9, $storeMinimized), $$invalidate(8, $storeElementRoot);
+    });
+  }
+  __name(div_binding, "div_binding");
+  $$self.$$set = ($$props2) => {
+    if ("isResizable" in $$props2)
+      $$invalidate(7, isResizable = $$props2.isResizable);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*elementResize, isResizable, $storeMinimized, $storeElementRoot*/
+    897) {
+      if (elementResize) {
+        $$invalidate(0, elementResize.style.display = isResizable && !$storeMinimized ? "block" : "none", elementResize);
+        const elementRoot = $storeElementRoot;
+        if (elementRoot) {
+          elementRoot.classList[isResizable ? "add" : "remove"]("resizable");
+        }
+      }
+    }
+  };
+  return [
+    elementResize,
+    $storeResizable,
+    storeElementRoot,
+    storeResizable,
+    storeMinimized,
+    storeResizing,
+    resizable,
+    isResizable,
+    $storeElementRoot,
+    $storeMinimized,
+    div_binding
+  ];
+}
+__name(instance$l, "instance$l");
+const _ResizableHandle = class _ResizableHandle extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$l, create_fragment$D, safe_not_equal, { isResizable: 7 });
+  }
+};
+__name(_ResizableHandle, "ResizableHandle");
+let ResizableHandle = _ResizableHandle;
+const ResizableHandle$1 = ResizableHandle;
+const ApplicationShell_svelte_svelte_type_style_lang = "";
+function create_else_block$2(ctx) {
+  let div;
+  let tjsapplicationheader;
+  let t0;
+  let section;
+  let applyStyles_action;
+  let t1;
+  let resizablehandle;
+  let t2;
+  let tjsfocuswrap;
+  let div_id_value;
+  let div_class_value;
+  let div_data_appid_value;
+  let applyStyles_action_1;
+  let current;
+  let mounted;
+  let dispose;
+  tjsapplicationheader = new TJSApplicationHeader$1({
+    props: {
+      draggable: (
+        /*draggable*/
+        ctx[6]
+      ),
+      draggableOptions: (
+        /*draggableOptions*/
+        ctx[7]
+      )
+    }
+  });
+  const default_slot_template = (
+    /*#slots*/
+    ctx[36].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[35],
+    null
+  );
+  resizablehandle = new ResizableHandle$1({});
+  tjsfocuswrap = new TJSFocusWrap$1({
+    props: {
+      elementRoot: (
+        /*elementRoot*/
+        ctx[1]
+      ),
+      enabled: (
+        /*focusWrapEnabled*/
+        ctx[11]
+      )
+    }
+  });
+  return {
+    c() {
+      div = element("div");
+      create_component(tjsapplicationheader.$$.fragment);
+      t0 = space();
+      section = element("section");
+      if (default_slot)
+        default_slot.c();
+      t1 = space();
+      create_component(resizablehandle.$$.fragment);
+      t2 = space();
+      create_component(tjsfocuswrap.$$.fragment);
+      attr(section, "class", "window-content svelte-FF15-oz81f7");
+      attr(section, "tabindex", "-1");
+      attr(div, "id", div_id_value = /*application*/
+      ctx[10].id);
+      attr(div, "class", div_class_value = "app window-app " + /*application*/
+      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7");
+      attr(div, "data-appid", div_data_appid_value = /*application*/
+      ctx[10].appId);
+      attr(div, "role", "application");
+      attr(div, "tabindex", "-1");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(tjsapplicationheader, div, null);
+      append(div, t0);
+      append(div, section);
+      if (default_slot) {
+        default_slot.m(section, null);
+      }
+      ctx[39](section);
+      append(div, t1);
+      mount_component(resizablehandle, div, null);
+      append(div, t2);
+      mount_component(tjsfocuswrap, div, null);
+      ctx[40](div);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          listen(
+            section,
+            "pointerdown",
+            /*onPointerdownContent*/
+            ctx[21]
+          ),
+          action_destroyer(applyStyles_action = applyStyles.call(
+            null,
+            section,
+            /*stylesContent*/
+            ctx[9]
+          )),
+          action_destroyer(
+            /*contentResizeObserver*/
+            ctx[13].call(
+              null,
+              section,
+              /*resizeObservedContent*/
+              ctx[22]
+            )
+          ),
+          listen(div, "close:popup", stop_propagation(prevent_default(
+            /*onClosePopup*/
+            ctx[18]
+          ))),
+          listen(
+            div,
+            "keydown",
+            /*onKeydown*/
+            ctx[19],
+            true
+          ),
+          listen(
+            div,
+            "pointerdown",
+            /*onPointerdownApp*/
+            ctx[20]
+          ),
+          action_destroyer(applyStyles_action_1 = applyStyles.call(
+            null,
+            div,
+            /*stylesApp*/
+            ctx[8]
+          )),
+          action_destroyer(
+            /*appResizeObserver*/
+            ctx[12].call(
+              null,
+              div,
+              /*resizeObservedApp*/
+              ctx[23]
+            )
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      const tjsapplicationheader_changes = {};
+      if (dirty[0] & /*draggable*/
+      64)
+        tjsapplicationheader_changes.draggable = /*draggable*/
+        ctx2[6];
+      if (dirty[0] & /*draggableOptions*/
+      128)
+        tjsapplicationheader_changes.draggableOptions = /*draggableOptions*/
+        ctx2[7];
+      tjsapplicationheader.$set(tjsapplicationheader_changes);
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty[1] & /*$$scope*/
+        16)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx2,
+            /*$$scope*/
+            ctx2[35],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx2[35]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx2[35],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (applyStyles_action && is_function(applyStyles_action.update) && dirty[0] & /*stylesContent*/
+      512)
+        applyStyles_action.update.call(
+          null,
+          /*stylesContent*/
+          ctx2[9]
+        );
+      const tjsfocuswrap_changes = {};
+      if (dirty[0] & /*elementRoot*/
+      2)
+        tjsfocuswrap_changes.elementRoot = /*elementRoot*/
+        ctx2[1];
+      if (dirty[0] & /*focusWrapEnabled*/
+      2048)
+        tjsfocuswrap_changes.enabled = /*focusWrapEnabled*/
+        ctx2[11];
+      tjsfocuswrap.$set(tjsfocuswrap_changes);
+      if (!current || dirty[0] & /*application*/
+      1024 && div_id_value !== (div_id_value = /*application*/
+      ctx2[10].id)) {
+        attr(div, "id", div_id_value);
+      }
+      if (!current || dirty[0] & /*application*/
+      1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
+      ctx2[10].options.classes.join(" ") + " svelte-FF15-oz81f7")) {
+        attr(div, "class", div_class_value);
+      }
+      if (!current || dirty[0] & /*application*/
+      1024 && div_data_appid_value !== (div_data_appid_value = /*application*/
+      ctx2[10].appId)) {
+        attr(div, "data-appid", div_data_appid_value);
+      }
+      if (applyStyles_action_1 && is_function(applyStyles_action_1.update) && dirty[0] & /*stylesApp*/
+      256)
+        applyStyles_action_1.update.call(
+          null,
+          /*stylesApp*/
+          ctx2[8]
+        );
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(tjsapplicationheader.$$.fragment, local);
+      transition_in(default_slot, local);
+      transition_in(resizablehandle.$$.fragment, local);
+      transition_in(tjsfocuswrap.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(tjsapplicationheader.$$.fragment, local);
+      transition_out(default_slot, local);
+      transition_out(resizablehandle.$$.fragment, local);
+      transition_out(tjsfocuswrap.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(tjsapplicationheader);
+      if (default_slot)
+        default_slot.d(detaching);
+      ctx[39](null);
+      destroy_component(resizablehandle);
+      destroy_component(tjsfocuswrap);
+      ctx[40](null);
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_else_block$2, "create_else_block$2");
+function create_if_block$5(ctx) {
+  let div;
+  let tjsapplicationheader;
+  let t0;
+  let section;
+  let applyStyles_action;
+  let t1;
+  let resizablehandle;
+  let t2;
+  let tjsfocuswrap;
+  let div_id_value;
+  let div_class_value;
+  let div_data_appid_value;
+  let applyStyles_action_1;
+  let div_intro;
+  let div_outro;
+  let current;
+  let mounted;
+  let dispose;
+  tjsapplicationheader = new TJSApplicationHeader$1({
+    props: {
+      draggable: (
+        /*draggable*/
+        ctx[6]
+      ),
+      draggableOptions: (
+        /*draggableOptions*/
+        ctx[7]
+      )
+    }
+  });
+  const default_slot_template = (
+    /*#slots*/
+    ctx[36].default
+  );
+  const default_slot = create_slot(
+    default_slot_template,
+    ctx,
+    /*$$scope*/
+    ctx[35],
+    null
+  );
+  resizablehandle = new ResizableHandle$1({});
+  tjsfocuswrap = new TJSFocusWrap$1({
+    props: { elementRoot: (
+      /*elementRoot*/
+      ctx[1]
+    ) }
+  });
+  return {
+    c() {
+      div = element("div");
+      create_component(tjsapplicationheader.$$.fragment);
+      t0 = space();
+      section = element("section");
+      if (default_slot)
+        default_slot.c();
+      t1 = space();
+      create_component(resizablehandle.$$.fragment);
+      t2 = space();
+      create_component(tjsfocuswrap.$$.fragment);
+      attr(section, "class", "window-content svelte-FF15-oz81f7");
+      attr(section, "tabindex", "-1");
+      attr(div, "id", div_id_value = /*application*/
+      ctx[10].id);
+      attr(div, "class", div_class_value = "app window-app " + /*application*/
+      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7");
+      attr(div, "data-appid", div_data_appid_value = /*application*/
+      ctx[10].appId);
+      attr(div, "role", "application");
+      attr(div, "tabindex", "-1");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      mount_component(tjsapplicationheader, div, null);
+      append(div, t0);
+      append(div, section);
+      if (default_slot) {
+        default_slot.m(section, null);
+      }
+      ctx[37](section);
+      append(div, t1);
+      mount_component(resizablehandle, div, null);
+      append(div, t2);
+      mount_component(tjsfocuswrap, div, null);
+      ctx[38](div);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          listen(
+            section,
+            "pointerdown",
+            /*onPointerdownContent*/
+            ctx[21]
+          ),
+          action_destroyer(applyStyles_action = applyStyles.call(
+            null,
+            section,
+            /*stylesContent*/
+            ctx[9]
+          )),
+          action_destroyer(
+            /*contentResizeObserver*/
+            ctx[13].call(
+              null,
+              section,
+              /*resizeObservedContent*/
+              ctx[22]
+            )
+          ),
+          listen(div, "close:popup", stop_propagation(prevent_default(
+            /*onClosePopup*/
+            ctx[18]
+          ))),
+          listen(
+            div,
+            "keydown",
+            /*onKeydown*/
+            ctx[19],
+            true
+          ),
+          listen(
+            div,
+            "pointerdown",
+            /*onPointerdownApp*/
+            ctx[20]
+          ),
+          action_destroyer(applyStyles_action_1 = applyStyles.call(
+            null,
+            div,
+            /*stylesApp*/
+            ctx[8]
+          )),
+          action_destroyer(
+            /*appResizeObserver*/
+            ctx[12].call(
+              null,
+              div,
+              /*resizeObservedApp*/
+              ctx[23]
+            )
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      const tjsapplicationheader_changes = {};
+      if (dirty[0] & /*draggable*/
+      64)
+        tjsapplicationheader_changes.draggable = /*draggable*/
+        ctx[6];
+      if (dirty[0] & /*draggableOptions*/
+      128)
+        tjsapplicationheader_changes.draggableOptions = /*draggableOptions*/
+        ctx[7];
+      tjsapplicationheader.$set(tjsapplicationheader_changes);
+      if (default_slot) {
+        if (default_slot.p && (!current || dirty[1] & /*$$scope*/
+        16)) {
+          update_slot_base(
+            default_slot,
+            default_slot_template,
+            ctx,
+            /*$$scope*/
+            ctx[35],
+            !current ? get_all_dirty_from_scope(
+              /*$$scope*/
+              ctx[35]
+            ) : get_slot_changes(
+              default_slot_template,
+              /*$$scope*/
+              ctx[35],
+              dirty,
+              null
+            ),
+            null
+          );
+        }
+      }
+      if (applyStyles_action && is_function(applyStyles_action.update) && dirty[0] & /*stylesContent*/
+      512)
+        applyStyles_action.update.call(
+          null,
+          /*stylesContent*/
+          ctx[9]
+        );
+      const tjsfocuswrap_changes = {};
+      if (dirty[0] & /*elementRoot*/
+      2)
+        tjsfocuswrap_changes.elementRoot = /*elementRoot*/
+        ctx[1];
+      tjsfocuswrap.$set(tjsfocuswrap_changes);
+      if (!current || dirty[0] & /*application*/
+      1024 && div_id_value !== (div_id_value = /*application*/
+      ctx[10].id)) {
+        attr(div, "id", div_id_value);
+      }
+      if (!current || dirty[0] & /*application*/
+      1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
+      ctx[10].options.classes.join(" ") + " svelte-FF15-oz81f7")) {
+        attr(div, "class", div_class_value);
+      }
+      if (!current || dirty[0] & /*application*/
+      1024 && div_data_appid_value !== (div_data_appid_value = /*application*/
+      ctx[10].appId)) {
+        attr(div, "data-appid", div_data_appid_value);
+      }
+      if (applyStyles_action_1 && is_function(applyStyles_action_1.update) && dirty[0] & /*stylesApp*/
+      256)
+        applyStyles_action_1.update.call(
+          null,
+          /*stylesApp*/
+          ctx[8]
+        );
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(tjsapplicationheader.$$.fragment, local);
+      transition_in(default_slot, local);
+      transition_in(resizablehandle.$$.fragment, local);
+      transition_in(tjsfocuswrap.$$.fragment, local);
+      add_render_callback(() => {
+        if (!current)
+          return;
+        if (div_outro)
+          div_outro.end(1);
+        div_intro = create_in_transition(
+          div,
+          /*inTransition*/
+          ctx[2],
+          /*inTransitionOptions*/
+          ctx[4]
+        );
+        div_intro.start();
+      });
+      current = true;
+    },
+    o(local) {
+      transition_out(tjsapplicationheader.$$.fragment, local);
+      transition_out(default_slot, local);
+      transition_out(resizablehandle.$$.fragment, local);
+      transition_out(tjsfocuswrap.$$.fragment, local);
+      if (div_intro)
+        div_intro.invalidate();
+      div_outro = create_out_transition(
+        div,
+        /*outTransition*/
+        ctx[3],
+        /*outTransitionOptions*/
+        ctx[5]
+      );
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      destroy_component(tjsapplicationheader);
+      if (default_slot)
+        default_slot.d(detaching);
+      ctx[37](null);
+      destroy_component(resizablehandle);
+      destroy_component(tjsfocuswrap);
+      ctx[38](null);
+      if (detaching && div_outro)
+        div_outro.end();
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_if_block$5, "create_if_block$5");
+function create_fragment$C(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block$5, create_else_block$2];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*inTransition*/
+      ctx2[2] !== TJSDefaultTransition.default || /*outTransition*/
+      ctx2[3] !== TJSDefaultTransition.default
+    )
+      return 0;
+    return 1;
+  }
+  __name(select_block_type, "select_block_type");
+  current_block_type_index = select_block_type(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+__name(create_fragment$C, "create_fragment$C");
+function instance$k($$self, $$props, $$invalidate) {
+  let $focusKeep;
+  let $focusAuto;
+  let $minimized;
+  let $focusTrap;
+  let { $$slots: slots = {}, $$scope } = $$props;
+  let { elementContent = void 0 } = $$props;
+  let { elementRoot = void 0 } = $$props;
+  let { draggable: draggable2 = void 0 } = $$props;
+  let { draggableOptions = void 0 } = $$props;
+  let { stylesApp = void 0 } = $$props;
+  let { stylesContent = void 0 } = $$props;
+  let { appOffsetHeight = false } = $$props;
+  let { appOffsetWidth = false } = $$props;
+  const appResizeObserver = !!appOffsetHeight || !!appOffsetWidth ? resizeObserver : () => null;
+  let { contentOffsetHeight = false } = $$props;
+  let { contentOffsetWidth = false } = $$props;
+  const contentResizeObserver = !!contentOffsetHeight || !!contentOffsetWidth ? resizeObserver : () => null;
+  const internal = new AppShellContextInternal();
+  const s_IGNORE_CLASSES = { ignoreClasses: ["tjs-focus-wrap"] };
+  setContext("#internal", internal);
+  const { application } = getContext("#external");
+  const { focusAuto, focusKeep, focusTrap } = application.reactive.storeAppOptions;
+  component_subscribe($$self, focusAuto, (value) => $$invalidate(32, $focusAuto = value));
+  component_subscribe($$self, focusKeep, (value) => $$invalidate(41, $focusKeep = value));
+  component_subscribe($$self, focusTrap, (value) => $$invalidate(34, $focusTrap = value));
+  const { minimized } = application.reactive.storeUIState;
+  component_subscribe($$self, minimized, (value) => $$invalidate(33, $minimized = value));
+  let focusWrapEnabled;
+  let { transition = TJSDefaultTransition.default } = $$props;
+  let { inTransition = TJSDefaultTransition.default } = $$props;
+  let { outTransition = TJSDefaultTransition.default } = $$props;
+  let { transitionOptions = void 0 } = $$props;
+  let { inTransitionOptions = TJSDefaultTransition.options } = $$props;
+  let { outTransitionOptions = TJSDefaultTransition.options } = $$props;
+  let oldTransition = TJSDefaultTransition.default;
+  let oldTransitionOptions = void 0;
+  onMount(() => elementRoot.focus());
+  function onClosePopup(event) {
+    if (!$focusAuto) {
+      return;
+    }
+    const targetEl = event?.detail?.target;
+    if (!(targetEl instanceof HTMLElement)) {
+      return;
+    }
+    if (A11yHelper.isFocusable(targetEl)) {
+      return;
+    }
+    const elementRootContains = elementRoot.contains(targetEl);
+    if (targetEl === elementRoot) {
+      elementRoot.focus();
+    } else if (targetEl === elementContent) {
+      elementContent.focus();
+    } else if (elementRootContains) {
+      if (elementContent.contains(targetEl)) {
+        elementContent.focus();
+      } else {
+        elementRoot.focus();
+      }
+    }
+  }
+  __name(onClosePopup, "onClosePopup");
+  function onKeydown(event) {
+    if ((event.target === elementRoot || event.target === elementContent) && KeyboardManager && KeyboardManager?._getMatchingActions?.(KeyboardManager?.getKeyboardEventContext?.(event))?.length) {
+      event.target?.blur();
+      return;
+    }
+    if (focusWrapEnabled && event.shiftKey && event.code === "Tab") {
+      const allFocusable = A11yHelper.getFocusableElements(elementRoot, s_IGNORE_CLASSES);
+      const firstFocusEl = allFocusable.length > 0 ? allFocusable[0] : void 0;
+      const lastFocusEl = allFocusable.length > 0 ? allFocusable[allFocusable.length - 1] : void 0;
+      if (elementRoot === document.activeElement || firstFocusEl === document.activeElement) {
+        if (lastFocusEl instanceof HTMLElement && firstFocusEl !== lastFocusEl) {
+          lastFocusEl.focus();
+        }
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }
+    if (typeof application?.options?.popOut === "boolean" && application.options.popOut && application !== globalThis.ui?.activeWindow) {
+      application.bringToTop.call(application);
+    }
+  }
+  __name(onKeydown, "onKeydown");
+  function onPointerdownApp() {
+    if (typeof application?.options?.popOut === "boolean" && application.options.popOut && application !== globalThis.ui?.activeWindow) {
+      application.bringToTop.call(application);
+    }
+  }
+  __name(onPointerdownApp, "onPointerdownApp");
+  function onPointerdownContent(event) {
+    const focusable = A11yHelper.isFocusable(event.target);
+    if (!focusable && $focusAuto) {
+      if ($focusKeep) {
+        const focusOutside = document.activeElement instanceof HTMLElement && !elementRoot.contains(document.activeElement);
+        if (focusOutside) {
+          elementContent.focus();
+        } else {
+          event.preventDefault();
+        }
+      } else {
+        elementContent.focus();
+      }
+    }
+  }
+  __name(onPointerdownContent, "onPointerdownContent");
+  function resizeObservedContent(offsetWidth, offsetHeight) {
+    $$invalidate(27, contentOffsetWidth = offsetWidth);
+    $$invalidate(26, contentOffsetHeight = offsetHeight);
+  }
+  __name(resizeObservedContent, "resizeObservedContent");
+  function resizeObservedApp(offsetWidth, offsetHeight, contentWidth, contentHeight) {
+    application.position.stores.resizeObserved.update((object) => {
+      object.contentWidth = contentWidth;
+      object.contentHeight = contentHeight;
+      object.offsetWidth = offsetWidth;
+      object.offsetHeight = offsetHeight;
+      return object;
+    });
+    $$invalidate(24, appOffsetHeight = offsetHeight);
+    $$invalidate(25, appOffsetWidth = offsetWidth);
+  }
+  __name(resizeObservedApp, "resizeObservedApp");
+  function section_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      elementContent = $$value;
+      $$invalidate(0, elementContent);
+    });
+  }
+  __name(section_binding, "section_binding");
+  function div_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      elementRoot = $$value;
+      $$invalidate(1, elementRoot);
+    });
+  }
+  __name(div_binding, "div_binding");
+  function section_binding_1($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      elementContent = $$value;
+      $$invalidate(0, elementContent);
+    });
+  }
+  __name(section_binding_1, "section_binding_1");
+  function div_binding_1($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      elementRoot = $$value;
+      $$invalidate(1, elementRoot);
+    });
+  }
+  __name(div_binding_1, "div_binding_1");
+  $$self.$$set = ($$props2) => {
+    if ("elementContent" in $$props2)
+      $$invalidate(0, elementContent = $$props2.elementContent);
+    if ("elementRoot" in $$props2)
+      $$invalidate(1, elementRoot = $$props2.elementRoot);
+    if ("draggable" in $$props2)
+      $$invalidate(6, draggable2 = $$props2.draggable);
+    if ("draggableOptions" in $$props2)
+      $$invalidate(7, draggableOptions = $$props2.draggableOptions);
+    if ("stylesApp" in $$props2)
+      $$invalidate(8, stylesApp = $$props2.stylesApp);
+    if ("stylesContent" in $$props2)
+      $$invalidate(9, stylesContent = $$props2.stylesContent);
+    if ("appOffsetHeight" in $$props2)
+      $$invalidate(24, appOffsetHeight = $$props2.appOffsetHeight);
+    if ("appOffsetWidth" in $$props2)
+      $$invalidate(25, appOffsetWidth = $$props2.appOffsetWidth);
+    if ("contentOffsetHeight" in $$props2)
+      $$invalidate(26, contentOffsetHeight = $$props2.contentOffsetHeight);
+    if ("contentOffsetWidth" in $$props2)
+      $$invalidate(27, contentOffsetWidth = $$props2.contentOffsetWidth);
+    if ("transition" in $$props2)
+      $$invalidate(28, transition = $$props2.transition);
+    if ("inTransition" in $$props2)
+      $$invalidate(2, inTransition = $$props2.inTransition);
+    if ("outTransition" in $$props2)
+      $$invalidate(3, outTransition = $$props2.outTransition);
+    if ("transitionOptions" in $$props2)
+      $$invalidate(29, transitionOptions = $$props2.transitionOptions);
+    if ("inTransitionOptions" in $$props2)
+      $$invalidate(4, inTransitionOptions = $$props2.inTransitionOptions);
+    if ("outTransitionOptions" in $$props2)
+      $$invalidate(5, outTransitionOptions = $$props2.outTransitionOptions);
+    if ("$$scope" in $$props2)
+      $$invalidate(35, $$scope = $$props2.$$scope);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty[0] & /*elementContent*/
+    1) {
+      if (elementContent !== void 0 && elementContent !== null) {
+        getContext("#internal").stores.elementContent.set(elementContent);
+      }
+    }
+    if ($$self.$$.dirty[0] & /*elementRoot*/
+    2) {
+      if (elementRoot !== void 0 && elementRoot !== null) {
+        getContext("#internal").stores.elementRoot.set(elementRoot);
+      }
+    }
+    if ($$self.$$.dirty[1] & /*$focusAuto, $focusTrap, $minimized*/
+    14) {
+      $$invalidate(11, focusWrapEnabled = $focusAuto && $focusTrap && !$minimized);
+    }
+    if ($$self.$$.dirty[0] & /*oldTransition, transition*/
+    1342177280) {
+      if (oldTransition !== transition) {
+        const newTransition = typeof transition === "function" ? transition : TJSDefaultTransition.default;
+        $$invalidate(2, inTransition = newTransition);
+        $$invalidate(3, outTransition = newTransition);
+        $$invalidate(30, oldTransition = newTransition);
+      }
+    }
+    if ($$self.$$.dirty[0] & /*transitionOptions*/
+    536870912 | $$self.$$.dirty[1] & /*oldTransitionOptions*/
+    1) {
+      if (oldTransitionOptions !== transitionOptions) {
+        const newOptions = transitionOptions !== TJSDefaultTransition.options && isObject(transitionOptions) ? transitionOptions : TJSDefaultTransition.options;
+        $$invalidate(4, inTransitionOptions = newOptions);
+        $$invalidate(5, outTransitionOptions = newOptions);
+        $$invalidate(31, oldTransitionOptions = newOptions);
+      }
+    }
+    if ($$self.$$.dirty[0] & /*inTransition*/
+    4) {
+      if (typeof inTransition !== "function") {
+        $$invalidate(2, inTransition = TJSDefaultTransition.default);
+      }
+    }
+    if ($$self.$$.dirty[0] & /*outTransition, application*/
+    1032) {
+      {
+        if (typeof outTransition !== "function") {
+          $$invalidate(3, outTransition = TJSDefaultTransition.default);
+        }
+        const defaultCloseAnimation = application?.options?.defaultCloseAnimation;
+        if (typeof defaultCloseAnimation === "boolean" && defaultCloseAnimation && outTransition !== TJSDefaultTransition.default) {
+          $$invalidate(10, application.options.defaultCloseAnimation = false, application);
+        }
+      }
+    }
+    if ($$self.$$.dirty[0] & /*inTransitionOptions*/
+    16) {
+      if (!isObject(inTransitionOptions)) {
+        $$invalidate(4, inTransitionOptions = TJSDefaultTransition.options);
+      }
+    }
+    if ($$self.$$.dirty[0] & /*outTransitionOptions*/
+    32) {
+      if (!isObject(outTransitionOptions)) {
+        $$invalidate(5, outTransitionOptions = TJSDefaultTransition.options);
+      }
+    }
+  };
+  return [
+    elementContent,
+    elementRoot,
+    inTransition,
+    outTransition,
+    inTransitionOptions,
+    outTransitionOptions,
+    draggable2,
+    draggableOptions,
+    stylesApp,
+    stylesContent,
+    application,
+    focusWrapEnabled,
+    appResizeObserver,
+    contentResizeObserver,
+    focusAuto,
+    focusKeep,
+    focusTrap,
+    minimized,
+    onClosePopup,
+    onKeydown,
+    onPointerdownApp,
+    onPointerdownContent,
+    resizeObservedContent,
+    resizeObservedApp,
+    appOffsetHeight,
+    appOffsetWidth,
+    contentOffsetHeight,
+    contentOffsetWidth,
+    transition,
+    transitionOptions,
+    oldTransition,
+    oldTransitionOptions,
+    $focusAuto,
+    $minimized,
+    $focusTrap,
+    $$scope,
+    slots,
+    section_binding,
+    div_binding,
+    section_binding_1,
+    div_binding_1
+  ];
+}
+__name(instance$k, "instance$k");
+const _ApplicationShell = class _ApplicationShell extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(
+      this,
+      options,
+      instance$k,
+      create_fragment$C,
+      safe_not_equal,
+      {
+        elementContent: 0,
+        elementRoot: 1,
+        draggable: 6,
+        draggableOptions: 7,
+        stylesApp: 8,
+        stylesContent: 9,
+        appOffsetHeight: 24,
+        appOffsetWidth: 25,
+        contentOffsetHeight: 26,
+        contentOffsetWidth: 27,
+        transition: 28,
+        inTransition: 2,
+        outTransition: 3,
+        transitionOptions: 29,
+        inTransitionOptions: 4,
+        outTransitionOptions: 5
+      },
+      null,
+      [-1, -1]
+    );
+  }
+  get elementContent() {
+    return this.$$.ctx[0];
+  }
+  set elementContent(elementContent) {
+    this.$$set({ elementContent });
+    flush();
+  }
+  get elementRoot() {
+    return this.$$.ctx[1];
+  }
+  set elementRoot(elementRoot) {
+    this.$$set({ elementRoot });
+    flush();
+  }
+  get draggable() {
+    return this.$$.ctx[6];
+  }
+  set draggable(draggable2) {
+    this.$$set({ draggable: draggable2 });
+    flush();
+  }
+  get draggableOptions() {
+    return this.$$.ctx[7];
+  }
+  set draggableOptions(draggableOptions) {
+    this.$$set({ draggableOptions });
+    flush();
+  }
+  get stylesApp() {
+    return this.$$.ctx[8];
+  }
+  set stylesApp(stylesApp) {
+    this.$$set({ stylesApp });
+    flush();
+  }
+  get stylesContent() {
+    return this.$$.ctx[9];
+  }
+  set stylesContent(stylesContent) {
+    this.$$set({ stylesContent });
+    flush();
+  }
+  get appOffsetHeight() {
+    return this.$$.ctx[24];
+  }
+  set appOffsetHeight(appOffsetHeight) {
+    this.$$set({ appOffsetHeight });
+    flush();
+  }
+  get appOffsetWidth() {
+    return this.$$.ctx[25];
+  }
+  set appOffsetWidth(appOffsetWidth) {
+    this.$$set({ appOffsetWidth });
+    flush();
+  }
+  get contentOffsetHeight() {
+    return this.$$.ctx[26];
+  }
+  set contentOffsetHeight(contentOffsetHeight) {
+    this.$$set({ contentOffsetHeight });
+    flush();
+  }
+  get contentOffsetWidth() {
+    return this.$$.ctx[27];
+  }
+  set contentOffsetWidth(contentOffsetWidth) {
+    this.$$set({ contentOffsetWidth });
+    flush();
+  }
+  get transition() {
+    return this.$$.ctx[28];
+  }
+  set transition(transition) {
+    this.$$set({ transition });
+    flush();
+  }
+  get inTransition() {
+    return this.$$.ctx[2];
+  }
+  set inTransition(inTransition) {
+    this.$$set({ inTransition });
+    flush();
+  }
+  get outTransition() {
+    return this.$$.ctx[3];
+  }
+  set outTransition(outTransition) {
+    this.$$set({ outTransition });
+    flush();
+  }
+  get transitionOptions() {
+    return this.$$.ctx[29];
+  }
+  set transitionOptions(transitionOptions) {
+    this.$$set({ transitionOptions });
+    flush();
+  }
+  get inTransitionOptions() {
+    return this.$$.ctx[4];
+  }
+  set inTransitionOptions(inTransitionOptions) {
+    this.$$set({ inTransitionOptions });
+    flush();
+  }
+  get outTransitionOptions() {
+    return this.$$.ctx[5];
+  }
+  set outTransitionOptions(outTransitionOptions) {
+    this.$$set({ outTransitionOptions });
+    flush();
+  }
+};
+__name(_ApplicationShell, "ApplicationShell");
+let ApplicationShell = _ApplicationShell;
+const ApplicationShell$1 = ApplicationShell;
+const DialogContent_svelte_svelte_type_style_lang = "";
+function get_each_context$2(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[26] = list[i];
+  return child_ctx;
+}
+__name(get_each_context$2, "get_each_context$2");
+function create_if_block_3(ctx) {
+  let switch_instance;
+  let switch_instance_anchor;
+  let current;
+  const switch_instance_spread_levels = [
+    /*dialogProps*/
+    ctx[7]
+  ];
+  var switch_value = (
+    /*dialogClass*/
+    ctx[6]
+  );
+  function switch_props(ctx2, dirty) {
+    let switch_instance_props = {};
+    for (let i = 0; i < switch_instance_spread_levels.length; i += 1) {
+      switch_instance_props = assign(switch_instance_props, switch_instance_spread_levels[i]);
+    }
+    if (dirty !== void 0 && dirty & /*dialogProps*/
+    128) {
+      switch_instance_props = assign(switch_instance_props, get_spread_update(switch_instance_spread_levels, [get_spread_object(
+        /*dialogProps*/
+        ctx2[7]
+      )]));
+    }
+    return { props: switch_instance_props };
+  }
+  __name(switch_props, "switch_props");
+  if (switch_value) {
+    switch_instance = construct_svelte_component(switch_value, switch_props(ctx));
+    ctx[16](switch_instance);
+  }
+  return {
+    c() {
+      if (switch_instance)
+        create_component(switch_instance.$$.fragment);
+      switch_instance_anchor = empty();
+    },
+    m(target, anchor) {
+      if (switch_instance)
+        mount_component(switch_instance, target, anchor);
+      insert(target, switch_instance_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*dialogClass*/
+      64 && switch_value !== (switch_value = /*dialogClass*/
+      ctx2[6])) {
+        if (switch_instance) {
+          group_outros();
+          const old_component = switch_instance;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance = construct_svelte_component(switch_value, switch_props(ctx2, dirty));
+          ctx2[16](switch_instance);
+          create_component(switch_instance.$$.fragment);
+          transition_in(switch_instance.$$.fragment, 1);
+          mount_component(switch_instance, switch_instance_anchor.parentNode, switch_instance_anchor);
+        } else {
+          switch_instance = null;
+        }
+      } else if (switch_value) {
+        const switch_instance_changes = dirty & /*dialogProps*/
+        128 ? get_spread_update(switch_instance_spread_levels, [get_spread_object(
+          /*dialogProps*/
+          ctx2[7]
+        )]) : {};
+        switch_instance.$set(switch_instance_changes);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      if (switch_instance)
+        transition_in(switch_instance.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance)
+        transition_out(switch_instance.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(switch_instance_anchor);
+      }
+      ctx[16](null);
+      if (switch_instance)
+        destroy_component(switch_instance, detaching);
+    }
+  };
+}
+__name(create_if_block_3, "create_if_block_3");
+function create_if_block_2(ctx) {
+  let html_tag;
+  let html_anchor;
+  return {
+    c() {
+      html_tag = new HtmlTag(false);
+      html_anchor = empty();
+      html_tag.a = html_anchor;
+    },
+    m(target, anchor) {
+      html_tag.m(
+        /*content*/
+        ctx[3],
+        target,
+        anchor
+      );
+      insert(target, html_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*content*/
+      8)
+        html_tag.p(
+          /*content*/
+          ctx2[3]
+        );
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(html_anchor);
+        html_tag.d();
+      }
+    }
+  };
+}
+__name(create_if_block_2, "create_if_block_2");
+function create_if_block$4(ctx) {
+  let div;
+  let each_blocks = [];
+  let each_1_lookup = /* @__PURE__ */ new Map();
+  let each_value = ensure_array_like(
+    /*buttons*/
+    ctx[1]
+  );
+  const get_key = /* @__PURE__ */ __name((ctx2) => (
+    /*button*/
+    ctx2[26].id
+  ), "get_key");
+  for (let i = 0; i < each_value.length; i += 1) {
+    let child_ctx = get_each_context$2(ctx, each_value, i);
+    let key = get_key(child_ctx);
+    each_1_lookup.set(key, each_blocks[i] = create_each_block$2(key, child_ctx));
+  }
+  return {
+    c() {
+      div = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div, "class", "dialog-buttons tjs-dialog-buttons svelte-FF15-1ez4adq");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div, null);
+        }
+      }
+      ctx[20](div);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*buttons, onClick, currentButtonId*/
+      530) {
+        each_value = ensure_array_like(
+          /*buttons*/
+          ctx2[1]
+        );
+        each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, div, destroy_block, create_each_block$2, null, get_each_context$2);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].d();
+      }
+      ctx[20](null);
+    }
+  };
+}
+__name(create_if_block$4, "create_if_block$4");
+function create_if_block_1$1(ctx) {
+  let html_tag;
+  let raw_value = (
+    /*button*/
+    ctx[26].icon + ""
+  );
+  let html_anchor;
+  return {
+    c() {
+      html_tag = new HtmlTag(false);
+      html_anchor = empty();
+      html_tag.a = html_anchor;
+    },
+    m(target, anchor) {
+      html_tag.m(raw_value, target, anchor);
+      insert(target, html_anchor, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*buttons*/
+      2 && raw_value !== (raw_value = /*button*/
+      ctx2[26].icon + ""))
+        html_tag.p(raw_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(html_anchor);
+        html_tag.d();
+      }
+    }
+  };
+}
+__name(create_if_block_1$1, "create_if_block_1$1");
+function create_each_block$2(key_1, ctx) {
+  let button_1;
+  let span;
+  let t0_value = (
+    /*button*/
+    ctx[26].label + ""
+  );
+  let t0;
+  let span_title_value;
+  let t1;
+  let button_1_class_value;
+  let button_1_disabled_value;
+  let applyStyles_action;
+  let mounted;
+  let dispose;
+  let if_block = (
+    /*button*/
+    ctx[26].icon && create_if_block_1$1(ctx)
+  );
+  function click_handler() {
+    return (
+      /*click_handler*/
+      ctx[18](
+        /*button*/
+        ctx[26]
+      )
+    );
+  }
+  __name(click_handler, "click_handler");
+  function focus_handler() {
+    return (
+      /*focus_handler*/
+      ctx[19](
+        /*button*/
+        ctx[26]
+      )
+    );
+  }
+  __name(focus_handler, "focus_handler");
+  return {
+    key: key_1,
+    first: null,
+    c() {
+      button_1 = element("button");
+      span = element("span");
+      if (if_block)
+        if_block.c();
+      t0 = text(t0_value);
+      t1 = space();
+      attr(span, "title", span_title_value = /*button*/
+      ctx[26].title);
+      attr(button_1, "class", button_1_class_value = "dialog-button tjs-dialog-button " + /*button*/
+      ctx[26].id + " svelte-FF15-1ez4adq");
+      button_1.disabled = button_1_disabled_value = /*button*/
+      ctx[26].disabled;
+      this.first = button_1;
+    },
+    m(target, anchor) {
+      insert(target, button_1, anchor);
+      append(button_1, span);
+      if (if_block)
+        if_block.m(span, null);
+      append(span, t0);
+      append(button_1, t1);
+      if (!mounted) {
+        dispose = [
+          listen(button_1, "click", stop_propagation(prevent_default(click_handler))),
+          listen(button_1, "focus", focus_handler),
+          action_destroyer(applyStyles_action = applyStyles.call(
+            null,
+            button_1,
+            /*button*/
+            ctx[26].styles
+          ))
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (
+        /*button*/
+        ctx[26].icon
+      ) {
+        if (if_block) {
+          if_block.p(ctx, dirty);
+        } else {
+          if_block = create_if_block_1$1(ctx);
+          if_block.c();
+          if_block.m(span, t0);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      if (dirty & /*buttons*/
+      2 && t0_value !== (t0_value = /*button*/
+      ctx[26].label + ""))
+        set_data(t0, t0_value);
+      if (dirty & /*buttons*/
+      2 && span_title_value !== (span_title_value = /*button*/
+      ctx[26].title)) {
+        attr(span, "title", span_title_value);
+      }
+      if (dirty & /*buttons*/
+      2 && button_1_class_value !== (button_1_class_value = "dialog-button tjs-dialog-button " + /*button*/
+      ctx[26].id + " svelte-FF15-1ez4adq")) {
+        attr(button_1, "class", button_1_class_value);
+      }
+      if (dirty & /*buttons*/
+      2 && button_1_disabled_value !== (button_1_disabled_value = /*button*/
+      ctx[26].disabled)) {
+        button_1.disabled = button_1_disabled_value;
+      }
+      if (applyStyles_action && is_function(applyStyles_action.update) && dirty & /*buttons*/
+      2)
+        applyStyles_action.update.call(
+          null,
+          /*button*/
+          ctx[26].styles
+        );
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(button_1);
+      }
+      if (if_block)
+        if_block.d();
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_each_block$2, "create_each_block$2");
+function create_fragment$B(ctx) {
+  let main;
+  let div;
+  let current_block_type_index;
+  let if_block0;
+  let t;
+  let current;
+  const if_block_creators = [create_if_block_2, create_if_block_3];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (typeof /*content*/
+    ctx2[3] === "string")
+      return 0;
+    if (
+      /*dialogClass*/
+      ctx2[6]
+    )
+      return 1;
+    return -1;
+  }
+  __name(select_block_type, "select_block_type");
+  if (~(current_block_type_index = select_block_type(ctx))) {
+    if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  }
+  let if_block1 = (
+    /*buttons*/
+    ctx[1].length && create_if_block$4(ctx)
+  );
+  return {
+    c() {
+      main = element("main");
+      div = element("div");
+      if (if_block0)
+        if_block0.c();
+      t = space();
+      if (if_block1)
+        if_block1.c();
+      attr(div, "class", "dialog-content");
+    },
+    m(target, anchor) {
+      insert(target, main, anchor);
+      append(main, div);
+      if (~current_block_type_index) {
+        if_blocks[current_block_type_index].m(div, null);
+      }
+      ctx[17](div);
+      append(main, t);
+      if (if_block1)
+        if_block1.m(main, null);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if (~current_block_type_index) {
+          if_blocks[current_block_type_index].p(ctx2, dirty);
+        }
+      } else {
+        if (if_block0) {
+          group_outros();
+          transition_out(if_blocks[previous_block_index], 1, 1, () => {
+            if_blocks[previous_block_index] = null;
+          });
+          check_outros();
+        }
+        if (~current_block_type_index) {
+          if_block0 = if_blocks[current_block_type_index];
+          if (!if_block0) {
+            if_block0 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+            if_block0.c();
+          } else {
+            if_block0.p(ctx2, dirty);
+          }
+          transition_in(if_block0, 1);
+          if_block0.m(div, null);
+        } else {
+          if_block0 = null;
+        }
+      }
+      if (
+        /*buttons*/
+        ctx2[1].length
+      ) {
+        if (if_block1) {
+          if_block1.p(ctx2, dirty);
+        } else {
+          if_block1 = create_if_block$4(ctx2);
+          if_block1.c();
+          if_block1.m(main, null);
+        }
+      } else if (if_block1) {
+        if_block1.d(1);
+        if_block1 = null;
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block0);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block0);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(main);
+      }
+      if (~current_block_type_index) {
+        if_blocks[current_block_type_index].d();
+      }
+      ctx[17](null);
+      if (if_block1)
+        if_block1.d();
+    }
+  };
+}
+__name(create_fragment$B, "create_fragment$B");
+const s_REGEX_HTML = /^\s*<.*>$/;
+function instance$j($$self, $$props, $$invalidate) {
+  let autoClose;
+  let focusFirst;
+  let resolveId;
+  let $elementRoot;
+  let { data = void 0 } = $$props;
+  let { preventDefault = false } = $$props;
+  let { stopPropagation = false } = $$props;
+  let { dialogComponent = void 0 } = $$props;
+  let buttons;
+  let contentEl;
+  let buttonsEl;
+  let content = void 0;
+  let dialogClass;
+  let dialogProps = {};
+  let { elementRoot } = getContext("#internal").stores;
+  component_subscribe($$self, elementRoot, (value) => $$invalidate(15, $elementRoot = value));
+  let { application } = getContext("#external");
+  let managedPromise = getContext("#managedPromise");
+  let currentButtonId = data.default;
+  onDestroy(() => {
+    const rootEl = $elementRoot;
+    if (rootEl instanceof HTMLElement) {
+      rootEl.removeEventListener("keydown", onKeydown);
+      rootEl.removeEventListener("keyup", onKeyup);
+    }
+  });
+  onMount(() => {
+    if (focusFirst) {
+      const focusEl = A11yHelper.getFirstFocusableElement(contentEl);
+      if (focusEl instanceof HTMLElement) {
+        setTimeout(() => focusEl.focus(), 0);
+      }
+    }
+  });
+  function onClick(button) {
+    try {
+      let result = void 0;
+      const callback = button?.onPress;
+      switch (typeof callback) {
+        case "function":
+          result = callback(application);
+          break;
+        case "string":
+          if (dialogComponent !== void 0 && typeof dialogComponent[callback] === "function") {
+            result = dialogComponent[callback](application);
+          } else {
+            if (dialogComponent === void 0) {
+              console.warn(`[TRL] TJSDialog warning: 'onPress' defined as a string with no associated content Svelte component.`);
+            } else if (typeof dialogComponent?.[callback] !== "function") {
+              console.warn(`[TRL] TJSDialog warning: The content Svelte component does not contain an associated function '${callback}'. Did you remember to add '<svelte:options accessors={true} />' and export the function?`);
+            }
+          }
+          break;
+      }
+      if (button.autoClose && autoClose) {
+        if (resolveId && result === void 0) {
+          result = button.id;
+        }
+        managedPromise.resolve(result);
+      }
+    } catch (err) {
+      const notifyError = typeof data.notifyError === "boolean" ? data.notifyError : true;
+      if (notifyError) {
+        globalThis.ui.notifications.error(err, { console: false });
+      }
+      if (!managedPromise.reject(err)) {
+        throw err;
+      }
+    } finally {
+      if (button.autoClose && autoClose) {
+        application.close();
+      }
+    }
+  }
+  __name(onClick, "onClick");
+  function onKeydown(event) {
+    switch (event.code) {
+      case "ArrowLeft":
+      case "ArrowRight":
+      case "Enter":
+        event.stopPropagation();
+        break;
+      case "Tab":
+        event.stopPropagation();
+        setTimeout(
+          () => {
+            const activeElement = document.activeElement;
+            if (activeElement instanceof HTMLElement && buttonsEl instanceof HTMLElement && buttonsEl.contains(activeElement)) {
+              for (let cntr = 0; cntr < activeElement.classList.length; cntr++) {
+                const item = activeElement.classList.item(cntr);
+                if (item !== "dialog-button" && item !== "default" && typeof data.buttons[item] !== void 0) {
+                  $$invalidate(4, currentButtonId = item);
+                  break;
+                }
+              }
+            }
+          },
+          0
+        );
+        break;
+      default:
+        if (preventDefault) {
+          event.preventDefault();
+        }
+        if (stopPropagation) {
+          event.stopPropagation();
+        }
+        break;
+    }
+  }
+  __name(onKeydown, "onKeydown");
+  function onKeyup(event) {
+    switch (event.code) {
+      case "ArrowLeft": {
+        event.preventDefault();
+        event.stopPropagation();
+        const activeEl = document.activeElement;
+        if (buttonsEl instanceof HTMLElement) {
+          if (activeEl instanceof HTMLElement && buttonsEl.contains(activeEl)) {
+            const currentIndex = buttons.findIndex((button) => button.id === currentButtonId);
+            if (buttons.length && currentIndex > 0) {
+              $$invalidate(4, currentButtonId = buttons[currentIndex - 1].id);
+            }
+          }
+          const buttonEl = buttonsEl.querySelector(`.${currentButtonId}`);
+          if (buttonEl instanceof HTMLElement) {
+            buttonEl.focus();
+          }
+        }
+        break;
+      }
+      case "ArrowRight": {
+        event.preventDefault();
+        event.stopPropagation();
+        const activeEl = document.activeElement;
+        if (buttonsEl instanceof HTMLElement) {
+          if (activeEl instanceof HTMLElement && (buttonsEl.contains(activeEl) || currentButtonId === void 0)) {
+            const currentIndex = buttons.findIndex((button) => button.id === currentButtonId);
+            if (buttons.length && currentIndex < buttons.length - 1) {
+              $$invalidate(4, currentButtonId = buttons[currentIndex + 1].id);
+            }
+          }
+          const buttonEl = buttonsEl.querySelector(`.${currentButtonId}`);
+          if (buttonEl instanceof HTMLElement) {
+            buttonEl.focus();
+          }
+        }
+        break;
+      }
+      case "Enter":
+        event.preventDefault();
+        event.stopPropagation();
+        break;
+      default:
+        if (preventDefault) {
+          event.preventDefault();
+        }
+        if (stopPropagation) {
+          event.stopPropagation();
+        }
+        break;
+    }
+  }
+  __name(onKeyup, "onKeyup");
+  function switch_instance_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      dialogComponent = $$value;
+      $$invalidate(0, dialogComponent);
+    });
+  }
+  __name(switch_instance_binding, "switch_instance_binding");
+  function div_binding($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      contentEl = $$value;
+      $$invalidate(5, contentEl);
+    });
+  }
+  __name(div_binding, "div_binding");
+  const click_handler = /* @__PURE__ */ __name((button) => onClick(button), "click_handler");
+  const focus_handler = /* @__PURE__ */ __name((button) => $$invalidate(4, currentButtonId = button.id), "focus_handler");
+  function div_binding_1($$value) {
+    binding_callbacks[$$value ? "unshift" : "push"](() => {
+      buttonsEl = $$value;
+      $$invalidate(2, buttonsEl);
+    });
+  }
+  __name(div_binding_1, "div_binding_1");
+  $$self.$$set = ($$props2) => {
+    if ("data" in $$props2)
+      $$invalidate(10, data = $$props2.data);
+    if ("preventDefault" in $$props2)
+      $$invalidate(11, preventDefault = $$props2.preventDefault);
+    if ("stopPropagation" in $$props2)
+      $$invalidate(12, stopPropagation = $$props2.stopPropagation);
+    if ("dialogComponent" in $$props2)
+      $$invalidate(0, dialogComponent = $$props2.dialogComponent);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$elementRoot*/
+    32768) {
+      if ($elementRoot) {
+        const rootEl = $elementRoot;
+        if (rootEl instanceof HTMLElement) {
+          rootEl.addEventListener("keydown", onKeydown);
+          rootEl.addEventListener("keyup", onKeyup);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data*/
+    1024) {
+      $$invalidate(13, autoClose = typeof data.autoClose === "boolean" ? data.autoClose : true);
+    }
+    if ($$self.$$.dirty & /*data*/
+    1024) {
+      $$invalidate(14, focusFirst = typeof data.focusFirst === "boolean" ? data.focusFirst : false);
+    }
+    if ($$self.$$.dirty & /*data*/
+    1024) {
+      {
+        $$invalidate(1, buttons = !isObject(data.buttons) ? [] : Object.keys(data.buttons).reduce(
+          (array, key) => {
+            const b = data.buttons[key];
+            const icon = typeof b.icon !== "string" ? void 0 : s_REGEX_HTML.test(b.icon) ? b.icon : `<i class="${b.icon}"></i>`;
+            const autoClose2 = typeof b.autoClose === "boolean" ? b.autoClose : true;
+            const disabled = typeof b.disabled === "boolean" ? b.disabled : false;
+            const label = typeof b.label === "string" ? `${icon !== void 0 ? " " : ""}${localize(b.label)}` : "";
+            const title = typeof b.title === "string" ? localize(b.title) : void 0;
+            const condition = typeof b.condition === "function" ? b.condition.call(b) : b.condition ?? true;
+            if (condition) {
+              array.push({
+                ...b,
+                id: key,
+                autoClose: autoClose2,
+                icon,
+                label,
+                title,
+                disabled
+              });
+            }
+            return array;
+          },
+          []
+        ));
+      }
+    }
+    if ($$self.$$.dirty & /*buttons, currentButtonId*/
+    18) {
+      if (!buttons.find((button) => button.id === currentButtonId)) {
+        $$invalidate(4, currentButtonId = void 0);
+      }
+    }
+    if ($$self.$$.dirty & /*focusFirst, buttonsEl, currentButtonId*/
+    16404) {
+      if (!focusFirst && buttonsEl instanceof HTMLElement) {
+        const buttonEl = buttonsEl.querySelector(`.${currentButtonId}`);
+        if (buttonEl instanceof HTMLElement) {
+          buttonEl.focus();
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data*/
+    1024) {
+      resolveId = typeof data.resolveId === "boolean" ? data.resolveId : false;
+    }
+    if ($$self.$$.dirty & /*content, data*/
+    1032) {
+      if (content !== data.content) {
+        $$invalidate(
+          3,
+          content = data.content
+        );
+        try {
+          if (isSvelteComponent(content)) {
+            $$invalidate(6, dialogClass = content);
+            $$invalidate(7, dialogProps = {});
+          } else if (isObject(content)) {
+            const svelteConfig = parseTJSSvelteConfig(content, application);
+            $$invalidate(6, dialogClass = svelteConfig.class);
+            $$invalidate(7, dialogProps = svelteConfig.props ?? {});
+            const children2 = svelteConfig?.context?.get("external")?.children;
+            if (Array.isArray(children2)) {
+              $$invalidate(7, dialogProps.children = children2, dialogProps);
+            }
+          } else {
+            $$invalidate(6, dialogClass = void 0);
+            $$invalidate(7, dialogProps = {});
+          }
+        } catch (err) {
+          $$invalidate(6, dialogClass = void 0);
+          $$invalidate(7, dialogProps = {});
+          $$invalidate(3, content = err.message);
+          console.error(err);
+        }
+      }
+    }
+  };
+  return [
+    dialogComponent,
+    buttons,
+    buttonsEl,
+    content,
+    currentButtonId,
+    contentEl,
+    dialogClass,
+    dialogProps,
+    elementRoot,
+    onClick,
+    data,
+    preventDefault,
+    stopPropagation,
+    autoClose,
+    focusFirst,
+    $elementRoot,
+    switch_instance_binding,
+    div_binding,
+    click_handler,
+    focus_handler,
+    div_binding_1
+  ];
+}
+__name(instance$j, "instance$j");
+const _DialogContent = class _DialogContent extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$j, create_fragment$B, safe_not_equal, {
+      data: 10,
+      preventDefault: 11,
+      stopPropagation: 12,
+      dialogComponent: 0
+    });
+  }
+};
+__name(_DialogContent, "DialogContent");
+let DialogContent = _DialogContent;
+const DialogContent$1 = DialogContent;
+function create_else_block$1(ctx) {
+  let applicationshell;
+  let updating_elementRoot;
+  let updating_elementContent;
+  let current;
+  const applicationshell_spread_levels = [
+    /*appProps*/
+    ctx[6],
+    { appOffsetHeight: true }
+  ];
+  function applicationshell_elementRoot_binding_1(value) {
+    ctx[15](value);
+  }
+  __name(applicationshell_elementRoot_binding_1, "applicationshell_elementRoot_binding_1");
+  function applicationshell_elementContent_binding_1(value) {
+    ctx[16](value);
+  }
+  __name(applicationshell_elementContent_binding_1, "applicationshell_elementContent_binding_1");
+  let applicationshell_props = {
+    $$slots: { default: [create_default_slot_2] },
+    $$scope: { ctx }
+  };
+  for (let i = 0; i < applicationshell_spread_levels.length; i += 1) {
+    applicationshell_props = assign(applicationshell_props, applicationshell_spread_levels[i]);
+  }
+  if (
+    /*elementRoot*/
+    ctx[0] !== void 0
+  ) {
+    applicationshell_props.elementRoot = /*elementRoot*/
+    ctx[0];
+  }
+  if (
+    /*elementContent*/
+    ctx[1] !== void 0
+  ) {
+    applicationshell_props.elementContent = /*elementContent*/
+    ctx[1];
+  }
+  applicationshell = new ApplicationShell$1({ props: applicationshell_props });
+  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding_1));
+  binding_callbacks.push(() => bind(applicationshell, "elementContent", applicationshell_elementContent_binding_1));
+  return {
+    c() {
+      create_component(applicationshell.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(applicationshell, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const applicationshell_changes = dirty & /*appProps*/
+      64 ? get_spread_update(applicationshell_spread_levels, [
+        get_spread_object(
+          /*appProps*/
+          ctx2[6]
+        ),
+        applicationshell_spread_levels[1]
+      ]) : {};
+      if (dirty & /*$$scope, data, dialogComponent*/
+      4194316) {
+        applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      if (!updating_elementRoot && dirty & /*elementRoot*/
+      1) {
+        updating_elementRoot = true;
+        applicationshell_changes.elementRoot = /*elementRoot*/
+        ctx2[0];
+        add_flush_callback(() => updating_elementRoot = false);
+      }
+      if (!updating_elementContent && dirty & /*elementContent*/
+      2) {
+        updating_elementContent = true;
+        applicationshell_changes.elementContent = /*elementContent*/
+        ctx2[1];
+        add_flush_callback(() => updating_elementContent = false);
+      }
+      applicationshell.$set(applicationshell_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(applicationshell.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(applicationshell.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(applicationshell, detaching);
+    }
+  };
+}
+__name(create_else_block$1, "create_else_block$1");
+function create_if_block$3(ctx) {
+  let tjsglasspane;
+  let current;
+  const tjsglasspane_spread_levels = [
+    {
+      id: `${/*application*/
+      ctx[4].id}-glasspane`
+    },
+    /*modalProps*/
+    ctx[7],
+    { zIndex: (
+      /*zIndex*/
+      ctx[8]
+    ) }
+  ];
+  let tjsglasspane_props = {
+    $$slots: { default: [create_default_slot$6] },
+    $$scope: { ctx }
+  };
+  for (let i = 0; i < tjsglasspane_spread_levels.length; i += 1) {
+    tjsglasspane_props = assign(tjsglasspane_props, tjsglasspane_spread_levels[i]);
+  }
+  tjsglasspane = new TJSGlassPane$1({ props: tjsglasspane_props });
+  tjsglasspane.$on(
+    "close:glasspane",
+    /*close_glasspane_handler*/
+    ctx[13]
+  );
+  return {
+    c() {
+      create_component(tjsglasspane.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(tjsglasspane, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const tjsglasspane_changes = dirty & /*application, modalProps, zIndex*/
+      400 ? get_spread_update(tjsglasspane_spread_levels, [
+        dirty & /*application*/
+        16 && {
+          id: `${/*application*/
+          ctx2[4].id}-glasspane`
+        },
+        dirty & /*modalProps*/
+        128 && get_spread_object(
+          /*modalProps*/
+          ctx2[7]
+        ),
+        dirty & /*zIndex*/
+        256 && { zIndex: (
+          /*zIndex*/
+          ctx2[8]
+        ) }
+      ]) : {};
+      if (dirty & /*$$scope, appProps, elementRoot, elementContent, data, dialogComponent*/
+      4194383) {
+        tjsglasspane_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      tjsglasspane.$set(tjsglasspane_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(tjsglasspane.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(tjsglasspane.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(tjsglasspane, detaching);
+    }
+  };
+}
+__name(create_if_block$3, "create_if_block$3");
+function create_default_slot_2(ctx) {
+  let dialogcontent;
+  let updating_dialogComponent;
+  let current;
+  function dialogcontent_dialogComponent_binding_1(value) {
+    ctx[14](value);
+  }
+  __name(dialogcontent_dialogComponent_binding_1, "dialogcontent_dialogComponent_binding_1");
+  let dialogcontent_props = { data: (
+    /*data*/
+    ctx[3]
+  ) };
+  if (
+    /*dialogComponent*/
+    ctx[2] !== void 0
+  ) {
+    dialogcontent_props.dialogComponent = /*dialogComponent*/
+    ctx[2];
+  }
+  dialogcontent = new DialogContent$1({ props: dialogcontent_props });
+  binding_callbacks.push(() => bind(dialogcontent, "dialogComponent", dialogcontent_dialogComponent_binding_1));
+  return {
+    c() {
+      create_component(dialogcontent.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(dialogcontent, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const dialogcontent_changes = {};
+      if (dirty & /*data*/
+      8)
+        dialogcontent_changes.data = /*data*/
+        ctx2[3];
+      if (!updating_dialogComponent && dirty & /*dialogComponent*/
+      4) {
+        updating_dialogComponent = true;
+        dialogcontent_changes.dialogComponent = /*dialogComponent*/
+        ctx2[2];
+        add_flush_callback(() => updating_dialogComponent = false);
+      }
+      dialogcontent.$set(dialogcontent_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(dialogcontent.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(dialogcontent.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(dialogcontent, detaching);
+    }
+  };
+}
+__name(create_default_slot_2, "create_default_slot_2");
+function create_default_slot_1(ctx) {
+  let dialogcontent;
+  let updating_dialogComponent;
+  let current;
+  function dialogcontent_dialogComponent_binding(value) {
+    ctx[10](value);
+  }
+  __name(dialogcontent_dialogComponent_binding, "dialogcontent_dialogComponent_binding");
+  let dialogcontent_props = {
+    data: (
+      /*data*/
+      ctx[3]
+    ),
+    stopPropagation: true
+  };
+  if (
+    /*dialogComponent*/
+    ctx[2] !== void 0
+  ) {
+    dialogcontent_props.dialogComponent = /*dialogComponent*/
+    ctx[2];
+  }
+  dialogcontent = new DialogContent$1({ props: dialogcontent_props });
+  binding_callbacks.push(() => bind(dialogcontent, "dialogComponent", dialogcontent_dialogComponent_binding));
+  return {
+    c() {
+      create_component(dialogcontent.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(dialogcontent, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const dialogcontent_changes = {};
+      if (dirty & /*data*/
+      8)
+        dialogcontent_changes.data = /*data*/
+        ctx2[3];
+      if (!updating_dialogComponent && dirty & /*dialogComponent*/
+      4) {
+        updating_dialogComponent = true;
+        dialogcontent_changes.dialogComponent = /*dialogComponent*/
+        ctx2[2];
+        add_flush_callback(() => updating_dialogComponent = false);
+      }
+      dialogcontent.$set(dialogcontent_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(dialogcontent.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(dialogcontent.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(dialogcontent, detaching);
+    }
+  };
+}
+__name(create_default_slot_1, "create_default_slot_1");
+function create_default_slot$6(ctx) {
+  let applicationshell;
+  let updating_elementRoot;
+  let updating_elementContent;
+  let current;
+  const applicationshell_spread_levels = [
+    /*appProps*/
+    ctx[6],
+    { appOffsetHeight: true }
+  ];
+  function applicationshell_elementRoot_binding(value) {
+    ctx[11](value);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  function applicationshell_elementContent_binding(value) {
+    ctx[12](value);
+  }
+  __name(applicationshell_elementContent_binding, "applicationshell_elementContent_binding");
+  let applicationshell_props = {
+    $$slots: { default: [create_default_slot_1] },
+    $$scope: { ctx }
+  };
+  for (let i = 0; i < applicationshell_spread_levels.length; i += 1) {
+    applicationshell_props = assign(applicationshell_props, applicationshell_spread_levels[i]);
+  }
+  if (
+    /*elementRoot*/
+    ctx[0] !== void 0
+  ) {
+    applicationshell_props.elementRoot = /*elementRoot*/
+    ctx[0];
+  }
+  if (
+    /*elementContent*/
+    ctx[1] !== void 0
+  ) {
+    applicationshell_props.elementContent = /*elementContent*/
+    ctx[1];
+  }
+  applicationshell = new ApplicationShell$1({ props: applicationshell_props });
+  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
+  binding_callbacks.push(() => bind(applicationshell, "elementContent", applicationshell_elementContent_binding));
+  return {
+    c() {
+      create_component(applicationshell.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(applicationshell, target, anchor);
+      current = true;
+    },
+    p(ctx2, dirty) {
+      const applicationshell_changes = dirty & /*appProps*/
+      64 ? get_spread_update(applicationshell_spread_levels, [
+        get_spread_object(
+          /*appProps*/
+          ctx2[6]
+        ),
+        applicationshell_spread_levels[1]
+      ]) : {};
+      if (dirty & /*$$scope, data, dialogComponent*/
+      4194316) {
+        applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      if (!updating_elementRoot && dirty & /*elementRoot*/
+      1) {
+        updating_elementRoot = true;
+        applicationshell_changes.elementRoot = /*elementRoot*/
+        ctx2[0];
+        add_flush_callback(() => updating_elementRoot = false);
+      }
+      if (!updating_elementContent && dirty & /*elementContent*/
+      2) {
+        updating_elementContent = true;
+        applicationshell_changes.elementContent = /*elementContent*/
+        ctx2[1];
+        add_flush_callback(() => updating_elementContent = false);
+      }
+      applicationshell.$set(applicationshell_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(applicationshell.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(applicationshell.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(applicationshell, detaching);
+    }
+  };
+}
+__name(create_default_slot$6, "create_default_slot$6");
+function create_fragment$A(ctx) {
+  let current_block_type_index;
+  let if_block;
+  let if_block_anchor;
+  let current;
+  const if_block_creators = [create_if_block$3, create_else_block$1];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*modal*/
+      ctx2[5]
+    )
+      return 0;
+    return 1;
+  }
+  __name(select_block_type, "select_block_type");
+  current_block_type_index = select_block_type(ctx);
+  if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  return {
+    c() {
+      if_block.c();
+      if_block_anchor = empty();
+    },
+    m(target, anchor) {
+      if_blocks[current_block_type_index].m(target, anchor);
+      insert(target, if_block_anchor, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx2);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx2, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block = if_blocks[current_block_type_index];
+        if (!if_block) {
+          if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx2);
+          if_block.c();
+        } else {
+          if_block.p(ctx2, dirty);
+        }
+        transition_in(if_block, 1);
+        if_block.m(if_block_anchor.parentNode, if_block_anchor);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(if_block_anchor);
+      }
+      if_blocks[current_block_type_index].d(detaching);
+    }
+  };
+}
+__name(create_fragment$A, "create_fragment$A");
+const s_MODAL_BACKGROUND = "#50505080";
+function instance$i($$self, $$props, $$invalidate) {
+  let { elementContent = void 0 } = $$props;
+  let { elementRoot = void 0 } = $$props;
+  let { data = {} } = $$props;
+  let { dialogComponent = void 0 } = $$props;
+  let { managedPromise = void 0 } = $$props;
+  const application = getContext("#external").application;
+  const dialogOptions = writable({});
+  setContext("#managedPromise", managedPromise);
+  setContext("#dialogOptions", dialogOptions);
+  const s_MODAL_TRANSITION = fade;
+  const s_MODAL_TRANSITION_OPTIONS = { duration: 200 };
+  let modal = void 0;
+  const appProps = {
+    // Stores any transition functions.
+    transition: void 0,
+    inTransition: void 0,
+    outTransition: void 0,
+    // Stores properties to set for options for any transitions.
+    transitionOptions: void 0,
+    inTransitionOptions: void 0,
+    outTransitionOptions: void 0,
+    // Stores any style overrides for application shell.
+    stylesApp: void 0,
+    stylesContent: void 0
+  };
+  const modalProps = {
+    // Background CSS style string.
+    background: void 0,
+    slotSeparate: void 0,
+    styles: void 0,
+    // Close modal on glasspane input.
+    closeOnInput: void 0,
+    // Stores any transition functions.
+    transition: void 0,
+    inTransition: void 0,
+    outTransition: void 0,
+    // Stores properties to set for options for any transitions.
+    transitionOptions: void 0,
+    inTransitionOptions: void 0,
+    outTransitionOptions: void 0
+  };
+  let zIndex = void 0;
+  if (modal === void 0) {
+    modal = typeof data?.modal === "boolean" ? data.modal : false;
+  }
+  if (modal) {
+    onDestroy(() => window.removeEventListener("keydown", onKeydownModal, { capture: true }));
+    onMount(() => window.addEventListener("keydown", onKeydownModal, { capture: true }));
+  } else {
+    onDestroy(() => document.removeEventListener("keydown", onKeydown));
+    onMount(() => document.addEventListener("keydown", onKeydown));
+  }
+  function onKeydown(event) {
+    if (event.code === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      application.close();
+    }
+  }
+  __name(onKeydown, "onKeydown");
+  function onKeydownModal(event) {
+    if (event.code === "Escape") {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      application.close();
+    }
+  }
+  __name(onKeydownModal, "onKeydownModal");
+  function dialogcontent_dialogComponent_binding(value) {
+    dialogComponent = value;
+    $$invalidate(2, dialogComponent);
+  }
+  __name(dialogcontent_dialogComponent_binding, "dialogcontent_dialogComponent_binding");
+  function applicationshell_elementRoot_binding(value) {
+    elementRoot = value;
+    $$invalidate(0, elementRoot);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  function applicationshell_elementContent_binding(value) {
+    elementContent = value;
+    $$invalidate(1, elementContent);
+  }
+  __name(applicationshell_elementContent_binding, "applicationshell_elementContent_binding");
+  const close_glasspane_handler = /* @__PURE__ */ __name(() => application.close(), "close_glasspane_handler");
+  function dialogcontent_dialogComponent_binding_1(value) {
+    dialogComponent = value;
+    $$invalidate(2, dialogComponent);
+  }
+  __name(dialogcontent_dialogComponent_binding_1, "dialogcontent_dialogComponent_binding_1");
+  function applicationshell_elementRoot_binding_1(value) {
+    elementRoot = value;
+    $$invalidate(0, elementRoot);
+  }
+  __name(applicationshell_elementRoot_binding_1, "applicationshell_elementRoot_binding_1");
+  function applicationshell_elementContent_binding_1(value) {
+    elementContent = value;
+    $$invalidate(1, elementContent);
+  }
+  __name(applicationshell_elementContent_binding_1, "applicationshell_elementContent_binding_1");
+  $$self.$$set = ($$props2) => {
+    if ("elementContent" in $$props2)
+      $$invalidate(1, elementContent = $$props2.elementContent);
+    if ("elementRoot" in $$props2)
+      $$invalidate(0, elementRoot = $$props2.elementRoot);
+    if ("data" in $$props2)
+      $$invalidate(3, data = $$props2.data);
+    if ("dialogComponent" in $$props2)
+      $$invalidate(2, dialogComponent = $$props2.dialogComponent);
+    if ("managedPromise" in $$props2)
+      $$invalidate(9, managedPromise = $$props2.managedPromise);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*elementRoot, modal*/
+    33) {
+      if (elementRoot instanceof HTMLElement) {
+        elementRoot.setAttribute("role", "dialog");
+        if (modal) {
+          elementRoot.setAttribute("aria-modal", "true");
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data, modal, zIndex, application*/
+    312) {
+      if (isObject(data)) {
+        dialogOptions.set(klona(data));
+        const newZIndex = Number.isInteger(data.zIndex) || data.zIndex === null ? data.zIndex : modal ? Number.MAX_SAFE_INTEGER : Number.MAX_SAFE_INTEGER - 1;
+        if (zIndex !== newZIndex) {
+          $$invalidate(8, zIndex = newZIndex);
+        }
+        const newDraggable = typeof data.draggable === "boolean" ? data.draggable : void 0;
+        if (newDraggable !== void 0 && application.reactive.draggable !== newDraggable) {
+          $$invalidate(4, application.reactive.draggable = newDraggable, application);
+        }
+        const newFocusAuto = typeof data.focusAuto === "boolean" ? data.focusAuto : void 0;
+        if (newFocusAuto !== void 0 && application.reactive.focusAuto !== newFocusAuto) {
+          $$invalidate(4, application.reactive.focusAuto = newFocusAuto, application);
+        }
+        const newFocusKeep = typeof data.focusKeep === "boolean" ? data.focusKeep : void 0;
+        if (newFocusKeep !== void 0 && application.reactive.focusKeep !== newFocusKeep) {
+          $$invalidate(4, application.reactive.focusKeep = newFocusKeep, application);
+        }
+        const newFocusTrap = typeof data.focusTrap === "boolean" ? data.focusTrap : void 0;
+        if (newFocusTrap !== void 0 && application.reactive.focusTrap !== newFocusTrap) {
+          $$invalidate(4, application.reactive.focusTrap = newFocusTrap, application);
+        }
+        const newMinimizable = typeof data.minimizable === "boolean" ? data.minimizable : void 0;
+        if (newMinimizable !== void 0 && application.reactive.minimizable !== newMinimizable) {
+          $$invalidate(4, application.reactive.minimizable = newMinimizable, application);
+        }
+        const newResizable = typeof data.resizable === "boolean" ? data.resizable : void 0;
+        if (newResizable !== void 0 && application.reactive.resizable !== newResizable) {
+          $$invalidate(4, application.reactive.resizable = newResizable, application);
+        }
+        const newTitle = data.title ?? "Dialog";
+        if (newTitle !== application?.options?.title) {
+          $$invalidate(4, application.reactive.title = newTitle, application);
+        }
+        if (application.position.zIndex !== zIndex) {
+          $$invalidate(4, application.position.zIndex = zIndex, application);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data, appProps*/
+    72) {
+      if (isObject(data?.transition)) {
+        const d = data.transition;
+        if (d?.transition !== appProps.transition) {
+          $$invalidate(6, appProps.transition = d.transition, appProps);
+        }
+        if (d?.inTransition !== appProps.inTransition) {
+          $$invalidate(6, appProps.inTransition = d.inTransition, appProps);
+        }
+        if (d?.outTransition !== appProps.outTransition) {
+          $$invalidate(6, appProps.outTransition = d.outTransition, appProps);
+        }
+        if (d?.transitionOptions !== appProps.transitionOptions) {
+          $$invalidate(6, appProps.transitionOptions = d.transitionOptions, appProps);
+        }
+        if (d?.inTransitionOptions !== appProps.inTransitionOptions) {
+          $$invalidate(6, appProps.inTransitionOptions = d.inTransitionOptions, appProps);
+        }
+        if (d?.outTransitionOptions !== appProps.outTransitionOptions) {
+          $$invalidate(6, appProps.outTransitionOptions = d.outTransitionOptions, appProps);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data, modalProps*/
+    136) {
+      {
+        const newModalBackground = typeof data?.modalOptions?.background === "string" ? data.modalOptions.background : s_MODAL_BACKGROUND;
+        if (newModalBackground !== modalProps.background) {
+          $$invalidate(7, modalProps.background = newModalBackground, modalProps);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data, modalProps*/
+    136) {
+      {
+        const newModalSlotSeparate = typeof data?.modalOptions?.slotSeparate === "boolean" ? data.modalOptions.slotSeparate : void 0;
+        if (newModalSlotSeparate !== modalProps.slotSeparate) {
+          $$invalidate(7, modalProps.slotSeparate = newModalSlotSeparate, modalProps);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data, modalProps*/
+    136) {
+      {
+        const newModalStyles = isObject(data?.modalOptions?.styles) ? data.modalOptions.styles : void 0;
+        if (newModalStyles !== modalProps.styles) {
+          $$invalidate(7, modalProps.styles = newModalStyles, modalProps);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data, modalProps*/
+    136) {
+      {
+        const newModalCloseOnInput = typeof data?.modalOptions?.closeOnInput === "boolean" ? data.modalOptions.closeOnInput : void 0;
+        if (newModalCloseOnInput !== modalProps.closeOnInput) {
+          $$invalidate(7, modalProps.closeOnInput = newModalCloseOnInput, modalProps);
+        }
+      }
+    }
+    if ($$self.$$.dirty & /*data, modalProps*/
+    136) {
+      if (isObject(data?.modalOptions?.transition)) {
+        const d = data.modalOptions.transition;
+        if (d?.transition !== modalProps.transition) {
+          $$invalidate(
+            7,
+            modalProps.transition = typeof d?.transition === "function" ? d.transition : s_MODAL_TRANSITION,
+            modalProps
+          );
+        }
+        if (d?.inTransition !== modalProps.inTransition) {
+          $$invalidate(7, modalProps.inTransition = d.inTransition, modalProps);
+        }
+        if (d?.outTransition !== modalProps.outTransition) {
+          $$invalidate(7, modalProps.outTransition = d.outTransition, modalProps);
+        }
+        if (d?.transitionOptions !== modalProps.transitionOptions) {
+          $$invalidate(
+            7,
+            modalProps.transitionOptions = isObject(d?.transitionOptions) ? d.transitionOptions : s_MODAL_TRANSITION_OPTIONS,
+            modalProps
+          );
+        }
+        if (d?.inTransitionOptions !== modalProps.inTransitionOptions) {
+          $$invalidate(7, modalProps.inTransitionOptions = d.inTransitionOptions, modalProps);
+        }
+        if (d?.outTransitionOptions !== modalProps.outTransitionOptions) {
+          $$invalidate(7, modalProps.outTransitionOptions = d.outTransitionOptions, modalProps);
+        }
+      } else {
+        const newModalTransition = typeof data?.modalOptions?.transition?.transition === "function" ? data.modalOptions.transition.transition : s_MODAL_TRANSITION;
+        if (newModalTransition !== modalProps.transition) {
+          $$invalidate(7, modalProps.transition = newModalTransition, modalProps);
+        }
+        const newModalTransitionOptions = isObject(data?.modalOptions?.transitionOptions) ? data.modalOptions.transitionOptions : s_MODAL_TRANSITION_OPTIONS;
+        if (newModalTransitionOptions !== modalProps.transitionOptions) {
+          $$invalidate(7, modalProps.transitionOptions = newModalTransitionOptions, modalProps);
+        }
+      }
+    }
+  };
+  return [
+    elementRoot,
+    elementContent,
+    dialogComponent,
+    data,
+    application,
+    modal,
+    appProps,
+    modalProps,
+    zIndex,
+    managedPromise,
+    dialogcontent_dialogComponent_binding,
+    applicationshell_elementRoot_binding,
+    applicationshell_elementContent_binding,
+    close_glasspane_handler,
+    dialogcontent_dialogComponent_binding_1,
+    applicationshell_elementRoot_binding_1,
+    applicationshell_elementContent_binding_1
+  ];
+}
+__name(instance$i, "instance$i");
+const _DialogShell = class _DialogShell extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$i, create_fragment$A, safe_not_equal, {
+      elementContent: 1,
+      elementRoot: 0,
+      data: 3,
+      dialogComponent: 2,
+      managedPromise: 9
+    });
+  }
+  get elementContent() {
+    return this.$$.ctx[1];
+  }
+  set elementContent(elementContent) {
+    this.$$set({ elementContent });
+    flush();
+  }
+  get elementRoot() {
+    return this.$$.ctx[0];
+  }
+  set elementRoot(elementRoot) {
+    this.$$set({ elementRoot });
+    flush();
+  }
+  get data() {
+    return this.$$.ctx[3];
+  }
+  set data(data) {
+    this.$$set({ data });
+    flush();
+  }
+  get dialogComponent() {
+    return this.$$.ctx[2];
+  }
+  set dialogComponent(dialogComponent) {
+    this.$$set({ dialogComponent });
+    flush();
+  }
+  get managedPromise() {
+    return this.$$.ctx[9];
+  }
+  set managedPromise(managedPromise) {
+    this.$$set({ managedPromise });
+    flush();
+  }
+};
+__name(_DialogShell, "DialogShell");
+let DialogShell = _DialogShell;
+const DialogShell$1 = DialogShell;
+cssVariables$1.setProperties({
+  // Anchor text shadow / header buttons
+  "--tjs-default-text-shadow-focus-hover": "0 0 8px var(--color-shadow-primary)",
+  // TJSApplicationShell app background.
+  "--tjs-app-background": `url("${globalThis.foundry.utils.getRoute("/ui/denim075.png")}")`
+}, false);
+const _ManagedPromise = class _ManagedPromise {
+  constructor() {
+    /** @type {{ isProcessing?: boolean, promise?: Promise, reject: Function, resolve: Function }} */
+    __privateAdd(this, _current, void 0);
+  }
+  /**
+   * @returns {boolean} Whether global logging is enabled.
+   */
+  static get logging() {
+    return __privateGet(this, _logging);
+  }
+  /**
+   * @returns {boolean} Whether there is an active managed Promise.
+   */
+  get isActive() {
+    return __privateGet(this, _current) !== void 0;
+  }
+  /**
+   * @returns {boolean} Whether there is an active managed Promise and resolution is currently being processed.
+   */
+  get isProcessing() {
+    return __privateGet(this, _current) !== void 0 ? __privateGet(this, _current).isProcessing : false;
+  }
+  /**
+   * Sets global logging enabled state.
+   *
+   * @param {boolean}  logging - New logging enabled state.
+   */
+  static set logging(logging) {
+    if (typeof logging !== "boolean") {
+      throw new TypeError(`[TRL] ManagedPromise.logging error: 'logging' is not a boolean.`);
+    }
+    __privateSet(this, _logging, logging);
+  }
+  // ----------------------------------------------------------------------------------------------------------------
+  /**
+   * Resolves any current Promise with undefined and creates a new current Promise.
+   *
+   * @template T
+   *
+   * @param {object} opts - Options.
+   *
+   * @param {boolean}  [opts.reuse=false] - When true if there is an existing live Promise it is returned immediately.
+   *
+   * @returns {Promise<T>} The new current managed Promise.
+   */
+  create({ reuse = false } = {}) {
+    if (typeof reuse !== "boolean") {
+      throw new TypeError(`[TRL] ManagedPromise.create error: 'reuse' is not a boolean.`);
+    }
+    if (reuse && __privateGet(this, _current) !== void 0 && __privateGet(this, _current).promise instanceof Promise) {
+      if (__privateGet(_ManagedPromise, _logging)) {
+        console.warn(`[TRL] ManagedPromise.create info: Reusing / returning existing managed Promise.`);
+      }
+      return __privateGet(this, _current).promise;
+    }
+    if (__privateGet(this, _current) !== void 0) {
+      if (__privateGet(_ManagedPromise, _logging)) {
+        console.warn(
+          `[TRL] ManagedPromise.create info: Creating a new Promise and resolving existing immediately.`
+        );
+      }
+      __privateGet(this, _current).resolve(void 0);
+      __privateSet(this, _current, void 0);
+    }
+    const promise2 = new Promise((resolve, reject) => {
+      __privateSet(this, _current, {
+        isProcessing: false,
+        reject,
+        resolve
+      });
+    });
+    __privateGet(this, _current).promise = promise2;
+    return promise2;
+  }
+  /**
+   * Gets the current Promise if any.
+   *
+   * @returns {Promise<any>} Current Promise.
+   */
+  get() {
+    return __privateGet(this, _current) ? __privateGet(this, _current).promise : void 0;
+  }
+  /**
+   * Rejects the current Promise if applicable.
+   *
+   * @param {*}  [result] - Result to reject.
+   *
+   * @returns {boolean} Was the promise rejected.
+   */
+  reject(result = void 0) {
+    if (__privateGet(this, _current) !== void 0 && __privateGet(this, _current).isProcessing) {
+      if (__privateGet(_ManagedPromise, _logging)) {
+        console.warn(`[TRL] ManagedPromise.reject info: Currently processing promise.`);
+      }
+      return true;
+    }
+    if (__privateGet(this, _current) !== void 0) {
+      __privateGet(this, _current).isProcessing = true;
+      if (result instanceof Promise) {
+        result.then((value) => {
+          __privateGet(this, _current).reject(value);
+          __privateSet(this, _current, void 0);
+        }).catch((err) => {
+          __privateGet(this, _current).reject(err);
+          __privateSet(this, _current, void 0);
+        });
+      } else {
+        __privateGet(this, _current).reject(result);
+        __privateSet(this, _current, void 0);
+      }
+      return true;
+    } else {
+      if (__privateGet(_ManagedPromise, _logging)) {
+        console.warn(`[TRL] ManagedPromise.reject warning: No current managed Promise to reject.`);
+      }
+      return false;
+    }
+  }
+  /**
+   * Resolves the current Promise if applicable.
+   *
+   * @param {*}  [result] - Result to resolve.
+   *
+   * @returns {boolean} Was the promise resolved.
+   */
+  resolve(result = void 0) {
+    if (__privateGet(this, _current) !== void 0 && __privateGet(this, _current).isProcessing) {
+      if (__privateGet(_ManagedPromise, _logging)) {
+        console.warn(`[TRL] ManagedPromise.resolve info: Currently processing promise.`);
+      }
+      return true;
+    }
+    if (__privateGet(this, _current) !== void 0) {
+      if (result instanceof Promise) {
+        __privateGet(this, _current).isProcessing = true;
+        result.then((value) => {
+          __privateGet(this, _current).resolve(value);
+          __privateSet(this, _current, void 0);
+        }).catch((err) => {
+          __privateGet(this, _current).reject(err);
+          __privateSet(this, _current, void 0);
+        });
+      } else {
+        __privateGet(this, _current).resolve(result);
+        __privateSet(this, _current, void 0);
+      }
+      return true;
+    } else {
+      if (__privateGet(_ManagedPromise, _logging)) {
+        console.warn(`[TRL] ManagedPromise.resolve warning: No current managed Promise to resolve.`);
+      }
+      return false;
+    }
+  }
+};
+_logging = new WeakMap();
+_current = new WeakMap();
+__name(_ManagedPromise, "ManagedPromise");
+/** @type {boolean} */
+__privateAdd(_ManagedPromise, _logging, false);
+let ManagedPromise = _ManagedPromise;
+const _TJSDialogData = class _TJSDialogData {
+  /**
+   * @param {import('../../index.js').SvelteApplication} application - The host Foundry application.
+   */
+  constructor(application) {
+    /**
+     * Updates the data in the Svelte dialog component.
+     */
+    __privateAdd(this, _updateComponent);
+    /**
+     * @type {import('../../index.js').SvelteApplication}
+     */
+    __privateAdd(this, _application3, void 0);
+    /**
+     * Stores the dialog options data.
+     *
+     * @type {import('./types').TJSDialogOptions}
+     */
+    __privateAdd(this, _internal, {});
+    __privateSet(this, _application3, application);
+  }
+  /**
+   * @returns {Record<string, import('./types').TJSDialogButtonData>} The dialog button configuration.
+   */
+  get buttons() {
+    return __privateGet(this, _internal).buttons;
+  }
+  /**
+   * Set the dialog button configuration.
+   *
+   * @param {string} buttons - New dialog button configuration.
+   */
+  set buttons(buttons) {
+    __privateGet(this, _internal).buttons = buttons;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {import('@typhonjs-fvtt/runtime/svelte/util').TJSSvelteConfig | string} The Svelte configuration object or HTML string
+   *          content.
+   */
+  get content() {
+    return __privateGet(this, _internal).content;
+  }
+  /**
+   * Set the Svelte configuration object or HTML string content.
+   *
+   * @param {import('@typhonjs-fvtt/runtime/svelte/util').TJSSvelteConfig | string} content - New Svelte configuration object or
+   *        HTML string content.
+   */
+  set content(content) {
+    __privateGet(this, _internal).content = content;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {string} The default button ID to focus initially.
+   */
+  get default() {
+    return __privateGet(this, _internal).default;
+  }
+  /**
+   * Set the default button ID to focus initially.
+   *
+   * @param {string} newDefault - New default button ID to focus initially.
+   */
+  set default(newDefault) {
+    __privateGet(this, _internal).default = newDefault;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} The dialog draggable state; draggable when true.
+   */
+  get draggable() {
+    return __privateGet(this, _internal).draggable;
+  }
+  /**
+   * Set the dialog state; draggable when true.
+   *
+   * @param {boolean} draggable - New dialog draggable state; draggable when true.
+   */
+  set draggable(draggable2) {
+    __privateGet(this, _internal).draggable = draggable2;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} When true auto-management of app focus is enabled.
+   */
+  get focusAuto() {
+    return __privateGet(this, _internal).focusAuto;
+  }
+  /**
+   * Set the dialog auto-management of app focus.
+   *
+   * @param {boolean} focusAuto - New dialog auto-management of app focus.
+   */
+  set focusAuto(focusAuto) {
+    __privateGet(this, _internal).focusAuto = focusAuto;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} When true the first focusable element that isn't a button is focused.
+   */
+  get focusFirst() {
+    return __privateGet(this, _internal).focusFirst;
+  }
+  /**
+   * Set the dialog first focusable element state.
+   *
+   * @param {boolean} focusFirst - New dialog first focusable element state.
+   */
+  set focusFirst(focusFirst) {
+    __privateGet(this, _internal).focusFirst = focusFirst;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} When `focusAuto` and `focusKeep` is true; keeps internal focus.
+   */
+  get focusKeep() {
+    return __privateGet(this, _internal).focusKeep;
+  }
+  /**
+   * Set the dialog `focusKeep` state. When `focusAuto` and `focusKeep` is true; keeps internal focus.
+   *
+   * @param {boolean} focusKeep - New dialog `focusKeep` state.
+   */
+  set focusKeep(focusKeep) {
+    __privateGet(this, _internal).focusKeep = focusKeep;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} When true the dialog is minimizable.
+   */
+  get minimizable() {
+    return __privateGet(this, _internal).minimizable;
+  }
+  /**
+   * Set the dialog `minimizable` state. When true the dialog is minimizable.
+   *
+   * @param {boolean} minimizable - New dialog `minimizable` state.
+   */
+  set minimizable(minimizable) {
+    __privateGet(this, _internal).minimizable = minimizable;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} When true a modal dialog is displayed.
+   */
+  get modal() {
+    return __privateGet(this, _internal).modal;
+  }
+  /**
+   * Set the dialog `modal` state. When true a modal dialog is displayed.
+   *
+   * @param {boolean} modal - New dialog `modal` state.
+   */
+  set modal(modal) {
+    __privateGet(this, _internal).modal = modal;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {import('./types').TJSDialogModalOptions} Additional options for modal dialog display.
+   */
+  get modalOptions() {
+    return __privateGet(this, _internal).modalOptions;
+  }
+  /**
+   * Set additional options for modal dialog display.
+   *
+   * @param {import('./types').TJSDialogModalOptions} modalOptions - New additional options for modal dialog display.
+   */
+  set modalOptions(modalOptions) {
+    __privateGet(this, _internal).modalOptions = modalOptions;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} When true and an error is raised in dialog callback functions post a UI error notification.
+   */
+  get notifyError() {
+    return __privateGet(this, _internal).notifyError;
+  }
+  /**
+   * Set the dialog `notifyError` state. When true and an error is raised in dialog callback functions post a UI error
+   * notification.
+   *
+   * @param {boolean} notifyError - New dialog `notifyError` state.
+   */
+  set notifyError(notifyError) {
+    __privateGet(this, _internal).notifyError = notifyError;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {string | ((application: import('../../index.js').TJSDialog) => any)} Callback invoked when dialog is
+   *          closed; no button option selected. When defined as a string any matching function by name exported from
+   *          content Svelte component is invoked.
+   */
+  get onClose() {
+    return __privateGet(this, _internal).onClose;
+  }
+  /**
+   * Set callback invoked when dialog is closed; no button option selected. When defined as a string any matching
+   * function by name exported from content Svelte component is invoked..
+   *
+   * @param {string | ((application: import('../../index.js').TJSDialog) => any)} onClose - New dialog `onClose` state.
+   */
+  set onClose(onClose) {
+    __privateGet(this, _internal).onClose = onClose;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} Dialog `rejectClose` state. When true and a Promise has been created by {@link TJSDialog.wait}
+   *          and the Promise is not in the process of being resolved or rejected on close of the dialog any `onClose`
+   *          function is invoked and any result that is undefined will cause the Promise to then be rejected..
+   */
+  get rejectClose() {
+    return __privateGet(this, _internal).rejectClose;
+  }
+  /**
+   * Set the dialog `rejectClose` state.
+   *
+   * @param {boolean} rejectClose - New dialog `rejectClose` state.
+   */
+  set rejectClose(rejectClose) {
+    __privateGet(this, _internal).rejectClose = rejectClose;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} When true the dialog is resizable.
+   */
+  get resizable() {
+    return __privateGet(this, _internal).resizable;
+  }
+  /**
+   * Set the dialog `resizable` state. When true the dialog is resizable.
+   *
+   * @param {boolean} resizable - New dialog `resizable` state.
+   */
+  set resizable(resizable) {
+    __privateGet(this, _internal).resizable = resizable;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {boolean} When true and resolving any Promises and there are undefined results from any button callbacks
+   *          the button ID is resolved.
+   */
+  get resolveId() {
+    return __privateGet(this, _internal).resolveId;
+  }
+  /**
+   * Set the dialog `resolveId` state. When true and resolving any Promises and there are undefined results from any
+   * button callbacks the button ID is resolved.
+   *
+   * @param {boolean} resolveId - New dialog `resolveId` state.
+   */
+  set resolveId(resolveId) {
+    __privateGet(this, _internal).resolveId = resolveId;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {string} The dialog window title.
+   */
+  get title() {
+    return __privateGet(this, _internal).title;
+  }
+  /**
+   * Set the dialog window title.
+   *
+   * @param {string} title - New dialog window title.
+   */
+  set title(title) {
+    __privateGet(this, _internal).title = title;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {import('./types').TJSDialogTransitionOptions} Transition options for the dialog.
+   */
+  get transition() {
+    return __privateGet(this, _internal).transition;
+  }
+  /**
+   * Set transition options for the dialog.
+   *
+   * @param {import('./types').TJSDialogTransitionOptions} transition - New transition options for the dialog.
+   */
+  set transition(transition) {
+    __privateGet(this, _internal).transition = transition;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * @returns {number | null} A specific z-index for the dialog. Pass null for the dialog to act like other
+   *          applications in regard bringing to top when activated.
+   */
+  get zIndex() {
+    return __privateGet(this, _internal).zIndex;
+  }
+  /**
+   * Set specific z-index for the dialog.
+   *
+   * @param {number | null} zIndex - New z-index for the dialog.
+   */
+  set zIndex(zIndex) {
+    __privateGet(this, _internal).zIndex = zIndex;
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * Provides a way to safely get this dialogs data given an accessor string which describes the
+   * entries to walk. To access deeper entries into the object format the accessor string with `.` between entries
+   * to walk.
+   *
+   * @param {string}   accessor - The path / key to set. You can set multiple levels.
+   *
+   * @param {any}      [defaultValue] - A default value returned if the accessor is not found.
+   *
+   * @returns {any} Value at the accessor.
+   */
+  get(accessor, defaultValue) {
+    return safeAccess(__privateGet(this, _internal), accessor, defaultValue);
+  }
+  /**
+   * @param {import('./types').TJSDialogOptions} data - Merge provided data object into Dialog data.
+   */
+  merge(data) {
+    deepMerge(__privateGet(this, _internal), data);
+    __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+  }
+  /**
+   * Sets the dialog data; this is reactive.
+   *
+   * @param {import('./types').TJSDialogOptions}   data - Dialog data.
+   */
+  replace(data) {
+    if (!isObject(data)) {
+      throw new TypeError(`TJSDialogData replace error: 'data' is not an object'.`);
+    }
+    __privateSet(this, _internal, {});
+    this.merge(data);
+  }
+  /**
+   * Provides a way to safely set this dialogs data given an accessor string which describes the
+   * entries to walk. To access deeper entries into the object format the accessor string with `.` between entries
+   * to walk.
+   *
+   * Automatically the dialog data will be updated in the associated DialogShell Svelte component.
+   *
+   * @param {string}   accessor - The path / key to set. You can set multiple levels.
+   *
+   * @param {any}      value - Value to set.
+   *
+   * @returns {boolean} True if successful.
+   */
+  set(accessor, value) {
+    const success = safeSet(__privateGet(this, _internal), accessor, value);
+    if (success) {
+      __privateMethod(this, _updateComponent, updateComponent_fn).call(this);
+    }
+    return success;
+  }
+};
+_application3 = new WeakMap();
+_internal = new WeakMap();
+_updateComponent = new WeakSet();
+updateComponent_fn = /* @__PURE__ */ __name(function() {
+  const component = __privateGet(this, _application3).svelte.component(0);
+  if (component?.data) {
+    component.data = __privateGet(this, _internal);
+  }
+}, "#updateComponent");
+__name(_TJSDialogData, "TJSDialogData");
+let TJSDialogData = _TJSDialogData;
+const _TJSDialog = class _TJSDialog extends SvelteApplication {
+  /**
+   * @param {import('./internal/state-dialog/types').TJSDialogOptions}           data - Dialog options.
+   *
+   * @param {import('./').SvelteApplicationOptions}   [options] - SvelteApplication options.
+   */
+  constructor(data, options = {}) {
+    super(options);
+    /** @type {TJSDialogData} */
+    __privateAdd(this, _data4, void 0);
+    /** @type {ManagedPromise} */
+    __privateAdd(this, _managedPromise, void 0);
+    __privateSet(this, _managedPromise, new ManagedPromise());
+    __privateSet(this, _data4, new TJSDialogData(this));
+    __privateGet(this, _data4).replace(data);
+    Object.defineProperty(this.svelte, "dialogComponent", {
+      get: () => this.svelte?.applicationShell?.dialogComponent
+    });
+  }
+  /**
+   * Default options for TJSDialog. Provides a default width and setting `height` to `auto` to always display dialog
+   * content even if it changes. The default `DialogShell` / `svelte` options should not be changed and instead mount
+   * the dialog content component by supplying a Svelte configuration object to dialog data `content` field.
+   *
+   * @returns {import('./').SvelteApplicationOptions} Default options
+   */
+  static get defaultOptions() {
+    return deepMerge(super.defaultOptions, {
+      classes: ["dialog", "tjs-dialog"],
+      width: 400,
+      height: "auto",
+      svelte: {
+        class: DialogShell$1,
+        intro: true,
+        target: document.body,
+        props: function() {
+          return {
+            data: __privateGet(this, _data4),
+            managedPromise: __privateGet(this, _managedPromise)
+          };
+        }
+      }
+    });
+  }
+  /**
+   * Returns the dialog data.
+   *
+   * @returns {import('./internal/state-dialog/types').TJSDialogData} Dialog data.
+   */
+  get data() {
+    return __privateGet(this, _data4);
+  }
+  /**
+   * @returns {import('@typhonjs-fvtt/runtime/util/async').ManagedPromise} Returns the managed promise.
+   */
+  get managedPromise() {
+    return __privateGet(this, _managedPromise);
+  }
+  /**
+   * Close the dialog and un-register references to it within UI mappings.
+   * This function returns a Promise which resolves once the window closing animation concludes.
+   *
+   * @param {object}   [options] - Optional parameters.
+   *
+   * @param {boolean}  [options.force] - Force close regardless of render state.
+   *
+   * @returns {Promise<void>} A Promise which resolves once the application is closed with the callback value or
+   *                          `true`.
+   */
+  async close(options) {
+    var _a2;
+    try {
+      if (__privateGet(this, _managedPromise).isActive && !__privateGet(this, _managedPromise).isProcessing) {
+        const result = __privateMethod(_a2 = _TJSDialog, _invokeFn, invokeFn_fn).call(_a2, __privateGet(this, _data4).onClose, this, null);
+        const rejectClose = typeof __privateGet(this, _data4).rejectClose === "boolean" ? __privateGet(this, _data4).rejectClose : false;
+        if (rejectClose && result === null) {
+          __privateGet(this, _managedPromise).reject(new Error("TJSDialog was closed without a choice being made."));
+        } else {
+          __privateGet(this, _managedPromise).resolve(result);
+        }
+      }
+    } catch (err) {
+      const notifyError = typeof __privateGet(this, _data4).notifyError === "boolean" ? __privateGet(this, _data4).notifyError : true;
+      if (notifyError) {
+        globalThis.ui.notifications.error(err, { console: false });
+      }
+      if (!__privateGet(this, _managedPromise).reject(err)) {
+        throw err;
+      }
+    } finally {
+      await super.close(options);
+    }
+  }
+  /**
+   * Brings to top or renders this dialog returning a Promise that is resolved any button pressed or when the dialog
+   * is closed.
+   *
+   * Creates an anonymous data defined TJSDialog returning a Promise that can be awaited upon for the user to make a
+   * choice.
+   *
+   * Note: `null` is returned if the dialog is closed without a user making a choice.
+   *
+   * @template T
+   *
+   * @param {object}   [options] - Options.
+   *
+   * @param {boolean}  [options.reuse=false] - When true if there is an existing managed Promise this allows multiple
+   *        sources to await on the same result.
+   *
+   * @returns {Promise<T>} A promise for dialog resolution.
+   */
+  async wait(options) {
+    if (this.rendered) {
+      this.bringToTop();
+    } else {
+      this.render(true, { focus: true });
+    }
+    return __privateGet(this, _managedPromise).create(options);
+  }
+  // ---------------------------------------------------------------------------------------------------------------
+  /**
+   * A helper factory method to create simple confirmation dialog windows which consist of simple yes / no prompts.
+   * If you require more flexibility, a custom TJSDialog instance is preferred. The default focused button is 'yes'.
+   * You can change the default focused button by setting `default` to `yes` or `no`.
+   *
+   * @template T
+   *
+   * @param {import('./internal/state-dialog/types').TJSDialogOptions & {
+   *    onYes?: string|((application: TJSDialog) => any),
+   *    onNo?: string|((application: TJSDialog) => any)
+   * }} [data] - Confirm dialog options.
+   *
+   * @param {string|((application: TJSDialog) => any)} [data.onYes] - Callback function upon `yes`; may be an async
+   *        function. When defined as a string any matching function by name exported from content Svelte component is
+   *        invoked.
+   *
+   * @param {string|((application: TJSDialog) => any)} [data.onNo] - Callback function upon `no`; may be an async
+   *        function. When defined as a string any matching function by name exported from content Svelte component is
+   *        invoked.
+   *
+   * @param {import('./').SvelteApplicationOptions}  [options]  SvelteApplication options passed to the TJSDialog
+   *        constructor.
+   *
+   * @returns {Promise<T>} A promise which resolves with result of yes / no callbacks or true / false.
+   *
+   * @example
+   * const result = await TJSDialog.confirm({
+   *  title: 'A Yes or No Question',
+   *  content: '<p>Choose wisely.</p>',
+   *  onYes: () => 'YES Result'
+   *  onNo: () => 'NO Result'
+   * });
+   *
+   * // Logs 'YES result', 'NO Result', or null if the user closed the dialog without making a selection.
+   * console.log(result);
+   */
+  static async confirm({ onYes, onNo, ...data } = {}, options = {}) {
+    const mergedButtons = deepMerge({
+      yes: {
+        icon: "fas fa-check",
+        label: "Yes"
+      },
+      no: {
+        icon: "fas fa-times",
+        label: "No"
+      }
+    }, data.buttons ?? {});
+    return this.wait({
+      ...data,
+      buttons: deepMerge(mergedButtons, {
+        yes: {
+          onPress: (application) => __privateMethod(this, _invokeFn, invokeFn_fn).call(this, onYes, application, true)
+        },
+        no: {
+          onPress: (application) => __privateMethod(this, _invokeFn, invokeFn_fn).call(this, onNo, application, false)
+        }
+      }),
+      default: data.default ?? "yes"
+    }, options);
+  }
+  /**
+   * A helper factory method to display a basic "prompt" style TJSDialog with a single button.
+   *
+   * @template T
+   *
+   * @param {import('./internal/state-dialog/types').TJSDialogOptions & {
+   *    onOk?: string|((application: TJSDialog) => any),
+   *    label?: string,
+   *    icon?: string
+   * }} [data] - Prompt dialog options that includes any TJSDialog options along with the following optional fields:
+   *
+   * @param {string|((application: TJSDialog) => any)} [data.onOk] - Callback function upon `ok`; may be an async
+   *        function. When defined as a string any matching function by name exported from content Svelte component is
+   *        invoked.
+   *
+   * @param {string}   [data.label] - The OK prompt button text.
+   *
+   * @param {string}   [data.icon="fas fa-check"] - Set another icon besides `fas fa-check` for button.
+   *
+   * @param {import('./').SvelteApplicationOptions}  [options]  SvelteApplication options passed to the TJSDialog
+   *        constructor.
+   *
+   * @returns {Promise<T>} The returned value from the provided callback function or `true` if the button
+   *          is pressed.
+   *
+   * @example
+   * const result = await TJSDialog.prompt({
+   *  title: 'Are you OK?',
+   *  content: '<p>Are you OK?.</p>',
+   *  label: 'Feeling Fine!'
+   *  onOk: () => 'OK'
+   * });
+   *
+   * // Logs 'OK' or null if the user closed the dialog without making a selection.
+   * console.log(result);
+   */
+  static async prompt({ onOk, label, icon = "fas fa-check", ...data } = {}, options = {}) {
+    return this.wait({
+      ...data,
+      buttons: {
+        ok: {
+          icon,
+          label,
+          onPress: (application) => __privateMethod(this, _invokeFn, invokeFn_fn).call(this, onOk, application, true)
+        }
+      },
+      default: "ok"
+    }, options);
+  }
+  /**
+   * Creates an anonymous data defined TJSDialog returning a Promise that can be awaited upon for the user to make a
+   * choice.
+   *
+   * Note: By default `null` is returned if the dialog is closed without a user making a choice.
+   *
+   * @template T
+   *
+   * @param {import('./internal/state-dialog/types').TJSDialogOptions}  data - Dialog data passed to the TJSDialog constructor.
+   *
+   * @param {import('./').SvelteApplicationOptions}  [options]  SvelteApplication options passed to the TJSDialog
+   *        constructor.
+   *
+   * @returns {Promise<T>} A Promise that resolves to the chosen result.
+   */
+  static async wait(data, options = {}) {
+    if (!isObject(data)) {
+      throw new TypeError(`TJSDialog.wait error: 'data' is not an object'.`);
+    }
+    return new this({ ...data }, options).wait();
+  }
+};
+_data4 = new WeakMap();
+_managedPromise = new WeakMap();
+_invokeFn = new WeakSet();
+invokeFn_fn = /* @__PURE__ */ __name(function(callback, application, defaultResult = void 0) {
+  let result = defaultResult;
+  switch (typeof callback) {
+    case "function":
+      result = callback(application);
+      break;
+    case "string": {
+      const dialogComponent = application?.svelte?.dialogComponent;
+      if (dialogComponent !== void 0 && typeof dialogComponent?.[callback] === "function") {
+        result = dialogComponent?.[callback](application);
+      } else {
+        if (dialogComponent === void 0) {
+          console.warn(`[TRL] TJSDialog warning: 'onPress' defined as a string with no associated content Svelte component.`);
+        } else if (typeof dialogComponent?.[callback] !== "function") {
+          console.warn(`[TRL] TJSDialog warning: The content Svelte component does not contain an associated function '${callback}'. Did you remember to add '<svelte:options accessors={true} />' and export the function?`);
+        }
+      }
+      break;
+    }
+  }
+  return result;
+}, "#invokeFn");
+/**
+ * A helper method to invoke a callback function directly or lookup an exported function with the same name from any
+ * content Svelte component to invoke. This is used internally to apply default values for `confirm` and `prompt`.
+ *
+ * @param {string|((application: TJSDialog) => any)} callback - Callback function to invoke; may be an async
+ *        function. When defined as a string any matching function by name exported from content Svelte component is
+ *        invoked.
+ *
+ * @param {TJSDialog} application - TJSDialog instance passed to callback.
+ *
+ * @param {*} [defaultResult] - An optional default result to return; undefined if not specified.
+ *
+ * @returns {*} Result.
+ *
+ * @internal
+ */
+__privateAdd(_TJSDialog, _invokeFn);
+__name(_TJSDialog, "TJSDialog");
+let TJSDialog = _TJSDialog;
 Hooks.on("PopOut:loading", (app) => {
   if (app instanceof SvelteApplication) {
     app.position.enabled = false;
@@ -15561,6 +18531,1098 @@ Hooks.on("PopOut:close", (app) => {
     app.position.enabled = true;
   }
 });
+const _UIControl = class _UIControl {
+  /**
+   * @param {import('./').TJSGameSettings}   settings -
+   */
+  constructor(settings) {
+    /**
+     * Destroy callback. Checks for any `requiresReload` parameter in each setting comparing against initial value
+     * when `settings` is created and current value. If there is a difference then show a modal dialog asking the user
+     * if they want to reload for those settings to take effect.
+     *
+     * @param {import('./types').TJSSettingsUIData}   settings - The UI data object initiated w/ `create`.
+     */
+    __privateAdd(this, _destroy);
+    /**
+     * @param {import('./types').TJSSettingsCreateOptions} [options] - Optional parameters.
+     *
+     * @returns {import('./types').TJSSettingsUIData} Parsed UI settings data.
+     */
+    __privateAdd(this, _parseSettings);
+    __privateAdd(this, _reloadConfirm);
+    /** @type {import('./types').TJSSettingsCustomSection[]} */
+    __privateAdd(this, _sections, []);
+    /** @type {import('./').TJSGameSettings} */
+    __privateAdd(this, _settings, void 0);
+    /** @type {boolean} */
+    __privateAdd(this, _showSettings, false);
+    /** @type {Function} */
+    __privateAdd(this, _showSettingsSet, void 0);
+    /** @type {{showSettings: import('svelte/store').Readable<boolean>}} */
+    __privateAdd(this, _stores5, void 0);
+    __privateSet(this, _settings, settings);
+    const showSettings = writable(__privateGet(this, _showSettings));
+    __privateSet(this, _showSettingsSet, showSettings.set);
+    __privateSet(this, _stores5, {
+      showSettings: { subscribe: showSettings.subscribe }
+    });
+    Object.freeze(__privateGet(this, _stores5));
+  }
+  /**
+   * @returns {boolean} Current `showSettings` state.
+   */
+  get showSettings() {
+    return __privateGet(this, _showSettings);
+  }
+  /**
+   * @returns {{ showSettings: import('svelte/store').Readable<boolean> }} Returns the managed stores.
+   */
+  get stores() {
+    return __privateGet(this, _stores5);
+  }
+  /**
+   * Sets current `showSettings` state.
+   *
+   * @param {boolean}  showSettings - New `showSettings` state.
+   */
+  set showSettings(showSettings) {
+    __privateSet(this, _showSettings, showSettings);
+    __privateGet(this, _showSettingsSet).call(this, __privateGet(this, _showSettings));
+  }
+  /**
+   * Adds a custom section / folder defined by the provided TJSSettingsCustomSection options object.
+   *
+   * @param {import('./types').TJSSettingsCustomSection} options - The configuration object for the custom section.
+   */
+  addSection(options) {
+    if (!isObject(options)) {
+      throw new TypeError(`'options' is not an object.`);
+    }
+    if (!isSvelteComponent(options.class)) {
+      throw new TypeError(`'options.class' is not a Svelte component.`);
+    }
+    if (options.props !== void 0 && !isObject(options.props)) {
+      throw new TypeError(`'options.props' is not an object.`);
+    }
+    if (options.folder !== void 0) {
+      const folder = options.folder;
+      if (typeof folder !== "string" && !isObject(folder)) {
+        throw new TypeError(`'options.folder' is not a string or object.`);
+      }
+      if (isObject(folder)) {
+        if (typeof folder.label !== "string") {
+          throw new TypeError(`'options.folder.label' is not a string.`);
+        }
+        if (folder.summaryEnd !== void 0) {
+          if (!isObject(folder.summaryEnd)) {
+            throw new TypeError(`'options.folder.summaryEnd' is not an object.`);
+          }
+          if (!isSvelteComponent(folder.summaryEnd.class)) {
+            throw new TypeError(`'options.folder.summaryEnd.class' is not a Svelte component.`);
+          }
+          if (folder.summaryEnd.props !== void 0 && !isObject(folder.summaryEnd.props)) {
+            throw new TypeError(`'options.folder.summaryEnd.props' is not an object.`);
+          }
+        }
+        if (folder.styles !== void 0 && !isObject(folder.styles)) {
+          throw new TypeError(`'options.folder.styles' is not an object.`);
+        }
+      }
+    }
+    if (options.styles !== void 0 && !isObject(options.styles)) {
+      throw new TypeError(`'options.styles' is not an object.`);
+    }
+    __privateGet(this, _sections).push(options);
+  }
+  /**
+   * Creates the UISettingsData object by parsing stored settings in
+   *
+   * @param {import('./types').TJSSettingsCreateOptions} [options] - Optional parameters.
+   *
+   * @returns {import('./types').TJSSettingsUIData} Parsed UI settings data.
+   */
+  create(options) {
+    const settings = __privateMethod(this, _parseSettings, parseSettings_fn).call(this, options);
+    const destroy = /* @__PURE__ */ __name(() => __privateMethod(this, _destroy, destroy_fn).call(this, settings), "destroy");
+    return {
+      ...settings,
+      destroy
+    };
+  }
+  /**
+   * Convenience method to swap `showSettings`.
+   *
+   * @returns {boolean} New `showSettings` state.
+   */
+  swapShowSettings() {
+    __privateSet(this, _showSettings, !__privateGet(this, _showSettings));
+    __privateGet(this, _showSettingsSet).call(this, __privateGet(this, _showSettings));
+    return __privateGet(this, _showSettings);
+  }
+};
+_sections = new WeakMap();
+_settings = new WeakMap();
+_showSettings = new WeakMap();
+_showSettingsSet = new WeakMap();
+_stores5 = new WeakMap();
+_destroy = new WeakSet();
+destroy_fn = /* @__PURE__ */ __name(function(settings) {
+  let requiresClientReload = false;
+  let requiresWorldReload = false;
+  if (Array.isArray(settings.topLevel)) {
+    for (const setting of settings.topLevel) {
+      const current = globalThis.game.settings.get(setting.namespace, setting.key);
+      if (current === setting.initialValue) {
+        continue;
+      }
+      requiresClientReload ||= setting.scope === "client" && setting.requiresReload;
+      requiresWorldReload ||= setting.scope === "world" && setting.requiresReload;
+    }
+  }
+  if (Array.isArray(settings.folders)) {
+    for (const folder of settings.folders) {
+      if (Array.isArray(folder.settings)) {
+        for (const setting of folder.settings) {
+          const current = globalThis.game.settings.get(setting.namespace, setting.key);
+          if (current === setting.initialValue) {
+            continue;
+          }
+          requiresClientReload ||= setting.scope === "client" && setting.requiresReload;
+          requiresWorldReload ||= setting.scope === "world" && setting.requiresReload;
+        }
+      }
+    }
+  }
+  if (requiresClientReload || requiresWorldReload) {
+    __privateMethod(this, _reloadConfirm, reloadConfirm_fn).call(this, { world: requiresWorldReload });
+  }
+  __privateSet(this, _showSettings, false);
+  __privateGet(this, _showSettingsSet).call(this, __privateGet(this, _showSettings));
+}, "#destroy");
+_parseSettings = new WeakSet();
+parseSettings_fn = /* @__PURE__ */ __name(function({ efx = "ripple", storage } = {}) {
+  const namespace = __privateGet(this, _settings).namespace;
+  if (storage && typeof namespace !== "string") {
+    console.warn(
+      `TJSGameSettings warning: 'options.storage' defined, but 'namespace' not defined in TJSGameSettings.`
+    );
+  }
+  const hasStorage = storage && typeof namespace === "string";
+  const uiSettings = [];
+  const canConfigure = globalThis.game.user.can("SETTINGS_MODIFY");
+  for (const setting of __privateGet(this, _settings)) {
+    if (!setting.config || !canConfigure && setting.scope !== "client") {
+      continue;
+    }
+    let options;
+    if (isObject(setting.choices)) {
+      options = Object.entries(setting.choices).map((entry) => ({ value: entry[0], label: localize(entry[1]) }));
+    }
+    let range;
+    if (isObject(setting.range)) {
+      range = {};
+      if (typeof setting.range.min !== "number") {
+        throw new TypeError(`Setting 'range.min' is not a number.`);
+      }
+      if (typeof setting.range.max !== "number") {
+        throw new TypeError(`Setting 'range.max' is not a number.`);
+      }
+      if (setting.range.step !== void 0 && typeof setting.range.step !== "number") {
+        throw new TypeError(`Setting 'range.step' is not a number.`);
+      }
+      range.min = setting.range.min;
+      range.max = setting.range.max;
+      range.step = setting.range.step ? setting.range.step : 1;
+    }
+    const type = setting.type instanceof Function ? setting.type.name : "String";
+    let filePicker;
+    if (type === "String") {
+      filePicker = setting.filePicker === true ? "any" : setting.filePicker;
+    }
+    let buttonData;
+    if (filePicker) {
+      buttonData = {
+        icon: "fas fa-file-import fa-fw",
+        efx: efx === "ripple" ? ripple() : void 0,
+        title: "FILES.BrowseTooltip",
+        styles: { "margin-left": "0.25em" }
+      };
+    }
+    const store = __privateGet(this, _settings).getStore(setting.key);
+    let selectData;
+    let componentType = "text";
+    if (setting.type === Boolean) {
+      componentType = "checkbox";
+    } else if (options !== void 0) {
+      componentType = "select";
+      selectData = {
+        store,
+        efx: efx === "ripple" ? rippleFocus() : void 0,
+        type: componentType,
+        options
+      };
+    } else if (setting.type === Number) {
+      componentType = isObject(setting.range) ? "range" : "number";
+    }
+    let inputData;
+    if (componentType === "text" || componentType === "number") {
+      inputData = {
+        store,
+        efx: efx === "ripple" ? rippleFocus() : void 0,
+        type: componentType
+      };
+    }
+    uiSettings.push({
+      id: `${setting.namespace}.${setting.key}`,
+      namespace: setting.namespace,
+      folder: setting.folder,
+      key: setting.key,
+      name: localize(setting.name),
+      hint: localize(setting.hint),
+      type,
+      componentType,
+      filePicker,
+      range,
+      store,
+      initialValue: globalThis.game.settings.get(setting.namespace, setting.key),
+      scope: setting.scope,
+      requiresReload: typeof setting.requiresReload === "boolean" ? setting.requiresReload : false,
+      buttonData,
+      inputData,
+      selectData
+    });
+  }
+  const storeScrollbar = hasStorage ? storage.getStore(`${namespace}-settings-scrollbar`) : writable(0);
+  const topLevel = [];
+  const folderData = {};
+  for (const setting of uiSettings) {
+    if (typeof setting.folder === "string") {
+      const folderName = localize(setting.folder);
+      if (!Array.isArray(folderData[folderName])) {
+        folderData[folderName] = [];
+      }
+      folderData[folderName].push(setting);
+    } else {
+      topLevel.push(setting);
+    }
+  }
+  const folders = Object.entries(folderData).map((entry) => {
+    return {
+      label: entry[0],
+      store: hasStorage ? storage.getStore(`${namespace}-settings-folder-${entry[0]}`) : void 0,
+      settings: entry[1]
+    };
+  });
+  const sections = [];
+  for (const section of __privateGet(this, _sections)) {
+    const parsedSection = {
+      class: section.class,
+      props: section.props,
+      styles: section.styles
+    };
+    if (typeof section.folder === "string") {
+      const label = localize(section.folder);
+      parsedSection.folder = {
+        label,
+        store: hasStorage ? storage.getStore(`${namespace}-settings-folder-${label}`) : void 0
+      };
+    } else if (isObject(section.folder)) {
+      const label = localize(section.folder.label);
+      parsedSection.folder = {
+        label,
+        store: hasStorage ? storage.getStore(`${namespace}-settings-folder-${label}`) : void 0,
+        summaryEnd: section.folder.summaryEnd,
+        styles: section.folder.styles
+      };
+    }
+    sections.push(parsedSection);
+  }
+  return {
+    storeScrollbar,
+    topLevel,
+    folders,
+    sections
+  };
+}, "#parseSettings");
+_reloadConfirm = new WeakSet();
+reloadConfirm_fn = /* @__PURE__ */ __name(async function({ world = false } = {}) {
+  let title = localize("SETTINGS.ReloadPromptTitle");
+  let label = localize("SETTINGS.ReloadPromptBody");
+  title = title !== "SETTINGS.ReloadPromptTitle" ? title : "Reload Application?";
+  label = label !== "SETTINGS.ReloadPromptBody" ? label : "Some of the changed settings require a reload of the application to take effect. Would you like to reload now?";
+  const reload = await TJSDialog.confirm({
+    modal: true,
+    draggable: false,
+    title,
+    content: `<p>${label}</p>`
+  });
+  if (!reload) {
+    return;
+  }
+  if (world && globalThis.game.user.isGM) {
+    globalThis.game.socket.emit("reload");
+  }
+  window.location.reload();
+}, "#reloadConfirm");
+__name(_UIControl, "UIControl");
+let UIControl = _UIControl;
+const _TJSGameSettings = class _TJSGameSettings {
+  /**
+   * Creates the TJSGameSettings instance.
+   *
+   * @param {string}   namespace - The namespace for all settings.
+   */
+  constructor(namespace) {
+    /**
+     * Gets a store from the `stores` Map or creates a new store for the key.
+     *
+     * @param {string}   key - Key to lookup in stores map.
+     *
+     * @param {string}   [initialValue] - An initial value to set to new stores.
+     *
+     * @returns {import('svelte/store').Writable} The store for the given key.
+     */
+    __privateAdd(this, _getStore2);
+    /** @type {string} */
+    __privateAdd(this, _namespace, void 0);
+    /** @type {GameSettingData[]} */
+    __privateAdd(this, _settings2, []);
+    /**
+     * @type {Map<string, import('svelte/store').Writable>}
+     */
+    __privateAdd(this, _stores6, /* @__PURE__ */ new Map());
+    /** @type {import('./types').UIControl} */
+    __privateAdd(this, _uiControl, void 0);
+    if (typeof namespace !== "string") {
+      throw new TypeError(`'namespace' is not a string.`);
+    }
+    __privateSet(this, _namespace, namespace);
+    __privateSet(this, _uiControl, new UIControl(this));
+  }
+  /**
+   * Provides an iterator / generator to return stored settings data.
+   *
+   * @returns {IterableIterator<GameSettingData>} An iterator of all game setting data.
+   * @yields {GameSettingData}
+   */
+  *[Symbol.iterator]() {
+    for (const setting of __privateGet(this, _settings2)) {
+      yield setting;
+    }
+  }
+  /**
+   * @returns {string} Returns namespace set in constructor.
+   */
+  get namespace() {
+    return __privateGet(this, _namespace);
+  }
+  /**
+   * @returns {import('./types').UIControl} The associated UIControl.
+   */
+  get uiControl() {
+    return __privateGet(this, _uiControl);
+  }
+  /**
+   * Returns a readable Game Settings store for the associated key.
+   *
+   * @param {string}   key - Game setting key.
+   *
+   * @returns {import('svelte/store').Readable | undefined} The associated store for the given game setting key.
+   */
+  getReadableStore(key) {
+    if (!__privateGet(this, _stores6).has(key)) {
+      console.warn(`TJSGameSettings - getReadableStore: '${key}' is not a registered setting.`);
+      return;
+    }
+    const store = __privateMethod(this, _getStore2, getStore_fn2).call(this, key);
+    return { subscribe: store.subscribe };
+  }
+  /**
+   * Returns a writable Game Settings store for the associated key.
+   *
+   * @param {string}   key - Game setting key.
+   *
+   * @returns {import('svelte/store').Writable | undefined} The associated store for the given game setting key.
+   */
+  getStore(key) {
+    return this.getWritableStore(key);
+  }
+  /**
+   * Returns a writable Game Settings store for the associated key.
+   *
+   * @param {string}   key - Game setting key.
+   *
+   * @returns {import('svelte/store').Writable | undefined} The associated store for the given game setting key.
+   */
+  getWritableStore(key) {
+    if (!__privateGet(this, _stores6).has(key)) {
+      console.warn(`TJSGameSettings - getWritableStore: '${key}' is not a registered setting.`);
+      return;
+    }
+    return __privateMethod(this, _getStore2, getStore_fn2).call(this, key);
+  }
+  /**
+   * Registers a setting with TJSGameSettings and Foundry core.
+   *
+   * Note: The specific store subscription handler assigned to the passed in store or store created for the setting
+   * internally is returned from this function. In some cases when setting up custom stores particularly of object
+   * types with several child property stores (`propertyStore`) it is necessary to only update the setting store and
+   * not all subscribers to the custom store as the `propertyStore` instances are also subscribers to the custom store.
+   *
+   * This allows the custom store in the `set` implementation to mainly only trigger the TJSGameSettings subscriber
+   * handler on updates and not all the connected `propertyStore` instances.
+   *
+   * @param {GameSetting} setting - A GameSetting instance to set to Foundry game settings.
+   *
+   * @param {boolean}     coreConfig - When false this overrides the `setting.options.config` parameter when
+   *                                   registering the setting with Foundry. This allows the settings to be displayed
+   *                                   in the app itself, but removed from the standard Foundry configuration location.
+   *
+   * @returns {Function} The specific store subscription handler assigned to the passed in store.
+   */
+  register(setting, coreConfig = true) {
+    if (!isObject(setting)) {
+      throw new TypeError(`TJSGameSettings - register: setting is not an object.`);
+    }
+    if (!isObject(setting.options)) {
+      throw new TypeError(`TJSGameSettings - register: 'setting.options' attribute is not an object.`);
+    }
+    if (typeof coreConfig !== "boolean") {
+      throw new TypeError(`TJSGameSettings - register: 'coreConfig' is not an boolean.`);
+    }
+    if (setting.store !== void 0 && !isWritableStore(setting.store)) {
+      throw new TypeError(
+        `TJSGameSettings - register: 'setting.store' attribute is not a writable store.`
+      );
+    }
+    const namespace = setting.namespace;
+    const key = setting.key;
+    const folder = setting.folder;
+    const foundryConfig = coreConfig ? setting.options.config : false;
+    if (typeof namespace !== "string") {
+      throw new TypeError(`TJSGameSettings - register: 'namespace' attribute is not a string.`);
+    }
+    if (typeof key !== "string") {
+      throw new TypeError(`TJSGameSettings - register: 'key' attribute is not a string.`);
+    }
+    if (folder !== void 0 && typeof folder !== "string") {
+      throw new TypeError(`TJSGameSettings - register: 'folder' attribute is not a string.`);
+    }
+    const store = setting.store;
+    const options = setting.options;
+    const onchangeFunctions = [];
+    let gateSet = false;
+    onchangeFunctions.push((value) => {
+      const callbackStore = __privateMethod(this, _getStore2, getStore_fn2).call(this, key);
+      if (callbackStore && !gateSet) {
+        gateSet = true;
+        callbackStore.set(value);
+        gateSet = false;
+      }
+    });
+    if (isIterable(options?.onChange)) {
+      for (const entry of options.onChange) {
+        if (typeof entry === "function") {
+          onchangeFunctions.push(entry);
+        }
+      }
+    } else if (typeof options.onChange === "function") {
+      onchangeFunctions.push(options.onChange);
+    }
+    const onChange = /* @__PURE__ */ __name((value) => {
+      for (const entry of onchangeFunctions) {
+        entry(value);
+      }
+    }, "onChange");
+    globalThis.game.settings.register(namespace, key, { ...options, config: foundryConfig, onChange });
+    const targetStore = store ? store : __privateMethod(this, _getStore2, getStore_fn2).call(this, key, globalThis.game.settings.get(namespace, key));
+    if (store) {
+      __privateGet(this, _stores6).set(key, targetStore);
+      store.set(globalThis.game.settings.get(namespace, key));
+    }
+    const storeHandler = /* @__PURE__ */ __name(async (value) => {
+      if (!gateSet && globalThis.game.settings.get(namespace, key) !== value) {
+        gateSet = true;
+        await globalThis.game.settings.set(namespace, key, value);
+      }
+      gateSet = false;
+    }, "storeHandler");
+    subscribeIgnoreFirst(targetStore, storeHandler);
+    __privateGet(this, _settings2).push({
+      namespace,
+      key,
+      folder,
+      ...options
+    });
+    return storeHandler;
+  }
+  /**
+   * Registers multiple settings.
+   *
+   * Please refer to the note in {@link TJSGameSettings.register} about the returned object of store subscriber handler
+   * functions.
+   *
+   * @param {Iterable<GameSetting>} settings - An iterable list of game setting configurations to register.
+   *
+   * @param {boolean}     coreConfig - When false this overrides the `setting.options.config` parameter when
+   *                                   registering the setting with Foundry. This allows the settings to be displayed
+   *                                   in the app itself, but removed from the standard Foundry configuration location.
+   *
+   * @returns { {[key: string]: Function} } An object containing all TJSGameSetting store subscriber handlers for each
+   *          setting `key` added.
+   */
+  registerAll(settings, coreConfig) {
+    const storeHandlers = {};
+    if (!isIterable(settings)) {
+      throw new TypeError(`TJSGameSettings - registerAll: settings is not iterable.`);
+    }
+    for (const entry of settings) {
+      if (!isObject(entry)) {
+        throw new TypeError(`TJSGameSettings - registerAll: entry in settings is not an object.`);
+      }
+      if (typeof entry.namespace !== "string") {
+        throw new TypeError(`TJSGameSettings - registerAll: entry in settings missing 'namespace' attribute.`);
+      }
+      if (typeof entry.key !== "string") {
+        throw new TypeError(`TJSGameSettings - registerAll: entry in settings missing 'key' attribute.`);
+      }
+      if (!isObject(entry.options)) {
+        throw new TypeError(`TJSGameSettings - registerAll: entry in settings missing 'options' attribute.`);
+      }
+      storeHandlers[entry.key] = this.register(entry, coreConfig);
+    }
+    return storeHandlers;
+  }
+};
+_namespace = new WeakMap();
+_settings2 = new WeakMap();
+_stores6 = new WeakMap();
+_uiControl = new WeakMap();
+_createStore2 = new WeakSet();
+createStore_fn2 = /* @__PURE__ */ __name(function(initialValue) {
+  return writable(initialValue);
+}, "#createStore");
+_getStore2 = new WeakSet();
+getStore_fn2 = /* @__PURE__ */ __name(function(key, initialValue) {
+  var _a2;
+  let store = __privateGet(this, _stores6).get(key);
+  if (store === void 0) {
+    store = __privateMethod(_a2 = _TJSGameSettings, _createStore2, createStore_fn2).call(_a2, initialValue);
+    __privateGet(this, _stores6).set(key, store);
+  }
+  return store;
+}, "#getStore");
+/**
+ * Creates a new writable for the given key.
+ *
+ * @param {*}  initialValue - An initial value to set to new stores.
+ *
+ * @returns {import('svelte/store').Writable} The new writable.
+ */
+__privateAdd(_TJSGameSettings, _createStore2);
+__name(_TJSGameSettings, "TJSGameSettings");
+let TJSGameSettings = _TJSGameSettings;
+const gameSettings = new TJSGameSettings(SYSTEM_ID);
+function registerSettings() {
+  dontShowWelcome();
+  applicationWindowHeaderIconsOnly();
+}
+__name(registerSettings, "registerSettings");
+function dontShowWelcome() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: "dontShowWelcome",
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Hint`),
+      scope: "user",
+      config: true,
+      default: false,
+      type: Boolean
+    }
+  });
+}
+__name(dontShowWelcome, "dontShowWelcome");
+function applicationWindowHeaderIconsOnly() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: "applicationWindowHeaderIconsOnly",
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.applicationWindowHeaderIconsOnly.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.applicationWindowHeaderIconsOnly.Hint`),
+      scope: "user",
+      config: true,
+      default: false,
+      type: Boolean
+    }
+  });
+}
+__name(applicationWindowHeaderIconsOnly, "applicationWindowHeaderIconsOnly");
+foundry.data.fields;
+const _FFTypeDataModel = class _FFTypeDataModel extends foundry.abstract.TypeDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_FFTypeDataModel, "FFTypeDataModel");
+let FFTypeDataModel = _FFTypeDataModel;
+foundry.data.fields;
+const _FFActorDataModel = class _FFActorDataModel extends FFTypeDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_FFActorDataModel, "FFActorDataModel");
+let FFActorDataModel = _FFActorDataModel;
+const {
+  HTMLField: HTMLField$2,
+  SchemaField: SchemaField$2,
+  NumberField: NumberField$2,
+  StringField: StringField$2,
+  FilePathField: FilePathField$2,
+  ArrayField: ArrayField$2
+} = foundry.data.fields;
+const _NPCModel = class _NPCModel extends FFActorDataModel {
+  static defineSchema() {
+    return {
+      description: new HTMLField$2()
+    };
+  }
+};
+__name(_NPCModel, "NPCModel");
+let NPCModel = _NPCModel;
+const {
+  HTMLField: HTMLField$1,
+  SchemaField: SchemaField$1,
+  NumberField: NumberField$1,
+  StringField: StringField$1,
+  FilePathField: FilePathField$1,
+  ArrayField: ArrayField$1,
+  BooleanField
+} = foundry.data.fields;
+const _PCModel = class _PCModel extends FFActorDataModel {
+  static defineSchema() {
+    return {
+      isEditing: new BooleanField({ initial: false }),
+      biography: new HTMLField$1(),
+      points: new SchemaField$1({
+        MP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        HP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        BP: new SchemaField$1({
+          current: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        })
+      }),
+      attributes: new SchemaField$1({
+        primary: new SchemaField$1({
+          str: new SchemaField$1({
+            //- @deprecated: I think `label` is in the wrong place? Should maybe just be in the svelte template as it is a constant, not data
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.str.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          dex: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.dex.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          vit: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vit.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          int: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.ing.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          mnd: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mnd.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          })
+        })
+      }),
+      secondary: new SchemaField$1({
+        def: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        mag: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        vig: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        spd: new SchemaField$1({
+          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
+          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        })
+      })
+    };
+  }
+};
+__name(_PCModel, "PCModel");
+let PCModel = _PCModel;
+const {
+  HTMLField,
+  SchemaField,
+  NumberField,
+  StringField,
+  FilePathField,
+  ArrayField
+} = foundry.data.fields;
+const _FFItemDataModel = class _FFItemDataModel extends FFTypeDataModel {
+  static defineSchema() {
+    return {
+      description: new HTMLField()
+    };
+  }
+};
+__name(_FFItemDataModel, "FFItemDataModel");
+let FFItemDataModel = _FFItemDataModel;
+foundry.data.fields;
+const _ActionModel = class _ActionModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_ActionModel, "ActionModel");
+let ActionModel = _ActionModel;
+foundry.data.fields;
+const _EquipmentModel = class _EquipmentModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_EquipmentModel, "EquipmentModel");
+let EquipmentModel = _EquipmentModel;
+foundry.data.fields;
+const _JobModel = class _JobModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_JobModel, "JobModel");
+let JobModel = _JobModel;
+foundry.data.fields;
+const _TelegraphModel = class _TelegraphModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_TelegraphModel, "TelegraphModel");
+let TelegraphModel = _TelegraphModel;
+foundry.data.fields;
+const _TraitModel = class _TraitModel extends FFItemDataModel {
+  static defineSchema() {
+    return {};
+  }
+};
+__name(_TraitModel, "TraitModel");
+let TraitModel = _TraitModel;
+function setupModels() {
+  CONFIG.Item.dataModels["job"] = JobModel;
+  CONFIG.Item.dataModels["Action"] = ActionModel;
+  CONFIG.Item.dataModels["Telegraph"] = TelegraphModel;
+  CONFIG.Item.dataModels["Trait"] = TraitModel;
+  CONFIG.Item.dataModels["Equipment"] = EquipmentModel;
+  CONFIG.Actor.dataModels["PC"] = PCModel;
+  CONFIG.Actor.dataModels["NPC"] = NPCModel;
+}
+__name(setupModels, "setupModels");
+const WelcomeAppShell_svelte_svelte_type_style_lang = "";
+function create_default_slot$5(ctx) {
+  let main;
+  let div1;
+  let p0;
+  let h10;
+  let p1;
+  let a0;
+  let t6;
+  let t7_value = localize(`${SYSTEM_CODE}.Welcome.Released`) + "";
+  let t7;
+  let h11;
+  let p2;
+  let span0;
+  let a1;
+  let div4;
+  let div2;
+  let input;
+  let div3;
+  let span1;
+  let footer;
+  let div5;
+  let div6;
+  let h4;
+  let a2;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      main = element("main");
+      div1 = element("div");
+      div1.innerHTML = `<div class="texture svelte-FF15-1njk00a"></div><img src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;" class="svelte-FF15-1njk00a"/>`;
+      p0 = element("p");
+      p0.textContent = `${localize("FF15.Welcome.To")} ${localize(`${SYSTEM_CODE}.Title`)}!`;
+      h10 = element("h1");
+      h10.textContent = `${localize("FF15.Welcome.Introduction")}`;
+      p1 = element("p");
+      a0 = element("a");
+      a0.textContent = `${localize(`${SYSTEM_CODE}.Title`)}`;
+      t6 = text(" ");
+      t7 = text(t7_value);
+      h11 = element("h1");
+      h11.textContent = "Help";
+      p2 = element("p");
+      span0 = element("span");
+      span0.textContent = `${localize("FF15.Welcome.Issues")}`;
+      a1 = element("a");
+      a1.textContent = `${localize("FF15.Welcome.Github")}`;
+      div4 = element("div");
+      div2 = element("div");
+      input = element("input");
+      div3 = element("div");
+      span1 = element("span");
+      span1.textContent = `${localize("FF15.Setting.DontShowWelcome.Name")}`;
+      footer = element("footer");
+      div5 = element("div");
+      div5.innerHTML = `<img class="pt-sm white svelte-FF15-1njk00a" src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
+      div6 = element("div");
+      h4 = element("h4");
+      h4.textContent = `${localize(`${SYSTEM_CODE}.Title`)} ${localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
+      a2 = element("a");
+      a2.textContent = "Round Table Games ©2024";
+      attr(div1, "class", "logo-background svelte-FF15-1njk00a");
+      attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
+      attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
+      attr(input, "type", "checkbox");
+      attr(input, "label", localize("FF15.Setting.DontShowWelcome.Name"));
+      attr(div2, "class", "flex0");
+      attr(div3, "class", "flex");
+      attr(div4, "class", "flexrow inset justify-flexrow-vertical");
+      attr(div4, "data-tooltip", localize("FF15.Setting.DontShowWelcome.Hint"));
+      attr(main, "class", "svelte-FF15-1njk00a");
+      attr(div5, "class", "flex2 right");
+      attr(a2, "href", "https://www.round-table.games");
+      attr(a2, "class", "svelte-FF15-1njk00a");
+      attr(div6, "class", "flex2 left pt-sm");
+      attr(footer, "class", "svelte-FF15-1njk00a");
+    },
+    m(target, anchor) {
+      insert(target, main, anchor);
+      append(main, div1);
+      append(main, p0);
+      append(main, h10);
+      append(main, p1);
+      append(p1, a0);
+      append(p1, t6);
+      append(p1, t7);
+      append(main, h11);
+      append(main, p2);
+      append(p2, span0);
+      append(p2, a1);
+      append(main, div4);
+      append(div4, div2);
+      append(div2, input);
+      input.checked = /*dontShowWelcome*/
+      ctx[1];
+      append(div4, div3);
+      append(div3, span1);
+      insert(target, footer, anchor);
+      append(footer, div5);
+      append(footer, div6);
+      append(div6, h4);
+      append(div6, a2);
+      if (!mounted) {
+        dispose = [
+          listen(
+            input,
+            "change",
+            /*handleChange*/
+            ctx[3]
+          ),
+          listen(
+            input,
+            "change",
+            /*input_change_handler*/
+            ctx[7]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*dontShowWelcome*/
+      2) {
+        input.checked = /*dontShowWelcome*/
+        ctx2[1];
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(main);
+        detach(footer);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_default_slot$5, "create_default_slot$5");
+function create_fragment$z(ctx) {
+  let applicationshell;
+  let updating_elementRoot;
+  let current;
+  function applicationshell_elementRoot_binding(value) {
+    ctx[8](value);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  let applicationshell_props = {
+    $$slots: { default: [create_default_slot$5] },
+    $$scope: { ctx }
+  };
+  if (
+    /*elementRoot*/
+    ctx[0] !== void 0
+  ) {
+    applicationshell_props.elementRoot = /*elementRoot*/
+    ctx[0];
+  }
+  applicationshell = new ApplicationShell$1({ props: applicationshell_props });
+  binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
+  return {
+    c() {
+      create_component(applicationshell.$$.fragment);
+    },
+    m(target, anchor) {
+      mount_component(applicationshell, target, anchor);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      const applicationshell_changes = {};
+      if (dirty & /*$$scope, dontShowWelcome*/
+      1026) {
+        applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
+      }
+      if (!updating_elementRoot && dirty & /*elementRoot*/
+      1) {
+        updating_elementRoot = true;
+        applicationshell_changes.elementRoot = /*elementRoot*/
+        ctx2[0];
+        add_flush_callback(() => updating_elementRoot = false);
+      }
+      applicationshell.$set(applicationshell_changes);
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(applicationshell.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(applicationshell.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      destroy_component(applicationshell, detaching);
+    }
+  };
+}
+__name(create_fragment$z, "create_fragment$z");
+function instance$h($$self, $$props, $$invalidate) {
+  let dontShowWelcome2;
+  let $dontShowWelcomeStore;
+  let { elementRoot = void 0 } = $$props;
+  let { version: version2 = void 0 } = $$props;
+  const application = getContext("#external").application;
+  const dontShowWelcomeStore = gameSettings.getStore("dontShowWelcome");
+  component_subscribe($$self, dontShowWelcomeStore, (value) => $$invalidate(6, $dontShowWelcomeStore = value));
+  const handleChange = /* @__PURE__ */ __name((event) => {
+    game.settings.set(SYSTEM_ID, "dontShowWelcome", event.target.checked);
+  }, "handleChange");
+  let draggable2 = application.reactive.draggable;
+  draggable2 = true;
+  onMount(async () => {
+  });
+  function input_change_handler() {
+    dontShowWelcome2 = this.checked;
+    $$invalidate(1, dontShowWelcome2), $$invalidate(6, $dontShowWelcomeStore);
+  }
+  __name(input_change_handler, "input_change_handler");
+  function applicationshell_elementRoot_binding(value) {
+    elementRoot = value;
+    $$invalidate(0, elementRoot);
+  }
+  __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
+  $$self.$$set = ($$props2) => {
+    if ("elementRoot" in $$props2)
+      $$invalidate(0, elementRoot = $$props2.elementRoot);
+    if ("version" in $$props2)
+      $$invalidate(4, version2 = $$props2.version);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*draggable*/
+    32) {
+      application.reactive.draggable = draggable2;
+    }
+    if ($$self.$$.dirty & /*$dontShowWelcomeStore*/
+    64) {
+      $$invalidate(1, dontShowWelcome2 = $dontShowWelcomeStore);
+    }
+    if ($$self.$$.dirty & /*dontShowWelcome*/
+    2) {
+      log.d("dontShowWelcome", dontShowWelcome2);
+    }
+  };
+  return [
+    elementRoot,
+    dontShowWelcome2,
+    dontShowWelcomeStore,
+    handleChange,
+    version2,
+    draggable2,
+    $dontShowWelcomeStore,
+    input_change_handler,
+    applicationshell_elementRoot_binding
+  ];
+}
+__name(instance$h, "instance$h");
+const _WelcomeAppShell = class _WelcomeAppShell extends SvelteComponent {
+  constructor(options) {
+    super();
+    init(this, options, instance$h, create_fragment$z, safe_not_equal, { elementRoot: 0, version: 4 });
+  }
+  get elementRoot() {
+    return this.$$.ctx[0];
+  }
+  set elementRoot(elementRoot) {
+    this.$$set({ elementRoot });
+    flush();
+  }
+  get version() {
+    return this.$$.ctx[4];
+  }
+  set version(version2) {
+    this.$$set({ version: version2 });
+    flush();
+  }
+};
+__name(_WelcomeAppShell, "WelcomeAppShell");
+let WelcomeAppShell = _WelcomeAppShell;
 const version = "0.0.1";
 const _WelcomeApplication = class _WelcomeApplication extends SvelteApplication {
   /**
@@ -15623,84 +19685,6 @@ const _FF15Actor = class _FF15Actor extends Actor {
 };
 __name(_FF15Actor, "FF15Actor");
 let FF15Actor = _FF15Actor;
-function ripple({
-  duration = 600,
-  background = "rgba(255, 255, 255, 0.7)",
-  events = ["click", "keyup"],
-  keyCode = "Enter",
-  debounce
-} = {}) {
-  return (element2) => {
-    function createRipple(e) {
-      const elementRect = element2.getBoundingClientRect();
-      const diameter = Math.max(elementRect.width, elementRect.height);
-      const radius = diameter / 2;
-      const left = e.clientX ? `${e.clientX - (elementRect.left + radius)}px` : "0";
-      const top = e.clientY ? `${e.clientY - (elementRect.top + radius)}px` : "0";
-      const span = document.createElement("span");
-      span.style.position = "absolute";
-      span.style.width = `${diameter}px`;
-      span.style.height = `${diameter}px`;
-      span.style.left = left;
-      span.style.top = top;
-      span.style.background = `var(--tjs-action-ripple-background, ${background})`;
-      span.style.borderRadius = "50%";
-      span.style.pointerEvents = "none";
-      span.style.transform = "translateZ(-1px)";
-      element2.prepend(span);
-      const animation = span.animate(
-        [
-          {
-            // from
-            transform: "scale(.7)",
-            opacity: 0.5,
-            filter: "blur(2px)"
-          },
-          {
-            // to
-            transform: "scale(4)",
-            opacity: 0,
-            filter: "blur(5px)"
-          }
-        ],
-        duration
-      );
-      animation.onfinish = () => {
-        if (span && span.isConnected) {
-          span.remove();
-        }
-      };
-    }
-    __name(createRipple, "createRipple");
-    function keyHandler(event) {
-      if (event?.code === keyCode) {
-        createRipple(event);
-      }
-    }
-    __name(keyHandler, "keyHandler");
-    const eventFn = Number.isInteger(debounce) && debounce > 0 ? Timing.debounce(createRipple, debounce) : createRipple;
-    const keyEventFn = Number.isInteger(debounce) && debounce > 0 ? Timing.debounce(keyHandler, debounce) : keyHandler;
-    for (const event of events) {
-      if (["keydown", "keyup"].includes(event)) {
-        element2.addEventListener(event, keyEventFn);
-      } else {
-        element2.addEventListener(event, eventFn);
-      }
-    }
-    return {
-      destroy: () => {
-        for (const event of events) {
-          if (["keydown", "keyup"].includes(event)) {
-            element2.removeEventListener(event, keyEventFn);
-          } else {
-            element2.removeEventListener(event, eventFn);
-          }
-        }
-      }
-    };
-  };
-}
-__name(ripple, "ripple");
 const Tabs_svelte_svelte_type_style_lang = "";
 function get_each_context$1(ctx, list, i) {
   const child_ctx = ctx.slice();
@@ -20660,33 +24644,49 @@ const _Inventory = class _Inventory extends SvelteComponent {
 };
 __name(_Inventory, "Inventory");
 let Inventory = _Inventory;
+const ActorSheetShell_svelte_svelte_type_style_lang = "";
 function create_default_slot$1(ctx) {
   let pre;
+  let t0;
+  let t1;
   let tabs_1;
   let current;
   tabs_1 = new Tabs$5({
     props: { tabs: (
       /*tabs*/
-      ctx[3]
+      ctx[4]
     ), activeTab }
   });
   return {
     c() {
       pre = element("pre");
-      pre.textContent = `${game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly")}`;
+      t0 = text("applicationWindowHeaderIconsOnly? ");
+      t1 = text(
+        /*$applicationWindowHeaderIconsOnly*/
+        ctx[2]
+      );
       create_component(tabs_1.$$.fragment);
     },
     m(target, anchor) {
       insert(target, pre, anchor);
+      append(pre, t0);
+      append(pre, t1);
       mount_component(tabs_1, target, anchor);
       current = true;
     },
     p(ctx2, dirty) {
+      if (!current || dirty & /*$applicationWindowHeaderIconsOnly*/
+      4)
+        set_data(
+          t1,
+          /*$applicationWindowHeaderIconsOnly*/
+          ctx2[2]
+        );
       const tabs_1_changes = {};
       if (dirty & /*tabs*/
-      8)
+      16)
         tabs_1_changes.tabs = /*tabs*/
-        ctx2[3];
+        ctx2[4];
       tabs_1.$set(tabs_1_changes);
     },
     i(local) {
@@ -20714,11 +24714,11 @@ function create_fragment$d(ctx) {
   let updating_stylesApp;
   let current;
   function applicationshell_elementRoot_binding(value) {
-    ctx[5](value);
+    ctx[6](value);
   }
   __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
   function applicationshell_stylesApp_binding(value) {
-    ctx[6](value);
+    ctx[7](value);
   }
   __name(applicationshell_stylesApp_binding, "applicationshell_stylesApp_binding");
   let applicationshell_props = {
@@ -20734,10 +24734,10 @@ function create_fragment$d(ctx) {
   }
   if (
     /*stylesApp*/
-    ctx[2] !== void 0
+    ctx[3] !== void 0
   ) {
     applicationshell_props.stylesApp = /*stylesApp*/
-    ctx[2];
+    ctx[3];
   }
   applicationshell = new ApplicationShell$1({ props: applicationshell_props });
   binding_callbacks.push(() => bind(applicationshell, "elementRoot", applicationshell_elementRoot_binding));
@@ -20752,8 +24752,8 @@ function create_fragment$d(ctx) {
     },
     p(ctx2, [dirty]) {
       const applicationshell_changes = {};
-      if (dirty & /*$$scope, tabs*/
-      131080) {
+      if (dirty & /*$$scope, tabs, $applicationWindowHeaderIconsOnly*/
+      131092) {
         applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
       }
       if (!updating_elementRoot && dirty & /*elementRoot*/
@@ -20764,10 +24764,10 @@ function create_fragment$d(ctx) {
         add_flush_callback(() => updating_elementRoot = false);
       }
       if (!updating_stylesApp && dirty & /*stylesApp*/
-      4) {
+      8) {
         updating_stylesApp = true;
         applicationshell_changes.stylesApp = /*stylesApp*/
-        ctx2[2];
+        ctx2[3];
         add_flush_callback(() => updating_stylesApp = false);
       }
       applicationshell.$set(applicationshell_changes);
@@ -20791,16 +24791,17 @@ __name(create_fragment$d, "create_fragment$d");
 let activeTab = "attributes";
 function instance$3($$self, $$props, $$invalidate) {
   let tabs;
-  let $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(8, $$value)), documentStore), "$$subscribe_documentStore");
-  let $headerButtonNoLabel;
+  let $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(10, $$value)), documentStore), "$$subscribe_documentStore");
+  let $applicationWindowHeaderIconsOnly;
   $$self.$$.on_destroy.push(() => $$unsubscribe_documentStore());
   let { elementRoot } = $$props;
   let { documentStore } = $$props;
   $$subscribe_documentStore();
   setContext("#doc", documentStore);
   const application = getContext("#external").application;
-  const headerButtonNoLabel = application.reactive.storeAppOptions.headerButtonNoLabel;
-  component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(9, $headerButtonNoLabel = value));
+  const applicationWindowHeaderIconsOnly2 = gameSettings.getStore("applicationWindowHeaderIconsOnly");
+  component_subscribe($$self, applicationWindowHeaderIconsOnly2, (value) => $$invalidate(2, $applicationWindowHeaderIconsOnly = value));
+  application.reactive.storeAppOptions.headerButtonNoLabel;
   let stylesApp;
   const defaultTabs = [
     {
@@ -20833,7 +24834,7 @@ function instance$3($$self, $$props, $$invalidate) {
   __name(applicationshell_elementRoot_binding, "applicationshell_elementRoot_binding");
   function applicationshell_stylesApp_binding(value) {
     stylesApp = value;
-    $$invalidate(2, stylesApp);
+    $$invalidate(3, stylesApp);
   }
   __name(applicationshell_stylesApp_binding, "applicationshell_stylesApp_binding");
   $$self.$$set = ($$props2) => {
@@ -20842,18 +24843,22 @@ function instance$3($$self, $$props, $$invalidate) {
     if ("documentStore" in $$props2)
       $$subscribe_documentStore($$invalidate(1, documentStore = $$props2.documentStore));
   };
-  if (game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly") == true) {
-    set_store_value(headerButtonNoLabel, $headerButtonNoLabel = true, $headerButtonNoLabel);
-  } else {
-    set_store_value(headerButtonNoLabel, $headerButtonNoLabel = false, $headerButtonNoLabel);
-  }
-  $$invalidate(3, tabs = defaultTabs);
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$applicationWindowHeaderIconsOnly*/
+    4) {
+      {
+        application.reactive.headerButtonNoLabel = $applicationWindowHeaderIconsOnly;
+      }
+    }
+  };
+  $$invalidate(4, tabs = defaultTabs);
   return [
     elementRoot,
     documentStore,
+    $applicationWindowHeaderIconsOnly,
     stylesApp,
     tabs,
-    headerButtonNoLabel,
+    applicationWindowHeaderIconsOnly2,
     applicationshell_elementRoot_binding,
     applicationshell_stylesApp_binding
   ];
@@ -21080,6 +25085,8 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
       minWidth: 660,
       id: `${SYSTEM_ID}--actor-sheet`,
       classes: [SYSTEM_CODE],
+      headerButtonNoLabel: game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly") || false,
+      //- @why: without this the initial value on first load of this app after a page refresh will be wrong, despite a reactive setting in the .svelte template; I don't really know why
       dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
       svelte: {
         class: ActorSheetShell,
@@ -21088,11 +25095,13 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
     });
   }
   _getHeaderButtons() {
+    log.d("_getHeaderButtons");
     const buttons = super._getHeaderButtons();
+    this.reactive.sessionStorage;
     const canConfigure = game.user.isGM || this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE");
     if (this.reactive.document.documentName === "Actor") {
       if (canConfigure) {
-        buttons.splice(1, 0, {
+        buttons.unshift({
           label: this.token ? "Token" : "TOKEN.TitlePrototype",
           class: "configure-token",
           icon: "fas fa-user-circle",
@@ -21100,7 +25109,39 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
         });
       }
     }
+    const canEdit = game.user.isGM || this.reactive.document.isOwner;
+    if (canEdit) {
+      buttons.unshift({
+        label: localize("FF15.Types.Actor.HeaderButtons.Edit"),
+        class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
+        icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
+        // onclick: (ev) => this._onToggleEdit(ev),
+        onPress: (ev) => {
+          this._onToggleEdit(ev);
+        }
+      });
+    }
     return buttons;
+  }
+  _onToggleEdit(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    log.d("before", this.reactive.document.system.isEditing);
+    this.reactive.document.system.isEditing = !this.reactive.document.system.isEditing;
+    this.render();
+    log.d("after", this.reactive.document.system.isEditing);
+  }
+  _onConfigureToken(event) {
+    if (event) {
+      event.preventDefault();
+    }
+    const actor = this.reactive.document;
+    const token = actor.isToken ? actor.token : actor.prototypeToken;
+    new CONFIG.Token.prototypeSheetClass(token, {
+      left: Math.max(this.position.left - 560 - 10, 10),
+      top: this.position.top
+    }).render(true);
   }
   /**
    * Drag&Drop handling
@@ -21161,7 +25202,7 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
         return this._onDropFolder(event, data);
       }
       default: {
-        log$1.e(`Impossible type "${data.type}" in _onDrop.`);
+        log.e(`Impossible type "${data.type}" in _onDrop.`);
         return;
       }
     }
@@ -21241,17 +25282,6 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
       return update2;
     });
     return actor.updateEmbeddedDocuments("Item", updateData);
-  }
-  _onConfigureToken(event) {
-    if (event) {
-      event.preventDefault();
-    }
-    const actor = this.reactive.document;
-    const token = actor.isToken ? actor.token : actor.prototypeToken;
-    new CONFIG.Token.prototypeSheetClass(token, {
-      left: Math.max(this.position.left - 560 - 10, 10),
-      top: this.position.top
-    }).render(true);
   }
 };
 __name(_FF15ActorSheet, "FF15ActorSheet");

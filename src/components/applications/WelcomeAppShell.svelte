@@ -4,11 +4,13 @@
   import { ApplicationShell }   from '#runtime/svelte/component/core';
   import { localize } from "#runtime/svelte/helper";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
+  import { gameSettings } from '~/src/config/gameSettings';
 
   export let elementRoot = void 0;
   export let version = void 0;
 
   const application = getContext('#external').application;
+  const dontShowWelcomeStore = gameSettings.getStore('dontShowWelcome');
 
   const handleChange = (event) => {
     game.settings.set(SYSTEM_ID, 'dontShowWelcome', event.target.checked);
@@ -19,7 +21,9 @@
   draggable = true
 
   $: application.reactive.draggable = draggable;
-  $: dontShowWelcome = game.settings.get(SYSTEM_ID, 'dontShowWelcome');
+  $: dontShowWelcome = $dontShowWelcomeStore
+
+  $: log.d('dontShowWelcome', dontShowWelcome);
 
   onMount(async () => {
   });

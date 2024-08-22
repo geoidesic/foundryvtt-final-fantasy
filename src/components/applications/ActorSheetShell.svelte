@@ -6,6 +6,7 @@
   import { getActorOwner, ucfirst } from "~/src/helpers/utility";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import { localize } from "#runtime/svelte/helper";
+  import { gameSettings } from '~/src/config/gameSettings';
 
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import Abilities from "~/src/components/pages/actor/Abilities.svelte";
@@ -21,18 +22,12 @@
   setContext("#doc", documentStore);
 
   const application = getContext("#external").application;
+  const applicationWindowHeaderIconsOnly = gameSettings.getStore('applicationWindowHeaderIconsOnly');
   const headerButtonNoLabel = application.reactive.storeAppOptions.headerButtonNoLabel;
-
-
-  const setHeaderLabels = (value) => {
-    $headerButtonNoLabel = value;
-  };
-
-  $: if (game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly") == true) {
-    $headerButtonNoLabel = true;
-  } else {
-    $headerButtonNoLabel = false
+  $: {
+   application.reactive.headerButtonNoLabel = $applicationWindowHeaderIconsOnly;
   }
+
 
   // set the sheet color
   let stylesApp;
@@ -116,10 +111,27 @@
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot bind:stylesApp)
-    pre {game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly")}
+    pre applicationWindowHeaderIconsOnly? {$applicationWindowHeaderIconsOnly}
     Tabs(tabs="{tabs}" activeTab="{activeTab}")
 </template>
 
 <style lang="sass">
+:global(.edit-sheet)
+  color: var(--border-color)
+  display: flex
+  align-items: center
+:global(.edit-sheet i)
+  font-size: larger
+:global(.edit-sheet.active)
+  color: var(--border-highlight)
+  animation: pulse 1.2s infinite ease-out
+  
+@keyframes pulse
+  0%
+    opacity: 1
+  25%
+    opacity: 0.5
+  100%
+    opacity: 1
 
 </style>
