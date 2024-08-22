@@ -3,6 +3,7 @@
   "description": "A VTT-first RPG system.",
   "license": "MIT License",
   "version": "1.0.0",
+  "node": ">=20.0.0",
   "private": true,
   "type": "module",
   "author": "Noel da Costa <noeldacosta@gmail.com",
@@ -46,5 +47,6 @@
     "dev": "vite",
     "eslint": "eslint .",
     "test:unit": "vitest"
+
   }
 }
