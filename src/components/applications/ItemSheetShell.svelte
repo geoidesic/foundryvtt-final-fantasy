@@ -1,18 +1,17 @@
 <svelte:options accessors={true} />
 
 <script>
-import { onMount } from 'svelte';
-import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-import { setContext, getContext } from "svelte";
-import { ucfirst } from "~/src/helpers/Utility.js";
-import ItemInput from "~/src/components/atoms/item/ItemInput.svelte";
-import * as components from "~/src/components/organisms/item/type";
+  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+  import { setContext, getContext } from "svelte";
+  import DocInput from "~/src/components/atoms/item/ItemInput.svelte";
+  import * as components from "~/src/components/organisms/item/type";
+  import { ucfirst } from "~/src/helpers/Utility.js";
 
-export let elementRoot; //- passed in by SvelteApplication
-export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
-export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
+  export let elementRoot; //- passed in by SvelteApplication
+  export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
+  export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
 
-const headerMap = {
+  const headerMap = {
     action: components.ActionHeader,
     equipment: components.EquipmentHeader,
     job: components.JobHeader,
@@ -96,54 +95,157 @@ const headerMap = {
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot)
-    header
-      .flexrow.gap-15
-        .profile-wrap.flex0
-          .profile
-            img.profile(src="{$documentStore.img}" data-tooltip="{$documentStore.name}" on:click="{_launchStandardProfileEditor}")
-          
-        .flex
-          .flexcol
-            .flex
-              ItemInput(className="lg transparent" attr="name" label="Name" placeholder="Item Name" maxlength="40")
-    section
-      .flexrow.gap-15
-        .flex1
-          .flexcol
+    header.surge-defaultSheet-header(on:drop="{handleDrop}")
+
+      //- profile pic
+      section.profile-wrap
+        .profile.round
+        .profile-buttons
+        .portrait
+          img.profile(src="{$documentStore.img}" data-tooltip="{$documentStore.name}" on:click="{_launchStandardProfileEditor}")
+          //- img.inline.flex2(src="systems/surge/assets/logo.webp" height="100" width="100" style="max-width: 100px; text-align: center;")
+
+      section.item.details
+        //- shared details 
+        section.general-info.flexrow
+          .flexcol.flex3
+            DocInput(className="lg transparent" attr="name" placeholder="Item Name" maxlength="40")
+          div.flex1.level-information
             table(style="text-align: center")
               tr
                 td
                   div {item.type} 
-            
-            svelte:component(this="{headerMap[item.type]}")
-        .flex4
-          svelte:component(this="{tabMap[item.type]}" bind:activeTab="{activeTab}")
+
+        //- type details
+        svelte:component(this="{headerMap[item.type]}")
+        
+
+
+    section.sheet-body(on:drop="{handleDrop}")
+      svelte:component(this="{tabMap[item.type]}" bind:activeTab="{activeTab}")
+      
 
 </template>
 
-<style lang='sass'>
-  @import '../../styles/Mixins.sass'
+<style lang="scss" scoped>
+  // @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap");
+  .level-information {
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+    // border: 1px solid var(--border-color);
+    // border-radius: var(--border-radius);
+    // margin-left: 1rem;
+    // padding: 1rem;
+  }
 
-  :global(.window-app .window-content)
-    display: block
+  input {
+    display: block;
+    padding: 0;
+    width: 100%;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: "Modesto Condensed", "Palatino Lynotype", serif;
+    max-height: 2rem;
+    background: none;
+    -webkit-transition: background 0.3s ease, border-color 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  .surge-defaultSheet-header {
+    display: flex;
+    justify-content: center;
+    flex: 0;
+  }
 
-  .profile-wrap
-    width: 50px
-    /* position: relative */
+  .sheet-body {
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    overflow: hidden;
+    background: url("ui/parchment.jpg");
+    background-repeat: repeat;
+  }
+  .surge-defaultSheet {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+  .profile-wrap {
+    width: 100px;
+    /* position: relative; */
+  }
+  .details {
+    margin-left: 1rem;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+  }
+  .header-attributes {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    -webkit-box-flex: 0;
+    -ms-flex: 0;
+    flex: 0;
+  }
+  .portrait img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: top;
+    object-position: top;
+  }
+  img {
+    border: none;
+  }
+  .bd-green {
+    padding: 1rem;
+    border: 1px solid green;
+  }
+  .bd-red {
+    padding: 1rem;
+    border: 1px solid red;
+  }
+  .bd-blue {
+    padding: 1rem;
+    border: 1px solid blue;
+  }
+  svg path {
+    fill: #ff8899;
+    width: 20px;
+    height: 20px;
+  }
+  .align-center {
+    text-align: center;
+  }
 
-  .portrait img
-    display: block
-    width: 100%
-    height: 100%
-    -o-object-fit: cover
-    object-fit: cover
-    -o-object-position: top
-    object-position: top
+  .inline-block {
+    display: inline-block;
+  }
+  .inline {
+    display: inline;
+  }
 
-  img
-    border: none
-    min-width: 50px
-
-
-
+  .sheet .window-content h1 {
+    padding: 0;
+    margin: 0;
+  }
 </style>
