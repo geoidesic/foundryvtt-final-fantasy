@@ -123,7 +123,7 @@
 <style lang='sass'>
   @import '../../styles/Mixins.sass'
 
-  :global(.window-app .window-content)
+  :global(.FF15.window-app .window-content)
     display: block
 
   .profile-wrap
@@ -142,7 +142,5 @@
   img
     border: none
     min-width: 50px
-
-
 
 </style>
