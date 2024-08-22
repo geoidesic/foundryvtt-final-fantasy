@@ -19253,28 +19253,28 @@ const _PCModel = class _PCModel extends FFActorDataModel {
             val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
             mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
           })
-        })
-      }),
-      secondary: new SchemaField$1({
-        def: new SchemaField$1({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
-          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
         }),
-        mag: new SchemaField$1({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
-          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        vig: new SchemaField$1({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
-          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        spd: new SchemaField$1({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
-          val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+        secondary: new SchemaField$1({
+          def: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          mag: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          vig: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          spd: new SchemaField$1({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
+            val: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$1({ required: true, integer: true, min: 0, initial: 0 })
+          })
         })
       })
     };
@@ -23535,7 +23535,7 @@ function create_if_block$1(ctx) {
           i,
           "click",
           /*click_handler*/
-          ctx[5]
+          ctx[12]
         );
         mounted = true;
       }
@@ -23552,108 +23552,171 @@ function create_if_block$1(ctx) {
 }
 __name(create_if_block$1, "create_if_block$1");
 function create_fragment$r(ctx) {
+  let div5;
+  let div4;
   let div3;
   let div2;
   let div0;
-  let t0_value = (
-    /*uppercase*/
-    (ctx[2] ? (
-      /*code*/
-      ctx[0].toUpperCase()
-    ) : (
-      /*code*/
-      ctx[0]
-    )) + ""
-  );
   let t0;
   let t1;
   let div1;
   let t2;
+  let t3;
+  let div2_data_tooltip_value;
+  let mounted;
+  let dispose;
   let if_block = !/*$actor*/
-  ctx[3]?.system?.isEditing && create_if_block$1(ctx);
+  ctx[1]?.system?.isEditing && create_if_block$1(ctx);
   return {
     c() {
-      div3 = element("div");
-      div2 = element("div");
+      div5 = element("div");
+      div4 = element("div");
       if (if_block)
         if_block.c();
+      div3 = element("div");
+      div2 = element("div");
       div0 = element("div");
-      t0 = text(t0_value);
+      t0 = text(
+        /*label*/
+        ctx[4]
+      );
       t1 = space();
       div1 = element("div");
       t2 = text(
+        /*sign*/
+        ctx[2]
+      );
+      t3 = text(
         /*value*/
-        ctx[1]
+        ctx[0]
       );
       attr(div0, "class", "flex2 header svelte-FF15-1kwenlb");
       attr(div1, "class", "flex0 header svelte-FF15-1kwenlb");
-      attr(div2, "class", "underscore flexrow svelte-FF15-1kwenlb");
-      attr(div3, "class", "attribute svelte-FF15-1kwenlb");
+      attr(div2, "class", "flexrow");
+      attr(div2, "data-tooltip", div2_data_tooltip_value = /*isEditing*/
+      ctx[3] ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : void 0);
+      attr(div3, "class", "flex3");
+      attr(div4, "class", "underscore flexrow svelte-FF15-1kwenlb");
+      attr(div5, "class", "attribute svelte-FF15-1kwenlb");
     },
     m(target, anchor) {
-      insert(target, div3, anchor);
-      append(div3, div2);
+      insert(target, div5, anchor);
+      append(div5, div4);
       if (if_block)
-        if_block.m(div2, null);
+        if_block.m(div4, null);
+      append(div4, div3);
+      append(div3, div2);
       append(div2, div0);
       append(div0, t0);
       append(div0, t1);
       append(div2, div1);
       append(div1, t2);
+      append(div1, t3);
+      if (!mounted) {
+        dispose = [
+          listen(
+            div2,
+            "click",
+            /*add*/
+            ctx[6]
+          ),
+          listen(
+            div2,
+            "contextmenu",
+            /*remove*/
+            ctx[7]
+          )
+        ];
+        mounted = true;
+      }
     },
     p(ctx2, [dirty]) {
       if (!/*$actor*/
-      ctx2[3]?.system?.isEditing) {
+      ctx2[1]?.system?.isEditing) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
           if_block = create_if_block$1(ctx2);
           if_block.c();
-          if_block.m(div2, div0);
+          if_block.m(div4, div3);
         }
       } else if (if_block) {
         if_block.d(1);
         if_block = null;
       }
-      if (dirty & /*uppercase, code*/
-      5 && t0_value !== (t0_value = /*uppercase*/
-      (ctx2[2] ? (
-        /*code*/
-        ctx2[0].toUpperCase()
-      ) : (
-        /*code*/
-        ctx2[0]
-      )) + ""))
-        set_data(t0, t0_value);
-      if (dirty & /*value*/
-      2)
+      if (dirty & /*label*/
+      16)
+        set_data(
+          t0,
+          /*label*/
+          ctx2[4]
+        );
+      if (dirty & /*sign*/
+      4)
         set_data(
           t2,
-          /*value*/
-          ctx2[1]
+          /*sign*/
+          ctx2[2]
         );
+      if (dirty & /*value*/
+      1)
+        set_data(
+          t3,
+          /*value*/
+          ctx2[0]
+        );
+      if (dirty & /*isEditing*/
+      8 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*isEditing*/
+      ctx2[3] ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : void 0)) {
+        attr(div2, "data-tooltip", div2_data_tooltip_value);
+      }
     },
     i: noop,
     o: noop,
     d(detaching) {
       if (detaching) {
-        detach(div3);
+        detach(div5);
       }
       if (if_block)
         if_block.d();
+      mounted = false;
+      run_all(dispose);
     }
   };
 }
 __name(create_fragment$r, "create_fragment$r");
 function instance$a($$self, $$props, $$invalidate) {
+  let label;
+  let value;
+  let isEditing;
+  let sign;
   let $actor;
   let { code } = $$props;
-  let { value } = $$props;
-  let { uppercase = false } = $$props;
+  let { key } = $$props;
+  let { abbreviateLabel = false } = $$props;
+  let { showSign = false } = $$props;
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value2) => $$invalidate(3, $actor = value2));
+  component_subscribe($$self, actor, (value2) => $$invalidate(1, $actor = value2));
   log.d("actor", actor);
-  log.d("$actor", $actor?.system?.isEditing);
+  log.d("$actor", $actor);
+  const add = /* @__PURE__ */ __name(() => {
+    if (!isEditing)
+      return;
+    $actor.update({
+      system: {
+        attributes: { [key]: { [code]: { val: value + 1 } } }
+      }
+    });
+  }, "add");
+  const remove = /* @__PURE__ */ __name(() => {
+    if (!isEditing)
+      return;
+    $actor.update({
+      system: {
+        attributes: { [key]: { [code]: { val: value - 1 } } }
+      }
+    });
+  }, "remove");
   onMount(() => {
   });
   const click_handler = /* @__PURE__ */ __name(() => {
@@ -23661,28 +23724,66 @@ function instance$a($$self, $$props, $$invalidate) {
   }, "click_handler");
   $$self.$$set = ($$props2) => {
     if ("code" in $$props2)
-      $$invalidate(0, code = $$props2.code);
-    if ("value" in $$props2)
-      $$invalidate(1, value = $$props2.value);
-    if ("uppercase" in $$props2)
-      $$invalidate(2, uppercase = $$props2.uppercase);
+      $$invalidate(8, code = $$props2.code);
+    if ("key" in $$props2)
+      $$invalidate(9, key = $$props2.key);
+    if ("abbreviateLabel" in $$props2)
+      $$invalidate(10, abbreviateLabel = $$props2.abbreviateLabel);
+    if ("showSign" in $$props2)
+      $$invalidate(11, showSign = $$props2.showSign);
   };
-  return [code, value, uppercase, $actor, actor, click_handler];
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*abbreviateLabel, key, code*/
+    1792) {
+      $$invalidate(4, label = abbreviateLabel ? localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`) : localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attributes.${key}.${code}.Label`));
+    }
+    if ($$self.$$.dirty & /*$actor, key, code*/
+    770) {
+      $$invalidate(0, value = $actor?.system?.attributes?.[key]?.[code]?.val);
+    }
+    if ($$self.$$.dirty & /*$actor*/
+    2) {
+      $$invalidate(3, isEditing = $actor?.system?.isEditing);
+    }
+    if ($$self.$$.dirty & /*showSign, value*/
+    2049) {
+      $$invalidate(2, sign = showSign ? value > 0 ? "+" : value < 0 ? "-" : "" : "");
+    }
+  };
+  return [
+    value,
+    $actor,
+    sign,
+    isEditing,
+    label,
+    actor,
+    add,
+    remove,
+    code,
+    key,
+    abbreviateLabel,
+    showSign,
+    click_handler
+  ];
 }
 __name(instance$a, "instance$a");
 const _Attribute = class _Attribute extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$a, create_fragment$r, safe_not_equal, { code: 0, value: 1, uppercase: 2 });
+    init(this, options, instance$a, create_fragment$r, safe_not_equal, {
+      code: 8,
+      key: 9,
+      abbreviateLabel: 10,
+      showSign: 11
+    });
   }
 };
 __name(_Attribute, "Attribute");
 let Attribute = _Attribute;
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[2] = list[i].code;
-  child_ctx[3] = list[i].value;
-  child_ctx[5] = i;
+  child_ctx[4] = list[i].code;
+  child_ctx[6] = i;
   return child_ctx;
 }
 __name(get_each_context, "get_each_context");
@@ -23691,17 +23792,21 @@ function create_each_block(ctx) {
   let current;
   attribute = new Attribute({
     props: {
-      uppercase: (
-        /*uppercase*/
+      showSign: (
+        /*showSign*/
+        ctx[3]
+      ),
+      abbreviateLabel: (
+        /*abbreviateLabel*/
         ctx[1]
+      ),
+      key: (
+        /*key*/
+        ctx[2]
       ),
       code: (
         /*code*/
-        ctx[2]
-      ),
-      value: (
-        /*value*/
-        ctx[3]
+        ctx[4]
       )
     }
   });
@@ -23715,18 +23820,22 @@ function create_each_block(ctx) {
     },
     p(ctx2, dirty) {
       const attribute_changes = {};
-      if (dirty & /*uppercase*/
+      if (dirty & /*showSign*/
+      8)
+        attribute_changes.showSign = /*showSign*/
+        ctx2[3];
+      if (dirty & /*abbreviateLabel*/
       2)
-        attribute_changes.uppercase = /*uppercase*/
+        attribute_changes.abbreviateLabel = /*abbreviateLabel*/
         ctx2[1];
-      if (dirty & /*data*/
-      1)
-        attribute_changes.code = /*code*/
+      if (dirty & /*key*/
+      4)
+        attribute_changes.key = /*key*/
         ctx2[2];
       if (dirty & /*data*/
       1)
-        attribute_changes.value = /*value*/
-        ctx2[3];
+        attribute_changes.code = /*code*/
+        ctx2[4];
       attribute.$set(attribute_changes);
     },
     i(local) {
@@ -23777,8 +23886,8 @@ function create_fragment$q(ctx) {
       current = true;
     },
     p(ctx2, [dirty]) {
-      if (dirty & /*uppercase, data*/
-      3) {
+      if (dirty & /*showSign, abbreviateLabel, key, data*/
+      15) {
         each_value = ensure_array_like(
           /*data*/
           ctx2[0]
@@ -23829,22 +23938,33 @@ function create_fragment$q(ctx) {
 __name(create_fragment$q, "create_fragment$q");
 function instance$9($$self, $$props, $$invalidate) {
   let { data } = $$props;
-  let { uppercase = false } = $$props;
+  let { abbreviateLabel } = $$props;
+  let { key } = $$props;
+  let { showSign } = $$props;
   onMount(() => {
   });
   $$self.$$set = ($$props2) => {
     if ("data" in $$props2)
       $$invalidate(0, data = $$props2.data);
-    if ("uppercase" in $$props2)
-      $$invalidate(1, uppercase = $$props2.uppercase);
+    if ("abbreviateLabel" in $$props2)
+      $$invalidate(1, abbreviateLabel = $$props2.abbreviateLabel);
+    if ("key" in $$props2)
+      $$invalidate(2, key = $$props2.key);
+    if ("showSign" in $$props2)
+      $$invalidate(3, showSign = $$props2.showSign);
   };
-  return [data, uppercase];
+  return [data, abbreviateLabel, key, showSign];
 }
 __name(instance$9, "instance$9");
 const _AttributeCol = class _AttributeCol extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$9, create_fragment$q, safe_not_equal, { data: 0, uppercase: 1 });
+    init(this, options, instance$9, create_fragment$q, safe_not_equal, {
+      data: 0,
+      abbreviateLabel: 1,
+      key: 2,
+      showSign: 3
+    });
   }
 };
 __name(_AttributeCol, "AttributeCol");
@@ -23856,10 +23976,15 @@ function create_fragment$p(ctx) {
   let attributecol;
   let current;
   attributecol = new AttributeCol({
-    props: { uppercase: true, data: (
-      /*data*/
-      ctx[0]
-    ) }
+    props: {
+      key: "primary",
+      showSign: true,
+      abbreviateLabel: true,
+      data: (
+        /*data*/
+        ctx[0]
+      )
+    }
   });
   return {
     c() {
@@ -23898,11 +24023,11 @@ function create_fragment$p(ctx) {
 __name(create_fragment$p, "create_fragment$p");
 function instance$8($$self) {
   let data = [
-    { code: "str", value: "+2" },
-    { code: "dex", value: "+5" },
-    { code: "vit", value: "+3" },
-    { code: "int", value: "+4" },
-    { code: "mnd", value: "+3" }
+    { code: "str" },
+    { code: "dex" },
+    { code: "vit" },
+    { code: "int" },
+    { code: "mnd" }
   ];
   return [data];
 }
@@ -23921,10 +24046,12 @@ function create_fragment$o(ctx) {
   let div0;
   let attributecol;
   let current;
-  attributecol = new AttributeCol({ props: { data: (
-    /*data*/
-    ctx[0]
-  ) } });
+  attributecol = new AttributeCol({
+    props: { data: (
+      /*data*/
+      ctx[0]
+    ), key: "secondary" }
+  });
   return {
     c() {
       div1 = element("div");
@@ -23961,12 +24088,7 @@ function create_fragment$o(ctx) {
 }
 __name(create_fragment$o, "create_fragment$o");
 function instance$7($$self) {
-  let data = [
-    { code: "Defence", value: 14 },
-    { code: "Magic Defence", value: 14 },
-    { code: "Vigilance", value: 13 },
-    { code: "Speed", value: 5 }
-  ];
+  let data = [{ code: "def" }, { code: "mag" }, { code: "vig" }, { code: "spd" }];
   return [data];
 }
 __name(instance$7, "instance$7");

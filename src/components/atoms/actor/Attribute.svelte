@@ -1,13 +1,32 @@
 <script>
 import { onMount, getContext } from 'svelte';
+import { localize } from '#runtime/svelte/helper';
+import { SYSTEM_CODE } from '~/src/helpers/constants'
+import { ucfirst } from '~/src/helpers/utility'
 
 export let code;
-export let value;
-export let uppercase = false;
+export let key;
+export let abbreviateLabel = false;
+export let showSign = false;
 
 const actor = getContext('#doc');
 log.d('actor', actor);
-log.d('$actor', $actor?.system?.isEditing);
+log.d('$actor', $actor);
+
+const add = () => {
+  if(!isEditing) return;
+  $actor.update({system: {attributes: {[key]: { [code]: {val: value + 1}}}}})
+}
+
+const remove = () => {
+  if(!isEditing) return;
+  $actor.update({system: {attributes: {[key]: { [code]: {val: value - 1}}}}})
+}
+
+$: label = abbreviateLabel ? localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`) : localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attributes.${key}.${code}.Label`);
+$: value = $actor?.system?.attributes?.[key]?.[code]?.val;
+$: isEditing = $actor?.system?.isEditing;
+$: sign = showSign ? value > 0 ? '+' : value < 0 ? '-' : '' : '';
 
 onMount(() => {
 });
@@ -19,9 +38,10 @@ onMount(() => {
       +if("!$actor?.system?.isEditing")
         .flex.dice
           i.fas.fa-dice(on:click!="{() => {alert('Rolling!')}}")
-
-      .flex2.header {uppercase ? code.toUpperCase() : code} 
-      .flex0.header {value}
+      .flex3
+        .flexrow(data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
+          .flex2.header {label} 
+          .flex0.header {sign}{value} 
     
 </template>
 <style lang='sass'>

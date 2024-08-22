@@ -52,29 +52,29 @@ export class PCModel extends FFActorDataModel {
             val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
             mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
           }),
+        }),
+        secondary: new SchemaField({
+          def: new SchemaField({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
+            val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          mag: new SchemaField({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
+            val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          vig: new SchemaField({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
+            val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          spd: new SchemaField({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
+            val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
+          }),
         })
-      }),
-      secondary: new SchemaField({
-        def: new SchemaField({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
-          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        mag: new SchemaField({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
-          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        vig: new SchemaField({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
-          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        spd: new SchemaField({
-          // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
-          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
-          mod: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
-        }),
       })
     }
   }
