@@ -1,15 +1,18 @@
 <script>
   import { onMount, getContext } from 'svelte';
+  import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   
+
   const actor = getContext("#doc");
   
   onMount(() => {
-    console.log("HP mounted");
-    console.log($actor);
+    game.system.log.d("BP mounted");
+    game.system.log.d($actor);
+
   });
   </script>
   <template lang='pug'>
-    .hp.flexrow.justify-flexrow-vertical 
+    .bp.flexrow.justify-flexrow-vertical 
       .flex
         .flexcol
           .header 
@@ -24,7 +27,8 @@
           .flex.max.header 
             .header {$actor.system.points.BP.max}
       .flex.header.val
-        .header {$actor.system.points.BP.val}
+        .header
+          DocInput(name="BP" valuePath="system.points.BP.val")
       
   </template>
 

@@ -1,5 +1,6 @@
 <script>
   import { onMount, getContext } from 'svelte';
+  import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   
   const actor = getContext("#doc");
   
@@ -9,7 +10,7 @@
   });
   </script>
   <template lang='pug'>
-    .hp.flexrow.justify-flexrow-vertical 
+    .mp.flexrow.justify-flexrow-vertical 
       .flex
         .flexcol
           .header 
@@ -23,7 +24,8 @@
           .flex.max.header 
             .header {$actor.system.points.MP.max}
       .flex.header.val
-        .header {$actor.system.points.MP.val}
+        .header 
+          DocInput(name="BP" valuePath="system.points.MP.val")
       
   </template>
 
