@@ -3,7 +3,7 @@
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { setContext, getContext, onMount, tick } from "svelte";
-  import { getActorOwner, ucfirst } from "~/src/helpers/utility";
+  import { getActorOwner, ucfirst } from "~/src/helpers/util";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import { localize } from "#runtime/svelte/helper";
   import { gameSettings } from '~/src/config/gameSettings';

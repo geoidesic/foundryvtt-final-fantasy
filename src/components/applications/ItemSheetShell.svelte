@@ -3,7 +3,7 @@
 <script>
   import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
   import { setContext, getContext, onMount } from "svelte";
-  import { ucfirst } from "~/src/helpers/Utility.js";
+  import { ucfirst } from "~/src/helpers/util.js";
   import ItemInput from "~/src/components/atoms/item/ItemInput.svelte";
   import * as components from "~/src/components/organisms/item/type";
 

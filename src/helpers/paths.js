@@ -11,15 +11,6 @@ export function formatDotpath(path) {
   return path.replace(/\[/g, ".").replace(/]/g, "");
 }
 
-/**
- * An object providing context on the path and result relative to the most deploy nested document we encounter
- *
- * @typedef {object} PathResolutionStep 
- *
- * @property {string | null} pathlet The individual x, y, or z substrings of an x.y.z path
- *
- * @property {any} val The value reached at a specific x, y, or z of an x.y.z path
- */
 
 /**
  * 

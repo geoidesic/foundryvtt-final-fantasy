@@ -2,7 +2,7 @@
 import { onMount, getContext } from 'svelte';
 import { localize } from '#runtime/svelte/helper';
 import { SYSTEM_CODE } from '~/src/helpers/constants'
-import { ucfirst } from '~/src/helpers/utility'
+import { ucfirst } from '~/src/helpers/util'
 
 export let code;
 export let key;

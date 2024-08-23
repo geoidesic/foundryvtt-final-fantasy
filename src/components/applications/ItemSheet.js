@@ -1,7 +1,7 @@
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
 import ItemSheetShell from "./ItemSheetShell.svelte";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
-import { generateRandomElementId } from "~/src/helpers/utility";
+import { generateRandomElementId } from "~/src/helpers/util";
 // import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
 
 export default class FF15ItemSheet extends SvelteDocumentSheet {
