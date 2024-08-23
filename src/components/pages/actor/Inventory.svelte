@@ -8,10 +8,28 @@
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "./InventoryRow.svelte";
 
-
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
+  const nameSearch = createFilterQuery("name");
+  const input = {
+    store: nameSearch,
+    efx: rippleFocus(),
+    placeholder: "by Name",
+    type: "search",
+  };
 
+  /** @type {import('@typhonjs-fvtt/runtime/svelte/store').DynMapReducer<string, Item>} */
+  const wildcard = doc.embedded.create(Item, {
+    name: "wildcard",
+    filters: [nameSearch],
+    sort: (a, b) => a.name.localeCompare(b.name),
+  });
+
+
+  function addItem(item) {
+    game.system.log.d('addItem')
+    game.system.log.d(item)
+  }
   function editItem(item) {
     game.system.log.d('editItem')
     game.system.log.d(item)
@@ -20,14 +38,19 @@
   function addQuantity(item) {
     game.system.log.d('addQuantity')
     game.system.log.d(item)
-  }
 
+    const quantity = item.system.quantity + 1;
+    item.update({ system: { quantity: quantity } });
+  }
 
   function duplicateItem(item) {
     game.system.log.d('duplicateItem')
     game.system.log.d(item)
+    const itemData = item.toObject();
+    delete itemData._id;
+    game.system.log.d('itemData', itemData);
+    $Actor.sheet._onDropItemCreate(itemData)
   }
-
 
   function deleteItem(item) {
       game.system.log.d('deleteItem')
@@ -38,6 +61,28 @@
       game.system.log.d('roll')
       game.system.log.d(item)
   }
+  function toggleLock(event) {
+    game.system.log.d('a')
+    event.stopPropagation();
+    event.preventDefault();
+    $doc.update(
+      {
+        ["system.inventoryLocked"]: !$doc.system.inventoryLocked,
+      },
+      {
+        diff: true,
+        diffData: true,
+        diffSystem: true,
+      }
+    );
+  }
+  onMount(async () => {
+
+  })
+
+  $: items = [...$wildcard];
+  $: lockCSS = $doc.system.inventoryLocked ? "lock" : "lock-open";
+  $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock negative" : "fa-lock-open positive";
 
 </script>
 <template lang='pug'>
