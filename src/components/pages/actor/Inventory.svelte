@@ -4,6 +4,7 @@
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
   import { TJSInput } from "@typhonjs-fvtt/svelte-standard/component";
   import { createFilterQuery } from "~/src/filters/inventoryFilterQuery";
+  import { toggleBookmark } from "~/src/helpers/util";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "./InventoryRow.svelte";
@@ -43,6 +44,11 @@
     item.update({ system: { quantity: quantity } });
   }
 
+  function removeQuantity(item) {
+    const quantity = item.system.quantity - 1;
+    item.update({ system: { quantity: quantity } });
+  }
+
   function duplicateItem(item) {
     game.system.log.d('duplicateItem')
     game.system.log.d(item)
@@ -75,6 +81,11 @@
       }
     );
   }
+
+  function showItemSheet(item) {
+    item.sheet.render(true);
+  }
+
   onMount(async () => {
 
   })
@@ -85,6 +96,7 @@
 
 </script>
 <template lang='pug'>
+
   ScrollingContainer
     .flexrow.pt-sm.pr-sm
       .flexcol.flex1.label-container 
@@ -113,16 +125,14 @@
             div(slot="c1")
               div.flex0
                 div.relative.buttons
-                  div.rowimg.button.rowimgbezelbutton(on:click!="{roll(item)}")
-                    img.left.flex0(src="{item.img}" )
-                  div.rowimg
+                  div.rowimg.button(on:click!="{roll(item)}")
                     img.left.flex0(src="{item.img}" )
             div(slot="c2") 
               div.pointer.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             div(slot="c3") 
               .clickable(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
             div(slot="c4") 
-              i.fa-bookmark.row(class="{item.system.bookmarked === true ? 'fa-solid' : 'fa-regular'}" on:click="{toggleBookmark(item)}")
+              i.fa-bookmark.row.pointer(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" on:click="{toggleBookmark(item)}")
             div.buttons.actions(slot="c5")
               +if("!$doc.system.inventoryLocked")
                 div.rowbutton.rowimgbezelbutton( on:click="{editItem(index, item)}")
@@ -133,16 +143,72 @@
                   i.left.fa.fa-trash.mr-md
 </template>
 <style lang='sass'>
-  @import '../../../styles/Mixins.sass'
+@import '../../../styles/Mixins.sass'
 
-  .buttons 
-    @include buttons
-  
-  .background
-    text-align: left
-    min-height: 100%
-    width: 100%
-    position: relative
-    overflow: hidden
-    border: 4px ridge var(--border-color)
+.pulse
+  @include pulse
+
+.buttons
+  @include buttons
+
+.fa.fa-add
+  cursor: pointer
+  &:hover
+    background-color: var(--sheet-color)
+    color: var(--sheet-contrast)
+
+.clickable
+  max-height: 1.3rem
+  line-height: 1.3rem
+  display: flex
+  justify-content: center
+  align-items: center
+  background: rgba(255, 255, 255, 0.2)
+  cursor: pointer
+
+img
+  border: none
+  width: 20px
+  height: 20px
+
+.inverted
+  transform: scalex(-1)
+
+i
+  padding: 0
+  margin: 0
+
+.full
+  color: var(--color-negative)
+
+ol
+  height: 100%
+  margin: 0
+  padding: 0.1rem
+  border: 1px solid grey
+  li,
+  :global(li)
+    padding: 3px
+    margin: 0 2px 2px 2px
+    align-items: center
+    &:not(.header):not(.footer)
+      background-color: #cdc8c7
+
+    &.header
+      padding: 0 3px
+      line-height: 1rem
+      text-align: top
+      justify-content: top
+      border-bottom-left-radius: 0
+      border-bottom-right-radius: 0
+      margin-bottom: 0
+      border-bottom: none
+
+input
+  background-color: white
+  height: 1.2rem
+
+.label-container
+  justify-content: center
+
 </style>

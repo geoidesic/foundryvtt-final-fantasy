@@ -115,6 +115,27 @@
   --border-color: var(--panel-1-color)
 
 
+@mixin pulse($color: #fff, $duration: 1.2s) 
+  animation: pulse $duration infinite ease-out
+  color: $color
+  text-shadow: lightblue 0 0 4px
+
+  @keyframes pulse 
+
+    0% 
+      opacity: 1
+    
+
+    25% 
+      opacity: 0.5
+    
+
+    100% 
+      opacity: 1
+    
+  
+
+
 @mixin buttons
   .rowimg
     position: absolute

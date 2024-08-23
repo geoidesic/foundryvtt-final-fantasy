@@ -26,6 +26,10 @@ export function editableDocNode(doc, path) {
   }
 }
 
+export async function toggleBookmark(item, callback=() => {}) {
+  await item.update({ ["system.favourite"]: !item.system.favourite });
+  callback();
+}
 
 export function localize(string) {
   return game.i18n.localize(`${SYSTEM_ID}.${string}`);
