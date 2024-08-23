@@ -12,15 +12,15 @@ export class PCModel extends FFActorDataModel {
       biography: new HTMLField(),
       points: new SchemaField({
         MP: new SchemaField({
-          current: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
           max: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
         }),
         HP: new SchemaField({
-          current: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
           max: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
         }),
         BP: new SchemaField({
-          current: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
+          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
           max: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
         })
       }),
