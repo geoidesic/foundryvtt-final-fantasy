@@ -4,11 +4,14 @@
   import MP from "~/src/components/molecules/Points/MP.svelte";
   import BP from "~/src/components/molecules/Points/BP.svelte";
   
+  function clicked() {
+    alert('click')
+  }
   </script>
   <template lang='pug'>
     section.organism
       .flexrow.section
-        .flex.hp.pa-md
+        .flex.hp.pa-md(on:dblclick="{clicked}")
           HP
         .flex.mp.pa-md
           MP

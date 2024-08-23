@@ -28,7 +28,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
     });
     this.reactive.document = object;
 
-    log.d('isEditing', this.reactive.document.system.isEditing);
+    game.system.log.d('isEditing', this.reactive.document.system.isEditing);
   }
 
   /**

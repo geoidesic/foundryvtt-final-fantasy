@@ -7,7 +7,7 @@ import Corner from '~/src/components/atoms/PortraitFrame/corner.svelte';
 let strokeColor="#514030";
 
 onMount(() => {
-  log.d('PortraitFrame mounted');
+  game.system.log.d('PortraitFrame mounted');
 });
 </script>
 <template lang="pug">

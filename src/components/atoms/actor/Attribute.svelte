@@ -10,8 +10,8 @@ export let abbreviateLabel = false;
 export let showSign = false;
 
 const actor = getContext('#doc');
-log.d('actor', actor);
-log.d('$actor', $actor);
+game.system.log.d('actor', actor);
+game.system.log.d('$actor', $actor);
 
 const add = () => {
   if(!isEditing) return;

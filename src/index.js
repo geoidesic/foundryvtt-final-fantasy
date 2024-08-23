@@ -12,11 +12,6 @@ import FF15ActorSheet from "~/src/components/applications/ActorSheet";
 import FF15ItemSheet from "~/src/components/applications/ItemSheet";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 
-
-//- global logging
-window.log = log;
-log.level = log.DEBUG;
-
 //- helpers
 function setupDSN() {
   // Set up Dice So Nice to icrementally show attacks then damge rolls
@@ -37,7 +32,11 @@ CONFIG.Actor.documentClass = FF15Actor
 
 //- Foundry System Hooks
 Hooks.once("init", async (a, b, c) => {
-  log.d(`Starting System ${SYSTEM_ID}`);
+
+
+  game.system.log = log;
+  log.level = log.DEBUG;
+  game.system.log.i(`Starting System ${SYSTEM_ID}`);
 
   // CONFIG.debug.hooks = true;
 
@@ -45,8 +44,8 @@ Hooks.once("init", async (a, b, c) => {
   setupModels();
 
   game.system.config = systemconfig;
-  log.d(game.system.id)
-  log.d(game.system.config)
+  game.system.log.d(game.system.id)
+  game.system.log.d(game.system.config)
 
   //- Regiser Sheets
   Actors.registerSheet("foundryvtt-final-fantasy", FF15ActorSheet, {

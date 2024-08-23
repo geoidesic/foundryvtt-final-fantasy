@@ -26,6 +26,7 @@
         .header {$actor.system.points.HP.val}
       
   </template>
+  
   <style lang='sass'>
     @import '../../../styles/Mixins.sass'
     

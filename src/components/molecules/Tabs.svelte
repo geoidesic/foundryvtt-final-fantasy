@@ -12,7 +12,7 @@
 
   onMount(() => {
     activeTab = tabs[0].id;
-    log.d("Tabs", tabs);
+    game.system.log.d("Tabs", tabs);
   });
 </script>
 

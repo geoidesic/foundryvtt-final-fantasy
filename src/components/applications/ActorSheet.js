@@ -33,8 +33,8 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   _getHeaderButtons() {
-    log.d('_getHeaderButtons')
-    log.d('isEditing', this.reactive.document.system.isEditing);
+    game.system.log.d('_getHeaderButtons')
+    game.system.log.d('isEditing', this.reactive.document.system.isEditing);
 
     const buttons = super._getHeaderButtons();
     const storage = this.reactive.sessionStorage;
@@ -65,12 +65,12 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   async _onToggleEdit(event) {
-    log.d('_onToggleEdit')
+    game.system.log.d('_onToggleEdit')
     if (event) {
       event.preventDefault();
     }
     await this.reactive.document.update({system: {isEditing: !this.reactive.document.system.isEditing}});
-    log.d('after toggle: isEditing', this.reactive.document.system.isEditing);
+    game.system.log.d('after toggle: isEditing', this.reactive.document.system.isEditing);
     this.render();
   }
 

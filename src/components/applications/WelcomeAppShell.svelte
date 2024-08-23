@@ -23,7 +23,7 @@
   $: application.reactive.draggable = draggable;
   $: dontShowWelcome = $dontShowWelcomeStore
 
-  $: log.d('dontShowWelcome', dontShowWelcome);
+  $: game.system.log.d('dontShowWelcome', dontShowWelcome);
 
   onMount(async () => {
   });
