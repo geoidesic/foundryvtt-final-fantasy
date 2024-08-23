@@ -25,7 +25,7 @@
             .header {$actor.system.points.MP.max}
       .flex.header.val
         .header 
-          DocInput(name="BP" valuePath="system.points.MP.val")
+          DocInput(name="BP" type="number" valuePath="system.points.MP.val" min=0 max="{$actor.system.points.MP.max}" )
       
   </template>
 

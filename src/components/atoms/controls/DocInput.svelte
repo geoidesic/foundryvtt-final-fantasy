@@ -7,16 +7,15 @@
   export let placeholder = "";
   export let maxlength = "40";
   export let disabled = false;
-  export let inputType = "text";
   export let valuePath = "";
   export let label = "";
   export let document = false;
   export let editable = false;
+  export let type = "standard";
 
   let data;
   let inputValue;
   let LABEL = !!label;
-  let type = "standard";
   let inputElement
 
   const doc = document || getContext("#doc");
@@ -30,6 +29,10 @@
     }
   }
 
+  function handleBlur(event, index) {
+      editable = false;
+  }
+
   async function handleDblClick(event) {
     game.system.log.d(event);
     game.system.log.d('dblclick');
@@ -41,7 +44,15 @@
   }
 
   function update(event) {
-    const val = event.target.value;
+    let val = event.target.value;
+    if(type == 'number' && $$props.max !== undefined && val > $$props.max) {
+      val = $$props.max;
+      ui.notifications.warn(`Value cannot exceed ${$$props.max}`);
+    }
+    if(type == 'number' &&  $$props.min !== undefined && val < $$props.min) {
+      val = $$props.min;
+      ui.notifications.warn(`Value cannot exceed ${$$props.min}`);
+    }
     inputValue = val;  // Update the local value
     data.set(val);  // Update the document value
     game.system.log.d(`Updated value: ${val}`);
@@ -66,7 +77,7 @@ div(on:dblclick!="{handleDblClick}")
   +if('LABEL')
     label {label}
   +if("editable")
-    input({...$$restProps} bind:this="{inputElement}" type="{inputType}" value="{inputValue}" on:keydown="{handleKeyDown}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
+    input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown="{handleKeyDown}" on:blur="{handleBlur}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
     +else
       div({...$$restProps}) {inputValue}
 </template>

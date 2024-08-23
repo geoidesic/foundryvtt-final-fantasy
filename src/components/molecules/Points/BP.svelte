@@ -1,7 +1,6 @@
 <script>
   import { onMount, getContext } from 'svelte';
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
-  
 
   const actor = getContext("#doc");
   
@@ -28,7 +27,7 @@
             .header {$actor.system.points.BP.max}
       .flex.header.val
         .header
-          DocInput(name="BP" valuePath="system.points.BP.val")
+          DocInput(type="number" name="BP" min=0 max="{$actor.system.points.BP.max}" valuePath="system.points.BP.val")
       
   </template>
 

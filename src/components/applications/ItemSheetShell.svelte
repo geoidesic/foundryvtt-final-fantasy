@@ -91,6 +91,10 @@
       console.log("$documentStore", $documentStore);
     }
   }
+
+  onMount(() => {
+    game.system.log.d("ItemSheetShell mounted", $documentStore);
+  });
 </script>
 
 <template lang="pug">
