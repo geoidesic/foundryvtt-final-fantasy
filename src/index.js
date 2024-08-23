@@ -2,7 +2,7 @@ import './styles/Variables.sass';
 import './styles/Main.sass';
 import './styles/MarginsAndPadding.sass';
 
-import { log } from "~/src/helpers/utility"
+import { log } from "~/src/helpers/util"
 import { SYSTEM_ID } from "~/src/helpers/constants"
 import { registerSettings } from "~/src/settings"
 import { setupModels } from './config/models';
