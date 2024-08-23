@@ -6,6 +6,7 @@ export function registerSettings() {
   /** User settings */
   dontShowWelcome();
   applicationWindowHeaderIconsOnly()
+  confirmBeforeDeletingActorItem()
 }
 
 function dontShowWelcome() {
@@ -29,6 +30,20 @@ function applicationWindowHeaderIconsOnly() {
     options: {
       name: localize(`${SYSTEM_CODE}.Setting.applicationWindowHeaderIconsOnly.Name`),
       hint: localize(`${SYSTEM_CODE}.Setting.applicationWindowHeaderIconsOnly.Hint`),
+      scope: 'user',
+      config: true,
+      default: false,
+      type: Boolean
+    }
+  });
+}
+function confirmBeforeDeletingActorItem() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'confirmBeforeDeletingActorItem',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.confirmBeforeDeletingActorItem.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.confirmBeforeDeletingActorItem.Hint`),
       scope: 'user',
       config: true,
       default: false,

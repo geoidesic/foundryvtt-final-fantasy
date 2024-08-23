@@ -243,9 +243,13 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   async _onDropItemCreate(itemData) {
+
+    itemData = itemData instanceof Array ? itemData : [itemData];
     const actor = this.reactive.document;
-
-
+    for(let v of itemData) {
+      const item = v
+      await actor.createEmbeddedDocuments("Item", [item]);
+    }
   }
 
   _onSortItem(event, itemData) {

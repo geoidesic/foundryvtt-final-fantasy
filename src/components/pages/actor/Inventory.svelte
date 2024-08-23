@@ -52,9 +52,8 @@
     $Actor.sheet._onDropItemCreate(itemData)
   }
 
-  function deleteItem(item) {
-      game.system.log.d('deleteItem')
-      game.system.log.d(item)
+  function deleteItem(index, item) {
+    item.delete();
   }
 
   function roll(item) {
@@ -114,12 +113,10 @@
             div(slot="c1")
               div.flex0
                 div.relative.buttons
-                  +if("rollableCharacteristics.includes(item.type)")
-                    div.rowimg.button.rowimgbezelbutton(on:click!="{roll(item)}")
-                      img.left.flex0(src="{item.img}" )
-                    +else()
-                      div.rowimg
-                        img.left.flex0(src="{item.img}" )
+                  div.rowimg.button.rowimgbezelbutton(on:click!="{roll(item)}")
+                    img.left.flex0(src="{item.img}" )
+                  div.rowimg
+                    img.left.flex0(src="{item.img}" )
             div(slot="c2") 
               div.pointer.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             div(slot="c3") 
@@ -128,15 +125,19 @@
               i.fa-bookmark.row(class="{item.system.bookmarked === true ? 'fa-solid' : 'fa-regular'}" on:click="{toggleBookmark(item)}")
             div.buttons.actions(slot="c5")
               +if("!$doc.system.inventoryLocked")
-                div.rowbutton.rowimgbezelbutton
-                  i.left.fa.fa-edit.mr-md( on:click="{editItem(index, item)}")
-                div.rowbutton.rowimgbezelbutton
-                  i.left.fa.fa-copy.mr-md( on:click="{duplicateItem(index, item)}")
-                div.rowbutton.rowimgbezelbutton
-                  i.left.fa.fa-trash.mr-md( on:click="{deleteItem(index, item)}")
+                div.rowbutton.rowimgbezelbutton( on:click="{editItem(index, item)}")
+                  i.left.fa.fa-edit.mr-md
+                div.rowbutton.rowimgbezelbutton( on:click="{duplicateItem(index, item)}")
+                  i.left.fa.fa-copy.mr-md
+                div.rowbutton.rowimgbezelbutton( on:click="{deleteItem(index, item)}")
+                  i.left.fa.fa-trash.mr-md
 </template>
 <style lang='sass'>
   @import '../../../styles/Mixins.sass'
+
+  .buttons 
+    @include buttons
+  
   .background
     text-align: left
     min-height: 100%
