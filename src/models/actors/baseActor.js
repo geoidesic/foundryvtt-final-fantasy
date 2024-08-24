@@ -1,4 +1,4 @@
-import { FFTypeDataModel } from '../baseModel';
+import { FFTypeDataModel } from '~/src/models/baseModel';
 const {
   HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField
 } = foundry.data.fields;
@@ -6,6 +6,8 @@ const {
 export class FFActorDataModel extends FFTypeDataModel {
   static defineSchema() {
     return {
+      ...super.defineSchema(),
+      inventoryLocked: new BooleanField({ initial: false }),
     }
   }
 }

@@ -186,6 +186,8 @@ ol
   margin: 0
   padding: 0.1rem
   border: 1px solid grey
+  border-radius: var(--border-radius)
+
   li,
   :global(li)
     padding: 3px

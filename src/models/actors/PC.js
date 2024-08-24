@@ -8,6 +8,7 @@ const {
 export class PCModel extends FFActorDataModel {
   static defineSchema() {
     return {
+      ...super.defineSchema(),
       isEditing: new BooleanField({initial: false}),
       biography: new HTMLField(),
       points: new SchemaField({
