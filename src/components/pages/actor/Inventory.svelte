@@ -103,16 +103,16 @@
 <template lang='pug'>
 
   ScrollingContainer
-    .flexrow.pt-sm.pr-sm
+    .flexrow.inventory-search-bar.pt-sm.pr-sm.justify-flexrow-vertical()
       .flexcol.flex1.label-container 
         label Search
       .flex3.left
-        TJSInput({input}) 
+        TJSInput({input} role="searchbox") 
       
-    div.pa-sm
+    div.px-smd.mt-sm.inventory-rows-container
       ol
-        InventoryRow.header(lockCss="{lockCSS}" toggleLock="{toggleLock}")
-          div(slot="c1") 
+        InventoryRow.header(lockCss="{lockCSS}" toggleLock="{toggleLock}" role="rowheader")
+          div.li-image.header(slot="c1") 
             div.flex0
               div.relative.buttons
                 div.rowimg.button
@@ -124,16 +124,17 @@
           div(slot="c4")
             div
               i.fa-solid.fa-bookmark
-          div(slot="c5") 
-            div.rowbutton.rowimgbezelbutton(class="{lockCSS}" style="cursor: pointer" on:click|preventDefault!="{toggleLock}")
+          div.actions(slot="c5") 
+            div.hide.rowbutton.rowimgbezelbutton
+              i.left.fa.fa-edit.mr-md
+            div.hide.rowbutton.rowimgbezelbutton
+              i.left.fa.fa-copy.mr-md
+            div.rowbutton.rowimgbezelbutton(class="{lockCSS}" style="cursor: pointer; min-width: 2.7rem" on:click|preventDefault!="{toggleLock}")
               i.fa(class="{faLockCSS}")
         +each("items as item, index")
-          InventoryRow.relative(lockCss="{lockCSS}" index="{index}" toggleLock="{toggleLock}")
-            div(slot="c1")
-              div.flex0
-                div.relative.buttons
-                  div.rowimg.button(on:click!="{roll(item)}")
-                    img.left.flex0(src="{item.img}" )
+          InventoryRow(lockCss="{lockCSS}" index="{index}" toggleLock="{toggleLock}" role="row")
+            div.li-image(slot="c1")
+              img.icon(src="{item.img}" )
             div(slot="c2") 
               div.pointer.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             div(slot="c3") 
@@ -173,11 +174,6 @@
   background: rgba(255, 255, 255, 0.2)
   cursor: pointer
 
-img
-  border: none
-  width: 20px
-  height: 20px
-
 .inverted
   transform: scalex(-1)
 
@@ -192,27 +188,38 @@ ol
   height: 100%
   margin: 0
   padding: 0.1rem
-  border: 1px solid grey
+  border: 1px inset grey
   border-radius: var(--border-radius)
 
-  li,
-  :global(li)
-    padding: 3px
-    margin: 0 2px 2px 2px
+
+:global(.FF15 li.inventory-row.header)
+  padding: 0.4rem 0.3rem
+
+:global(.FF15 li.inventory-row)
+  position: relative // Allows the img to be positioned properly
+  padding: 0 0.3rem
+  margin: 0 2px 2px 2px
+  align-items: center
+  border-radius: var(--border-radius)
+  display: flex
+  flex-direction: row
+  justify-content: flex-start
+  background: rgba(0, 0, 0, 0.1)
+  max-height: 2rem
+  .li-image
+    display: flex
     align-items: center
-    &:not(.header):not(.footer)
-      background-color: #cdc8c7
-
-    &.header
-      padding: 0 3px
-      line-height: 1rem
-      text-align: top
-      justify-content: top
-      border-bottom-left-radius: 0
-      border-bottom-right-radius: 0
-      margin-bottom: 0
-      border-bottom: none
-
+    flex-shrink: 0
+    margin-left: -0.3rem
+    max-height: 2rem
+    flex: 0.7
+    img.icon
+      max-height: 2rem
+      border-top-left-radius: var(--border-radius)
+      border-bottom-left-radius: var(--border-radius)
+      border-top-right-radius: 0px
+      border-bottom-right-radius: 0px
+      
 input
   background-color: white
   height: 1.2rem
@@ -220,4 +227,8 @@ input
 .label-container
   justify-content: center
 
+.actions
+  display: flex
+  flex-wrap: nowrap
+  justify-content: flex-end
 </style>
