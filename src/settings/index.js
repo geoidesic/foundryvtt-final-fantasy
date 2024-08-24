@@ -46,7 +46,7 @@ function confirmBeforeDeletingActorItem() {
       hint: localize(`${SYSTEM_CODE}.Setting.confirmBeforeDeletingActorItem.Hint`),
       scope: 'user',
       config: true,
-      default: false,
+      default: true,
       type: Boolean
     }
   });

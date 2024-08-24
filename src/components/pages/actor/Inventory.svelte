@@ -5,6 +5,7 @@
   import { TJSInput } from "@typhonjs-fvtt/svelte-standard/component";
   import { createFilterQuery } from "~/src/filters/inventoryFilterQuery";
   import { toggleBookmark } from "~/src/helpers/util";
+  import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "./InventoryRow.svelte";
@@ -27,10 +28,6 @@
   });
 
 
-  function addItem(item) {
-    game.system.log.d('addItem')
-    game.system.log.d(item)
-  }
   function editItem(item) {
     game.system.log.d('editItem')
     game.system.log.d(item)
@@ -59,7 +56,15 @@
   }
 
   function deleteItem(index, item) {
-    item.delete();
+    let okToDelete = true;
+    if(game.settings.get(SYSTEM_ID, 'confirmBeforeDeletingActorItem')) {
+      okToDelete = confirm(
+        game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteItem`)
+      );
+    }
+    if(okToDelete) {
+      item.delete();
+    }
   }
 
   function roll(item) {
@@ -108,8 +113,10 @@
       ol
         InventoryRow.header(lockCss="{lockCSS}" toggleLock="{toggleLock}")
           div(slot="c1") 
-            i.left.fa.fa-add.mr-md( on:click="{addItem}")
-
+            div.flex0
+              div.relative.buttons
+                div.rowimg.button
+                  
           div(slot="c2") 
             div Name
           div(slot="c3")
