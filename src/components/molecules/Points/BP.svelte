@@ -24,7 +24,9 @@
           .flex.sub-header 
             .header Max
           .flex.max.header 
-            .header {$actor.system.points.BP.max}
+            .header 
+              DocInput(type="number" name="BP" min=0 valuePath="system.points.BP.max")
+
       .flex.header.val
         .header
           DocInput(type="number" name="BP" min=0 max="{$actor.system.points.BP.max}" valuePath="system.points.BP.val")
