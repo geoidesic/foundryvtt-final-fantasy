@@ -16,7 +16,7 @@ export class FFItemDataModel extends FFTypeDataModel {
     
     // Custom migration logic for this model
     if (source.favourite === undefined) {
-      source.favourite = true;
+      source.favourite = false;
     }
     
     return source;
