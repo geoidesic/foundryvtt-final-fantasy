@@ -31,6 +31,32 @@ export async function toggleBookmark(item, callback=() => {}) {
   callback();
 }
 
+export function getEffectOrigin(effect, tryFromUuidSync = false) {
+  if (!game.actors) return null;
+  const origin = effect._source.origin;
+  if (!origin) return null;
+  const split = origin.split(".");
+  let item = void 0;
+  if (split.length == 4) {
+    item = effect.parent.items.get(split[3]);
+  } else {
+    try {
+      item = game.actors?.get(origin)
+      || game.items?.get(origin)
+      || game.packs?.get('effects');
+
+      if(!item && tryFromUuidSync) {
+        item = fromUuidSync(origin);
+      }
+    } catch (error) {
+      console.warn('getEffectOrigin', effect, origin);
+      throw error;
+    }
+  }
+  
+  return item;
+}
+
 export function localize(string) {
   return game.i18n.localize(`${SYSTEM_ID}.${string}`);
 }
@@ -41,6 +67,19 @@ export function isNumber(value) {
 
 export function isAttribute(val) {
   if (Object.keys(attributes).includes(val)) return true;
+  return false;
+}
+
+export function isPassiveEffectFromItem(item) {
+  game.system.log.d("isPassiveEffectFromItem item", item);
+  if (item instanceof ActiveEffect) {
+    const parent = item.parent;
+    if (
+      parent instanceof Item
+    ) {
+      return true;
+    }
+  }
   return false;
 }
 

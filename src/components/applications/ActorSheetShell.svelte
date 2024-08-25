@@ -9,10 +9,10 @@
   import { gameSettings } from '~/src/config/gameSettings';
 
   import Tabs from "~/src/components/molecules/Tabs.svelte";
-  import Abilities from "~/src/components/pages/actor/Abilities.svelte";
-  import Attributes from "~/src/components/pages/actor/Attributes.svelte";
-  import Profile from "~/src/components/pages/actor/Profile.svelte";
-  import Inventory from "~/src/components/pages/actor/Inventory.svelte";
+  import Abilities from "~/src/components/tabs/actor/Abilities.svelte";
+  import Attributes from "~/src/components/tabs/actor/Attributes.svelte";
+  import Profile from "~/src/components/tabs/actor/Profile.svelte";
+  import Inventory from "~/src/components/tabs/actor/Inventory.svelte";
 
   export let elementRoot; //- passed in by SvelteApplication
   export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body

@@ -8,7 +8,7 @@
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
-  import InventoryRow from "./InventoryRow.svelte";
+  import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
@@ -110,12 +110,12 @@
         TJSInput({input} role="searchbox") 
       
     div.px-smd.mt-sm.inventory-rows-container
-      ol
+      ol.standard-list
         InventoryRow.header(lockCss="{lockCSS}" toggleLock="{toggleLock}" role="rowheader")
-          div.li-image.header(slot="c1") 
-            div.flex0
-              div.relative.buttons
-                div.rowimg.button
+          .li-image.header(slot="c1") 
+            .flex0
+              .relative.buttons
+                .rowimg.button
                   
           div(slot="c2") 
             div Name
@@ -184,41 +184,6 @@ i
 .full
   color: var(--color-negative)
 
-ol
-  height: 100%
-  margin: 0
-  padding: 0.1rem
-  border: 1px inset grey
-  border-radius: var(--border-radius)
-
-
-:global(.FF15 li.inventory-row.header)
-  padding: 0.4rem 0.3rem
-
-:global(.FF15 li.inventory-row)
-  position: relative // Allows the img to be positioned properly
-  padding: 0 0.3rem
-  margin: 0 2px 2px 2px
-  align-items: center
-  border-radius: var(--border-radius)
-  display: flex
-  flex-direction: row
-  justify-content: flex-start
-  background: rgba(0, 0, 0, 0.1)
-  max-height: 2rem
-  .li-image
-    display: flex
-    align-items: center
-    flex-shrink: 0
-    margin-left: -0.3rem
-    max-height: 2rem
-    flex: 0.7
-    img.icon
-      max-height: 2rem
-      border-top-left-radius: var(--border-radius)
-      border-bottom-left-radius: var(--border-radius)
-      border-top-right-radius: 0px
-      border-bottom-right-radius: 0px
       
 input
   background-color: white
@@ -231,4 +196,5 @@ input
   display: flex
   flex-wrap: nowrap
   justify-content: flex-end
+
 </style>

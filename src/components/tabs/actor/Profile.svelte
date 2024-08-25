@@ -7,7 +7,7 @@ import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContain
 <template lang='pug'>
 ScrollingContainer
   .flexcol.background
-    ProseMirror( attr="system.biography.profile" )
+    ProseMirror( attr="system.biography" )
 
 </template>
 <style lang='sass'>

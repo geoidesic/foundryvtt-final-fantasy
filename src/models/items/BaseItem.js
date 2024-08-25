@@ -7,6 +7,7 @@ export class FFItemDataModel extends FFTypeDataModel {
       ...super.defineSchema(),  // Include the schema from the base class
       description: new HTMLField(),
       favourite: new BooleanField({ initial: false }),
+      effectActionsLocked: new BooleanField({ initial: false }),
     };
   }
 
