@@ -60,6 +60,14 @@ export default class FF15Actor extends Actor {
     // }
   }
 
+  async _preCreate() {
+    game.system.log.d('preCreate', this);
+    if(this.type === 'PC') {
+      const prototypeToken = { disposition: 1, actorLink: true }; // Set disposition to "Friendly"
+      this.updateSource({ prototypeToken });
+    }
+  }
+
   async _onDrop(event) {
     console.log('_onDrop in the actor.js', event);
 
