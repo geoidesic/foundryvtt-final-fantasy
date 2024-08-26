@@ -1,7 +1,7 @@
 <script>
 import { onMount } from 'svelte';
-import AttributeSection from "~/src/components/organisms/AttributeSection.svelte";
-import PointsSection from "~/src/components/organisms/PointsSection.svelte";
+import AttributeSection from "~/src/components/organisms/actor/AttributeSection.svelte";
+import PointsSection from "~/src/components/organisms/actor/PointsSection.svelte";
 
 </script>
 <template lang='pug'>

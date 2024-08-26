@@ -69,29 +69,7 @@
     z-index: 1
 
     .logo-background
-      width: 100%
-      background-color: rgb(74, 29, 20)
-      position: relative
-      overflow: hidden
-
-      .texture
-        position: absolute
-        top: 0
-        left: 0
-        width: 100%
-        height: 100%
-        background-image: url("systems/foundryvtt-final-fantasy/assets/diamonds.png")
-        // background-image: url("systems/foundryvtt-final-fantasy/assets/royal-tile.png")
-        background-size: 80%
-        background-repeat: repeat
-        opacity: 0.2
-        z-index: 1
-
-      img
-        position: relative
-        display: block
-        margin: auto
-        z-index: 2
+      +texture-background
         
 
 

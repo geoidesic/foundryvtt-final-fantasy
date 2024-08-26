@@ -18,7 +18,7 @@ import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
       
 </template>
 <style lang='sass'>
-  @import '../../styles/Mixins.sass'
+  @import '../../../styles/Mixins.sass'
 
   .background
     width: 100%

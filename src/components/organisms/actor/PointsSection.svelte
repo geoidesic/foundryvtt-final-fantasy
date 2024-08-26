@@ -17,7 +17,7 @@
         
   </template>
   <style lang='sass'>
-    @import '../../styles/Mixins.sass'
+    @import '../../../styles/Mixins.sass'
   
     .section
       width: 100%

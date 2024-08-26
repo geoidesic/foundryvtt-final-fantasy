@@ -83,7 +83,7 @@
   function toggleLock(event) {
     $doc.update(
       {
-        ["system.inventoryLocked"]: !$doc.system.inventoryLocked,
+        ["system.effectActionsLocked"]: !$doc.system.effectActionsLocked,
       },
       {
         diff: true,
@@ -163,8 +163,8 @@
     effect.flags.surge.originInstance = originInstance;
     return effect
   });
-  $: lockCSS = $doc.system.inventoryLocked ? "lock" : "lock-open";
-  $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock" : "fa-lock-open";
+  $: lockCSS = $doc.system.effectActionsLocked ? "lock" : "lock-open";
+  $: faLockCSS = $doc.system.effectActionsLocked ? "fa-lock negative" : "fa-lock-open positive";
   $: xpUnspent = parseInt($doc.system.xp?.unspent) || 0;
 </script>
 
@@ -185,8 +185,8 @@
           .flex4.left
             div Name
           .actions.right
-            .row-action-button.rowimgbezelbutton.pointer(class="{lockCSS}")
-              i.fa(class="{faLockCSS}" on:click="{toggleLock}")
+            .row-action-button.rowimgbezelbutton.pointer(class="{lockCSS}" on:click="{toggleLock}")
+              i.fa(class="{faLockCSS}")
         +each("ActiveEffects as effect, index")
           li.flexrow.justify-flexrow-vertical.standard-list-row
             .li-image(class="{effect.isSuppressed ? 'suspended' : 'active'}")
@@ -195,7 +195,7 @@
               div {effect.name}
             
             .actions.right
-              +if("!$doc.system.inventoryLocked")
+              +if("!$doc.system.effectActionsLocked")
                 div.hide.row-action-button.rowimgbezelbutton.pointer
                   i.left.fa.fa-edit.mr-md
                 div.row-action-button.rowimgbezelbutton.pointer( on:click="{editItem(index, effect)}")
@@ -220,4 +220,5 @@
     display: flex
     flex-wrap: nowrap
     justify-content: flex-end
+
 </style>

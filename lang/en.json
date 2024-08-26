@@ -15,6 +15,11 @@
   "FF15": {
     "Title": "Final Fantasy TTRPG",
     "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
+    "Chat": {
+      "Buttons": {
+        "ApplyItemToTarget": "Apply {0} to target(s)"
+      }
+    },
     "Types": {
       "Item": {
         "Label": "Item",
@@ -145,6 +150,10 @@
       "combatStartSound": {
         "Name": "Sound file for combat start",
         "Hint": "If blank, no sound will be played. If set, the sound will be played when combat starts."
+      },
+      "chatMessageSound": {
+        "Name": "Sound file for new chat message",
+        "Hint": "If blank, no sound will be played. If set, the sound will be played when a chat message arrives in the Chat sidebar tab."
       }
     }
   }

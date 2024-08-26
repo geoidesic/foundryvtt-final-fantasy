@@ -9,6 +9,7 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
+  import RollCalcActor from "~/src/helpers/RollCalcActor"
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
@@ -29,6 +30,8 @@
 
 
   function editItem(item) {
+    item.sheet.render(true);
+
     game.system.log.d('editItem')
     game.system.log.d(item)
   }
@@ -70,6 +73,12 @@
   function roll(item) {
       game.system.log.d('roll')
       game.system.log.d(item)
+  }
+  function useItem(item) {
+    const result = new RollCalcActor({actor: $Actor, item: item, rollType: 'equipment'}).send();
+
+    game.system.log.d('useItem')
+    game.system.log.d(item)
   }
   function toggleLock(event) {
     game.system.log.d('a')
@@ -134,7 +143,7 @@
         +each("items as item, index")
           InventoryRow(lockCss="{lockCSS}" index="{index}" toggleLock="{toggleLock}" role="row")
             div.li-image(slot="c1")
-              img.icon(src="{item.img}" )
+              img.icon(src="{item.img}" on:click="{useItem(item)}")
             div(slot="c2") 
               div.pointer.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             div(slot="c3") 
@@ -143,7 +152,7 @@
               i.fa-bookmark.row.pointer(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" on:click="{toggleBookmark(item)}")
             div.buttons.actions(slot="c5")
               +if("!$doc.system.inventoryLocked")
-                div.rowbutton.rowimgbezelbutton( on:click="{editItem(index, item)}")
+                div.rowbutton.rowimgbezelbutton( on:click="{editItem(item)}")
                   i.left.fa.fa-edit.mr-md
                 div.rowbutton.rowimgbezelbutton( on:click="{duplicateItem(index, item)}")
                   i.left.fa.fa-copy.mr-md
@@ -196,5 +205,8 @@ input
   display: flex
   flex-wrap: nowrap
   justify-content: flex-end
+
+
+       
 
 </style>

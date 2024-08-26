@@ -15,16 +15,7 @@ export const log = {
   get level() { return this.loggingLevel; }
 };
 
-export function editableDocNode(doc, path) {
-  return {
-    get() {
-      return resolveDotpath(doc, path);
-    },
-    set(value) {
-      doc.update({ [path]: value });  
-    }
-  }
-}
+
 
 export async function toggleBookmark(item, callback=() => {}) {
   await item.update({ ["system.favourite"]: !item.system.favourite });
@@ -173,4 +164,22 @@ export function findKeysByValue(obj, value) {
 
 export function truncate(str, n) {
   return str.length > n ? str.substr(0, n - 1) + "..." : str;
+}
+
+export async function updateMessage(messageId, data) {
+  // check if chat message owner is this user
+  const message = game.messages.get(messageId);
+  if (message.user.id !== game.user.id) {
+    // emit to owner of message
+    game.socket.emit(`system.${game.system.id}`, {
+      type: "chatMessage",
+      mode: "messageUpdate",
+      messageId,
+      data
+    });
+  } else {
+    game.system.log.d('Current user is message owner');
+    // update message
+    await message.update(data)
+  }
 }

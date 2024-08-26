@@ -2,7 +2,6 @@
   import { getContext, onMount, tick } from "svelte";
   import { Timing } from "@typhonjs-fvtt/runtime/util";
   import { resolveDotpath } from "~/src/helpers/paths";
-  import { editableDocNode } from "~/src/helpers/util";
 
   export let placeholder = "";
   export let maxlength = "40";
@@ -13,7 +12,6 @@
   export let editable = false;
   export let type = "standard";
 
-  let data;
   let inputValue;
   let LABEL = !!label;
   let inputElement
@@ -43,7 +41,7 @@
     inputElement.select();
   }
 
-  function update(event) {
+  async function update(event) {
     let val = event.target.value;
     if(type == 'number' && $$props.max !== undefined && val > $$props.max) {
       val = $$props.max;
@@ -53,21 +51,15 @@
       val = $$props.min;
       ui.notifications.warn(`Value cannot exceed ${$$props.min}`);
     }
-    inputValue = val;  // Update the local value
-    data.set(val);  // Update the document value
+    inputValue = type == 'number' ? Number(val) : val;  // Update the local value
+    await $doc.update({[valuePath]: val});   // Update the document value
     game.system.log.d(`Updated value: ${val}`);
   }
 
+  $: inputValue = resolveDotpath($doc, valuePath);
+
+
   onMount(async () => {
-    game.system.log.d("DocInput mounted");
-    game.system.log.d($doc);
-    data = editableDocNode($doc, valuePath);
-    inputValue = data.get();  // Initialize inputValue with the current document value
-
-    game.system.log.d(inputValue);
-    game.system.log.d($$restProps);
-    game.system.log.d($$props);
-
 
   });
 </script>

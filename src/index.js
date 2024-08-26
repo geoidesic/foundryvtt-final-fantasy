@@ -5,6 +5,7 @@ import './styles/MarginsAndPadding.sass';
 import { log } from "~/src/helpers/util"
 import { SYSTEM_ID } from "~/src/helpers/constants"
 import { registerSettings } from "~/src/settings"
+import { mappedGameTargets } from '~/src/stores';
 import { setupModels } from './config/models';
 import WelcomeApplication from "~/src/components/applications/WelcomeApplication"
 import FF15Actor from '~/src/extensions/actor.js'
@@ -37,7 +38,7 @@ Hooks.once("init", async (a, b, c) => {
   log.level = log.DEBUG;
   game.system.log.i(`Starting System ${SYSTEM_ID}`);
 
-  CONFIG.debug.hooks = true;
+  // CONFIG.debug.hooks = true;
 
   registerSettings();
   setupModels();
@@ -91,4 +92,31 @@ Hooks.on('renderChatMessage', (message, html) => {
       }
     )
   }
+});
+
+
+/**
+ * Used by chat messages to react to targeting changes.
+ */
+Hooks.on("targetToken", (User, Token) => {
+
+  const targets =
+    game.user.targets
+      // strip out this target if it is flagged as for untargeting, return all others
+      .filter((target) => {
+        if (Token._id === target._id && target == false) return false;
+        return true;
+      })
+      // map the targets to the format needed for the store
+      .map((target) => {
+        return {
+          avatar: target.document.texture.src,
+          actorUuid: target.actor.uuid, // map the token actor (not the linked actor)
+          clickedByUserId: User._id,
+          tokenUuid: target.document.uuid
+        }
+      })
+  game.system.log.d('targets', targets);
+  mappedGameTargets.set(targets);
+
 });

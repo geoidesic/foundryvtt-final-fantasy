@@ -189,6 +189,11 @@
       background-color: rgba(170, 170, 170, 0.5)
       border: 1px outset transparent
       color: #989898
+      
+    &:active 
+      -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
+      border-color: #888 #aaa #eee
+    
 
   &:active
     -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
@@ -252,4 +257,27 @@
 
   &
     position: relative 
+
+=cursor-dice
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='26' viewBox='0 0 32 26'%3E%3Cg transform='matrix(0.05,0,0,0.05,0,0)' fill='%23a58363'%3E%3Cpath d='M274.9,34.3C246.8,6.2 201.2,6.2 173.1,34.3L34.3,173.1C6.2,201.2 6.2,246.8 34.3,274.9L173.1,413.7C201.2,441.8 246.8,441.8 274.9,413.7L413.7,274.9C441.8,246.8 441.8,201.2 413.7,173.1L274.9,34.3ZM200,224C200,210.834 210.834,200 224,200C237.166,200 248,210.834 248,224C248,237.166 237.166,248 224,248C210.834,248 200,237.166 200,224ZM96,200C109.166,200 120,210.834 120,224C120,237.166 109.166,248 96,248C82.834,248 72,237.166 72,224C72,210.834 82.834,200 96,200ZM224,376C210.834,376 200,365.166 200,352C200,338.834 210.834,328 224,328C237.166,328 248,338.834 248,352C248,365.166 237.166,376 224,376ZM352,200C365.166,200 376,210.834 376,224C376,237.166 365.166,248 352,248C338.834,248 328,237.166 328,224C328,210.834 338.834,200 352,200ZM224,120C210.834,120 200,109.166 200,96C200,82.834 210.834,72 224,72C237.166,72 248,82.834 248,96C248,109.166 237.166,120 224,120ZM320,448C320,483.3 348.7,512 384,512L576,512C611.3,512 640,483.3 640,448L640,256C640,220.7 611.3,192 576,192L461.7,192C473.3,228 464.8,269 436.3,297.5L320,413.8L320,448ZM480,328C493.166,328 504,338.834 504,352C504,365.166 493.166,376 480,376C466.834,376 456,365.166 456,352C456,338.834 466.834,328 480,328Z' style='fill-rule:nonzero;'/%3E%3C/g%3E%3C/svg%3E%0A") 32 26, pointer
+
+
+=texture-background($bgColor: rgb(74, 29, 20), $opacity: 0.2)
+  width: 100%
+  background-color: $bgColor
+  position: relative
+  overflow: hidden
+
+  .texture
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background-image: url("systems/foundryvtt-final-fantasy/assets/diamonds.png")
+    // background-image: url("systems/foundryvtt-final-fantasy/assets/royal-tile.png")
+    background-size: 80%
+    background-repeat: repeat
+    opacity: $opacity
+    z-index: 1
 
