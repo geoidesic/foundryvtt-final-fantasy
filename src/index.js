@@ -64,7 +64,10 @@ Hooks.once("ready", async () => {
 });
 
 Hooks.on("combatStart", async () => {
-  AudioHelper.play({ src: "sounds/drums.wav", volume: 0.8, autoplay: true, loop: false });
+  const combatStartSound = game.settings.get(SYSTEM_ID, 'combatStartSound').trim();
+  if(combatStartSound !== '') {
+    AudioHelper.play({ src: combatStartSound, volume: 1, autoplay: true, loop: false });
+  }
 });
 
 /**
