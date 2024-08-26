@@ -12,9 +12,12 @@
   export let editable = false;
   export let type = "standard";
 
-  let inputValue;
-  let LABEL = !!label;
-  let inputElement
+  let inputValue,
+    LABEL = !!label,
+    inputElement,
+    pulseClass = ""
+    ;
+  
 
   const doc = document || getContext("#doc");
   const updateDebounce = Timing.debounce(update, 500);
@@ -54,9 +57,17 @@
     inputValue = type == 'number' ? Number(val) : val;  // Update the local value
     await $doc.update({[valuePath]: val});   // Update the document value
     game.system.log.d(`Updated value: ${val}`);
+
+
   }
 
   $: inputValue = resolveDotpath($doc, valuePath);
+
+  $: if(inputValue !== undefined) {
+    inputValue = type == 'number' ? Number(inputValue) : inputValue;
+    pulseClass = "pulse";
+    setTimeout(() => pulseClass = "", 1000);
+  }
 
 
   onMount(async () => {
@@ -71,5 +82,27 @@ div(on:dblclick!="{handleDblClick}")
   +if("editable")
     input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown="{handleKeyDown}" on:blur="{handleBlur}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
     +else
-      div({...$$restProps}) {inputValue}
+      div({...$$restProps} class="{pulseClass}") {inputValue}
 </template>
+
+
+<style>
+  /* CSS for the pulse effect */
+
+  .pulse {
+    transition: scale 0.5s ease-in-out;
+    animation: pulse-animation 0.5s ease-in-out;
+  }
+
+  @keyframes pulse-animation {
+    0% {
+      scale: 1;
+    }
+    50% {
+      scale: 1.5;
+    }
+    100% {
+      scale: 1;
+    }
+  }
+</style>
