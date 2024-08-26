@@ -120,5 +120,5 @@ $: buttonCss = disabled ? 'disabled' : '';
       border-radius: var(--border-radius)
       color: white
       
-      +texture-background(rgba(144, 29, 20, 0.7), 0.1)
+      +texture-background(rgba(144, 29, 20, 0.7), 0.1, 80%)
 </style>
