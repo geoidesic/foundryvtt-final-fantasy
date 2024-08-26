@@ -7,6 +7,8 @@ export function registerSettings() {
   dontShowWelcome();
   applicationWindowHeaderIconsOnly()
   confirmBeforeDeletingActorItem()
+  combatStartSound()
+  chatMessageSound()
 }
 
 function dontShowWelcome() {
@@ -48,6 +50,36 @@ function confirmBeforeDeletingActorItem() {
       config: true,
       default: true,
       type: Boolean
+    }
+  });
+}
+function combatStartSound() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'combatStartSound',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.combatStartSound.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.combatStartSound.Hint`),
+      scope: 'user',
+      config: true,
+      default: 'sounds/drums.wav',
+      type: String,
+      filePicker: "any",
+    }
+  });
+}
+function chatMessageSound() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'chatMessageSound',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.chatMessageSound.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.chatMessageSound.Hint`),
+      scope: 'user',
+      config: true,
+      default: `sounds/notify.wav`,
+      type: String,
+      filePicker: "any",
     }
   });
 }
