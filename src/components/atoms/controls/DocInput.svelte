@@ -15,9 +15,8 @@
   let inputValue,
     LABEL = !!label,
     inputElement,
-    pulseClass = ""
-    ;
-  
+    pulseClass = "",
+    initialRender = true;
 
   const doc = document || getContext("#doc");
   const updateDebounce = Timing.debounce(update, 500);
@@ -58,20 +57,21 @@
     await $doc.update({[valuePath]: val});   // Update the document value
     game.system.log.d(`Updated value: ${val}`);
 
-
-  }
-
-  $: inputValue = resolveDotpath($doc, valuePath);
-
-  $: if(inputValue !== undefined) {
-    inputValue = type == 'number' ? Number(inputValue) : inputValue;
+    // Apply pulse animation only when update is triggered by user interaction
     pulseClass = "pulse";
     setTimeout(() => pulseClass = "", 1000);
   }
 
+  $: {
+    let newValue = resolveDotpath($doc, valuePath);
+    if (!initialRender && newValue !== inputValue) {
+      inputValue = type == 'number' ? Number(newValue) : newValue;
+    }
+  }
 
   onMount(async () => {
-
+    inputValue = resolveDotpath($doc, valuePath);
+    initialRender = false;
   });
 </script>
 
@@ -84,7 +84,6 @@ div(on:dblclick!="{handleDblClick}")
     +else
       div({...$$restProps} class="{pulseClass}") {inputValue}
 </template>
-
 
 <style>
   /* CSS for the pulse effect */
