@@ -1,12 +1,17 @@
 <script>
 import { onMount } from 'svelte';
+import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
+
 </script>
 <template lang='pug'>
-  .level-and-job 
-    .row
-      .level LV50 
-      .job DPS/BARD
-    
+.flexrow
+  .flex4
+    .flexrow.level
+      .right LV
+      .left
+        DocInput(style="max-width: 40px" type="number" name="LV" min=0 valuePath="system.level")
+  .flex4 
+    .job DPS/BARD
 </template>
 <style lang='sass'>
   @import '../../styles/Mixins.sass'
@@ -28,6 +33,9 @@ import { onMount } from 'svelte';
     text-shadow: 0 0 4px #fff
     -webkit-text-stroke-width: 0.5px
     -webkit-text-stroke-color: rgba(100,0,0,0.1)
+
+    .right, .left
+      display: inline-block
   .job
     display: inline-block
     transform: scaleX(1.2)
