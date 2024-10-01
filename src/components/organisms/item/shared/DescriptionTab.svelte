@@ -8,7 +8,7 @@ import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
       ProseMirror( attr="system.description" )
 </template>
 <style lang='sass'>
-  @import '../../../../../../styles/Mixins.sass'
+  @import '../../../../styles/Mixins.sass'
   .item-tabs
     @include inset
 </style>

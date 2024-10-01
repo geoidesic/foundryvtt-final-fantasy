@@ -3,7 +3,7 @@
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
-  import Description from "~/src/components/organisms/item/type/equipment/tabs/Description.svelte";
+  import Description from "~/src/components/organisms/item/shared/DescriptionTab.svelte";
 
   let activeTab = "description";
   // Tabs
