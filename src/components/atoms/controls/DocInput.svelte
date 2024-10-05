@@ -69,6 +69,9 @@
     }
   }
 
+  $: displayValue = inputValue === '' ? '\u00A0' : inputValue;
+  $: isEmpty = inputValue === '';
+
   onMount(async () => {
     inputValue = resolveDotpath($doc, valuePath);
     initialRender = false;
@@ -82,26 +85,31 @@ div(on:dblclick!="{handleDblClick}")
   +if("editable")
     input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown="{handleKeyDown}" on:blur="{handleBlur}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
     +else
-      div({...$$restProps} class="{pulseClass}") {inputValue}
+      div({...$$restProps} class="{pulseClass}" class:empty="{inputValue === ''}") {displayValue}
 </template>
 
-<style>
+<style lang="sass">
+  @import '../../../styles/Mixins.sass'
   /* CSS for the pulse effect */
+  .pulse 
+    transition: scale 0.5s ease-in-out
+    animation: pulse-animation 0.5s ease-in-out
 
-  .pulse {
-    transition: scale 0.5s ease-in-out;
-    animation: pulse-animation 0.5s ease-in-out;
-  }
+  @keyframes pulse-animation 
+    0% 
+      scale: 1
+    
+    50% 
+      scale: 1.5
+    
+    100% 
+      scale: 1
 
-  @keyframes pulse-animation {
-    0% {
-      scale: 1;
-    }
-    50% {
-      scale: 1.5;
-    }
-    100% {
-      scale: 1;
-    }
-  }
+  div.empty 
+    width: 100%
+    min-height: 1em
+    display: inline-block
+    border: 1px solid #aaa
+    border-radius: var(--border-radius)
+  
 </style>

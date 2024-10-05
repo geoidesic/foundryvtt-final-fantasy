@@ -4,12 +4,10 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
   import Description from "~/src/components/organisms/item/shared/DescriptionTab.svelte";
-  import Details from "~/src/components/organisms/item/type/trait/tabs/Details.svelte";
   let activeTab = "description";
   // Tabs
   const tabs = [
     { label: "description", id: "description", component: Description },
-    { label: "details", id: "details", component: Details },
     { label: "effects", id: "effects", component: Effects },
   ];
 
