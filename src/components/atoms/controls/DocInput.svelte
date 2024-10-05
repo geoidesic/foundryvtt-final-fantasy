@@ -11,6 +11,7 @@
   export let document = false;
   export let editable = false;
   export let type = "standard";
+  export let clickType = "click";
 
   let inputValue,
     LABEL = !!label,
@@ -33,7 +34,7 @@
       editable = false;
   }
 
-  async function handleDblClick(event) {
+  async function enableInput(event) {
     game.system.log.d(event);
     game.system.log.d('dblclick');
     editable = true; // or use  editable=!editable  to toggle
@@ -79,7 +80,7 @@
 </script>
 
 <template lang="pug">
-div(on:dblclick!="{handleDblClick}")
+div(on:click!="{clickType=='click' ? enableInput : () => {}}" on:dblclick!="{clickType=='dblclick' ? enableInput : () => {}}")
   +if('LABEL')
     label {label}
   +if("editable")
