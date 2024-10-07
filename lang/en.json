@@ -35,10 +35,6 @@
             "Label": "Job",
             "Description": "A class that a character can be."
           },
-          "telegraph": {
-            "Label": "Telegraph",
-            "Description": "A visual indicator of an ability."
-          },
           "trait": {
             "Label": "Trait",
             "Description": "A passive ability."

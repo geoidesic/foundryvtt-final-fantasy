@@ -9,7 +9,7 @@
       }
   },
   "Item": {
-      "types": ["job", "action", "equipment", "telegraph", "trait"],
+      "types": ["job", "action", "equipment", "trait"],
       "htmlFields": ["description"]
   }
 }
