@@ -18,7 +18,9 @@ export class ActionModel extends FFItemDataModel {
       checkAttribute: new StringField({ required: false, initial: '' }),
       checkBonus: new NumberField({ required: false, initial: 0 }),
       CR: new NumberField({ required: false, initial: 0 }),
-      directHit: new StringField({ required: false, initial: '' }),
+      hasDirectHit: new BooleanField({ required: false, initial: false }),
+      directHitType: new StringField({ required: false, initial: '' }),
+      directHitDamage: new StringField({ required: false, initial: '' }),
       heavierShot: new StringField({ required: false, initial: '' }),
       limitation: new NumberField({ required: false, initial: 0 }),
     };

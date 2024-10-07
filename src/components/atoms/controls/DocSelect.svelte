@@ -22,7 +22,7 @@
 
   const update = async () => {
     if (preventDefault) return;
-    await $doc.update({ [valuePath]: Boolean(inputValue) });
+    await $doc.update({ [valuePath]: inputValue });
   };
 
   onMount(() => {

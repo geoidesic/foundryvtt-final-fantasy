@@ -17,10 +17,14 @@
   const schemaFields = PCModel.schema.fields.attributes.fields.primary.fields;
   const schemaFieldEntries = Object.entries(schemaFields);
   const schemaFieldKeys = Object.keys(schemaFields).filter((key) => schemaFields[key] instanceof SchemaField);
-
   const schemaFieldObjects = schemaFieldEntries
     .filter(([key, value]) => value instanceof SchemaField)
     .map(([key, value]) => ({ key, value }));
+
+  const directHitOptions = [
+    { value: "damage", label: "Damage" },
+    { value: "markers", label: "Remove Markers" },
+  ];
 
   console.log(schemaFieldObjects);
 
@@ -48,7 +52,7 @@
             .flex2.right
               DocInput( name="rangeType" valuePath="system.rangeType")
 
-        h3.left Extras
+        h3.left Checks
         .flexrow.justify-flexrow-vertical
           .flex2
             label Has Check?
@@ -56,12 +60,34 @@
             DocCheckbox( name="hasCheck" valuePath="system.hasCheck")
 
         +if("$item.system.hasCheck")
-          .flexrow.sheet-row
+          .flexrow.sheet-row.justify-flexrow-vertical
             .flex2
               label Check Attribute
             .flex2.right
               DocSelect( name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
-        h3.left Checks
+
+        h3.left Direct Hit
+        .flexrow.justify-flexrow-vertical
+          .flex2
+            label Has Direct Hit?
+          .flex2.right
+            DocCheckbox( name="hasDirectHit" valuePath="system.hasDirectHit")
+
+        +if("$item.system.hasDirectHit")
+          .flexrow.sheet-row.justify-flexrow-vertical
+            .flex2
+              label Direct Hit Type
+            .flex2.right
+              DocSelect( name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
+
+        +if("$item.system.directHitType === 'damage'")
+          .flexrow.sheet-row
+            .flex2
+              label Direct Hit Damage 
+            .flex2.right
+              DocInput( name="directHitDamage" valuePath="system.directHitDamage")
+
+        h3.left Extras
         .flexrow.sheet-row
           .flex2
             label Trigger
