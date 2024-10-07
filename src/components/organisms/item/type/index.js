@@ -4,7 +4,5 @@ export { default as EquipmentHeader } from "./equipment/Header.svelte";
 export { default as EquipmentTabs } from "./equipment/EquipmentTabs.svelte";
 export { default as JobHeader } from "./job/Header.svelte";
 export { default as JobTabs } from "./job/Tabs.svelte";
-export { default as TelegraphHeader } from "./telegraph/Header.svelte";
-export { default as TelegraphTabs } from "./telegraph/Tabs.svelte";
 export { default as TraitHeader } from "./trait/Header.svelte";
 export { default as TraitTabs } from "./trait/Tabs.svelte";

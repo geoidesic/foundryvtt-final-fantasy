@@ -15,14 +15,12 @@
     action: components.ActionHeader,
     equipment: components.EquipmentHeader,
     job: components.JobHeader,
-    telegraph: components.TelegraphHeader,
     trait: components.TraitHeader
   }
   const tabMap = {
     action: components.ActionTabs,
     equipment: components.EquipmentTabs,
     job: components.JobTabs,
-    telegraph: components.TelegraphTabs,
     trait: components.TraitTabs
   }
 

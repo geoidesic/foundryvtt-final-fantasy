@@ -48,14 +48,6 @@
       }
     },
     {
-      "name": "telegraphs",
-      "label": "FF15 Telegraphs",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
-    },
-    {
       "name": "traits",
       "label": "FF15 Traits",
       "type": "Item",
