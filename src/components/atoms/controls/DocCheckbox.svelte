@@ -1,7 +1,7 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { getContext } from "svelte";
+  import { onMount, getContext } from 'svelte';
   import { resolveDotpath } from "~/src/helpers/paths";
 
   // The value of the input
@@ -26,6 +26,9 @@
     await $doc.update({[valuePath]: Boolean(inputValue)}); 
   }
 
+  onMount(() => {
+    inputValue = resolveDotpath($doc, valuePath);
+  });
 
 </script>
 

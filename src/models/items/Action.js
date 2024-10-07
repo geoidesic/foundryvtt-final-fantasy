@@ -14,6 +14,7 @@ export class ActionModel extends FFItemDataModel {
       trigger: new StringField({ required: false, initial: '' }),
       target: new StringField({ required: false, initial: '' }),
       baseEffect: new StringField({ required: false, initial: '' }),
+      hasCheck: new BooleanField({ required: false, initial: false }),
       checkAttribute: new StringField({ required: false, initial: '' }),
       checkBonus: new NumberField({ required: false, initial: 0 }),
       CR: new NumberField({ required: false, initial: 0 }),
