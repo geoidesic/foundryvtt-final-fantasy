@@ -45,6 +45,19 @@
   const heavyshotOptions = [
     { value: "straignt", label: "Grants Straight Shot Ready" }
   ]
+  const triggerOptions = [
+    { value: "afterCheck", label: "Immediately after an enemy makes an ability check" },
+    { value: "beforeMove", label: "Immediately before an enemy moves" },
+    { value: "afterTurn", label: "When any character finishes their turn" },
+    { value: "invoke", label: "When an enemy within 10 squares of this character uses an invoked ability, or is using an invoked ability to generate a marker" },
+  ]
+  const rangeOptions = [
+    { value: "1sq", label: "1 Square" },
+    { value: "5sq", label: "5 Squares" },
+    { value: "10sq", label: "10 Squares" },
+    { value: "3x3a", label: "A 3x3 area centered on this character" },
+    { value: "5x5a", label: "A 5x5 area centered on this character" },
+  ]
 
   console.log(schemaFieldObjects);
 
@@ -54,50 +67,42 @@
 <template lang="pug">
     .item-sheet.details
       .flexcol.flex3.left
-        h3.left Range
         .flexrow.justify-flexrow-vertical
-          .flex2
-            label Is Ranged?
-          .flex2.right
-            DocCheckbox( name="ranged" valuePath="system.ranged")
-        +if("$item.system.ranged")
-          .flexrow.sheet-row
-            .flex2
-              label Range value
-            .flex2.right
-              DocInput( name="rangeValue" type="number" valuePath="system.rangeValue")
-          .flexrow.sheet-row
-            .flex2
-              label Range type
-            .flex2.right
-              DocInput( name="rangeType" valuePath="system.rangeType")
-
-        h3.left Checks
-        .flexrow.justify-flexrow-vertical
-          .flex2
-            label Has Check?
-          .flex2.right
+          .flex4
+            h3.left Checks
+          .flex0.right
             DocCheckbox( name="hasCheck" valuePath="system.hasCheck")
 
         +if("$item.system.hasCheck")
           .flexrow.sheet-row.justify-flexrow-vertical
-            .flex2
+            .flex4
               label Check Attribute
-            .flex2.right
+            .flex0.right
               DocSelect.right( name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
 
-        h3.left Direct Hit
         .flexrow.justify-flexrow-vertical
-          .flex2
-            label Has Direct Hit?
-          .flex2.right
+          .flex4
+            h3.left CR
+          .flex0.right
+            DocCheckbox( name="hasCR" valuePath="system.hasCR")
+
+        +if("$item.system.hasCR")
+          .flexrow.sheet-row.justify-flexrow-vertical
+            .flex2
+              label CR Type
+            .flex2.right
+              DocSelect.right( name="CR" options="{CROptions}" valuePath="system.CR")
+        .flexrow.justify-flexrow-vertical
+          .flex4
+            h3.left Direct Hit
+          .flex0.right
             DocCheckbox( name="hasDirectHit" valuePath="system.hasDirectHit")
 
         +if("$item.system.hasDirectHit")
           .flexrow.sheet-row.justify-flexrow-vertical
-            .flex2
+            .flex4
               label Direct Hit Type
-            .flex2.right
+            .flex0.right
               DocSelect.right( name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
 
         +if("$item.system.directHitType === 'damage'")
@@ -107,25 +112,10 @@
             .flex2.right
               DocInput( name="directHitDamage" valuePath="system.directHitDamage")
 
-        h3.left CR
         .flexrow.justify-flexrow-vertical
-          .flex2
-            label Has CR?
-          .flex2.right
-            DocCheckbox( name="hasCR" valuePath="system.hasCR")
-
-        +if("$item.system.hasCR")
-          .flexrow.sheet-row.justify-flexrow-vertical
-            .flex2
-              label CR Type
-            .flex2.right
-              DocSelect.right( name="CR" options="{CROptions}" valuePath="system.CR")
-
-        h3.left Heavier Shot
-        .flexrow.justify-flexrow-vertical
-          .flex2
-            label Heavier Shot?
-          .flex2.right
+          .flex4
+            h3.left Heavier Shot
+          .flex0.right
             DocCheckbox( name="hasHeavierShot" valuePath="system.hasHeavierShot")
 
         +if("$item.system.hasHeavierShot")
@@ -135,11 +125,34 @@
             .flex2.right
               DocSelect.right( name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
 
-        h3.left Target
         .flexrow.justify-flexrow-vertical
-          .flex2
-            label Has Target?
-          .flex2.right
+          .flex4
+            h3.left Limitation
+          .flex0.right
+            DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
+
+        +if("$item.system.hasLimitation")
+          .flexrow.sheet-row.justify-flexrow-vertical
+            .flex2
+              label Limitation
+            .flex2.right
+              DocSelect.right( name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
+        .flexrow.justify-flexrow-vertical
+          .flex4
+            h3.left Range
+          .flex0.right
+            DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
+        +if("$item.system.hasRanged")
+
+          .flexrow.sheet-row.justify-flexrow-vertical
+              .flex2
+                label Range Type
+              .flex2.right
+                DocSelect.right( name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
+        .flexrow.justify-flexrow-vertical
+          .flex4
+            h3.left Target
+          .flex0.right
             DocCheckbox( name="hasTarget" valuePath="system.hasTarget")
 
         +if("$item.system.hasTarget")
@@ -149,36 +162,21 @@
             .flex2.right
               DocSelect.right( name="target" options="{targetOptions}" valuePath="system.target")
 
-        h3.left Limitation
-        .flexrow.justify-flexrow-vertical
-          .flex2
-            label Has Limitation?
-          .flex2.right
-            DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
 
-        +if("$item.system.hasLimitation")
+        .flexrow.justify-flexrow-vertical
+          .flex4
+            h3.left Trigger
+          .flex0.right
+            DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
+
+        +if("$item.system.hasTrigger")
           .flexrow.sheet-row.justify-flexrow-vertical
             .flex2
-              label Limitation
+              label Trigger
             .flex2.right
-              DocSelect.right( name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
+              DocSelect.right( name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
 
-        h3.left Extras
-        .flexrow.sheet-row
-          .flex2
-            label Trigger
-          .flex2.right
-            DocInput( name="trigger" valuePath="system.trigger")
-            
-        .flexrow.sheet-row
-          .flex2
-            label Heavier Shot
-          .flex2.right
-            DocInput( name="heavierShot" valuePath="system.heavierShot")
 
-        h3.left Base Effect
-          .prose
-            ProseMirror( attr="system.baseEffect" )
 </template>
 
 <style lang="sass">
