@@ -12,7 +12,7 @@
   export let label = "";
   export let editable = false;
 
-  let inputValue,
+  let inputValue = null, // Initialize to null to avoid preselection
     LABEL = !!label,
     inputElement,
     pulseClass = "";
@@ -31,6 +31,9 @@
 </script>
 
 <select {...$$restProps} bind:value={inputValue} on:change={update} {disabled}>
+  <!-- Placeholder option when nothing is selected -->
+  <option value="" disabled selected={!inputValue}>Please select an option</option>
+  
   {#if options && options.length}
     {#each options as option}
       <option value={option.value}>
