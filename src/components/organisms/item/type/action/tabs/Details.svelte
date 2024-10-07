@@ -1,5 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
+  import { localize } from "#runtime/svelte/helper";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
@@ -22,42 +23,46 @@
     .map(([key, value]) => ({ key, value }));
 
   const directHitOptions = [
-    { value: "damage", label: "Damage" },
-    { value: "markers", label: "Remove Markers" },
+    { value: "damage", label: localize("FF15.Types.Item.Types.Options.DirectHit.damage") },
+    { value: "markers", label: localize("FF15.Types.Item.Types.Options.DirectHit.markers") },
   ];
+
   const CROptions = [
-    { value: "def", label: "Defence" },
-    { value: "mag", label: "Magic Defence" },
-    { value: "vig", label: "Vigilance" },
-    { value: "spd", label: "Speed" },
+    { value: "def", label: localize("FF15.Types.Item.Types.Options.CR.def") },
+    { value: "mag", label: localize("FF15.Types.Item.Types.Options.CR.mag") },
+    { value: "vig", label: localize("FF15.Types.Item.Types.Options.CR.vig") },
+    { value: "spd", label: localize("FF15.Types.Item.Types.Options.CR.spd") },
   ];
+
   const targetOptions = [
-    { value: "single", label: "Single" },
-    { value: "enemy", label: "The enemy that triggered this ability" },
-    { value: "all", label: "All enemies within range" },
-    { value: "ally", label: "Ally" },
-  ]
+    { value: "single", label: localize("FF15.Types.Item.Types.Options.Target.single") },
+    { value: "enemy", label: localize("FF15.Types.Item.Types.Options.Target.enemy") },
+    { value: "all", label: localize("FF15.Types.Item.Types.Options.Target.all") },
+    { value: "ally", label: localize("FF15.Types.Item.Types.Options.Target.ally") },
+  ];
+
   const limitationOptions = [
-    { value: "once", label: "Once per phase" },
-    { value: "twice", label: "Twice per phase" },
-    { value: "thrice", label: "Thrice per phase" },
-  ]
-  const heavyshotOptions = [
-    { value: "straignt", label: "Grants Straight Shot Ready" }
-  ]
+    { value: "once", label: localize("FF15.Types.Item.Types.Options.Limitation.once") },
+    { value: "twice", label: localize("FF15.Types.Item.Types.Options.Limitation.twice") },
+    { value: "thrice", label: localize("FF15.Types.Item.Types.Options.Limitation.thrice") },
+  ];
+
+  const heavyshotOptions = [{ value: "straignt", label: localize("FF15.Types.Item.Types.Options.Heavyshot.straignt") }];
+
   const triggerOptions = [
-    { value: "afterCheck", label: "Immediately after an enemy makes an ability check" },
-    { value: "beforeMove", label: "Immediately before an enemy moves" },
-    { value: "afterTurn", label: "When any character finishes their turn" },
-    { value: "invoke", label: "When an enemy within 10 squares of this character uses an invoked ability, or is using an invoked ability to generate a marker" },
-  ]
+    { value: "afterCheck", label: localize("FF15.Types.Item.Types.Options.Trigger.afterCheck") },
+    { value: "beforeMove", label: localize("FF15.Types.Item.Types.Options.Trigger.beforeMove") },
+    { value: "afterTurn", label: localize("FF15.Types.Item.Types.Options.Trigger.afterTurn") },
+    { value: "invoke", label: localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
+  ];
+
   const rangeOptions = [
-    { value: "1sq", label: "1 Square" },
-    { value: "5sq", label: "5 Squares" },
-    { value: "10sq", label: "10 Squares" },
-    { value: "3x3a", label: "A 3x3 area centered on this character" },
-    { value: "5x5a", label: "A 5x5 area centered on this character" },
-  ]
+    { value: "1sq", label: localize("FF15.Types.Item.Types.Options.Range.1sq") },
+    { value: "5sq", label: localize("FF15.Types.Item.Types.Options.Range.5sq") },
+    { value: "10sq", label: localize("FF15.Types.Item.Types.Options.Range.10sq") },
+    { value: "3x3a", label: localize("FF15.Types.Item.Types.Options.Range.3x3a") },
+    { value: "5x5a", label: localize("FF15.Types.Item.Types.Options.Range.5x5a") },
+  ];
 
   console.log(schemaFieldObjects);
 

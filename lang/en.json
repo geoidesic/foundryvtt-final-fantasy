@@ -38,6 +38,45 @@
           "trait": {
             "Label": "Trait",
             "Description": "A passive ability."
+          },
+          "Options": {
+            "DirectHit": {
+              "damage": "Damage",
+              "markers": "Remove Markers"
+            },
+            "CR": {
+              "def": "Defence",
+              "mag": "Magic Defence",
+              "vig": "Vigilance",
+              "spd": "Speed"
+            },
+            "Target": {
+              "single": "Single",
+              "enemy": "The enemy that triggered this ability",
+              "all": "All enemies within range",
+              "ally": "Ally"
+            },
+            "Limitation": {
+              "once": "Once per phase",
+              "twice": "Twice per phase",
+              "thrice": "Thrice per phase"
+            },
+            "Heavyshot": {
+              "straignt": "Grants Straight Shot Ready"
+            },
+            "Trigger": {
+              "afterCheck": "Immediately after an enemy makes an ability check",
+              "beforeMove": "Immediately before an enemy moves",
+              "afterTurn": "When any character finishes their turn",
+              "invoke": "When an enemy within 10 squares of this character uses an invoked ability, or is using an invoked ability to generate a marker"
+            },
+            "Range": {
+              "1sq": "1 Square",
+              "5sq": "5 Squares",
+              "10sq": "10 Squares",
+              "3x3a": "A 3x3 area centered on this character",
+              "5x5a": "A 5x5 area centered on this character"
+            }
           }
         }
       },
@@ -49,7 +88,7 @@
         "EditAttribute": {
           "Tooltip": "Left click + / Right Click -"
         },
-        "Inventory" : {
+        "Inventory": {
           "confirmDeleteItem": "Are you sure you want to delete this item?"
         },
         "Types": {
@@ -113,7 +152,6 @@
         }
       }
     },
-    
     "Welcome": {
       "To": "Welcome to the",
       "Introduction": "Introduction",
