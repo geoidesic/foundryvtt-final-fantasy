@@ -27,7 +27,7 @@ export function formatDotpath(path) {
  */
 export function stepwiseResolveDotpath(obj, path) {
   const pathlets = formatDotpath(path).split(".");
-  game.system.log.d("pathlets", pathlets);
+  // game.system.log.d("pathlets", pathlets);
   // Resolve each key, starting with root
   const result = [
     {
@@ -35,7 +35,7 @@ export function stepwiseResolveDotpath(obj, path) {
       val: obj
     },
   ];
-  game.system.log.d("result", result);
+  // game.system.log.d("result", result);
 
   for (const pathlet of pathlets) {
     obj = obj?.[pathlet];
@@ -44,7 +44,7 @@ export function stepwiseResolveDotpath(obj, path) {
       val: obj,
     });
   }
-  game.system.log.d("result", result);
+  // game.system.log.d("result", result);
   return result;
 }
 

@@ -23,11 +23,11 @@
             .header Max
           .flex.max.header 
             .header 
-              DocInput(clickType="dblclick" type="number" name="BP" min=0 valuePath="system.points.MP.max")
+              DocInput(clickType="dblclick" pulse="{true}" type="number" name="BP" min=0 valuePath="system.points.MP.max")
 
       .flex.header.val
         .header 
-          DocInput(clickType="dblclick" name="BP" type="number" valuePath="system.points.MP.val" min=0 max="{$actor.system.points.MP.max}" )
+          DocInput(clickType="dblclick" pulse="{true}" name="BP" type="number" valuePath="system.points.MP.val" min=0 max="{$actor.system.points.MP.max}" )
       
   </template>
 

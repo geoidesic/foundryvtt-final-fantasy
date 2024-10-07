@@ -3,7 +3,7 @@
   import { Timing } from "@typhonjs-fvtt/runtime/util";
   import { resolveDotpath } from "~/src/helpers/paths";
 
-  export let placeholder = "";
+  export let placeholder = "--";
   export let maxlength = "40";
   export let disabled = false;
   export let valuePath = "";
@@ -12,6 +12,7 @@
   export let editable = false;
   export let type = "standard";
   export let clickType = "click";
+  export let pulse = false;
 
   let inputValue,
     LABEL = !!label,
@@ -59,8 +60,10 @@
     game.system.log.d(`Updated value: ${val}`);
 
     // Apply pulse animation only when update is triggered by user interaction
-    pulseClass = "pulse";
-    setTimeout(() => pulseClass = "", 1000);
+    if(pulse) {
+      pulseClass = "pulse";
+      setTimeout(() => pulseClass = "", 1000);
+    }
   }
 
   $: {
@@ -70,12 +73,18 @@
     }
   }
 
-  $: displayValue = inputValue === '' ? '\u00A0' : inputValue;
+  $: displayValue = inputValue === '' || inputValue == 0 ? '' : inputValue;
   $: isEmpty = inputValue === '';
 
   onMount(async () => {
     inputValue = resolveDotpath($doc, valuePath);
     initialRender = false;
+    if($$props.type == 'number') {
+      inputValue = Number(inputValue);
+      if( placeholder == '--'){
+        placeholder = 0;
+      }
+    }
   });
 </script>
 
@@ -86,7 +95,7 @@ div(on:click!="{clickType=='click' ? enableInput : () => {}}" on:dblclick!="{cli
   +if("editable")
     input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown="{handleKeyDown}" on:blur="{handleBlur}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
     +else
-      div({...$$restProps} class="{pulseClass}" class:empty="{inputValue === ''}") {displayValue}
+      .output({...$$restProps} class="{pulseClass}" class:empty="{inputValue === ''}") {displayValue || placeholder}
 </template>
 
 <style lang="sass">
@@ -112,5 +121,8 @@ div(on:click!="{clickType=='click' ? enableInput : () => {}}" on:dblclick!="{cli
     display: inline-block
     border: 1px solid #aaa
     border-radius: var(--border-radius)
+
+  .output:not([type="checkbox"])
+    margin-right: 0.5em
   
 </style>
