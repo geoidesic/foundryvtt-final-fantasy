@@ -130,6 +130,11 @@
             .flex2.right
               DocSelect.right( name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
 
+        .flexrow.justify-flexrow-vertical
+          .flex4
+            h3.left Limitation
+          .flex0.right
+            DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
 
         +if("$item.system.hasLimitation")
           .flexrow.sheet-row.justify-flexrow-vertical
