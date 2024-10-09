@@ -1,6 +1,33 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400..900&family=Ibarra+Real+Nova:ital,wght@0,400..700;1,400..700&family=Inter:wght@100..900&family=Libre+Caslon+Display&family=Markazi+Text:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Trirong:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
 
+@font-face
+  font-family: 'icomoon'
+  src: url('systems/foundryvtt-final-fantasy/assets/fonts/icomoon.eot?3hrrg5')
+  src: url('systems/foundryvtt-final-fantasy/assets/fonts/icomoon.eot?3hrrg5#iefix') format('embedded-opentype'), url('systems/foundryvtt-final-fantasy/assets/fonts/icomoon.ttf?3hrrg5') format('truetype'), url('systems/foundryvtt-final-fantasy/assets/fonts/icomoon.woff?3hrrg5') format('woff'), url('systems/foundryvtt-final-fantasy/assets/fonts/icomoon.svg?3hrrg5#icomoon') format('svg')
+  font-weight: normal
+  font-style: normal
+  font-display: block
+
+[class^="icon-"], [class*=" icon-"] 
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important
+  speak: never
+  font-style: normal
+  font-weight: normal
+  font-variant: normal
+  text-transform: none
+  line-height: 1
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+.icon-critical:before
+  content: "\e900"
+
+.icon-dice-solid:before
+  content: "\e901"
 
 // global style changes to foundry UI
 .window-resizable-handle
@@ -31,7 +58,6 @@
   --tjs-select-text-overflow: ellipsis
   --tjs-select-transition-focus-visible: box-shadow 0.2s ease
   --tjs-select-width: auto /* Adjust width as needed */
-
 
   /* Option variables */
   --tjs-select-option-background: #23221d
@@ -65,58 +91,50 @@
     font-size: var(--size-lg-h)
   h3
     font-size: var(--size-md-h)
-  h2, h3, [title] 
+  h2, h3, [title]
     color: var(--color-highlight)
-  
+
   h4
     font-size: var(--size-sm-h)
 
-  .border-right 
+  .border-right
     border-right: 4px ridge var(--color-highlight)
-  
-  .right-border-gradient-mask 
+
+  .right-border-gradient-mask
     mask-image: linear-gradient(0deg, transparent 0%, black 100%)
 
-
   // alignment, accent and visibility
-  .bold 
+  .bold
     font-weight: 700
 
-  
-  .left 
+  .left
     text-align: left
 
-  
-  .right 
+  .right
     text-align: right
 
-
-  .center 
+  .center
     text-align: center
 
-  
-  .hide 
+  .hide
     visibility: hidden
 
-
-  .relative 
+  .relative
     position: relative
 
-  
-  .justify-flexrow-vertical 
+  .justify-flexrow-vertical
     align-items: center
 
-  .tight 
+  .tight
     padding: 0
 
-  .pointer 
+  .pointer
     cursor: var(--tjs-select-cursor)
 
-  .caption 
+  .caption
     font-size: smaller
 
-
-  .light 
+  .light
     opacity: 0.5
 
   .prose
@@ -130,46 +148,38 @@
     .editor.prosemirror.tjs-editor .editor-enriched
       padding: 1em
 
-  .window-title 
+  .window-title
     font-size: 1.5em
     font-weight: 700
 
   .flexrow>.flex4,
-  .flexcol>.flex4 
+  .flexcol>.flex4
     flex: 4
 
-  .gap-4 
+  .gap-4
     gap: 4px
   .gap-15
     gap: 15px
 
-
-  .no-wrap 
+  .no-wrap
     white-space: nowrap
 
-
-  .required 
+  .required
     font-size: large
     margin-right: 2px
     color: var(--color-positive)
     display: none
-    &.active 
+    &.active
       display: block
       color: var(--color-negative)
       animation: pulse 0.5s infinite
-  
-
 
   // Colours
-  .negative 
+  .negative
     color: var(--color-negative)
 
-
-  .positive 
+  .positive
     color: var(--color-positive)
-
-
-
 
   ol.standard-list
     height: 100%
@@ -178,21 +188,20 @@
     border: 1px inset grey
     border-radius: var(--border-radius)
 
-
   .standard-list-row.header
-      padding: 0.4rem 0.3rem
+    padding: 0.4rem 0.3rem
 
   .standard-list-row
-      position: relative // Allows the img to be positioned properly
-      padding: 0 0.3rem
-      margin: 0 2px 2px 2px
-      align-items: center
-      border-radius: var(--border-radius)
-      display: flex
-      flex-direction: row
-      justify-content: flex-start
-      background: rgba(0, 0, 0, 0.1)
-      max-height: 2rem
+    position: relative // Allows the img to be positioned properly
+    padding: 0 0.3rem
+    margin: 0 2px 2px 2px
+    align-items: center
+    border-radius: var(--border-radius)
+    display: flex
+    flex-direction: row
+    justify-content: flex-start
+    background: rgba(0, 0, 0, 0.1)
+    max-height: 2rem
   .li-image
     display: flex
     align-items: center
@@ -217,8 +226,8 @@
         overflow: hidden
         cursor: pointer
         //- this combo preserves the border radius with an invisible border, so you still get the clipping effect
-        border-radius: var(--border-radius) 0 0 var(--border-radius) 
-        border: none 
+        border-radius: var(--border-radius) 0 0 var(--border-radius)
+        border: none
         &.right
           border-radius: 0 var(--border-radius) var(--border-radius) 0
-          border: none 
+          border: none

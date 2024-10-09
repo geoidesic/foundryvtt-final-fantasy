@@ -8,7 +8,8 @@
       "action": "Action",
       "equipment": "Equipment",
       "job": "Job",
-      "trait": "Trait"
+      "trait": "Trait",
+      "effect": "Effect"
     }
   },
   "FF15": {
@@ -33,10 +34,14 @@
           },
           "job": {
             "Label": "Job",
-            "Description": "A class that a character can be."
+            "Description": "Defines the character's available abilities."
           },
           "trait": {
             "Label": "Trait",
+            "Description": "A passive ability."
+          },
+          "effect": {
+            "Label": "Effect",
             "Description": "A passive ability."
           },
           "Options": {
@@ -48,7 +53,8 @@
               "def": "Defence",
               "mag": "Magic Defence",
               "vig": "Vigilance",
-              "spd": "Speed"
+              "spd": "Speed",
+              "special": "Special"
             },
             "Target": {
               "single": "Single",
