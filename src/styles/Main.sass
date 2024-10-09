@@ -32,12 +32,24 @@
 // global style changes to foundry UI
 .window-resizable-handle
   z-index: 4
-.journal-entry-page
-  h4
-    font-weight: bold
-    margin-bottom: 0
-  h4 + p
-    margin-top: 0
+.journal-entry-page .editor-content, .journal-entry-pages 
+    font-family: "Trirong", serif
+    line-height: 1.5
+    ul 
+      li
+        margin-left: 1em
+        list-style-image: url('systems/foundryvtt-final-fantasy/assets/svg/critical.svg')
+        &::marker
+          font-size: 1.8em
+          line-height: 0.1
+    blockquote
+      margin-top: 1.5em
+      margin-bottom: 1.5em
+    h4
+      font-weight: bold
+      margin-bottom: 0
+    h4 + p
+      margin-top: 0
 
 // style changes specific to FF15 UI 
 .FF15
