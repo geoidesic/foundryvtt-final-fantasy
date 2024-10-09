@@ -22,7 +22,7 @@ export default class WelcomeApplication extends SvelteApplication
          minimizable: true,
          width: 600,
          height: 700,
-         // headerIcon: 'modules/foundryvtt-actor-studio/assets/actor-studio-logo-dragon-white.svg',
+         // headerIcon: 'systems/foundryvtt-final-fantasy/assets/critical.svg',
          title: game.i18n.localize(`${SYSTEM_CODE}.SystemName`)+' v'+version,
          svelte: {
             class: WelcomeAppShell,

@@ -32,6 +32,7 @@
     { value: "mag", label: localize("FF15.Types.Item.Types.Options.CR.mag") },
     { value: "vig", label: localize("FF15.Types.Item.Types.Options.CR.vig") },
     { value: "spd", label: localize("FF15.Types.Item.Types.Options.CR.spd") },
+    { value: "special", label: localize("FF15.Types.Item.Types.Options.CR.special") },
   ];
 
   const targetOptions = [
