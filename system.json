@@ -40,6 +40,14 @@
       }
     },
     {
+      "name": "effect",
+      "label": "FF15 Effects",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER"
+      }
+    },
+    {
       "name": "equipment",
       "label": "FF15 Equipment",
       "type": "Item",
