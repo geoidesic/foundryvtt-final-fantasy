@@ -16,7 +16,7 @@
 
   export let elementRoot; //- passed in by SvelteApplication
   export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
-  export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
+  // export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
 
   //- store a copy of the templates for usage as schemas in other places
   setContext("#doc", documentStore);

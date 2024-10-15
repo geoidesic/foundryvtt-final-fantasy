@@ -86,7 +86,7 @@ export default () => {
         fileName: "index",
       },
     },
-
+    
     plugins: [
       svelte({
         compilerOptions: {

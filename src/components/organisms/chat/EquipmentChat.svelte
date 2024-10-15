@@ -4,7 +4,7 @@ import { activeEffectModes } from '~/src/helpers/constants';
 import { mappedGameTargets } from '~/src/stores';
 import { resolveDotpath } from "~/src/helpers/paths";
 
-export let messageId;
+// export let messageId;
 export let FFMessage;
 
 async function applyToTarget() {
@@ -104,8 +104,8 @@ $: buttonCss = disabled ? 'disabled' : '';
       img.icon.right(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
     .flexrow.justify-flexrow-vertical.mt-sm
       .flex4.buttons
-        .rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
-          .flex3.pa-sm {game.i18n.format("FF15.Chat.Buttons.ApplyItemToTarget", [FFMessage.item.name])}
+        button.stealth.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
+          .flex3.pa-sm {window.game.i18n.format("FF15.Chat.Buttons.ApplyItemToTarget", [FFMessage.item.name])}
           .flex0
             i.fa.fa-crosshairs.mr-sm.right.mt-sm
 

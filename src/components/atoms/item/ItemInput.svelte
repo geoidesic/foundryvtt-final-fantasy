@@ -12,7 +12,6 @@
   export let maxlength = "40";
   export let className = "";
   export let document = false;
-  export let disabled = false;
   export let inputType = "text";
   export let id = generateRandomElementId()
 
@@ -46,8 +45,8 @@
 <template lang="pug">
   div.flexcol
     +if('LABEL')
-      label {label}
-    input.flex3(type="{inputType}" name="Name" id="{id}" class="{className}" value="{data}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
+      label(for="{id}") {label}
+    input.flex3(type="{inputType}" name="{label}" id="{id}" class="{className}" value="{data}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
 </template>
 
 <style lang="scss" scoped>

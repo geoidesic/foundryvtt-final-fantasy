@@ -9,7 +9,7 @@
 
   export let elementRoot; //- passed in by SvelteApplication
   export let documentStore; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
-  export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
+  // export let document; //- passed in by DocumentSheet.js where it attaches DocumentShell to the DOM body
 
   const headerMap = {
     action: components.ActionHeader,
@@ -100,8 +100,8 @@
     header
       .flexrow.gap-15
         .profile-wrap.flex0
-          .profile
-            img.profile(src="{$documentStore.img}" data-tooltip="{$documentStore.name}" on:click="{_launchStandardProfileEditor}")
+          button.stealth.profile(on:click="{_launchStandardProfileEditor}")
+            img.profile(src="{$documentStore.img}" data-tooltip="{$documentStore.name}" alt="{$documentStore.name}" )
           
         .flex
           .flexcol
@@ -132,14 +132,14 @@
     width: 50px
     /* position: relative */
 
-  .portrait img
-    display: block
-    width: 100%
-    height: 100%
-    -o-object-fit: cover
-    object-fit: cover
-    -o-object-position: top
-    object-position: top
+  // .portrait img
+  //   display: block
+  //   width: 100%
+  //   height: 100%
+  //   -o-object-fit: cover
+  //   object-fit: cover
+  //   -o-object-position: top
+  //   object-position: top
 
   img
     border: none

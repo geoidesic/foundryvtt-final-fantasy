@@ -39,6 +39,7 @@
     efx: rippleFocus(),
     placeholder: "*",
     type: "search",
+    id: "search"
   };
 
   /** @type {import('@typhonjs-fvtt/runtime/svelte/store').DynMapReducer<string, Item>} */
@@ -174,7 +175,7 @@
 
     .flexrow.justify-flexrow-vertical.my-sm
       .flexcol.flex1.label-container 
-        label Search
+        label(for="search") Search
       .flex3.left
         TJSInput({input})
 
@@ -185,12 +186,12 @@
           .flex4.left
             div Name
           .actions.right
-            .row-action-button.rowimgbezelbutton.pointer(class="{lockCSS}" on:click="{toggleLock}")
+            button.stealth.row-action-button.rowimgbezelbutton.pointer(class="{lockCSS}" on:click="{toggleLock}")
               i.fa(class="{faLockCSS}")
         +each("ActiveEffects as effect, index")
           li.flexrow.justify-flexrow-vertical.standard-list-row
             .li-image(class="{effect.isSuppressed ? 'suspended' : 'active'}")
-              img.icon(src="{getAvatarForVersion(effect, game.version)}" )
+              img.icon(src="{getAvatarForVersion(effect, window.game.version)}" alt="avatar for game version")
             .flex4.left
               div {effect.name}
             
@@ -198,9 +199,9 @@
               +if("!$doc.system.effectActionsLocked")
                 div.hide.row-action-button.rowimgbezelbutton.pointer
                   i.left.fa.fa-edit.mr-md
-                div.row-action-button.rowimgbezelbutton.pointer( on:click="{editItem(index, effect)}")
+                button.stealth.row-action-button.rowimgbezelbutton.pointer( on:click="{editItem(index, effect)}")
                   i.left.fa.fa-edit.mr-md
-                div.row-action-button.rowimgbezelbutton.pointer( on:click="{deleteItem(index, effect)}")
+                button.stealth.row-action-button.rowimgbezelbutton.pointer( on:click="{deleteItem(index, effect)}")
                   i.left.fa.fa-trash.mr-md
         li.flexrow.footer
 

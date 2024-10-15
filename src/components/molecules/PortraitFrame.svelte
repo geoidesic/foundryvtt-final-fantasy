@@ -13,7 +13,7 @@ onMount(() => {
 <template lang="pug">
 .atom
   .frame
-    img(src="{ASSET_PATH}/portraits/witch2.webp")
+    img(src="{ASSET_PATH}/portraits/witch2.webp" alt="witch avatar")
     Corner.corner.bottom-right(strokeColor="{strokeColor}" size="50")
     Corner.corner.bottom-left( flip="horizontal" strokeColor="{strokeColor}" size="50")
     Corner.corner.top-right(flip="vertical" strokeColor="{strokeColor}" size="50")

@@ -10,7 +10,6 @@
   export let preventDefault = false;
   export let disabled = false;
   export let label = "";
-  export let editable = false;
 
   let inputValue = null, // Initialize to null to avoid preselection
     LABEL = !!label,

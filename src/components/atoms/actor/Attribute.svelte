@@ -36,10 +36,10 @@ onMount(() => {
   .attribute
     .underscore.flexrow
       +if("!$actor?.system?.isEditing")
-        .flex.dice
-          i.fas.fa-dice(on:click!="{() => {alert('Rolling!')}}")
+        button.flex.dice(on:click!="{() => {alert('Rolling!')}}")
+          i.fas.fa-dice
       .flex3
-        .flexrow(data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
+        button.flexrow(data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
           .flex2.header {label} 
           .flex0.header {sign}{value} 
     

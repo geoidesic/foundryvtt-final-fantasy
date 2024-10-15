@@ -82,9 +82,9 @@
         +if("$item.system.hasCheck")
           .flexrow.sheet-row.justify-flexrow-vertical
             .flex4
-              label Check Attribute
+              label(for="checkAttribute") Check Attribute
             .flex0.right
-              DocSelect.right( name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
+              DocSelect.right(id="checkAttribute" name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
 
         .flexrow.justify-flexrow-vertical
           .flex4
@@ -95,9 +95,9 @@
         +if("$item.system.hasCR")
           .flexrow.sheet-row.justify-flexrow-vertical
             .flex2
-              label CR Type
+              label(for="CR") CR Type
             .flex2.right
-              DocSelect.right( name="CR" options="{CROptions}" valuePath="system.CR")
+              DocSelect.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
         .flexrow.justify-flexrow-vertical
           .flex4
             h3.left Direct Hit
@@ -107,16 +107,16 @@
         +if("$item.system.hasDirectHit")
           .flexrow.sheet-row.justify-flexrow-vertical
             .flex4
-              label Direct Hit Type
+              label(for="directHitType") Direct Hit Type
             .flex0.right
-              DocSelect.right( name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
+              DocSelect.right(id="directHitType" name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
 
         +if("$item.system.directHitType === 'damage'")
           .flexrow.sheet-row
             .flex2
-              label Direct Hit Damage 
+              label(for="directHitDamage") Direct Hit Damage 
             .flex2.right
-              DocInput( name="directHitDamage" valuePath="system.directHitDamage")
+              DocInput(id="directHitDamage" name="directHitDamage" valuePath="system.directHitDamage")
 
         .flexrow.justify-flexrow-vertical
           .flex4
@@ -127,9 +127,9 @@
         +if("$item.system.hasHeavierShot")
           .flexrow.sheet-row.justify-flexrow-vertical
             .flex2
-              label Heavier Shot Type
+              label(for="heavierShot") Heavier Shot Type
             .flex2.right
-              DocSelect.right( name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
+              DocSelect.right(id="heavierShot" name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
 
         .flexrow.justify-flexrow-vertical
           .flex4
@@ -140,9 +140,9 @@
         +if("$item.system.hasLimitation")
           .flexrow.sheet-row.justify-flexrow-vertical
             .flex2
-              label Limitation
+              label(for="limitation") Limitation
             .flex2.right
-              DocSelect.right( name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
+              DocSelect.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
         .flexrow.justify-flexrow-vertical
           .flex4
             h3.left Range
@@ -152,21 +152,21 @@
 
           .flexrow.sheet-row.justify-flexrow-vertical
               .flex2
-                label Range Type
+                label(for="rangeType") Range Type
               .flex2.right
-                DocSelect.right( name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
+                DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
         .flexrow.justify-flexrow-vertical
           .flex4
             h3.left Target
           .flex0.right
-            DocCheckbox( name="hasTarget" valuePath="system.hasTarget")
+            DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
 
         +if("$item.system.hasTarget")
           .flexrow.sheet-row.justify-flexrow-vertical
             .flex2
-              label Target
+              label(for="target") Target
             .flex2.right
-              DocSelect.right( name="target" options="{targetOptions}" valuePath="system.target")
+              DocSelect.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
 
 
         .flexrow.justify-flexrow-vertical
@@ -178,9 +178,9 @@
         +if("$item.system.hasTrigger")
           .flexrow.sheet-row.justify-flexrow-vertical
             .flex2
-              label Trigger
+              label(for="trigger") Trigger
             .flex2.right
-              DocSelect.right( name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
+              DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
 
 
 </template>

@@ -10,7 +10,6 @@
   export let preventDefault = false;
   export let disabled = false;
   export let label = "";
-  export let editable = false;
 
   let inputValue,
     LABEL = !!label,
@@ -39,9 +38,10 @@
 <template>
   <div class={$$props.class}>
     {#if $$props.label}
-      <label class="flex1">{$$props.label}</label>
+      <label class="flex1" for={inputElement.id}>{$$props.label}</label>
     {/if}
     <input
+      id="doc-checkbox"
       type="checkbox"
       bind:this={inputElement}
       bind:checked={inputValue}

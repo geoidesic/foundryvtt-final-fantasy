@@ -22,7 +22,7 @@
 
 <style lang="sass">
   @import '../../../styles/Mixins.sass'
-  @include cornice
+  +cornice
   svg
     // border: 10px solid black
 

@@ -1,0 +1,28 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img">
+    </header>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+      <button 
+        type="button" 
+        class="unbutton control-button" 
+        data-action="testButtonClick"
+        data-tooltip="test"
+        aria-label="test"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+
+      {{!-- Drop zone --}}
+      <div 
+        class="dropzone" 
+        data-action="drop-handler" 
+        style="border: 1px dashed #ccc; padding: 10px; text-align: center;"
+      >
+        Drop something here
+      </div>
+    </section>
+</form>

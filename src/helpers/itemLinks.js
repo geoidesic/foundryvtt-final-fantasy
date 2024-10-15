@@ -60,15 +60,15 @@ export async function onDropItemOnItem(event, $doc, key) {
     game.system.log.d('itemList', itemList)
 
     //- this works but causes a sort validation error. Don't know why. It shouldn't
-    await $doc.update([`system.${key}`], { value: 1, list: itemList } );
+    await $doc.update({[`system.${key}`]: { value: 1, list: itemList } });
 
     // this doesn't work – don't know why. It should
     // await $doc.update({system: { [key]: { value: 1, list: itemList } }});
 
-    result[key] = droppedItemData
-    game.system.log.d('result', result)
-    game.system.log.d('$doc', $doc)
-    return result;
+    // result[key] = droppedItemData
+    // game.system.log.d('result', result)
+    // game.system.log.d('$doc', $doc)
+    // return result;
   } catch (err) {
     game.system.log.e(err);
   }

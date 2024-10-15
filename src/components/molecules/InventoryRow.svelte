@@ -25,7 +25,7 @@
     +if("!$doc.system.inventoryLocked")
       slot(name="c5")
       +else()
-        div.rowbutton.rowimgbezelbutton.negative.pointer( on:click|preventDefault!="{toggle}")
+        button.stealth.rowbutton.rowimgbezelbutton.negative.pointer( on:click|preventDefault!="{toggle}")
           i.fa.fa-lock(style="{styleCss}" )
 </li>
 </template>

@@ -19,6 +19,7 @@
     efx: rippleFocus(),
     placeholder: "by Name",
     type: "search",
+    id: "search"
   };
 
   /** @type {import('@typhonjs-fvtt/runtime/svelte/store').DynMapReducer<string, Item>} */
@@ -114,7 +115,7 @@
   ScrollingContainer
     .flexrow.inventory-search-bar.pt-sm.pr-sm.justify-flexrow-vertical()
       .flexcol.flex1.label-container 
-        label Search
+        label(for="search") Search
       .flex3.left
         TJSInput({input} role="searchbox") 
       
@@ -138,25 +139,25 @@
               i.left.fa.fa-edit.mr-md
             div.hide.rowbutton.rowimgbezelbutton
               i.left.fa.fa-copy.mr-md
-            div.rowbutton.rowimgbezelbutton(class="{lockCSS}" style="cursor: pointer; min-width: 2.7rem" on:click|preventDefault!="{toggleLock}")
+            button.stealth.rowbutton.rowimgbezelbutton(class="{lockCSS}" style="cursor: pointer; min-width: 2.7rem" on:click|preventDefault!="{toggleLock}")
               i.fa(class="{faLockCSS}")
         +each("items as item, index")
           InventoryRow(lockCss="{lockCSS}" index="{index}" toggleLock="{toggleLock}" role="row")
-            div.li-image(slot="c1")
-              img.icon(src="{item.img}" on:click="{useItem(item)}")
+            button.stealth.li-image(slot="c1" on:click="{useItem(item)}")
+              img.icon(src="{item.img}" alt="{item.name}")
             div(slot="c2") 
-              div.pointer.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+              button.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             div(slot="c3") 
-              .clickable(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
-            div(slot="c4") 
-              i.fa-bookmark.row.pointer(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" on:click="{toggleBookmark(item)}")
+              button.stealth.clickable(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
+            button.stealth(slot="c4" on:click="{toggleBookmark(item)}") 
+              i.fa-bookmark.row.pointer(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
             div.buttons.actions(slot="c5")
               +if("!$doc.system.inventoryLocked")
-                div.rowbutton.rowimgbezelbutton( on:click="{editItem(item)}")
+                button.stealth.rowbutton.rowimgbezelbutton( on:click="{editItem(item)}")
                   i.left.fa.fa-edit.mr-md
-                div.rowbutton.rowimgbezelbutton( on:click="{duplicateItem(index, item)}")
+                button.stealth.rowbutton.rowimgbezelbutton( on:click="{duplicateItem(index, item)}")
                   i.left.fa.fa-copy.mr-md
-                div.rowbutton.rowimgbezelbutton( on:click="{deleteItem(index, item)}")
+                button.stealth.rowbutton.rowimgbezelbutton( on:click="{deleteItem(index, item)}")
                   i.left.fa.fa-trash.mr-md
 </template>
 <style lang='sass'>
@@ -194,9 +195,9 @@ i
   color: var(--color-negative)
 
       
-input
-  background-color: white
-  height: 1.2rem
+// input
+//   background-color: white
+//   height: 1.2rem
 
 .label-container
   justify-content: center

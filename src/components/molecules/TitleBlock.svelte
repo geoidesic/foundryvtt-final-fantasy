@@ -23,10 +23,6 @@ import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   @import '../../styles/Mixins.sass'
   :global(.FF15 .job input)
     font-size: 1em
-  .row
-    text-align: left
-    border: 5px ridge var(--border-color)
-    padding: 1rem
   .level
     display: inline-block
     margin: 2px 5em 0 0

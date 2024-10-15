@@ -7,7 +7,6 @@ import DocCheckbox from '~/src/components/atoms/controls/DocCheckbox.svelte'
 export let title
 export let key;
 export let initialChecked = false;
-export let isEditable = true; 
 
 const doc = getContext("#doc");
 
@@ -23,9 +22,10 @@ async function onDrop(event) {
   game.system.log.d('onDrop event', event);
   game.system.log.d('onDrop key', key);
   const result = await onDropItemOnItem(event, $doc, key);
-  if (!result) return;
-  localList = await updateList(localList, storedList.list, result[key].uuid);
+  // if (!result) return;
+  // localList = await updateList(localList, storedList.list, result[key].uuid);
 }
+
 
 async function deleteLink(index) {
   await deleteItemLink($doc, key, index)
@@ -40,7 +40,7 @@ onMount(async () => {
 </script>
 
 <template lang="pug">
-  .item-bucket(role="application" aria-dropeffect="create item link" on:drop|preventDefault|stopPropagation="{onDrop}")
+  .item-bucket(role="application" aria-dropeffect="link" on:drop|preventDefault|stopPropagation="{onDrop}")
     h2.flex.mt-none {title}
       //- DocumentCheckboxInput(
       DocCheckbox(
@@ -64,13 +64,13 @@ onMount(async () => {
             +each("localList as link, index")
               li.flexrow.justify-flexrow-vertical
                 .flex0.avatar
-                  img(src="{link?.img}")
+                  img(src="{link?.img}" alt="Item avatar")
                 .flex2
                   h4.document-name {link?.name}
                 .flex1
                   h4.document-name {link?.type}
-                .flex0.pr-sm
-                  i.right.fa.fa-trash.pointer(on:click!="{() => deleteLink(index)}")
+                button.stealth.flex0.pr-sm(on:click!="{() => deleteLink(index)}")
+                  i.right.fa.fa-trash.pointer
 </template>
 
 <style lang="sass">

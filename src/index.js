@@ -11,6 +11,7 @@ import WelcomeApplication from "~/src/components/applications/WelcomeApplication
 import FF15Actor from '~/src/extensions/actor.js'
 import FF15ActorSheet from "~/src/components/applications/ActorSheet";
 import FF15ItemSheet from "~/src/components/applications/ItemSheet";
+import ItemSheetStandard from "~/src/components/applications/ItemSheetStandard";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 import FFChat from "~/src/components/organisms/chat/FFChat.svelte";
 
@@ -26,10 +27,8 @@ function setupDSN() {
   }
 }
 
-
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
-
 
 //- Foundry System Hooks
 Hooks.once("init", async (a, b, c) => {
@@ -54,6 +53,11 @@ Hooks.once("init", async (a, b, c) => {
   Items.registerSheet("foundryvtt-final-fantasy", FF15ItemSheet, {
     makeDefault: true,
   });
+
+  //- for testing without Svelte (handy when asking questions on Discord)
+  // Items.registerSheet("foundryvtt-final-fantasy", ItemSheetStandard, {
+  //   makeDefault: true,
+  // });
 
   Hooks.call("gff15.initIsComplete");
 });
@@ -93,7 +97,6 @@ Hooks.on('renderChatMessage', (message, html) => {
     )
   }
 });
-
 
 /**
  * Used by chat messages to react to targeting changes.

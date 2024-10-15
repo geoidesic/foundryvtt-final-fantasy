@@ -5,7 +5,6 @@
 
   export let placeholder = "--";
   export let maxlength = "40";
-  export let disabled = false;
   export let valuePath = "";
   export let label = "";
   export let document = false;
@@ -36,8 +35,6 @@
   }
 
   async function enableInput(event) {
-    game.system.log.d(event);
-    game.system.log.d('dblclick');
     editable = true; // or use  editable=!editable  to toggle
     await tick();
 
@@ -89,9 +86,9 @@
 </script>
 
 <template lang="pug">
-div(on:click!="{clickType=='click' ? enableInput : () => {}}" on:dblclick!="{clickType=='dblclick' ? enableInput : () => {}}")
+button.stealth(on:click!="{clickType=='click' ? enableInput : () => {}}" on:dblclick!="{clickType=='dblclick' ? enableInput : () => {}}")
   +if('LABEL')
-    label {label}
+    label(for="{inputElement.id}") {label} 
   +if("editable")
     input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown="{handleKeyDown}" on:blur="{handleBlur}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
     +else
