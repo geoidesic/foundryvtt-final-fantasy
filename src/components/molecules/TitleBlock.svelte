@@ -41,6 +41,7 @@ import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
     .right, .left
       display: inline-block
   .job
+    white-space: nowrap
     display: inline-block
     margin: 2px 5em 0 0
     transform: scaleX(1.2)

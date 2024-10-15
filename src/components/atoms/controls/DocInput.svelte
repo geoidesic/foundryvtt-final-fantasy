@@ -130,7 +130,5 @@ button.stealth(on:click!="{clickType=='click' ? enableInput : () => {}}" on:dblc
   .output:not([type="checkbox"])
     margin-right: 0.5em
 
-  input
-    margin-left: -1rem
   
 </style>

@@ -95,6 +95,12 @@
         "HeaderButtons": {
           "Edit": "Edit"
         },
+        "ActionButtons": {
+          "Edit": "Edit",
+          "Duplicate": "Duplicate",
+          "Delete": "Delete",
+          "ToggleActions": "Toggle Actions"
+        },
         "EditAttribute": {
           "Tooltip": "Left click + / Right Click -"
         },
