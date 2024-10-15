@@ -6,8 +6,8 @@ const {
 
 export class JobModel extends FFItemDataModel {
     static defineSchema() {
-        return {
-
-        }
+      return {
+        ...super.defineSchema(),  // Merge with the base model schema
+      }
     }
 }
