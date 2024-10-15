@@ -11,29 +11,29 @@
   </script>
   <template lang='pug'>
     .mp.flexrow.justify-vertical 
-      .flex
-        .flexcol
-          .header 
-            .header MP
-          .sub-header
-            .header (Mana)
-      .flex
-        .flexcol
-          .flex.sub-header 
-            .header Max
-          .flex.max.header 
-            .header 
-              DocInput(clickType="dblclick" pulse="{true}" type="number" name="BP" min=0 valuePath="system.points.MP.max")
-
-      .flex.header.val
+      .flex3
         .header 
-          DocInput(clickType="dblclick" pulse="{true}" name="BP" type="number" valuePath="system.points.MP.val" min=0 max="{$actor.system.points.MP.max}" )
-      
+          .header MP
+        .sub-header
+          .header (Mana)
+      .flex2
+        .flex.sub-header 
+          .header Max
+        .flex.max.header 
+          .header 
+            DocInput(clickType="dblclick" pulse="{true}" type="number" name="BP" min=0 valuePath="system.points.MP.max")
+
+      .flex2
+        .header.val
+          .header 
+            DocInput(clickType="dblclick" pulse="{true}" name="BP" type="number" valuePath="system.points.MP.val" min=0 max="{$actor.system.points.MP.max}" )
+        
   </template>
 
   <style lang='sass'>
     @import '../../../styles/Mixins.sass'
-    
+    .mp
+      width: 100%
     .header
       @include white-shadow-header(var(--size-md-h))
       &.val
