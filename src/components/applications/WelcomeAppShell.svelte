@@ -40,7 +40,6 @@
         img(src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
       p {localize('FF15.Welcome.To')} {localize(`${SYSTEM_CODE}.Title`)}!
       h1 {localize('FF15.Welcome.Introduction')}
-      p {globalThis.game}
       p  
         a(href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html") {localize(`${SYSTEM_CODE}.Title`)}
         | &nbsp;{localize(`${SYSTEM_CODE}.Welcome.Released`) }
