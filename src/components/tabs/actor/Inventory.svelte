@@ -113,7 +113,7 @@
 <template lang='pug'>
 
   ScrollingContainer
-    .flexrow.inventory-search-bar.pt-sm.pr-sm.justify-flexrow-vertical()
+    .flexrow.inventory-search-bar.pt-sm.pr-sm.justify-vertical()
       .flexcol.flex1.label-container 
         label(for="search") Search
       .flex3.left

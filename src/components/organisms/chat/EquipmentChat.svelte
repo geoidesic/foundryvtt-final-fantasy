@@ -96,13 +96,13 @@ $: buttonCss = disabled ? 'disabled' : '';
 <template lang='pug'>
 .FF15
   .chat.pa-xs
-    .flexrow.justify-flexrow-vertical.title
+    .flexrow.justify-vertical.title
       .texture
       img.icon(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
       .flex4 {FFMessage.actor.name}
       .flex3.right {FFMessage.item.name}
       img.icon.right(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
-    .flexrow.justify-flexrow-vertical.mt-sm
+    .flexrow.justify-vertical.mt-sm
       .flex4.buttons
         button.stealth.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
           .flex3.pa-sm {window.game.i18n.format("FF15.Chat.Buttons.ApplyItemToTarget", [FFMessage.item.name])}

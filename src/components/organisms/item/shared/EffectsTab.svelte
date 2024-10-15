@@ -173,7 +173,7 @@
   div
     //- i.fa.fa-circle-check(on:click="{debug}")
 
-    .flexrow.justify-flexrow-vertical.my-sm
+    .flexrow.justify-vertical.my-sm
       .flexcol.flex1.label-container 
         label(for="search") Search
       .flex3.left
@@ -181,7 +181,7 @@
 
     div
       ol.standard-list
-        li.flexrow.header.justify-flexrow-vertical.standard-list-row
+        li.flexrow.header.justify-vertical.standard-list-row
           .li-image
           .flex4.left
             div Name
@@ -189,7 +189,7 @@
             button.stealth.row-action-button.rowimgbezelbutton.pointer(class="{lockCSS}" on:click="{toggleLock}")
               i.fa(class="{faLockCSS}")
         +each("ActiveEffects as effect, index")
-          li.flexrow.justify-flexrow-vertical.standard-list-row
+          li.flexrow.justify-vertical.standard-list-row
             .li-image(class="{effect.isSuppressed ? 'suspended' : 'active'}")
               img.icon(src="{getAvatarForVersion(effect, window.game.version)}" alt="avatar for game version")
             .flex4.left

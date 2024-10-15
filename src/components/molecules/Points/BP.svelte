@@ -11,7 +11,7 @@
   });
   </script>
   <template lang='pug'>
-    .bp.flexrow.justify-flexrow-vertical 
+    .bp.flexrow.justify-vertical 
       .flex
         .flexcol
           .header 

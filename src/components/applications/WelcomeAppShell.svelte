@@ -47,7 +47,7 @@
       p 
         span {localize('FF15.Welcome.Issues')}
         a(href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues") {localize('FF15.Welcome.Github')}
-      .flexrow.inset.justify-flexrow-vertical(data-tooltip="{localize('FF15.Setting.DontShowWelcome.Hint')}")
+      .flexrow.inset.justify-vertical(data-tooltip="{localize('FF15.Setting.DontShowWelcome.Hint')}")
         .flex0
           input(type="checkbox" on:change="{handleChange}" label="{localize('FF15.Setting.DontShowWelcome.Name')}" bind:checked="{dontShowWelcome}") 
         .flex

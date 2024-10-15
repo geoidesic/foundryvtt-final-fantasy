@@ -51,7 +51,7 @@ onMount(async () => {
     .flexrow.left.mt-xs
       +if("checkboxValue")
         .flexcol
-          .flexrow.justify-flexrow-vertical
+          .flexrow.justify-vertical
             .flex0.avatar
             .flex2
               h4.document-name Name
@@ -62,7 +62,7 @@ onMount(async () => {
 
           ol
             +each("localList as link, index")
-              li.flexrow.justify-flexrow-vertical
+              li.flexrow.justify-vertical
                 .flex0.avatar
                   img(src="{link?.img}" alt="Item avatar")
                 .flex2

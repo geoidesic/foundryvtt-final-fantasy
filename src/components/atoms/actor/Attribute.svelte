@@ -34,12 +34,13 @@ onMount(() => {
 </script>
 <template lang='pug'>
   .attribute
-    .underscore.flexrow
+    .underscore.flexrow.justify-vertical
       +if("!$actor?.system?.isEditing")
-        button.flex.dice(on:click!="{() => {alert('Rolling!')}}")
-          i.fas.fa-dice
-      .flex3
-        button.flexrow(data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
+        .flex0
+          button.stealth.flex.dice(on:click!="{() => {alert('Rolling!')}}")
+            i.fas.fa-dice
+      .flex3.left
+        button.left.stealth.flexrow(data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
           .flex2.header {label} 
           .flex0.header {sign}{value} 
     
@@ -66,4 +67,9 @@ onMount(() => {
     color: var(--border-color)
     &:hover
       color: var(--border-highlight)
+
+  button
+    &.dice
+      margin-bottom: -5px
+      padding: 0
 </style>

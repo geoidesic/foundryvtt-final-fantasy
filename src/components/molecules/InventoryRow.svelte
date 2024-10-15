@@ -13,7 +13,7 @@
 </script>
 
 <template lang="pug">
-<li class="{$$restProps.class} flexrow justify-flexrow-vertical standard-list-row" >
+<li class="{$$restProps.class} flexrow justify-vertical standard-list-row" >
   slot(name="c1")
   .flex4.left
     slot(name="c2" )
