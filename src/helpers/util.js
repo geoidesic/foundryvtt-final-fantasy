@@ -1,5 +1,4 @@
 import { LOG_PREFIX } from './constants';
-import { resolveDotpath } from "~/src/helpers/paths";
 
 export const log = {
   ASSERT: 1, ERROR: 2, WARN: 3, INFO: 4, DEBUG: 5, VERBOSE: 6,
@@ -16,8 +15,7 @@ export const log = {
 };
 
 
-
-export async function toggleBookmark(item, callback=() => {}) {
+export async function toggleBookmark(item, callback = () => { }) {
   await item.update({ ["system.favourite"]: !item.system.favourite });
   callback();
 }
@@ -33,10 +31,10 @@ export function getEffectOrigin(effect, tryFromUuidSync = false) {
   } else {
     try {
       item = game.actors?.get(origin)
-      || game.items?.get(origin)
-      || game.packs?.get('effects');
+        || game.items?.get(origin)
+        || game.packs?.get('effects');
 
-      if(!item && tryFromUuidSync) {
+      if (!item && tryFromUuidSync) {
         item = fromUuidSync(origin);
       }
     } catch (error) {
@@ -44,7 +42,7 @@ export function getEffectOrigin(effect, tryFromUuidSync = false) {
       throw error;
     }
   }
-  
+
   return item;
 }
 
@@ -82,8 +80,8 @@ export function ucfirst(str) {
 export const isEmptyObj = (obj) => Object.keys(obj).length === 0
 
 export const getPackFromUuid = async (uuid) => {
-  const split  = uuid.split(".");
-  if(split[0] !== 'Compendium') {
+  const split = uuid.split(".");
+  if (split[0] !== 'Compendium') {
     log.w('Not a compendium uuid', uuid)
     return false;
   }
@@ -96,7 +94,7 @@ export function generateRandomElementId(length = 8) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
   for (let i = 0; i < length; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
   }
   return result;
 }
@@ -162,9 +160,11 @@ export function findKeysByValue(obj, value) {
     .map(([key]) => key);
 }
 
+
 export function truncate(str, n) {
   return str.length > n ? str.substr(0, n - 1) + "..." : str;
 }
+
 
 export async function updateMessage(messageId, data) {
   // check if chat message owner is this user

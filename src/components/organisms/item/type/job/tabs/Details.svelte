@@ -5,14 +5,18 @@
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
-
+  import ItemBucket from "~/src/components/molecules/ItemBucket.svelte";
 
   const item = getContext("#doc");
 
 </script>
 
 <template lang="pug">
-
+  .envelope
+    ItemBucket(
+      title="Grants",
+      key="grants",
+    )
 
 </template>
 
