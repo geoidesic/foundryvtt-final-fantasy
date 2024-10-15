@@ -37,7 +37,7 @@
             "Description": "Defines the character's available abilities.",
             "Bard": {
               "Label": "Bard",
-              "Description": "Bard is a support-oriented job specializing in musical abilities that enhance allies and weaken enemies. Bards use their songs to heal, boost stats, or inflict status effects on foes. They are versatile in battle, with abilities like "Sing" that can raise the party's agility, strength, or other attributes, while also being capable of wielding harps for ranged attacks. Though physically weak, Bards excel in bolstering their party's effectiveness and turning the tide of battle through strategic use of their musical talents."
+              "Description": "Bard is a support-oriented job specializing in musical abilities that enhance allies and weaken enemies. Bards use their songs to heal, boost stats, or inflict status effects on foes. They are versatile in battle, with abilities like \"Sing\" that can raise the party's agility, strength, or other attributes, while also being capable of wielding harps for ranged attacks. Though physically weak, Bards excel in bolstering their party's effectiveness and turning the tide of battle through strategic use of their musical talents."
             }
           },
           "trait": {
