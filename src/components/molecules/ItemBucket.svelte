@@ -48,24 +48,25 @@ onMount(async () => {
         valuePath="system.grants.value"
       )
     slot
-    table.standard-list.small-text
-      tr
-        th.img.shrink(scope="col")
-        th.left.expand(scope="col") Name
-        th.left.fixed(scope="col") Type
-        th.buttons
-          button.stealth
-            i.fa.fa-trash
-      +each("localList as item, index")
-        //- pre item.type {item.type}
+    +if("checkboxValue")
+      table.standard-list.small-text
         tr
-          td.img
-            img.icon(src="{item.img}" alt="{item.name}")
-          td.left {item?.name}
-          td.left {item?.type}
-          td.buttons.right
-            button.stealth(on:click!="{() => deleteLink(index)}")
-              i.left.fa.fa-trash.pointer
+          th.img.shrink(scope="col")
+          th.left.expand(scope="col") Name
+          th.left.fixed(scope="col") Type
+          th.buttons
+            button.stealth
+              i.fa.fa-trash
+        +each("localList as item, index")
+          //- pre item.type {item.type}
+          tr
+            td.img
+              img.icon(src="{item.img}" alt="{item.name}")
+            td.left {item?.name}
+            td.left {item?.type}
+            td.buttons.right
+              button.stealth(on:click!="{() => deleteLink(index)}")
+                i.left.fa.fa-trash.pointer
 
 </template>
 
