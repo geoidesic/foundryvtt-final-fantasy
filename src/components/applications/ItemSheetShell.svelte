@@ -103,11 +103,9 @@
           button.stealth.profile(on:click="{_launchStandardProfileEditor}")
             img.profile(src="{$documentStore.img}" data-tooltip="{$documentStore.name}" alt="{$documentStore.name}" )
           
-        .flex
-          .flexcol
-            .flex
-              ItemInput(className="lg transparent" attr="name" label="Name" placeholder="Item Name" maxlength="40")
-    section
+        .flex5
+          ItemInput(className="lg transparent" attr="name" label="Name" placeholder="Item Name" maxlength="40")
+    section.mt-sm
       .flexrow.gap-15
         .flex1
           .flexcol
