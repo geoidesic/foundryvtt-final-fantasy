@@ -1,4 +1,4 @@
-import './styles/Variables.sass';
+// import './styles/Variables.sass';
 import './styles/Main.sass';
 import './styles/MarginsAndPadding.sass';
 

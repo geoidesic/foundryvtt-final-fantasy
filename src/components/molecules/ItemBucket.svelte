@@ -22,8 +22,8 @@ async function onDrop(event) {
   game.system.log.d('onDrop event', event);
   game.system.log.d('onDrop key', key);
   const result = await onDropItemOnItem(event, $doc, key);
-  // if (!result) return;
-  // localList = await updateList(localList, storedList.list, result[key].uuid);
+  if (!result) return;
+  localList = await updateList(localList, storedList.list, result[key].uuid);
 }
 
 
@@ -48,29 +48,25 @@ onMount(async () => {
         valuePath="system.grants.value"
       )
     slot
-    .flexrow.left.mt-xs
-      +if("checkboxValue")
-        .flexcol
-          .flexrow.justify-vertical
-            .flex0.avatar
-            .flex2
-              h4.document-name Name
-            .flex1
-              h4.document-name Type
-            .flex0.pr-sm
-              i.right
+    table.standard-list.small-text
+      tr
+        th.img.shrink(scope="col")
+        th.left.expand(scope="col") Name
+        th.left.fixed(scope="col") Type
+        th.buttons
+          button.stealth
+            i.fa.fa-trash
+      +each("localList as item, index")
+        //- pre item.type {item.type}
+        tr
+          td.img
+            img.icon(src="{item.img}" alt="{item.name}")
+          td.left {item?.name}
+          td.left {item?.type}
+          td.buttons.right
+            button.stealth(on:click!="{() => deleteLink(index)}")
+              i.left.fa.fa-trash.pointer
 
-          ol
-            +each("localList as link, index")
-              li.flexrow.justify-vertical
-                .flex0.avatar
-                  img(src="{link?.img}" alt="Item avatar")
-                .flex2
-                  h4.document-name {link?.name}
-                .flex1
-                  h4.document-name {link?.type}
-                button.stealth.flex0.pr-sm(on:click!="{() => deleteLink(index)}")
-                  i.right.fa.fa-trash.pointer
 </template>
 
 <style lang="sass">
@@ -85,4 +81,5 @@ onMount(async () => {
       margin: 0
       li
         background-color: rgba(255, 255, 255, 0.4)
+    
 </style>

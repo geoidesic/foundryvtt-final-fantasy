@@ -1,6 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@400..900&family=Ibarra+Real+Nova:ital,wght@0,400..700;1,400..700&family=Inter:wght@100..900&family=Libre+Caslon+Display&family=Markazi+Text:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Trirong:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap')
-
+@import './Variables.sass'
 @font-face
   font-family: 'icomoon'
   src: url('systems/foundryvtt-final-fantasy/assets/fonts/icomoon.eot?3hrrg5')
@@ -75,11 +75,22 @@
   --tjs-select-option-background: #23221d
   --tjs-select-option-color: #b5b3a4
 
+  --dnd5e-border-dotted: 1px dotted #bbb
+
   button
     &.stealth
+      display: inline-flex
       border: none
       background: none
-      box-shadow: none
+      flex: none
+      // box-shadow: none
+      // width: 0
+      // margin: 0
+      // padding: 0
+      box-sizing: content-box
+      i
+        display: inline-block
+        margin: auto
 
   .item-sheet
     .sheet-row
@@ -236,7 +247,48 @@
     margin-left: -0.3rem
     max-height: 2rem
     flex: 0.7
+
+  table
+    &.standard-list
+      width: 100%
+
+    th, td
+      padding: 0
+      line-height: 2rem
+      // border: 1px solid gold
+      &.img
+        position: relative
+      img.icon
+        margin-top: 3px
+        position: absolute
+        top: -4px
+        left: 0
+      &.fixed
+        width: 10%
+        white-space: nowrap
+      &.shrink
+        width: 8%
+        white-space: nowrap
+      &.buttons
+        text-align: right
+        &.lock-open
+          width: 20%
+        &.lock
+          width: 1%
+      &.expand
+        width: auto
+
+    &.small-text
+      font-size: smaller
+      th, td
+        padding-left: 0.4rem
+        img.icon
+          margin-top: 5px
+        &.shrink
+          width: 9%
+      
   img.icon
+    margin-top: -0.2rem
     max-height: 2rem
     border: 1px solid transparent
     border-top-left-radius: var(--border-radius)

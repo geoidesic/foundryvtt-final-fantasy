@@ -108,53 +108,50 @@
 
 <template lang="pug">
 
-  ScrollingContainer
-    .flexrow.inventory-search-bar.pt-sm.pr-sm.justify-vertical()
-      .flexcol.flex1.label-container 
-        label(for="search") Search
-      .flex3.left
-        TJSInput({input} role="searchbox") 
-      
-    div.px-smd.mt-sm.inventory-rows-container
-      ol.standard-list
-        InventoryRow.header(lockCss="{lockCSS}" toggleLock="{toggleLock}" role="rowheader")
-          .li-image.header(slot="c1") 
-            .flex0
-              .relative.buttons
-                .rowimg.button
-                  
-          div(slot="c2") 
-            div Name
-          div(slot="c3")
-            div Quantity
-          div(slot="c4")
-            div
-              i.fa-solid.fa-bookmark
-          div.actions(slot="c5") 
-            div.hide.rowbutton.rowimgbezelbutton
-              i.left.fa.fa-edit.mr-md
-            div.hide.rowbutton.rowimgbezelbutton
-              i.left.fa.fa-copy.mr-md
-            button.stealth.rowbutton.rowimgbezelbutton(class="{lockCSS}" style="cursor: pointer; min-width: 2.7rem" on:click|preventDefault!="{toggleLock}")
-              i.fa(class="{faLockCSS}")
+ScrollingContainer
+    //- .flexrow.pt-sm.pr-sm
+    //-   .flexcol.flex1.label-container 
+    //-     label Search
+    //-   .flex3.left
+    //-     TJSInput({input})
+    //-   .flexcol.flex1.label-container 
+    //-     label Type
+    //-   .flex3.right
+    //-     Select.short(options="{typeFilterOptions}" bind:value="{typeFilterValue}")
+
+    div.pa-sm
+      table.standard-list
+        tr
+          th.img.shrink(scope="col")
+          th.left.expand(scope="col") Name
+          th.fixed(scope="col") Quantity
+          th.shrink(scope="col")
+            i.fa-solid.fa-bookmark
+          th.buttons(scope="col" class="{lockCSS}")
+            button.stealth(class="{lockCSS}")
+              i.fa(class="{faLockCSS}" on:click="{toggleLock}")
         +each("items as item, index")
-          InventoryRow(lockCss="{lockCSS}" index="{index}" toggleLock="{toggleLock}" role="row")
-            button.stealth.li-image(slot="c1" on:click="{useItem(item)}")
+          //- pre item.type {item.type}
+          tr
+            td.img
               img.icon(src="{item.img}" alt="{item.name}")
-            div(slot="c2") 
+            td.left
               a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-            div(slot="c3") 
+            td
               button.stealth.clickable(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
-            button.stealth(slot="c4" on:click="{toggleBookmark(item)}") 
-              i.fa-bookmark.row.pointer(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
-            div.buttons.actions(slot="c5")
+            td
+              button.stealth(on:click="{toggleBookmark(item)}") 
+                i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
+            td.buttons.right
               +if("!$doc.system.inventoryLocked")
                 button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
-                  i.left.fa.fa-edit.mr-md
+                  i.left.fa.fa-edit
                 button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
-                  i.left.fa.fa-copy.mr-md
+                  i.left.fa.fa-copy
                 button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
-                  i.left.fa.fa-trash.mr-md
+                  i.left.fa.fa-trash
+          
+            
 </template>
 
 <style lang="sass">
@@ -163,48 +160,81 @@
 .pulse
   @include pulse
 
-.buttons
+  .buttons
   @include buttons
 
-.fa.fa-add
-  cursor: pointer
-  &:hover
-    background-color: var(--sheet-color)
-    color: var(--sheet-contrast)
+.actions
+  margin-left: 0.5rem
+  margin-right: 0
+  justify-content: right
+  :not(:last-child)
+    margin-right: 2px
 
 .clickable
   max-height: 1.3rem
   line-height: 1.3rem
-  display: flex
-  justify-content: center
-  align-items: center
   background: rgba(255, 255, 255, 0.2)
+
+i.disable
+  color: grey
+  cursor: not-allowed
+
+.fa-bookmark
   cursor: pointer
+  &.row
+    color: rgba(100, 0, 100, 1)
 
-.inverted
-  transform: scalex(-1)
-
-i
-  padding: 0
+ol
+  height: 100%
   margin: 0
+  padding: 0.1rem
+  border: 1px solid grey
+  li
+    padding: 3px
+    margin: 0 2px 2px 2px
+    align-items: center
+    &:not(.header):not(.footer)
+      background-color: #cdc8c7
+    &.header
+      padding: 0 3px
+      line-height: 1rem
+      text-align: top
+      justify-content: top
+      border-bottom-left-radius: 0
+      border-bottom-right-radius: 0
+      margin-bottom: 0
+      border-bottom: none
 
-.full
-  color: var(--color-negative)
+.itemrow
+  height: 1.9rem
 
-      
-// input
-//   background-color: white
-//   height: 1.2rem
+.rowimgbezelbutton
+  border-style: solid
+  border-width: 1px
+  border-color: #bbb #aaa #999
+  text-shadow: 0 1px 0 #eee
+  background: #ccc
+  color: #333
+  font-family: "Lucida Grande"
+  font-size: 12px
+  font-weight: bold
+  text-decoration: none
+  -webkit-border-radius: 3px
+  -webkit-box-shadow: inset 0 1px 1px #fff, inset 0 -1px 1px #aaa, 0 2px 4px -3px #666
+  &.lock-open
+    background-color: #19762d
+    color: white
+  &.lock
+    background-color: #9c0f0f
+    color: white
 
-.label-container
-  justify-content: center
+.rowimgbezelbutton:active
+  -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
+  border-color: #888 #aaa #eee
 
-.actions
-  display: flex
-  flex-wrap: nowrap
-  justify-content: flex-end
-
-
+input
+  background-color: white
+  height: 1.2rem
        
 
 </style>
