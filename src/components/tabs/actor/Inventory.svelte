@@ -14,9 +14,10 @@
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
-  const nameSearch = createFilterQuery("name");
+  const typeSearch = createFilterQuery("type");
+  typeSearch.set('equipment')
   const input = {
-    store: nameSearch,
+    store: typeSearch,
     efx: rippleFocus(),
     placeholder: "by Name",
     type: "search",
@@ -26,7 +27,7 @@
   /** @type {import('@typhonjs-fvtt/runtime/svelte/store').DynMapReducer<string, Item>} */
   const wildcard = doc.embedded.create(Item, {
     name: "wildcard",
-    filters: [nameSearch],
+    filters: [typeSearch],
     sort: (a, b) => a.name.localeCompare(b.name),
   });
 
