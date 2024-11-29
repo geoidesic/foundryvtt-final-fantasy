@@ -3,7 +3,7 @@
   import { rippleFocus } from "@typhonjs-fvtt/runtime/svelte/action/animate";
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
   import { TJSInput } from "@typhonjs-fvtt/svelte-standard/component";
-  import { createFilterQuery } from "~/src/filters/inventoryFilterQuery";
+  import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { toggleBookmark } from "~/src/helpers/util";
   import { localize } from "#runtime/svelte/helper";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
