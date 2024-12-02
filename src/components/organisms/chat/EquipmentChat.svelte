@@ -104,7 +104,7 @@ $: buttonCss = disabled ? 'disabled' : '';
       img.icon.right(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
     .flexrow.justify-vertical.mt-sm
       .flex4.buttons
-        button.stealth.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
+        button.wide.stealth.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
           .flex3.pa-sm {window.game.i18n.format("FF15.Chat.Buttons.ApplyItemToTarget", [FFMessage.item.name])}
           .flex0
             i.fa.fa-crosshairs.mr-sm.right.mt-sm
