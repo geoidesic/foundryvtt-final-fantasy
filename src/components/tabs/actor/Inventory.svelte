@@ -127,10 +127,13 @@ ScrollingContainer
           th.left.expand(scope="col") Name
           th.fixed(scope="col") Quantity
           th.shrink(scope="col")
-            i.fa-solid.fa-bookmark
-          th.buttons(scope="col" class="{lockCSS}")
-            button.stealth(class="{lockCSS}")
-              i.fa(class="{faLockCSS}" on:click="{toggleLock}")
+            button.stealth.mr-lg
+              i.fa-solid.fa-bookmark
+          th.min.buttons(scope="col" class="{lockCSS}")
+            .flexrow.end
+              .flex0
+                button.stealth.mr-lg(class="{lockCSS}")
+                  i.fa(class="{faLockCSS}" on:click="{toggleLock}")
         +each("items as item, index")
           //- pre item.type {item.type}
           tr
@@ -139,18 +142,22 @@ ScrollingContainer
             td.left
               a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             td
-              button.stealth.clickable(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
+              button.stealth.clickable.wide(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
             td
               button.stealth(on:click="{toggleBookmark(item)}") 
                 i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
-            td.buttons.right
+            td.min.buttons.right
               +if("!$doc.system.inventoryLocked")
-                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
-                  i.left.fa.fa-edit
-                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
-                  i.left.fa.fa-copy
-                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
-                  i.left.fa.fa-trash
+                .flexrow.end
+                  .flex0
+                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                      i.left.fa.fa-edit
+                  .flex0
+                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                      i.left.fa.fa-copy
+                  .flex0
+                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                      i.left.fa.fa-trash
           
             
 </template>
