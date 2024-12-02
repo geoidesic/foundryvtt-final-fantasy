@@ -15,7 +15,7 @@
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
   const typeSearch = createFilterQuery("type");
-  typeSearch.set('trait')
+  typeSearch.set(['trait', 'action'])
   const input = {
     store: typeSearch,
     efx: rippleFocus(),
