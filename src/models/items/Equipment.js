@@ -10,14 +10,6 @@ export class EquipmentModel extends FFItemDataModel {
   }
 
   static migrateData(source) {
-    // Migrate data from the base class first
-    source = super.migrateData(source);
-    
-    // Custom migration logic for this model
-    if (source.quantity === undefined) {
-      source.quantity = 1;
-    }
-
     return source;
   }
 }
