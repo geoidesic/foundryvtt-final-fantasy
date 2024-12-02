@@ -135,7 +135,7 @@ ScrollingContainer
           //- pre item.type {item.type}
           tr
             td.img
-              img.icon(src="{item.img}" alt="{item.name}")
+              img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
             td.left
               a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             td
