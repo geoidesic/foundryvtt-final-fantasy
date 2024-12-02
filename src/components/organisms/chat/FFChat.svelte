@@ -10,6 +10,7 @@
   export let messageId;
   
   let actor = new TJSDocument(void 0, { delete: () => {} });
+  let message = new TJSDocument(game.messages.get(messageId));
   let messageColor;
   let messageContrast;
   let foundryChatMessageDocument = (() => new TJSDocument(void 0, { delete: () => {} }))()
@@ -20,12 +21,13 @@
   }
 
   $: setContext("sourceActor", actor);
+  $: setContext("message", message);
 
   onMount(async () => {
     game.system.log.d(FFMessage);
     game.system.log.d(FFMessage.chatTemplate);
-    const sourceActor = await fromUuid(FFMessage.actorUuid);
-    actor.set(sourceActor);
+    const sourceActor = await game.actors.get(FFMessage.actor._id);
+    actor.set(sourceActor); //@todo: something wasn't ported here, sourceActor is undefined
     await foundryChatMessageDocument.set(await game.messages.get(messageId));
   });
 

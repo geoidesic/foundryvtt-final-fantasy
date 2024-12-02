@@ -39,6 +39,7 @@ export default class RollCalc {
       if (message === false) return;
       message.sound = 'sounds/dice.wav';
       message.rollType = this.params.rollType;
+      message.applied = false;
       message = Object.assign({}, this.message, message);
       await this.createChatMessage(message);
     }
