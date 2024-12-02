@@ -37,10 +37,10 @@ onMount(() => {
     .underscore.flexrow.justify-vertical
       +if("!$actor?.system?.isEditing")
         .flex0
-          button.stealth.flex.dice(on:click!="{() => {alert('Rolling!')}}")
+          button.wide.stealth.flex.dice(on:click!="{() => {alert('Rolling!')}}")
             i.fas.fa-dice
       .flex3.left
-        button.left.stealth.flexrow(data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
+        button.left.wide.tall.stealth.flexrow(data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
           .flex2.header {label} 
           .flex0.header {sign}{value} 
     
