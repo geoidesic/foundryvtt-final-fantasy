@@ -37,7 +37,9 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
 
     if (typeof current === 'string') {
       keyword = Strings.normalize(current);
+      game.system.log.d('keyword', keyword);
       regex = new RegExp(RegExp.escape(keyword), caseSensitive ? '' : 'i');
+      game.system.log.d('keyword', regex);
     }
     else {
       store.set(keyword);
@@ -54,14 +56,16 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
    */
   function filterQuery(data) {
     if (keyword === '' || !regex) { return true; }
-
+    console.log(properties);
     if (isIterable(properties)) {
+      console.log('isIterable')
       for (const property of properties) {
         if (regex.test(Strings.normalize(data?.[property]))) { return true; }
       }
       return false;
     }
     else {
+      console.log('is not Iterable')
       return regex.test(Strings.normalize(data?.[properties]));
     }
   }
@@ -83,11 +87,16 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
    * @param {string}   value - A new value for the keyword / regex test.
    */
   filterQuery.set = (value) => {
-    if (typeof value === 'string') {
+    if (Array.isArray(value)) {
+      // Join the array into a regex pattern
+      const pattern = value.map(v => RegExp.escape(Strings.normalize(v))).join('|');
+      keyword = value.join(', '); // Store the original values for reference
+      regex = new RegExp(pattern, caseSensitive ? '' : 'i');
+    } else if (typeof value === 'string') {
       keyword = Strings.normalize(value);
       regex = new RegExp(RegExp.escape(keyword), caseSensitive ? '' : 'i');
-      storeKeyword.set(keyword);
     }
+    storeKeyword.set(keyword);
   };
 
   return filterQuery;
