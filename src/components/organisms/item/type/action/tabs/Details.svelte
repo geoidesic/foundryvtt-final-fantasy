@@ -51,9 +51,9 @@
   const heavyshotOptions = [{ value: "straignt", label: localize("FF15.Types.Item.Types.Options.Heavyshot.straignt") }];
 
   const triggerOptions = [
-    { value: "ability", label: localize("FF15.Types.Item.Types.Options.Trigger.afterCheck") },
-    { value: "move", label: localize("FF15.Types.Item.Types.Options.Trigger.beforeMove") },
-    { value: "turn", label: localize("FF15.Types.Item.Types.Options.Trigger.afterTurn") },
+    { value: "ability", label: localize("FF15.Types.Item.Types.Options.Trigger.ability") },
+    { value: "move", label: localize("FF15.Types.Item.Types.Options.Trigger.move") },
+    { value: "turn", label: localize("FF15.Types.Item.Types.Options.Trigger.turn") },
     { value: "invoke", label: localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
   ];
 
