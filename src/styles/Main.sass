@@ -71,7 +71,6 @@
   --tjs-select-text-overflow: ellipsis
   --tjs-select-transition-focus-visible: box-shadow 0.2s ease
   --tjs-select-width: auto /* Adjust width as needed */
-
   /* Option variables */
   --tjs-select-option-background: #23221d
   --tjs-select-option-color: #b5b3a4
@@ -90,12 +89,21 @@
     &.tall
       line-height: 1.5rem
 
+  .heightcol
+    height: 100%
+    
   .item-sheet
     .sheet-row
       margin: 0 0 0.3rem 0
       .right
         input:not([type="checkbox"])
           margin-right: 0.5rem
+
+  .panel
+    width: 100%
+    position: relative
+    overflow: hidden
+    border: 4px ridge var(--border-color)
 
   section.window-content
     border: 5px ridge var(--border-shadow)

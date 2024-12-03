@@ -1,8 +1,9 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { TJSProseMirror } from "@typhonjs-fvtt/svelte-standard/component";
-  // import { TJSProseMirror, TJSContentEdit, TJSTinyMCE } from "@typhonjs-fvtt/svelte-standard/component";
+  // import { TJSProseMirror } from "@typhonjs-fvtt/svelte-standard/component";
+
+  import { TJSProseMirror, TJSContentEdit, TJSTinyMCE } from "@typhonjs-fvtt/svelte-standard/component";
   import { getContext } from "svelte";
 
   // If you are developing ProseMirror plugins import from this path to enable PM debugging tooling.
@@ -15,7 +16,7 @@
   export let attr = "";
 
   const doc = getContext("#doc");
-  console.log("$doc", $doc);
+  // console.log("$doc", $doc);
 
   function doSomethingWithEnrichedContent(event) {
     // console.log(`! event - editor:enrichedContent - ${event.detail.enrichedContent}`)
@@ -70,6 +71,4 @@
   on:editor:start={() => console.log("! event - editor:start")}
 />
 
-<!-- You can subscribe to the above events if desired -->
-<style lang="scss" scoped>
-</style>
+
