@@ -71,6 +71,7 @@
   $: if(!$item.system.hasTrigger) {
     $item.update({system: {trigger: null}})
   }
+
 </script>
 
 <template lang="pug">

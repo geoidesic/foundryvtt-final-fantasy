@@ -72,6 +72,10 @@ export function isPassiveEffectFromItem(item) {
   return false;
 }
 
+export function isParentActor(item) {
+  return item?.parent?.constructor?.name === 'FF15Actor';
+}
+
 export function ucfirst(str) {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
