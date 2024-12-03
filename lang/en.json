@@ -17,7 +17,8 @@
     "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
     "Chat": {
       "Buttons": {
-        "ApplyItemToTarget": "Apply {0} to target(s)"
+        "ApplyItemToTarget": "Apply {0} to target(s)",
+        "AppliedTo": "Applied to {1}"
       }
     },
     "Types": {
@@ -75,9 +76,9 @@
               "straignt": "Grants Straight Shot Ready"
             },
             "Trigger": {
-              "afterCheck": "Immediately after an enemy makes an ability check",
-              "beforeMove": "Immediately before an enemy moves",
-              "afterTurn": "When any character finishes their turn",
+              "ability": "Immediately after an enemy makes an ability check",
+              "move": "Immediately before an enemy moves",
+              "turn": "When any character finishes their turn",
               "invoke": "When an enemy within 10 squares of this character uses an invoked ability, or is using an invoked ability to generate a marker"
             },
             "Range": {
