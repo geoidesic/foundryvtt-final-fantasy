@@ -85,7 +85,7 @@
 
       //- get the effects from the item
       //- add the effect from the item to this item
-      await $documentStore.createEmbeddedDocuments("ActiveEffect", effects);
+      await $documentStore?.createEmbeddedDocuments("ActiveEffect", effects);
       console.log("$documentStore", $documentStore);
     }
   }
@@ -101,7 +101,7 @@
       .flexrow.gap-15
         .profile-wrap.flex0
           button.stealth.profile(on:click="{_launchStandardProfileEditor}")
-            img.profile(src="{$documentStore.img}" data-tooltip="{$documentStore.name}" alt="{$documentStore.name}" )
+            img.profile(src="{$documentStore?.img}" data-tooltip="{$documentStore?.name}" alt="{$documentStore?.name}" )
           
         .flex5
           ItemInput(className="lg transparent" attr="name" label="Name" placeholder="Item Name" maxlength="40")

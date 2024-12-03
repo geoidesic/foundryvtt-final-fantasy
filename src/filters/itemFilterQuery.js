@@ -56,16 +56,16 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
    */
   function filterQuery(data) {
     if (keyword === '' || !regex) { return true; }
-    console.log(properties);
+    // console.log(properties);
     if (isIterable(properties)) {
-      console.log('isIterable')
+      // console.log('isIterable')
       for (const property of properties) {
         if (regex.test(Strings.normalize(data?.[property]))) { return true; }
       }
       return false;
     }
     else {
-      console.log('is not Iterable')
+      // console.log('is not Iterable')
       return regex.test(Strings.normalize(data?.[properties]));
     }
   }

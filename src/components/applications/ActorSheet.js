@@ -18,7 +18,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
       minWidth: 660,
       // id: `${SYSTEM_ID}--actor-sheet`, // @deprecated: I don't know why we need an ID for this? And having a non-unique ID causes https://github.com/geoidesic/foundryvtt-final-fantasy/issues/8
       classes: [SYSTEM_CODE],
-      // headerButtonNoLabel: game.settings.get(SYSTEM_ID, 'applicationWindowHeaderIconsOnly') || false, //- @why: without this the initial value on first load of this app after a page refresh will be wrong, despite a reactive setting in the .svelte template; I don't really know why
+      headerButtonNoLabel: game.settings.get(SYSTEM_ID, 'applicationWindowHeaderIconsOnly') || false, //- @why: without this the initial value on first load of this app after a page refresh will be wrong, despite a reactive setting in the .svelte template; I don't really know why
       dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
       svelte: {
         class: ActorSheetShell,
@@ -156,17 +156,17 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     // Handle different data types
     switch (data.type) {
       case "ActiveEffect": {
-        return this._onDropActiveEffect(event, data);
+        return await this._onDropActiveEffect(event, data);
       }
       case "Actor": {
-        return this._onDropActor(event, data);
+        return await this._onDropActor(event, data);
       }
       case "Item": {
-        return this._onDropItem(event, data);
+        return await this._onDropItem(event, data);
       }
 
       case "Folder": {
-        return this._onDropFolder(event, data);
+        return await this._onDropFolder(event, data);
       }
       default: {
         log.e(`Impossible type "${data.type}" in _onDrop.`);
@@ -208,16 +208,19 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     if (!actor.isOwner) {
       return false;
     }
+
+    //- if equipment duplicate, increment quantity and return
+    const droppedItem = await fromUuid(data.uuid);
+    const duplicate = actor.items.find(x => x.name = droppedItem.name);
+    if(duplicate) {
+      await duplicate.update({system: {quantity: duplicate.system.quantity + 1}})
+      ui.notifications.info(`Found matching item "${duplicate.name}" and incremented quantity.`)
+      return
+    }
+
     const item = await Item.implementation.fromDropData(data);
     const itemData = item.toObject();
-
-    console.log('itemData', itemData);
-
-    console.log('itemData.type', itemData.type);
-
     const itemEffects = Array.from(itemData.effects);
-    console.log('itemEffects', itemEffects);
-
 
     // Handle item sorting within the same Actor
     if (actor.uuid === item.parent?.uuid) {

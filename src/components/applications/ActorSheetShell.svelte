@@ -72,7 +72,7 @@
     }
   }
 
-  // below is just for reference on creating active effects. This is handled natively in DocumentSheet.js
+  // below is just for reference on creating active effects. This is handled in ActorSheet.js
   async function handleDrop(event) {
     return;
 
