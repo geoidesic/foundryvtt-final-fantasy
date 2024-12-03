@@ -15,13 +15,15 @@
     action: components.ActionHeader,
     equipment: components.EquipmentHeader,
     job: components.JobHeader,
-    trait: components.TraitHeader
+    trait: components.TraitHeader,
+    limitbreak: components.LimitbreakHeader
   }
   const tabMap = {
     action: components.ActionTabs,
     equipment: components.EquipmentTabs,
     job: components.JobTabs,
-    trait: components.TraitTabs
+    trait: components.TraitTabs,
+    limitbreak: components.LimitbreakTabs
   }
 
   const application = getContext("#external").application;
