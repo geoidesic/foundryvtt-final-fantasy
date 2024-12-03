@@ -51,9 +51,9 @@
   const heavyshotOptions = [{ value: "straignt", label: localize("FF15.Types.Item.Types.Options.Heavyshot.straignt") }];
 
   const triggerOptions = [
-    { value: "afterCheck", label: localize("FF15.Types.Item.Types.Options.Trigger.afterCheck") },
-    { value: "beforeMove", label: localize("FF15.Types.Item.Types.Options.Trigger.beforeMove") },
-    { value: "afterTurn", label: localize("FF15.Types.Item.Types.Options.Trigger.afterTurn") },
+    { value: "ability", label: localize("FF15.Types.Item.Types.Options.Trigger.afterCheck") },
+    { value: "move", label: localize("FF15.Types.Item.Types.Options.Trigger.beforeMove") },
+    { value: "turn", label: localize("FF15.Types.Item.Types.Options.Trigger.afterTurn") },
     { value: "invoke", label: localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
   ];
 
@@ -68,6 +68,9 @@
   console.log(schemaFieldObjects);
 
   $: checkOptions = schemaFieldKeys.map((key) => ({ value: key, label: key.toUpperCase() }));
+  $: if(!$item.system.hasTrigger) {
+    $item.update({system: {trigger: null}})
+  }
 </script>
 
 <template lang="pug">
