@@ -4,7 +4,7 @@
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
   import { TJSInput } from "@typhonjs-fvtt/svelte-standard/component";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
-  import { toggleBookmark } from "~/src/helpers/util";
+  import { toggleBookmark, ucfirst } from "~/src/helpers/util";
   import { localize } from "#runtime/svelte/helper";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
@@ -125,7 +125,7 @@ ScrollingContainer
         tr
           th.img.shrink(scope="col")
           th.left.expand(scope="col") Name
-          th.fixed(scope="col") Quantity
+          th.fixed(scope="col") Type
           th.shrink(scope="col")
             i.fa-solid.fa-bookmark
           th.buttons(scope="col" class="{lockCSS}")
@@ -138,8 +138,7 @@ ScrollingContainer
               img.icon(src="{item.img}" alt="{item.name}")
             td.left
               a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-            td
-              button.stealth.clickable(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
+            td {ucfirst(item.type)}
             td
               button.stealth(on:click="{toggleBookmark(item)}") 
                 i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
