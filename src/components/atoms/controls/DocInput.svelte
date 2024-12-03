@@ -12,37 +12,59 @@
   export let type = "standard";
   export let clickType = "click";
   export let pulse = false;
+  export let updateOnInput = false;
 
   let inputValue,
     LABEL = !!label,
     inputElement,
     pulseClass = "",
-    initialRender = true;
+    initialRender = true,
+    enabled = false;
 
   const doc = document || getContext("#doc");
   const updateDebounce = Timing.debounce(update, 500);
 
   function handleKeyDown(event, index) {
+    game.system.log.d('DocInput keydown: ' + event.key);
     if (event.key === "Enter") {
-      event.preventDefault();
-      inputElement.blur();
-      editable = false;
+        event.preventDefault();
+        inputElement.blur();
+        editable = false;
+        update(event);
     }
+    
   }
 
   function handleBlur(event, index) {
-      editable = false;
+    game.system.log.d('DocInput blurring');
+    editable = false;
+    enabled = false;
   }
 
   async function enableInput(event) {
-    editable = true; // or use  editable=!editable  to toggle
+    if(enabled) return;
+    enabled = true;
+    console.log('enableInput', event);
+    if (event.key === 'Space') {
+        console.log('space');
+        event.preventDefault();
+        return;
+    }
+    editable = true;
     await tick();
 
     inputElement.focus();
     inputElement.select();
   }
+ 
+  function handleButtonKeyDown(event) {
+    if (event.key === " ") {
+        event.preventDefault(); // Prevent space from triggering the button click
+    }
+}
 
   async function update(event) {
+    game.system.log.d('DocInput updating value: ' + `${event.target.value}`);
     let val = event.target.value;
     if(type == 'number' && $$props.max !== undefined && val > $$props.max) {
       val = $$props.max;
@@ -61,6 +83,7 @@
       pulseClass = "pulse";
       setTimeout(() => pulseClass = "", 1000);
     }
+    enabled = false;
   }
 
   $: {
@@ -68,10 +91,10 @@
     if (!initialRender && newValue !== inputValue) {
       inputValue = type == 'number' ? Number(newValue) : newValue;
     }
-  }
-
+  } 
   $: displayValue = inputValue === '' || inputValue == 0 ? '' : inputValue;
   $: isEmpty = inputValue === '';
+  $: hasFocus = inputElement === document.activeElement;
 
   onMount(async () => {
     inputValue = resolveDotpath($doc, valuePath);
@@ -83,14 +106,15 @@
       }
     }
   });
+
 </script>
 
 <template lang="pug">
-button.stealth(on:click!="{clickType=='click' ? enableInput : () => {}}" on:dblclick!="{clickType=='dblclick' ? enableInput : () => {}}")
+button.stealth(on:click!="{clickType=='click' ? enableInput : () => {}}")
   +if('LABEL')
     label(for="{inputElement.id}") {label} 
   +if("editable")
-    input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown="{handleKeyDown}" on:blur="{handleBlur}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
+    input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
     +else
       .output({...$$restProps} class="{pulseClass}" class:empty="{inputValue === ''}") {displayValue || placeholder}
 </template>
