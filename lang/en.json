@@ -9,7 +9,8 @@
       "equipment": "Equipment",
       "job": "Job",
       "trait": "Trait",
-      "effect": "Effect"
+      "effect": "Effect",
+      "limitbreak": "Limit Break"
     }
   },
   "FF15": {
@@ -48,6 +49,10 @@
           "effect": {
             "Label": "Effect",
             "Description": "A passive ability."
+          },
+          "limitbreak": {
+            "Label": "Limit Break",
+            "Description": "Each Job has a single definitive limit Break ability."
           },
           "Options": {
             "DirectHit": {
