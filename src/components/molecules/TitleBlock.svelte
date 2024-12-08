@@ -7,13 +7,32 @@ let levelEnabled = false;
 </script>
 <template lang='pug'>
 .panel.heightcol
-  .flexrow.nowrap.justify-vertical
-    .flex1.right
-      label.right
-        span.widebold.font-inter.glow.white.scaleup.mr-lg.inline-block LV
-    .flex1.left
-      //- input.font-inter(style="font-size: 2em;" name="level" id="level")
-      DocInput.widebold.white.wide.font-inter(bind:enabled="{levelEnabled}" type="number" name="LV" min=0 valuePath="system.level" textClasses="glow widebold scaleupint white ml-md")
+  .flexrow
+    .flex1
+      .flexrow.nowrap.justify-vertical
+        .flex1.right
+          label
+            span.widebold.font-inter.glow.white.scaleup.mr-lg.inline-block LV
+        .flex1.left
+          //- input.font-inter(style="font-size: 2em;" name="level" id="level")
+          DocInput.widebold.white.wide.font-inter(bind:enabled="{levelEnabled}" type="number" name="level" min=0 valuePath="system.level" textClasses="glow widebold scaleupint white ml-md")
+
+    .flex1
+      .flexrow.nowrap.mr-md
+        .flex4.job.right
+          DocInput.white( name="role" valuePath="system.role" textClasses="glow white")
+        .flex0.middle /
+        .flex4.job.left
+          DocInput.white( name="job" valuePath="system.job" textClasses="glow white")
+
+  //- .flexrow.nowrap.font-cinzel
+  //-   .flex2.bgb
+  //-     div a
+  //-   .flex1.bgg
+  //-     .middle.white /
+  //-   .flex2.bgo
+  //-     div a
+      
 //- .flexrow
 //-   .flex2
 //-     .flexrow.nowrap
@@ -34,34 +53,13 @@ let levelEnabled = false;
   @import '../../styles/Mixins.sass'
   :global(.FF15 .job input)
     font-size: 1em
-
-  .job
-    white-space: nowrap
-    display: inline-block
-    margin: 2px 5em 0 0
-    transform: scaleX(1.2)
-    letter-spacing: -2px
-    transform-origin: left
-    font-family: "Cinzel", serif
-    // font-family: "Montserrat", sans-serif
-    color: #fff
-    font-weight: 400
-    font-size: 2em
-    text-shadow: 0 0 4px #fff
-    -webkit-text-stroke-width: 0.5px
-    -webkit-text-stroke-color: rgba(100,0,0,0.1)
-
-    .right, .left
-      display: inline-block
       
-  .middle
-    display: inline-block
-    margin: 0 0.25em
-
-    transform: scaleX(1.2)
-    transform-origin: left
+  .job
     font-family: "Cinzel", serif
-    font-size: 1em
+    font-size: 2em
+    
+  .middle
+    font-size: 2em
     font-weight: 500
     color: #fff
 </style>
