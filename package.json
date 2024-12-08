@@ -43,10 +43,9 @@
     "not IE 11"
   ],
   "scripts": {
-    "build": "VITE_ENV_MODE=production vite build",
-    "dev": "VITE_ENV_MODE=development vite",
+    "dev": "node modifySystemJson.js remove && vite",
+    "build": "vite build && node modifySystemJson.js restore",
     "eslint": "eslint .",
     "test:unit": "vitest"
-
   }
 }
