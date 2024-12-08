@@ -4,6 +4,9 @@ import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
 import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
 import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
 
+const proseMirrorClasses = ['left', 'small']
+const proseMirrorClasses2 = ['left']
+
 </script>
 <template lang='pug'>
 h1 Details
@@ -12,9 +15,11 @@ h1 Details
     label Character Name:
   .flex2
     DocInput(id="name" name="name" valuePath="name")
+
+h1 Description
+ProseMirror(classes="{proseMirrorClasses}" attr="system.description" )
 h1 Notes
-.left.panel.borderless
-  ProseMirror( attr="system.biography" )
+ProseMirror(classes="{proseMirrorClasses2}" attr="system.biography" )
 
 //- .panel.heightcol
 //-   .flexrow

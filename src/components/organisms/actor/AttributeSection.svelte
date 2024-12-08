@@ -11,7 +11,7 @@ import { ASSET_PATH } from '~/src/helpers/constants';
     .flexcol.background
       .texture
       TitleBlock
-      .flexrow.panel
+      .flexrow.panel.borderless
         .flex2
           AttributeBlock
         .flex1.portrait-frame

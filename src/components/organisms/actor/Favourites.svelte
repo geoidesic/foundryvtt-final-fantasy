@@ -126,8 +126,7 @@
           th.left.expand(scope="col") Name
           th.fixed(scope="col") 
           th.shrink(scope="col")
-            button.stealth.mr-lg
-              i.fa-solid.fa-bookmark
+            
         +each("items as item, index")
           //- pre item.type {item.type}
           tr
@@ -146,14 +145,14 @@
 
 <style lang="sass">
 @import '../../../styles/Mixins.sass'
+.favourites
+  +inset(0 0 5px rgba(165,0,0,1) inset)
+  width: 100%
 .fa-bookmark
   color: var(--color-highlight) !important
 .portrait-frame
   margin-right: -2px
   z-index: 2
-.favourites
-  +inset(0 0 5px rgba(165,0,0,1) inset)
-  width: 100%
 .pulse
   @include pulse
 

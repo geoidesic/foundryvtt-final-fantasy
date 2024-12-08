@@ -7,7 +7,6 @@ const {
 export class NPCModel extends FFActorDataModel {
   static defineSchema() {
     return {
-      description: new HTMLField(),
     }
   }
 }

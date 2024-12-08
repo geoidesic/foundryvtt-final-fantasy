@@ -8,6 +8,7 @@ export class FFActorDataModel extends FFTypeDataModel {
     return {
       ...super.defineSchema(),
       inventoryLocked: new BooleanField({ initial: false }),
+      description: new HTMLField(),
     }
   }
 }

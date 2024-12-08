@@ -1,9 +1,10 @@
 <svelte:options accessors={true} />
 
 <script>
-  // import { TJSProseMirror } from "@typhonjs-fvtt/svelte-standard/component";
 
-  import { TJSProseMirror, TJSContentEdit, TJSTinyMCE } from "@typhonjs-fvtt/svelte-standard/component";
+  import TJSProseMirror from "~/src/components/TJSProseMirror.svelte";
+  import {  TJSContentEdit, TJSTinyMCE } from "@typhonjs-fvtt/svelte-standard/component";
+  // import { TJSProseMirror, TJSContentEdit, TJSTinyMCE } from "@typhonjs-fvtt/svelte-standard/component";
   import { getContext } from "svelte";
 
   // If you are developing ProseMirror plugins import from this path to enable PM debugging tooling.
@@ -14,6 +15,8 @@
 
   export let content = "";
   export let attr = "";
+  export let classes = "";
+  export let editable = "";
 
   const doc = getContext("#doc");
   // console.log("$doc", $doc);
@@ -37,11 +40,11 @@
     fieldName: attr, // Path to data in `a.b.c`; note: this is a v10 field name.
     // collaborate: false,                             // Enables collaboration; requires document.
     // button: true      // Show edit button to launch editor when hovered; when false editor is open by default.
-    // classes: ['foo', 'bar'],   // Adds additional classes to `.editor` element.
+    classes,   // Adds additional classes to `.editor` element.
     // clickToEdit: false,  // Clicking editor content initializes the editor; hides the edit button.
     // DOMPurify,        // You can pass DOMPurify from `@typhonjs-fvtt/runtime/dompurify though ProseMirror does
     // essential client side sanitation; IE stripping `<script>` tags, etc.
-    // editable: true,   // Enable / disable editing
+    editable,   // Enable / disable editing
     // enrichContent: true  // The default is true, but if you set it to false content is not enriched.
     // initialSelection: 'start', // The initial selection / cursor position: 'all', 'end', or 'start'.
     // styles: { '--tjs-editor-toolbar-background': 'red' } // Apply any inline styles / CSS variables

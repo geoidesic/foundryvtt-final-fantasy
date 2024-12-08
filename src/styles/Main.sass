@@ -83,6 +83,8 @@
     &.disabled
       cursor: inherit
     &.stealth
+      position: relative
+      z-index: 100
       border: none
       background: none
       margin: auto
@@ -121,7 +123,8 @@
       border-bottom: 4px ridge var(--ff-border-color) !important
     &.overflow
       overflow: auto
-
+  .overflow
+    overflow: auto
   .box
     width: 100%
     position: relative
@@ -149,6 +152,10 @@
   .widebold
     font-size: 2em
     font-weight: 400
+  .wide
+    width: 100%
+  .high
+    height: 100%
   .glow
     letter-spacing: -2px
     color: #fff
@@ -244,15 +251,12 @@
   .light
     opacity: 0.5
 
-  .prose
-    min-height: 300px
-    background-color: rgba(255, 255, 255, 0.2)
-    // border: 5px ridge var(--border-highlight)
-    // border-radius: var(--border-radius)
-    padding: 0.1em 0.2em
-    font-family: "Newsreader", serif
 
-    .editor.prosemirror.tjs-editor .editor-enriched
+
+  .editor.prosemirror.tjs-editor 
+    &.small
+      height: 20%
+    .editor-enriched
       padding: 1em
 
   .window-title
