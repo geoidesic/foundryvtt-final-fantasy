@@ -44,7 +44,7 @@
   ],
   "scripts": {
     "build": "VITE_ENV_MODE=production vite build",
-    "dev": "rm -rf style.css; VITE_ENV_MODE=development vite",
+    "dev": "VITE_ENV_MODE=development vite",
     "eslint": "eslint .",
     "test:unit": "vitest"
 
