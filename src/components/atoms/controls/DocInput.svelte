@@ -58,6 +58,7 @@
 
     inputElement.focus();
     inputElement.select();
+
   }
  
   function handleButtonKeyDown(event) {
@@ -119,7 +120,7 @@ button.stealth(on:click!="{clickType=='click' ? enableInput : () => {}}")
   +if("editable")
     input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
     +else
-      .output({...$$restProps} class="{pulseClass} {textClasses}" class:empty="{inputValue === ''}") {displayValue || placeholder}
+      .output( class="{pulseClass} {textClasses}" class:empty="{inputValue === ''}") {displayValue || placeholder}
 </template>
 
 <style lang="sass">

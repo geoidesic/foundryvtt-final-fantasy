@@ -133,22 +133,44 @@
     // display: block
 
   .ml-30percent
-    margin-left: 20%
+    margin-left: 25%
   .mr-30percent
-    margin-left: -30%
+    margin-left: -50%
   .fullwidth
     width: 100%
-
-  .scaleup
-    
-    transform: scaleX(2.4)
+  .font-inter
     font-family: "Inter", sans-serif
+  .font-cinzel
+    font-family: "Cinzel", serif
+    display: inline
+  
+  .inline-block
+    display: inline-block
+  .widebold
     font-size: 2em
     font-weight: 400
-    display: inline-block
+  .glow
+    letter-spacing: -2px
+    color: #fff
+    font-weight: 400
+    text-shadow: 0 0 4px #fff
+    -webkit-text-stroke-width: 0.5px
+    -webkit-text-stroke-color: rgba(100,0,0,0.1)
+
+  .scaleup
+    transform: scaleX(2.4)
+  .scaleupint
+    transform: scaleX(2.4) scaleY(1.15)
 
   .white
     color: #fff
+
+  input 
+    all: unset
+    box-sizing: border-box
+    width: 100%
+
+
   select
     @include input
     max-width: 200px // Set a maximum width
@@ -248,6 +270,15 @@
   .flexrow>.flex4,
   .flexcol>.flex4
     flex: 4
+
+  .bgb
+    background-color: blue
+
+  .bg0
+    background-color: orange
+
+  .bgg
+    background-color: green
 
   .flexrow
     &.nowrap
