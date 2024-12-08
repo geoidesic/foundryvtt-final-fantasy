@@ -6,22 +6,32 @@ import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContain
 
 </script>
 <template lang='pug'>
-.panel.heightcol
-  .flexrow
-    h1 Details
-  .flexrow
-    .flex2.left
-      label Character Name:
-    .flex2.right
-      DocInput(id="name" name="name" valuePath="name")
-  hr
-  .flexcol
-    .flex0
-      .flexrow
-        h1 Notes
+h1 Details
+.flexrow.justify-vertical
+  .flex2 
+    label Character Name:
+  .flex2
+    DocInput(id="name" name="name" valuePath="name")
+h1 Notes
+.left.panel.borderless
+  ProseMirror( attr="system.biography" )
 
-  .flexrow.left.heightcol
-    ProseMirror( attr="system.biography" )
+//- .panel.heightcol
+//-   .flexrow
+//-     h1 Details
+//-   .flexrow
+//-     .flex2.left
+//-       label Character Name:
+//-     .flex2.right
+//-       DocInput(id="name" name="name" valuePath="name")
+//-   hr
+//-   .flexcol
+//-     .flex0
+//-       .flexrow
+//-         h1 Notes
+
+//-   .flexrow.left.heightcol
+//-     ProseMirror( attr="system.biography" )
 
 </template>
 <style lang='sass'>

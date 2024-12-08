@@ -108,7 +108,7 @@
 </script>
 
 <template lang="pug">
-ScrollingContainer
+
     //- .flexrow.pt-sm.pr-sm
     //-   .flexcol.flex1.label-container 
     //-     label Search
@@ -119,7 +119,7 @@ ScrollingContainer
     //-   .flex3.right
     //-     Select.short(options="{typeFilterOptions}" bind:value="{typeFilterValue}")
 
-    .panel
+    .panel.overflow
       table.standard-list.borderless
         tr
           th.img.shrink(scope="col")

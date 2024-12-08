@@ -14,6 +14,7 @@
     activeTab = tabs[0].id;
     game.system.log.d("Tabs", tabs);
   });
+  
 </script>
 
 <template lang="pug">
@@ -57,12 +58,13 @@
     height: 100%
     width: 100%
     background: url(/systems/foundryvtt-final-fantasy/assets/parchment4.webp) repeat
-
+    overflow: hidden
     .tab-content
       z-index: 1
       // background: url(../ui/parchment.jpg) repeat
       border: 1px solid transparent
       border-radius: 10px
+      max-height: calc(100% - 60px) //- this leaves space for the tabs, allowing the full content to be scrolled
 
     .tabs-list 
       @include flex-row

@@ -116,8 +116,11 @@
     width: 100%
     position: relative
     overflow: hidden
-    border-top: 4px ridge var(--ff-border-color) !important
-    border-bottom: 4px ridge var(--ff-border-color) !important
+    &:not(.borderless)
+      border-top: 4px ridge var(--ff-border-color) !important
+      border-bottom: 4px ridge var(--ff-border-color) !important
+    &.overflow
+      overflow: auto
 
   .box
     width: 100%
