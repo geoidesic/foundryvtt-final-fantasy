@@ -66,7 +66,6 @@ export default () => {
       open: false,
       proxy: {
         [`^(/systems/${SYSTEM_ID}/(lang|packs|assets))`]: "http://localhost:30000",
-        [`^(/systems/${SYSTEM_ID}/style.css)`]: "http://localhost:30000",
         [`^(?!/systems/${SYSTEM_ID}/)`]: "http://localhost:30000",
         "/socket.io": { target: "ws://localhost:30000", ws: true }
       },
