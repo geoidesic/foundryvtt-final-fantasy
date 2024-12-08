@@ -5,7 +5,7 @@ import PointsSection from "~/src/components/organisms/actor/PointsSection.svelte
 
 </script>
 <template lang='pug'>
-  .component
+  .panel
     AttributeSection
     PointsSection
 </template>

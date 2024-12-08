@@ -23,9 +23,9 @@
       width: 100%
       position: relative
       overflow: hidden
-      border-bottom: 4px ridge var(--border-color)
-      border-left: 4px ridge var(--border-color)
-      border-right: 4px ridge var(--border-color)
+      border-bottom: 4px ridge var(--ff-border-color)
+      border-left: 4px ridge var(--ff-border-color)
+      border-right: 4px ridge var(--ff-border-color)
   
     .hp
       position: relative

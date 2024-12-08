@@ -2,16 +2,20 @@
 import { onMount } from 'svelte';
 import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
 
+let levelEnabled = false;
+
 </script>
 <template lang='pug'>
 .flexrow
-  .flex2
-    .flexrow.level
-      .right LV
-      .left
-        DocInput(style="max-width: 40px" type="number" name="LV" min=0 valuePath="system.level")
-  .flex2
-    .flexrow.job
+  .flex1
+    .flexrow.nowrap
+        +if("!levelEnabled")
+          .flex2
+            .scaleup.white.ml-30percent(style="min-width: 115px;") LV
+        .flex2
+          DocInput.white.scaleup.mr-30percent(style="min-width: 115px;" bind:enabled="{levelEnabled}" type="number" name="LV" min=0 valuePath="system.level")
+  .flex3
+    .flexrow.job.nowrap
       .right
         DocInput(style="max-width: 65px" name="role" min=0 valuePath="system.role") 
       .middle /
@@ -23,17 +27,22 @@ import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   @import '../../styles/Mixins.sass'
   :global(.FF15 .job input)
     font-size: 1em
+  
+  .bgr
+    background: green
+
+
+  .bgb
+    font-family: "Inter", sans-serif
+
+    background: blue
   .level
-    display: inline-block
-    margin: 2px 5em 0 0
-    transform: scaleX(2.4)
     letter-spacing: -2px
-    transform-origin: left
     font-family: "Inter", sans-serif
     // font-family: "Montserrat", sans-serif
     color: #fff
     font-weight: 400
-    font-size: 2em
+    font-size: 8em
     text-shadow: 0 0 4px #fff
     -webkit-text-stroke-width: 0.5px
     -webkit-text-stroke-color: rgba(100,0,0,0.1)
@@ -42,7 +51,6 @@ import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
       display: inline-block
   .job
     white-space: nowrap
-    display: inline-block
     margin: 2px 5em 0 0
     transform: scaleX(1.2)
     letter-spacing: -2px

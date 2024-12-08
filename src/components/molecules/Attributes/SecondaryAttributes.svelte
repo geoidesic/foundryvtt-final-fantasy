@@ -21,6 +21,7 @@
     @import '../../../styles/Mixins.sass'
   
     .molecule
+      width: 100%
       padding: 1em
       @include white-shadow-header
       @include white-shadow-underscore

@@ -13,13 +13,15 @@
   export let clickType = "click";
   export let pulse = false;
   export let updateOnInput = false;
+  export let enabled = false;
+  export let textClasses = "";
 
   let inputValue,
     LABEL = !!label,
     inputElement,
     pulseClass = "",
-    initialRender = true,
-    enabled = false;
+    initialRender = true
+  ;
 
   const doc = document || getContext("#doc");
   const updateDebounce = Timing.debounce(update, 500);
@@ -36,6 +38,7 @@
   }
 
   function handleBlur(event, index) {
+    return;
     game.system.log.d('DocInput blurring');
     editable = false;
     enabled = false;
@@ -116,7 +119,7 @@ button.stealth(on:click!="{clickType=='click' ? enableInput : () => {}}")
   +if("editable")
     input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
     +else
-      .output({...$$restProps} class="{pulseClass}" class:empty="{inputValue === ''}") {displayValue || placeholder}
+      .output({...$$restProps} class="{pulseClass} {textClasses}" class:empty="{inputValue === ''}") {displayValue || placeholder}
 </template>
 
 <style lang="sass">
@@ -152,7 +155,7 @@ button.stealth(on:click!="{clickType=='click' ? enableInput : () => {}}")
     border-radius: var(--border-radius)
 
   .output:not([type="checkbox"])
-    margin-right: 0.5em
+    // margin-right: 0.5em
 
   
 </style>

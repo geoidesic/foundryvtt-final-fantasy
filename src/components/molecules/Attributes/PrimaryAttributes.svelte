@@ -20,6 +20,7 @@ let data = [
 
   .molecule
     padding: 1em
+    width: 100%
     @include white-shadow-header
     @include white-shadow-underscore
     

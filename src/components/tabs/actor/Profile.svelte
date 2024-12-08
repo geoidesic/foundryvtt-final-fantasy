@@ -19,10 +19,9 @@ import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContain
     .flex0
       .flexrow
         h1 Notes
-  ScrollingContainer
 
-    .flexrow.left.heightcol
-      ProseMirror( attr="system.biography" )
+  .flexrow.left.heightcol
+    ProseMirror( attr="system.biography" )
 
 </template>
 <style lang='sass'>

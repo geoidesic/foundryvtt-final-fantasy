@@ -20,11 +20,17 @@
 .tabs
   .tabs-list
     +each("tabs as tab")
-      button(
+      button.short(
         class="{tab.id === activeTab ? 'active' : ''}"
         on:click|preventDefault!="{() => activeTab = tab.id}"
         transition:efx
-      ) {tab.label}
+      ) 
+        +if("!tab.img && !tab.icon")
+          span {tab.label}
+          +else
+            +if("tab.img")
+              img.tab-icon(src="{tab.img}")
+          
   .tab-content
     +each("tabs as tab")
       +if("tab.id === activeTab")
@@ -33,6 +39,10 @@
 
 <style lang="sass">
   @import "../../styles/Mixins.sass"
+  .tab-icon
+    border: none
+    text-align: middle
+    height: 30px
 
   .tab-content 
     @include flex-column
@@ -46,11 +56,11 @@
     @include border
     height: 100%
     width: 100%
+    background: url(/systems/foundryvtt-final-fantasy/assets/parchment4.webp) repeat
 
     .tab-content
-      margin-top: -8px
       z-index: 1
-      background: url(../ui/parchment.jpg) repeat
+      // background: url(../ui/parchment.jpg) repeat
       border: 1px solid transparent
       border-radius: 10px
 
@@ -65,21 +75,9 @@
       padding: 0.25rem
       height: 100%
       flex: 0
-      z-index: 0
 
       button 
-        --button-border-radius: 5px
-        --button-line-height: var(--tab-line-height)
-        --button-font-size: var(--tab-font-size)
-        --button-color: var(--tab-text-color)
-        --button-hover-background-color: var(--border-color)
-        --button-focus-outline-color: var(--border-color)
         --color-shadow-primary: var(--border-shadow)
-        --button-border-radius: 0
-        --button-padding: 0 0 1px 0
-        --button-border-style: solid
-        --button-border-color: transparent
-        --button-font-weight: bold
         position: relative
         overflow: hidden
         clip-path: var(--tjs-icon-button-clip-path, none)
@@ -89,32 +87,38 @@
         font-weight: normal
         font-family: "Cinzel", serif
         margin: 0 2px
+        background: rgba(216, 214, 203, 0.8)
         width: 100%
         text-shadow: 0px 0px 1px var(--color-shadow-primary)
-
+        // background: rgba(0, 0, 0, 0.1)
+        padding: 0.5rem 0
         -webkit-text-stroke-width: 0.5px
         -webkit-text-stroke-color: rgba(100, 0, 0, 0.1)
+        border: none
         // &:not(:first-child) 
         //   border-left: none
+        // color: var(--ff-border-color)
+        opacity: 0.5
 
-        &:hover 
-          --button-border-style: ridge
-          --button-border-color: var(--border-color)
-          box-shadow: 0 -3px 10px var(--color-shadow-primary)
+        transition: opacity 0.5s ease-in-out
 
-        //   // color: var(--border-color)
+        &:hover
+          box-shadow: 0 -7px 15px -6px var(--color-shadow-primary)
+          opacity: 1
+        //   // color: var(--ff-border-color)
         //   box-shadow: none
         //   &:not(:disabled) 
         //     clip-path: var(--tjs-icon-button-clip-path-hover, var(--tjs-icon-button-clip-path, none))
 
         &.active
-          --button-border-style: ridge
-          --button-border-color: var(--border-color)
-          box-shadow: 0 -3px 10px var(--color-shadow-primary)
+          box-shadow: 0 -7px 15px -6px var(--color-shadow-primary)
+          // box-shadow: 0 -7px 15px -5px var(--ff-border-color)
+          z-index: 100
+          opacity: 1
+          // text-decoration: underline
+          // border: 4px ridge var(--ff-border-color)
+          // border-bottom: 1px solid transparent !important
+          // box-shadow: none
 
-          // background: var(--border-color)
-          // color: var(--border-color)
-
-        @include button
         
 </style>

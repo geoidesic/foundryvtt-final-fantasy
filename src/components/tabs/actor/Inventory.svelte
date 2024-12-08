@@ -120,8 +120,8 @@ ScrollingContainer
     //-   .flex3.right
     //-     Select.short(options="{typeFilterOptions}" bind:value="{typeFilterValue}")
 
-    div.pa-sm
-      table.standard-list
+    .panel
+      table.borderless
         tr
           th.img.shrink(scope="col")
           th.left.expand(scope="col") Name

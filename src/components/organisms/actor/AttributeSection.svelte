@@ -10,22 +10,25 @@ import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
     .flexcol.background
       .texture
       TitleBlock
-      .flexrow
+      .flexrow.panel
         .flex2
           AttributeBlock
-        .flex1(style="margin-right: -2px; z-index: 2")
+        .flex1.portrait-frame
           PortraitFrame
       
 </template>
 <style lang='sass'>
   @import '../../../styles/Mixins.sass'
+  .portrait-frame
+    margin-right: -2px
+    z-index: 2
 
   .background
     width: 100%
     background-color: rgb(154 48 53)
     position: relative
     overflow: hidden
-    border: 4px ridge var(--border-color)
+    border: 4px ridge var(--ff-border-color)
 
     .texture
       position: absolute

@@ -80,19 +80,27 @@
 
   button
     width: fit-content
-    line-height: 0.7rem
+    &.disabled
+      cursor: inherit
     &.stealth
       border: none
       background: none
       margin: auto
+      &:hover
+        box-shadow: none
+      &:active
+        box-shadow: none !important
+      &:focus
+        box-shadow: none !important
+        
     &.wide
       width: 100%
     &.tall
       line-height: 1.5rem
+    &.short
+      line-height: 0.7rem
 
-  .heightcol
-    height: 100%
-    
+
   .item-sheet
     .sheet-row
       margin: 0 0 0.3rem 0
@@ -100,16 +108,44 @@
         input:not([type="checkbox"])
           margin-right: 0.5rem
 
+  .heightcol
+    height: 100%
+    
+
   .panel
     width: 100%
     position: relative
     overflow: hidden
-    border: 4px ridge var(--border-color)
+    border-top: 4px ridge var(--ff-border-color) !important
+    border-bottom: 4px ridge var(--ff-border-color) !important
+
+  .box
+    width: 100%
+    position: relative
+    overflow: hidden
+    border: 4px ridge var(--ff-border-color)
 
   section.window-content
-    border: 5px ridge var(--border-shadow)
+    border: 5px ridge var(--outer-border-color)
     // display: block
 
+  .ml-30percent
+    margin-left: 20%
+  .mr-30percent
+    margin-left: -30%
+  .fullwidth
+    width: 100%
+
+  .scaleup
+    
+    transform: scaleX(2.4)
+    font-family: "Inter", sans-serif
+    font-size: 2em
+    font-weight: 400
+    display: inline-block
+
+  .white
+    color: #fff
   select
     @include input
     max-width: 200px // Set a maximum width
@@ -199,7 +235,7 @@
     font-weight: 700
 
   .envelope
-    border: 4px ridge var(--border-color)
+    border: 4px ridge var(--ff-border-color)
     padding: 1rem
     
 
@@ -211,6 +247,8 @@
     flex: 4
 
   .flexrow
+    &.nowrap
+      flex-wrap: nowrap
     &.end
       justify-content: flex-end
     &.justify-vertical
@@ -275,6 +313,8 @@
   table
     &.standard-list
       width: 100%
+    &.borderless
+      border: none
 
     th, td
       padding: 0
@@ -282,6 +322,7 @@
       // border: 1px solid gold
       &.img
         position: relative
+        min-width: 32px
       img.icon
         margin-top: 3px
         position: absolute

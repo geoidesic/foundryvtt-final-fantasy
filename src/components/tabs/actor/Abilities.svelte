@@ -108,7 +108,6 @@
 </script>
 
 <template lang="pug">
-
 ScrollingContainer
     //- .flexrow.pt-sm.pr-sm
     //-   .flexcol.flex1.label-container 
@@ -120,8 +119,8 @@ ScrollingContainer
     //-   .flex3.right
     //-     Select.short(options="{typeFilterOptions}" bind:value="{typeFilterValue}")
 
-    div.pa-sm
-      table.standard-list
+    .panel
+      table.standard-list.borderless
         tr
           th.img.shrink(scope="col")
           th.left.expand(scope="col") Name

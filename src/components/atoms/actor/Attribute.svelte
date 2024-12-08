@@ -10,8 +10,8 @@ export let abbreviateLabel = false;
 export let showSign = false;
 
 const actor = getContext('#doc');
-game.system.log.d('actor', actor);
-game.system.log.d('$actor', $actor);
+// game.system.log.d('actor', actor);
+// game.system.log.d('$actor', $actor);
 
 const add = () => {
   if(!isEditing) return;
@@ -27,6 +27,7 @@ $: label = abbreviateLabel ? localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attri
 $: value = $actor?.system?.attributes?.[key]?.[code]?.val;
 $: isEditing = $actor?.system?.isEditing;
 $: sign = showSign ? value > 0 ? '+' : value < 0 ? '-' : '' : '';
+$: disabled = isEditing ? '' : 'disabled'
 
 onMount(() => {
 });
@@ -35,12 +36,12 @@ onMount(() => {
 <template lang='pug'>
   .attribute
     .underscore.flexrow.justify-vertical
-      +if("!$actor?.system?.isEditing")
+      +if("!isEditing")
         .flex0
           button.wide.stealth.flex.dice(on:click!="{() => {alert('Rolling!')}}")
             i.fas.fa-dice
       .flex3.left
-        button.left.wide.tall.stealth.flexrow(data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
+        button.left.wide.tall.stealth.flexrow(class="{disabled}" data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 
           .flex2.header {label} 
           .flex0.header {sign}{value} 
     
@@ -48,6 +49,7 @@ onMount(() => {
 <style lang='sass'>
   @import '../../../styles/Mixins.sass'
   .attribute
+    width: 100%
     @include white-shadow-header(var(--size-md))
     @include white-shadow-underscore(3.5px, rgba(255, 255, 255, 0.4), rgba(0,0,0,0.3), 0px, 0.1em, -3px, 103%, 0px)
     
@@ -64,7 +66,7 @@ onMount(() => {
     transform: scaleY(0.75)
     transform-origin: top
     text-align: left
-    color: var(--border-color)
+    color: var(--ff-border-color)
     &:hover
       color: var(--border-highlight)
 

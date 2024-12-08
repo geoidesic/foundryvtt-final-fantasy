@@ -28,31 +28,31 @@ onMount(() => {
     display: flex
     min-width: 100px
     min-height: 100px
-    border: 3px solid var(--border-color) // Matching CSS border
+    border: 3px solid var(--ff-border-color) // Matching CSS border
     box-shadow: inset 0 0 30px 30px var(--border-shadow)
-
+    color: var(--ff-border-color)
     border-radius: 17px
     padding: 0px // Adjust based on SVG size
 
   :global(.corner)
     position: absolute
     border: none
-    color: var(--border-color)
+    color: var(--ff-border-color)
 
 
-  :global(.top-left)
+  :global(.corner.top-left)
     top: -5px
     left: -5px
 
-  :global(.top-right)
+  :global(.corner.top-right)
     top: -5px
     right: -5px
 
-  :global(.bottom-left)
+  :global(.corner.bottom-left)
     bottom: -5px
     left: -5px
 
-  :global(.bottom-right)
+  :global(.corner.bottom-right)
     bottom: -5px
     right: -5px
 </style>
