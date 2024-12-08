@@ -120,7 +120,7 @@
     //-     Select.short(options="{typeFilterOptions}" bind:value="{typeFilterValue}")
 
     .panel.overflow
-      table.standard-list.borderless
+      table.borderless
         tr
           th.img.shrink(scope="col")
           th.left.expand(scope="col") Name
@@ -141,7 +141,7 @@
             td
               button.stealth(on:click="{toggleBookmark(item)}") 
                 i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
-            td.buttons.right
+            td.min.buttons.right
               +if("!$doc.system.inventoryLocked")
                 button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
                   i.left.fa.fa-edit

@@ -15,6 +15,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       width: 440,
       height: 828,
+      minHeight: 180,
       minWidth: 282,
       // id: `${SYSTEM_ID}--actor-sheet`, // @deprecated: I don't know why we need an ID for this? And having a non-unique ID causes https://github.com/geoidesic/foundryvtt-final-fantasy/issues/8
       classes: [SYSTEM_CODE],

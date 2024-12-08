@@ -4,7 +4,7 @@
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
   import { TJSInput } from "@typhonjs-fvtt/svelte-standard/component";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
-  import { toggleBookmark } from "~/src/helpers/util";
+  import { toggleBookmark, ucfirst } from "~/src/helpers/util";
   import { localize } from "#runtime/svelte/helper";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
@@ -15,7 +15,7 @@
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
   const typeSearch = createFilterQuery("type");
-  typeSearch.set('equipment')
+  typeSearch.set(['equipment']); // Updated to filter for both types
   const input = {
     store: typeSearch,
     efx: rippleFocus(),
@@ -109,7 +109,6 @@
 
 <template lang="pug">
 
-ScrollingContainer
     //- .flexrow.pt-sm.pr-sm
     //-   .flexcol.flex1.label-container 
     //-     label Search
@@ -120,44 +119,37 @@ ScrollingContainer
     //-   .flex3.right
     //-     Select.short(options="{typeFilterOptions}" bind:value="{typeFilterValue}")
 
-    .panel
+    .panel.overflow
       table.borderless
         tr
           th.img.shrink(scope="col")
           th.left.expand(scope="col") Name
           th.fixed(scope="col") Quantity
           th.shrink(scope="col")
-            button.stealth.mr-lg
-              i.fa-solid.fa-bookmark
-          th.min.buttons(scope="col" class="{lockCSS}")
-            .flexrow.end
-              .flex0
-                button.stealth.mr-lg(class="{lockCSS}")
-                  i.fa(class="{faLockCSS}" on:click="{toggleLock}")
+            i.fa-solid.fa-bookmark
+          th.buttons(scope="col" class="{lockCSS}")
+            button.stealth(class="{lockCSS}")
+              i.fa(class="{faLockCSS}" on:click="{toggleLock}")
         +each("items as item, index")
           //- pre item.type {item.type}
           tr
             td.img
-              img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
+              img.icon(src="{item.img}" alt="{item.name}")
             td.left
               a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-            td
+            td 
               button.stealth.clickable.wide(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
             td
               button.stealth(on:click="{toggleBookmark(item)}") 
                 i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
             td.min.buttons.right
               +if("!$doc.system.inventoryLocked")
-                .flexrow.end
-                  .flex0
-                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
-                      i.left.fa.fa-edit
-                  .flex0
-                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
-                      i.left.fa.fa-copy
-                  .flex0
-                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
-                      i.left.fa.fa-trash
+                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                  i.left.fa.fa-edit
+                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                  i.left.fa.fa-copy
+                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                  i.left.fa.fa-trash
           
             
 </template>

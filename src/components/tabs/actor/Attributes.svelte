@@ -18,7 +18,7 @@ import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
           .flexrow.panel
             .flex2
               .portrait-frame.pr-xs
-                PortraitFrame(style="min-width: 350px;")
+                PortraitFrame(style="min-width: 182px;")
                   Favourites
 </template>
 <style lang='sass'>

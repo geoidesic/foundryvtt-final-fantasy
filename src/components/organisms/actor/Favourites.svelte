@@ -128,11 +128,6 @@
           th.shrink(scope="col")
             button.stealth.mr-lg
               i.fa-solid.fa-bookmark
-          th.min.buttons(scope="col" class="{lockCSS}")
-            .flexrow.end
-              .flex0
-                button.stealth.mr-lg(class="{lockCSS}")
-                  i.fa(class="{faLockCSS}" on:click="{toggleLock}")
         +each("items as item, index")
           //- pre item.type {item.type}
           tr
@@ -144,18 +139,7 @@
             td
               button.stealth(on:click="{toggleBookmark(item)}") 
                 i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
-            td.min.buttons.right
-              +if("!$doc.system.inventoryLocked")
-                .flexrow.end
-                  .flex0
-                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
-                      i.left.fa.fa-edit
-                  .flex0
-                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
-                      i.left.fa.fa-copy
-                  .flex0
-                    button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
-                      i.left.fa.fa-trash
+          
           
             
 </template>
