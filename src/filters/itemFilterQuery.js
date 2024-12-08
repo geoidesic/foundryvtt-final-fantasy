@@ -2,6 +2,7 @@ import { get, writable } from 'svelte/store';
 import { isWritableStore } from "@typhonjs-fvtt/runtime/util/store";
 import { Strings } from "@typhonjs-fvtt/runtime/util";
 import { isIterable } from "@typhonjs-fvtt/runtime/util/object";
+import { stepwiseResolveDotpath } from '../helpers/paths';
 
 
 /**
@@ -55,18 +56,64 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
    * @returns {boolean} AnimationStore filter state.
    */
   function filterQuery(data) {
-    if (keyword === '' || !regex) { return true; }
-    // console.log(properties);
+    if (keyword === '' || !regex) { 
+      game.system.log.d('No keyword or regex, returning true');
+      return true; 
+    }
+    
+    game.system.log.d('Filtering data:', data, 'with keyword:', keyword);
+
     if (isIterable(properties)) {
       // console.log('isIterable')
       for (const property of properties) {
-        if (regex.test(Strings.normalize(data?.[property]))) { return true; }
+        const value = data?.[property];
+        game.system.log.d('Checking property:', property, 'with value:', value);
+        
+        // Check if value is defined
+        if (value !== undefined) {
+          // Handle boolean values directly
+          if (typeof value === 'boolean') {
+            game.system.log.d('Boolean value found:', value);
+            if (value.toString() === keyword) {
+              game.system.log.d('Match found for boolean:', value);
+              return true; 
+            }
+          } else {
+            // Normalize string values
+            const normalizedValue = Strings.normalize(value);
+            game.system.log.d('Normalized value:', normalizedValue);
+            if (regex.test(normalizedValue)) { 
+              game.system.log.d('Match found for normalized value:', normalizedValue);
+              return true; 
+            }
+          }
+        } else {
+          game.system.log.d('Value is undefined for property:', property);
+        }
       }
+      game.system.log.d('No matches found in iterable properties');
       return false;
     }
     else {
-      // console.log('is not Iterable')
-      return regex.test(Strings.normalize(data?.[properties]));
+      // Handle the single property case
+      const steps = stepwiseResolveDotpath(data, properties);
+      const value = steps[steps.length - 1].val; // Get the final value from the resolved steps
+      game.system.log.d('Checking single property:', properties, 'with value:', value);
+      
+      // Check if value is defined
+      if (value !== undefined) {
+        // Handle boolean values directly
+        if (typeof value === 'boolean') {
+          game.system.log.d('Boolean value found in single property:', value);
+          return value.toString() === keyword; // Compare boolean as string
+        }
+        // Normalize string values
+        const normalizedValue = Strings.normalize(value);
+        game.system.log.d('Normalized value for single property:', normalizedValue);
+        return regex.test(normalizedValue);
+      }
+      game.system.log.d('Value is undefined for single property:', properties);
+      return false; // Return false if value is undefined
     }
   }
 
@@ -87,6 +134,8 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
    * @param {string}   value - A new value for the keyword / regex test.
    */
   filterQuery.set = (value) => {
+    game.system.log.d('value', value)
+
     if (Array.isArray(value)) {
       // Join the array into a regex pattern
       const pattern = value.map(v => RegExp.escape(Strings.normalize(v))).join('|');
@@ -94,8 +143,13 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
       regex = new RegExp(pattern, caseSensitive ? '' : 'i');
     } else if (typeof value === 'string') {
       keyword = Strings.normalize(value);
+      game.system.log.d('keyword', keyword)
       regex = new RegExp(RegExp.escape(keyword), caseSensitive ? '' : 'i');
+    } else if (typeof value === 'boolean') {
+      keyword = value.toString(); // Convert boolean to string
+      regex = new RegExp(keyword, caseSensitive ? '' : 'i'); // Create regex for boolean string
     }
+    
     storeKeyword.set(keyword);
   };
 

@@ -3,6 +3,7 @@ import { onMount } from 'svelte';
 import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
 import AttributeBlock from "~/src/components/molecules/Attributes/AttributeBlock.svelte";
 import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
+import { ASSET_PATH } from '~/src/helpers/constants';
 
 </script>
 <template lang='pug'>
@@ -14,7 +15,7 @@ import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
         .flex2
           AttributeBlock
         .flex1.portrait-frame
-          PortraitFrame
+          PortraitFrame(img="{true}")
       
 </template>
 <style lang='sass'>
@@ -23,25 +24,5 @@ import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
     margin-right: -2px
     z-index: 2
 
-  .background
-    width: 100%
-    background-color: rgb(154 48 53)
-    position: relative
-    overflow: hidden
-    border: 4px ridge var(--ff-border-color)
-
-    .texture
-      position: absolute
-      top: 0
-      left: 0
-      width: 100%
-      height: 100%
-      pointer-events: none
-
-      background-image: url("systems/foundryvtt-final-fantasy/assets/diamonds.png")
-      // background-image: url("systems/foundryvtt-final-fantasy/assets/royal-tile.png")
-      background-size: 40%
-      background-repeat: repeat
-      opacity: 0.05
-      z-index: 1
+  +background
 </style>

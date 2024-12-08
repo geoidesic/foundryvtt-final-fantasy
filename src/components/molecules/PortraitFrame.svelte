@@ -1,8 +1,9 @@
 <script>
 import { onMount } from 'svelte';
 import { ASSET_PATH } from '~/src/helpers/constants';
-
 import Corner from '~/src/components/atoms/PortraitFrame/corner.svelte';
+
+export let img = false;
 
 let strokeColor="#514030";
 
@@ -12,8 +13,11 @@ onMount(() => {
 </script>
 <template lang="pug">
 .atom
-  .frame
-    img(src="{ASSET_PATH}/portraits/witch2.webp" alt="witch avatar")
+  .frame({...$$restProps})
+    +if("img")
+      img(src="{ASSET_PATH}/portraits/witch2.webp" alt="witch avatar")
+      +else
+        slot
     Corner.corner.bottom-right(strokeColor="{strokeColor}" size="50")
     Corner.corner.bottom-left( flip="horizontal" strokeColor="{strokeColor}" size="50")
     Corner.corner.top-right(flip="vertical" strokeColor="{strokeColor}" size="50")
@@ -29,7 +33,6 @@ onMount(() => {
     min-width: 100px
     min-height: 100px
     border: 3px solid var(--ff-border-color) // Matching CSS border
-    box-shadow: inset 0 0 30px 30px var(--border-shadow)
     color: var(--ff-border-color)
     border-radius: 17px
     padding: 0px // Adjust based on SVG size

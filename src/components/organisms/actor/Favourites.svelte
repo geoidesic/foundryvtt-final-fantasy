@@ -14,8 +14,8 @@
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
-  const typeSearch = createFilterQuery("type");
-  typeSearch.set('equipment')
+  const typeSearch = createFilterQuery("system.favourite");
+  typeSearch.set(true)
   const input = {
     store: typeSearch,
     efx: rippleFocus(),
@@ -108,7 +108,7 @@
 </script>
 
 <template lang="pug">
-.favourites
+.favourites({...$$restProps})
     //- .flexrow.pt-sm.pr-sm
     //-   .flexcol.flex1.label-container 
     //-     label Search
@@ -124,7 +124,7 @@
         tr
           th.img.shrink(scope="col")
           th.left.expand(scope="col") Name
-          th.fixed(scope="col") Quantity
+          th.fixed(scope="col") 
           th.shrink(scope="col")
             button.stealth.mr-lg
               i.fa-solid.fa-bookmark
@@ -141,7 +141,6 @@
             td.left
               a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             td
-              button.stealth.clickable.wide(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
             td
               button.stealth(on:click="{toggleBookmark(item)}") 
                 i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
@@ -163,11 +162,14 @@
 
 <style lang="sass">
 @import '../../../styles/Mixins.sass'
-
+.fa-bookmark
+  color: var(--color-highlight) !important
+.portrait-frame
+  margin-right: -2px
+  z-index: 2
 .favourites
-  background: rgba(50,0,10,0.1)
-  background: rgba(123,0,0,0.05)
-  +inset
+  +inset(0 0 5px rgba(165,0,0,1) inset)
+  width: 100%
 .pulse
   @include pulse
 

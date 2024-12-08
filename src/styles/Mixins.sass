@@ -5,11 +5,34 @@
   color: #fff
   font-size: $size
 
-=inset 
-  padding: 0.5rem
+=inset($shadow: 0 0 5px rgba(165,42,42,0.3) inset, $padding: 0.5rem)
+  padding: $padding
   border: 1px solid #ccc
   border-radius: 0.4rem
-  box-shadow: 0 0 5px rgba(165,42,42,0.3) inset
+  box-shadow: $shadow
+
+=background($color: rgb(154 48 53), $opacity: 0.05)
+  .background
+    width: 100%
+    background-color: $color
+    position: relative
+    overflow: hidden
+    border: 4px ridge var(--ff-border-color)
+
+    .texture
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      pointer-events: none
+
+      background-image: url("systems/foundryvtt-final-fantasy/assets/diamonds.png")
+      // background-image: url("systems/foundryvtt-final-fantasy/assets/royal-tile.png")
+      background-size: 40%
+      background-repeat: repeat
+      opacity: $opacity
+      z-index: 1
 
 =cornice
   svg
