@@ -108,7 +108,7 @@
           
         .flex1.left
           //- ItemInput(className="lg transparent" id="name" attr="name" label="Name" placeholder="Item Name" maxlength="40")
-          DocInput.wide.left(id="name" valuePath="name" placeholder="Item Name" maxlength="40" textClasses="wide")
+          DocInput.wide.widebutton.left(id="name" valuePath="name" placeholder="Item Name" maxlength="40" textClasses="wide")
     section.mt-sm
       .flexrow.gap-15
         .flex1
