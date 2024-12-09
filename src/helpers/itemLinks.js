@@ -1,6 +1,5 @@
-
 import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
-
+import { SYSTEM_CODE } from "~/src/helpers/constants"
 
 
 /**
@@ -18,7 +17,7 @@ export async function deleteItemLink($doc, key, index) {
 
   game.system.log.d('itemList', itemList)
   game.system.log.d('itemList', $doc.system?.[key]?.list)
-  await $doc.update({system: { [key]: { value: 1, list: itemList } }});
+  await $doc.update({ system: { [key]: { value: 1, list: itemList } } });
 }
 
 
@@ -31,7 +30,9 @@ export async function deleteItemLink($doc, key, index) {
  * @returns {object} saved droppedItemData
  */
 export async function onDropItemOnItem(event, $doc, key) {
+
   game.system.log.d('key', key)
+  game.system.log.d('$doc.type', $doc.type)
   if (typeof key === 'undefined') {
     console.error('onDropItemOnItem `key` string is not defined. This determines where to store the drop in the item.system.')
   }
@@ -44,12 +45,35 @@ export async function onDropItemOnItem(event, $doc, key) {
 
     //- filter out duplicates
     if ($doc.system?.[key]?.list.find(r => r.uuid === droppedItemData.uuid)) {
-      const error = 'Item already exists'
+      const error = game.i18n.localize(`${SYSTEM_CODE}.Types.Item.AlreadyExists`)
       game.system.log.w(error);
       ui.notifications.warn(error)
       return false;
     }
     game.system.log.d('droppedItemData.type', droppedItemData.type)
+    
+    //- if item is of type `limitebreak` only allow one. I.e. must delete before adding new
+    if (droppedItemData.type === 'limitbreak' && $doc.type === 'job') {
+      const existingLimitbreak = await Promise.all($doc.system?.[key]?.list.map(async r => {
+        const item = await fromUuid(r.uuid);
+        game.system.log.d('Checking item', item); // Log each item being checked
+        return item.type === 'limitbreak' ? item : null; // Return the item if it's a limitbreak
+      }));
+
+      const foundLimitbreak = existingLimitbreak.find(item => item !== null); // Find any existing limitbreak
+
+      game.system.log.d('foundLimitbreak', foundLimitbreak); // Log the found limitbreak item
+
+      if (foundLimitbreak) {
+        const error = game.i18n.localize(`${SYSTEM_CODE}.Types.Item.LimitBreakAlreadyExists`);
+        game.system.log.w(error);
+        ui.notifications.warn(error);
+        return false;
+      }
+    }
+
+
+
     const itemList = $doc.system?.[key]?.list || [];
 
     // only store the uuid, anything else will cause desync
@@ -60,7 +84,7 @@ export async function onDropItemOnItem(event, $doc, key) {
     game.system.log.d('itemList', itemList)
 
     //- this works but causes a sort validation error. Don't know why. It shouldn't
-    await $doc.update({[`system.${key}`]: { value: true, list: itemList } });
+    await $doc.update({ [`system.${key}`]: { value: true, list: itemList } });
 
     // this doesn't work – don't know why. It should
     // await $doc.update({system: { [key]: { value: 1, list: itemList } }});
@@ -85,7 +109,7 @@ export async function onDropItemOnItem(event, $doc, key) {
 export async function updateList(list, uuids, uuid = false) {
   // game.system.log.d('updateList', list, uuids, uuid)
   // game.system.log.d('uuids.length', uuids.length)
-  if(uuids.length === 0) return [];
+  if (uuids.length === 0) return [];
   if (!uuid) {
     return Object.values(await uuidsFromList(uuids));
   } else {
@@ -98,13 +122,13 @@ export async function updateList(list, uuids, uuid = false) {
  * @param {boolean} byUuid
  * @returns object uuid key/value pairs
  */
-export async function uuidsFromList(list, byUuid=false) {
+export async function uuidsFromList(list, byUuid = false) {
   const items = {}
-  for(let item of list) {
-    if(!byUuid) {
+  for (let item of list) {
+    if (!byUuid) {
       items[item.uuid] = await fromUuid(item.uuid);
     } else {
-      if(byUuid == item.uuid) {
+      if (byUuid == item.uuid) {
         items[item.uuid] = await fromUuid(item.uuid);
       }
     }
