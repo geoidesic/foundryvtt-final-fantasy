@@ -192,6 +192,18 @@
     &.widebold
       font-size: 2em
 
+  label
+    &.underline
+      border-bottom: 1px solid var(--color-underline-header)
+      display: inline-block
+    &.h1
+      font-size: var(--size-xl-h)
+    &.h2
+      font-size: var(--size-lg-h)
+    &.h3
+      font-size: var(--size-md-h)
+    &.h4
+      font-size: var(--size-ms-h)
 
   select
     @include input
@@ -231,6 +243,18 @@
 
   .border-right
     border-right: 4px ridge var(--color-highlight)
+
+  .border-left
+    border-left: 4px ridge var(--color-highlight)
+
+  .border-top
+    border-top: 4px ridge var(--color-highlight)
+
+  .border-bottom
+    border-bottom: 4px ridge var(--color-highlight)
+
+  .border
+    border: 4px ridge var(--color-highlight)
 
   .right-border-gradient-mask
     mask-image: linear-gradient(0deg, transparent 0%, black 100%)
