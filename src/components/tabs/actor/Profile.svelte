@@ -9,16 +9,16 @@ const proseMirrorClasses2 = ['left']
 
 </script>
 <template lang='pug'>
-h1 Details
+h1.gold Details
 .flexrow.justify-vertical
   .flex2 
-    label Character Name:
+    label.gold Character Name:
   .flex2.wide
     DocInput.wide(id="name" name="name" valuePath="name")
 
-h1 Description
+h1.gold Description
 ProseMirror(classes="{proseMirrorClasses}" attr="system.description" )
-h1 Notes
+h1.gold Notes
 ProseMirror(classes="{proseMirrorClasses2}" attr="system.biography" )
 
 //- .panel.heightcol
