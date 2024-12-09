@@ -27,19 +27,19 @@ import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
       .flex2
         .flexcol.background3
           .texture
-          .flexrow.panel.borderless
-            .flex2
-              .portrait-frame.pr-xs
+          .flexrow.panel.borderless.wide
+            .flex2.wide
+              .portrait-frame.pr-xs.wide
                 PortraitFrame(style="min-width: 182px;")
                   .flexcol.wide
-                    .flex1.inset
+                    .flex1
                       h2.font-cinzel Points
                     .flex1
                       .left.panel.borderless.overflow
                         PointsSection
         .flexcol.background
           .texture
-          .flexrow.panel.borderless
+          .flexrow.panel.borderless.wide
             .flex2
               .portrait-frame.pr-xs
                 PortraitFrame(style="min-width: 182px;")
