@@ -13,8 +13,8 @@ h1 Details
 .flexrow.justify-vertical
   .flex2 
     label Character Name:
-  .flex2
-    DocInput(id="name" name="name" valuePath="name")
+  .flex2.wide
+    DocInput.wide(id="name" name="name" valuePath="name")
 
 h1 Description
 ProseMirror(classes="{proseMirrorClasses}" attr="system.description" )
