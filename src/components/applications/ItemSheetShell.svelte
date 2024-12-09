@@ -119,7 +119,7 @@
                   div {game.i18n.localize(`TYPES.Item.${item.type}`)} 
             
             svelte:component(this="{headerMap[item.type]}")
-        .flex4
+        .flex4.tabs
           svelte:component(this="{tabMap[item.type]}" bind:activeTab="{activeTab}")
 
 </template>
@@ -142,7 +142,8 @@
   //   object-fit: cover
   //   -o-object-position: top
   //   object-position: top
-
+  .tabs
+    height: 100%
   img
     border: none
     min-width: 50px
