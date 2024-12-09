@@ -16,7 +16,7 @@
 </script>
 
 <template lang="pug">
-  Tabs( {tabs} bind:activeTab="{activeTab}")
+  Tabs.gold( {tabs} bind:activeTab="{activeTab}")
 </template>
 
 <style lang="sass">

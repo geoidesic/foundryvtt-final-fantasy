@@ -21,7 +21,7 @@
 .tabs
   .tabs-list
     +each("tabs as tab")
-      button.short(
+      button.short.gold(
         class="{tab.id === activeTab ? 'active' : ''}"
         on:click|preventDefault!="{() => activeTab = tab.id}"
         transition:efx
@@ -100,9 +100,9 @@
         // &:not(:first-child) 
         //   border-left: none
         // color: var(--ff-border-color)
-        opacity: 0.5
+        opacity: 0.4
 
-        transition: opacity 0.5s ease-in-out
+        transition: opacity 0.5s ease-out
 
         &:hover
           box-shadow: 0 -7px 15px -6px var(--color-shadow-primary)

@@ -38,6 +38,7 @@
   }
 
   function handleBlur(event, index) {
+    // return;
     game.system.log.d('DocInput blurring');
     editable = false;
     enabled = false;
