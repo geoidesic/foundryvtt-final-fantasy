@@ -23,18 +23,20 @@
           .header Max
         .flex.max.header 
           .header
-            DocInput(clickType="click" pulse="{true}" type="number" name="BP" min=0 valuePath="system.points.BP.max")
+            DocInput.wide(clickType="click" pulse="{true}" type="number" name="BP" min=0 valuePath="system.points.BP.max")
       .flex2.left
         .header.val
           .header
-            DocInput(clickType="click" pulse="{true}" type="number" name="BP" min=0 max="{$actor.system.points.BP.max}" valuePath="system.points.BP.val")
+            DocInput.wide(clickType="click" pulse="{true}" type="number" name="BP" min=0 max="{$actor.system.points.BP.max}" valuePath="system.points.MP.val")
         
   </template>
 
   <style lang='sass'>
     @import '../../../styles/Mixins.sass'
     .bp
+      position: relative
       width: 100%
+      z-index: 100
     .header
       @include white-shadow-header(var(--size-md-h))
       &.val

@@ -33,8 +33,10 @@
 
   <style lang='sass'>
     @import '../../../styles/Mixins.sass'
-    .bp
+    .mp
+      position: relative
       width: 100%
+      z-index: 100
     .header
       @include white-shadow-header(var(--size-md-h))
       &.val
