@@ -38,6 +38,7 @@
   }
 
   function handleBlur(event, index) {
+    return;
     game.system.log.d('DocInput blurring');
     editable = false;
     enabled = false;
@@ -113,13 +114,16 @@
 </script>
 
 <template lang="pug">
-button.stealth(on:click!="{clickType=='click' ? enableInput : () => {}}")
-  +if('LABEL')
-    label(for="{inputElement.id}") {label} 
-  +if("editable")
-    input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
-    +else
-      .output( class="{pulseClass} {textClasses}" class:empty="{inputValue === ''}") {displayValue || placeholder}
+button.stealth(class="{$$props?.class?.includes('wide') ? 'wide' : ' '} + {$$props?.class?.includes('left') ? 'left' : ' '}" on:click!="{clickType=='click' ? enableInput : () => {}}")
+  .flexrow.gap-15.wide
+    +if('LABEL')
+      .flex1.wide
+        label.bold.gold(for="{inputElement?.id}") {label} 
+    +if("editable")
+      .flex5.wide
+        input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
+      +else
+        .output( class="{pulseClass} {textClasses}" class:empty="{inputValue === ''}") {displayValue || placeholder}
 </template>
 
 <style lang="sass">

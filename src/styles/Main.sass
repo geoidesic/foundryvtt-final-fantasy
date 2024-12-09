@@ -172,10 +172,22 @@
   .white
     color: #fff
 
-  input 
+  .gold
+    color: var(--color-highlight)
+
+  input[type="text"]
     all: unset
-    box-sizing: border-box
     width: 100%
+    color: #fff
+    background: #420000
+  input[type="number"]
+    all: unset
+    color: #fff
+    background: #420000
+    &.wide
+      width: 100%
+    &.widebold
+      font-size: 2em
 
 
   select
@@ -274,6 +286,9 @@
   .flexrow>.flex4,
   .flexcol>.flex4
     flex: 4
+
+  .underline
+    border-bottom: 4px ridge var(--ff-border-color)
 
   .bgb
     background-color: blue

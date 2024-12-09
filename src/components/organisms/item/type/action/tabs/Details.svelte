@@ -116,7 +116,7 @@
               DocSelect.right(id="directHitType" name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
 
         +if("$item.system.directHitType === 'damage'")
-          .flexrow.sheet-row
+          .flexrow.sheet-row.justify-vertical
             .flex2
               label(for="directHitDamage") Direct Hit Damage 
             .flex2.right

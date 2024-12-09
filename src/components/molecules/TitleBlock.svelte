@@ -19,10 +19,10 @@ let levelEnabled = false;
     .flex2
       .flexrow.nowrap.mr-md
         .flex4.job.right
-          DocInput.white.wide.widebold( name="role" valuePath="system.role" textClasses="glow white wide")
+          DocInput.white.wide.widebold( type="text" name="role" valuePath="system.role" textClasses="glow white wide")
         .flex0.middle /
         .flex4.job.left
-          DocInput.white.wide.widebold( name="job" valuePath="system.job" textClasses="glow white wide")
+          DocInput.white.wide.widebold( type="text" name="job" valuePath="system.job" textClasses="glow white wide")
 
   //- .flexrow.nowrap.font-cinzel
   //-   .flex2.bgb

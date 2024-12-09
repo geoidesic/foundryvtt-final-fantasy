@@ -5,6 +5,7 @@
   import { setContext, getContext, onMount } from "svelte";
   import { ucfirst } from "~/src/helpers/util.js";
   import ItemInput from "~/src/components/atoms/item/ItemInput.svelte";
+  import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import * as components from "~/src/components/organisms/item/type";
 
   export let elementRoot; //- passed in by SvelteApplication
@@ -105,8 +106,9 @@
           button.stealth.profile(on:click="{_launchStandardProfileEditor}")
             img.profile(src="{$documentStore?.img}" data-tooltip="{$documentStore?.name}" alt="{$documentStore?.name}" )
           
-        .flex5
-          ItemInput(className="lg transparent" attr="name" label="Name" placeholder="Item Name" maxlength="40")
+        .flex1.left
+          //- ItemInput(className="lg transparent" id="name" attr="name" label="Name" placeholder="Item Name" maxlength="40")
+          DocInput.wide.left(id="name" valuePath="name" placeholder="Item Name" maxlength="40" textClasses="wide")
     section.mt-sm
       .flexrow.gap-15
         .flex1

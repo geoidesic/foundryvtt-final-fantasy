@@ -43,7 +43,7 @@
 </script>
 
 <template lang="pug">
-  div.flexcol
+  .flexcol
     +if('LABEL')
       label(for="{id}") {label}
     input.flex3(type="{inputType}" name="{label}" id="{id}" class="{className}" value="{data}" on:input="{updateDebounce}" placeholder="{placeholder}" maxlength="{maxlength}")
