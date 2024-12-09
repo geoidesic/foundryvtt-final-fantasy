@@ -2,9 +2,10 @@ import './styles/Main.sass';
 
 import { log } from "~/src/helpers/util"
 import { SYSTEM_ID } from "~/src/helpers/constants"
+import { setupModels } from './config/models';
 import { registerSettings } from "~/src/settings"
 import { mappedGameTargets } from '~/src/stores';
-import { setupModels } from './config/models';
+import { defaultStatusEffects } from "./helpers/Conditions.js"
 import WelcomeApplication from "~/src/components/applications/WelcomeApplication"
 import FF15Actor from '~/src/extensions/actor.js'
 import FF15ActorSheet from "~/src/components/applications/ActorSheet";
@@ -12,6 +13,7 @@ import FF15ItemSheet from "~/src/components/applications/ItemSheet";
 import ItemSheetStandard from "~/src/components/applications/ItemSheetStandard";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 import FFChat from "~/src/components/organisms/chat/FFChat.svelte";
+import SurgeTokenHUD from './extensions/token-hud.js'
 
 //- helpers
 function setupDSN() {
@@ -27,6 +29,10 @@ function setupDSN() {
 
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
+
+//- status effects
+CONFIG.statusEffects = defaultStatusEffects;
+
 
 //- Foundry System Hooks
 Hooks.once("init", async (a, b, c) => {
@@ -65,6 +71,14 @@ Hooks.once("ready", async () => {
     new WelcomeApplication().render(true, { focus: true });
   }
 });
+
+Hooks.on('canvasReady', () => {
+  // render custom token hud
+  canvas.hud.token = new SurgeTokenHUD()
+
+  // measuredTemplates.set(canvas.templates?.placeables || false)
+
+})
 
 Hooks.on("combatStart", async () => {
   const combatStartSound = game.settings.get(SYSTEM_ID, 'combatStartSound').trim();

@@ -1,5 +1,5 @@
-import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import { localize } from "#runtime/svelte/helper";
+import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import { gameSettings } from '~/src/config/gameSettings';
 
 export function registerSettings() {
@@ -9,6 +9,23 @@ export function registerSettings() {
   confirmBeforeDeletingActorItem()
   combatStartSound()
   chatMessageSound()
+  showStatusEffectNames()
+}
+
+function showStatusEffectNames() {
+
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'show-status-effect-names',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.ShowStatusEffects.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.ShowStatusEffects.Hint`),
+      scope: 'world',
+      config: true,
+      default: true,
+      type: Boolean
+    }
+  });
 }
 
 function dontShowWelcome() {

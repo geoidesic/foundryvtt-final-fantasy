@@ -24,6 +24,8 @@
     },
     "Types": {
       "Item": {
+        "AlreadyExists": "Item already exists",
+        "LimitBreakAlreadyExists": "Limit Break already exists",
         "Label": "Item",
         "Types": {
           "action": {
@@ -190,6 +192,10 @@
     },
     "SystemName": "Final Fantasy",
     "Setting": {
+      "ShowStatusEffects": {
+        "Name": "Show enfeeblements labels",
+        "Hint": "If unchecked, will only show icons in the token HUD."
+      },
       "DontShowWelcome": {
         "Name": "Don't show this message again",
         "Hint": "Don't show the welcome application when Foundry first loads. (You can always undo this via Configure Settings)."
