@@ -4,7 +4,9 @@ import { ASSET_PATH } from '~/src/helpers/constants';
 import Corner from '~/src/components/atoms/PortraitFrame/corner.svelte';
 
 export let img = false;
+export let imgSrc = `${ASSET_PATH}/portraits/witch2.webp`;
 export let strokeColor="#514030";
+export let onClick;
 
 onMount(() => {
   game.system.log.d('PortraitFrame mounted');
@@ -14,7 +16,7 @@ onMount(() => {
 .atom
   .frame({...$$restProps})
     +if("img")
-      img(src="{ASSET_PATH}/portraits/witch2.webp" alt="witch avatar")
+      img(src="{imgSrc}" alt="avatar" on:click="{onClick}")
       +else
         slot
     Corner.corner.bottom-right(strokeColor="{strokeColor}" size="50")

@@ -38,39 +38,6 @@
   let activeTab = "attributes";
   let _filePickerInstance = {};
 
-  function _launchStandardProfileEditor(event) {
-    const current = $documentStore.img;
-    if (_filePickerInstance instanceof FilePicker && !_filePickerInstance?.rendered) {
-      _filePickerInstance.render(true);
-      return;
-    }
-    _filePickerInstance = new FilePicker({
-      type: "image",
-      current: current,
-      callback: (path) => {
-        $documentStore.update({ img: path });
-      },
-
-      top: application.position.top + 40,
-      left: application.position.left + 10,
-    });
-    return _filePickerInstance.browse();
-  }
-
-  //- provide Tokenizer support
-  function _editToken(event) {
-    if (game.modules.has("vtta-tokenizer") && typeof Tokenizer !== "undefined") {
-      _launchTokenizer();
-    } else {
-      _launchStandardProfileEditor(event);
-    }
-  }
-
-  function _launchTokenizer() {
-    if (game.modules.has("vtta-tokenizer") && typeof Tokenizer !== "undefined") {
-      Tokenizer.tokenizeActor($documentStore);
-    }
-  }
 
   // below is just for reference on creating active effects. This is handled in ActorSheet.js
   async function handleDrop(event) {
