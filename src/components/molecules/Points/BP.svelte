@@ -16,7 +16,7 @@
         .header 
           .header BP
         .sub-header
-          .header (Barrier)
+          .header (Barrier Points)
 
       .flex2
         .flex.sub-header 

@@ -9,21 +9,20 @@ let levelEnabled = false;
 .panel.heightcol
   .flexrow
     .flex1
-      .flexrow.nowrap.justify-vertical
+      .flexrow.nowrap.justify-vertical(style="min-width: 150px")
         .flex1.right
-          label
-            span.widebold.font-inter.glow.white.scaleup.mr-lg.inline-block LV
+          label.widebold.font-inter.glow.white.scaleup.mr-lg.inline-block LV
         .flex1.left
           //- input.font-inter(style="font-size: 2em;" name="level" id="level")
           DocInput.widebold.white.wide.font-inter(bind:enabled="{levelEnabled}" type="number" name="level" min=0 valuePath="system.level" textClasses="glow widebold scaleupint white ml-md")
 
-    .flex1
+    .flex2
       .flexrow.nowrap.mr-md
         .flex4.job.right
-          DocInput.white( name="role" valuePath="system.role" textClasses="glow white")
+          DocInput.white.wide.widebold( name="role" valuePath="system.role" textClasses="glow white wide")
         .flex0.middle /
         .flex4.job.left
-          DocInput.white( name="job" valuePath="system.job" textClasses="glow white")
+          DocInput.white.wide.widebold( name="job" valuePath="system.job" textClasses="glow white wide")
 
   //- .flexrow.nowrap.font-cinzel
   //-   .flex2.bgb
