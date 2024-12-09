@@ -125,6 +125,8 @@
       border-bottom: 4px ridge var(--ff-border-color) !important
     &.overflow
       overflow: auto
+  .nooverflow
+    overflow: hidden
   .overflow
     overflow: auto
   .box
@@ -178,6 +180,10 @@
     color: #000
   .gold
     color: var(--color-highlight)
+  .border-gold
+    border: 2px groove var(--color-highlight) !important
+  .bg-gold
+    background-color: var(--color-highlight) !important
 
   input[type="text"]
     all: unset
@@ -243,6 +249,8 @@
   h4
     font-size: var(--size-sm-h)
 
+  .borderless
+    border: none !important
   .border-right
     border-right: 4px ridge var(--color-highlight)
 
@@ -298,11 +306,17 @@
 
   .prose
     min-height: 300px
+    height: 100%
     background-color: rgba(255, 255, 255, 0.2)
     // border: 5px ridge var(--border-highlight)
     // border-radius: var(--border-radius)
     padding: 0.1em 0.2em
     font-family: "Newsreader", serif
+
+    .editor.prosemirror.tjs-editor 
+      height: 100%
+    .editor-container
+      height: 100%
 
   .editor.prosemirror.tjs-editor 
     &.small

@@ -9,6 +9,9 @@
       .flexrow
         .flexcol.flex1.left
           ol.properties-list
+            li.bg-gold.white.border-gold {$item.system.type.capitalize()}
+            +if("$item.system.hasCost")
+              li Cost: {$item.system.cost} MP
             +if("$item.system.hasCheck")
               li Check: {$item.system.checkAttribute.toUpperCase()}
             +if("$item.system.hasCR")

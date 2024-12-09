@@ -100,7 +100,7 @@
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot)
-    .flexrow.gap-15.wide
+    .flexrow.gap-15.wide.high.nooverflow
       .flex1.profile-wrap
         .flex0
           button.stealth.profile(on:click="{_launchStandardProfileEditor}")
@@ -113,25 +113,13 @@
                 div {game.i18n.localize(`TYPES.Item.${item.type}`)} 
           svelte:component(this="{headerMap[item.type]}")
         
-      .flex4.wide.mr-sm
+      .flex4.wide.mr-sm.high
         header.wide
           .left.wide
             DocInput.wide.widebutton.left(id="name" valuePath="name" placeholder="Item Name" maxlength="40" textClasses="wide bold burgundy")
-        section.mt-sm
-                
-                
+        section.mt-sm.high
           svelte:component(this="{tabMap[item.type]}" bind:activeTab="{activeTab}")
 
-    //- header
-    //-   .flexrow.gap-15
-    //-     .profile-wrap.flex0
-    //-       button.stealth.profile(on:click="{_launchStandardProfileEditor}")
-    //-         img.profile(src="{$documentStore?.img}" data-tooltip="{$documentStore?.name}" alt="{$documentStore?.name}" )
-          
-    //-     .flex1.left
-    //-       //- ItemInput(className="lg transparent" id="name" attr="name" label="Name" placeholder="Item Name" maxlength="40")
-    //-       DocInput.wide.left(id="name" valuePath="name" placeholder="Item Name" maxlength="40" textClasses="wide")
-    //- section.mt-sm
 
 </template>
 

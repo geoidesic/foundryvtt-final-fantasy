@@ -29,6 +29,10 @@ export class ActionModel extends FFItemDataModel {
       hasLimitation: new BooleanField({ required: false, initial: false }),
       limitation: new StringField({ required: false, initial: '' }),
       type: new StringField({ required: false, initial: '' }),
+      formula: new StringField({ required: false, initial: '' }),
+      hasCost: new BooleanField({ required: false, initial: false }),
+      cost: new NumberField({ required: false, initial: 0 }),
+      directHitText: new StringField({ required: false, initial: '' }),
     };
   }
 }

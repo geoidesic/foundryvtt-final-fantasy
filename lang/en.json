@@ -14,6 +14,8 @@
     }
   },
   "FF15": {
+    "None": "None",
+    "Other": "Other",
     "Title": "Final Fantasy TTRPG",
     "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
     "Chat": {
@@ -62,8 +64,9 @@
               "markers": "Remove Markers"
             },
             "CR": {
-              "def": "Defence",
-              "mag": "Magic Defence",
+              "def": "Physical",
+              "mag": "Magic",
+              "heal": "Heal",
               "vig": "Vigilance",
               "spd": "Speed",
               "special": "Special"
@@ -94,6 +97,19 @@
               "10sq": "10 Squares",
               "3x3a": "A 3x3 area centered on this character",
               "5x5a": "A 5x5 area centered on this character"
+            },
+            "Type": {
+              "primary": "Primary",
+              "secondary": "Secondary",
+              "reaction": "Reaction",
+              "limit": "Limit",
+              "combo": "Combo"
+            },
+            "Cost": {
+              "1": "1 MP",
+              "2": "2 MP",
+              "3": "3 MP",
+              "4": "4 MP"
             }
           }
         }

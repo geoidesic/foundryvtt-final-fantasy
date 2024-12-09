@@ -20,7 +20,7 @@
 
 <template lang="pug">
   .flex1.portrait-frame
-    PortraitFrame
+    PortraitFrame.high.frame
       Tabs( {tabs} bind:activeTab="{activeTab}")
 </template>
 
@@ -30,6 +30,7 @@
   .portrait-frame
     margin-right: -2px
     z-index: 2
+    height: calc(100% - 40px)
 
   +background
 </style>

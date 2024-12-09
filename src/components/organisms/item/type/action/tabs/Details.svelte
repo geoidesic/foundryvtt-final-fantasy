@@ -75,6 +75,13 @@
     { value: "combo", label: localize("FF15.Types.Item.Types.Options.Type.combo") },
   ];
 
+  const costOptions = [
+    { value: 1, label: localize("FF15.Types.Item.Types.Options.Cost.1") },
+    { value: 2, label: localize("FF15.Types.Item.Types.Options.Cost.2") },
+    { value: 3, label: localize("FF15.Types.Item.Types.Options.Cost.3") },
+    { value: 4, label: localize("FF15.Types.Item.Types.Options.Cost.4") },
+  ];
+
   console.log(schemaFieldObjects);
 
   $: checkOptions = schemaFieldKeys.map((key) => ({ value: key, label: key.toUpperCase() }));
@@ -85,126 +92,152 @@
 </script>
 
 <template lang="pug">
-    .item-sheet.details
-      .flexcol.flex3.left
-                
+  .item-sheet.details.overflow
+    .flexcol.flex3.left.high
+      .flexrow.sheet-row.justify-vertical
+        .flex3
+          label(for="type") Type
+        .flex2.right
+          DocSelect.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
+      
+      .flexrow.sheet-row.justify-vertical
+        .flex3
+          label(for="formula") Damage / Heal Formula
+        .flex2.right
+          DocInput(id="formula" name="formula" valuePath="system.formula")
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Cost
+        .flex0.right
+          DocCheckbox( name="hasCost" valuePath="system.hasCost")
+
+      +if("$item.system.hasCost")
+        .flexrow.sheet-row.justify-vertical
+          .flex3
+            label(for="cost") MP
+          .flex2.right
+            DocSelect.right(id="cost" name="cost" type="number" options="{costOptions}" valuePath="system.cost")
+      
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Checks
+        .flex0.right
+          DocCheckbox( name="hasCheck" valuePath="system.hasCheck")
+
+      +if("$item.system.hasCheck")
+        .flexrow.sheet-row.justify-vertical
+          .flex4
+            label(for="checkAttribute") Check Attribute
+          .flex0.right
+            DocSelect.right(id="checkAttribute" name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left CR
+        .flex0.right
+          DocCheckbox( name="hasCR" valuePath="system.hasCR")
+
+      +if("$item.system.hasCR")
         .flexrow.sheet-row.justify-vertical
           .flex2
-            label(for="type") Type
+            label(for="CR") CR Type
           .flex2.right
-            DocSelect.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
+            DocSelect.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
+      
 
-        .flexrow.justify-vertical
-          .flex4
-            h3.left Checks
-          .flex0.right
-            DocCheckbox( name="hasCheck" valuePath="system.hasCheck")
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Heavier Shot
+        .flex0.right
+          DocCheckbox( name="hasHeavierShot" valuePath="system.hasHeavierShot")
 
-        +if("$item.system.hasCheck")
-          .flexrow.sheet-row.justify-vertical
-            .flex4
-              label(for="checkAttribute") Check Attribute
-            .flex0.right
-              DocSelect.right(id="checkAttribute" name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
+      +if("$item.system.hasHeavierShot")
+        .flexrow.sheet-row.justify-vertical
+          .flex2
+            label(for="heavierShot") Heavier Shot Type
+          .flex2.right
+            DocSelect.right(id="heavierShot" name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
 
-        .flexrow.justify-vertical
-          .flex4
-            h3.left CR
-          .flex0.right
-            DocCheckbox( name="hasCR" valuePath="system.hasCR")
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Limitation
+        .flex0.right
+          DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
 
-        +if("$item.system.hasCR")
-          .flexrow.sheet-row.justify-vertical
+      +if("$item.system.hasLimitation")
+        .flexrow.sheet-row.justify-vertical
+          .flex2
+            label(for="limitation") Limitation
+          .flex2.right
+            DocSelect.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
+      
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Range
+        .flex0.right
+          DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
+      +if("$item.system.hasRanged")
+
+        .flexrow.sheet-row.justify-vertical
             .flex2
-              label(for="CR") CR Type
+              label(for="rangeType") Range Type
             .flex2.right
-              DocSelect.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
-        
-        .flexrow.justify-vertical
+              DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Target
+        .flex0.right
+          DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
+
+      +if("$item.system.hasTarget")
+        .flexrow.sheet-row.justify-vertical
+          .flex2
+            label(for="target") Target
+          .flex2.right
+            DocSelect.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
+
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Trigger
+        .flex0.right
+          DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
+
+      +if("$item.system.hasTrigger")
+        .flexrow.sheet-row.justify-vertical
+          .flex2
+            label(for="trigger") Trigger
+          .flex2.right
+            DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
+    
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Direct Hit
+        .flex0.right
+          DocCheckbox( name="hasDirectHit" valuePath="system.hasDirectHit")
+
+      +if("$item.system.hasDirectHit")
+        .flexrow.sheet-row.justify-vertical
           .flex4
-            h3.left Direct Hit
+            label(for="directHitType") Direct Hit Type
           .flex0.right
-            DocCheckbox( name="hasDirectHit" valuePath="system.hasDirectHit")
+            DocSelect.right(id="directHitType" name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
 
-        +if("$item.system.hasDirectHit")
-          .flexrow.sheet-row.justify-vertical
-            .flex4
-              label(for="directHitType") Direct Hit Type
-            .flex0.right
-              DocSelect.right(id="directHitType" name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
+      +if("$item.system.directHitType === 'damage'")
+        .flexrow.sheet-row.justify-vertical
+          .flex2
+            label(for="directHitDamage") Direct Hit Damage 
+          .flex2.right
+            DocInput(id="directHitDamage" name="directHitDamage" valuePath="system.directHitDamage")
 
-        +if("$item.system.directHitType === 'damage'")
-          .flexrow.sheet-row.justify-vertical
-            .flex2
-              label(for="directHitDamage") Direct Hit Damage 
-            .flex2.right
-              DocInput(id="directHitDamage" name="directHitDamage" valuePath="system.directHitDamage")
-
-        .flexrow.justify-vertical
-          .flex4
-            h3.left Heavier Shot
-          .flex0.right
-            DocCheckbox( name="hasHeavierShot" valuePath="system.hasHeavierShot")
-
-        +if("$item.system.hasHeavierShot")
-          .flexrow.sheet-row.justify-vertical
-            .flex2
-              label(for="heavierShot") Heavier Shot Type
-            .flex2.right
-              DocSelect.right(id="heavierShot" name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
-
-        .flexrow.justify-vertical
-          .flex4
-            h3.left Limitation
-          .flex0.right
-            DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
-
-        +if("$item.system.hasLimitation")
-          .flexrow.sheet-row.justify-vertical
-            .flex2
-              label(for="limitation") Limitation
-            .flex2.right
-              DocSelect.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
-        
-        .flexrow.justify-vertical
-          .flex4
-            h3.left Range
-          .flex0.right
-            DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
-        +if("$item.system.hasRanged")
-
-          .flexrow.sheet-row.justify-vertical
-              .flex2
-                label(for="rangeType") Range Type
-              .flex2.right
-                DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
-
-        .flexrow.justify-vertical
-          .flex4
-            h3.left Target
-          .flex0.right
-            DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
-
-        +if("$item.system.hasTarget")
-          .flexrow.sheet-row.justify-vertical
-            .flex2
-              label(for="target") Target
-            .flex2.right
-              DocSelect.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
-
-
-        .flexrow.justify-vertical
-          .flex4
-            h3.left Trigger
-          .flex0.right
-            DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
-
-        +if("$item.system.hasTrigger")
-          .flexrow.sheet-row.justify-vertical
-            .flex2
-              label(for="trigger") Trigger
-            .flex2.right
-              DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
+      +if("$item.system.hasDirectHit")
+        .flexcol.sheet-row.justify-vertical.high
+          .flex2
+            h3.left Direct Hit Text 
+          .flex2.left.prose.high
+            ProseMirror( id="directHitText" name="directHitText" attr="system.directHitText")
 
 </template>
 

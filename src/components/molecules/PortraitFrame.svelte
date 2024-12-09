@@ -13,7 +13,7 @@ onMount(() => {
 });
 </script>
 <template lang="pug">
-.atom
+.atom(class="{$$restProps?.class?.includes('high') ? 'high' : ''}")
   .frame({...$$restProps})
     +if("img")
       img(src="{imgSrc}" alt="avatar" on:click="{onClick}")
