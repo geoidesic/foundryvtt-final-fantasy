@@ -2,6 +2,7 @@ import ActorSheetShell from "./ActorSheetShell.svelte";
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import { localize } from "#runtime/svelte/helper";
+import { generateRandomElementId } from "~/src/helpers/util";
 
 export default class FF15ActorSheet extends SvelteDocumentSheet {
 
@@ -13,6 +14,8 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
    */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
+      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
+
       width: 440,
       height: 828,
       minHeight: 180,
