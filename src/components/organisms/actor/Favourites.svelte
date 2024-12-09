@@ -133,7 +133,7 @@
             td.img
               img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
             td.left
-              a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+              a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             td
             td
               button.stealth(on:click="{toggleBookmark(item)}") 
