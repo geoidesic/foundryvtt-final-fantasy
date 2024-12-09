@@ -38,7 +38,6 @@
   }
 
   function handleBlur(event, index) {
-    return;
     game.system.log.d('DocInput blurring');
     editable = false;
     enabled = false;
@@ -114,8 +113,8 @@
 </script>
 
 <template lang="pug">
-button.stealth(class="{$$props?.class?.includes('wide') ? 'wide' : ' '} + {$$props?.class?.includes('left') ? 'left' : ' '}" on:click!="{clickType=='click' ? enableInput : () => {}}")
-  .flexrow.gap-15.wide
+button.stealth(class="{$$props?.class?.includes('widebutton') ? 'wide' : ' '} + {$$props?.class?.includes('left') ? 'left' : ' '}" on:click!="{clickType=='click' ? enableInput : () => {}}")
+  .flexrow.gap-15.wide.doc-input
     +if('LABEL')
       .flex1.wide
         label.bold.gold(for="{inputElement?.id}") {label} 
