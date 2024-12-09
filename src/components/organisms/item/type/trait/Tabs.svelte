@@ -4,6 +4,9 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
   import Description from "~/src/components/organisms/item/shared/DescriptionTab.svelte";
+  import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
+  
+  
   let activeTab = "description";
   // Tabs
   const tabs = [
@@ -13,11 +16,21 @@
 
 </script>
 
+
+
 <template lang="pug">
-  Tabs( {tabs} bind:activeTab="{activeTab}")
+
+.flex1.portrait-frame
+  PortraitFrame
+    Tabs( {tabs} bind:activeTab="{activeTab}")
 </template>
 
 <style lang="sass">
   @import '../../../../../styles/Mixins.sass'
+  .portrait-frame
+    margin-right: -2px
+    z-index: 2
 
+  +background
 </style>
+  
