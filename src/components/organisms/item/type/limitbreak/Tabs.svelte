@@ -5,7 +5,9 @@
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
   import Description from "~/src/components/organisms/item/shared/DescriptionTab.svelte";
   import Details from "~/src/components/organisms/item/type/limitbreak/tabs/Details.svelte";
-  let activeTab = "description";
+  import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
+  
+  let activeTab = "description";  
   // Tabs
   const tabs = [
     // { label: "description", id: "description", component: Description },
@@ -16,10 +18,17 @@
 </script>
 
 <template lang="pug">
-  Tabs.gold( {tabs} bind:activeTab="{activeTab}")
+
+.flex1.portrait-frame
+  PortraitFrame
+    Tabs( {tabs} bind:activeTab="{activeTab}")
 </template>
 
 <style lang="sass">
   @import '../../../../../styles/Mixins.sass'
+  .portrait-frame
+    margin-right: -2px
+    z-index: 2
 
+  +background
 </style>

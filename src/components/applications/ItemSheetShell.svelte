@@ -101,8 +101,8 @@
 <template lang="pug">
   ApplicationShell(bind:elementRoot)
     .flexrow.gap-15.wide
-      .flex1
-        .profile-wrap.flex0
+      .flex1.profile-wrap
+        .flex0
           button.stealth.profile(on:click="{_launchStandardProfileEditor}")
             img.profile(src="{$documentStore?.img}" data-tooltip="{$documentStore?.name}" alt="{$documentStore?.name}" )
           
@@ -113,7 +113,7 @@
                 div {game.i18n.localize(`TYPES.Item.${item.type}`)} 
           svelte:component(this="{headerMap[item.type]}")
         
-      .flex4.wide
+      .flex4.wide.mr-sm
         header.wide
           .left.wide
             DocInput.wide.widebutton.left(id="name" valuePath="name" placeholder="Item Name" maxlength="40" textClasses="wide bold burgundy")
@@ -142,7 +142,8 @@
     display: block
 
   .profile-wrap
-    width: 120px
+    min-width: 50px
+    max-width: 150px
     /* position: relative */
 
   // .portrait img

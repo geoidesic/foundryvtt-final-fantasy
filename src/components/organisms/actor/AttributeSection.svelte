@@ -5,6 +5,7 @@ import AttributeBlock from "~/src/components/molecules/Attributes/AttributeBlock
 import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
 import { ASSET_PATH } from '~/src/helpers/constants';
 
+
 </script>
 <template lang='pug'>
   section.organism
@@ -15,7 +16,7 @@ import { ASSET_PATH } from '~/src/helpers/constants';
         .flex2
           AttributeBlock
         .flex1.portrait-frame
-          PortraitFrame(img="{true}")
+          PortraitFrame(img="{true}" )
       
 </template>
 <style lang='sass'>

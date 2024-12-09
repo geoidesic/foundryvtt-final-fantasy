@@ -4,8 +4,7 @@ import { ASSET_PATH } from '~/src/helpers/constants';
 import Corner from '~/src/components/atoms/PortraitFrame/corner.svelte';
 
 export let img = false;
-
-let strokeColor="#514030";
+export let strokeColor="#514030";
 
 onMount(() => {
   game.system.log.d('PortraitFrame mounted');
@@ -33,7 +32,7 @@ onMount(() => {
     min-width: 100px
     min-height: 100px
     border: 3px solid var(--ff-border-color) // Matching CSS border
-    color: var(--ff-border-color)
+    
     border-radius: 17px
     padding: 0px // Adjust based on SVG size
 

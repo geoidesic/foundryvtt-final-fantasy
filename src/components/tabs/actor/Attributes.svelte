@@ -18,7 +18,7 @@ import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
             .flex2.wide
               .portrait-frame.pr-xs.wide
                 PortraitFrame(style="min-width: 182px;")
-                  .flexcol.wide
+                  .flexcol.wide.gold
                     .flex1
                       h2.font-cinzel Description
                     .flex1
@@ -40,7 +40,7 @@ import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
         .flexcol.background
           .texture
           .flexrow.panel.borderless.wide
-            .flex2
+            .flex2.gold
               .portrait-frame.pr-xs
                 PortraitFrame(style="min-width: 182px;")
                   Favourites.high.wide
