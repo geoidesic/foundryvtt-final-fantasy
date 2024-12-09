@@ -37,10 +37,12 @@ onMount(() => {
     border-radius: 17px
     padding: 0px // Adjust based on SVG size
 
+
   :global(.corner)
     position: absolute
     border: none
     color: var(--ff-border-color)
+    pointer-events: none
 
 
   :global(.corner.top-left)
