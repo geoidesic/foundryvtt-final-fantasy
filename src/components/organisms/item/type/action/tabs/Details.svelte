@@ -64,6 +64,13 @@
     { value: "3x3a", label: localize("FF15.Types.Item.Types.Options.Range.3x3a") },
     { value: "5x5a", label: localize("FF15.Types.Item.Types.Options.Range.5x5a") },
   ];
+  const typeOptions = [
+    { value: "primary", label: localize("FF15.Types.Item.Types.Options.Type.primary") },
+    { value: "secondary", label: localize("FF15.Types.Item.Types.Options.Type.secondary") },
+    { value: "reaction", label: localize("FF15.Types.Item.Types.Options.Type.reaction") },
+    { value: "limit", label: localize("FF15.Types.Item.Types.Options.Type.limit") },
+    { value: "combo", label: localize("FF15.Types.Item.Types.Options.Type.combo") },
+  ];
 
   console.log(schemaFieldObjects);
 
@@ -77,6 +84,13 @@
 <template lang="pug">
     .item-sheet.details
       .flexcol.flex3.left
+                
+        .flexrow.sheet-row.justify-vertical
+          .flex2
+            label(for="type") Type
+          .flex2.right
+            DocSelect.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
+
         .flexrow.justify-vertical
           .flex4
             h3.left Checks
@@ -102,6 +116,7 @@
               label(for="CR") CR Type
             .flex2.right
               DocSelect.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
+        
         .flexrow.justify-vertical
           .flex4
             h3.left Direct Hit
@@ -147,6 +162,7 @@
               label(for="limitation") Limitation
             .flex2.right
               DocSelect.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
+        
         .flexrow.justify-vertical
           .flex4
             h3.left Range
@@ -159,6 +175,7 @@
                 label(for="rangeType") Range Type
               .flex2.right
                 DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
+                
         .flexrow.justify-vertical
           .flex4
             h3.left Target
@@ -185,7 +202,6 @@
               label(for="trigger") Trigger
             .flex2.right
               DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
-
 
 </template>
 

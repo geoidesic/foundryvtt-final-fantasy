@@ -28,6 +28,7 @@ export class ActionModel extends FFItemDataModel {
       heavierShot: new StringField({ required: false, initial: '' }),
       hasLimitation: new BooleanField({ required: false, initial: false }),
       limitation: new StringField({ required: false, initial: '' }),
+      type: new StringField({ required: false, initial: '' }),
     };
   }
 }
