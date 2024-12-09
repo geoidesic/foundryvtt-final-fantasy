@@ -30,9 +30,12 @@
   const CROptions = [
     { value: "def", label: localize("FF15.Types.Item.Types.Options.CR.def") },
     { value: "mag", label: localize("FF15.Types.Item.Types.Options.CR.mag") },
-    { value: "vig", label: localize("FF15.Types.Item.Types.Options.CR.vig") },
-    { value: "spd", label: localize("FF15.Types.Item.Types.Options.CR.spd") },
-    { value: "special", label: localize("FF15.Types.Item.Types.Options.CR.special") },
+    // { value: "vig", label: localize("FF15.Types.Item.Types.Options.CR.vig") },
+    // { value: "spd", label: localize("FF15.Types.Item.Types.Options.CR.spd") },
+    { value: "heal", label: localize("FF15.Types.Item.Types.Options.CR.heal") },
+    { value: "other", label: localize("FF15.Other") },
+    { value: "none", label: localize("FF15.None") },
+    // { value: "special", label: localize("FF15.Types.Item.Types.Options.CR.special") },
   ];
 
   const targetOptions = [
@@ -175,7 +178,7 @@
                 label(for="rangeType") Range Type
               .flex2.right
                 DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
-                
+
         .flexrow.justify-vertical
           .flex4
             h3.left Target
