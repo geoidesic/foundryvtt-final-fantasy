@@ -13,7 +13,7 @@ import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   @import '../../../../styles/Mixins.sass'
 
   .details
-    height: calc(100% - 1em)
+    height: calc(100% - 0px)
 
     +inset
 
