@@ -1,51 +1,48 @@
 <script>
-import { onMount } from 'svelte';
+import { onMount, getContext } from 'svelte';
 import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
+import { localize } from "#runtime/svelte/helper"; // Import the localize function
 
 let levelEnabled = false;
 
+const actor = getContext("#doc");
+
+onMount(() => {
+  // console.log('TitleBlock mounted');
+});
+
+async function rest(event) {
+  const confirmed = confirm(localize("FF15.TitleBlock.ConfirmRest")); // Use localized string
+  if(!confirmed) return;
+  await $actor.update({ system: { points: { 
+    MP: { val : $actor.system.points.MP.max }, 
+    HP: { val: $actor.system.points.HP.max} },
+    BP: { val: $actor.system.points.BP.max} }
+  });
+  ui.notifications.info(localize("FF15.TitleBlock.PointsRestored")); // Use localized string
+}
 </script>
 <template lang='pug'>
 .panel.heightcol
   .flexrow
-    .flex1
+    .flex2
       .flexrow.nowrap.justify-vertical(style="min-width: 150px")
+        .flex0.rest
+          button.stealth.rest-button(on:click|preventDefault="{rest}" data-tooltip="{localize('FF15.TitleBlock.Rest')}" aria-label="{localize('FF15.TitleBlock.Rest')}")
+            img.rest-icon(src="systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp")
         .flex1.right
           label.widebold.font-inter.glow.white.scaleup.mr-lg.inline-block LV
         .flex1.left
           //- input.font-inter(style="font-size: 2em;" name="level" id="level")
           DocInput.widebold.white.wide.font-inter(bind:enabled="{levelEnabled}" type="number" name="level" min=0 valuePath="system.level" textClasses="glow widebold scaleupint white ml-md")
 
-    .flex2
+    .flex3
       .flexrow.nowrap.mr-md
         .flex4.job.right
           DocInput.white.wide.widebold( type="text" name="role" valuePath="system.role" textClasses="glow white wide")
         .flex0.middle /
         .flex4.job.left
           DocInput.white.wide.widebold( type="text" name="job" valuePath="system.job" textClasses="glow white wide")
-
-  //- .flexrow.nowrap.font-cinzel
-  //-   .flex2.bgb
-  //-     div a
-  //-   .flex1.bgg
-  //-     .middle.white /
-  //-   .flex2.bgo
-  //-     div a
-      
-//- .flexrow
-//-   .flex2
-//-     .flexrow.nowrap
-//-       .flex2.bgg 
-//-         span.scaleup LV
-//-       .flex2.bgb
-//-         DocInput.white.scaleup(bind:enabled="{levelEnabled}" type="number" name="LV" min=0 valuePath="system.level" textClasses="scaleup")
-//-   .flex2
-//-     .flexrow.job
-//-       .right
-//-         DocInput(style="max-width: 65px" name="role" min=0 valuePath="system.role") 
-//-       .middle /
-//-       .left
-//-         DocInput(style="max-width: 80px" name="job" min=0 valuePath="system.job")
 
 </template>
 <style lang='sass'>
@@ -61,4 +58,18 @@ let levelEnabled = false;
     font-size: 2em
     font-weight: 500
     color: #fff
+
+  .rest
+    text-align: left
+    min-width: 35px
+    margin-right: 20px
+    margin-left: -3px
+    padding: 0
+    .rest-button
+      max-height: 35px
+    .rest-icon
+      max-width: 35px
+      border: none
+      height: 35px
+      width: 35px
 </style>

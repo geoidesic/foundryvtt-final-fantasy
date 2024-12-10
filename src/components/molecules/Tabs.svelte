@@ -43,7 +43,7 @@
   .tab-icon
     border: none
     text-align: middle
-    height: 30px
+    height: 35px
 
   .tab-content 
     @include flex-column

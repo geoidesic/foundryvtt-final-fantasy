@@ -27,10 +27,10 @@
 
   // Tabs
   const defaultTabs = [
-    { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/attributes.webp', icon: 'fas fa-chart-simple' },
-    { label: localize("FF15.Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/abilities.webp', icon: 'fas fa-list' },
-    { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/inventory.webp', icon: 'fas fa-shelves'},
-    { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/profile.webp', icon: 'fas fa-user' },
+    { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp', icon: 'fas fa-chart-simple' },
+    { label: localize("FF15.Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp', icon: 'fas fa-list' },
+    { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp', icon: 'fas fa-shelves'},
+    { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp', icon: 'fas fa-user' },
   ];
 
   // set the sheet color
