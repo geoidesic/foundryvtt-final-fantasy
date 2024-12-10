@@ -1,6 +1,7 @@
 <script>
   import { localize } from "#runtime/svelte/helper";
   import { onMount, getContext } from "svelte";
+  import { SYSTEM_CODE } from "~/src/helpers/constants.js";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
@@ -11,14 +12,12 @@
   let activeTab = "description";
   // Tabs
   const tabs = [
-    { label: "description", id: "description", component: Description },
-    { label: "details", id: "details", component: Details },
-    { label: "effects", id: "effects", component: Effects },
+    { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
+    { label: localize(`${SYSTEM_CODE}.Details`), id: "details", component: Details },
+    { label: localize(`${SYSTEM_CODE}.Effects`), id: "effects", component: Effects },
   ];
 
 </script>
-
-
 
 <template lang="pug">
 .flex1.portrait-frame

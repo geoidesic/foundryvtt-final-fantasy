@@ -35,7 +35,7 @@
 
 <template lang="pug">
 .item-sheet.details.overflow
-  .flexcol.flex3.left.high
+  .flexcol.flex3.left.high.bigbottom
     h3.left General
     .flexrow.sheet-row.justify-vertical
       .flex3
@@ -63,20 +63,12 @@
         DocCheckbox( name="hasModifier" valuePath="system.hasModifier")
     +if("$item.system.hasModifier")
       .flexrow.sheet-row.justify-vertical
-        .flex2
-          label(for="modType") Modifier Type
-        .flex2.right
-          DocSelect.right(id="modType" name="modType" options="{modOptions}" valuePath="system.modType")
-      .flexrow.sheet-row.justify-vertical
-        .flex2
-          label(for="operator") Operator
-        .flex2.right
-          DocSelect.right(id="operator" name="operator" options="{operatorOptions}" valuePath="system.operator")
-      .flexrow.sheet-row.justify-vertical
-        .flex2
-          label(for="modAmount") Amount
-        .flex2.right
-          DocInput(id="modAmount" name="modAmount" valuePath="system.modAmount")
+        .flex3.left
+          DocSelect.left(style="min-width: 4em;" id="modType" name="modType" options="{modOptions}" valuePath="system.modType")
+        .flex1()
+          DocSelect(style="width: 2em;" id="operator" name="operator" options="{operatorOptions}" valuePath="system.operator")
+        .flex3.right
+          DocInput.wide.right(id="modAmount" name="modAmount" valuePath="system.modAmount")
   
 </template>
 
@@ -84,6 +76,6 @@
   @import '../../../../../../styles/Mixins.sass'
 
   .details
-    height: calc(100%)
-    +inset
+    max-height: calc(100% - 15px) //- prevents the scrolling area's content from being hidden below the fold
+    +inset(1rem)
 </style>
