@@ -32,7 +32,7 @@
             +if("tab.img")
               img.tab-icon(src="{tab.img}")
           
-  .tab-content({...$$restProps})
+  .tab-content
     +each("tabs as tab")
       +if("tab.id === activeTab")
         svelte:component(this="{tab.component}" sheet="{sheet}")
