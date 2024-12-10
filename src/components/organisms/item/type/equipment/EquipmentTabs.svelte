@@ -1,6 +1,8 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { isParentActor} from "~/src/helpers/util";
+  import { SYSTEM_CODE } from "~/src/helpers/constants.js";
+  import { localize } from "#runtime/svelte/helper";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
@@ -11,8 +13,9 @@
   let activeTab = "description";
   // Tabs
   let tabs = [
-    { label: "description", id: "description", component: Description },
-    { label: "effects", id: "effects", component: Effects },
+    { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
+    // { label: localize(`${SYSTEM_CODE}.Details`), id: "details", component: Details },
+    { label: localize(`${SYSTEM_CODE}.Effects`), id: "effects", component: Effects }
   ];
 
   const item = getContext("#doc");
@@ -23,11 +26,11 @@
 
   $: parentIsActor = isParentActor($item);
   $: if (parentIsActor) {
-    tabs = [
-      { label: "description", id: "description", component: Description },
-      { label: "details", id: "details", component: Details },
-      { label: "effects", id: "effects", component: Effects },
-    ];
+     tabs = [
+    { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
+    // { label: localize(`${SYSTEM_CODE}.Details`), id: "details", component: Details },
+    // { label: localize(`${SYSTEM_CODE}.Effects`), id: "effects", component: Effects },
+  ];
   }
 </script>
 
@@ -44,7 +47,7 @@
   .portrait-frame
     margin-right: -2px
     z-index: 2
+    height: calc(100% - 40px)
 
-  +background
 </style>
   
