@@ -14,10 +14,13 @@
     }
   },
   "FF15": {
+    "Name": "Name",
+    "Description": "Description",
     "None": "None",
+    "Points": "Points",
     "Other": "Other",
     "Title": "Final Fantasy TTRPG",
-    "Description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
+    "SystemDescription": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
     "Chat": {
       "Buttons": {
         "ApplyItemToTarget": "Apply {0} to target(s)",
@@ -202,9 +205,9 @@
     },
     "Tabs": {
       "Attributes": "Attributes",
-      "Abilities": "Abilities",
-      "Inventory": "Inventory",
-      "Profile": "Profile",
+      "Description": "Description",
+      "Points": "Points",
+      "Favourites": "Favourites",
       "Effects": "Effects"
     },
     "SystemName": "Final Fantasy",
@@ -239,5 +242,8 @@
       "PointsRestored": "Your points have been restored to max.",
       "Rest": "Rest"
     }
+  },
+  "Favourites": {
+    "Title": "Favourites"
   }
 }

@@ -109,35 +109,26 @@
 
 <template lang="pug">
 .favourites({...$$restProps})
-    //- .flexrow.pt-sm.pr-sm
-    //-   .flexcol.flex1.label-container 
-    //-     label Search
-    //-   .flex3.left
-    //-     TJSInput({input})
-    //-   .flexcol.flex1.label-container 
-    //-     label Type
-    //-   .flex3.right
-    //-     Select.short(options="{typeFilterOptions}" bind:value="{typeFilterValue}")
-    h2.font-cinzel Favourites
-    div.pa-xs
-      table.borderless
+  h2.font-cinzel {localize("Favourites.Title")}
+  div.pa-xs
+    table.borderless
+      tr
+        th.img.shrink(scope="col")
+        th.left.expand(scope="col") {localize(`${SYSTEM_CODE}.Name`)}
+        th.fixed(scope="col") 
+        th.shrink(scope="col")
+          
+      +each("items as item, index")
+        //- pre item.type {item.type}
         tr
-          th.img.shrink(scope="col")
-          th.left.expand(scope="col") Name
-          th.fixed(scope="col") 
-          th.shrink(scope="col")
-            
-        +each("items as item, index")
-          //- pre item.type {item.type}
-          tr
-            td.img
-              img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
-            td.left
-              a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-            td
-            td
-              button.stealth(on:click="{toggleBookmark(item)}") 
-                i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
+          td.img
+            img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
+          td.left
+            a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+          td
+          td
+            button.stealth(on:click="{toggleBookmark(item)}") 
+              i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
           
           
             
