@@ -36,16 +36,16 @@
   z-index: 100
 .window-resizable-handle
   z-index: 4
-.journal-entry-page .editor-content, .journal-entry-pages 
-    font-family: "Trirong", serif
-    line-height: 1.5
-    ul 
-      li
-        margin-left: 1em
-        list-style-image: url('systems/foundryvtt-final-fantasy/assets/svg/critical.svg')
-        &::marker
-          font-size: 1.8em
-          line-height: 0.1
+.journal-entry-page .editor-content, .journal-entry-pages
+  font-family: "Trirong", serif
+  line-height: 1.5
+  ul
+    li
+      margin-left: 1em
+      list-style-image: url('systems/foundryvtt-final-fantasy/assets/svg/critical.svg')
+      &::marker
+        font-size: 1.8em
+        line-height: 0.1
     blockquote
       margin-top: 1.5em
       margin-bottom: 1.5em
@@ -80,8 +80,53 @@
 
   --dnd5e-border-dotted: 1px dotted #bbb
 
+
+
+  .glossy-button 
+    display: inline-block
+    position: relative
+    background-color: #AAA
+    background-image: linear-gradient(  hsla(0, 0%, 100%, 0.6), hsla(0, 0%, 100%, 0) 50%, hsla(0, 0%, 0%, 0.3) 50%, hsla(0, 0%, 100%, 0.2))
+    font-size: 1rem
+    font-family: sans-serif
+    font-weight: bold
+    color: white
+    padding: 0.3em 0.6em
+    text-shadow: 0 0 15px hsla(0, 0%, 100%, 1),  0 2px 4px hsla(0, 0%, 0%, 0.7)
+    border: none
+    border-radius: var(--border-radius-icon)
+    margin: 10px
+    cursor: pointer
+    transition: transform 0.1s, box-shadow 0.1s
+    background-color: var(--color-lowlight)
+    border: 3px ridge var(--ff-border-color)
+
+  
+
+    &:before 
+      content: ''
+      display: block
+      position: absolute
+      left: 0.3em
+      right: 0.3em
+      top: 5px
+      height: 1em
+      border-radius: var(--border-radius-icon)
+      background: linear-gradient(hsla(0, 0%, 100%, 0.4), hsla(0, 0%, 100%, 0) )
+
+   
+    &:hover
+      transform: scale(1.01)
+      box-shadow: inset 0 -2px 10px hsla(0, 0%, 0%, 0.4), inset 0 5px 20px hsla(0, 0%, 100%, 0.4), -12px 12px 5px hsla(0, 0%, 0%, 0.15), 10px 25px 10px hsla(0, 0%, 0%, 0.2) /* drop shadow 2 */
+  
   button
+    border: 3px ridge var(--ff-border-color)
+    // border: 2px double var(--ff-border-color)
     width: fit-content
+    padding: 0 0.5em
+    color: var(--color-highligh-light)
+    border-radius: var(--border-radius-icon)
+    background-color: var(--color-lowlight)
     &.disabled
       cursor: inherit
     &.stealth
@@ -96,14 +141,13 @@
         box-shadow: none !important
       &:focus
         box-shadow: none !important
-        
+
     &.wide
       width: 100%
     &.tall
       line-height: 1.5rem
     &.short
       line-height: 0.7rem
-
 
   .item-sheet
     .sheet-row
@@ -114,7 +158,6 @@
 
   .heightcol
     height: 100%
-    
 
   .panel
     width: 100%
@@ -150,7 +193,7 @@
   .font-cinzel
     font-family: "Cinzel", serif
     display: inline
-  
+
   .inline-block
     display: inline-block
   .widebold
@@ -180,6 +223,9 @@
     color: #000
   .gold
     color: var(--color-highlight)
+  .gold-light
+    color: var(--color-highlight-light)
+
   .border-gold
     border: 2px groove var(--color-highlight) !important
   .bg-gold
@@ -225,7 +271,7 @@
 
     &.short
       height: inherit
-      
+
   //- Fonts
   h1
     font-family: "Cinzel", sans-serif
@@ -303,7 +349,6 @@
   .light
     opacity: 0.5
 
-
   .prose
     min-height: 300px
     height: 100%
@@ -313,12 +358,12 @@
     padding: 0.1em 0.2em
     font-family: "Newsreader", serif
 
-    .editor.prosemirror.tjs-editor 
+    .editor.prosemirror.tjs-editor
       height: 100%
     .editor-container
       height: 100%
 
-  .editor.prosemirror.tjs-editor 
+  .editor.prosemirror.tjs-editor
     &.small
       height: 20%
     .editor-enriched
@@ -331,7 +376,6 @@
   .envelope
     border: 4px ridge var(--ff-border-color)
     padding: 1rem
-    
 
   .flex
     display: flex !important
@@ -414,7 +458,6 @@
     max-height: 2rem
     flex: 0.7
 
-  
   // Ensur
   table
     &.standard-list
@@ -461,7 +504,7 @@
           width: 9%
         &.min
           width: 3%
-      
+
   img.icon
     margin-top: -0.2rem
     max-height: 2rem
@@ -486,7 +529,5 @@
           border-radius: 0 var(--border-radius) var(--border-radius) 0
           border: none
 
-
-
-.drag-over 
+.drag-over
   border: 2px dashed #007bff
