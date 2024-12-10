@@ -16,6 +16,8 @@
   "FF15": {
     "Name": "Name",
     "Description": "Description",
+    "Details": "Details",
+    "Effects": "Effects",
     "None": "None",
     "Points": "Points",
     "Other": "Other",
