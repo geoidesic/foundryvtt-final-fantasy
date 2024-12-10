@@ -94,6 +94,7 @@
 <template lang="pug">
   .item-sheet.details.overflow
     .flexcol.flex3.left.high
+      h3.left General
       .flexrow.sheet-row.justify-vertical
         .flex3
           label(for="type") Type
@@ -244,5 +245,5 @@
 <style lang="sass">
     @import '../../../../../../styles/Mixins.sass'
     .details
-      @include inset
+      +inset
 </style>

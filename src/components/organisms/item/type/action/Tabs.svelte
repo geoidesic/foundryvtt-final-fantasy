@@ -32,5 +32,4 @@
     z-index: 2
     height: calc(100% - 40px)
 
-  +background
 </style>

@@ -32,7 +32,7 @@
             +if("tab.img")
               img.tab-icon(src="{tab.img}")
           
-  .tab-content
+  .tab-content({...$$restProps})
     +each("tabs as tab")
       +if("tab.id === activeTab")
         svelte:component(this="{tab.component}" sheet="{sheet}")
@@ -64,8 +64,6 @@
       // background: url(../ui/parchment.jpg) repeat
       border: 1px solid transparent
       border-radius: 10px
-      max-height: calc(100% - 60px) //- this leaves space for the tabs, allowing the full content to be scrolled
-
     .tabs-list 
       @include flex-row
       @include flex-space-evenly

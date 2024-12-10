@@ -3,12 +3,16 @@ import { onMount } from 'svelte';
 import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
 </script>
 <template lang="pug">
-  .item-tabs.high
-    .flexcol.flex3.left.prose.inset.high
+
+.item-sheet.details.overflow.high
+  .flexcol.flex3.left.high
+
       ProseMirror( attr="system.description" )
 </template>
 <style lang='sass'>
   @import '../../../../styles/Mixins.sass'
-  .item-tabs
-    @include inset
+
+  .details
+    +inset
+
 </style>

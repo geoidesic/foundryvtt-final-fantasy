@@ -66,6 +66,11 @@
               "damage": "Damage",
               "markers": "Remove Markers"
             },
+            "TraitType": {
+              "Buff": "Buff",
+              "Debuff": "Debuff",
+              "Trait": "Trait"
+            },
             "CR": {
               "def": "Physical",
               "mag": "Magic",
@@ -84,6 +89,13 @@
               "once": "Once per phase",
               "twice": "Twice per phase",
               "thrice": "Thrice per phase"
+            },
+            "ModType": {
+              "Allchecks": "All Checks",
+              "AllDamage": "All Damage",
+              "BonusDice": "Bonus Dice",
+              "Movement": "Movement",
+              "DOT": "DOT"
             },
             "Heavyshot": {
               "straignt": "Grants Straight Shot Ready"
