@@ -171,9 +171,9 @@
 
 <template lang="pug">
 
-.item-sheet.details.overflow.high
+.item-sheet.details.overflow
   //- i.fa.fa-circle-check(on:click="{debug}")
-  .flexcol.flex3.left.high
+  .flexcol.flex3.left
     .flexrow.justify-vertical.my-sm
       .flexcol.flex1.label-container 
         label(for="search") Search
@@ -219,7 +219,7 @@
   @import '../../../../styles/Mixins.sass'
 
   .details
-    height: calc(100% - 1em)
+    height: calc(100% - 0px)
 
     +inset
   .actions
