@@ -31,8 +31,8 @@
           +else
             +if("tab.img")
               img.tab-icon(src="{tab.img}")
-          
-  .tab-content
+
+  div(class="{`tab-content ${$$props?.class?.includes('small') ? 'tab-content--small' : ''} ${$$props?.class?.includes('tall') ? 'tab-content--tall' : ''}`}")
     +each("tabs as tab")
       +if("tab.id === activeTab")
         svelte:component(this="{tab.component}" sheet="{sheet}")
@@ -45,11 +45,6 @@
     text-align: middle
     height: 35px
 
-  .tab-content 
-    @include flex-column
-    flex: 2
-    height: 100%
-    width: 100%
 
   .tabs 
     @include flex-column
@@ -59,11 +54,6 @@
     width: 100%
     background: url(/systems/foundryvtt-final-fantasy/assets/parchment4.webp) repeat
     overflow: hidden
-    .tab-content
-      z-index: 1
-      // background: url(../ui/parchment.jpg) repeat
-      border: 1px solid transparent
-      border-radius: 10px
     .tabs-list 
       @include flex-row
       @include flex-space-evenly
@@ -119,6 +109,19 @@
           // border: 4px ridge var(--ff-border-color)
           // border-bottom: 1px solid transparent !important
           // box-shadow: none
+    .tab-content
+      z-index: 1
+      // background: url(../ui/parchment.jpg) repeat
+      border: 1px solid transparent
+      border-radius: 10px
+      flex: 2
+      width: 100%
+
+      +flex-column
+      &.tab-content--tall
+        height: calc(100% - 60px)
+      &.tab-content--small
+        height: calc(100% - 20px)
 
         
 </style>

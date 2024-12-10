@@ -171,7 +171,7 @@
 
 <template lang="pug">
 
-.item-sheet.details.overflow
+.item-sheet.details.overflow.high
   //- i.fa.fa-circle-check(on:click="{debug}")
   .flexcol.flex3.left.high
     .flexrow.justify-vertical.my-sm
@@ -219,7 +219,8 @@
   @import '../../../../styles/Mixins.sass'
 
   .details
-    height: calc(100% - 40px)
+    height: calc(100% - 1em)
+
     +inset
   .actions
     display: flex

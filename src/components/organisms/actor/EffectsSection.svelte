@@ -188,7 +188,7 @@
             td.img
               img.icon(src="{item.img}" alt="{item.name}")
             td.left
-              a.ml-sm.stealth.link(on:click="{editItem(index)}") {item.name}
+              a.ml-sm.stealth.link(on:click="{editItem(index, item)}") {item.name}
             td
 
 </template>
