@@ -245,5 +245,7 @@
 <style lang="sass">
     @import '../../../../../../styles/Mixins.sass'
     .details
-      +inset
+      max-height: calc(100% - 15px) //- prevents the scrolling area's content from being hidden below the fold
+
+      +inset(1rem)
 </style>
