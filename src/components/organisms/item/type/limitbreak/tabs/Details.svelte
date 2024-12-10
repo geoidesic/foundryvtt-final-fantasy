@@ -107,5 +107,5 @@
 
     .details
       height: calc(100%)
-      +inset
+      +inset(1rem)
 </style>
