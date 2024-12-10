@@ -205,7 +205,7 @@
                   i.left.fa.fa-trash.mr-md
         li.flexrow.footer
 
-    button.mt-sm.glossy-button.gold-light(on:click="{openActiveEffectEditor}") + Add Effect
+    button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{openActiveEffectEditor}") + Add Effect
     h5 Notes: 
     ul.pa-sm.left.pa-md(style="margin-top: -20px")
       li Each of the effects listed are collections. 
