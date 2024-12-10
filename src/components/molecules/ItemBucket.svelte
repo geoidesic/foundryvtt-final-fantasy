@@ -49,7 +49,7 @@ onMount(async () => {
       )
     slot
     +if("checkboxValue")
-      table.standard-list.small-text
+      table.standard-list.small-text.borderless
         tr
           th.img.shrink(scope="col")
           th.left.expand(scope="col") Name
@@ -73,6 +73,7 @@ onMount(async () => {
 <style lang="sass">
   @import '../../styles/Mixins.sass'
   .item-bucket
+    padding: 0 0.4rem
     .flexrow
       gap: 4px
     .avatar
