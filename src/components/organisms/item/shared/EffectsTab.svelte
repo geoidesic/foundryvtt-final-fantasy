@@ -170,9 +170,10 @@
 </script>
 
 <template lang="pug">
-  div
-    //- i.fa.fa-circle-check(on:click="{debug}")
 
+.item-sheet.details.overflow
+  //- i.fa.fa-circle-check(on:click="{debug}")
+  .flexcol.flex3.left.high
     .flexrow.justify-vertical.my-sm
       .flexcol.flex1.label-container 
         label(for="search") Search
@@ -211,12 +212,14 @@
       li Each of the effects listed are collections. 
       li Click edit next to the collection to see its contents.
       li You should set your item's profile image before adding an effect as the effect will inherit that image. 
-
+    
 </template>
 
 <style lang="sass">
   @import '../../../../styles/Mixins.sass'
 
+  .details
+    +inset
   .actions
     display: flex
     flex-wrap: nowrap

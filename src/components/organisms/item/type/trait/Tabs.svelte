@@ -23,7 +23,7 @@
 <template lang="pug">
 .flex1.portrait-frame
   PortraitFrame.high.frame
-    Tabs( {tabs} bind:activeTab="{activeTab}")
+    Tabs.tabs.small( {tabs} bind:activeTab="{activeTab}")
 </template>
 
 <style lang="sass">
