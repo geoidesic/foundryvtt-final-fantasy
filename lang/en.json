@@ -232,6 +232,11 @@
         "Name": "Sound file for new chat message",
         "Hint": "If blank, no sound will be played. If set, the sound will be played when a chat message arrives in the Chat sidebar tab."
       }
+    },
+    "TitleBlock": {
+      "ConfirmRest": "Are you sure you want to rest?",
+      "PointsRestored": "Your points have been restored to max.",
+      "Rest": "Rest"
     }
   }
 }

@@ -562,7 +562,12 @@ const _ActionModel = class _ActionModel extends FFItemDataModel {
       hasHeavierShot: new BooleanField$1({ required: false, initial: false }),
       heavierShot: new StringField$1({ required: false, initial: "" }),
       hasLimitation: new BooleanField$1({ required: false, initial: false }),
-      limitation: new StringField$1({ required: false, initial: "" })
+      limitation: new StringField$1({ required: false, initial: "" }),
+      type: new StringField$1({ required: false, initial: "" }),
+      formula: new StringField$1({ required: false, initial: "" }),
+      hasCost: new BooleanField$1({ required: false, initial: false }),
+      cost: new NumberField$2({ required: false, initial: 0 }),
+      directHitText: new StringField$1({ required: false, initial: "" })
     };
   }
 };
@@ -13973,7 +13978,7 @@ function create_fragment$V(ctx) {
   };
 }
 __name(create_fragment$V, "create_fragment$V");
-function instance$M($$self, $$props, $$invalidate) {
+function instance$N($$self, $$props, $$invalidate) {
   let { $$slots: slots = {}, $$scope } = $$props;
   let { background = "#50505080" } = $$props;
   let { captureInput = true } = $$props;
@@ -14140,11 +14145,11 @@ function instance$M($$self, $$props, $$invalidate) {
     div_binding_1
   ];
 }
-__name(instance$M, "instance$M");
+__name(instance$N, "instance$N");
 const _TJSGlassPane = class _TJSGlassPane extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$M, create_fragment$V, safe_not_equal, {
+    init(this, options, instance$N, create_fragment$V, safe_not_equal, {
       background: 5,
       captureInput: 13,
       closeOnInput: 14,
@@ -14381,7 +14386,7 @@ function create_fragment$U(ctx) {
 }
 __name(create_fragment$U, "create_fragment$U");
 const s_REGEX_HTML$1 = /^\s*<.*>$/;
-function instance$L($$self, $$props, $$invalidate) {
+function instance$M($$self, $$props, $$invalidate) {
   let title;
   let icon;
   let label;
@@ -14467,11 +14472,11 @@ function instance$L($$self, $$props, $$invalidate) {
     title
   ];
 }
-__name(instance$L, "instance$L");
+__name(instance$M, "instance$M");
 const _TJSHeaderButton = class _TJSHeaderButton extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$L, create_fragment$U, safe_not_equal, { button: 0 });
+    init(this, options, instance$M, create_fragment$U, safe_not_equal, { button: 0 });
   }
   get button() {
     return this.$$.ctx[0];
@@ -15013,7 +15018,7 @@ function create_fragment$T(ctx) {
   };
 }
 __name(create_fragment$T, "create_fragment$T");
-function instance$K($$self, $$props, $$invalidate) {
+function instance$L($$self, $$props, $$invalidate) {
   let $focusKeep;
   let $focusAuto;
   let $elementRoot;
@@ -15172,11 +15177,11 @@ function instance$K($$self, $$props, $$invalidate) {
     $storeDraggable
   ];
 }
-__name(instance$K, "instance$K");
+__name(instance$L, "instance$L");
 const _TJSApplicationHeader = class _TJSApplicationHeader extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$K, create_fragment$T, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
+    init(this, options, instance$L, create_fragment$T, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
   }
 };
 __name(_TJSApplicationHeader, "TJSApplicationHeader");
@@ -15220,7 +15225,7 @@ function create_fragment$S(ctx) {
   };
 }
 __name(create_fragment$S, "create_fragment$S");
-function instance$J($$self, $$props, $$invalidate) {
+function instance$K($$self, $$props, $$invalidate) {
   let { elementRoot = void 0 } = $$props;
   let { enabled = true } = $$props;
   let ignoreElements, wrapEl;
@@ -15261,11 +15266,11 @@ function instance$J($$self, $$props, $$invalidate) {
   };
   return [wrapEl, onFocus, elementRoot, enabled, div_binding];
 }
-__name(instance$J, "instance$J");
+__name(instance$K, "instance$K");
 const _TJSFocusWrap = class _TJSFocusWrap extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$J, create_fragment$S, safe_not_equal, { elementRoot: 2, enabled: 3 });
+    init(this, options, instance$K, create_fragment$S, safe_not_equal, { elementRoot: 2, enabled: 3 });
   }
 };
 __name(_TJSFocusWrap, "TJSFocusWrap");
@@ -15328,7 +15333,7 @@ function create_fragment$R(ctx) {
   };
 }
 __name(create_fragment$R, "create_fragment$R");
-function instance$I($$self, $$props, $$invalidate) {
+function instance$J($$self, $$props, $$invalidate) {
   let $storeElementRoot;
   let $storeMinimized;
   let $storeResizable;
@@ -15461,11 +15466,11 @@ function instance$I($$self, $$props, $$invalidate) {
     div_binding
   ];
 }
-__name(instance$I, "instance$I");
+__name(instance$J, "instance$J");
 const _ResizableHandle = class _ResizableHandle extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$I, create_fragment$R, safe_not_equal, { isResizable: 7 });
+    init(this, options, instance$J, create_fragment$R, safe_not_equal, { isResizable: 7 });
   }
 };
 __name(_ResizableHandle, "ResizableHandle");
@@ -16074,7 +16079,7 @@ function create_fragment$Q(ctx) {
   };
 }
 __name(create_fragment$Q, "create_fragment$Q");
-function instance$H($$self, $$props, $$invalidate) {
+function instance$I($$self, $$props, $$invalidate) {
   let $focusKeep;
   let $focusAuto;
   let $minimized;
@@ -16373,14 +16378,14 @@ function instance$H($$self, $$props, $$invalidate) {
     div_binding_1
   ];
 }
-__name(instance$H, "instance$H");
+__name(instance$I, "instance$I");
 const _ApplicationShell = class _ApplicationShell extends SvelteComponent {
   constructor(options) {
     super();
     init(
       this,
       options,
-      instance$H,
+      instance$I,
       create_fragment$Q,
       safe_not_equal,
       {
@@ -17004,7 +17009,7 @@ function create_fragment$P(ctx) {
 }
 __name(create_fragment$P, "create_fragment$P");
 const s_REGEX_HTML = /^\s*<.*>$/;
-function instance$G($$self, $$props, $$invalidate) {
+function instance$H($$self, $$props, $$invalidate) {
   let autoClose;
   let focusFirst;
   let resolveId;
@@ -17325,11 +17330,11 @@ function instance$G($$self, $$props, $$invalidate) {
     div_binding_1
   ];
 }
-__name(instance$G, "instance$G");
+__name(instance$H, "instance$H");
 const _DialogContent = class _DialogContent extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$G, create_fragment$P, safe_not_equal, {
+    init(this, options, instance$H, create_fragment$P, safe_not_equal, {
       data: 10,
       preventDefault: 11,
       stopPropagation: 12,
@@ -17800,7 +17805,7 @@ function create_fragment$O(ctx) {
 }
 __name(create_fragment$O, "create_fragment$O");
 const s_MODAL_BACKGROUND = "#50505080";
-function instance$F($$self, $$props, $$invalidate) {
+function instance$G($$self, $$props, $$invalidate) {
   let { elementContent = void 0 } = $$props;
   let { elementRoot = void 0 } = $$props;
   let { data = {} } = $$props;
@@ -18085,11 +18090,11 @@ function instance$F($$self, $$props, $$invalidate) {
     applicationshell_elementContent_binding_1
   ];
 }
-__name(instance$F, "instance$F");
+__name(instance$G, "instance$G");
 const _DialogShell = class _DialogShell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$F, create_fragment$O, safe_not_equal, {
+    init(this, options, instance$G, create_fragment$O, safe_not_equal, {
       elementContent: 1,
       elementRoot: 0,
       data: 3,
@@ -19957,7 +19962,7 @@ function create_fragment$N(ctx) {
   };
 }
 __name(create_fragment$N, "create_fragment$N");
-function instance$E($$self, $$props, $$invalidate) {
+function instance$F($$self, $$props, $$invalidate) {
   let dontShowWelcome2;
   let $dontShowWelcomeStore;
   let { elementRoot = void 0 } = $$props;
@@ -20010,11 +20015,11 @@ function instance$E($$self, $$props, $$invalidate) {
     applicationshell_elementRoot_binding
   ];
 }
-__name(instance$E, "instance$E");
+__name(instance$F, "instance$F");
 const _WelcomeAppShell = class _WelcomeAppShell extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$E, create_fragment$N, safe_not_equal, { elementRoot: 0 });
+    init(this, options, instance$F, create_fragment$N, safe_not_equal, { elementRoot: 0 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -20114,7 +20119,7 @@ function create_if_block_2$3(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "tab-icon svelte-FF15-1hjjp1x");
+      attr(img, "class", "tab-icon svelte-FF15-1ctdj3y");
       if (!src_url_equal(img.src, img_src_value = /*tab*/
       ctx[5].img))
         attr(img, "src", img_src_value);
@@ -20205,7 +20210,7 @@ function create_each_block_1(ctx) {
         if_block.c();
       attr(button, "class", button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-FF15-1hjjp1x");
+      ctx[0] ? "active" : "") + " svelte-FF15-1ctdj3y");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -20233,7 +20238,7 @@ function create_each_block_1(ctx) {
       if (!current || dirty & /*tabs, activeTab*/
       3 && button_class_value !== (button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-FF15-1hjjp1x")) {
+      ctx[0] ? "active" : "") + " svelte-FF15-1ctdj3y")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -20471,9 +20476,9 @@ function create_fragment$M(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "tabs-list svelte-FF15-1hjjp1x");
-      attr(div1, "class", "tab-content svelte-FF15-1hjjp1x");
-      attr(div2, "class", "tabs svelte-FF15-1hjjp1x");
+      attr(div0, "class", "tabs-list svelte-FF15-1ctdj3y");
+      attr(div1, "class", "tab-content svelte-FF15-1ctdj3y");
+      attr(div2, "class", "tabs svelte-FF15-1ctdj3y");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -20575,7 +20580,7 @@ function create_fragment$M(ctx) {
   };
 }
 __name(create_fragment$M, "create_fragment$M");
-function instance$D($$self, $$props, $$invalidate) {
+function instance$E($$self, $$props, $$invalidate) {
   let { tabs = [] } = $$props;
   let { sheet } = $$props;
   let { activeTab: activeTab2 = void 0 } = $$props;
@@ -20597,11 +20602,11 @@ function instance$D($$self, $$props, $$invalidate) {
   };
   return [activeTab2, tabs, sheet, efx, click_handler2];
 }
-__name(instance$D, "instance$D");
+__name(instance$E, "instance$E");
 const _Tabs = class _Tabs extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$D, create_fragment$M, safe_not_equal, { tabs: 1, sheet: 2, activeTab: 0, efx: 3 });
+    init(this, options, instance$E, create_fragment$M, safe_not_equal, { tabs: 1, sheet: 2, activeTab: 0, efx: 3 });
   }
 };
 __name(_Tabs, "Tabs");
@@ -22757,7 +22762,7 @@ function create_fragment$L(ctx) {
   };
 }
 __name(create_fragment$L, "create_fragment$L");
-function instance$C($$self, $$props, $$invalidate) {
+function instance$D($$self, $$props, $$invalidate) {
   let $storeIsValid, $$unsubscribe_storeIsValid = noop, $$subscribe_storeIsValid = /* @__PURE__ */ __name(() => ($$unsubscribe_storeIsValid(), $$unsubscribe_storeIsValid = subscribe(storeIsValid, ($$value) => $$invalidate(10, $storeIsValid = $$value)), storeIsValid), "$$subscribe_storeIsValid");
   let $store, $$unsubscribe_store = noop, $$subscribe_store = /* @__PURE__ */ __name(() => ($$unsubscribe_store(), $$unsubscribe_store = subscribe(store, ($$value) => $$invalidate(11, $store = $$value)), store), "$$subscribe_store");
   $$self.$$.on_destroy.push(() => $$unsubscribe_storeIsValid());
@@ -22917,11 +22922,11 @@ function instance$C($$self, $$props, $$invalidate) {
     input_1_input_handler
   ];
 }
-__name(instance$C, "instance$C");
+__name(instance$D, "instance$D");
 const _TJSInputNumber = class _TJSInputNumber extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$C, create_fragment$L, safe_not_equal, {
+    init(this, options, instance$D, create_fragment$L, safe_not_equal, {
       input: 15,
       disabled: 0,
       options: 14,
@@ -23071,7 +23076,7 @@ function create_fragment$K(ctx) {
   };
 }
 __name(create_fragment$K, "create_fragment$K");
-function instance$B($$self, $$props, $$invalidate) {
+function instance$C($$self, $$props, $$invalidate) {
   let $storeIsValid, $$unsubscribe_storeIsValid = noop, $$subscribe_storeIsValid = /* @__PURE__ */ __name(() => ($$unsubscribe_storeIsValid(), $$unsubscribe_storeIsValid = subscribe(storeIsValid, ($$value) => $$invalidate(8, $storeIsValid = $$value)), storeIsValid), "$$subscribe_storeIsValid");
   let $store, $$unsubscribe_store = noop, $$subscribe_store = /* @__PURE__ */ __name(() => ($$unsubscribe_store(), $$unsubscribe_store = subscribe(store, ($$value) => $$invalidate(9, $store = $$value)), store), "$$subscribe_store");
   $$self.$$.on_destroy.push(() => $$unsubscribe_storeIsValid());
@@ -23230,11 +23235,11 @@ function instance$B($$self, $$props, $$invalidate) {
     input_1_input_handler
   ];
 }
-__name(instance$B, "instance$B");
+__name(instance$C, "instance$C");
 const _TJSInputText = class _TJSInputText extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$B, create_fragment$K, safe_not_equal, {
+    init(this, options, instance$C, create_fragment$K, safe_not_equal, {
       input: 13,
       type: 0,
       disabled: 1,
@@ -23330,7 +23335,7 @@ function create_fragment$J(ctx) {
   };
 }
 __name(create_fragment$J, "create_fragment$J");
-function instance$A($$self, $$props, $$invalidate) {
+function instance$B($$self, $$props, $$invalidate) {
   let { input = void 0 } = $$props;
   let component;
   $$self.$$set = ($$props2) => {
@@ -23361,11 +23366,11 @@ function instance$A($$self, $$props, $$invalidate) {
   };
   return [input, component];
 }
-__name(instance$A, "instance$A");
+__name(instance$B, "instance$B");
 const _TJSInput = class _TJSInput extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$A, create_fragment$J, safe_not_equal, { input: 0 });
+    init(this, options, instance$B, create_fragment$J, safe_not_equal, { input: 0 });
   }
 };
 __name(_TJSInput, "TJSInput");
@@ -23947,7 +23952,7 @@ function create_fragment$I(ctx) {
   };
 }
 __name(create_fragment$I, "create_fragment$I");
-function instance$z($$self, $$props, $$invalidate) {
+function instance$A($$self, $$props, $$invalidate) {
   let $doc;
   let { content = "" } = $$props;
   let { enrichedContent = "" } = $$props;
@@ -24216,11 +24221,11 @@ function instance$z($$self, $$props, $$invalidate) {
     div_binding_1
   ];
 }
-__name(instance$z, "instance$z");
+__name(instance$A, "instance$A");
 const _TJSProseMirror = class _TJSProseMirror extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$z, create_fragment$I, safe_not_equal, {
+    init(this, options, instance$A, create_fragment$I, safe_not_equal, {
       content: 12,
       enrichedContent: 1,
       options: 0
@@ -24344,7 +24349,7 @@ __name(create_fragment$H, "create_fragment$H");
 function doSomethingWithEnrichedContent(event) {
 }
 __name(doSomethingWithEnrichedContent, "doSomethingWithEnrichedContent");
-function instance$y($$self, $$props, $$invalidate) {
+function instance$z($$self, $$props, $$invalidate) {
   const omit_props_names = ["content", "attr", "classes", "editable"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   let $doc;
@@ -24409,11 +24414,11 @@ function instance$y($$self, $$props, $$invalidate) {
     editor_start_handler
   ];
 }
-__name(instance$y, "instance$y");
+__name(instance$z, "instance$z");
 let ProseMirror$1 = (_a = class extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$y, create_fragment$H, safe_not_equal, {
+    init(this, options, instance$z, create_fragment$H, safe_not_equal, {
       content: 0,
       attr: 5,
       classes: 6,
@@ -24955,7 +24960,7 @@ function showItemSheet$2(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$2, "showItemSheet$2");
-function instance$x($$self, $$props, $$invalidate) {
+function instance$y($$self, $$props, $$invalidate) {
   let items;
   let lockCSS;
   let faLockCSS;
@@ -25039,11 +25044,11 @@ function instance$x($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$x, "instance$x");
+__name(instance$y, "instance$y");
 const _Abilities = class _Abilities extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$x, create_fragment$G, safe_not_equal, {});
+    init(this, options, instance$y, create_fragment$G, safe_not_equal, {});
   }
 };
 __name(_Abilities, "Abilities");
@@ -25168,7 +25173,7 @@ function create_fragment$F(ctx) {
   };
 }
 __name(create_fragment$F, "create_fragment$F");
-function instance$w($$self, $$props, $$invalidate) {
+function instance$x($$self, $$props, $$invalidate) {
   let { size = 100 } = $$props;
   let { strokeWidth = 2 } = $$props;
   let { strokeColor = "#000" } = $$props;
@@ -25193,11 +25198,11 @@ function instance$w($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [size, strokeWidth, strokeColor, rotation, fill, flip, $$props];
 }
-__name(instance$w, "instance$w");
+__name(instance$x, "instance$x");
 const _Corner = class _Corner extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$w, create_fragment$F, safe_not_equal, {
+    init(this, options, instance$x, create_fragment$F, safe_not_equal, {
       size: 0,
       strokeWidth: 1,
       strokeColor: 2,
@@ -25214,13 +25219,13 @@ function create_else_block$1(ctx) {
   let current;
   const default_slot_template = (
     /*#slots*/
-    ctx[4].default
+    ctx[6].default
   );
   const default_slot = create_slot(
     default_slot_template,
     ctx,
     /*$$scope*/
-    ctx[3],
+    ctx[5],
     null
   );
   return {
@@ -25237,20 +25242,20 @@ function create_else_block$1(ctx) {
     p(ctx2, dirty) {
       if (default_slot) {
         if (default_slot.p && (!current || dirty & /*$$scope*/
-        8)) {
+        32)) {
           update_slot_base(
             default_slot,
             default_slot_template,
             ctx2,
             /*$$scope*/
-            ctx2[3],
+            ctx2[5],
             !current ? get_all_dirty_from_scope(
               /*$$scope*/
-              ctx2[3]
+              ctx2[5]
             ) : get_slot_changes(
               default_slot_template,
               /*$$scope*/
-              ctx2[3],
+              ctx2[5],
               dirty,
               null
             ),
@@ -25279,23 +25284,45 @@ __name(create_else_block$1, "create_else_block$1");
 function create_if_block$b(ctx) {
   let img_1;
   let img_1_src_value;
+  let mounted;
+  let dispose;
   return {
     c() {
       img_1 = element("img");
-      if (!src_url_equal(img_1.src, img_1_src_value = ASSET_PATH + "/portraits/witch2.webp"))
+      if (!src_url_equal(img_1.src, img_1_src_value = /*imgSrc*/
+      ctx[1]))
         attr(img_1, "src", img_1_src_value);
-      attr(img_1, "alt", "witch avatar");
+      attr(img_1, "alt", "avatar");
     },
     m(target, anchor) {
       insert(target, img_1, anchor);
+      if (!mounted) {
+        dispose = listen(img_1, "click", function() {
+          if (is_function(
+            /*onClick*/
+            ctx[3]
+          ))
+            ctx[3].apply(this, arguments);
+        });
+        mounted = true;
+      }
     },
-    p: noop,
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*imgSrc*/
+      2 && !src_url_equal(img_1.src, img_1_src_value = /*imgSrc*/
+      ctx[1])) {
+        attr(img_1, "src", img_1_src_value);
+      }
+    },
     i: noop,
     o: noop,
     d(detaching) {
       if (detaching) {
         detach(img_1);
       }
+      mounted = false;
+      dispose();
     }
   };
 }
@@ -25310,6 +25337,7 @@ function create_fragment$E(ctx) {
   let corner1;
   let corner2;
   let corner3;
+  let div1_class_value;
   let current;
   const if_block_creators = [create_if_block$b, create_else_block$1];
   const if_blocks = [];
@@ -25329,7 +25357,7 @@ function create_fragment$E(ctx) {
       class: "corner bottom-right",
       strokeColor: (
         /*strokeColor*/
-        ctx[1]
+        ctx[2]
       ),
       size: "50"
     }
@@ -25340,7 +25368,7 @@ function create_fragment$E(ctx) {
       flip: "horizontal",
       strokeColor: (
         /*strokeColor*/
-        ctx[1]
+        ctx[2]
       ),
       size: "50"
     }
@@ -25351,7 +25379,7 @@ function create_fragment$E(ctx) {
       flip: "vertical",
       strokeColor: (
         /*strokeColor*/
-        ctx[1]
+        ctx[2]
       ),
       size: "50"
     }
@@ -25362,7 +25390,7 @@ function create_fragment$E(ctx) {
       flip: "both",
       strokeColor: (
         /*strokeColor*/
-        ctx[1]
+        ctx[2]
       ),
       size: "50"
     }
@@ -25370,7 +25398,7 @@ function create_fragment$E(ctx) {
   let div0_levels = [
     { class: "frame" },
     /*$$restProps*/
-    ctx[2]
+    ctx[4]
   ];
   let div_data = {};
   for (let i = 0; i < div0_levels.length; i += 1) {
@@ -25388,7 +25416,8 @@ function create_fragment$E(ctx) {
       create_component(corner3.$$.fragment);
       set_attributes(div0, div_data);
       toggle_class(div0, "svelte-FF15-8iscl9", true);
-      attr(div1, "class", "atom");
+      attr(div1, "class", div1_class_value = "atom " + /*$$restProps*/
+      (ctx[4]?.class?.includes("high") ? "high" : ""));
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -25424,32 +25453,37 @@ function create_fragment$E(ctx) {
       }
       const corner0_changes = {};
       if (dirty & /*strokeColor*/
-      2)
+      4)
         corner0_changes.strokeColor = /*strokeColor*/
-        ctx2[1];
+        ctx2[2];
       corner0.$set(corner0_changes);
       const corner1_changes = {};
       if (dirty & /*strokeColor*/
-      2)
+      4)
         corner1_changes.strokeColor = /*strokeColor*/
-        ctx2[1];
+        ctx2[2];
       corner1.$set(corner1_changes);
       const corner2_changes = {};
       if (dirty & /*strokeColor*/
-      2)
+      4)
         corner2_changes.strokeColor = /*strokeColor*/
-        ctx2[1];
+        ctx2[2];
       corner2.$set(corner2_changes);
       const corner3_changes = {};
       if (dirty & /*strokeColor*/
-      2)
+      4)
         corner3_changes.strokeColor = /*strokeColor*/
-        ctx2[1];
+        ctx2[2];
       corner3.$set(corner3_changes);
       set_attributes(div0, div_data = get_spread_update(div0_levels, [{ class: "frame" }, dirty & /*$$restProps*/
-      4 && /*$$restProps*/
-      ctx2[2]]));
+      16 && /*$$restProps*/
+      ctx2[4]]));
       toggle_class(div0, "svelte-FF15-8iscl9", true);
+      if (!current || dirty & /*$$restProps*/
+      16 && div1_class_value !== (div1_class_value = "atom " + /*$$restProps*/
+      (ctx2[4]?.class?.includes("high") ? "high" : ""))) {
+        attr(div1, "class", div1_class_value);
+      }
     },
     i(local) {
       if (current)
@@ -25482,32 +25516,43 @@ function create_fragment$E(ctx) {
   };
 }
 __name(create_fragment$E, "create_fragment$E");
-function instance$v($$self, $$props, $$invalidate) {
-  const omit_props_names = ["img", "strokeColor"];
+function instance$w($$self, $$props, $$invalidate) {
+  const omit_props_names = ["img", "imgSrc", "strokeColor", "onClick"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   let { $$slots: slots = {}, $$scope } = $$props;
   let { img = false } = $$props;
+  let { imgSrc = `${ASSET_PATH}/portraits/witch2.webp` } = $$props;
   let { strokeColor = "#514030" } = $$props;
+  let { onClick } = $$props;
   onMount(() => {
     game.system.log.d("PortraitFrame mounted");
   });
   $$self.$$set = ($$new_props) => {
     $$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
-    $$invalidate(2, $$restProps = compute_rest_props($$props, omit_props_names));
+    $$invalidate(4, $$restProps = compute_rest_props($$props, omit_props_names));
     if ("img" in $$new_props)
       $$invalidate(0, img = $$new_props.img);
+    if ("imgSrc" in $$new_props)
+      $$invalidate(1, imgSrc = $$new_props.imgSrc);
     if ("strokeColor" in $$new_props)
-      $$invalidate(1, strokeColor = $$new_props.strokeColor);
+      $$invalidate(2, strokeColor = $$new_props.strokeColor);
+    if ("onClick" in $$new_props)
+      $$invalidate(3, onClick = $$new_props.onClick);
     if ("$$scope" in $$new_props)
-      $$invalidate(3, $$scope = $$new_props.$$scope);
+      $$invalidate(5, $$scope = $$new_props.$$scope);
   };
-  return [img, strokeColor, $$restProps, $$scope, slots];
+  return [img, imgSrc, strokeColor, onClick, $$restProps, $$scope, slots];
 }
-__name(instance$v, "instance$v");
+__name(instance$w, "instance$w");
 const _PortraitFrame = class _PortraitFrame extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$v, create_fragment$E, safe_not_equal, { img: 0, strokeColor: 1 });
+    init(this, options, instance$w, create_fragment$E, safe_not_equal, {
+      img: 0,
+      imgSrc: 1,
+      strokeColor: 2,
+      onClick: 3
+    });
   }
 };
 __name(_PortraitFrame, "PortraitFrame");
@@ -25691,7 +25736,7 @@ function create_fragment$D(ctx) {
   };
 }
 __name(create_fragment$D, "create_fragment$D");
-function instance$u($$self, $$props, $$invalidate) {
+function instance$v($$self, $$props, $$invalidate) {
   let label;
   let value;
   let isEditing;
@@ -25776,11 +25821,11 @@ function instance$u($$self, $$props, $$invalidate) {
     click_handler2
   ];
 }
-__name(instance$u, "instance$u");
+__name(instance$v, "instance$v");
 const _Attribute = class _Attribute extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$u, create_fragment$D, safe_not_equal, {
+    init(this, options, instance$v, create_fragment$D, safe_not_equal, {
       code: 8,
       key: 9,
       abbreviateLabel: 10,
@@ -25946,7 +25991,7 @@ function create_fragment$C(ctx) {
   };
 }
 __name(create_fragment$C, "create_fragment$C");
-function instance$t($$self, $$props, $$invalidate) {
+function instance$u($$self, $$props, $$invalidate) {
   let { data } = $$props;
   let { abbreviateLabel } = $$props;
   let { key } = $$props;
@@ -25965,11 +26010,11 @@ function instance$t($$self, $$props, $$invalidate) {
   };
   return [data, abbreviateLabel, key, showSign];
 }
-__name(instance$t, "instance$t");
+__name(instance$u, "instance$u");
 const _AttributeCol = class _AttributeCol extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$t, create_fragment$C, safe_not_equal, {
+    init(this, options, instance$u, create_fragment$C, safe_not_equal, {
       data: 0,
       abbreviateLabel: 1,
       key: 2,
@@ -26031,7 +26076,7 @@ function create_fragment$B(ctx) {
   };
 }
 __name(create_fragment$B, "create_fragment$B");
-function instance$s($$self) {
+function instance$t($$self) {
   let data = [
     { code: "str" },
     { code: "dex" },
@@ -26041,11 +26086,11 @@ function instance$s($$self) {
   ];
   return [data];
 }
-__name(instance$s, "instance$s");
+__name(instance$t, "instance$t");
 const _PrimaryAttributes = class _PrimaryAttributes extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$s, create_fragment$B, safe_not_equal, {});
+    init(this, options, instance$t, create_fragment$B, safe_not_equal, {});
   }
 };
 __name(_PrimaryAttributes, "PrimaryAttributes");
@@ -26097,15 +26142,15 @@ function create_fragment$A(ctx) {
   };
 }
 __name(create_fragment$A, "create_fragment$A");
-function instance$r($$self) {
+function instance$s($$self) {
   let data = [{ code: "def" }, { code: "mag" }, { code: "vig" }, { code: "spd" }];
   return [data];
 }
-__name(instance$r, "instance$r");
+__name(instance$s, "instance$s");
 const _SecondaryAttributes = class _SecondaryAttributes extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$r, create_fragment$A, safe_not_equal, {});
+    init(this, options, instance$s, create_fragment$A, safe_not_equal, {});
   }
 };
 __name(_SecondaryAttributes, "SecondaryAttributes");
@@ -26496,7 +26541,7 @@ const input_handler = /* @__PURE__ */ __name(() => {
 }, "input_handler");
 const click_handler = /* @__PURE__ */ __name(() => {
 }, "click_handler");
-function instance$q($$self, $$props, $$invalidate) {
+function instance$r($$self, $$props, $$invalidate) {
   let displayValue;
   const omit_props_names = [
     "placeholder",
@@ -26681,11 +26726,11 @@ function instance$q($$self, $$props, $$invalidate) {
     input_binding
   ];
 }
-__name(instance$q, "instance$q");
+__name(instance$r, "instance$r");
 const _DocInput = class _DocInput extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$q, create_fragment$y, safe_not_equal, {
+    init(this, options, instance$r, create_fragment$y, safe_not_equal, {
       placeholder: 0,
       maxlength: 2,
       valuePath: 20,
@@ -26705,24 +26750,28 @@ __name(_DocInput, "DocInput");
 let DocInput = _DocInput;
 const TitleBlock_svelte_svelte_type_style_lang = "";
 function create_fragment$x(ctx) {
+  let div11;
   let div10;
-  let div9;
+  let div4;
   let div3;
-  let div2;
   let div0;
+  let button;
   let div1;
+  let div2;
   let docinput0;
   let updating_enabled;
+  let div9;
   let div8;
-  let div7;
-  let div4;
-  let docinput1;
   let div5;
+  let docinput1;
   let div6;
+  let div7;
   let docinput2;
   let current;
+  let mounted;
+  let dispose;
   function docinput0_enabled_binding(value) {
-    ctx[1](value);
+    ctx[3](value);
   }
   __name(docinput0_enabled_binding, "docinput0_enabled_binding");
   let docinput0_props = {
@@ -26762,51 +26811,67 @@ function create_fragment$x(ctx) {
   });
   return {
     c() {
+      div11 = element("div");
       div10 = element("div");
-      div9 = element("div");
-      div3 = element("div");
-      div2 = element("div");
-      div0 = element("div");
-      div0.innerHTML = `<label class="widebold font-inter glow white scaleup mr-lg inline-block">LV</label>`;
-      div1 = element("div");
-      create_component(docinput0.$$.fragment);
-      div8 = element("div");
-      div7 = element("div");
       div4 = element("div");
-      create_component(docinput1.$$.fragment);
+      div3 = element("div");
+      div0 = element("div");
+      button = element("button");
+      button.innerHTML = `<img class="rest-icon svelte-FF15-jeh1mn" src="systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp"/>`;
+      div1 = element("div");
+      div1.innerHTML = `<label class="widebold font-inter glow white scaleup mr-lg inline-block">LV</label>`;
+      div2 = element("div");
+      create_component(docinput0.$$.fragment);
+      div9 = element("div");
+      div8 = element("div");
       div5 = element("div");
-      div5.textContent = "/";
+      create_component(docinput1.$$.fragment);
       div6 = element("div");
+      div6.textContent = "/";
+      div7 = element("div");
       create_component(docinput2.$$.fragment);
-      attr(div0, "class", "flex1 right");
-      attr(div1, "class", "flex1 left");
-      attr(div2, "class", "flexrow nowrap justify-vertical");
-      set_style(div2, "min-width", "150px");
-      attr(div3, "class", "flex1");
-      attr(div4, "class", "flex4 job right svelte-FF15-xy8rzh");
-      attr(div5, "class", "flex0 middle svelte-FF15-xy8rzh");
-      attr(div6, "class", "flex4 job left svelte-FF15-xy8rzh");
-      attr(div7, "class", "flexrow nowrap mr-md");
-      attr(div8, "class", "flex2");
-      attr(div9, "class", "flexrow");
-      attr(div10, "class", "panel heightcol");
+      attr(button, "class", "stealth rest-button svelte-FF15-jeh1mn");
+      attr(button, "data-tooltip", localize("FF15.TitleBlock.Rest"));
+      attr(button, "aria-label", localize("FF15.TitleBlock.Rest"));
+      attr(div0, "class", "flex0 rest svelte-FF15-jeh1mn");
+      attr(div1, "class", "flex1 right");
+      attr(div2, "class", "flex1 left");
+      attr(div3, "class", "flexrow nowrap justify-vertical");
+      set_style(div3, "min-width", "150px");
+      attr(div4, "class", "flex2");
+      attr(div5, "class", "flex4 job right svelte-FF15-jeh1mn");
+      attr(div6, "class", "flex0 middle svelte-FF15-jeh1mn");
+      attr(div7, "class", "flex4 job left svelte-FF15-jeh1mn");
+      attr(div8, "class", "flexrow nowrap mr-md");
+      attr(div9, "class", "flex3");
+      attr(div10, "class", "flexrow");
+      attr(div11, "class", "panel heightcol");
     },
     m(target, anchor) {
-      insert(target, div10, anchor);
-      append(div10, div9);
-      append(div9, div3);
+      insert(target, div11, anchor);
+      append(div11, div10);
+      append(div10, div4);
+      append(div4, div3);
+      append(div3, div0);
+      append(div0, button);
+      append(div3, div1);
       append(div3, div2);
-      append(div2, div0);
-      append(div2, div1);
-      mount_component(docinput0, div1, null);
+      mount_component(docinput0, div2, null);
+      append(div10, div9);
       append(div9, div8);
+      append(div8, div5);
+      mount_component(docinput1, div5, null);
+      append(div8, div6);
       append(div8, div7);
-      append(div7, div4);
-      mount_component(docinput1, div4, null);
-      append(div7, div5);
-      append(div7, div6);
-      mount_component(docinput2, div6, null);
+      mount_component(docinput2, div7, null);
       current = true;
+      if (!mounted) {
+        dispose = listen(button, "click", prevent_default(
+          /*rest*/
+          ctx[2]
+        ));
+        mounted = true;
+      }
     },
     p(ctx2, [dirty]) {
       const docinput0_changes = {};
@@ -26835,29 +26900,52 @@ function create_fragment$x(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div10);
+        detach(div11);
       }
       destroy_component(docinput0);
       destroy_component(docinput1);
       destroy_component(docinput2);
+      mounted = false;
+      dispose();
     }
   };
 }
 __name(create_fragment$x, "create_fragment$x");
-function instance$p($$self, $$props, $$invalidate) {
+function instance$q($$self, $$props, $$invalidate) {
+  let $actor;
   let levelEnabled = false;
+  const actor = getContext("#doc");
+  component_subscribe($$self, actor, (value) => $$invalidate(4, $actor = value));
+  onMount(() => {
+  });
+  async function rest(event) {
+    const confirmed = confirm(localize("FF15.TitleBlock.ConfirmRest"));
+    if (!confirmed)
+      return;
+    await $actor.update({
+      system: {
+        points: {
+          MP: { val: $actor.system.points.MP.max },
+          HP: { val: $actor.system.points.HP.max }
+        },
+        BP: { val: $actor.system.points.BP.max }
+      }
+    });
+    ui.notifications.info(localize("FF15.TitleBlock.PointsRestored"));
+  }
+  __name(rest, "rest");
   function docinput0_enabled_binding(value) {
     levelEnabled = value;
     $$invalidate(0, levelEnabled);
   }
   __name(docinput0_enabled_binding, "docinput0_enabled_binding");
-  return [levelEnabled, docinput0_enabled_binding];
+  return [levelEnabled, actor, rest, docinput0_enabled_binding];
 }
-__name(instance$p, "instance$p");
+__name(instance$q, "instance$q");
 const _TitleBlock = class _TitleBlock extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$p, create_fragment$x, safe_not_equal, {});
+    init(this, options, instance$q, create_fragment$x, safe_not_equal, {});
   }
 };
 __name(_TitleBlock, "TitleBlock");
@@ -26876,7 +26964,19 @@ function create_fragment$w(ctx) {
   let current;
   titleblock = new TitleBlock({});
   attributeblock = new AttributeBlock({});
-  portraitframe = new PortraitFrame({ props: { img: true } });
+  portraitframe = new PortraitFrame({
+    props: {
+      img: true,
+      imgSrc: (
+        /*$documentStore*/
+        ctx[0]?.img
+      ),
+      onClick: (
+        /*_editToken*/
+        ctx[2]
+      )
+    }
+  });
   return {
     c() {
       section = element("section");
@@ -26907,7 +27007,14 @@ function create_fragment$w(ctx) {
       mount_component(portraitframe, div2, null);
       current = true;
     },
-    p: noop,
+    p(ctx2, [dirty]) {
+      const portraitframe_changes = {};
+      if (dirty & /*$documentStore*/
+      1)
+        portraitframe_changes.imgSrc = /*$documentStore*/
+        ctx2[0]?.img;
+      portraitframe.$set(portraitframe_changes);
+    },
     i(local) {
       if (current)
         return;
@@ -26933,10 +27040,51 @@ function create_fragment$w(ctx) {
   };
 }
 __name(create_fragment$w, "create_fragment$w");
+function instance$p($$self, $$props, $$invalidate) {
+  let $documentStore;
+  const application = getContext("#external").application;
+  const documentStore = getContext("#doc");
+  component_subscribe($$self, documentStore, (value) => $$invalidate(0, $documentStore = value));
+  let _filePickerInstance = {};
+  function _launchStandardProfileEditor(event) {
+    const current = $documentStore.img;
+    if (_filePickerInstance instanceof FilePicker && !_filePickerInstance?.rendered) {
+      _filePickerInstance.render(true);
+      return;
+    }
+    _filePickerInstance = new FilePicker({
+      type: "image",
+      current,
+      callback: (path) => {
+        $documentStore.update({ img: path });
+      },
+      top: application.position.top + 40,
+      left: application.position.left + 10
+    });
+    return _filePickerInstance.browse();
+  }
+  __name(_launchStandardProfileEditor, "_launchStandardProfileEditor");
+  function _editToken(event) {
+    if (game.modules.has("vtta-tokenizer") && typeof Tokenizer !== "undefined") {
+      _launchTokenizer();
+    } else {
+      _launchStandardProfileEditor();
+    }
+  }
+  __name(_editToken, "_editToken");
+  function _launchTokenizer() {
+    if (game.modules.has("vtta-tokenizer") && typeof Tokenizer !== "undefined") {
+      Tokenizer.tokenizeActor($documentStore);
+    }
+  }
+  __name(_launchTokenizer, "_launchTokenizer");
+  return [$documentStore, documentStore, _editToken];
+}
+__name(instance$p, "instance$p");
 const _AttributeSection = class _AttributeSection extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, null, create_fragment$w, safe_not_equal, {});
+    init(this, options, instance$p, create_fragment$w, safe_not_equal, {});
   }
 };
 __name(_AttributeSection, "AttributeSection");
@@ -28055,7 +28203,7 @@ function create_fragment$p(ctx) {
       h10.textContent = "Details";
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label>Character Name:</label>`;
+      div0.innerHTML = `<label class="gold">Character Name:</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       h11 = element("h1");
@@ -28064,9 +28212,12 @@ function create_fragment$p(ctx) {
       h12 = element("h1");
       h12.textContent = "Notes";
       create_component(prosemirror1.$$.fragment);
+      attr(h10, "class", "gold");
       attr(div0, "class", "flex2");
       attr(div1, "class", "flex2 wide");
       attr(div2, "class", "flexrow justify-vertical");
+      attr(h11, "class", "gold");
+      attr(h12, "class", "gold");
     },
     m(target, anchor) {
       insert(target, h10, anchor);
@@ -28743,7 +28894,7 @@ function create_fragment$n(ctx) {
     p(ctx2, [dirty]) {
       const applicationshell_changes = {};
       if (dirty & /*$$scope, tabs*/
-      262152) {
+      32776) {
         applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
       }
       if (!updating_elementRoot && dirty & /*elementRoot*/
@@ -28783,7 +28934,7 @@ function instance$i($$self, $$props, $$invalidate) {
   let tabs;
   let $applicationWindowHeaderIconsOnly;
   let $headerButtonNoLabel;
-  let $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(11, $$value)), documentStore), "$$subscribe_documentStore");
+  let $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(10, $$value)), documentStore), "$$subscribe_documentStore");
   $$self.$$.on_destroy.push(() => $$unsubscribe_documentStore());
   let { elementRoot } = $$props;
   let { documentStore } = $$props;
@@ -28793,34 +28944,34 @@ function instance$i($$self, $$props, $$invalidate) {
   const applicationWindowHeaderIconsOnly2 = gameSettings.getStore("applicationWindowHeaderIconsOnly");
   component_subscribe($$self, applicationWindowHeaderIconsOnly2, (value) => $$invalidate(6, $applicationWindowHeaderIconsOnly = value));
   let headerButtonNoLabel = application.reactive.storeAppOptions.headerButtonNoLabel;
-  component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(10, $headerButtonNoLabel = value));
+  component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(9, $headerButtonNoLabel = value));
   const defaultTabs = [
     {
       label: localize("FF15.Tabs.Attributes"),
       id: "attributes",
       component: Attributes,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/attributes.webp",
+      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp",
       icon: "fas fa-chart-simple"
     },
     {
       label: localize("FF15.Tabs.Abilities"),
       id: "abilities",
       component: Abilities,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/abilities.webp",
+      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp",
       icon: "fas fa-list"
     },
     {
       label: localize("FF15.Tabs.Inventory"),
       id: "inventory",
       component: Inventory,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/inventory.webp",
+      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp",
       icon: "fas fa-shelves"
     },
     {
       label: localize("FF15.Tabs.Profile"),
       id: "profile",
       component: Profile,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/profile.webp",
+      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp",
       icon: "fas fa-user"
     }
   ];
@@ -29311,6 +29462,42 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
 __name(_FF15ActorSheet, "FF15ActorSheet");
 let FF15ActorSheet = _FF15ActorSheet;
 const Header_svelte_svelte_type_style_lang = "";
+function create_if_block_9$1(ctx) {
+  let li;
+  let t0;
+  let t1_value = (
+    /*$item*/
+    ctx[0].system.cost + ""
+  );
+  let t1;
+  let t2;
+  return {
+    c() {
+      li = element("li");
+      t0 = text("Cost: ");
+      t1 = text(t1_value);
+      t2 = text(" MP");
+    },
+    m(target, anchor) {
+      insert(target, li, anchor);
+      append(li, t0);
+      append(li, t1);
+      append(li, t2);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*$item*/
+      1 && t1_value !== (t1_value = /*$item*/
+      ctx2[0].system.cost + ""))
+        set_data(t1, t1_value);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(li);
+      }
+    }
+  };
+}
+__name(create_if_block_9$1, "create_if_block_9$1");
 function create_if_block_8$1(ctx) {
   let li;
   let t0;
@@ -29637,6 +29824,12 @@ function create_fragment$l(ctx) {
   let div1;
   let div0;
   let ol;
+  let li;
+  let t_value = (
+    /*$item*/
+    ctx[0].system.type.capitalize() + ""
+  );
+  let t;
   let if_block0_anchor;
   let if_block1_anchor;
   let if_block2_anchor;
@@ -29644,35 +29837,40 @@ function create_fragment$l(ctx) {
   let if_block4_anchor;
   let if_block5_anchor;
   let if_block6_anchor;
+  let if_block7_anchor;
   let if_block0 = (
     /*$item*/
-    ctx[0].system.hasCheck && create_if_block_8$1(ctx)
+    ctx[0].system.hasCost && create_if_block_9$1(ctx)
   );
   let if_block1 = (
     /*$item*/
-    ctx[0].system.hasCR && create_if_block_7$1(ctx)
+    ctx[0].system.hasCheck && create_if_block_8$1(ctx)
   );
   let if_block2 = (
     /*$item*/
-    ctx[0].system.directHitType && create_if_block_5$1(ctx)
+    ctx[0].system.hasCR && create_if_block_7$1(ctx)
   );
   let if_block3 = (
     /*$item*/
-    ctx[0].system.hasHeavierShot && create_if_block_4$1(ctx)
+    ctx[0].system.directHitType && create_if_block_5$1(ctx)
   );
   let if_block4 = (
     /*$item*/
-    ctx[0].system.hasLimitation && create_if_block_3$1(ctx)
+    ctx[0].system.hasHeavierShot && create_if_block_4$1(ctx)
   );
   let if_block5 = (
     /*$item*/
-    ctx[0].system.hasRanged && create_if_block_2$2(ctx)
+    ctx[0].system.hasLimitation && create_if_block_3$1(ctx)
   );
   let if_block6 = (
     /*$item*/
-    ctx[0].system.hasTarget && create_if_block_1$2(ctx)
+    ctx[0].system.hasRanged && create_if_block_2$2(ctx)
   );
   let if_block7 = (
+    /*$item*/
+    ctx[0].system.hasTarget && create_if_block_1$2(ctx)
+  );
+  let if_block8 = (
     /*$item*/
     ctx[0].system.hasTrigger && create_if_block$7(ctx)
   );
@@ -29683,6 +29881,8 @@ function create_fragment$l(ctx) {
       div1 = element("div");
       div0 = element("div");
       ol = element("ol");
+      li = element("li");
+      t = text(t_value);
       if (if_block0)
         if_block0.c();
       if_block0_anchor = empty();
@@ -29706,6 +29906,10 @@ function create_fragment$l(ctx) {
       if_block6_anchor = empty();
       if (if_block7)
         if_block7.c();
+      if_block7_anchor = empty();
+      if (if_block8)
+        if_block8.c();
+      attr(li, "class", "bg-gold white border-gold");
       attr(ol, "class", "properties-list svelte-FF15-1j7mfxl");
       attr(div0, "class", "flexcol flex1 left svelte-FF15-1j7mfxl");
       attr(div1, "class", "flexrow svelte-FF15-1j7mfxl");
@@ -29718,6 +29922,8 @@ function create_fragment$l(ctx) {
       append(div2, div1);
       append(div1, div0);
       append(div0, ol);
+      append(ol, li);
+      append(li, t);
       if (if_block0)
         if_block0.m(ol, null);
       append(ol, if_block0_anchor);
@@ -29741,16 +29947,23 @@ function create_fragment$l(ctx) {
       append(ol, if_block6_anchor);
       if (if_block7)
         if_block7.m(ol, null);
+      append(ol, if_block7_anchor);
+      if (if_block8)
+        if_block8.m(ol, null);
     },
     p(ctx2, [dirty]) {
+      if (dirty & /*$item*/
+      1 && t_value !== (t_value = /*$item*/
+      ctx2[0].system.type.capitalize() + ""))
+        set_data(t, t_value);
       if (
         /*$item*/
-        ctx2[0].system.hasCheck
+        ctx2[0].system.hasCost
       ) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_8$1(ctx2);
+          if_block0 = create_if_block_9$1(ctx2);
           if_block0.c();
           if_block0.m(ol, if_block0_anchor);
         }
@@ -29760,12 +29973,12 @@ function create_fragment$l(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasCR
+        ctx2[0].system.hasCheck
       ) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block_7$1(ctx2);
+          if_block1 = create_if_block_8$1(ctx2);
           if_block1.c();
           if_block1.m(ol, if_block1_anchor);
         }
@@ -29775,12 +29988,12 @@ function create_fragment$l(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.directHitType
+        ctx2[0].system.hasCR
       ) {
         if (if_block2) {
           if_block2.p(ctx2, dirty);
         } else {
-          if_block2 = create_if_block_5$1(ctx2);
+          if_block2 = create_if_block_7$1(ctx2);
           if_block2.c();
           if_block2.m(ol, if_block2_anchor);
         }
@@ -29790,12 +30003,12 @@ function create_fragment$l(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasHeavierShot
+        ctx2[0].system.directHitType
       ) {
         if (if_block3) {
           if_block3.p(ctx2, dirty);
         } else {
-          if_block3 = create_if_block_4$1(ctx2);
+          if_block3 = create_if_block_5$1(ctx2);
           if_block3.c();
           if_block3.m(ol, if_block3_anchor);
         }
@@ -29805,12 +30018,12 @@ function create_fragment$l(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasLimitation
+        ctx2[0].system.hasHeavierShot
       ) {
         if (if_block4) {
           if_block4.p(ctx2, dirty);
         } else {
-          if_block4 = create_if_block_3$1(ctx2);
+          if_block4 = create_if_block_4$1(ctx2);
           if_block4.c();
           if_block4.m(ol, if_block4_anchor);
         }
@@ -29820,12 +30033,12 @@ function create_fragment$l(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasRanged
+        ctx2[0].system.hasLimitation
       ) {
         if (if_block5) {
           if_block5.p(ctx2, dirty);
         } else {
-          if_block5 = create_if_block_2$2(ctx2);
+          if_block5 = create_if_block_3$1(ctx2);
           if_block5.c();
           if_block5.m(ol, if_block5_anchor);
         }
@@ -29835,12 +30048,12 @@ function create_fragment$l(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasTarget
+        ctx2[0].system.hasRanged
       ) {
         if (if_block6) {
           if_block6.p(ctx2, dirty);
         } else {
-          if_block6 = create_if_block_1$2(ctx2);
+          if_block6 = create_if_block_2$2(ctx2);
           if_block6.c();
           if_block6.m(ol, if_block6_anchor);
         }
@@ -29850,18 +30063,33 @@ function create_fragment$l(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasTrigger
+        ctx2[0].system.hasTarget
       ) {
         if (if_block7) {
           if_block7.p(ctx2, dirty);
         } else {
-          if_block7 = create_if_block$7(ctx2);
+          if_block7 = create_if_block_1$2(ctx2);
           if_block7.c();
-          if_block7.m(ol, null);
+          if_block7.m(ol, if_block7_anchor);
         }
       } else if (if_block7) {
         if_block7.d(1);
         if_block7 = null;
+      }
+      if (
+        /*$item*/
+        ctx2[0].system.hasTrigger
+      ) {
+        if (if_block8) {
+          if_block8.p(ctx2, dirty);
+        } else {
+          if_block8 = create_if_block$7(ctx2);
+          if_block8.c();
+          if_block8.m(ol, null);
+        }
+      } else if (if_block8) {
+        if_block8.d(1);
+        if_block8 = null;
       }
     },
     i: noop,
@@ -29886,6 +30114,8 @@ function create_fragment$l(ctx) {
         if_block6.d();
       if (if_block7)
         if_block7.d();
+      if (if_block8)
+        if_block8.d();
     }
   };
 }
@@ -31167,7 +31397,64 @@ const _DocCheckbox = class _DocCheckbox extends SvelteComponent {
 __name(_DocCheckbox, "DocCheckbox");
 let DocCheckbox = _DocCheckbox;
 const Details_svelte_svelte_type_style_lang$2 = "";
-function create_if_block_8(ctx) {
+function create_if_block_10(ctx) {
+  let div2;
+  let div0;
+  let div1;
+  let docselect;
+  let current;
+  docselect = new DocSelect({
+    props: {
+      class: "right",
+      id: "cost",
+      name: "cost",
+      type: "number",
+      options: (
+        /*costOptions*/
+        ctx[11]
+      ),
+      valuePath: "system.cost"
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      div0.innerHTML = `<label for="cost">MP</label>`;
+      div1 = element("div");
+      create_component(docselect.$$.fragment);
+      attr(div0, "class", "flex3");
+      attr(div1, "class", "flex2 right");
+      attr(div2, "class", "flexrow sheet-row justify-vertical");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      append(div2, div1);
+      mount_component(docselect, div1, null);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(docselect.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(docselect.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(docselect);
+    }
+  };
+}
+__name(create_if_block_10, "create_if_block_10");
+function create_if_block_9(ctx) {
   let div2;
   let div0;
   let div1;
@@ -31229,8 +31516,8 @@ function create_if_block_8(ctx) {
     }
   };
 }
-__name(create_if_block_8, "create_if_block_8");
-function create_if_block_7(ctx) {
+__name(create_if_block_9, "create_if_block_9");
+function create_if_block_8(ctx) {
   let div2;
   let div0;
   let div1;
@@ -31285,114 +31572,8 @@ function create_if_block_7(ctx) {
     }
   };
 }
-__name(create_if_block_7, "create_if_block_7");
-function create_if_block_6(ctx) {
-  let div2;
-  let div0;
-  let div1;
-  let docselect;
-  let current;
-  docselect = new DocSelect({
-    props: {
-      class: "right",
-      id: "directHitType",
-      name: "directHitType",
-      options: (
-        /*directHitOptions*/
-        ctx[3]
-      ),
-      valuePath: "system.directHitType"
-    }
-  });
-  return {
-    c() {
-      div2 = element("div");
-      div0 = element("div");
-      div0.innerHTML = `<label for="directHitType">Direct Hit Type</label>`;
-      div1 = element("div");
-      create_component(docselect.$$.fragment);
-      attr(div0, "class", "flex4");
-      attr(div1, "class", "flex0 right");
-      attr(div2, "class", "flexrow sheet-row justify-vertical");
-    },
-    m(target, anchor) {
-      insert(target, div2, anchor);
-      append(div2, div0);
-      append(div2, div1);
-      mount_component(docselect, div1, null);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(docselect.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(docselect.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div2);
-      }
-      destroy_component(docselect);
-    }
-  };
-}
-__name(create_if_block_6, "create_if_block_6");
-function create_if_block_5(ctx) {
-  let div2;
-  let div0;
-  let div1;
-  let docinput;
-  let current;
-  docinput = new DocInput({
-    props: {
-      id: "directHitDamage",
-      name: "directHitDamage",
-      valuePath: "system.directHitDamage"
-    }
-  });
-  return {
-    c() {
-      div2 = element("div");
-      div0 = element("div");
-      div0.innerHTML = `<label for="directHitDamage">Direct Hit Damage </label>`;
-      div1 = element("div");
-      create_component(docinput.$$.fragment);
-      attr(div0, "class", "flex2");
-      attr(div1, "class", "flex2 right");
-      attr(div2, "class", "flexrow sheet-row justify-vertical");
-    },
-    m(target, anchor) {
-      insert(target, div2, anchor);
-      append(div2, div0);
-      append(div2, div1);
-      mount_component(docinput, div1, null);
-      current = true;
-    },
-    i(local) {
-      if (current)
-        return;
-      transition_in(docinput.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(docinput.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div2);
-      }
-      destroy_component(docinput);
-    }
-  };
-}
-__name(create_if_block_5, "create_if_block_5");
-function create_if_block_4(ctx) {
+__name(create_if_block_8, "create_if_block_8");
+function create_if_block_7(ctx) {
   let div2;
   let div0;
   let div1;
@@ -31447,8 +31628,8 @@ function create_if_block_4(ctx) {
     }
   };
 }
-__name(create_if_block_4, "create_if_block_4");
-function create_if_block_3(ctx) {
+__name(create_if_block_7, "create_if_block_7");
+function create_if_block_6(ctx) {
   let div2;
   let div0;
   let div1;
@@ -31504,8 +31685,8 @@ function create_if_block_3(ctx) {
     }
   };
 }
-__name(create_if_block_3, "create_if_block_3");
-function create_if_block_2$1(ctx) {
+__name(create_if_block_6, "create_if_block_6");
+function create_if_block_5(ctx) {
   let div2;
   let div0;
   let div1;
@@ -31560,8 +31741,8 @@ function create_if_block_2$1(ctx) {
     }
   };
 }
-__name(create_if_block_2$1, "create_if_block_2$1");
-function create_if_block_1$1(ctx) {
+__name(create_if_block_5, "create_if_block_5");
+function create_if_block_4(ctx) {
   let div2;
   let div0;
   let div1;
@@ -31616,8 +31797,8 @@ function create_if_block_1$1(ctx) {
     }
   };
 }
-__name(create_if_block_1$1, "create_if_block_1$1");
-function create_if_block$3(ctx) {
+__name(create_if_block_4, "create_if_block_4");
+function create_if_block_3(ctx) {
   let div2;
   let div0;
   let div1;
@@ -31673,74 +31854,259 @@ function create_if_block$3(ctx) {
     }
   };
 }
-__name(create_if_block$3, "create_if_block$3");
-function create_fragment$g(ctx) {
-  let div25;
-  let div24;
+__name(create_if_block_3, "create_if_block_3");
+function create_if_block_2$1(ctx) {
   let div2;
   let div0;
   let div1;
-  let doccheckbox0;
+  let docselect;
+  let current;
+  docselect = new DocSelect({
+    props: {
+      class: "right",
+      id: "directHitType",
+      name: "directHitType",
+      options: (
+        /*directHitOptions*/
+        ctx[3]
+      ),
+      valuePath: "system.directHitType"
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      div0.innerHTML = `<label for="directHitType">Direct Hit Type</label>`;
+      div1 = element("div");
+      create_component(docselect.$$.fragment);
+      attr(div0, "class", "flex4");
+      attr(div1, "class", "flex0 right");
+      attr(div2, "class", "flexrow sheet-row justify-vertical");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      append(div2, div1);
+      mount_component(docselect, div1, null);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(docselect.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(docselect.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(docselect);
+    }
+  };
+}
+__name(create_if_block_2$1, "create_if_block_2$1");
+function create_if_block_1$1(ctx) {
+  let div2;
+  let div0;
+  let div1;
+  let docinput;
+  let current;
+  docinput = new DocInput({
+    props: {
+      id: "directHitDamage",
+      name: "directHitDamage",
+      valuePath: "system.directHitDamage"
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      div0.innerHTML = `<label for="directHitDamage">Direct Hit Damage </label>`;
+      div1 = element("div");
+      create_component(docinput.$$.fragment);
+      attr(div0, "class", "flex2");
+      attr(div1, "class", "flex2 right");
+      attr(div2, "class", "flexrow sheet-row justify-vertical");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      append(div2, div1);
+      mount_component(docinput, div1, null);
+      current = true;
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(docinput.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(docinput.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(docinput);
+    }
+  };
+}
+__name(create_if_block_1$1, "create_if_block_1$1");
+function create_if_block$3(ctx) {
+  let div2;
+  let div0;
+  let div1;
+  let prosemirror;
+  let current;
+  prosemirror = new ProseMirror$1({
+    props: {
+      id: "directHitText",
+      name: "directHitText",
+      attr: "system.directHitText"
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      div0.innerHTML = `<h3 class="left">Direct Hit Text </h3>`;
+      div1 = element("div");
+      create_component(prosemirror.$$.fragment);
+      attr(div0, "class", "flex2");
+      attr(div1, "class", "flex2 left prose high");
+      attr(div2, "class", "flexcol sheet-row justify-vertical high");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      append(div2, div1);
+      mount_component(prosemirror, div1, null);
+      current = true;
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(prosemirror.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(prosemirror.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(prosemirror);
+    }
+  };
+}
+__name(create_if_block$3, "create_if_block$3");
+function create_fragment$g(ctx) {
+  let div34;
+  let div33;
+  let div2;
+  let div0;
+  let div1;
+  let docselect;
   let div5;
   let div3;
   let div4;
-  let doccheckbox1;
+  let docinput;
   let div8;
   let div6;
   let div7;
-  let doccheckbox2;
-  let if_block2_anchor;
+  let doccheckbox0;
   let div11;
   let div9;
   let div10;
-  let doccheckbox3;
+  let doccheckbox1;
   let div14;
   let div12;
   let div13;
-  let doccheckbox4;
+  let doccheckbox2;
   let div17;
   let div15;
   let div16;
-  let doccheckbox5;
+  let doccheckbox3;
   let div20;
   let div18;
   let div19;
-  let doccheckbox6;
+  let doccheckbox4;
   let div23;
   let div21;
   let div22;
+  let doccheckbox5;
+  let div26;
+  let div24;
+  let div25;
+  let doccheckbox6;
+  let div29;
+  let div27;
+  let div28;
   let doccheckbox7;
+  let div32;
+  let div30;
+  let div31;
+  let doccheckbox8;
+  let if_block8_anchor;
+  let if_block9_anchor;
   let current;
+  docselect = new DocSelect({
+    props: {
+      class: "right",
+      id: "type",
+      name: "type",
+      type: "number",
+      options: (
+        /*typeOptions*/
+        ctx[10]
+      ),
+      valuePath: "system.type"
+    }
+  });
+  docinput = new DocInput({
+    props: {
+      id: "formula",
+      name: "formula",
+      valuePath: "system.formula"
+    }
+  });
   doccheckbox0 = new DocCheckbox({
+    props: {
+      name: "hasCost",
+      valuePath: "system.hasCost"
+    }
+  });
+  let if_block0 = (
+    /*$item*/
+    ctx[0].system.hasCost && create_if_block_10(ctx)
+  );
+  doccheckbox1 = new DocCheckbox({
     props: {
       name: "hasCheck",
       valuePath: "system.hasCheck"
     }
   });
-  let if_block0 = (
-    /*$item*/
-    ctx[0].system.hasCheck && create_if_block_8(ctx)
-  );
-  doccheckbox1 = new DocCheckbox({
-    props: { name: "hasCR", valuePath: "system.hasCR" }
-  });
   let if_block1 = (
     /*$item*/
-    ctx[0].system.hasCR && create_if_block_7(ctx)
+    ctx[0].system.hasCheck && create_if_block_9(ctx)
   );
   doccheckbox2 = new DocCheckbox({
-    props: {
-      name: "hasDirectHit",
-      valuePath: "system.hasDirectHit"
-    }
+    props: { name: "hasCR", valuePath: "system.hasCR" }
   });
   let if_block2 = (
     /*$item*/
-    ctx[0].system.hasDirectHit && create_if_block_6(ctx)
-  );
-  let if_block3 = (
-    /*$item*/
-    ctx[0].system.directHitType === "damage" && create_if_block_5()
+    ctx[0].system.hasCR && create_if_block_8(ctx)
   );
   doccheckbox3 = new DocCheckbox({
     props: {
@@ -31748,9 +32114,9 @@ function create_fragment$g(ctx) {
       valuePath: "system.hasHeavierShot"
     }
   });
-  let if_block4 = (
+  let if_block3 = (
     /*$item*/
-    ctx[0].system.hasHeavierShot && create_if_block_4(ctx)
+    ctx[0].system.hasHeavierShot && create_if_block_7(ctx)
   );
   doccheckbox4 = new DocCheckbox({
     props: {
@@ -31758,9 +32124,9 @@ function create_fragment$g(ctx) {
       valuePath: "system.hasLimitation"
     }
   });
-  let if_block5 = (
+  let if_block4 = (
     /*$item*/
-    ctx[0].system.hasLimitation && create_if_block_3(ctx)
+    ctx[0].system.hasLimitation && create_if_block_6(ctx)
   );
   doccheckbox5 = new DocCheckbox({
     props: {
@@ -31768,9 +32134,9 @@ function create_fragment$g(ctx) {
       valuePath: "system.hasRanged"
     }
   });
-  let if_block6 = (
+  let if_block5 = (
     /*$item*/
-    ctx[0].system.hasRanged && create_if_block_2$1(ctx)
+    ctx[0].system.hasRanged && create_if_block_5(ctx)
   );
   doccheckbox6 = new DocCheckbox({
     props: {
@@ -31779,9 +32145,9 @@ function create_fragment$g(ctx) {
       valuePath: "system.hasTarget"
     }
   });
-  let if_block7 = (
+  let if_block6 = (
     /*$item*/
-    ctx[0].system.hasTarget && create_if_block_1$1(ctx)
+    ctx[0].system.hasTarget && create_if_block_4(ctx)
   );
   doccheckbox7 = new DocCheckbox({
     props: {
@@ -31789,79 +32155,117 @@ function create_fragment$g(ctx) {
       valuePath: "system.hasTrigger"
     }
   });
+  let if_block7 = (
+    /*$item*/
+    ctx[0].system.hasTrigger && create_if_block_3(ctx)
+  );
+  doccheckbox8 = new DocCheckbox({
+    props: {
+      name: "hasDirectHit",
+      valuePath: "system.hasDirectHit"
+    }
+  });
   let if_block8 = (
     /*$item*/
-    ctx[0].system.hasTrigger && create_if_block$3(ctx)
+    ctx[0].system.hasDirectHit && create_if_block_2$1(ctx)
+  );
+  let if_block9 = (
+    /*$item*/
+    ctx[0].system.directHitType === "damage" && create_if_block_1$1()
+  );
+  let if_block10 = (
+    /*$item*/
+    ctx[0].system.hasDirectHit && create_if_block$3()
   );
   return {
     c() {
-      div25 = element("div");
-      div24 = element("div");
+      div34 = element("div");
+      div33 = element("div");
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<h3 class="left">Checks</h3>`;
+      div0.innerHTML = `<label for="type">Type</label>`;
       div1 = element("div");
+      create_component(docselect.$$.fragment);
+      div5 = element("div");
+      div3 = element("div");
+      div3.innerHTML = `<label for="formula">Damage / Heal Formula</label>`;
+      div4 = element("div");
+      create_component(docinput.$$.fragment);
+      div8 = element("div");
+      div6 = element("div");
+      div6.innerHTML = `<h3 class="left">Cost</h3>`;
+      div7 = element("div");
       create_component(doccheckbox0.$$.fragment);
       if (if_block0)
         if_block0.c();
-      div5 = element("div");
-      div3 = element("div");
-      div3.innerHTML = `<h3 class="left">CR</h3>`;
-      div4 = element("div");
+      div11 = element("div");
+      div9 = element("div");
+      div9.innerHTML = `<h3 class="left">Checks</h3>`;
+      div10 = element("div");
       create_component(doccheckbox1.$$.fragment);
       if (if_block1)
         if_block1.c();
-      div8 = element("div");
-      div6 = element("div");
-      div6.innerHTML = `<h3 class="left">Direct Hit</h3>`;
-      div7 = element("div");
+      div14 = element("div");
+      div12 = element("div");
+      div12.innerHTML = `<h3 class="left">CR</h3>`;
+      div13 = element("div");
       create_component(doccheckbox2.$$.fragment);
       if (if_block2)
         if_block2.c();
-      if_block2_anchor = empty();
-      if (if_block3)
-        if_block3.c();
-      div11 = element("div");
-      div9 = element("div");
-      div9.innerHTML = `<h3 class="left">Heavier Shot</h3>`;
-      div10 = element("div");
-      create_component(doccheckbox3.$$.fragment);
-      if (if_block4)
-        if_block4.c();
-      div14 = element("div");
-      div12 = element("div");
-      div12.innerHTML = `<h3 class="left">Limitation</h3>`;
-      div13 = element("div");
-      create_component(doccheckbox4.$$.fragment);
-      if (if_block5)
-        if_block5.c();
       div17 = element("div");
       div15 = element("div");
-      div15.innerHTML = `<h3 class="left">Range</h3>`;
+      div15.innerHTML = `<h3 class="left">Heavier Shot</h3>`;
       div16 = element("div");
-      create_component(doccheckbox5.$$.fragment);
-      if (if_block6)
-        if_block6.c();
+      create_component(doccheckbox3.$$.fragment);
+      if (if_block3)
+        if_block3.c();
       div20 = element("div");
       div18 = element("div");
-      div18.innerHTML = `<h3 class="left">Target</h3>`;
+      div18.innerHTML = `<h3 class="left">Limitation</h3>`;
       div19 = element("div");
-      create_component(doccheckbox6.$$.fragment);
-      if (if_block7)
-        if_block7.c();
+      create_component(doccheckbox4.$$.fragment);
+      if (if_block4)
+        if_block4.c();
       div23 = element("div");
       div21 = element("div");
-      div21.innerHTML = `<h3 class="left">Trigger</h3>`;
+      div21.innerHTML = `<h3 class="left">Range</h3>`;
       div22 = element("div");
+      create_component(doccheckbox5.$$.fragment);
+      if (if_block5)
+        if_block5.c();
+      div26 = element("div");
+      div24 = element("div");
+      div24.innerHTML = `<h3 class="left">Target</h3>`;
+      div25 = element("div");
+      create_component(doccheckbox6.$$.fragment);
+      if (if_block6)
+        if_block6.c();
+      div29 = element("div");
+      div27 = element("div");
+      div27.innerHTML = `<h3 class="left">Trigger</h3>`;
+      div28 = element("div");
       create_component(doccheckbox7.$$.fragment);
+      if (if_block7)
+        if_block7.c();
+      div32 = element("div");
+      div30 = element("div");
+      div30.innerHTML = `<h3 class="left">Direct Hit</h3>`;
+      div31 = element("div");
+      create_component(doccheckbox8.$$.fragment);
       if (if_block8)
         if_block8.c();
-      attr(div0, "class", "flex4");
-      attr(div1, "class", "flex0 right");
-      attr(div2, "class", "flexrow justify-vertical");
-      attr(div3, "class", "flex4");
-      attr(div4, "class", "flex0 right");
-      attr(div5, "class", "flexrow justify-vertical");
+      if_block8_anchor = empty();
+      if (if_block9)
+        if_block9.c();
+      if_block9_anchor = empty();
+      if (if_block10)
+        if_block10.c();
+      attr(div0, "class", "flex3");
+      attr(div1, "class", "flex2 right");
+      attr(div2, "class", "flexrow sheet-row justify-vertical");
+      attr(div3, "class", "flex3");
+      attr(div4, "class", "flex2 right");
+      attr(div5, "class", "flexrow sheet-row justify-vertical");
       attr(div6, "class", "flex4");
       attr(div7, "class", "flex0 right");
       attr(div8, "class", "flexrow justify-vertical");
@@ -31880,69 +32284,95 @@ function create_fragment$g(ctx) {
       attr(div21, "class", "flex4");
       attr(div22, "class", "flex0 right");
       attr(div23, "class", "flexrow justify-vertical");
-      attr(div24, "class", "flexcol flex3 left");
-      attr(div25, "class", "item-sheet details svelte-FF15-1tif2n8");
+      attr(div24, "class", "flex4");
+      attr(div25, "class", "flex0 right");
+      attr(div26, "class", "flexrow justify-vertical");
+      attr(div27, "class", "flex4");
+      attr(div28, "class", "flex0 right");
+      attr(div29, "class", "flexrow justify-vertical");
+      attr(div30, "class", "flex4");
+      attr(div31, "class", "flex0 right");
+      attr(div32, "class", "flexrow justify-vertical");
+      attr(div33, "class", "flexcol flex3 left high");
+      attr(div34, "class", "item-sheet details overflow svelte-FF15-1tif2n8");
     },
     m(target, anchor) {
-      insert(target, div25, anchor);
-      append(div25, div24);
-      append(div24, div2);
+      insert(target, div34, anchor);
+      append(div34, div33);
+      append(div33, div2);
       append(div2, div0);
       append(div2, div1);
-      mount_component(doccheckbox0, div1, null);
-      if (if_block0)
-        if_block0.m(div24, null);
-      append(div24, div5);
+      mount_component(docselect, div1, null);
+      append(div33, div5);
       append(div5, div3);
       append(div5, div4);
-      mount_component(doccheckbox1, div4, null);
-      if (if_block1)
-        if_block1.m(div24, null);
-      append(div24, div8);
+      mount_component(docinput, div4, null);
+      append(div33, div8);
       append(div8, div6);
       append(div8, div7);
-      mount_component(doccheckbox2, div7, null);
-      if (if_block2)
-        if_block2.m(div24, null);
-      append(div24, if_block2_anchor);
-      if (if_block3)
-        if_block3.m(div24, null);
-      append(div24, div11);
+      mount_component(doccheckbox0, div7, null);
+      if (if_block0)
+        if_block0.m(div33, null);
+      append(div33, div11);
       append(div11, div9);
       append(div11, div10);
-      mount_component(doccheckbox3, div10, null);
-      if (if_block4)
-        if_block4.m(div24, null);
-      append(div24, div14);
+      mount_component(doccheckbox1, div10, null);
+      if (if_block1)
+        if_block1.m(div33, null);
+      append(div33, div14);
       append(div14, div12);
       append(div14, div13);
-      mount_component(doccheckbox4, div13, null);
-      if (if_block5)
-        if_block5.m(div24, null);
-      append(div24, div17);
+      mount_component(doccheckbox2, div13, null);
+      if (if_block2)
+        if_block2.m(div33, null);
+      append(div33, div17);
       append(div17, div15);
       append(div17, div16);
-      mount_component(doccheckbox5, div16, null);
-      if (if_block6)
-        if_block6.m(div24, null);
-      append(div24, div20);
+      mount_component(doccheckbox3, div16, null);
+      if (if_block3)
+        if_block3.m(div33, null);
+      append(div33, div20);
       append(div20, div18);
       append(div20, div19);
-      mount_component(doccheckbox6, div19, null);
-      if (if_block7)
-        if_block7.m(div24, null);
-      append(div24, div23);
+      mount_component(doccheckbox4, div19, null);
+      if (if_block4)
+        if_block4.m(div33, null);
+      append(div33, div23);
       append(div23, div21);
       append(div23, div22);
-      mount_component(doccheckbox7, div22, null);
+      mount_component(doccheckbox5, div22, null);
+      if (if_block5)
+        if_block5.m(div33, null);
+      append(div33, div26);
+      append(div26, div24);
+      append(div26, div25);
+      mount_component(doccheckbox6, div25, null);
+      if (if_block6)
+        if_block6.m(div33, null);
+      append(div33, div29);
+      append(div29, div27);
+      append(div29, div28);
+      mount_component(doccheckbox7, div28, null);
+      if (if_block7)
+        if_block7.m(div33, null);
+      append(div33, div32);
+      append(div32, div30);
+      append(div32, div31);
+      mount_component(doccheckbox8, div31, null);
       if (if_block8)
-        if_block8.m(div24, null);
+        if_block8.m(div33, null);
+      append(div33, if_block8_anchor);
+      if (if_block9)
+        if_block9.m(div33, null);
+      append(div33, if_block9_anchor);
+      if (if_block10)
+        if_block10.m(div33, null);
       current = true;
     },
     p(ctx2, [dirty]) {
       if (
         /*$item*/
-        ctx2[0].system.hasCheck
+        ctx2[0].system.hasCost
       ) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
@@ -31951,10 +32381,10 @@ function create_fragment$g(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_8(ctx2);
+          if_block0 = create_if_block_10(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
-          if_block0.m(div24, div5);
+          if_block0.m(div33, div11);
         }
       } else if (if_block0) {
         group_outros();
@@ -31965,7 +32395,7 @@ function create_fragment$g(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasCR
+        ctx2[0].system.hasCheck
       ) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
@@ -31974,10 +32404,10 @@ function create_fragment$g(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_7(ctx2);
+          if_block1 = create_if_block_9(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
-          if_block1.m(div24, div8);
+          if_block1.m(div33, div14);
         }
       } else if (if_block1) {
         group_outros();
@@ -31988,7 +32418,7 @@ function create_fragment$g(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasDirectHit
+        ctx2[0].system.hasCR
       ) {
         if (if_block2) {
           if_block2.p(ctx2, dirty);
@@ -31997,10 +32427,10 @@ function create_fragment$g(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_6(ctx2);
+          if_block2 = create_if_block_8(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
-          if_block2.m(div24, if_block2_anchor);
+          if_block2.m(div33, div17);
         }
       } else if (if_block2) {
         group_outros();
@@ -32011,18 +32441,19 @@ function create_fragment$g(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.directHitType === "damage"
+        ctx2[0].system.hasHeavierShot
       ) {
         if (if_block3) {
+          if_block3.p(ctx2, dirty);
           if (dirty & /*$item*/
           1) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block_5();
+          if_block3 = create_if_block_7(ctx2);
           if_block3.c();
           transition_in(if_block3, 1);
-          if_block3.m(div24, div11);
+          if_block3.m(div33, div20);
         }
       } else if (if_block3) {
         group_outros();
@@ -32033,7 +32464,7 @@ function create_fragment$g(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasHeavierShot
+        ctx2[0].system.hasLimitation
       ) {
         if (if_block4) {
           if_block4.p(ctx2, dirty);
@@ -32042,10 +32473,10 @@ function create_fragment$g(ctx) {
             transition_in(if_block4, 1);
           }
         } else {
-          if_block4 = create_if_block_4(ctx2);
+          if_block4 = create_if_block_6(ctx2);
           if_block4.c();
           transition_in(if_block4, 1);
-          if_block4.m(div24, div14);
+          if_block4.m(div33, div23);
         }
       } else if (if_block4) {
         group_outros();
@@ -32056,7 +32487,7 @@ function create_fragment$g(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasLimitation
+        ctx2[0].system.hasRanged
       ) {
         if (if_block5) {
           if_block5.p(ctx2, dirty);
@@ -32065,10 +32496,10 @@ function create_fragment$g(ctx) {
             transition_in(if_block5, 1);
           }
         } else {
-          if_block5 = create_if_block_3(ctx2);
+          if_block5 = create_if_block_5(ctx2);
           if_block5.c();
           transition_in(if_block5, 1);
-          if_block5.m(div24, div17);
+          if_block5.m(div33, div26);
         }
       } else if (if_block5) {
         group_outros();
@@ -32079,7 +32510,7 @@ function create_fragment$g(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasRanged
+        ctx2[0].system.hasTarget
       ) {
         if (if_block6) {
           if_block6.p(ctx2, dirty);
@@ -32088,10 +32519,10 @@ function create_fragment$g(ctx) {
             transition_in(if_block6, 1);
           }
         } else {
-          if_block6 = create_if_block_2$1(ctx2);
+          if_block6 = create_if_block_4(ctx2);
           if_block6.c();
           transition_in(if_block6, 1);
-          if_block6.m(div24, div20);
+          if_block6.m(div33, div29);
         }
       } else if (if_block6) {
         group_outros();
@@ -32102,7 +32533,7 @@ function create_fragment$g(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasTarget
+        ctx2[0].system.hasTrigger
       ) {
         if (if_block7) {
           if_block7.p(ctx2, dirty);
@@ -32111,10 +32542,10 @@ function create_fragment$g(ctx) {
             transition_in(if_block7, 1);
           }
         } else {
-          if_block7 = create_if_block_1$1(ctx2);
+          if_block7 = create_if_block_3(ctx2);
           if_block7.c();
           transition_in(if_block7, 1);
-          if_block7.m(div24, div23);
+          if_block7.m(div33, div32);
         }
       } else if (if_block7) {
         group_outros();
@@ -32125,7 +32556,7 @@ function create_fragment$g(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasTrigger
+        ctx2[0].system.hasDirectHit
       ) {
         if (if_block8) {
           if_block8.p(ctx2, dirty);
@@ -32134,10 +32565,10 @@ function create_fragment$g(ctx) {
             transition_in(if_block8, 1);
           }
         } else {
-          if_block8 = create_if_block$3(ctx2);
+          if_block8 = create_if_block_2$1(ctx2);
           if_block8.c();
           transition_in(if_block8, 1);
-          if_block8.m(div24, null);
+          if_block8.m(div33, if_block8_anchor);
         }
       } else if (if_block8) {
         group_outros();
@@ -32146,53 +32577,109 @@ function create_fragment$g(ctx) {
         });
         check_outros();
       }
+      if (
+        /*$item*/
+        ctx2[0].system.directHitType === "damage"
+      ) {
+        if (if_block9) {
+          if (dirty & /*$item*/
+          1) {
+            transition_in(if_block9, 1);
+          }
+        } else {
+          if_block9 = create_if_block_1$1();
+          if_block9.c();
+          transition_in(if_block9, 1);
+          if_block9.m(div33, if_block9_anchor);
+        }
+      } else if (if_block9) {
+        group_outros();
+        transition_out(if_block9, 1, 1, () => {
+          if_block9 = null;
+        });
+        check_outros();
+      }
+      if (
+        /*$item*/
+        ctx2[0].system.hasDirectHit
+      ) {
+        if (if_block10) {
+          if (dirty & /*$item*/
+          1) {
+            transition_in(if_block10, 1);
+          }
+        } else {
+          if_block10 = create_if_block$3();
+          if_block10.c();
+          transition_in(if_block10, 1);
+          if_block10.m(div33, null);
+        }
+      } else if (if_block10) {
+        group_outros();
+        transition_out(if_block10, 1, 1, () => {
+          if_block10 = null;
+        });
+        check_outros();
+      }
     },
     i(local) {
       if (current)
         return;
+      transition_in(docselect.$$.fragment, local);
+      transition_in(docinput.$$.fragment, local);
       transition_in(doccheckbox0.$$.fragment, local);
       transition_in(if_block0);
       transition_in(doccheckbox1.$$.fragment, local);
       transition_in(if_block1);
       transition_in(doccheckbox2.$$.fragment, local);
       transition_in(if_block2);
-      transition_in(if_block3);
       transition_in(doccheckbox3.$$.fragment, local);
-      transition_in(if_block4);
+      transition_in(if_block3);
       transition_in(doccheckbox4.$$.fragment, local);
-      transition_in(if_block5);
+      transition_in(if_block4);
       transition_in(doccheckbox5.$$.fragment, local);
-      transition_in(if_block6);
+      transition_in(if_block5);
       transition_in(doccheckbox6.$$.fragment, local);
-      transition_in(if_block7);
+      transition_in(if_block6);
       transition_in(doccheckbox7.$$.fragment, local);
+      transition_in(if_block7);
+      transition_in(doccheckbox8.$$.fragment, local);
       transition_in(if_block8);
+      transition_in(if_block9);
+      transition_in(if_block10);
       current = true;
     },
     o(local) {
+      transition_out(docselect.$$.fragment, local);
+      transition_out(docinput.$$.fragment, local);
       transition_out(doccheckbox0.$$.fragment, local);
       transition_out(if_block0);
       transition_out(doccheckbox1.$$.fragment, local);
       transition_out(if_block1);
       transition_out(doccheckbox2.$$.fragment, local);
       transition_out(if_block2);
-      transition_out(if_block3);
       transition_out(doccheckbox3.$$.fragment, local);
-      transition_out(if_block4);
+      transition_out(if_block3);
       transition_out(doccheckbox4.$$.fragment, local);
-      transition_out(if_block5);
+      transition_out(if_block4);
       transition_out(doccheckbox5.$$.fragment, local);
-      transition_out(if_block6);
+      transition_out(if_block5);
       transition_out(doccheckbox6.$$.fragment, local);
-      transition_out(if_block7);
+      transition_out(if_block6);
       transition_out(doccheckbox7.$$.fragment, local);
+      transition_out(if_block7);
+      transition_out(doccheckbox8.$$.fragment, local);
       transition_out(if_block8);
+      transition_out(if_block9);
+      transition_out(if_block10);
       current = false;
     },
     d(detaching) {
       if (detaching) {
-        detach(div25);
+        detach(div34);
       }
+      destroy_component(docselect);
+      destroy_component(docinput);
       destroy_component(doccheckbox0);
       if (if_block0)
         if_block0.d();
@@ -32202,23 +32689,28 @@ function create_fragment$g(ctx) {
       destroy_component(doccheckbox2);
       if (if_block2)
         if_block2.d();
+      destroy_component(doccheckbox3);
       if (if_block3)
         if_block3.d();
-      destroy_component(doccheckbox3);
+      destroy_component(doccheckbox4);
       if (if_block4)
         if_block4.d();
-      destroy_component(doccheckbox4);
+      destroy_component(doccheckbox5);
       if (if_block5)
         if_block5.d();
-      destroy_component(doccheckbox5);
+      destroy_component(doccheckbox6);
       if (if_block6)
         if_block6.d();
-      destroy_component(doccheckbox6);
+      destroy_component(doccheckbox7);
       if (if_block7)
         if_block7.d();
-      destroy_component(doccheckbox7);
+      destroy_component(doccheckbox8);
       if (if_block8)
         if_block8.d();
+      if (if_block9)
+        if_block9.d();
+      if (if_block10)
+        if_block10.d();
     }
   };
 }
@@ -32254,17 +32746,19 @@ function instance$c($$self, $$props, $$invalidate) {
       value: "mag",
       label: localize("FF15.Types.Item.Types.Options.CR.mag")
     },
+    // { value: "vig", label: localize("FF15.Types.Item.Types.Options.CR.vig") },
+    // { value: "spd", label: localize("FF15.Types.Item.Types.Options.CR.spd") },
     {
-      value: "vig",
-      label: localize("FF15.Types.Item.Types.Options.CR.vig")
+      value: "heal",
+      label: localize("FF15.Types.Item.Types.Options.CR.heal")
     },
     {
-      value: "spd",
-      label: localize("FF15.Types.Item.Types.Options.CR.spd")
+      value: "other",
+      label: localize("FF15.Other")
     },
     {
-      value: "special",
-      label: localize("FF15.Types.Item.Types.Options.CR.special")
+      value: "none",
+      label: localize("FF15.None")
     }
   ];
   const targetOptions = [
@@ -32345,6 +32839,46 @@ function instance$c($$self, $$props, $$invalidate) {
       label: localize("FF15.Types.Item.Types.Options.Range.5x5a")
     }
   ];
+  const typeOptions = [
+    {
+      value: "primary",
+      label: localize("FF15.Types.Item.Types.Options.Type.primary")
+    },
+    {
+      value: "secondary",
+      label: localize("FF15.Types.Item.Types.Options.Type.secondary")
+    },
+    {
+      value: "reaction",
+      label: localize("FF15.Types.Item.Types.Options.Type.reaction")
+    },
+    {
+      value: "limit",
+      label: localize("FF15.Types.Item.Types.Options.Type.limit")
+    },
+    {
+      value: "combo",
+      label: localize("FF15.Types.Item.Types.Options.Type.combo")
+    }
+  ];
+  const costOptions = [
+    {
+      value: 1,
+      label: localize("FF15.Types.Item.Types.Options.Cost.1")
+    },
+    {
+      value: 2,
+      label: localize("FF15.Types.Item.Types.Options.Cost.2")
+    },
+    {
+      value: 3,
+      label: localize("FF15.Types.Item.Types.Options.Cost.3")
+    },
+    {
+      value: 4,
+      label: localize("FF15.Types.Item.Types.Options.Cost.4")
+    }
+  ];
   console.log(schemaFieldObjects);
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$item*/
@@ -32365,7 +32899,9 @@ function instance$c($$self, $$props, $$invalidate) {
     limitationOptions,
     heavyshotOptions,
     triggerOptions,
-    rangeOptions
+    rangeOptions,
+    typeOptions,
+    costOptions
   ];
 }
 __name(instance$c, "instance$c");
@@ -32438,6 +32974,7 @@ function create_fragment$f(ctx) {
   let current;
   portraitframe = new PortraitFrame({
     props: {
+      class: "high frame",
       $$slots: { default: [create_default_slot$5] },
       $$scope: { ctx }
     }
@@ -32446,7 +32983,7 @@ function create_fragment$f(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FF15-j08ob8");
+      attr(div, "class", "flex1 portrait-frame svelte-FF15-rb1jej");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -34475,9 +35012,9 @@ function create_default_slot(ctx) {
       attr(div3, "class", "flex1 profile-wrap svelte-FF15-ob297y");
       attr(div4, "class", "left wide");
       attr(header, "class", "wide");
-      attr(section, "class", "mt-sm");
-      attr(div5, "class", "flex4 wide mr-sm");
-      attr(div6, "class", "flexrow gap-15 wide");
+      attr(section, "class", "mt-sm high");
+      attr(div5, "class", "flex4 wide mr-sm high");
+      attr(div6, "class", "flexrow gap-15 wide high nooverflow");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
