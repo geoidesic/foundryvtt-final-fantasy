@@ -50,52 +50,54 @@
 </script>
 
 <template lang="pug">
-  .item-sheet.details
-    .flexcol.flex3.left
-      .flexrow.justify-vertical
-        .flex4
-          h3.left Range
-        .flex0.right
-          DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
-      +if("$item.system.hasRanged")
+.item-sheet.details.overflow
+  .flexcol.flex3.left.high
+    h3.left General
 
-        .flexrow.sheet-row.justify-vertical
-          .flex2
-            label(for="rangeType") Range Type
-          .flex2.right
-            DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
-      .flexrow.justify-vertical
-        .flex4
-          h3.left Target
-        .flex0.right
-          DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
-
-      +if("$item.system.hasTarget")
-        .flexrow.sheet-row.justify-vertical
-          .flex2
-            label(for="target") Target
-          .flex2.right
-            DocSelect.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
-
-      .flexrow.justify-vertical
-        .flex4
-          h3.left Trigger
-        .flex0.right
-          DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
-
-      +if("$item.system.hasTrigger")
-        .flexrow.sheet-row.justify-vertical
-          .flex2
-            label(for="trigger") Trigger
-          .flex2.right
-            DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
+    .flexrow.sheet-row.justify-vertical
+      .flex4
+        h3.left Range
+      .flex0.right
+        DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
+    +if("$item.system.hasRanged")
 
       .flexrow.sheet-row.justify-vertical
-        .flex2.wide
-          label.h3.underline.wide.gold(for="directHitDamage") Base Effect 
-          .item-tabs.high
-      .flexcol.flex3.left.prose.editor-inset.high
-          ProseMirror( attr="system.baseEffect")
+        .flex2
+          label(for="rangeType") Range Type
+        .flex2.right
+          DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
+    .flexrow.sheet-row.justify-vertical
+      .flex4
+        h3.left Target
+      .flex0.right
+        DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
+
+    +if("$item.system.hasTarget")
+      .flexrow.sheet-row.justify-vertical
+        .flex2
+          label(for="target") Target
+        .flex2.right
+          DocSelect.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
+
+    .flexrow.justify-vertical
+      .flex4
+        h3.left Trigger
+      .flex0.right
+        DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
+
+    +if("$item.system.hasTrigger")
+      .flexrow.sheet-row.justify-vertical
+        .flex2
+          label(for="trigger") Trigger
+        .flex2.right
+          DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
+
+    .flexrow.sheet-row.justify-vertical
+      .flex2.wide
+        label.h3.underline.wide.gold(for="directHitDamage") Base Effect 
+        .item-tabs.high
+    .flexcol.flex3.left.prose.editor-inset.high
+        ProseMirror( attr="system.baseEffect")
 
 </template>
 
@@ -104,7 +106,6 @@
   
 
     .details
+      height: calc(100%)
       +inset
-    .editor-inset
-      +inset($shadow: 0 0 5px rgba(165,42,42,0.3) inset, $padding: 0)
 </style>
