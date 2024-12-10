@@ -84,5 +84,6 @@
   @import '../../../../../../styles/Mixins.sass'
 
   .details
+    height: calc(100% - 0px)
     +inset
 </style>

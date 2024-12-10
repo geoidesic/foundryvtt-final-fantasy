@@ -219,6 +219,7 @@
   @import '../../../../styles/Mixins.sass'
 
   .details
+    height: calc(100% - 40px)
     +inset
   .actions
     display: flex
