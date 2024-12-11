@@ -102,7 +102,7 @@
 
 <template lang="pug">
   ApplicationShell(bind:elementRoot)
-    .flexrow.gap-15.wide.high.nooverflow
+    .flexrow.gap-15.wide.high.nooverflow.nowrap
       .flex1.profile-wrap
         .flex0
           button.stealth.profile(on:click="{_launchStandardProfileEditor}")
