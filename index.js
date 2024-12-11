@@ -581,6 +581,17 @@ const _ActionModel = class _ActionModel extends FFItemDataModel {
           })
         ),
         value: new BooleanField$2({ required: true, initial: false })
+      }),
+      enables: new SchemaField$2({
+        list: new ArrayField$2(
+          new ObjectField$1({
+            // Use ObjectField to allow storing objects
+            fields: {
+              uuid: new StringField$2({ required: true, initial: "" })
+            }
+          })
+        ),
+        value: new BooleanField$2({ required: true, initial: false })
       })
     };
   }
@@ -27003,19 +27014,24 @@ function instance$t($$self, $$props, $$invalidate) {
   onMount(() => {
   });
   async function rest(event) {
-    const confirmed = confirm(localize("FF15.TitleBlock.ConfirmRest"));
-    if (!confirmed)
-      return;
-    await $actor.update({
-      system: {
-        points: {
-          MP: { val: $actor.system.points.MP.max },
-          HP: { val: $actor.system.points.HP.max }
-        },
-        BP: { val: $actor.system.points.BP.max }
+    await Dialog.confirm({
+      title: "",
+      content: localize("FF15.TitleBlock.ConfirmRest"),
+      yes: async () => {
+        await $actor.update({
+          system: {
+            points: {
+              MP: { val: $actor.system.points.MP.max },
+              HP: { val: $actor.system.points.HP.max }
+            },
+            BP: { val: $actor.system.points.BP.max }
+          }
+        });
+        ui.notifications.info(localize("FF15.TitleBlock.PointsRestored"));
+      },
+      no: () => {
       }
     });
-    ui.notifications.info(localize("FF15.TitleBlock.PointsRestored"));
   }
   __name(rest, "rest");
   function docinput0_enabled_binding(value) {
@@ -29339,8 +29355,8 @@ let Inventory = _Inventory;
 const EffectsTab_svelte_svelte_type_style_lang = "";
 function get_each_context$2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[26] = list[i];
-  child_ctx[28] = i;
+  child_ctx[27] = list[i];
+  child_ctx[29] = i;
   return child_ctx;
 }
 __name(get_each_context$2, "get_each_context$2");
@@ -29371,15 +29387,15 @@ function create_if_block$7(ctx) {
           listen(button0, "click", function() {
             if (is_function(editItem(
               /*index*/
-              ctx[28],
+              ctx[29],
               /*effect*/
-              ctx[26]
+              ctx[27]
             )))
               editItem(
                 /*index*/
-                ctx[28],
+                ctx[29],
                 /*effect*/
-                ctx[26]
+                ctx[27]
               ).apply(this, arguments);
           }),
           listen(button1, "click", function() {
@@ -29387,16 +29403,16 @@ function create_if_block$7(ctx) {
               /*deleteItem*/
               ctx[7](
                 /*index*/
-                ctx[28],
+                ctx[29],
                 /*effect*/
-                ctx[26]
+                ctx[27]
               )
             ))
               ctx[7](
                 /*index*/
-                ctx[28],
+                ctx[29],
                 /*effect*/
-                ctx[26]
+                ctx[27]
               ).apply(this, arguments);
           })
         ];
@@ -29428,7 +29444,7 @@ function create_each_block$2(ctx) {
   let div1;
   let t_value = (
     /*effect*/
-    ctx[26].name + ""
+    ctx[27].name + ""
   );
   let t;
   let div3;
@@ -29448,13 +29464,13 @@ function create_each_block$2(ctx) {
       attr(img, "class", "icon");
       if (!src_url_equal(img.src, img_src_value = getAvatarForVersion(
         /*effect*/
-        ctx[26],
+        ctx[27],
         window.game.version
       )))
         attr(img, "src", img_src_value);
       attr(img, "alt", "avatar for game version");
       attr(div0, "class", div0_class_value = "li-image " + /*effect*/
-      (ctx[26].isSuppressed ? "suspended" : "active"));
+      (ctx[27].isSuppressed ? "suspended" : "active"));
       attr(div2, "class", "flex4 left");
       attr(div3, "class", "actions right svelte-FF15-nlnu0");
       attr(li, "class", "flexrow justify-vertical standard-list-row");
@@ -29474,19 +29490,19 @@ function create_each_block$2(ctx) {
       if (dirty & /*ActiveEffects*/
       2 && !src_url_equal(img.src, img_src_value = getAvatarForVersion(
         /*effect*/
-        ctx2[26],
+        ctx2[27],
         window.game.version
       ))) {
         attr(img, "src", img_src_value);
       }
       if (dirty & /*ActiveEffects*/
       2 && div0_class_value !== (div0_class_value = "li-image " + /*effect*/
-      (ctx2[26].isSuppressed ? "suspended" : "active"))) {
+      (ctx2[27].isSuppressed ? "suspended" : "active"))) {
         attr(div0, "class", div0_class_value);
       }
       if (dirty & /*ActiveEffects*/
       2 && t_value !== (t_value = /*effect*/
-      ctx2[26].name + ""))
+      ctx2[27].name + ""))
         set_data(t, t_value);
       if (!/*$doc*/
       ctx2[0].system.effectActionsLocked) {
@@ -29513,8 +29529,8 @@ function create_each_block$2(ctx) {
 }
 __name(create_each_block$2, "create_each_block$2");
 function create_fragment$q(ctx) {
-  let div9;
-  let div8;
+  let div12;
+  let div11;
   let div2;
   let div0;
   let div1;
@@ -29530,7 +29546,11 @@ function create_fragment$q(ctx) {
   let i_class_value;
   let button0_class_value;
   let li1;
+  let div10;
+  let div8;
   let button1;
+  let div9;
+  let button2;
   let h5;
   let ul;
   let current;
@@ -29550,8 +29570,8 @@ function create_fragment$q(ctx) {
   }
   return {
     c() {
-      div9 = element("div");
-      div8 = element("div");
+      div12 = element("div");
+      div11 = element("div");
       div2 = element("div");
       div0 = element("div");
       div0.innerHTML = `<label for="search">Search</label>`;
@@ -29570,8 +29590,13 @@ function create_fragment$q(ctx) {
         each_blocks[i2].c();
       }
       li1 = element("li");
+      div10 = element("div");
+      div8 = element("div");
       button1 = element("button");
       button1.textContent = "+ Add Effect";
+      div9 = element("div");
+      button2 = element("button");
+      button2.textContent = "- Remove All Effects";
       h5 = element("h5");
       h5.textContent = "Notes: ";
       ul = element("ul");
@@ -29590,19 +29615,23 @@ function create_fragment$q(ctx) {
       attr(li1, "class", "flexrow footer");
       attr(ol, "class", "standard-list");
       attr(button1, "class", "mt-sm glossy-button gold-light hover-shine");
+      attr(div8, "class", "flex1");
+      attr(button2, "class", "mt-sm glossy-button gold-light hover-shine");
+      attr(div9, "class", "flex1");
+      attr(div10, "class", "flexrow");
       attr(ul, "class", "pa-sm left pa-md");
       set_style(ul, "margin-top", "-20px");
-      attr(div8, "class", "flexcol flex3 left");
-      attr(div9, "class", "item-sheet details overflow svelte-FF15-nlnu0");
+      attr(div11, "class", "flexcol flex3 left");
+      attr(div12, "class", "item-sheet details overflow svelte-FF15-nlnu0");
     },
     m(target, anchor) {
-      insert(target, div9, anchor);
-      append(div9, div8);
-      append(div8, div2);
+      insert(target, div12, anchor);
+      append(div12, div11);
+      append(div11, div2);
       append(div2, div0);
       append(div2, div1);
       mount_component(tjsinput, div1, null);
-      append(div8, div7);
+      append(div11, div7);
       append(div7, ol);
       append(ol, li0);
       append(li0, div3);
@@ -29616,9 +29645,13 @@ function create_fragment$q(ctx) {
         }
       }
       append(ol, li1);
+      append(div11, div10);
+      append(div10, div8);
       append(div8, button1);
-      append(div8, h5);
-      append(div8, ul);
+      append(div10, div9);
+      append(div9, button2);
+      append(div11, h5);
+      append(div11, ul);
       current = true;
       if (!mounted) {
         dispose = [
@@ -29626,13 +29659,19 @@ function create_fragment$q(ctx) {
             button0,
             "click",
             /*toggleLock*/
-            ctx[8]
+            ctx[9]
           ),
           listen(
             button1,
             "click",
             /*openActiveEffectEditor*/
-            ctx[9]
+            ctx[10]
+          ),
+          listen(
+            button2,
+            "click",
+            /*removeAllEffects*/
+            ctx[8]
           )
         ];
         mounted = true;
@@ -29684,7 +29723,7 @@ function create_fragment$q(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div9);
+        detach(div12);
       }
       destroy_component(tjsinput);
       destroy_each(each_blocks, detaching);
@@ -29707,7 +29746,7 @@ function instance$k($$self, $$props, $$invalidate) {
   let lockCSS;
   let faLockCSS;
   let $doc;
-  let $wildcard, $$unsubscribe_wildcard = noop, $$subscribe_wildcard = /* @__PURE__ */ __name(() => ($$unsubscribe_wildcard(), $$unsubscribe_wildcard = subscribe(wildcard, ($$value) => $$invalidate(12, $wildcard = $$value)), wildcard), "$$subscribe_wildcard");
+  let $wildcard, $$unsubscribe_wildcard = noop, $$subscribe_wildcard = /* @__PURE__ */ __name(() => ($$unsubscribe_wildcard(), $$unsubscribe_wildcard = subscribe(wildcard, ($$value) => $$invalidate(13, $wildcard = $$value)), wildcard), "$$subscribe_wildcard");
   $$self.$$.on_destroy.push(() => $$unsubscribe_wildcard());
   let { sheet } = $$props;
   function resetEffectList() {
@@ -29745,6 +29784,20 @@ function instance$k($$self, $$props, $$invalidate) {
     resetEffectList();
   }
   __name(deleteItem, "deleteItem");
+  async function removeAllEffects() {
+    await Dialog.confirm({
+      title: "Remove All Effects",
+      content: "Are you sure you want to remove all effects?",
+      yes: async () => {
+        for (let effect of $doc.effects) {
+          await effect.delete();
+        }
+      },
+      no: () => {
+      }
+    });
+  }
+  __name(removeAllEffects, "removeAllEffects");
   function isPassiveEffectFromItem(item) {
     game.system.log.d("isPassiveEffectFromItem item", item);
     if (item instanceof ActiveEffect) {
@@ -29804,11 +29857,11 @@ function instance$k($$self, $$props, $$invalidate) {
   });
   $$self.$$set = ($$props2) => {
     if ("sheet" in $$props2)
-      $$invalidate(10, sheet = $$props2.sheet);
+      $$invalidate(11, sheet = $$props2.sheet);
   };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$wildcard*/
-    4096) {
+    8192) {
       $$invalidate(1, ActiveEffects = [...$wildcard].map((effect) => {
         const originInstance = getEffectOrigin(effect, true);
         if (!effect.flags.surge)
@@ -29839,6 +29892,7 @@ function instance$k($$self, $$props, $$invalidate) {
     doc,
     input,
     deleteItem,
+    removeAllEffects,
     toggleLock,
     openActiveEffectEditor,
     sheet,
@@ -29850,17 +29904,17 @@ __name(instance$k, "instance$k");
 const _EffectsTab = class _EffectsTab extends SvelteComponent {
   constructor(options) {
     super();
-    init(this, options, instance$k, create_fragment$q, safe_not_equal, { sheet: 10, resetEffectList: 11 });
+    init(this, options, instance$k, create_fragment$q, safe_not_equal, { sheet: 11, resetEffectList: 12 });
   }
   get sheet() {
-    return this.$$.ctx[10];
+    return this.$$.ctx[11];
   }
   set sheet(sheet) {
     this.$$set({ sheet });
     flush();
   }
   get resetEffectList() {
-    return this.$$.ctx[11];
+    return this.$$.ctx[12];
   }
 };
 __name(_EffectsTab, "EffectsTab");
@@ -30465,6 +30519,10 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
       return false;
     }
     const droppedItem = await fromUuid(data.uuid);
+    if (droppedItem.type === "effect") {
+      ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`));
+      return false;
+    }
     const duplicate = actor.items.find((x) => x.name == droppedItem.name);
     if (duplicate) {
       await duplicate.update({ system: { quantity: duplicate.system.quantity + 1 } });
@@ -33940,45 +33998,57 @@ const _ItemBucket = class _ItemBucket extends SvelteComponent {
 };
 __name(_ItemBucket, "ItemBucket");
 let ItemBucket = _ItemBucket;
-const Grants_svelte_svelte_type_style_lang = "";
+const Links_svelte_svelte_type_style_lang = "";
 function create_fragment$h(ctx) {
   let div1;
   let div0;
-  let itembucket;
+  let itembucket0;
+  let hr;
+  let itembucket1;
   let current;
-  itembucket = new ItemBucket({
-    props: { title: "Grants", key: "grants" }
+  itembucket0 = new ItemBucket({
+    props: { title: "Target Effects", key: "grants" }
+  });
+  itembucket1 = new ItemBucket({
+    props: { title: "Enabled Traits", key: "enables" }
   });
   return {
     c() {
       div1 = element("div");
       div0 = element("div");
-      create_component(itembucket.$$.fragment);
+      create_component(itembucket0.$$.fragment);
+      hr = element("hr");
+      create_component(itembucket1.$$.fragment);
       attr(div0, "class", "flexcol flex3 left high");
-      attr(div1, "class", "item-sheet details overflow svelte-FF15-1qqquzo");
+      attr(div1, "class", "item-sheet details overflow high svelte-FF15-19vpw0f");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
       append(div1, div0);
-      mount_component(itembucket, div0, null);
+      mount_component(itembucket0, div0, null);
+      append(div0, hr);
+      mount_component(itembucket1, div0, null);
       current = true;
     },
     p: noop,
     i(local) {
       if (current)
         return;
-      transition_in(itembucket.$$.fragment, local);
+      transition_in(itembucket0.$$.fragment, local);
+      transition_in(itembucket1.$$.fragment, local);
       current = true;
     },
     o(local) {
-      transition_out(itembucket.$$.fragment, local);
+      transition_out(itembucket0.$$.fragment, local);
+      transition_out(itembucket1.$$.fragment, local);
       current = false;
     },
     d(detaching) {
       if (detaching) {
         detach(div1);
       }
-      destroy_component(itembucket);
+      destroy_component(itembucket0);
+      destroy_component(itembucket1);
     }
   };
 }
@@ -33988,14 +34058,14 @@ function instance$c($$self) {
   return [];
 }
 __name(instance$c, "instance$c");
-const _Grants = class _Grants extends SvelteComponent {
+const _Links = class _Links extends SvelteComponent {
   constructor(options) {
     super();
     init(this, options, instance$c, create_fragment$h, safe_not_equal, {});
   }
 };
-__name(_Grants, "Grants");
-let Grants = _Grants;
+__name(_Links, "Links");
+let Links = _Links;
 const Tabs_svelte_svelte_type_style_lang$4 = "";
 function create_default_slot$6(ctx) {
   let tabs_1;
@@ -34108,21 +34178,20 @@ __name(create_fragment$g, "create_fragment$g");
 function instance$b($$self, $$props, $$invalidate) {
   let activeTab2 = "description";
   const tabs = [
-    // { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
+    {
+      label: localize(`${SYSTEM_CODE}.Description`),
+      id: "description",
+      component: DescriptionTab
+    },
     {
       label: localize(`${SYSTEM_CODE}.Details`),
       id: "details",
       component: Details$3
     },
     {
-      label: localize(`${SYSTEM_CODE}.Grants`),
-      id: "grants",
-      component: Grants
-    },
-    {
-      label: localize(`${SYSTEM_CODE}.Effects`),
-      id: "effects",
-      component: EffectsTab
+      label: localize(`${SYSTEM_CODE}.Links`),
+      id: "links",
+      component: Links
     }
   ];
   function tabs_1_activeTab_binding(value) {

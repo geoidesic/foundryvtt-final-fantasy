@@ -1,6 +1,8 @@
 {
   "styles": ["style.css"],
 
+  "styles": ["style.css"],
+
   "id": "foundryvtt-final-fantasy",
   "title": "Final Fantasy 15 RPG",
   "description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV",
