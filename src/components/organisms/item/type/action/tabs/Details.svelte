@@ -44,6 +44,12 @@
     { value: "all", label: localize("FF15.Types.Item.Types.Options.Target.all") },
     { value: "ally", label: localize("FF15.Types.Item.Types.Options.Target.ally") },
   ];
+  const aspectedOptions = [
+    { value: "earth", label: localize("FF15.Types.Item.Types.Options.Aspected.earth") },
+    { value: "lightning", label: localize("FF15.Types.Item.Types.Options.Aspected.lightning") },
+    { value: "wind", label: localize("FF15.Types.Item.Types.Options.Aspected.wind") },
+    { value: "ice", label: localize("FF15.Types.Item.Types.Options.Aspected.ice") },
+  ];
 
   const limitationOptions = [
     { value: "once", label: localize("FF15.Types.Item.Types.Options.Limitation.once") },
@@ -109,6 +115,20 @@
 
       .flexrow.justify-vertical
         .flex4
+          h3.left Aspected
+        .flex0.right
+          DocCheckbox( name="hasAspected" valuePath="system.hasAspected")
+
+      +if("$item.system.hasAspected")
+        .flexrow.sheet-row.justify-vertical
+          .flex3
+            label(for="aspected") Aspected
+          .flex2.right
+            DocSelect.right(id="aspected" name="aspected" type="number" options="{aspectedOptions}" valuePath="system.aspected")
+      
+
+      .flexrow.justify-vertical
+        .flex4
           h3.left Cost
         .flex0.right
           DocCheckbox( name="hasCost" valuePath="system.hasCost")
@@ -119,6 +139,7 @@
             label(for="cost") MP
           .flex2.right
             DocSelect.right(id="cost" name="cost" type="number" options="{costOptions}" valuePath="system.cost")
+      
       
       .flexrow.justify-vertical
         .flex4

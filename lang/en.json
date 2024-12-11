@@ -94,6 +94,12 @@
               "all": "All enemies within range",
               "ally": "Ally"
             },
+            "Aspected": {
+              "earth": "Earth",
+              "lightning": "Lightning",
+              "wind": "Wind",
+              "ice": "Ice"
+            },
             "Limitation": {
               "once": "Once per phase",
               "twice": "Twice per phase",
