@@ -117,6 +117,7 @@
               "straignt": "Grants Straight Shot Ready"
             },
             "Trigger": {
+              "any": "Any time",
               "ability": "Immediately after an enemy makes an ability check",
               "move": "Immediately before an enemy moves",
               "turn": "When any character finishes their turn",
@@ -127,7 +128,8 @@
               "5sq": "5 Squares",
               "10sq": "10 Squares",
               "3x3a": "A 3x3 area centered on this character",
-              "5x5a": "A 5x5 area centered on this character"
+              "5x5a": "A 5x5 area centered on this character",
+              "5x4i": "A 5x&infin; area extending in a straight line from 1 square adjacent to this character"
             },
             "Type": {
               "primary": "Primary",

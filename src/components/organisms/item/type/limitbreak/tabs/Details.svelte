@@ -28,6 +28,7 @@
     { value: "ally", label: localize("FF15.Types.Item.Types.Options.Target.ally") },
   ];
   const triggerOptions = [
+    { value: "any", label: localize("FF15.Types.Item.Types.Options.Trigger.any") },
     { value: "ability", label: localize("FF15.Types.Item.Types.Options.Trigger.ability") },
     { value: "move", label: localize("FF15.Types.Item.Types.Options.Trigger.move") },
     { value: "turn", label: localize("FF15.Types.Item.Types.Options.Trigger.turn") },
@@ -39,6 +40,7 @@
     { value: "10sq", label: localize("FF15.Types.Item.Types.Options.Range.10sq") },
     { value: "3x3a", label: localize("FF15.Types.Item.Types.Options.Range.3x3a") },
     { value: "5x5a", label: localize("FF15.Types.Item.Types.Options.Range.5x5a") },
+    { value: "5x5i", label: localize("FF15.Types.Item.Types.Options.Range.5x5i") },
   ];
 
   $: parentIsActor = isParentActor($item);
@@ -50,8 +52,8 @@
 </script>
 
 <template lang="pug">
-.item-sheet.details.overflow
-  .flexcol.flex3.left.high
+.item-sheet.details.overflow.wide
+  .flexcol.flex3.left.high.wide
     h3.left General
 
     .flexrow.sheet-row.justify-vertical
@@ -73,11 +75,11 @@
         DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
 
     +if("$item.system.hasTarget")
-      .flexrow.sheet-row.justify-vertical
-        .flex2
+      .flexrow.sheet-row.justify-vertical.wide
+        .flex1
           label(for="target") Target
-        .flex2.right
-          DocSelect.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
+        .flex4.right.wide
+          DocSelect.right.wide(id="target" name="target" options="{targetOptions}" valuePath="system.target")
 
     .flexrow.justify-vertical
       .flex4
@@ -86,11 +88,11 @@
         DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
 
     +if("$item.system.hasTrigger")
-      .flexrow.sheet-row.justify-vertical
+      .flexrow.sheet-row.justify-vertical.wide
         .flex2
           label(for="trigger") Trigger
-        .flex2.right
-          DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
+        .flex2.right.wide(style="max-width: 100%")
+          DocSelect.right.wide(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
 
     .flexrow.sheet-row.justify-vertical
       .flex2.wide
