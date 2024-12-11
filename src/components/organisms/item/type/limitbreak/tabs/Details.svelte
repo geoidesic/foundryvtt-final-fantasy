@@ -63,11 +63,11 @@
         DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
     +if("$item.system.hasRanged")
 
-      .flexrow.sheet-row.justify-vertical
-        .flex2
+      .flexrow.sheet-row.justify-vertical.wide
+        .flex1
           label(for="rangeType") Range Type
-        .flex2.right
-          DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
+        .flex4.right.wide
+          DocSelect.right.wide(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
     .flexrow.sheet-row.justify-vertical
       .flex4
         h3.left Target
@@ -89,9 +89,9 @@
 
     +if("$item.system.hasTrigger")
       .flexrow.sheet-row.justify-vertical.wide
-        .flex2
+        .flex1
           label(for="trigger") Trigger
-        .flex2.right.wide(style="max-width: 100%")
+        .flex4.right.wide(style="max-width: 100%")
           DocSelect.right.wide(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
 
     .flexrow.sheet-row.justify-vertical
