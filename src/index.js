@@ -5,7 +5,7 @@ import { SYSTEM_ID } from "~/src/helpers/constants"
 import { setupModels } from './config/models';
 import { registerSettings } from "~/src/settings"
 import { mappedGameTargets } from '~/src/stores';
-import { defaultStatusEffects } from "./helpers/Conditions.js"
+import { getDefaultStatusEffects } from "./helpers/Conditions";
 import WelcomeApplication from "~/src/components/applications/WelcomeApplication"
 import FF15Actor from '~/src/extensions/actor.js'
 import FF15ActorSheet from "~/src/components/applications/ActorSheet";
@@ -13,7 +13,7 @@ import FF15ItemSheet from "~/src/components/applications/ItemSheet";
 import ItemSheetStandard from "~/src/components/applications/ItemSheetStandard";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 import FFChat from "~/src/components/organisms/chat/FFChat.svelte";
-import SurgeTokenHUD from './extensions/token-hud.js'
+import FFTokenHUD from './extensions/token-hud.js'
 
 //- helpers
 function setupDSN() {
@@ -30,8 +30,6 @@ function setupDSN() {
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
 
-//- status effects
-CONFIG.statusEffects = defaultStatusEffects;
 
 
 //- Foundry System Hooks
@@ -74,7 +72,10 @@ Hooks.once("ready", async () => {
 
 Hooks.on('canvasReady', () => {
   // render custom token hud
-  canvas.hud.token = new SurgeTokenHUD()
+  CONFIG.statusEffects = getDefaultStatusEffects();
+  canvas.hud.token = new FFTokenHUD({defaultStatusEffects: CONFIG.statusEffects})
+
+  //- status effects
 
   // measuredTemplates.set(canvas.templates?.placeables || false)
 
