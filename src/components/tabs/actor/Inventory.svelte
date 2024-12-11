@@ -60,6 +60,13 @@
     $Actor.sheet._onDropItemCreate(itemData);
   }
 
+  async function removeAllItems() {
+    const okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteAllItems`));
+    if (okToDelete) {
+      await $Actor.deleteAllItems('equipment');
+    }
+  }
+
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
@@ -151,6 +158,7 @@
                 button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
                   i.left.fa.fa-trash
           
+    button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
             
 </template>
 

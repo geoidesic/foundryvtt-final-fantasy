@@ -9,6 +9,7 @@ export class FFActorDataModel extends FFTypeDataModel {
       ...super.defineSchema(),
       inventoryLocked: new BooleanField({ initial: false }),
       description: new HTMLField(),
+      DOT: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
     }
   }
 }

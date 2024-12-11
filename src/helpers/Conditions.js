@@ -1,4 +1,4 @@
-import { SYSTEM_ID } from "./constants";
+import { SYSTEM_ID, activeEffectModes } from "./constants";
 
 export const defaultStatusEffects = [
   {
@@ -77,9 +77,22 @@ export const defaultStatusEffects = [
     id: "slow",
     name: "Slow",
     description: "The character's SPD is halved, and thus AP are also halved.",
-    icon: "systems/surge/assets/icons/slowed.svg",
+    icon: `systems/${SYSTEM_ID}/assets/icons/status/slowed.svg`,
     flags: { surge: { periodic: false, special: false } },
-    changes: []
+    changes: [
+      {
+        key: "system.attributes.secondary.spd.val",
+        value: 0.5,
+        mode: activeEffectModes.find(mode => mode.label === "multiply").value,
+        priority: 1
+      },
+      {
+        key: "system.globalCheckMod",
+        value: -2,
+        mode: activeEffectModes.find(mode => mode.label === "add").value,
+        priority: 1
+      },
+    ]
   },
 ];
 

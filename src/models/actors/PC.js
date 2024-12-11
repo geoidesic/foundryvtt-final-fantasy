@@ -14,7 +14,7 @@ export class PCModel extends FFActorDataModel {
       level: new NumberField({ required: true, integer: true, min: 30, initial: 30 }),
       role: new StringField({ required: true, initial: '' }),
       job: new StringField({ required: true, initial: '' }),
-
+      globalCheckMod: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
       points: new SchemaField({
         MP: new SchemaField({
           val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),

@@ -21,5 +21,6 @@ export default class FF15ItemSheet extends SvelteDocumentSheet {
       },
     });
   }
+
 }
 

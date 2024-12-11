@@ -60,6 +60,16 @@ export default class FF15Actor extends Actor {
     // }
   }
 
+  async deleteAllItems(type) {
+    game.system.log.d(type)
+    game.system.log.d(typeof type)
+    for (let item of this.items) {
+      if(Array.isArray(type) && type.includes(item.type) || !type || type === 'all' || item.type === type) {
+        await item.delete();
+      }
+    }
+  }
+
   async _preCreate() {
     game.system.log.d('preCreate', this);
     if(this.type === 'PC') {

@@ -8,12 +8,14 @@
   import Description from "~/src/components/organisms/item/shared/DescriptionTab.svelte";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import Details from "~/src/components/organisms/item/type/action/tabs/Details.svelte";
+  import Grants from "~/src/components/organisms/item/shared/Grants.svelte";
 
   let activeTab = "description";
   // Tabs
   const tabs = [
     // { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
     { label: localize(`${SYSTEM_CODE}.Details`), id: "details", component: Details },
+    { label: localize(`${SYSTEM_CODE}.Grants`), id: "grants", component: Grants },
     { label: localize(`${SYSTEM_CODE}.Effects`), id: "effects", component: Effects },
   ];
 </script>

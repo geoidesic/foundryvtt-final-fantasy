@@ -1,7 +1,7 @@
 import { FFItemDataModel } from './baseItem';
 
 const {
-  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField
+  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField, ObjectField
 } = foundry.data.fields;
 
 export class ActionModel extends FFItemDataModel {
@@ -33,6 +33,16 @@ export class ActionModel extends FFItemDataModel {
       hasCost: new BooleanField({ required: false, initial: false }),
       cost: new NumberField({ required: false, initial: 0 }),
       directHitText: new StringField({ required: false, initial: '' }),
+      grants: new SchemaField({
+        list: new ArrayField(
+          new ObjectField({ // Use ObjectField to allow storing objects
+            fields: {
+              uuid: new StringField({ required: true, initial: '' })
+            }
+          })
+        ),
+        value: new BooleanField({ required: true, initial: false })
+      }),
     };
   }
 }
