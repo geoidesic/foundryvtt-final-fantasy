@@ -217,10 +217,11 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     const droppedItem = await fromUuid(data.uuid);
     //- effect items are not to be dropped directly on the actor
 
-    // if (droppedItem.type === "effect") {
-    //   ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`))
-    //   return false;
-    // }
+    if (droppedItem.type === "effect") {
+      ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`))
+      return false;
+    }
+    
     //- if equipment duplicate, increment quantity and return
     const duplicate = actor.items.find(x => x.name == droppedItem.name);
     if(duplicate) {
