@@ -58,6 +58,10 @@ export class ActionModel extends FFItemDataModel {
         ),
         value: new BooleanField({ required: true, initial: false })
       }),
+      hasTags: new BooleanField({ required: false, initial: false }),
+      tags: new ArrayField(
+          new StringField({ required: false, initial: '' })
+      ),
     };
   }
 }
