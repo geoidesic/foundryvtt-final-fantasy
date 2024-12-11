@@ -91,7 +91,7 @@
   .inset
     +inset(0.5rem, 0 0 5px rgba(165,0,0,1) inset)
     width: 100%
-  .background, .background2, .background3
+  .background
     overflow-y: auto
   // +background(rgb(66 76 20), 0.05)
 </style>
