@@ -26,14 +26,19 @@
         title="Enabled Traits",
         key="enables",
       )
+      ItemBucket(
+        title="Combos",
+        key="combos",
+      )
 
-      .flexrow.justify-vertical
-        .flex4
-          h3.left Tags
-        .flex0.right
-          DocCheckbox( name="hasTags" valuePath="system.hasTags")
-      +if("$item.system.hasTags")
-        TagInput
+  .flexrow.sheet-row.justify-vertical.px-sm
+    .flex4
+      h2.left Tags
+    .flex0.right
+      DocCheckbox( name="hasTags" valuePath="system.hasTags")
+  +if("$item.system.hasTags")
+    .px-sm
+      TagInput
     //- allow breathing space at the bottom of the scroll area
     .pb-lg 
 </template>

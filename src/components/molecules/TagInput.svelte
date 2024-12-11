@@ -13,9 +13,12 @@
     const tags = [...$doc.system.tags];
     
     // Check for duplicate tag
-    if (tags.includes(newTag.toLowerCase().trim())) {
+    if (tags.includes(newTag)) {
       ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.DuplicateTag`));
       newTag = ""; // Clear the input if the tag already exists
+      return; // Exit the function to prevent adding the duplicate tag
+    }
+    if (!newTag.length) {
       return; // Exit the function to prevent adding the duplicate tag
     }
 
@@ -42,27 +45,31 @@
 <template lang="pug">
 .flexcol
   input(bind:value="{newTag}" on:input="{addTagDebounce}" placeholder="Enter new tag")
-.flex.gap-15.mt-sm
+.flexrow.gap-4.mt-sm.justify-vertical
   +each("$doc.system.tags as tag")
-    .badge
-      .label {tag}
-      .remove.right(on:click!="{() => removeTag(tag)}")
-        i.fas.fa-xmark
+    .flex0
+      .badge
+        .label {tag}
+        .remove.right(on:click!="{() => removeTag(tag)}")
+          i.fas.fa-xmark
 </template>
 
 <style lang="sass">
   .badge
     display: inline
-    border: 1px solid transparent
-    border-radius: var(--border-radius-icon)
+    border: 2px outset var(--color-highlight-light)
+    border-radius: 50px
     background-color: var(--ff-border-color)
-    padding: 2px 0px 2px 0.4rem
+    padding: 3px 0px 2px 0.4rem
     margin-right: 2px
     max-height: 1.8rem
-    color: white
+    vertical-align: middle
+    white-space: nowrap
+    
     .label
       font-size: 0.8rem
-      color: var(--player-contrast)
+      color: white
+      vertical-align: 10%
       display: inline-block
     .remove
       display: inline-block
@@ -71,6 +78,10 @@
       background-color: rgba(255, 255, 255, 0.3)
       border-radius: 10px
       border: 1px solid transparent
-      color: var(--player-contrast)
+      color: white
       cursor: pointer
+      transition: background-color 0.3s ease, color 0.3s ease
+      &:hover
+        color: var(--color-shadow-primary)
+        background-color: rgba(255, 255, 255, 1)
 </style>

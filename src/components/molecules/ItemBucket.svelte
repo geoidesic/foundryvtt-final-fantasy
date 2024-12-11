@@ -42,9 +42,12 @@ onMount(async () => {
 
 <template lang="pug">
   .item-bucket(role="application" aria-dropeffect="link" on:drop|preventDefault|stopPropagation="{onDrop}")
-    h2.flex.mt-none {title}
-      //- DocumentCheckboxInput(
-      DocCheckbox(
+    .flexrow.sheet-row.justify-vertical
+      .flex3
+          h2.wide {title}
+      .flex0.right
+        //- DocumentCheckboxInput(
+        DocCheckbox.right.wide(
         {...$$restProps}
         valuePath="{valuePath}"
       )
