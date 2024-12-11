@@ -65,6 +65,19 @@
     game.system.log.d(item);
     item.sheet.render(true);
   }
+  async function removeAllEffects() {
+    const confirmed = await Dialog.confirm({
+      title: "Remove All Effects",
+      content: "Are you sure you want to remove all effects?",
+      yes: async () => {
+        for(let effect of $doc.effects) {
+          await effect.delete();
+        }
+      },
+      no: () => {},
+    });
+    
+  }
   function isPassiveEffectFromItem(item) {
     game.system.log.d("isPassiveEffectFromItem item", item);
     if (item instanceof ActiveEffect) {
@@ -206,7 +219,12 @@
                   i.left.fa.fa-trash.mr-md
         li.flexrow.footer
 
-    button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{openActiveEffectEditor}") + Add Effect
+    .flexrow
+      .flex1
+        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{openActiveEffectEditor}") + Add Effect
+      .flex1
+        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllEffects}") - Remove All Effects
+
     h5 Notes: 
     ul.pa-sm.left.pa-md(style="margin-top: -20px")
       li Each of the effects listed are collections. 

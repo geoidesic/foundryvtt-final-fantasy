@@ -1,28 +1,38 @@
 <script>
-import { onMount, getContext } from 'svelte';
-import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
-import { localize } from "#runtime/svelte/helper"; // Import the localize function
+  import { onMount, getContext } from "svelte";
+  import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
+  import { localize } from "#runtime/svelte/helper"; // Import the localize function
 
-let levelEnabled = false;
+  let levelEnabled = false;
 
-const actor = getContext("#doc");
+  const actor = getContext("#doc");
 
-onMount(() => {
-  // console.log('TitleBlock mounted');
-});
-
-async function rest(event) {
-  const confirmed = confirm(localize("FF15.TitleBlock.ConfirmRest")); // Use localized string
-  if(!confirmed) return;
-  await $actor.update({ system: { points: { 
-    MP: { val : $actor.system.points.MP.max }, 
-    HP: { val: $actor.system.points.HP.max} },
-    BP: { val: $actor.system.points.BP.max} }
+  onMount(() => {
+    // console.log('TitleBlock mounted');
   });
-  ui.notifications.info(localize("FF15.TitleBlock.PointsRestored")); // Use localized string
-}
+
+  async function rest(event) {
+    const confirmed = await Dialog.confirm({
+      title: "",
+      content: localize("FF15.TitleBlock.ConfirmRest"),
+      yes: async () => {
+        await $actor.update({
+          system: {
+            points: {
+              MP: { val: $actor.system.points.MP.max },
+              HP: { val: $actor.system.points.HP.max },
+            },
+            BP: { val: $actor.system.points.BP.max },
+          },
+        });
+        ui.notifications.info(localize("FF15.TitleBlock.PointsRestored")); // Use localized string
+      },
+      no: () => {},
+    });
+  }
 </script>
-<template lang='pug'>
+
+<template lang="pug">
 .panel.heightcol
   .flexrow
     .flex2
@@ -45,7 +55,8 @@ async function rest(event) {
           DocInput.white.wide.widebold( type="text" name="job" valuePath="system.job" textClasses="glow white wide")
 
 </template>
-<style lang='sass'>
+
+<style lang="sass">
   @import '../../styles/Mixins.sass'
   :global(.FF15 .job input)
     font-size: 1em

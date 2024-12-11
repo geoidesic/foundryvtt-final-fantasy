@@ -4,19 +4,19 @@
   import { SYSTEM_CODE } from "~/src/helpers/constants.js";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
-  import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
+  // import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
   import Description from "~/src/components/organisms/item/shared/DescriptionTab.svelte";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import Details from "~/src/components/organisms/item/type/action/tabs/Details.svelte";
-  import Grants from "~/src/components/organisms/item/shared/Grants.svelte";
+  import Links from "~/src/components/organisms/item/type/action/tabs/Links.svelte";
 
   let activeTab = "description";
   // Tabs
   const tabs = [
-    // { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
+    { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
     { label: localize(`${SYSTEM_CODE}.Details`), id: "details", component: Details },
-    { label: localize(`${SYSTEM_CODE}.Grants`), id: "grants", component: Grants },
-    { label: localize(`${SYSTEM_CODE}.Effects`), id: "effects", component: Effects },
+    { label: localize(`${SYSTEM_CODE}.Links`), id: "links", component: Links },
+    // { label: localize(`${SYSTEM_CODE}.Effects`), id: "effects", component: Effects },
   ];
 </script>
 

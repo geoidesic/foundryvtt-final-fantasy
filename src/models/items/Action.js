@@ -43,6 +43,16 @@ export class ActionModel extends FFItemDataModel {
         ),
         value: new BooleanField({ required: true, initial: false })
       }),
+      enables: new SchemaField({
+        list: new ArrayField(
+          new ObjectField({ // Use ObjectField to allow storing objects
+            fields: {
+              uuid: new StringField({ required: true, initial: '' })
+            }
+          })
+        ),
+        value: new BooleanField({ required: true, initial: false })
+      }),
     };
   }
 }
