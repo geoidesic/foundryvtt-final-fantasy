@@ -140,6 +140,11 @@
               "2": "2 MP",
               "3": "3 MP",
               "4": "4 MP"
+            },
+            "UsesUnit": {
+              "turn": "Turn",
+              "phase": "Phase",
+              "round": "Round"
             }
           }
         }

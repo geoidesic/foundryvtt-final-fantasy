@@ -56,6 +56,11 @@
     { value: "twice", label: localize("FF15.Types.Item.Types.Options.Limitation.twice") },
     { value: "thrice", label: localize("FF15.Types.Item.Types.Options.Limitation.thrice") },
   ];
+  const usesUnitOptions = [
+    { value: "turn", label: localize("FF15.Types.Item.Types.Options.UsesUnit.turn") },
+    { value: "phase", label: localize("FF15.Types.Item.Types.Options.UsesUnit.phase") },
+    { value: "round", label: localize("FF15.Types.Item.Types.Options.UsesUnit.round") },
+  ];
 
   const heavyshotOptions = [{ value: "straignt", label: localize("FF15.Types.Item.Types.Options.Heavyshot.straignt") }];
 
@@ -234,6 +239,21 @@
           .flex2.right
             DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
     
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Uses
+        .flex0.right
+          DocCheckbox( name="hasUses" valuePath="system.hasUses")
+
+      +if("$item.system.hasUses")
+        .flexrow.sheet-row.justify-vertical
+          .flex2
+            DocInput.wide(id="uses" name="uses" valuePath="system.uses" placeholder="Uses")
+          .flex1 per
+          .flex2
+            DocSelect(id="usesUnit" name="usesUnit" valuePath="system.usesUnit" options="{usesUnitOptions}" placeholder="Units")
+
+
       .flexrow.justify-vertical
         .flex4
           h3.left Direct Hit

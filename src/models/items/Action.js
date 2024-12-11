@@ -8,6 +8,9 @@ export class ActionModel extends FFItemDataModel {
   static defineSchema() {
     return {
       ...super.defineSchema(),  // Merge with the base model schema
+      hasUses: new BooleanField({ required: false, initial: false }),
+      uses: new NumberField({ required: false, initial: 0 }),
+      usesUnit: new StringField({ required: false, initial: '' }),
       hasAspected: new BooleanField({ required: false, initial: false }),
       aspected: new StringField({ required: false, initial: '' }),
       hasRanged: new BooleanField({ required: false, initial: false }),
