@@ -129,7 +129,7 @@
               "10sq": "10 Squares",
               "3x3a": "A 3x3 area centered on this character",
               "5x5a": "A 5x5 area centered on this character",
-              "5x4i": "A 5x&infin; area extending in a straight line from 1 square adjacent to this character"
+              "5x5i": "A 5x\u221E area extending in a straight line from 1 square adjacent to this character"
             },
             "Type": {
               "primary": "Primary",
