@@ -5,7 +5,7 @@ import DocCheckbox from '~/src/components/atoms/controls/DocCheckbox.svelte'
 // import DocumentCheckboxInput from '~/src/components/atoms/controls/DocumentCheckboxInput.svelte'
 
 export let title
-export let key;
+export let key
 export let initialChecked = false;
 
 const doc = getContext("#doc");
@@ -16,7 +16,8 @@ let checkboxValue = initialChecked
 
 
 $: checkboxValue = $doc.system?.[key].value;
-$: storedList = $doc.system[key];
+$: storedList = $doc.system?.[key];
+$: valuePath = `system.${key}.value`
 
 async function onDrop(event) {
   game.system.log.d('onDrop event', event);
@@ -45,7 +46,7 @@ onMount(async () => {
       //- DocumentCheckboxInput(
       DocCheckbox(
         {...$$restProps}
-        valuePath="system.grants.value"
+        valuePath="{valuePath}"
       )
     slot
     +if("checkboxValue")
