@@ -76,7 +76,8 @@
           "Options": {
             "DirectHit": {
               "damage": "Damage",
-              "markers": "Remove Markers"
+              "markers": "Remove Markers",
+              "condition": "Condition"
             },
             "TraitType": {
               "Buff": "Buff",
@@ -116,7 +117,8 @@
               "DOT": "DOT"
             },
             "Heavyshot": {
-              "straignt": "Grants Straight Shot Ready"
+              "straignt": "Grants Straight Shot Ready",
+              "spread": "Grants Spread Shot Ready"
             },
             "Trigger": {
               "any": "Any time",
@@ -311,7 +313,7 @@
       "description": "A character on the brink of death suffers severe penalties."
     },
     "bind": {
-      "name": "Bound",
+      "name": "Bind",
       "description": "A bound character cannot move."
     },
     "enmity": {

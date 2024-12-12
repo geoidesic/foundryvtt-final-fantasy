@@ -26,6 +26,8 @@ export class ActionModel extends FFItemDataModel {
       hasDirectHit: new BooleanField({ required: false, initial: false }),
       directHitType: new StringField({ required: false, initial: '' }),
       directHitDamage: new StringField({ required: false, initial: '' }),
+      directHitText: new StringField({ required: false, initial: '' }),
+      directHitCondition: new StringField({ required: false, initial: '' }),
       hasHeavierShot: new BooleanField({ required: false, initial: false }),
       heavierShot: new StringField({ required: false, initial: '' }),
       hasLimitation: new BooleanField({ required: false, initial: false }),
@@ -34,7 +36,6 @@ export class ActionModel extends FFItemDataModel {
       formula: new StringField({ required: false, initial: '' }),
       hasCost: new BooleanField({ required: false, initial: false }),
       cost: new NumberField({ required: false, initial: 0 }),
-      directHitText: new StringField({ required: false, initial: '' }),
       grants: new SchemaField({
         list: new ArrayField(
           new ObjectField({ // Use ObjectField to allow storing objects
