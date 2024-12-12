@@ -215,8 +215,13 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     }
 
     const droppedItem = await fromUuid(data.uuid);
-    //- effect items are not to be dropped directly on the actor
 
+    //- job items are complicated and have their own logic
+    if(droppedItem.type === "job") {
+      return this._onDropJob(event, data);
+    }
+
+    //- effect items are not to be dropped directly on the actor
     if (droppedItem.type === "effect") {
       ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`))
       return false;
@@ -256,6 +261,37 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
         await this._onDropItem(event, item, true);
       }
     }
+  }
+
+  async _onDropJob(event, data) {
+    console.log('_onDropJob', data);
+    const actor = this.reactive.document;
+
+    if (!actor.isOwner) {
+      return false;
+    }
+    //- get the grants from the job item and apply them to the actor
+    const job = await fromUuid(data.uuid);
+    const grants = job.system.grants;
+    console.log('grants', grants);
+    //- apply the grants to the actor,
+    //- iterate over the grants collection as an array and await the fromUuid call, collate these items into an array  
+    const grantItems = [];
+    for(let grantObject of grants.list) {
+      //- grants in the job are stored as uuids,
+      game.system.log.d('uuid', grantObject.uuid);
+      const grantItem = await fromUuid(grantObject.uuid);
+      game.system.log.d('grantItem', grantItem);
+      //- filter out any grants that are already owned by the actor by name
+      if(!actor.items.some(x => x.name === grantItem.name)) {
+        grantItems.push(grantItem);
+      }
+    }
+    game.system.log.d('grantItems', grantItems);
+    //- apply the grants to the actor
+    await actor.createEmbeddedDocuments("Item", grantItems);
+    //- also add the job uuid to the actor
+    await actor.update({system: {job: {uuid: job.uuid, name: job.name, grants: grants.list, level: job.system.level, role: job.system.role, img: job.img}}});
   }
 
   async _onDropItemCreate(itemData) {

@@ -11,9 +11,16 @@ export class PCModel extends FFActorDataModel {
       ...super.defineSchema(),
       isEditing: new BooleanField({initial: false}),
       biography: new HTMLField(),
-      level: new NumberField({ required: true, integer: true, min: 30, initial: 30 }),
-      role: new StringField({ required: true, initial: '' }),
-      job: new StringField({ required: true, initial: '' }),
+      job: new SchemaField({
+        uuid: new StringField({ required: true, initial: '' }),
+        grants: new ArrayField(
+          new StringField({ required: true, initial: '' })
+        ),
+        level: new NumberField({ required: true, integer: true, min: 30, initial: 30 }),
+        role: new StringField({ required: true, initial: '' }),
+        name: new StringField({ required: true, initial: '' }),
+        img: new StringField({ required: true, initial: '' })
+      }),
       globalCheckMod: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
       points: new SchemaField({
         MP: new SchemaField({

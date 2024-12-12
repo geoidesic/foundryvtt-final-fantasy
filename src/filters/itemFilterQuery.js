@@ -61,58 +61,57 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
       return true; 
     }
     
-    game.system.log.d('Filtering data:', data, 'with keyword:', keyword);
 
     if (isIterable(properties)) {
       // console.log('isIterable')
       for (const property of properties) {
         const value = data?.[property];
-        game.system.log.d('Checking property:', property, 'with value:', value);
+        // game.system.log.d('Checking property:', property, 'with value:', value);
         
         // Check if value is defined
         if (value !== undefined) {
           // Handle boolean values directly
           if (typeof value === 'boolean') {
-            game.system.log.d('Boolean value found:', value);
+            // game.system.log.d('Boolean value found:', value);
             if (value.toString() === keyword) {
-              game.system.log.d('Match found for boolean:', value);
+              // game.system.log.d('Match found for boolean:', value);
               return true; 
             }
           } else {
             // Normalize string values
             const normalizedValue = Strings.normalize(value);
-            game.system.log.d('Normalized value:', normalizedValue);
+            // game.system.log.d('Normalized value:', normalizedValue);
             if (regex.test(normalizedValue)) { 
-              game.system.log.d('Match found for normalized value:', normalizedValue);
+              // game.system.log.d('Match found for normalized value:', normalizedValue);
               return true; 
             }
           }
         } else {
-          game.system.log.d('Value is undefined for property:', property);
+          // game.system.log.d('Value is undefined for property:', property);
         }
       }
-      game.system.log.d('No matches found in iterable properties');
+      // game.system.log.d('No matches found in iterable properties');
       return false;
     }
     else {
       // Handle the single property case
       const steps = stepwiseResolveDotpath(data, properties);
       const value = steps[steps.length - 1].val; // Get the final value from the resolved steps
-      game.system.log.d('Checking single property:', properties, 'with value:', value);
+      // game.system.log.d('Checking single property:', properties, 'with value:', value);
       
       // Check if value is defined
       if (value !== undefined) {
         // Handle boolean values directly
         if (typeof value === 'boolean') {
-          game.system.log.d('Boolean value found in single property:', value);
+          // game.system.log.d('Boolean value found in single property:', value);
           return value.toString() === keyword; // Compare boolean as string
         }
         // Normalize string values
         const normalizedValue = Strings.normalize(value);
-        game.system.log.d('Normalized value for single property:', normalizedValue);
+        // game.system.log.d('Normalized value for single property:', normalizedValue);
         return regex.test(normalizedValue);
       }
-      game.system.log.d('Value is undefined for single property:', properties);
+      // game.system.log.d('Value is undefined for single property:', properties);
       return false; // Return false if value is undefined
     }
   }

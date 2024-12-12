@@ -8,6 +8,8 @@ export class JobModel extends FFItemDataModel {
   static defineSchema() {
     return {
       ...super.defineSchema(),  // Merge with the base model schema
+      level: new NumberField({ required: true, initial: 0 }),
+      role: new StringField({ required: true, initial: '' }),
       grants: new SchemaField({
         list: new ArrayField(
           new ObjectField({ // Use ObjectField to allow storing objects
