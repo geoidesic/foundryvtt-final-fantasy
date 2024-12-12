@@ -17,6 +17,7 @@
     "Name": "Name",
     "Description": "Description",
     "BaseEffect": "Base Effect",
+    "ChatText": "Chat Text",
     "Details": "Details",
     "Effects": "Effects",
     "None": "None",
