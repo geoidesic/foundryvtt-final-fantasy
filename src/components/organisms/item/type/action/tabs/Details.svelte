@@ -237,19 +237,6 @@
           .flex4.right.wide
             DocSelect.wide.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
     
-      .flexrow.justify-vertical
-        .flex4
-          h3.left Uses
-        .flex0.right
-          DocCheckbox( name="hasUses" valuePath="system.hasUses")
-
-      +if("$item.system.hasUses")
-        .flexrow.sheet-row.justify-vertical.wide
-          .flex1
-            DocInput.wide(id="uses" name="uses" valuePath="system.uses" placeholder="Uses")
-          .flex1 per
-          .flex4.wide
-            DocSelect.wide(id="usesUnit" name="usesUnit" valuePath="system.usesUnit" options="{usesUnitOptions}" placeholder="Units")
 
 
       .flexrow.justify-vertical
