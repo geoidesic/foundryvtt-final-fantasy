@@ -1,7 +1,6 @@
 import { SYSTEM_ID, activeEffectModes } from "./constants";
 
 export function getDefaultStatusEffects() {
-  console.log('game', game)
   return [
     {
       id: "dead",

@@ -1,7 +1,19 @@
+
 export const SYSTEM_ID = 'foundryvtt-final-fantasy';
 export const SYSTEM_CODE = 'FF15';
 export const LOG_PREFIX = `${SYSTEM_CODE} |`;
 export const ASSET_PATH = `systems/${SYSTEM_ID}/assets`;
+
+
+
+export const getRangeOptions = () => [
+  { value: "1sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.1sq") },
+  { value: "5sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5sq") },
+  { value: "10sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.10sq") },
+  { value: "3x3a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.3x3a") },
+  { value: "3x3aa", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.3x3aa") },
+  { value: "5x5a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5a") },
+];
 
 export const activeEffectModes = [
   {

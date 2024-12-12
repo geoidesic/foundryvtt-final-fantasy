@@ -1,13 +1,14 @@
 <script>
   import { onMount, getContext } from "svelte";
+  import { isParentActor} from "~/src/helpers/util";
   import { localize } from "#runtime/svelte/helper";
+  import { PCModel } from "~/src/models/actors/PC.js";
+  import { getRangeOptions } from "~/src/helpers/constants.js";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
-  import { isParentActor} from "~/src/helpers/util";
 
-  import { PCModel } from "~/src/models/actors/PC.js";
 
   const item = getContext("#doc");
 
@@ -34,14 +35,11 @@
     { value: "turn", label: localize("FF15.Types.Item.Types.Options.Trigger.turn") },
     { value: "invoke", label: localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
   ];
-  const rangeOptions = [
-    { value: "1sq", label: localize("FF15.Types.Item.Types.Options.Range.1sq") },
-    { value: "5sq", label: localize("FF15.Types.Item.Types.Options.Range.5sq") },
-    { value: "10sq", label: localize("FF15.Types.Item.Types.Options.Range.10sq") },
-    { value: "3x3a", label: localize("FF15.Types.Item.Types.Options.Range.3x3a") },
-    { value: "5x5a", label: localize("FF15.Types.Item.Types.Options.Range.5x5a") },
-    { value: "5x5i", label: localize("FF15.Types.Item.Types.Options.Range.5x5i") },
-  ];
+
+
+  const rangeOptions = getRangeOptions();
+
+  
 
   $: parentIsActor = isParentActor($item);
   $: checkOptions = schemaFieldKeys.map((key) => ({ value: key, label: key.toUpperCase() }));

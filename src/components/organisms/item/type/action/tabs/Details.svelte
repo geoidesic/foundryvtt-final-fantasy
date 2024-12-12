@@ -1,6 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
+  import { getRangeOptions } from "~/src/helpers/constants.js";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
@@ -38,6 +39,8 @@
     // { value: "special", label: localize("FF15.Types.Item.Types.Options.CR.special") },
   ];
 
+  const rangeOptions = getRangeOptions();
+
   const targetOptions = [
     { value: "single", label: localize("FF15.Types.Item.Types.Options.Target.single") },
     { value: "enemy", label: localize("FF15.Types.Item.Types.Options.Target.enemy") },
@@ -72,13 +75,7 @@
     { value: "invoke", label: localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
   ];
 
-  const rangeOptions = [
-    { value: "1sq", label: localize("FF15.Types.Item.Types.Options.Range.1sq") },
-    { value: "5sq", label: localize("FF15.Types.Item.Types.Options.Range.5sq") },
-    { value: "10sq", label: localize("FF15.Types.Item.Types.Options.Range.10sq") },
-    { value: "3x3a", label: localize("FF15.Types.Item.Types.Options.Range.3x3a") },
-    { value: "5x5a", label: localize("FF15.Types.Item.Types.Options.Range.5x5a") },
-  ];
+
   const typeOptions = [
     { value: "primary", label: localize("FF15.Types.Item.Types.Options.Type.primary") },
     { value: "secondary", label: localize("FF15.Types.Item.Types.Options.Type.secondary") },
@@ -104,14 +101,14 @@
 </script>
 
 <template lang="pug">
-  .item-sheet.details.overflow
-    .flexcol.flex3.left.high
+  .item-sheet.details.overflow.wide
+    .flexcol.flex3.left.high.wide
       h3.left General
-      .flexrow.sheet-row.justify-vertical
-        .flex3
+      .flexrow.sheet-row.justify-vertical.wide
+        .flex1
           label(for="type") Type
-        .flex2.right
-          DocSelect.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
+        .flex4.right.wide
+          DocSelect.wide.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
       
       .flexrow.sheet-row.justify-vertical
         .flex3
@@ -126,11 +123,11 @@
           DocCheckbox( name="hasAspected" valuePath="system.hasAspected")
 
       +if("$item.system.hasAspected")
-        .flexrow.sheet-row.justify-vertical
-          .flex3
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
             label(for="aspected") Aspected
-          .flex2.right
-            DocSelect.right(id="aspected" name="aspected" type="number" options="{aspectedOptions}" valuePath="system.aspected")
+          .flex4.right.wide
+            DocSelect.wide.right(id="aspected" name="aspected" type="number" options="{aspectedOptions}" valuePath="system.aspected")
       
 
       .flexrow.justify-vertical
@@ -140,11 +137,11 @@
           DocCheckbox( name="hasCost" valuePath="system.hasCost")
 
       +if("$item.system.hasCost")
-        .flexrow.sheet-row.justify-vertical
-          .flex3
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
             label(for="cost") MP
-          .flex2.right
-            DocSelect.right(id="cost" name="cost" type="number" options="{costOptions}" valuePath="system.cost")
+          .flex4.right.wide
+            DocSelect.wide.right(id="cost" name="cost" type="number" options="{costOptions}" valuePath="system.cost")
       
       
       .flexrow.justify-vertical
@@ -154,11 +151,11 @@
           DocCheckbox( name="hasCheck" valuePath="system.hasCheck")
 
       +if("$item.system.hasCheck")
-        .flexrow.sheet-row.justify-vertical
+        .flexrow.sheet-row.justify-vertical.wide
           .flex4
             label(for="checkAttribute") Check Attribute
-          .flex0.right
-            DocSelect.right(id="checkAttribute" name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
+          .flex2.right.wide
+            DocSelect.wide.right(id="checkAttribute" name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
 
       .flexrow.justify-vertical
         .flex4
@@ -167,11 +164,11 @@
           DocCheckbox( name="hasCR" valuePath="system.hasCR")
 
       +if("$item.system.hasCR")
-        .flexrow.sheet-row.justify-vertical
-          .flex2
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
             label(for="CR") CR Type
-          .flex2.right
-            DocSelect.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
+          .flex4.right.wide
+            DocSelect.wide.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
       
 
       .flexrow.justify-vertical
@@ -181,11 +178,11 @@
           DocCheckbox( name="hasHeavierShot" valuePath="system.hasHeavierShot")
 
       +if("$item.system.hasHeavierShot")
-        .flexrow.sheet-row.justify-vertical
-          .flex2
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
             label(for="heavierShot") Heavier Shot Type
-          .flex2.right
-            DocSelect.right(id="heavierShot" name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
+          .flex4.right.wide
+            DocSelect.wide.right(id="heavierShot" name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
 
       .flexrow.justify-vertical
         .flex4
@@ -194,11 +191,11 @@
           DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
 
       +if("$item.system.hasLimitation")
-        .flexrow.sheet-row.justify-vertical
-          .flex2
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
             label(for="limitation") Limitation
-          .flex2.right
-            DocSelect.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
+          .flex4.right.wide
+            DocSelect.wide.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
       
       .flexrow.justify-vertical
         .flex4
@@ -207,11 +204,11 @@
           DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
       +if("$item.system.hasRanged")
 
-        .flexrow.sheet-row.justify-vertical
-            .flex2
-              label(for="rangeType") Range Type
-            .flex2.right
-              DocSelect.right(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
+        .flexrow.sheet-row.justify-vertical.wide
+            .flex1
+              label(for="rangeType") Type
+            .flex4.right.wide
+              DocSelect.wide.right.wide(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
 
       .flexrow.justify-vertical
         .flex4
@@ -220,11 +217,11 @@
           DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
 
       +if("$item.system.hasTarget")
-        .flexrow.sheet-row.justify-vertical
-          .flex2
-            label(for="target") Target
-          .flex2.right
-            DocSelect.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
+            label(for="target") Type
+          .flex4.right.wide
+            DocSelect.wide.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
 
 
       .flexrow.justify-vertical
@@ -234,11 +231,11 @@
           DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
 
       +if("$item.system.hasTrigger")
-        .flexrow.sheet-row.justify-vertical
-          .flex2
-            label(for="trigger") Trigger
-          .flex2.right
-            DocSelect.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
+            label(for="trigger") Type
+          .flex4.right.wide
+            DocSelect.wide.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
     
       .flexrow.justify-vertical
         .flex4
@@ -247,12 +244,12 @@
           DocCheckbox( name="hasUses" valuePath="system.hasUses")
 
       +if("$item.system.hasUses")
-        .flexrow.sheet-row.justify-vertical
-          .flex2
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
             DocInput.wide(id="uses" name="uses" valuePath="system.uses" placeholder="Uses")
           .flex1 per
-          .flex2
-            DocSelect(id="usesUnit" name="usesUnit" valuePath="system.usesUnit" options="{usesUnitOptions}" placeholder="Units")
+          .flex4.wide
+            DocSelect.wide(id="usesUnit" name="usesUnit" valuePath="system.usesUnit" options="{usesUnitOptions}" placeholder="Units")
 
 
       .flexrow.justify-vertical
@@ -262,11 +259,11 @@
           DocCheckbox( name="hasDirectHit" valuePath="system.hasDirectHit")
 
       +if("$item.system.hasDirectHit")
-        .flexrow.sheet-row.justify-vertical
-          .flex4
-            label(for="directHitType") Direct Hit Type
-          .flex0.right
-            DocSelect.right(id="directHitType" name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
+            label(for="directHitType") Type
+          .flex4.right.wide
+            DocSelect.wide.right(id="directHitType" name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
 
       +if("$item.system.directHitType === 'damage'")
         .flexrow.sheet-row.justify-vertical

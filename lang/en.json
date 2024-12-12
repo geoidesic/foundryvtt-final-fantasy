@@ -16,6 +16,7 @@
   "FF15": {
     "Name": "Name",
     "Description": "Description",
+    "BaseEffect": "Base Effect",
     "Details": "Details",
     "Effects": "Effects",
     "None": "None",
@@ -39,8 +40,8 @@
     },
     "Types": {
       "Item": {
-        "AlreadyExists": "Item already exists",
-        "LimitBreakAlreadyExists": "Limit Break already exists",
+        "AlreadyExists": "This container already contains that item",
+        "LimitBreakAlreadyExists": "A Job can only have one Limit Break",
         "Label": "Item",
         "Types": {
           "action": {
@@ -128,6 +129,7 @@
               "5sq": "5 Squares",
               "10sq": "10 Squares",
               "3x3a": "A 3x3 area centered on this character",
+              "3x3aa": "A 3x3 area adjacent to this character",
               "5x5a": "A 5x5 area centered on this character",
               "5x5i": "A 5x\u221E area extending in a straight line from 1 square adjacent to this character"
             },

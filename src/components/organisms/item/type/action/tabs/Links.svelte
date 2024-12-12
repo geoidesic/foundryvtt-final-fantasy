@@ -21,7 +21,6 @@
         title="Target Effects",
         key="grants",
       )
-      hr
       ItemBucket(
         title="Enabled Traits",
         key="enables",

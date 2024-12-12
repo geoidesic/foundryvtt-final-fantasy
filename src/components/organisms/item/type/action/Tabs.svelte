@@ -13,7 +13,7 @@
   let activeTab = "description";
   // Tabs
   const tabs = [
-    { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
+    { label: localize(`${SYSTEM_CODE}.BaseEffect`), id: "description", component: Description },
     { label: localize(`${SYSTEM_CODE}.Details`), id: "details", component: Details },
     { label: localize(`${SYSTEM_CODE}.Links`), id: "links", component: Links },
     // { label: localize(`${SYSTEM_CODE}.Effects`), id: "effects", component: Effects },
