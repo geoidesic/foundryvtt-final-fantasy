@@ -13,12 +13,13 @@
 
 <template lang="pug">
 
-.item-sheet.details.overflow
-  .flexcol.flex3.left.high
-    ItemBucket(
-      title="Grants",
-      key="grants",
-    )
+.item-sheet.details.overflow.high
+  .flexcol
+    .flex3.left.high
+      ItemBucket(
+        title="Grants",
+        key="grants",
+      )
 
 </template>
 
@@ -27,6 +28,6 @@
   @import '../../../../../../styles/Mixins.sass'
 
   .details
-    max-height: calc(100% - 15px) //- prevents the scrolling area's content from being hidden below the fold
+    max-height: calc(100% - 0px) //- prevents the scrolling area's content from being hidden below the fold
     +inset
 </style>
