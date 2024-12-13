@@ -41,8 +41,8 @@
 <template lang="pug">
 .px-sm.panel.pt-xs.containerx.wide
   .flexrow
-    .flex4.nowrap
-      .flexrow.nowrap
+    .flex4.no-wrap
+      .flexrow.no-wrap
         .flex1.rest-button
           .left.mt-xxs
             button.stealth(on:click|preventDefault="{rest}" data-tooltip="{localize('FF15.TitleBlock.Rest')}" aria-label="{localize('FF15.TitleBlock.Rest')}")
@@ -52,7 +52,7 @@
           .scaleup LV 
           .scaleup {level}
 
-    .flex4.nowrap.font-cinzel.job  {roleName} /  {jobName}
+    .flex4.no-wrap.font-cinzel.job  {roleName} /  {jobName}
        
 </template>
 
@@ -69,7 +69,7 @@
     
   .job
     text-align: right
-    @container (max-width: 350px)
+    @container (max-width: 390px)
       text-align: center
   .lvcontainer
     display: flex
