@@ -133,11 +133,14 @@
     border: 3px ridge var(--ff-border-color)
     // border: 2px double var(--ff-border-color)
     width: fit-content
-    max-height: 3em
+    max-height: 2.8em
     padding: 0 0.5em
     color: var(--color-highligh-light)
     border-radius: var(--border-radius-icon)
     background-color: var(--color-lowlight)
+    &.truncate
+      overflow: hidden
+      text-overflow: ellipsis
     &.disabled
       cursor: inherit
     &.stealth

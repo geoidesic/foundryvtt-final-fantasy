@@ -220,11 +220,11 @@
                   i.left.fa.fa-trash.mr-md
         li.flexrow.footer
 
-    .flexrow
-      .flex1
-        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{openActiveEffectEditor}") + Add Effect
-      .flex1
-        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllEffects}") - Remove All Effects
+    .flexrow(style="justify-content: space-evenly")
+      .flex1.center
+        button.truncate.mt-sm.glossy-button.gold-light.hover-shine(on:click="{openActiveEffectEditor}") + Add Effect
+      .flex1.center
+        button.truncate.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllEffects}") - Remove All Effects
 
     h5 Notes: 
     ul.pa-sm.left.pa-md(style="margin-top: -20px")
