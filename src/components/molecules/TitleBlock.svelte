@@ -10,7 +10,8 @@
   //- truncate everything after and including the first space
   $: jobName = $actor.system.job.name.split(' ')[0].toUpperCase();
   $: roleName = $actor.system.job.role.toUpperCase();
-  $: level = $actor.system.job.level;
+  $: level = $actor.system.job?.level || ''
+  $: hasJob = $actor.system.job.name ? true : false;
 
   onMount(() => {
     // console.log('TitleBlock mounted');
@@ -38,66 +39,43 @@
 </script>
 
 <template lang="pug">
-.panel.heightcol
+.px-sm.panel.pt-xs.containerx.wide
   .flexrow
-    .flex2
-      .flexrow.nowrap.justify-vertical.container(style="min-width: 150px")
-        .flex0.rest
-          button.stealth.rest-button(on:click|preventDefault="{rest}" data-tooltip="{localize('FF15.TitleBlock.Rest')}" aria-label="{localize('FF15.TitleBlock.Rest')}")
+    .flex4.nowrap
+      .flexrow.nowrap
+        .flex1.rest-button
+          .left
+            button.stealth(on:click|preventDefault="{rest}" data-tooltip="{localize('FF15.TitleBlock.Rest')}" aria-label="{localize('FF15.TitleBlock.Rest')}")
             img.rest-icon(src="systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp")
-        .flex1.right.mr-lg
-          label.scaleup.widebold.font-inter.glow.white.inline-block LV
-        .flex1.left.ml-lg
-          label.scaleup.widebold.font-inter.glow.white.inline-block {level}
-          //- input.font-inter(style="font-size: 2em;" name="level" id="level")
-          //- DocInput.widebold.white.wide.font-inter(bind:enabled="{levelEnabled}" type="number" name="level" min=0 valuePath="system.job.level" textClasses="glow widebold scaleupint white ml-md")
 
-    .flex3
-      .flexrow.nowrap.mr-xl.mt-xxs.ml-xxl
-        .flex4.job.right.white.wide.widebold.glow.pr-sm {roleName}
-          //- DocInput.white.wide.widebold( type="text" name="role" valuePath="system.job.role" textClasses="glow white wide")
-        .flex0.middle /
-        .flex4.job.left.white.wide.widebold.glow.pl-sm {jobName}
-          //- DocInput.white.wide.widebold( type="text" name="job" valuePath="system.job.name" textClasses="glow white wide")
+        .flex4.nowrap.font-inter.lvcontainer
+          .scaleup LV 
+          .scaleup {level}
 
+    .flex4.nowrap.font-cinzel.job  {roleName} /  {jobName}
+       
 </template>
 
 <style lang="sass">
   @import '../../styles/Mixins.sass'
-  :global(.FF15 .job input)
-    font-size: 1em
-      
-  .job
-    font-family: "Cinzel", serif
-    font-size: 2em
-    
-  .middle
-    font-size: 2em
-    font-weight: 500
-    color: #fff
-
-  .rest
-    text-align: left
-    margin: 2px 15px 0 0
-    padding: 0
-
-    @container (min-width: 200px) 
-      margin: 4px -40px 0 0
-    
-
-
-    .rest-button
-      max-height: 35px
-    .rest-icon
-      max-width: 35px
-      border: none
-      height: 35px
-      width: 35px
-
-    .lv
-    .level
-
-  .container 
+  .containerx
     container-type: inline-size
-  
+    font-size: 2rem
+    color: white
+  .rest-button
+    max-width: 35px
+  .rest-icon
+    min-width: 35px
+    
+  .job
+    text-align: right
+    @container (max-width: 350px)
+      text-align: center
+  .lvcontainer
+    display: flex
+    justify-content: center
+    gap: 3rem
+    min-width: 11rem
+  .lv
+    max-width: 2rem
 </style>

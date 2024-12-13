@@ -141,6 +141,7 @@
     &.disabled
       cursor: inherit
     &.stealth
+      padding: 0
       position: relative
       z-index: 100
       border: none
@@ -295,6 +296,8 @@
     option 
       white-space: nowrap
 
+  img
+    border: none
   //- Fonts
   h1
     font-family: "Cinzel", sans-serif
@@ -424,6 +427,8 @@
       flex-wrap: nowrap
     &.end
       justify-content: flex-end
+    &.center
+      justify-content: center
     &.justify-vertical
       align-items: center
 
@@ -435,8 +440,9 @@
   .gap-15
     gap: 15px
 
-  .no-wrap
+  .nowrap
     white-space: nowrap
+    flex-wrap: nowrap
 
   .required
     font-size: large
