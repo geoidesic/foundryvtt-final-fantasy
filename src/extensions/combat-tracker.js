@@ -25,12 +25,25 @@ export default class FFCombatTracker extends CombatTracker {
     const data = await super.getData(options);
     
     if (data.combat) {
-      // Sort combatants: PCs first, then NPCs
-      data.turns = this._sortCombatants(data.combat.turns);
+      const sortedTurns = this._sortCombatants(data.combat.turns);
+      
+      // Find the first NPC index
+      const firstNPCIndex = sortedTurns.findIndex(t => t.name.includes('[NPC]'));
+      
+      // Only add border if we have both PCs and NPCs
+      if (firstNPCIndex > 0 && firstNPCIndex < sortedTurns.length) {
+        // Add border class to first NPC
+        sortedTurns[firstNPCIndex].css = (sortedTurns[firstNPCIndex].css || "") + " npc-group-start";
+        // Add border class to last PC (the one before the first NPC)
+        sortedTurns[firstNPCIndex - 1].css = (sortedTurns[firstNPCIndex - 1].css || "") + " pc-group-end";
+      }
+      
+      data.turns = sortedTurns;
     }
-    
+    console.log('data.turns', data.turns);
     return data;
   }
+  
 
   /**
    * Custom sort method to separate PCs and NPCs
