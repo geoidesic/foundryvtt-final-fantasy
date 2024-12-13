@@ -10,3 +10,5 @@ export { default as TraitHeader } from "./trait/Header.svelte";
 export { default as TraitTabs } from "./trait/Tabs.svelte";
 export { default as EffectHeader } from "./effect/Header.svelte";
 export { default as EffectTabs } from "./effect/Tabs.svelte";
+export { default as TelegraphHeader } from "./telegraph/Header.svelte";
+export { default as TelegraphTabs } from "./telegraph/Tabs.svelte";
