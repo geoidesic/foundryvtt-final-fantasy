@@ -17,9 +17,47 @@ export default class FFCombatTracker extends CombatTracker {
     });
   }
 
+  /**
+   * Override the getData method to sort combatants
+   * @override
+   */
+  async getData(options={}) {
+    const data = await super.getData(options);
+    
+    if (data.combat) {
+      // Sort combatants: PCs first, then NPCs
+      data.turns = this._sortCombatants(data.combat.turns);
+    }
+    
+    return data;
+  }
+
+  /**
+   * Custom sort method to separate PCs and NPCs
+   * @private
+   */
+  _sortCombatants(turns) {
+    return turns.sort((a, b) => {
+      // Check if combatant is NPC by checking actor type
+      const aIsNPC = a.actor?.type === "NPC";
+      const bIsNPC = b.actor?.type === "NPC";
+      
+      // If one is NPC and other isn't, NPCs go last
+      if (aIsNPC !== bIsNPC) {
+        return aIsNPC ? 1 : -1;
+      }
+      
+      // If both are same type (both PC or both NPC), sort by initiative
+      if (a.initiative === null && b.initiative === null) return 0;
+      if (a.initiative === null) return 1;
+      if (b.initiative === null) return -1;
+      return b.initiative - a.initiative;
+    });
+  }
+
   async _onCombatantMouseDown(event) {
     event.preventDefault();
-    event.stopPropagation();
+    // event.stopPropagation(); //- this breaks the context menu, so removing it and the input click still works as expected
 
     const li = event.currentTarget;
     const combatant = this.viewed.combatants.get(li.dataset.combatantId);
@@ -44,48 +82,6 @@ export default class FFCombatTracker extends CombatTracker {
     }
   }
 
-  activateListeners(html) {
-    super.activateListeners(html);
-    //- recursively get super and give me the classnames till we traverse to the root class
-    const classNames = this.getClassNames();
-    console.log("Class Names:", classNames); // Log the class names
-
-    
-
-    const tracker = html.find("#combat-tracker");
-    const combatants = tracker.find(".combatant");
-
-    // Create new Combat encounter
-    html.find(".combat-create").click(ev => this._onCombatCreate(ev));
-
-    // Display Combat settings
-    html.find(".combat-settings").click(ev => {
-      ev.preventDefault();
-      new CombatTrackerConfig().render(true);
-    });
-
-    // Cycle the current Combat encounter
-    html.find(".combat-cycle").click(ev => this._onCombatCycle(ev));
-
-    // Combat control
-    html.find(".combat-control").click(ev => this._onCombatControl(ev));
-
-    // Combatant control
-    html.find(".combatant-control").click(ev => this._onCombatantControl(ev));
-
-    // Hover on Combatant
-    combatants.hover(this._onCombatantHoverIn.bind(this), this._onCombatantHoverOut.bind(this));
-
-    // Click on Combatant
-    combatants.click(this._onCombatantMouseDown.bind(this));
-
-    // Context on right-click
-    if ( game.user.isGM ) this._contextMenu(html);
-
-    // Intersection Observer for Combatant avatars
-    const observer = new IntersectionObserver(this._onLazyLoadImage.bind(this), {root: tracker[0]});
-    combatants.each((i, li) => observer.observe(li));
-  }
 
   getClassNames() {
     const classNames = [];
