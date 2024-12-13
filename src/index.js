@@ -14,26 +14,31 @@ import ItemSheetStandard from "~/src/components/applications/ItemSheetStandard";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 import FFChat from "~/src/components/organisms/chat/FFChat.svelte";
 import FFTokenHUD from './extensions/token-hud.js'
+import FFCombatTracker from './extensions/combat-tracker.js'
 
 //- helpers
 function setupDSN() {
   // Set up Dice So Nice to icrementally show attacks then damge rolls
   if (game.modules.get("dice-so-nice")?.active && !game.settings.get(game.system.id, ICON.settings.dsn_setup)) {
-      console.log(`First login setup for Dice So Nice`);
-      game.settings.set("dice-so-nice", "enabledSimultaneousRolls", true);
-      game.settings.set("dice-so-nice", "enabledSimultaneousRollForMessage", true);
-      game.settings.set("dice-so-nice", "immediatelyDisplayChatMessages", true);
-      game.settings.set(game.system.id, ICON.settings.dsn_setup, true);
+    console.log(`First login setup for Dice So Nice`);
+    game.settings.set("dice-so-nice", "enabledSimultaneousRolls", true);
+    game.settings.set("dice-so-nice", "enabledSimultaneousRollForMessage", true);
+    game.settings.set("dice-so-nice", "immediatelyDisplayChatMessages", true);
+    game.settings.set(game.system.id, ICON.settings.dsn_setup, true);
   }
 }
 
+//- debug hooks
+// CONFIG.debug.hooks = true;
+
+
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
+CONFIG.ui.combat = FFCombatTracker;
 
 //- Set initiative dice
 CONFIG.Combat.initiative = {
   formula: "1d20 + (@attributes.primary.dex.val)",
-  decimals: 2
 };
 
 
@@ -62,12 +67,71 @@ Hooks.once("init", async (a, b, c) => {
     makeDefault: true,
   });
 
+  Handlebars.registerHelper("getSetting", function (moduleName, settingKey) {
+    return game.settings.get(moduleName, settingKey);
+  });
+
   //- for testing without Svelte (handy when asking questions on Discord)
   // Items.registerSheet("foundryvtt-final-fantasy", ItemSheetStandard, {
   //   makeDefault: true,
   // });
 
   Hooks.call("gff15.initIsComplete");
+
+  // Override the default combat tracker behavior
+  Hooks.on("renderCombatTracker", (app, html) => {
+
+    const isCombatActive = game.combat?.started ? true : false;
+    console.log('isCombatActive', isCombatActive);
+
+    // Pass isCombatActive to the template context
+    html.find(".combatant").each(function (index, element) {
+      console.log('element', element);
+      const combatantId = $(element).data("combatant-id");
+      const combatant = game.combat?.combatants.get(combatantId);
+      console.log('combatant-id', combatantId);
+      console.log('combatant', combatant);
+      // Make initiative editable if combat is not active
+      if (isCombatActive) {
+
+      } else {
+        $(element).find(".initiative").each(function () {
+          console.log('initiative element', this);
+
+          // Listen for changes in the initiative input
+          $(this).on("input", async function (event, val) {
+            const newInitiative = parseInt($(this).val());
+            console.log('$(this)', $(this));
+            console.log('$(this).val()', $(this).val());
+            console.log('newInitiative', newInitiative);
+            if (!isNaN(newInitiative)) {
+              await combatant.update({ initiative: newInitiative });
+            }
+          });
+
+          $(this).on("dblclick", function (event) {
+            alert('dblclick');
+            event.stopPropagation(); // Prevents other listeners from being called
+            event.preventDefault(); // Prevents the default action
+          });
+
+          $(this).on("contextmenu", function (event) {
+            alert('contextmenu');
+            event.stopPropagation(); // Prevent the click from bubbling up
+            event.preventDefault(); // Prevents the default action
+          });
+
+          $(this).on("blur", async function () {
+            const newInitiative = parseInt($(this).text(), 10);
+            if (!isNaN(newInitiative)) {
+              await combatant.updateCombatant({ initiative: newInitiative });
+            }
+          });
+        });
+      }
+    });
+
+  });
 });
 
 Hooks.once("ready", async () => {
@@ -79,7 +143,7 @@ Hooks.once("ready", async () => {
 Hooks.on('canvasReady', () => {
   // render custom token hud
   CONFIG.statusEffects = getDefaultStatusEffects();
-  canvas.hud.token = new FFTokenHUD({defaultStatusEffects: CONFIG.statusEffects})
+  canvas.hud.token = new FFTokenHUD({ defaultStatusEffects: CONFIG.statusEffects })
 
   //- status effects
 
@@ -89,10 +153,18 @@ Hooks.on('canvasReady', () => {
 
 Hooks.on("combatStart", async () => {
   const combatStartSound = game.settings.get(SYSTEM_ID, 'combatStartSound').trim();
-  if(combatStartSound !== '') {
+  if (combatStartSound !== '') {
     AudioHelper.play({ src: combatStartSound, volume: 1, autoplay: true, loop: false });
   }
 });
+
+Hooks.on("updateCombatant", (combatant, updateData) => {
+  if (updateData.initiative !== undefined) {
+    console.log(`Combatant: ${combatant.name}, Initiative: ${updateData.initiative}`);
+  }
+});
+
+
 
 /**
  * Used by chat message demo to manually attach a Svelte component, SurgeRoll, to a chat message.

@@ -10,8 +10,24 @@ export function registerSettings() {
   combatStartSound()
   chatMessageSound()
   showStatusEffectNames()
+  manualInitiative()
 }
 
+function manualInitiative() {
+
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'manual-initiative',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.ManualInitiative.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.ManualInitiative.Hint`),
+      scope: 'world',
+      config: true,
+      default: true,
+      type: Boolean
+    }
+  });
+}
 function showStatusEffectNames() {
 
   gameSettings.register({

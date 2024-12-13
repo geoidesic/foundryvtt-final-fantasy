@@ -286,6 +286,10 @@
       "chatMessageSound": {
         "Name": "Sound file for new chat message",
         "Hint": "If blank, no sound will be played. If set, the sound will be played when a chat message arrives in the Chat sidebar tab."
+      },
+      "ManualInitiative": {
+        "Name": "Manual Initiative",
+        "Hint": "If checked, initiative will be manually set by the GM and or Players. If unchecked, initiative will be set automatically based on 1d20 + DEX."
       }
     },
     "TitleBlock": {
