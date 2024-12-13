@@ -48,7 +48,7 @@
             button.stealth(on:click|preventDefault="{rest}" data-tooltip="{localize('FF15.TitleBlock.Rest')}" aria-label="{localize('FF15.TitleBlock.Rest')}")
               img.rest-icon(src="systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp")
 
-        .flex4.nowrap.font-inter.lvcontainer
+        .flex4.nowrap.font-inter.lvcontainer.glow
           .scaleup LV 
           .scaleup {level}
 
