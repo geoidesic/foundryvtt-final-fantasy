@@ -30,6 +30,12 @@ function setupDSN() {
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
 
+//- Set initiative dice
+CONFIG.Combat.initiative = {
+  formula: "1d20 + (@attributes.primary.dex.val)",
+  decimals: 2
+};
+
 
 
 //- Foundry System Hooks
