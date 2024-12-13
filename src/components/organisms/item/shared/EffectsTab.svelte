@@ -187,6 +187,7 @@
 .item-sheet.details.overflow
   //- i.fa.fa-circle-check(on:click="{debug}")
   .flexcol.flex3.left
+    h1.gold.center Effects
     .flexrow.justify-vertical.my-sm
       .flexcol.flex1.label-container 
         label(for="search") Search

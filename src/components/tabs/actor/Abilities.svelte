@@ -169,7 +169,7 @@
       .padded
         //- add in the job item if it exists
         +if("$Actor.system.job?.name")
-          h1.left Job
+          h1.left.gold Job
           table.borderless
             tr
               td.img.shrink(scope="col")
@@ -180,7 +180,7 @@
                   i.fa-solid.fa-trash
 
 
-        h1 Abilities
+        h1.gold Abilities
         table.borderless
           tr
             th.img.shrink(scope="col")
