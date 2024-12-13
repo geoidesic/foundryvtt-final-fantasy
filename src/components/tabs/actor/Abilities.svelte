@@ -150,6 +150,7 @@
   $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock negative" : "fa-lock-open positive";
   $: hasItems = $Actor.items.some(x=> ['action', 'trait'].includes(x.type));
   $: console.log($Actor.items.map(x=>x.type))
+  
 </script>
 
 <template lang="pug">
@@ -164,59 +165,67 @@
     //-   .flex3.right
     //-     Select.short(options="{typeFilterOptions}" bind:value="{typeFilterValue}")
 
-    .panel.overflow
-      //- add in the job item if it exists
-      +if("$Actor.system.job?.name")
-        h1.left Job
+    .panel.overflow.containerx
+      .padded
+        //- add in the job item if it exists
+        +if("$Actor.system.job?.name")
+          h1.left Job
+          table.borderless
+            tr
+              td.img.shrink(scope="col")
+                img.icon(src="{$Actor.system.job?.img}" alt="{$Actor.system.job?.img}")
+              td.left.expand(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
+              td.buttons(scope="col")
+                button.stealth(on:click="{deleteJob}")
+                  i.fa-solid.fa-trash
+
+
+        h1 Abilities
         table.borderless
           tr
-            td.img.shrink(scope="col")
-              img.icon(src="{$Actor.system.job?.img}" alt="{$Actor.system.job?.img}")
-            td.left.expand(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
-            td.buttons(scope="col")
-              button.stealth(on:click="{deleteJob}")
-                i.fa-solid.fa-trash
-
-
-      h1 Abilities
-      table.borderless
-        tr
-          th.img.shrink(scope="col")
-          th.left.expand.ml-sm(scope="col") Name
-          th.fixed(scope="col") Type
-          th.shrink(scope="col")
-            i.fa-solid.fa-bookmark
-          th.buttons(scope="col" class="{lockCSS}")
-            button.stealth(class="{lockCSS}")
-              i.fa(class="{faLockCSS}" on:click="{toggleLock}")
-        +each("items as item, index")
-          //- pre item.type {item.type}
-          tr
-            td.img
-              img.icon(src="{item.img}" alt="{item.name}")
-            td.left
-              a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-            td {ucfirst(item.type)}
-            td
-              button.stealth(on:click="{toggleBookmark(item)}") 
-                i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
-            td.min.buttons.right
-              +if("!$doc.system.inventoryLocked")
-                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
-                  i.left.fa.fa-edit
-                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
-                  i.left.fa.fa-copy
-                button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
-                  i.left.fa.fa-trash
-          
-    +if("hasItems")
-      button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
+            th.img.shrink(scope="col")
+            th.left.expand.ml-sm(scope="col") Name
+            th.fixed(scope="col") Type
+            th.shrink(scope="col")
+              i.fa-solid.fa-bookmark
+            th.buttons(scope="col" class="{lockCSS}")
+              button.stealth(class="{lockCSS}")
+                i.fa(class="{faLockCSS}" on:click="{toggleLock}")
+          +each("items as item, index")
+            //- pre item.type {item.type}
+            tr
+              td.img
+                img.icon(src="{item.img}" alt="{item.name}")
+              td.left
+                a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+              td {ucfirst(item.type)}
+              td
+                button.stealth(on:click="{toggleBookmark(item)}") 
+                  i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
+              td.min.buttons.right
+                +if("!$doc.system.inventoryLocked")
+                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                    i.left.fa.fa-edit
+                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                    i.left.fa.fa-copy
+                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                    i.left.fa.fa-trash
+            
+      +if("hasItems")
+        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
 
 </template>
 
 <style lang="sass">
 @import '../../../styles/Mixins.sass'
 
+.containerx
+  container-type: inline-size
+
+.padded
+  transition: padding 0.2s ease-in-out
+  @container (min-width: 350px)
+    padding: 1rem
 .pulse
   @include pulse
 
