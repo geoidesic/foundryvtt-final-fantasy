@@ -65,11 +65,9 @@
   $: $headerButtonNoLabel = $applicationWindowHeaderIconsOnly;
 
   // Debugging the reactive flow
-  $: console.log('headerButtonNoLabel:', headerButtonNoLabel);
-  $: console.log('applicationWindowHeaderIconsOnly:', $applicationWindowHeaderIconsOnly);
 
   onMount(async () => {
-
+    game.system.log.d($documentStore)
   });
 </script>
 

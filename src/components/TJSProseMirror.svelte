@@ -217,8 +217,8 @@
   /** @type {boolean} */
   let keyFocused = false;
 
-  $: console.log('TJS options', options)
-  $: console.log('TJS classes', Array.isArray(options.classes) ? options.classes.join(' ') : '')
+//   $: console.log('TJS options', options)
+//   $: console.log('TJS classes', Array.isArray(options.classes) ? options.classes.join(' ') : '')
   /**
    * Respond to changes in `options.editable`.
    */

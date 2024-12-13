@@ -38,9 +38,6 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   _getHeaderButtons() {
-    game.system.log.d('_getHeaderButtons')
-    game.system.log.d('isEditing', this.reactive.document.system.isEditing);
-
     const buttons = super._getHeaderButtons();
     const storage = this.reactive.sessionStorage;
     const canConfigure = game.user.isGM || (this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE"));
@@ -70,12 +67,10 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   async _onToggleEdit(event) {
-    game.system.log.d('_onToggleEdit')
     if (event) {
       event.preventDefault();
     }
     await this.reactive.document.update({system: {isEditing: !this.reactive.document.system.isEditing}});
-    game.system.log.d('after toggle: isEditing', this.reactive.document.system.isEditing);
     this.render();
   }
 
@@ -134,13 +129,8 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   async _onDrop(event) {
-
     const data = TextEditor.getDragEventData(event);
     const actor = this.reactive.document;
-    console.log('event', event);
-    console.log('data', data);
-    console.log('actor', actor);
-
     if (actor.documentName !== "Actor") {
       return;
     }
@@ -180,13 +170,8 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   async _onDropActiveEffect(event, data) {
-    console.log('_onDropActiveEffect');
-
-    console.log('data', data);
     const actor = this.reactive.document;
-
     const effect = await ActiveEffect.implementation.fromDropData(data);
-    console.log('effect', effect);
 
     if (!actor.isOwner || !effect) {
       return false;
@@ -206,7 +191,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   async _onDropItem(event, data, ignoreValidation = false) {
-    console.log('_onDropItem', data);
+    // console.log('_onDropItem', data);
     const actor = this.reactive.document;
 
     if (!actor.isOwner) {
@@ -264,7 +249,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   async _onDropJob(event, data) {
-    console.log('_onDropJob', data);
+    // console.log('_onDropJob', data);
     const actor = this.reactive.document;
 
     if (!actor.isOwner) {
@@ -273,21 +258,17 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     //- get the grants from the job item and apply them to the actor
     const job = await fromUuid(data.uuid);
     const grants = job.system.grants;
-    console.log('grants', grants);
     //- apply the grants to the actor,
     //- iterate over the grants collection as an array and await the fromUuid call, collate these items into an array  
     const grantItems = [];
     for(let grantObject of grants.list) {
       //- grants in the job are stored as uuids,
-      game.system.log.d('uuid', grantObject.uuid);
       const grantItem = await fromUuid(grantObject.uuid);
-      game.system.log.d('grantItem', grantItem);
       //- filter out any grants that are already owned by the actor by name
       if(!actor.items.some(x => x.name === grantItem.name)) {
         grantItems.push(grantItem);
       }
     }
-    game.system.log.d('grantItems', grantItems);
     //- apply the grants to the actor
     await actor.createEmbeddedDocuments("Item", grantItems);
     //- also add the job uuid to the actor

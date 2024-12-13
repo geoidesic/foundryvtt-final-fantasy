@@ -149,15 +149,11 @@
     Hooks.on('createActiveEffect', resetEffectList);
     Hooks.on('deleteActiveEffect', resetEffectList);
 
-    game.system.log.d("EffectsTab mounted");
-    game.system.log.d(ActiveEffects);
   });
   onDestroy(() => {
     Hooks.off('createActiveEffect', resetEffectList);
     Hooks.off('deleteActiveEffect', resetEffectList);
 
-    game.system.log.d("EffectsTab onDestroy");
-    game.system.log.d(ActiveEffects);
   });
 
   // $: ActiveEffects = $filterDoc.effects;

@@ -9,7 +9,6 @@ export let strokeColor="#514030";
 export let onClick;
 
 onMount(() => {
-  game.system.log.d('PortraitFrame mounted');
 });
 </script>
 <template lang="pug">

@@ -5,8 +5,6 @@
   const actor = getContext("#doc");
   
   onMount(() => {
-    game.system.log.d("MP mounted");
-    game.system.log.d($actor);
 
   });
   </script>
