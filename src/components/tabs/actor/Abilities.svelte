@@ -110,6 +110,7 @@
   function showItemSheet(item) {
     item.sheet.render(true);
   }
+
   async function deleteJob() {
     if (!$doc.system.job.uuid) {
       return;
@@ -134,7 +135,7 @@
           }
         }
         //- update the actor to remove the job uuid
-        $doc.update({ system: { job: { uuid: "", name: "", grants: [] } } });
+        $doc.update({ system: { job: { uuid: "", name: "", grants: [], level: null, img: null, role: '' } } });
       },
       no: () => {},
     });
