@@ -81,9 +81,24 @@
   }
 
   function getDefenseValue(target) {
-    if (target.isUnlinked || !target.actor?.system?.attributes?.secondary) return 0;
-    const defense = target.actor.system.attributes.secondary.defence?.val || 0;
-    const magicDefense = target.actor.system.attributes.secondary.magicDefence?.val || 0;
+    game.system.log.d("Getting defense for target", target);
+    game.system.log.d("Target actor", target.actor);
+    game.system.log.d("Target actor system", target.actor?.system);
+    game.system.log.d("Target actor attributes", target.actor?.system?.attributes);
+    
+    if (target.isUnlinked || !target.actor?.system?.attributes) return 0;
+    
+    // For NPCs, defense is directly in attributes
+    if (target.actor.type === 'npc') {
+      const defense = target.actor.system.attributes.defence?.val || 0;
+      game.system.log.d("NPC defense value", defense);
+      return defense;
+    }
+    
+    // For PCs, defense is in secondary attributes
+    const defense = target.actor.system.attributes.secondary?.def?.val || 0;
+    const magicDefense = target.actor.system.attributes.secondary?.mag?.val || 0;
+    game.system.log.d("PC defense values", { defense, magicDefense });
     return Math.max(defense, magicDefense);
   }
 
@@ -129,12 +144,12 @@
                           +if("!target.isUnlinked")
                             img.target-img.clickable(src="{getTargetImage(target)}" alt="{target.name}" on:click!="{openActorSheet(target.actor)}")
                         .flex1
-                          .target-name {target.name}
+                          .target-name.font-cinzel.smaller {target.name}
                     .flex1.thin-border
                       .flexcol
                         .col.target-defense.flexrow.justify-vertical
                           .flex1.left.font-cinzel.smallest DEF 
-                          .flex1.right.pr-smd {getDefenseValue(target)}
+                          .flex1.m1-xs.center {getDefenseValue(target)}
                     
                         .col.flexrow.justify-vertical
                           .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
@@ -154,10 +169,10 @@
                     .flex0
                       .flexcol
                         .flex1
-                          button.stealth.apply-trait(on:click="{applyResult}" disabled="{target.isUnlinked}")
+                          button.stealth.apply-trait(on:click="{applyResult}" disabled="{target.isUnlinked || !isHit(target)}")
                             i.fa-solid.fa-check
                         .flex1
-                          button.stealth.apply-trait(on:click="{undoResult}" disabled="{target.isUnlinked}")
+                          button.stealth.apply-trait(on:click="{undoResult}" disabled="{target.isUnlinked || !isHit(target)}")
                             i.fa-solid.fa-refresh
 
 </template>
