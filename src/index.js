@@ -258,15 +258,19 @@ Hooks.on('renderChatMessage', (message, html) => {
   const FFMessage = message.getFlag(SYSTEM_ID, 'data');
   game.system.log.d('FFMessage', FFMessage);
   if (typeof FFMessage === 'object') {
-    message._svelteComponent = new FFChat(
-      {
-        target: html[0],
-        props: {
-          FFMessage,
-          messageId: message._id
-        }
+    // Store the original content
+    const originalContent = html[0].innerHTML;
+    // Clear the original content
+    html[0].innerHTML = '';
+    
+    message._svelteComponent = new FFChat({
+      target: html[0],
+      props: {
+        FFMessage,
+        messageId: message._id,
+        content: originalContent
       }
-    )
+    });
   }
 });
 

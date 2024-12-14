@@ -7,6 +7,8 @@
   export let key;
   export let showSign;
 
+  export let onclick;
+
 
   onMount(() => {});
 </script>
@@ -14,7 +16,7 @@
 <template lang="pug">
   .component
     +each("data as { code }, index")
-      Attribute( showSign="{showSign}" abbreviateLabel="{abbreviateLabel}" key="{key}" code="{code}" )
+      Attribute( showSign="{showSign}" abbreviateLabel="{abbreviateLabel}" key="{key}" code="{code}" onclick="{onclick}" )
 </template>
 
 <style lang="sass">

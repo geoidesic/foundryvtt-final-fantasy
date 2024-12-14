@@ -1,6 +1,8 @@
 <script>
 import { onMount } from 'svelte';
-import AttributeCol from "~/src/components/molecules/Attributes/AttributeCol.svelte";
+import AttributeCol from "~/src/components/molecules/Attributes/NPC/AttributeCol.svelte";
+
+export let onclick;
 
 let data = [
   { code: 'str' },
@@ -13,7 +15,7 @@ let data = [
 <template lang='pug'>
   .molecule
     .flexrow.mb-md
-      AttributeCol( key="primary" showSign="{true}" abbreviateLabel="{true}" data="{data}")
+      AttributeCol( key="primary" showSign="{true}" abbreviateLabel="{true}" data="{data}" onclick="{onclick}")
 </template>
 <style lang='sass'>
   @import '../../../../styles/Mixins.sass'

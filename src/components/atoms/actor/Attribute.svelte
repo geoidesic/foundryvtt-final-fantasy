@@ -9,6 +9,10 @@ export let key;
 export let abbreviateLabel = false;
 export let showSign = false;
 
+export let onclick = () => {
+  console.log('default onclick');
+};
+
 const actor = getContext('#doc');
 const application = getContext("#external").application;
 const { width } = application.position.stores;
@@ -44,7 +48,7 @@ onMount(() => {
     .underscore.flexrow.justify-vertical
       +if("!isEditing")
         .flex0
-          button.wide.stealth.flex.dice(on:click!="{() => {alert('Rolling!')}}")
+          button.wide.stealth.flex.dice(on:click!="{onclick(key, code)}")
             i.fas.fa-dice
       .flex3.left
         button.left.wide.tall.stealth.flexrow(class="{disabled}" data-tooltip="{isEditing ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : undefined}" on:click="{add}" on:contextmenu="{remove}") 

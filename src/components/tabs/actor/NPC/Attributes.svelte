@@ -29,7 +29,7 @@
             .background
               .texture
               .flexrow.panel.borderless.wide
-                .flex1
+                .flex1(style="{smallwindow ? 'min-width: 120px;' : ''}")
                   Portrait
                 .flex2.wide
                   .portrait-frame.pr-xs.wide

@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import AttributeCol from "~/src/components/molecules/Attributes/AttributeCol.svelte";
 
+  export let onclick;
 
   let data = [
   { code: 'def' },
@@ -13,7 +14,7 @@
   <template lang='pug'>
     .molecule
       .flexrow.header.underscore.mb-md Secondary Attributes
-      AttributeCol(data="{data}" key="secondary")
+      AttributeCol(data="{data}" key="secondary" onclick="{onclick}")
       
   </template>
 
