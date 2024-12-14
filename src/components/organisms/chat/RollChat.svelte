@@ -162,9 +162,9 @@
                           .flex3.left.font-cinzel.smallest Damage 
                           .flex1.right {FFMessage.item.system.formula}
                       +if("FFMessage.item.system?.hasDirectHit")
-                        .flex1.formula.flexrow.justify-vertical
+                        .flex1.formula.flexrow.justify-vertical.smaller
                           .flex3.left.font-cinzel.smallest Direct Hit 
-                          .flex1.right {FFMessage.item.system.directHitDamage}
+                          .flex1.right {isHit(target) ? FFMessage.item.system.directHitDamage : 'N/A'}
                     
                     .flex0
                       .flexcol
