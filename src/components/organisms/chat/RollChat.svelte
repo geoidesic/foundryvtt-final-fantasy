@@ -24,33 +24,34 @@
       // If we have targets, either load from flags or current targets
       if (hasTargets) {
         const storedTargetUuids = $message?.flags?.[SYSTEM_ID]?.targetUuids || [];
-        
+
         if (storedTargetUuids.length > 0) {
           // Load targets from stored UUIDs
-          targets = await Promise.all(storedTargetUuids.map(async (uuid) => {
-            const token = await fromUuid(uuid);
-            return token || { isUnlinked: true, name: "Unlinked Token" };
-          }));
+          targets = await Promise.all(
+            storedTargetUuids.map(async (uuid) => {
+              const token = await fromUuid(uuid);
+              return token || { isUnlinked: true, name: "Unlinked Token" };
+            }),
+          );
         } else {
           // Store current targets
           targets = Array.from(game.user.targets);
-          const targetUuids = targets.map(t => t.document.uuid);
-          
+          const targetUuids = targets.map((t) => t.document.uuid);
+
           // Update the message with target UUIDs
           await $message.update({
             flags: {
               [SYSTEM_ID]: {
-                targetUuids
-              }
-            }
+                targetUuids,
+              },
+            },
           });
         }
 
         let allTargetsHit = true;
         // Show trait button if all targets were hit and they still exist
-        showTraitButton = allTargetsHit && 
-          item.system?.enables?.list?.length > 0 && 
-          targets.every(t => !t.isUnlinked);
+        showTraitButton =
+          allTargetsHit && item.system?.enables?.list?.length > 0 && targets.every((t) => !t.isUnlinked);
       }
     }
   });
@@ -94,6 +95,13 @@
     if (target.isUnlinked) return null;
     return target.document?.texture?.src || target.actor?.img;
   }
+
+  function openActorSheet(actor) {
+    if (!actor) return;
+    actor.sheet.render(true);
+  }
+
+  $: actor = game.actors.get(FFMessage?.actor?._id)
 </script>
 
 <template lang="pug">
@@ -101,8 +109,8 @@
   button.stealth.apply-trait(on:click="{log}")
     i.fa-solid.fa-bug
   .flexrow
-    .flex0.img.mr-xs
-      img.actor-img(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}")
+    .flex0.img.mr-xs.pointer
+      img.actor-img.clickable( src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
     .flex3.content
       div {@html content}
   +if("FFMessage?.item?.type === 'action'")
@@ -117,9 +125,9 @@
                   .target-row.flexrow.gap-4(class="{target.isUnlinked ? 'unlinked' : ''}")
                     .flex2
                       .flexrow.justify-vertical.gap-4
-                        .flex0.target-info
+                        .flex0.target-info.pointer
                           +if("!target.isUnlinked")
-                            img.target-img(src="{getTargetImage(target)}" alt="{target.name}")
+                            img.target-img.clickable(src="{getTargetImage(target)}" alt="{target.name}" on:click!="{openActorSheet(target.actor)}")
                         .flex1
                           .target-name {target.name}
                     .flex1.thin-border
@@ -228,4 +236,4 @@
 button:disabled
   opacity: 0.5
   cursor: not-allowed
-</style> 
+</style>
