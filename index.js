@@ -253,7 +253,74 @@ const _FFActorDataModel = class _FFActorDataModel extends FFTypeDataModel {
       ...super.defineSchema(),
       inventoryLocked: new BooleanField$5({ initial: false }),
       description: new HTMLField$5(),
-      DOT: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+      DOT: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+      globalCheckMod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+      points: new SchemaField$4({
+        MP: new SchemaField$4({
+          val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        HP: new SchemaField$4({
+          val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+        }),
+        BP: new SchemaField$4({
+          val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+          max: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+        })
+      }),
+      attributes: new SchemaField$4({
+        primary: new SchemaField$4({
+          str: new SchemaField$4({
+            //- @deprecated: I think `label` is in the wrong place? Should maybe just be in the svelte template as it is a constant, not data
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.str.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          dex: new SchemaField$4({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.dex.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          vit: new SchemaField$4({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vit.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          int: new SchemaField$4({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.ing.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          mnd: new SchemaField$4({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mnd.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          })
+        }),
+        secondary: new SchemaField$4({
+          def: new SchemaField$4({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          mag: new SchemaField$4({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          vig: new SchemaField$4({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          }),
+          spd: new SchemaField$4({
+            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
+            val: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 }),
+            mod: new NumberField$5({ required: true, integer: true, min: 0, initial: 0 })
+          })
+        })
+      })
     };
   }
 };
@@ -491,77 +558,10 @@ const _PCModel = class _PCModel extends FFActorDataModel {
         grants: new ArrayField$3(
           new StringField$3({ required: true, initial: "" })
         ),
-        level: new NumberField$4({ required: true, integer: true, min: 30, initial: 30 }),
+        level: new NumberField$4({ required: true, integer: true, min: 30, initial: null }),
         role: new StringField$3({ required: true, initial: "" }),
         name: new StringField$3({ required: true, initial: "" }),
         img: new StringField$3({ required: true, initial: "" })
-      }),
-      globalCheckMod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-      points: new SchemaField$3({
-        MP: new SchemaField$3({
-          val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-          max: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        HP: new SchemaField$3({
-          val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-          max: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-        }),
-        BP: new SchemaField$3({
-          val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-          max: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-        })
-      }),
-      attributes: new SchemaField$3({
-        primary: new SchemaField$3({
-          str: new SchemaField$3({
-            //- @deprecated: I think `label` is in the wrong place? Should maybe just be in the svelte template as it is a constant, not data
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.str.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          dex: new SchemaField$3({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.dex.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          vit: new SchemaField$3({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vit.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          int: new SchemaField$3({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.ing.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          mnd: new SchemaField$3({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mnd.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          })
-        }),
-        secondary: new SchemaField$3({
-          def: new SchemaField$3({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          mag: new SchemaField$3({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          vig: new SchemaField$3({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          }),
-          spd: new SchemaField$3({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
-            val: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 }),
-            mod: new NumberField$4({ required: true, integer: true, min: 0, initial: 0 })
-          })
-        })
       })
     };
   }
@@ -19704,8 +19704,24 @@ function registerSettings() {
   combatStartSound();
   chatMessageSound();
   showStatusEffectNames();
+  manualInitiative();
 }
 __name(registerSettings, "registerSettings");
+function manualInitiative() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: "manual-initiative",
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.ManualInitiative.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.ManualInitiative.Hint`),
+      scope: "world",
+      config: true,
+      default: true,
+      type: Boolean
+    }
+  });
+}
+__name(manualInitiative, "manualInitiative");
 function showStatusEffectNames() {
   gameSettings.register({
     namespace: SYSTEM_ID,
@@ -20259,7 +20275,7 @@ const _FF15Actor = class _FF15Actor extends Actor {
 };
 __name(_FF15Actor, "FF15Actor");
 let FF15Actor = _FF15Actor;
-const Tabs_svelte_svelte_type_style_lang$5 = "";
+const Tabs_svelte_svelte_type_style_lang$6 = "";
 function get_each_context$9(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[6] = list[i];
@@ -24296,14 +24312,6 @@ function instance$F($$self, $$props, $$invalidate) {
       $$invalidate(0, options = $$props2.options);
   };
   $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*options*/
-    1) {
-      console.log("TJS options", options);
-    }
-    if ($$self.$$.dirty & /*options*/
-    1) {
-      console.log("TJS classes", Array.isArray(options.classes) ? options.classes.join(" ") : "");
-    }
     if ($$self.$$.dirty & /*options, editable*/
     8193) {
       {
@@ -24751,7 +24759,7 @@ function create_if_block_2$3(ctx) {
       td2 = element("td");
       button = element("button");
       button.innerHTML = `<i class="fa-solid fa-trash"></i>`;
-      attr(h1, "class", "left");
+      attr(h1, "class", "left gold");
       attr(img, "class", "icon");
       if (!src_url_equal(img.src, img_src_value = /*$Actor*/
       ctx[0].system.job?.img))
@@ -24972,10 +24980,10 @@ function create_each_block$8(ctx) {
       ctx[18].name);
       attr(td0, "class", "img");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[18].system.isMagic ? "pulse" : "") + " svelte-FF15-17crr6r");
+      (ctx[18].system.isMagic ? "pulse" : "") + " svelte-FF15-1qsi7ef");
       attr(td1, "class", "left");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[18].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-17crr6r");
+      (ctx[18].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1qsi7ef");
       attr(button, "class", "stealth");
       attr(td4, "class", "min buttons right");
     },
@@ -25038,7 +25046,7 @@ function create_each_block$8(ctx) {
         set_data(t0, t0_value);
       if (dirty & /*items*/
       32 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[18].system.isMagic ? "pulse" : "") + " svelte-FF15-17crr6r")) {
+      (ctx[18].system.isMagic ? "pulse" : "") + " svelte-FF15-1qsi7ef")) {
         attr(a, "class", a_class_value);
       }
       if (dirty & /*items*/
@@ -25049,7 +25057,7 @@ function create_each_block$8(ctx) {
         set_data(t1, t1_value);
       if (dirty & /*items*/
       32 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[18].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-17crr6r")) {
+      (ctx[18].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1qsi7ef")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -25112,7 +25120,8 @@ function create_if_block$d(ctx) {
 }
 __name(create_if_block$d, "create_if_block$d");
 function create_fragment$L(ctx) {
-  let div;
+  let div1;
+  let div0;
   let h1;
   let table;
   let tr;
@@ -25126,7 +25135,6 @@ function create_fragment$L(ctx) {
   let i1_class_value;
   let button_class_value;
   let th4_class_value;
-  let if_block1_anchor;
   let mounted;
   let dispose;
   let if_block0 = (
@@ -25147,7 +25155,8 @@ function create_fragment$L(ctx) {
   );
   return {
     c() {
-      div = element("div");
+      div1 = element("div");
+      div0 = element("div");
       if (if_block0)
         if_block0.c();
       h1 = element("h1");
@@ -25160,7 +25169,7 @@ function create_fragment$L(ctx) {
       th2 = element("th");
       th2.textContent = "Type";
       th3 = element("th");
-      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FF15-17crr6r"></i>`;
+      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FF15-1qsi7ef"></i>`;
       th4 = element("th");
       button = element("button");
       i1 = element("i");
@@ -25169,7 +25178,7 @@ function create_fragment$L(ctx) {
       }
       if (if_block1)
         if_block1.c();
-      if_block1_anchor = empty();
+      attr(h1, "class", "gold");
       attr(th0, "class", "img shrink");
       attr(th0, "scope", "col");
       attr(th1, "class", "left expand ml-sm");
@@ -25179,21 +25188,23 @@ function create_fragment$L(ctx) {
       attr(th3, "class", "shrink");
       attr(th3, "scope", "col");
       attr(i1, "class", i1_class_value = "fa " + /*faLockCSS*/
-      ctx[3] + " svelte-FF15-17crr6r");
+      ctx[3] + " svelte-FF15-1qsi7ef");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[4] + " svelte-FF15-17crr6r");
+      ctx[4] + " svelte-FF15-1qsi7ef");
       attr(th4, "class", th4_class_value = "buttons " + /*lockCSS*/
-      ctx[4] + " svelte-FF15-17crr6r");
+      ctx[4] + " svelte-FF15-1qsi7ef");
       attr(th4, "scope", "col");
       attr(table, "class", "borderless");
-      attr(div, "class", "panel overflow");
+      attr(div0, "class", "padded svelte-FF15-1qsi7ef");
+      attr(div1, "class", "panel overflow containerx svelte-FF15-1qsi7ef");
     },
     m(target, anchor) {
-      insert(target, div, anchor);
+      insert(target, div1, anchor);
+      append(div1, div0);
       if (if_block0)
-        if_block0.m(div, null);
-      append(div, h1);
-      append(div, table);
+        if_block0.m(div0, null);
+      append(div0, h1);
+      append(div0, table);
       append(table, tr);
       append(tr, th0);
       append(tr, th1);
@@ -25208,8 +25219,7 @@ function create_fragment$L(ctx) {
         }
       }
       if (if_block1)
-        if_block1.m(target, anchor);
-      insert(target, if_block1_anchor, anchor);
+        if_block1.m(div1, null);
       if (!mounted) {
         dispose = listen(
           i1,
@@ -25230,7 +25240,7 @@ function create_fragment$L(ctx) {
         } else {
           if_block0 = create_if_block_2$3(ctx2);
           if_block0.c();
-          if_block0.m(div, h1);
+          if_block0.m(div0, h1);
         }
       } else if (if_block0) {
         if_block0.d(1);
@@ -25238,17 +25248,17 @@ function create_fragment$L(ctx) {
       }
       if (dirty & /*faLockCSS*/
       8 && i1_class_value !== (i1_class_value = "fa " + /*faLockCSS*/
-      ctx2[3] + " svelte-FF15-17crr6r")) {
+      ctx2[3] + " svelte-FF15-1qsi7ef")) {
         attr(i1, "class", i1_class_value);
       }
       if (dirty & /*lockCSS*/
       16 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[4] + " svelte-FF15-17crr6r")) {
+      ctx2[4] + " svelte-FF15-1qsi7ef")) {
         attr(button, "class", button_class_value);
       }
       if (dirty & /*lockCSS*/
       16 && th4_class_value !== (th4_class_value = "buttons " + /*lockCSS*/
-      ctx2[4] + " svelte-FF15-17crr6r")) {
+      ctx2[4] + " svelte-FF15-1qsi7ef")) {
         attr(th4, "class", th4_class_value);
       }
       if (dirty & /*deleteItem, items, duplicateItem, editItem, $doc, showItemSheet*/
@@ -25282,7 +25292,7 @@ function create_fragment$L(ctx) {
         } else {
           if_block1 = create_if_block$d(ctx2);
           if_block1.c();
-          if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+          if_block1.m(div1, null);
         }
       } else if (if_block1) {
         if_block1.d(1);
@@ -25293,14 +25303,13 @@ function create_fragment$L(ctx) {
     o: noop,
     d(detaching) {
       if (detaching) {
-        detach(div);
-        detach(if_block1_anchor);
+        detach(div1);
       }
       if (if_block0)
         if_block0.d();
       destroy_each(each_blocks, detaching);
       if (if_block1)
-        if_block1.d(detaching);
+        if_block1.d();
       mounted = false;
       dispose();
     }
@@ -25402,7 +25411,16 @@ function instance$D($$self, $$props, $$invalidate) {
           }
         }
         $doc.update({
-          system: { job: { uuid: "", name: "", grants: [] } }
+          system: {
+            job: {
+              uuid: "",
+              name: "",
+              grants: [],
+              level: null,
+              img: null,
+              role: ""
+            }
+          }
         });
       },
       no: () => {
@@ -25934,7 +25952,6 @@ function instance$B($$self, $$props, $$invalidate) {
   let { strokeColor = "#514030" } = $$props;
   let { onClick } = $$props;
   onMount(() => {
-    game.system.log.d("PortraitFrame mounted");
   });
   $$self.$$set = ($$new_props) => {
     $$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
@@ -27159,91 +27176,80 @@ __name(_DocInput, "DocInput");
 let DocInput = _DocInput;
 const TitleBlock_svelte_svelte_type_style_lang = "";
 function create_fragment$C(ctx) {
-  let div11;
-  let div10;
-  let div4;
-  let div3;
-  let div0;
-  let button;
-  let div1;
-  let div2;
-  let label1;
-  let t1;
   let div9;
   let div8;
-  let div5;
-  let t2;
   let div6;
+  let div5;
+  let div1;
+  let div0;
+  let button;
+  let div4;
+  let div2;
+  let div3;
+  let t1;
   let div7;
+  let t2;
+  let t3;
   let t4;
   let mounted;
   let dispose;
   return {
     c() {
-      div11 = element("div");
-      div10 = element("div");
-      div4 = element("div");
-      div3 = element("div");
+      div9 = element("div");
+      div8 = element("div");
+      div6 = element("div");
+      div5 = element("div");
+      div1 = element("div");
       div0 = element("div");
       button = element("button");
-      button.innerHTML = `<img class="rest-icon svelte-FF15-i5hpmd" src="systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp"/>`;
-      div1 = element("div");
-      div1.innerHTML = `<label class="scaleup widebold font-inter glow white inline-block">LV</label>`;
+      button.innerHTML = `<img class="rest-icon svelte-FF15-j311md" src="systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp"/>`;
+      div4 = element("div");
       div2 = element("div");
-      label1 = element("label");
+      div2.textContent = "LV ";
+      div3 = element("div");
       t1 = text(
         /*level*/
         ctx[0]
       );
-      div9 = element("div");
-      div8 = element("div");
-      div5 = element("div");
+      div7 = element("div");
       t2 = text(
         /*roleName*/
         ctx[1]
       );
-      div6 = element("div");
-      div6.textContent = "/";
-      div7 = element("div");
+      t3 = text(" /  ");
       t4 = text(
         /*jobName*/
         ctx[2]
       );
-      attr(button, "class", "stealth rest-button svelte-FF15-i5hpmd");
+      attr(button, "class", "stealth");
       attr(button, "data-tooltip", localize("FF15.TitleBlock.Rest"));
       attr(button, "aria-label", localize("FF15.TitleBlock.Rest"));
-      attr(div0, "class", "flex0 rest svelte-FF15-i5hpmd");
-      attr(div1, "class", "flex1 right mr-lg");
-      attr(label1, "class", "scaleup widebold font-inter glow white inline-block");
-      attr(div2, "class", "flex1 left ml-lg");
-      attr(div3, "class", "flexrow nowrap justify-vertical container svelte-FF15-i5hpmd");
-      set_style(div3, "min-width", "150px");
-      attr(div4, "class", "flex2");
-      attr(div5, "class", "flex4 job right white wide widebold glow pr-sm svelte-FF15-i5hpmd");
-      attr(div6, "class", "flex0 middle svelte-FF15-i5hpmd");
-      attr(div7, "class", "flex4 job left white wide widebold glow pl-sm svelte-FF15-i5hpmd");
-      attr(div8, "class", "flexrow nowrap mr-xl mt-xxs ml-xxl");
-      attr(div9, "class", "flex3");
-      attr(div10, "class", "flexrow");
-      attr(div11, "class", "panel heightcol");
+      attr(div0, "class", "left mt-xxs");
+      attr(div1, "class", "flex1 rest-button svelte-FF15-j311md");
+      attr(div2, "class", "scaleup");
+      attr(div3, "class", "scaleup");
+      attr(div4, "class", "flex4 nowrap font-inter lvcontainer glow svelte-FF15-j311md");
+      attr(div5, "class", "flexrow no-wrap");
+      attr(div6, "class", "flex4 no-wrap");
+      attr(div7, "class", "flex4 no-wrap font-cinzel job svelte-FF15-j311md");
+      attr(div8, "class", "flexrow");
+      attr(div9, "class", "px-sm panel pt-xs containerx wide svelte-FF15-j311md");
     },
     m(target, anchor) {
-      insert(target, div11, anchor);
-      append(div11, div10);
-      append(div10, div4);
-      append(div4, div3);
-      append(div3, div0);
-      append(div0, button);
-      append(div3, div1);
-      append(div3, div2);
-      append(div2, label1);
-      append(label1, t1);
-      append(div10, div9);
+      insert(target, div9, anchor);
       append(div9, div8);
-      append(div8, div5);
-      append(div5, t2);
       append(div8, div6);
+      append(div6, div5);
+      append(div5, div1);
+      append(div1, div0);
+      append(div0, button);
+      append(div5, div4);
+      append(div4, div2);
+      append(div4, div3);
+      append(div3, t1);
       append(div8, div7);
+      append(div7, t2);
+      append(div7, t3);
       append(div7, t4);
       if (!mounted) {
         dispose = listen(button, "click", prevent_default(
@@ -27280,7 +27286,7 @@ function create_fragment$C(ctx) {
     o: noop,
     d(detaching) {
       if (detaching) {
-        detach(div11);
+        detach(div9);
       }
       mounted = false;
       dispose();
@@ -27329,7 +27335,11 @@ function instance$v($$self, $$props, $$invalidate) {
     }
     if ($$self.$$.dirty & /*$actor*/
     32) {
-      $$invalidate(0, level = $actor.system.job.level);
+      $$invalidate(0, level = $actor.system.job?.level || "");
+    }
+    if ($$self.$$.dirty & /*$actor*/
+    32) {
+      $actor.system.job.name ? true : false;
     }
   };
   return [level, roleName, jobName, actor, rest, $actor];
@@ -27596,8 +27606,6 @@ function instance$t($$self, $$props, $$invalidate) {
   const actor = getContext("#doc");
   component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
   onMount(() => {
-    game.system.log.d("HP mounted");
-    game.system.log.d($actor);
   });
   return [$actor, actor];
 }
@@ -27724,8 +27732,6 @@ function instance$s($$self, $$props, $$invalidate) {
   const actor = getContext("#doc");
   component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
   onMount(() => {
-    game.system.log.d("MP mounted");
-    game.system.log.d($actor);
   });
   return [$actor, actor];
 }
@@ -27852,8 +27858,6 @@ function instance$r($$self, $$props, $$invalidate) {
   const actor = getContext("#doc");
   component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
   onMount(() => {
-    game.system.log.d("BP mounted");
-    game.system.log.d($actor);
   });
   return [$actor, actor];
 }
@@ -28182,14 +28186,10 @@ function instance$q($$self, $$props, $$invalidate) {
   onMount(() => {
     Hooks.on("createActiveEffect", resetEffectList);
     Hooks.on("deleteActiveEffect", resetEffectList);
-    game.system.log.d("EffectsTab mounted");
-    game.system.log.d(ActiveEffects);
   });
   onDestroy(() => {
     Hooks.off("createActiveEffect", resetEffectList);
     Hooks.off("deleteActiveEffect", resetEffectList);
-    game.system.log.d("EffectsTab onDestroy");
-    game.system.log.d(ActiveEffects);
   });
   $$self.$$set = ($$new_props) => {
     $$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
@@ -29243,12 +29243,12 @@ function create_each_block$4(ctx) {
       ctx[16].name);
       attr(td0, "class", "img");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FF15-17crr6r");
+      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FF15-1qsi7ef");
       attr(td1, "class", "left");
-      attr(button0, "class", "stealth clickable wide svelte-FF15-17crr6r");
+      attr(button0, "class", "stealth clickable wide svelte-FF15-1qsi7ef");
       attr(button0, "data-tooltip", "Left click + / Right Click -");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-17crr6r");
+      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1qsi7ef");
       attr(button1, "class", "stealth");
       attr(td4, "class", "min buttons right");
     },
@@ -29332,7 +29332,7 @@ function create_each_block$4(ctx) {
         set_data(t0, t0_value);
       if (dirty & /*items*/
       8 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FF15-17crr6r")) {
+      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FF15-1qsi7ef")) {
         attr(a, "class", a_class_value);
       }
       if (dirty & /*items*/
@@ -29341,7 +29341,7 @@ function create_each_block$4(ctx) {
         set_data(t1, t1_value);
       if (dirty & /*items*/
       8 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-17crr6r")) {
+      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1qsi7ef")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -29371,7 +29371,9 @@ function create_each_block$4(ctx) {
 }
 __name(create_each_block$4, "create_each_block$4");
 function create_fragment$s(ctx) {
-  let div;
+  let div1;
+  let div0;
+  let h1;
   let table;
   let tr;
   let th0;
@@ -29397,7 +29399,10 @@ function create_fragment$s(ctx) {
   }
   return {
     c() {
-      div = element("div");
+      div1 = element("div");
+      div0 = element("div");
+      h1 = element("h1");
+      h1.textContent = "Inventory";
       table = element("table");
       tr = element("tr");
       th0 = element("th");
@@ -29406,7 +29411,7 @@ function create_fragment$s(ctx) {
       th2 = element("th");
       th2.textContent = "Quantity";
       th3 = element("th");
-      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FF15-17crr6r"></i>`;
+      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FF15-1qsi7ef"></i>`;
       th4 = element("th");
       button0 = element("button");
       i1 = element("i");
@@ -29415,6 +29420,7 @@ function create_fragment$s(ctx) {
       }
       button1 = element("button");
       button1.textContent = "- Remove All";
+      attr(h1, "class", "gold");
       attr(th0, "class", "img shrink");
       attr(th0, "scope", "col");
       attr(th1, "class", "left expand");
@@ -29424,19 +29430,22 @@ function create_fragment$s(ctx) {
       attr(th3, "class", "shrink");
       attr(th3, "scope", "col");
       attr(i1, "class", i1_class_value = "fa " + /*faLockCSS*/
-      ctx[1] + " svelte-FF15-17crr6r");
+      ctx[1] + " svelte-FF15-1qsi7ef");
       attr(button0, "class", button0_class_value = "stealth " + /*lockCSS*/
-      ctx[2] + " svelte-FF15-17crr6r");
+      ctx[2] + " svelte-FF15-1qsi7ef");
       attr(th4, "class", th4_class_value = "buttons " + /*lockCSS*/
-      ctx[2] + " svelte-FF15-17crr6r");
+      ctx[2] + " svelte-FF15-1qsi7ef");
       attr(th4, "scope", "col");
       attr(table, "class", "borderless");
-      attr(div, "class", "panel overflow");
+      attr(div0, "class", "padded svelte-FF15-1qsi7ef");
       attr(button1, "class", "mt-sm glossy-button gold-light hover-shine");
+      attr(div1, "class", "panel overflow containerx svelte-FF15-1qsi7ef");
     },
     m(target, anchor) {
-      insert(target, div, anchor);
-      append(div, table);
+      insert(target, div1, anchor);
+      append(div1, div0);
+      append(div0, h1);
+      append(div0, table);
       append(table, tr);
       append(tr, th0);
       append(tr, th1);
@@ -29450,7 +29459,7 @@ function create_fragment$s(ctx) {
           each_blocks[i].m(table, null);
         }
       }
-      insert(target, button1, anchor);
+      append(div1, button1);
       if (!mounted) {
         dispose = [
           listen(
@@ -29472,17 +29481,17 @@ function create_fragment$s(ctx) {
     p(ctx2, [dirty]) {
       if (dirty & /*faLockCSS*/
       2 && i1_class_value !== (i1_class_value = "fa " + /*faLockCSS*/
-      ctx2[1] + " svelte-FF15-17crr6r")) {
+      ctx2[1] + " svelte-FF15-1qsi7ef")) {
         attr(i1, "class", i1_class_value);
       }
       if (dirty & /*lockCSS*/
       4 && button0_class_value !== (button0_class_value = "stealth " + /*lockCSS*/
-      ctx2[2] + " svelte-FF15-17crr6r")) {
+      ctx2[2] + " svelte-FF15-1qsi7ef")) {
         attr(button0, "class", button0_class_value);
       }
       if (dirty & /*lockCSS*/
       4 && th4_class_value !== (th4_class_value = "buttons " + /*lockCSS*/
-      ctx2[2] + " svelte-FF15-17crr6r")) {
+      ctx2[2] + " svelte-FF15-1qsi7ef")) {
         attr(th4, "class", th4_class_value);
       }
       if (dirty & /*deleteItem, items, duplicateItem, editItem, $doc, addQuantity, removeQuantity, showItemSheet*/
@@ -29512,8 +29521,7 @@ function create_fragment$s(ctx) {
     o: noop,
     d(detaching) {
       if (detaching) {
-        detach(div);
-        detach(button1);
+        detach(div1);
       }
       destroy_each(each_blocks, detaching);
       mounted = false;
@@ -29824,6 +29832,7 @@ __name(create_each_block$3, "create_each_block$3");
 function create_fragment$r(ctx) {
   let div12;
   let div11;
+  let h1;
   let div2;
   let div0;
   let div1;
@@ -29865,6 +29874,8 @@ function create_fragment$r(ctx) {
     c() {
       div12 = element("div");
       div11 = element("div");
+      h1 = element("h1");
+      h1.textContent = "Effects";
       div2 = element("div");
       div0 = element("div");
       div0.innerHTML = `<label for="search">Search</label>`;
@@ -29894,6 +29905,7 @@ function create_fragment$r(ctx) {
       h5.textContent = "Notes: ";
       ul = element("ul");
       ul.innerHTML = `<li>Each of the effects listed are collections. </li><li>Click edit next to the collection to see its contents.</li><li>You should set your item&#39;s profile image before adding an effect as the effect will inherit that image.</li>`;
+      attr(h1, "class", "gold center");
       attr(div0, "class", "flexcol flex1 label-container");
       attr(div1, "class", "flex3 left");
       attr(div2, "class", "flexrow justify-vertical my-sm");
@@ -29907,11 +29919,12 @@ function create_fragment$r(ctx) {
       attr(li0, "class", "flexrow header justify-vertical standard-list-row");
       attr(li1, "class", "flexrow footer");
       attr(ol, "class", "standard-list");
-      attr(button1, "class", "mt-sm glossy-button gold-light hover-shine");
-      attr(div8, "class", "flex1");
-      attr(button2, "class", "mt-sm glossy-button gold-light hover-shine");
-      attr(div9, "class", "flex1");
+      attr(button1, "class", "truncate mt-sm glossy-button gold-light hover-shine");
+      attr(div8, "class", "flex1 center");
+      attr(button2, "class", "truncate mt-sm glossy-button gold-light hover-shine");
+      attr(div9, "class", "flex1 center");
       attr(div10, "class", "flexrow");
+      set_style(div10, "justify-content", "space-evenly");
       attr(ul, "class", "pa-sm left pa-md");
       set_style(ul, "margin-top", "-20px");
       attr(div11, "class", "flexcol flex3 left");
@@ -29920,6 +29933,7 @@ function create_fragment$r(ctx) {
     m(target, anchor) {
       insert(target, div12, anchor);
       append(div12, div11);
+      append(div11, h1);
       append(div11, div2);
       append(div2, div0);
       append(div2, div1);
@@ -30341,9 +30355,9 @@ __name(create_fragment$q, "create_fragment$q");
 let activeTab = "attributes";
 function instance$l($$self, $$props, $$invalidate) {
   let tabs;
+  let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(9, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
   let $applicationWindowHeaderIconsOnly;
   let $headerButtonNoLabel;
-  let $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(10, $$value)), documentStore), "$$subscribe_documentStore");
   $$self.$$.on_destroy.push(() => $$unsubscribe_documentStore());
   let { elementRoot } = $$props;
   let { documentStore } = $$props;
@@ -30353,7 +30367,7 @@ function instance$l($$self, $$props, $$invalidate) {
   const applicationWindowHeaderIconsOnly2 = gameSettings.getStore("applicationWindowHeaderIconsOnly");
   component_subscribe($$self, applicationWindowHeaderIconsOnly2, (value) => $$invalidate(6, $applicationWindowHeaderIconsOnly = value));
   let headerButtonNoLabel = application.reactive.storeAppOptions.headerButtonNoLabel;
-  component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(9, $headerButtonNoLabel = value));
+  component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(10, $headerButtonNoLabel = value));
   const defaultTabs = [
     {
       label: localize("FF15.Tabs.Attributes"),
@@ -30388,6 +30402,7 @@ function instance$l($$self, $$props, $$invalidate) {
   ];
   let stylesApp;
   onMount(async () => {
+    game.system.log.d($documentStore);
   });
   function applicationshell_elementRoot_binding(value) {
     elementRoot = value;
@@ -30410,13 +30425,8 @@ function instance$l($$self, $$props, $$invalidate) {
     64) {
       set_store_value(headerButtonNoLabel, $headerButtonNoLabel = $applicationWindowHeaderIconsOnly, $headerButtonNoLabel);
     }
-    if ($$self.$$.dirty & /*$applicationWindowHeaderIconsOnly*/
-    64) {
-      console.log("applicationWindowHeaderIconsOnly:", $applicationWindowHeaderIconsOnly);
-    }
   };
   $$invalidate(3, tabs = defaultTabs);
-  console.log("headerButtonNoLabel:", headerButtonNoLabel);
   return [
     elementRoot,
     documentStore,
@@ -30671,8 +30681,6 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
     await super.close(options);
   }
   _getHeaderButtons() {
-    game.system.log.d("_getHeaderButtons");
-    game.system.log.d("isEditing", this.reactive.document.system.isEditing);
     const buttons = super._getHeaderButtons();
     this.reactive.sessionStorage;
     const canConfigure = game.user.isGM || this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE");
@@ -30701,12 +30709,10 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
     return buttons;
   }
   async _onToggleEdit(event) {
-    game.system.log.d("_onToggleEdit");
     if (event) {
       event.preventDefault();
     }
     await this.reactive.document.update({ system: { isEditing: !this.reactive.document.system.isEditing } });
-    game.system.log.d("after toggle: isEditing", this.reactive.document.system.isEditing);
     this.render();
   }
   _onConfigureToken(event) {
@@ -30755,9 +30761,6 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);
     const actor = this.reactive.document;
-    console.log("event", event);
-    console.log("data", data);
-    console.log("actor", actor);
     if (actor.documentName !== "Actor") {
       return;
     }
@@ -30785,11 +30788,8 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
     }
   }
   async _onDropActiveEffect(event, data) {
-    console.log("_onDropActiveEffect");
-    console.log("data", data);
     const actor = this.reactive.document;
     const effect = await ActiveEffect.implementation.fromDropData(data);
-    console.log("effect", effect);
     if (!actor.isOwner || !effect) {
       return false;
     }
@@ -30805,7 +30805,6 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
     }
   }
   async _onDropItem(event, data, ignoreValidation = false) {
-    console.log("_onDropItem", data);
     const actor = this.reactive.document;
     if (!actor.isOwner) {
       ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.NotOwner`));
@@ -30846,24 +30845,19 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
     }
   }
   async _onDropJob(event, data) {
-    console.log("_onDropJob", data);
     const actor = this.reactive.document;
     if (!actor.isOwner) {
       return false;
     }
     const job = await fromUuid(data.uuid);
     const grants = job.system.grants;
-    console.log("grants", grants);
     const grantItems = [];
     for (let grantObject of grants.list) {
-      game.system.log.d("uuid", grantObject.uuid);
       const grantItem = await fromUuid(grantObject.uuid);
-      game.system.log.d("grantItem", grantItem);
       if (!actor.items.some((x) => x.name === grantItem.name)) {
         grantItems.push(grantItem);
       }
     }
-    game.system.log.d("grantItems", grantItems);
     await actor.createEmbeddedDocuments("Item", grantItems);
     await actor.update({ system: { job: { uuid: job.uuid, name: job.name, grants: grants.list, level: job.system.level, role: job.system.role, img: job.img } } });
   }
@@ -30902,7 +30896,7 @@ const _FF15ActorSheet = class _FF15ActorSheet extends SvelteDocumentSheet {
 };
 __name(_FF15ActorSheet, "FF15ActorSheet");
 let FF15ActorSheet = _FF15ActorSheet;
-const Header_svelte_svelte_type_style_lang$1 = "";
+const Header_svelte_svelte_type_style_lang$2 = "";
 function create_if_block_9$1(ctx) {
   let li;
   let t0;
@@ -32321,7 +32315,7 @@ const _DocCheckbox = class _DocCheckbox extends SvelteComponent {
 };
 __name(_DocCheckbox, "DocCheckbox");
 let DocCheckbox = _DocCheckbox;
-const Details_svelte_svelte_type_style_lang$4 = "";
+const Details_svelte_svelte_type_style_lang$5 = "";
 function create_if_block_12(ctx) {
   let div2;
   let div0;
@@ -34885,7 +34879,7 @@ const _Links = class _Links extends SvelteComponent {
 };
 __name(_Links, "Links");
 let Links = _Links;
-const Tabs_svelte_svelte_type_style_lang$4 = "";
+const Tabs_svelte_svelte_type_style_lang$5 = "";
 function create_default_slot$6(ctx) {
   let tabs_1;
   let updating_activeTab;
@@ -35054,7 +35048,7 @@ let Header$4 = (_e = class extends SvelteComponent {
     init(this, options, null, create_fragment$f, safe_not_equal, {});
   }
 }, __name(_e, "Header"), _e);
-const Details_svelte_svelte_type_style_lang$3 = "";
+const Details_svelte_svelte_type_style_lang$4 = "";
 const EquipmentTabs_svelte_svelte_type_style_lang = "";
 function create_default_slot$5(ctx) {
   let tabs_1;
@@ -35220,7 +35214,7 @@ const _EquipmentTabs = class _EquipmentTabs extends SvelteComponent {
 };
 __name(_EquipmentTabs, "EquipmentTabs");
 let EquipmentTabs = _EquipmentTabs;
-const Header_svelte_svelte_type_style_lang = "";
+const Header_svelte_svelte_type_style_lang$1 = "";
 function create_fragment$d(ctx) {
   let div3;
   let div2;
@@ -35306,7 +35300,7 @@ let Header$3 = (_f = class extends SvelteComponent {
     init(this, options, instance$a, create_fragment$d, safe_not_equal, {});
   }
 }, __name(_f, "Header"), _f);
-const Details_svelte_svelte_type_style_lang$2 = "";
+const Details_svelte_svelte_type_style_lang$3 = "";
 function create_fragment$c(ctx) {
   let div9;
   let div8;
@@ -35430,7 +35424,7 @@ let Details$2 = (_g = class extends SvelteComponent {
     init(this, options, instance$9, create_fragment$c, safe_not_equal, {});
   }
 }, __name(_g, "Details"), _g);
-const Tabs_svelte_svelte_type_style_lang$3 = "";
+const Tabs_svelte_svelte_type_style_lang$4 = "";
 function create_default_slot$4(ctx) {
   let tabs_1;
   let updating_activeTab;
@@ -35594,7 +35588,7 @@ let Header$2 = (_i = class extends SvelteComponent {
     init(this, options, null, create_fragment$a, safe_not_equal, {});
   }
 }, __name(_i, "Header"), _i);
-const Details_svelte_svelte_type_style_lang$1 = "";
+const Details_svelte_svelte_type_style_lang$2 = "";
 function create_if_block_2(ctx) {
   let div2;
   let div0;
@@ -36073,7 +36067,7 @@ let Details$1 = (_j = class extends SvelteComponent {
     init(this, options, instance$7, create_fragment$9, safe_not_equal, {});
   }
 }, __name(_j, "Details"), _j);
-const Tabs_svelte_svelte_type_style_lang$2 = "";
+const Tabs_svelte_svelte_type_style_lang$3 = "";
 function create_default_slot$3(ctx) {
   let tabs_1;
   let updating_activeTab;
@@ -36238,7 +36232,7 @@ let Header$1 = (_l = class extends SvelteComponent {
     init(this, options, null, create_fragment$7, safe_not_equal, {});
   }
 }, __name(_l, "Header"), _l);
-const Details_svelte_svelte_type_style_lang = "";
+const Details_svelte_svelte_type_style_lang$1 = "";
 function create_if_block_1(ctx) {
   let div2;
   let div0;
@@ -36643,7 +36637,7 @@ const _Details = class _Details extends SvelteComponent {
 };
 __name(_Details, "Details");
 let Details = _Details;
-const Tabs_svelte_svelte_type_style_lang$1 = "";
+const Tabs_svelte_svelte_type_style_lang$2 = "";
 function create_default_slot$2(ctx) {
   let tabs_1;
   let updating_activeTab;
@@ -36814,7 +36808,7 @@ const _Header = class _Header extends SvelteComponent {
 };
 __name(_Header, "Header");
 let Header = _Header;
-const Tabs_svelte_svelte_type_style_lang = "";
+const Tabs_svelte_svelte_type_style_lang$1 = "";
 function create_default_slot$1(ctx) {
   let tabs_1;
   let updating_activeTab;
@@ -36953,6 +36947,9 @@ const _Tabs_1 = class _Tabs_1 extends SvelteComponent {
 };
 __name(_Tabs_1, "Tabs_1");
 let Tabs_1 = _Tabs_1;
+const Header_svelte_svelte_type_style_lang = "";
+const Details_svelte_svelte_type_style_lang = "";
+const Tabs_svelte_svelte_type_style_lang = "";
 const ItemSheetShell_svelte_svelte_type_style_lang = "";
 function create_default_slot(ctx) {
   let div6;
@@ -38128,7 +38125,118 @@ const _FFTokenHUD = class _FFTokenHUD extends TokenHUD {
 };
 __name(_FFTokenHUD, "FFTokenHUD");
 let FFTokenHUD = _FFTokenHUD;
+const _FFCombatTracker = class _FFCombatTracker extends CombatTracker {
+  constructor(options) {
+    game.system.log.d("FFCombatTracker constructor");
+    super(options);
+  }
+  /** @inheritdoc */
+  static get defaultOptions() {
+    return foundry.utils.mergeObject(super.defaultOptions, {
+      id: "combat",
+      template: `systems/${SYSTEM_ID}/src/extensions/templates/combat-tracker.html`,
+      title: "COMBAT.SidebarTitle",
+      scrollY: [".directory-list"]
+    });
+  }
+  async _onCombatantMouseDown(event) {
+    event.preventDefault();
+    const li = event.currentTarget;
+    const combatant = this.viewed.combatants.get(li.dataset.combatantId);
+    const token = combatant.token;
+    if (!combatant.actor?.testUserPermission(game.user, "OBSERVER"))
+      return;
+    const now2 = Date.now();
+    const dt = now2 - this._clickTime;
+    this._clickTime = now2;
+    if (dt <= 250) {
+      if (event.target.type === void 0) {
+        return combatant.actor?.sheet.render(true);
+      }
+    }
+    if (token?.object) {
+      token.object?.control({ releaseOthers: true });
+      return canvas.animatePan(token.object.center);
+    }
+  }
+  getClassNames() {
+    const classNames = [];
+    let currentClass = this.constructor;
+    while (currentClass) {
+      classNames.push(currentClass.name);
+      currentClass = Object.getPrototypeOf(currentClass);
+    }
+    return classNames;
+  }
+};
+__name(_FFCombatTracker, "FFCombatTracker");
+let FFCombatTracker = _FFCombatTracker;
+const _SurgeCombat = class _SurgeCombat extends Combat {
+  constructor(data, context) {
+    super(data, context);
+    game.system.log.d(">>>>>>>>>> SurgeCombat constructor");
+  }
+  /**
+   * Return the Array of combatants sorted into initiative order, breaking ties alphabetically by name.
+   * @returns {Combatant[]}
+   */
+  setupTurns() {
+    this.turns ||= [];
+    const turns = this.combatants.contents.sort(this._sortCombatants);
+    if (this.turn !== null)
+      this.turn = Math.clamp(this.turn, 0, turns.length - 1);
+    let c = turns[this.turn];
+    this.current = this._getCurrentState(c);
+    if (!this.previous)
+      this.previous = this.current;
+    return this.turns = turns;
+  }
+  /**
+  * Define how the array of Combatants is sorted in the displayed list of the tracker.
+  * This method can be overridden by a system or module which needs to display combatants in an alternative order.
+  * The default sorting rules sort in descending order of initiative using combatant IDs for tiebreakers.
+  * @param {Combatant} a     Some combatant
+  * @param {Combatant} b     Some other combatant
+  * @protected
+  */
+  _sortCombatants(a, b) {
+    const aIsNPC = a.actor?.type === "NPC";
+    const bIsNPC = b.actor?.type === "NPC";
+    if (aIsNPC && !bIsNPC) {
+      a.css = "npc-group-start";
+      b.css = "pc-group-end";
+      return 1;
+    } else if (!aIsNPC && bIsNPC) {
+      a.css = "pc-group-end";
+      b.css = "npc-group-start";
+      return -1;
+    }
+    if (a.initiative === null && b.initiative === null)
+      return 0;
+    if (a.initiative === null)
+      return 1;
+    if (b.initiative === null)
+      return -1;
+    return b.initiative - a.initiative;
+  }
+};
+__name(_SurgeCombat, "SurgeCombat");
+let SurgeCombat = _SurgeCombat;
+const _SurgeCombatants = class _SurgeCombatants extends Combatant {
+  constructor(object, options = {}) {
+    game.system.log.d("SurgeCombatants constructor");
+    super(object, options);
+  }
+};
+__name(_SurgeCombatants, "SurgeCombatants");
+let SurgeCombatants = _SurgeCombatants;
 CONFIG.Actor.documentClass = FF15Actor;
+CONFIG.ui.combat = FFCombatTracker;
+CONFIG.Combat.documentClass = SurgeCombat;
+CONFIG.Combatant.documentClass = SurgeCombatants;
+CONFIG.Combat.initiative = {
+  formula: "1d20 + (@attributes.primary.dex.val)"
+};
 Hooks.once("init", async (a, b, c) => {
   game.system.log = log$1;
   log$1.level = log$1.DEBUG;
@@ -38144,7 +38252,45 @@ Hooks.once("init", async (a, b, c) => {
   Items.registerSheet("foundryvtt-final-fantasy", FF15ItemSheet, {
     makeDefault: true
   });
+  Handlebars.registerHelper("getSetting", function(moduleName, settingKey) {
+    return game.settings.get(moduleName, settingKey);
+  });
   Hooks.call("gff15.initIsComplete");
+  Hooks.on("renderCombatTracker", (app, html) => {
+    const isCombatActive = game.combat?.started ? true : false;
+    console.log("isCombatActive", isCombatActive);
+    const updateDebounced = Timing.debounce(async (combatant, value) => {
+      const newInitiative = parseInt(value);
+      if (!isNaN(newInitiative)) {
+        await combatant.update({ initiative: newInitiative });
+      }
+    }, 600);
+    html.find(".combatant").each(function(index, element2) {
+      const combatantId = $(element2).data("combatant-id");
+      const combatant = game.combat?.combatants.get(combatantId);
+      if (!isCombatActive) {
+        $(element2).find(".initiative").each(function() {
+          $(this).on("input", function(event) {
+            updateDebounced(combatant, $(this).val());
+          });
+          $(this).on("dblclick", function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+          });
+          $(this).on("contextmenu", function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+          });
+          $(this).on("blur", async function() {
+            const newInitiative = parseInt($(this).text(), 10);
+            if (!isNaN(newInitiative)) {
+              await combatant.update({ initiative: newInitiative });
+            }
+          });
+        });
+      }
+    });
+  });
 });
 Hooks.once("ready", async () => {
   if (!game.settings.get(SYSTEM_ID, "dontShowWelcome")) {
@@ -38159,6 +38305,56 @@ Hooks.on("combatStart", async () => {
   const combatStartSound2 = game.settings.get(SYSTEM_ID, "combatStartSound").trim();
   if (combatStartSound2 !== "") {
     AudioHelper.play({ src: combatStartSound2, volume: 1, autoplay: true, loop: false });
+  }
+});
+Hooks.on("renderCombatTracker", (app, html, data) => {
+  game.system.log.d("renderCombatTracker fired", {
+    turns: data.combat?.turns?.map((t) => ({
+      name: t.name,
+      initiative: t.initiative,
+      isNPC: t.actor?.type === "NPC"
+    }))
+  });
+  if (data.combat?.turns?.length) {
+    game.system.log.d("css-debug: Triggering updateCombatant hook");
+    Hooks.call("updateCombatant", data.combat.turns[0], {});
+  }
+});
+Hooks.on("updateCombatant", async (combatant, updateData) => {
+  const combat = combatant.parent;
+  if (!combat) {
+    game.system.log.d("updateCombatant: skipping - no combat parent");
+    return;
+  }
+  const turns = combat.turns;
+  turns.sort((a, b) => {
+    const aIsNPC = a.actor?.type === "NPC";
+    const bIsNPC = b.actor?.type === "NPC";
+    if (aIsNPC !== bIsNPC)
+      return aIsNPC ? 1 : -1;
+    const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
+    const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
+    return ib - ia;
+  });
+  const firstNPCIndex = turns.findIndex((t) => t.actor?.type === "NPC");
+  await combat.update({ turns });
+  if (firstNPCIndex > 0 && firstNPCIndex < turns.length) {
+    const tracker = ui.combat;
+    if (!tracker) {
+      game.system.log.d("updateCombatant: skipping CSS - no tracker UI");
+      return;
+    }
+    const combatants = tracker.element.find(".combatant");
+    combatants.each((index, element2) => {
+      const $element = $(element2);
+      $element.attr("class");
+      $element.removeClass("npc-group-start pc-group-end");
+      if (index === firstNPCIndex) {
+        $element.addClass("npc-group-start");
+      } else if (index === firstNPCIndex - 1) {
+        $element.addClass("pc-group-end");
+      }
+    });
   }
 });
 Hooks.on("renderChatMessage", (message, html) => {
