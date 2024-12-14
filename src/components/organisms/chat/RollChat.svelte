@@ -169,7 +169,7 @@
   max-height: 100px
 
 .action-result
-  margin-top: 0.5em
+  margin-top: 0.2em
   background: rgba(0, 0, 0, 0.05)
   border-radius: 3px
 
@@ -180,13 +180,13 @@
 .target-list
   display: flex
   flex-direction: column
-  gap: 0.5em
+  gap: 0.2em
 
 .target-row
   display: flex
   justify-content: space-between
   align-items: center
-  padding: 0.3em
+  padding: 0.1em 0.3em
   background: rgba(0, 0, 0, 0.03)
   border-radius: 3px
   border: 1px solid rgba(0, 0, 0, 0.1)
