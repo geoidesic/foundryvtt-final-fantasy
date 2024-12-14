@@ -1,42 +1,53 @@
 <script>
-import { onMount, getContext, onDestroy } from 'svelte';
-import { deleteItemLink, onDropItemOnItem, updateList } from '~/src/helpers/itemLinks'
+import { onMount, getContext } from 'svelte';
+import { SYSTEM_ID } from '~/src/helpers/constants';
+import { ucfirst } from '~/src/helpers/util';
 import DocCheckbox from '~/src/components/atoms/controls/DocCheckbox.svelte'
-// import DocumentCheckboxInput from '~/src/components/atoms/controls/DocumentCheckboxInput.svelte'
 
 export let title
 export let key
-export let initialChecked = false;
+export let valuePath = `system.${key}.value`;
+export let additionalColumns = []; // Array of {header: string, path: string} objects
 
-const doc = getContext("#doc");
-
+const item = getContext("#doc");
 let localList = []
-let storedList
-let checkboxValue = initialChecked
 
+$: checkboxValue = $item.system[key]?.value;
+$: if ($item.system[key]?.list) {
+  updateLocalList();
+}
 
-$: checkboxValue = $doc.system?.[key].value;
-$: storedList = $doc.system?.[key];
-$: valuePath = `system.${key}.value`
+async function updateLocalList() {
+  localList = [];
+  for (let listItem of $item.system[key].list) {
+    try {
+      const item = await fromUuid(listItem.uuid);
+      if (item) {
+        localList = [...localList, item];
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
 
 async function onDrop(event) {
-  game.system.log.d('onDrop event', event);
-  game.system.log.d('onDrop key', key);
-  const result = await onDropItemOnItem(event, $doc, key);
-  if (!result) return;
-  localList = await updateList(localList, storedList.list, result[key].uuid);
-}
+  event.preventDefault();
+  const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+  const droppedItem = await Item.implementation.fromDropData(data);
+  if (!droppedItem) return;
 
+  const list = [...$item.system[key].list];
+  list.push({ uuid: droppedItem.uuid });
+
+  await $item.update({ [`system.${key}.list`]: list });
+}
 
 async function deleteLink(index) {
-  await deleteItemLink($doc, key, index)
-  localList = await updateList(localList, storedList.list);
+  const list = [...$item.system[key].list];
+  list.splice(index, 1);
+  await $item.update({ [`system.${key}.list`]: list });
 }
-
-
-onMount(async () => {
-  localList = await updateList(localList, storedList.list);
-});
 
 </script>
 
@@ -46,7 +57,6 @@ onMount(async () => {
       .flex3
           h2.wide {title}
       .flex0.right
-        //- DocumentCheckboxInput(
         DocCheckbox.right.wide(
         {...$$restProps}
         valuePath="{valuePath}"
@@ -57,17 +67,20 @@ onMount(async () => {
         tr
           th.img.shrink(scope="col")
           th.left.expand(scope="col") Name
-          th.left.fixed(scope="col") Type
+          th.left.fixed(scope="col") Item Type
+          +each("additionalColumns as col")
+            th.left.fixed(scope="col") {col.header}
           th.buttons
             button.stealth
               i.fa.fa-trash
         +each("localList as item, index")
-          //- pre item.type {item.type}
           tr
             td.img
               img.icon(src="{item.img}" alt="{item.name}")
             td.left {item?.name}
-            td.left {item?.type}
+            td.left {ucfirst(item?.type)}
+            +each("additionalColumns as col")
+              td.left {item.type === col.itemType ? ucfirst(item.system?.[col.path] || '') : ''}
             td.buttons.right
               button.stealth(on:click!="{() => deleteLink(index)}")
                 i.left.fa.fa-trash.pointer
@@ -75,17 +88,35 @@ onMount(async () => {
 </template>
 
 <style lang="sass">
-  @import '../../styles/Mixins.sass'
-  .item-bucket
-    padding: 0 0.4rem
-    .flexrow
-      gap: 4px
-    .avatar
-      min-width: 30px
-    ol
-      padding: 0
-      margin: 0
-      li
-        background-color: rgba(255, 255, 255, 0.4)
-    
+@import '../../styles/Mixins.sass'
+
+.item-bucket
+  padding: 0.5em
+  margin-bottom: 1em
+  border: 1px solid rgba(0, 0, 0, 0.1)
+  border-radius: 3px
+
+.standard-list
+  width: 100%
+  margin-top: 0.5em
+
+  th, td
+    padding: 0.3em
+    &.img
+      width: 40px
+    &.buttons
+      width: 40px
+      text-align: right
+
+.icon
+  width: 36px
+  height: 36px
+  object-fit: cover
+  border: none
+
+.buttons
+  button
+    opacity: 0.7
+    &:hover
+      opacity: 1
 </style>
