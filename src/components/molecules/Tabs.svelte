@@ -109,6 +109,9 @@
           // border: 4px ridge var(--ff-border-color)
           // border-bottom: 1px solid transparent !important
           // box-shadow: none
+
+        img
+          margin-top: -4px
     .tab-content
       z-index: 1
       // background: url(../ui/parchment.jpg) repeat
