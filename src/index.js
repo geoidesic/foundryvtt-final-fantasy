@@ -178,8 +178,6 @@ Hooks.on("renderCombatTracker", (app, html, data) => {
  */
 Hooks.on("updateCombatant", async (combatant, updateData) => {
 
-  
-
 
   const combat = combatant.parent;
   if (!combat) {

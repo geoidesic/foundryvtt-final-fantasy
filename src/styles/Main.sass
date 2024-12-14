@@ -564,18 +564,30 @@
           border-radius: 0 var(--border-radius) var(--border-radius) 0
           border: none
 
-//- Combat Tracker
+//- Changes to Foundry Core
 #combat-tracker
   .combatant
     padding-right: 0.5rem
     input
       color: white
+    &.active
+      background-color: var(--color-scrollbar)
+      &::after
+        border: 2px ridge var(--color-highlight)
 
 .drag-over
   border: 2px dashed #007bff
 
 .npc-group-start
-  border-top: 2px ridge var(--color-highlight)
+  border-top: 4px ridge var(--color-highlight)
+  padding-top: 0.1rem
 
 .pc-group-end
+  border-bottom: 4px ridge var(--color-highlight)
+  padding-bottom: 0.3rem
+
+#sidebar-tabs
   border-bottom: 2px ridge var(--color-highlight)
+  & > .item.active
+    border: 2px ridge var(--color-highlight)
+    border-bottom: none
