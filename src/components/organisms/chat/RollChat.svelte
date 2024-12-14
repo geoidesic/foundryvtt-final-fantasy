@@ -121,8 +121,8 @@
 
 <template lang="pug">
 .FF15
-  button.stealth.apply-trait(on:click="{log}")
-    i.fa-solid.fa-bug
+  //- button.stealth.apply-trait(on:click="{log}")
+  //-   i.fa-solid.fa-bug
   .flexrow
     .flex0.img.mr-xs.pointer
       img.actor-img.clickable( src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
@@ -249,6 +249,6 @@
       margin: 0 0.3em
 
 button:disabled
-  opacity: 0.5
+  opacity: 0.3
   cursor: not-allowed
 </style>
