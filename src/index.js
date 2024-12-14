@@ -95,7 +95,7 @@ Hooks.once("init", async (a, b, c) => {
       if (!isNaN(newInitiative)) {
         await combatant.update({ initiative: newInitiative });
       }
-    }, 1000);
+    }, 600);
 
     // Pass isCombatActive to the template context
     html.find(".combatant").each(function (index, element) {
