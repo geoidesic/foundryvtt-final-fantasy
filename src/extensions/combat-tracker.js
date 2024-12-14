@@ -18,54 +18,85 @@ export default class FFCombatTracker extends CombatTracker {
   }
 
   /**
-   * Override the getData method to sort combatants
+   * Override getData to implement our custom sorting on initial load
    * @override
    */
-  async getData(options={}) {
+  async getData(options = {}) {
+    game.system.log.d('FFCombatTracker getData - start');
     const data = await super.getData(options);
-    
-    if (data.combat) {
-      const sortedTurns = this._sortCombatants(data.combat.turns);
-      
-      // Find the first NPC index
-      const firstNPCIndex = sortedTurns.findIndex(t => t.name.includes('[NPC]'));
-      
-      // Only add border if we have both PCs and NPCs
-      if (firstNPCIndex > 0 && firstNPCIndex < sortedTurns.length) {
-        // Add border class to first NPC
-        sortedTurns[firstNPCIndex].css = (sortedTurns[firstNPCIndex].css || "") + " npc-group-start";
-        // Add border class to last PC (the one before the first NPC)
-        sortedTurns[firstNPCIndex - 1].css = (sortedTurns[firstNPCIndex - 1].css || "") + " pc-group-end";
-      }
-      
-      data.turns = sortedTurns;
-    }
-    console.log('data.turns', data.turns);
-    return data;
-  }
-  
 
-  /**
-   * Custom sort method to separate PCs and NPCs
-   * @private
-   */
-  _sortCombatants(turns) {
-    return turns.sort((a, b) => {
-      // Check if combatant is NPC by checking actor type
+    if (!data.combat?.turns) return data;
+
+    // Log initial state
+    game.system.log.d('css-debug: Initial turns state:', {
+      turns: data.combat.turns.map(t => ({
+        name: t.name,
+        css: t.css,
+        type: t.actor?.type
+      }))
+    });
+
+    // Create a new array but preserve the Combatant instances
+    const sortedTurns = [...data.combat.turns].sort((a, b) => {
       const aIsNPC = a.actor?.type === "NPC";
       const bIsNPC = b.actor?.type === "NPC";
-      
-      // If one is NPC and other isn't, NPCs go last
-      if (aIsNPC !== bIsNPC) {
-        return aIsNPC ? 1 : -1;
-      }
-      
-      // If both are same type (both PC or both NPC), sort by initiative
+      if (aIsNPC !== bIsNPC) return aIsNPC ? 1 : -1;
       if (a.initiative === null && b.initiative === null) return 0;
       if (a.initiative === null) return 1;
       if (b.initiative === null) return -1;
       return b.initiative - a.initiative;
     });
+
+    // Find the first NPC index
+    const firstNPCIndex = sortedTurns.findIndex(t => t.actor?.type === "NPC");
+
+    game.system.log.d('css-debug: After sorting:', {
+      firstNPCIndex,
+      turns: sortedTurns.map(t => ({
+        name: t.name,
+        type: t.actor?.type,
+        css: t.css
+      }))
+    });
+
+    // Add CSS classes for visual grouping
+    if (firstNPCIndex > 0 && firstNPCIndex < sortedTurns.length) {
+      sortedTurns.forEach((turn, index) => {
+        // Log before modification
+        game.system.log.d(`css-debug: Processing turn ${index}:`, {
+          name: turn.name,
+          beforeCss: turn.css
+        });
+
+        // Directly set the css property
+        if (index === firstNPCIndex) {
+          turn.css = 'npc-group-start';
+        } else if (index === firstNPCIndex - 1) {
+          turn.css = 'pc-group-end';
+        }
+
+        // Log after modification
+        game.system.log.d(`css-debug: After processing turn ${index}:`, {
+          name: turn.name,
+          afterCss: turn.css
+        });
+      });
+    }
+
+    // Update the turns
+    data.combat.turns = sortedTurns;
+
+    // Log final state before template render
+    game.system.log.d('css-debug: Final state before template:', {
+      turns: data.combat.turns.map(t => ({
+        name: t.name,
+        css: t.css,
+        type: t.actor?.type
+      }))
+    });
+
+    game.system.log.d('FFCombatTracker getData - end');
+    return data;
   }
 
   async _onCombatantMouseDown(event) {

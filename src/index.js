@@ -151,10 +151,136 @@ Hooks.on("combatStart", async () => {
   }
 });
 
-Hooks.on("updateCombatant", (combatant, updateData) => {
-  if (updateData.initiative !== undefined) {
-    console.log(`Combatant: ${combatant.name}, Initiative: ${updateData.initiative}`);
+Hooks.on("renderCombatTracker", (app, html, data) => {
+  game.system.log.d('renderCombatTracker fired', {
+    turns: data.combat?.turns?.map(t => ({
+      name: t.name,
+      initiative: t.initiative,
+      isNPC: t.actor?.type === "NPC"
+    }))
+  });
+
+  // If we have combat and turns, trigger the updateCombatant hook
+  if (data.combat?.turns?.length) {
+    game.system.log.d('css-debug: Triggering updateCombatant hook');
+    // Call the hook with the first combatant and empty update data
+    Hooks.call('updateCombatant', data.combat.turns[0], {});
   }
+});
+
+/**
+ * Handle combat tracker sorting and visual grouping
+ */
+Hooks.on("updateCombatant", async (combatant, updateData) => {
+  game.system.log.d('updateCombatant: hook fired', { 
+    combatant: {
+      id: combatant.id,
+      name: combatant.name,
+      initiative: combatant.initiative,
+      isNPC: combatant.actor?.type === "NPC"
+    }, 
+    updateData 
+  });
+  
+  // Only process if initiative was changed
+  if (updateData.initiative === undefined) {
+    game.system.log.d('updateCombatant: skipping - no initiative change');
+    return;
+  }
+
+  const combat = combatant.parent;
+  if (!combat) {
+    game.system.log.d('updateCombatant: skipping - no combat parent');
+    return;
+  }
+
+  // Wait a moment for the base combat tracker to finish its updates
+  game.system.log.d('updateCombatant: waiting for base combat tracker');
+  await new Promise(resolve => setTimeout(resolve, 100));
+
+  // Get and sort all combatants
+  const turns = combat.turns;
+  game.system.log.d('updateCombatant: pre-sort turns', turns.map(t => ({
+    id: t.id,
+    name: t.name,
+    initiative: t.initiative,
+    isNPC: t.actor?.type === "NPC"
+  })));
+
+  // Sort the turns array
+  turns.sort((a, b) => {
+    const aIsNPC = a.actor?.type === "NPC";
+    const bIsNPC = b.actor?.type === "NPC";
+    
+    // First sort by PC/NPC status
+    if (aIsNPC !== bIsNPC) return aIsNPC ? 1 : -1;
+    
+    // Then sort by initiative within each group
+    const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
+    const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
+    return ib - ia;
+  });
+
+  game.system.log.d('updateCombatant: post-sort turns', turns.map(t => ({
+    id: t.id,
+    name: t.name,
+    initiative: t.initiative,
+    isNPC: t.actor?.type === "NPC"
+  })));
+
+  // Find the first NPC index
+  const firstNPCIndex = turns.findIndex(t => t.actor?.type === "NPC");
+  game.system.log.d('updateCombatant: first NPC index', { 
+    index: firstNPCIndex,
+    totalTurns: turns.length,
+    willApplyCSS: firstNPCIndex > 0 && firstNPCIndex < turns.length
+  });
+
+  // Update the turn order in the combat document
+  game.system.log.d('updateCombatant: updating combat document');
+  await combat.update({ turn: 0, turns: turns });
+  game.system.log.d('updateCombatant: combat document updated');
+
+  // Add visual grouping via CSS
+  if (firstNPCIndex > 0 && firstNPCIndex < turns.length) {
+    const tracker = ui.combat;
+    if (!tracker) {
+      game.system.log.d('updateCombatant: skipping CSS - no tracker UI');
+      return;
+    }
+
+    const combatants = tracker.element.find('.combatant');
+    game.system.log.d('updateCombatant: found DOM elements', { 
+      expectedElements: turns.length,
+      foundElements: combatants.length 
+    });
+
+    combatants.each((index, element) => {
+      const $element = $(element);
+      const currentClasses = $element.attr('class');
+      game.system.log.d(`updateCombatant: processing element ${index}`, {
+        currentClasses,
+        isNPCStart: index === firstNPCIndex,
+        isPCEnd: index === firstNPCIndex - 1
+      });
+
+      // Remove existing border classes
+      $element.removeClass('npc-group-start pc-group-end');
+      
+      // Add appropriate border class
+      if (index === firstNPCIndex) {
+        $element.addClass('npc-group-start');
+      } else if (index === firstNPCIndex - 1) {
+        $element.addClass('pc-group-end');
+      }
+
+      game.system.log.d(`updateCombatant: element ${index} final classes`, {
+        finalClasses: $element.attr('class')
+      });
+    });
+  }
+
+  game.system.log.d('updateCombatant: hook complete');
 });
 
 
@@ -207,3 +333,4 @@ Hooks.on("targetToken", (User, Token) => {
   mappedGameTargets.set(targets);
 
 });
+
