@@ -49,6 +49,10 @@ async function deleteLink(index) {
   await $item.update({ [`system.${key}.list`]: list });
 }
 
+function showItemSheet(item) {
+  item.sheet.render(true);
+}
+
 </script>
 
 <template lang="pug">
@@ -76,8 +80,8 @@ async function deleteLink(index) {
         +each("localList as item, index")
           tr
             td.img
-              img.icon(src="{item.img}" alt="{item.name}")
-            td.left {item?.name}
+              img.icon.nopointer(src="{item.img}" alt="{item.name}")
+            td.left.pointer(on:click!="{showItemSheet(item)}") {item?.name}
             td.left {ucfirst(item?.type)}
             +each("additionalColumns as col")
               td.left {item.type === col.itemType ? ucfirst(item.system?.[col.path] || '') : ''}
