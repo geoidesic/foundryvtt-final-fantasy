@@ -32,6 +32,9 @@
     }
   });
 
+  function applyResult() {}
+  function undoResult() {}
+
   async function applyTrait() {
     if (!FFMessage?.item?.system?.enables?.list?.length) return;
 
@@ -104,8 +107,16 @@
                         .flex1.formula.flexrow.justify-vertical
                           .flex3.left.font-cinzel.smallest Direct Hit 
                           .flex1.right {FFMessage.item.system.directHitDamage}
-          +if("showTraitButton")
-            button.apply-trait(on:click="{applyTrait}") Apply Trait
+                    
+         
+                    .flex0
+                      .flexcol
+                        .flex1
+                          button.stealth.apply-trait(on:click="{applyResult}")
+                            i.fa-solid.fa-check
+                        .flex1
+                          button.stealth.apply-trait(on:click="{undoResult}")
+                            i.fa-solid.fa-refresh
 
 </template>
 
@@ -175,14 +186,4 @@
       content: "•"
       margin: 0 0.3em
 
-.apply-trait
-  margin-top: 0.5em
-  padding: 0.3em 0.6em
-  background: #4a4a4a
-  color: white
-  border: none
-  border-radius: 3px
-  cursor: pointer
-  &:hover
-    background: #5a5a5a
 </style> 
