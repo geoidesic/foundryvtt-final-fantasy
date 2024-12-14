@@ -14,6 +14,7 @@
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
+  const RollCalc = new RollCalcActor({ actor: $Actor });
   const typeSearch = createFilterQuery("type");
   typeSearch.set(["trait", "action"]); // Updated to filter for both types
   const input = {
@@ -151,68 +152,6 @@
   $: hasItems = $Actor.items.some(x=> ['action', 'trait'].includes(x.type));
   $: console.log($Actor.items.map(x=>x.type))
   
-  async function executeAction(item) {
-    if (item.type !== "action") return;
-
-    // Show dialog for extra modifiers
-    const extraModifiers = await Dialog.prompt({
-      title: "Extra Modifiers",
-      content: `
-        <form>
-          <div class="form-group">
-            <label>Additional Modifier:</label>
-            <input type="number" name="modifier" value="0">
-          </div>
-        </form>
-      `,
-      label: "Roll",
-      callback: (html) => {
-        const form = html[0].querySelector("form");
-        return {
-          modifier: parseInt(form.modifier.value) || 0
-        };
-      }
-    });
-
-    // Check if we have targeted entities
-    const targets = game.user.targets;
-    const hasTargets = targets.size > 0;
-
-    // Roll d20 + Ability Modifier
-    const roll = await new Roll("1d20").evaluate({async: true});
-    
-    // Create chat message data
-    const messageData = {
-      speaker: ChatMessage.getSpeaker({ actor: $Actor }),
-      flavor: `${item.name}`,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      roll,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "RollChat",
-            actor: {
-              _id: $Actor._id,
-              name: $Actor.name,
-              img: $Actor.img
-            },
-            item: {
-              _id: item._id,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: item.system
-            },
-            hasTargets,
-            roll: roll.total,
-            extraModifiers
-          }
-        }
-      }
-    };
-
-    await roll.toMessage(messageData);
-  }
 
 </script>
 
@@ -260,7 +199,7 @@
             //- pre item.type {item.type}
             tr
               td.img
-                img.icon(src="{item.img}" alt="{item.name}" on:click!="{() => executeAction(item)}" style="cursor: pointer;")
+                img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.executeAction(item)}")
               td.left
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
               td.left {ucfirst(item.type)}
