@@ -123,7 +123,7 @@
               .target-list
                 +each("targets as target")
                   .target-row.flexrow.gap-4(class="{target.isUnlinked ? 'unlinked' : ''}")
-                    .flex2
+                    .flex3
                       .flexrow.justify-vertical.gap-4
                         .flex0.target-info.pointer
                           +if("!target.isUnlinked")
