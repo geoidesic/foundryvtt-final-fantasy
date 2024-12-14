@@ -21,13 +21,36 @@
       const modifier = FFMessage.extraModifiers?.modifier || 0;
       totalRoll = roll + modifier;
 
-      // If we have targets, check their defense/magic defense
+      // If we have targets, either load from flags or current targets
       if (hasTargets) {
-        targets = Array.from(game.user.targets);
-        let allTargetsHit = true;
+        const storedTargetUuids = $message?.flags?.[SYSTEM_ID]?.targetUuids || [];
+        
+        if (storedTargetUuids.length > 0) {
+          // Load targets from stored UUIDs
+          targets = await Promise.all(storedTargetUuids.map(async (uuid) => {
+            const token = await fromUuid(uuid);
+            return token || { isUnlinked: true, name: "Unlinked Token" };
+          }));
+        } else {
+          // Store current targets
+          targets = Array.from(game.user.targets);
+          const targetUuids = targets.map(t => t.document.uuid);
+          
+          // Update the message with target UUIDs
+          await $message.update({
+            flags: {
+              [SYSTEM_ID]: {
+                targetUuids
+              }
+            }
+          });
+        }
 
-        // Show trait button if all targets were hit
-        showTraitButton = allTargetsHit && item.system?.enables?.list?.length > 0;
+        let allTargetsHit = true;
+        // Show trait button if all targets were hit and they still exist
+        showTraitButton = allTargetsHit && 
+          item.system?.enables?.list?.length > 0 && 
+          targets.every(t => !t.isUnlinked);
       }
     }
   });
@@ -35,15 +58,20 @@
   function applyResult() {}
   function undoResult() {}
 
+  function log() {
+    game.system.log.d("RollChat FFMessage", FFMessage);
+    game.system.log.d("RollChat message", $message);
+  }
+
   async function applyTrait() {
     if (!FFMessage?.item?.system?.enables?.list?.length) return;
 
     const trait = await fromUuid(FFMessage.item.system.enables.list[0].uuid);
     if (!trait) return;
 
-    // Apply trait to all targets
+    // Apply trait to all existing targets
     for (const target of targets) {
-      if (target.actor) {
+      if (target.actor && !target.isUnlinked) {
         await target.actor.createEmbeddedDocuments("Item", [trait]);
       }
     }
@@ -52,7 +80,7 @@
   }
 
   function getDefenseValue(target) {
-    if (!target.actor?.system?.attributes?.secondary) return 0;
+    if (target.isUnlinked || !target.actor?.system?.attributes?.secondary) return 0;
     const defense = target.actor.system.attributes.secondary.defence?.val || 0;
     const magicDefense = target.actor.system.attributes.secondary.magicDefence?.val || 0;
     return Math.max(defense, magicDefense);
@@ -61,10 +89,17 @@
   function isHit(target) {
     return totalRoll >= getDefenseValue(target);
   }
+
+  function getTargetImage(target) {
+    if (target.isUnlinked) return null;
+    return target.document?.texture?.src || target.actor?.img;
+  }
 </script>
 
 <template lang="pug">
 .FF15
+  button.stealth.apply-trait(on:click="{log}")
+    i.fa-solid.fa-bug
   .flexrow
     .flex0.img.mr-xs
       img.actor-img(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}")
@@ -79,12 +114,12 @@
             +else
               .target-list
                 +each("targets as target")
-                  .target-row.flexrow.gap-4
+                  .target-row.flexrow.gap-4(class="{target.isUnlinked ? 'unlinked' : ''}")
                     .flex2
                       .flexrow.justify-vertical.gap-4
-                      
                         .flex0.target-info
-                          img.target-img(src="{target.document?.texture?.src || target.actor?.img}" alt="{target.name}")
+                          +if("!target.isUnlinked")
+                            img.target-img(src="{getTargetImage(target)}" alt="{target.name}")
                         .flex1
                           .target-name {target.name}
                     .flex1.thin-border
@@ -108,14 +143,13 @@
                           .flex3.left.font-cinzel.smallest Direct Hit 
                           .flex1.right {FFMessage.item.system.directHitDamage}
                     
-         
                     .flex0
                       .flexcol
                         .flex1
-                          button.stealth.apply-trait(on:click="{applyResult}")
+                          button.stealth.apply-trait(on:click="{applyResult}" disabled="{target.isUnlinked}")
                             i.fa-solid.fa-check
                         .flex1
-                          button.stealth.apply-trait(on:click="{undoResult}")
+                          button.stealth.apply-trait(on:click="{undoResult}" disabled="{target.isUnlinked}")
                             i.fa-solid.fa-refresh
 
 </template>
@@ -148,6 +182,11 @@
   background: rgba(0, 0, 0, 0.03)
   border-radius: 3px
   border: 1px solid rgba(0, 0, 0, 0.1)
+  &.unlinked
+    opacity: 0.7
+    background: rgba(0, 0, 0, 0.05)
+    .target-name
+      font-style: italic
 
 .target-info
   display: flex
@@ -186,4 +225,7 @@
       content: "•"
       margin: 0 0.3em
 
+button:disabled
+  opacity: 0.5
+  cursor: not-allowed
 </style> 
