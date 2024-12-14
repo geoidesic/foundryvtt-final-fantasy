@@ -63,7 +63,7 @@
 </template>
 
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
+  @import '../../../../styles/Mixins.sass'
 
   .fuscia
     +background(rgb(76 20 32), 0.05 )

@@ -16,7 +16,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
 
-      width: 440,
+      width: 390,
       height: 828,
       minHeight: 180,
       minWidth: 282,

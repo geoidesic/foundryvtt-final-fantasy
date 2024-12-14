@@ -9,7 +9,6 @@ export class PCModel extends FFActorDataModel {
   static defineSchema() {
     return {
       ...super.defineSchema(),
-      isEditing: new BooleanField({initial: false}),
       biography: new HTMLField(),
       job: new SchemaField({
         uuid: new StringField({ required: true, initial: '' }),

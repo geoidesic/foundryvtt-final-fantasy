@@ -15,7 +15,7 @@
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
   const typeSearch = createFilterQuery("type");
-  typeSearch.set(['equipment']); // Updated to filter for both types
+  typeSearch.set(["trait", "action"]); // Updated to filter for both types
   const input = {
     store: typeSearch,
     efx: rippleFocus(),
@@ -60,21 +60,25 @@
     $Actor.sheet._onDropItemCreate(itemData);
   }
 
-  async function removeAllItems() {
-    const okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteAllItems`));
-    if (okToDelete) {
-      await $Actor.deleteAllItems('equipment');
-    }
-  }
-
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteItem`));
+      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Abilities.confirmDeleteItem`));
     }
     if (okToDelete) {
       item.delete();
     }
+  }
+
+  async function removeAllItems() {
+    const okToDelete = await Dialog.confirm({
+      title: localize("FF15.Types.Actor.Abilities.confirmDeleteAllTitle"),
+      content: localize("FF15.Types.Actor.Abilities.confirmDeleteAll"),
+      yes: async () => {  
+        await $Actor.deleteAllItems(["trait", "action"]);
+      },
+      no: () => {},
+    });
   }
 
   function roll(item) {
@@ -107,11 +111,46 @@
     item.sheet.render(true);
   }
 
-  onMount(async () => {});
+  async function deleteJob() {
+    if (!$doc.system.job.uuid) {
+      return;
+    }
+
+    //- confirm by Dialog
+    const okToDelete = await Dialog.confirm({
+      title: localize("FF15.Types.Actor.Abilities.confirmDeleteJobTitle"),
+      content: localize("FF15.Types.Actor.Abilities.confirmDeleteJob"),
+      yes: async () => {
+        //- get the job by uuid
+        const job = await fromUuid($doc.system.job.uuid);
+        //- get the grants from the job
+        const grants = job.system.grants;
+        //- iterate over the grant (which are uuids) and get the item by uuid
+        for (let grant of grants.list) {
+          const item = await fromUuid(grant.uuid);
+          //- find the corresponding item in the actor by name
+          const actorItem = $doc.items.find((x) => x.name === item.name);
+          if (actorItem) {
+            actorItem.delete();
+          }
+        }
+        //- update the actor to remove the job uuid
+        $doc.update({ system: { job: { uuid: "", name: "", grants: [], level: null, img: null, role: '' } } });
+      },
+      no: () => {},
+    });
+  }
+
+  onMount(async () => {
+    game.system.log.d("items", $doc.items);
+  });
 
   $: items = [...$wildcard];
   $: lockCSS = $doc.system.inventoryLocked ? "lock" : "lock-open";
   $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock negative" : "fa-lock-open positive";
+  $: hasItems = $Actor.items.some(x=> ['action', 'trait'].includes(x.type));
+  $: console.log($Actor.items.map(x=>x.type))
+  
 </script>
 
 <template lang="pug">
@@ -128,12 +167,25 @@
 
     .panel.overflow.containerx
       .padded
-        h1.gold Inventory
+        //- add in the job item if it exists
+        +if("$Actor.system.job?.name")
+          h1.left.gold Job
+          table.borderless
+            tr
+              td.img.shrink(scope="col")
+                img.icon(src="{$Actor.system.job?.img}" alt="{$Actor.system.job?.img}")
+              td.left.expand(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
+              td.buttons(scope="col")
+                button.stealth(on:click="{deleteJob}")
+                  i.fa-solid.fa-trash
+
+
+        h1.gold Abilities
         table.borderless
           tr
             th.img.shrink(scope="col")
-            th.left.expand(scope="col") Name
-            th.fixed(scope="col") Quantity
+            th.left.expand.ml-sm(scope="col") Name
+            th.fixed(scope="col") Type
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
@@ -146,8 +198,7 @@
                 img.icon(src="{item.img}" alt="{item.name}")
               td.left
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-              td 
-                button.stealth.clickable.wide(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
+              td {ucfirst(item.type)}
               td
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
@@ -160,12 +211,13 @@
                   button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
                     i.left.fa.fa-trash
             
-      button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
-            
+      +if("hasItems")
+        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
+
 </template>
 
 <style lang="sass">
-@import '../../../styles/Mixins.sass'
+@import '../../../../styles/Mixins.sass'
 
 .containerx
   container-type: inline-size

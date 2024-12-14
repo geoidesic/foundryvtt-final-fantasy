@@ -9,10 +9,10 @@
   import { gameSettings } from '~/src/config/gameSettings';
 
   import Tabs from "~/src/components/molecules/Tabs.svelte";
-  import Abilities from "~/src/components/tabs/actor/Abilities.svelte";
-  import Attributes from "~/src/components/tabs/actor/Attributes.svelte";
-  import Profile from "~/src/components/tabs/actor/Profile.svelte";
-  import Inventory from "~/src/components/tabs/actor/Inventory.svelte";
+  import Abilities from "~/src/components/tabs/actor/NPC/Abilities.svelte";
+  import Attributes from "~/src/components/tabs/actor/NPC/Attributes.svelte";
+  import Profile from "~/src/components/tabs/actor/NPC/Profile.svelte";
+  import Inventory from "~/src/components/tabs/actor/NPC/Inventory.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
 
   export let elementRoot; //- passed in by SvelteApplication
@@ -30,8 +30,8 @@
   const defaultTabs = [
     { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp' },
     { label: localize("FF15.Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp' },
-    { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
-    { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
+    // { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
+    // { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
     { label: localize("FF15.Tabs.Effects"), id: "effect", component: Effects, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp' }
   ];
 

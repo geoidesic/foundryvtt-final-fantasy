@@ -217,7 +217,7 @@
 </template>
 
 <style lang="sass">
-@import '../../../styles/Mixins.sass'
+@import '../../../../styles/Mixins.sass'
 
 .containerx
   container-type: inline-size

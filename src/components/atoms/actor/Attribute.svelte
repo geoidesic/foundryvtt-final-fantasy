@@ -26,7 +26,7 @@ const remove = () => {
 $: label = abbreviateLabel ? localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`) : localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attributes.${key}.${code}.Label`);
 $: value = $actor?.system?.attributes?.[key]?.[code]?.val;
 $: isEditing = $actor?.system?.isEditing;
-$: sign = showSign ? value > 0 ? '+' : value < 0 ? '-' : '' : '';
+$: sign = showSign ? value > 0 ? '+' : value < 0 ? '' : '' : '';
 $: disabled = isEditing ? '' : 'disabled'
 
 onMount(() => {

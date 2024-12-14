@@ -9,10 +9,10 @@
   import { gameSettings } from '~/src/config/gameSettings';
 
   import Tabs from "~/src/components/molecules/Tabs.svelte";
-  import Abilities from "~/src/components/tabs/actor/Abilities.svelte";
-  import Attributes from "~/src/components/tabs/actor/Attributes.svelte";
-  import Profile from "~/src/components/tabs/actor/Profile.svelte";
-  import Inventory from "~/src/components/tabs/actor/Inventory.svelte";
+  import Abilities from "~/src/components/tabs/actor/PC/Abilities.svelte";
+  import Attributes from "~/src/components/tabs/actor/PC/Attributes.svelte";
+  import Profile from "~/src/components/tabs/actor/PC/Profile.svelte";
+  import Inventory from "~/src/components/tabs/actor/PC/Inventory.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
 
   export let elementRoot; //- passed in by SvelteApplication
