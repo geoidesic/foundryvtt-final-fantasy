@@ -11,6 +11,7 @@
   let targets = [];
   let totalRoll = 0;
   let damageResults = new Map(); // Store damage results by target ID
+  let appliedDamageByTarget = new Map(); // Track which targets have damage applied
 
   onMount(async () => {
     game.system.log.d("RollChat mounted", FFMessage);
@@ -37,6 +38,9 @@
           );
           // Load stored damage results
           damageResults = new Map(Object.entries(storedDamageResults));
+          // Initialize appliedDamageByTarget from stored results
+          appliedDamageByTarget = new Map();
+          Object.keys(storedDamageResults).forEach(id => appliedDamageByTarget.set(id, true));
         } else {
           // Store current targets
           targets = Array.from(game.user.targets);
@@ -59,7 +63,7 @@
   });
 
   async function applyResult(target) {
-    if (!target.actor || target.isUnlinked || !isHit(target)) return;
+    if (!target.actor || target.isUnlinked) return;
 
     const item = FFMessage.item;
     const modifier = FFMessage.extraModifiers?.modifier || 0;
@@ -81,8 +85,8 @@
       totalDamage += results.damage;
     }
 
-    // Calculate direct hit damage if applicable
-    if (item.system?.hasDirectHit && item.system?.directHitDamage) {
+    // Calculate direct hit damage if applicable - only if it's a hit
+    if (isHit(target) && item.system?.hasDirectHit && item.system?.directHitDamage) {
       const directHitFormula = item.system.directHitDamage.includes('d')
         ? `${item.system.directHitDamage} + ${modifier}`  // Add modifier to dice rolls
         : `${parseInt(item.system.directHitDamage) + modifier}`; // Add modifier to static values
@@ -98,17 +102,26 @@
 
     // Apply damage to target
     const currentHP = target.actor.system.points.HP.val;
+    const newHP = Math.max(0, currentHP - totalDamage);
     await target.actor.update({
-      "system.points.HP.val": Math.max(0, currentHP - totalDamage)
+      "system.points.HP.val": newHP
     });
+
+    // Toggle KO condition if HP drops to 0
+    if (currentHP > 0 && newHP <= 0) {
+      await target.actor.toggleStatusEffect("ko");
+    }
 
     // Store results
     damageResults.set(target.id, {
       damage: results.damage,
       directHit: results.directHit,
       originalHP: currentHP,
+      wasKOd: currentHP > 0 && newHP <= 0,  // Store if we applied KO
       modifier
     });
+    appliedDamageByTarget.set(target.id, true);
+    appliedDamageByTarget = appliedDamageByTarget;
 
     // Update message flags
     await $message.update({
@@ -131,8 +144,15 @@
       "system.points.HP.val": result.originalHP
     });
 
-    // Remove result from storage
+    // Remove KO if we applied it
+    if (result.wasKOd) {
+      await target.actor.toggleStatusEffect("ko");
+    }
+
+    // Remove result from storage and force UI update
     damageResults.delete(target.id);
+    appliedDamageByTarget.delete(target.id);
+    appliedDamageByTarget = appliedDamageByTarget;
 
     // Update message flags
     await $message.update({
@@ -215,7 +235,12 @@
     actor.sheet.render(true);
   }
 
-  $: actor = game.actors.get(FFMessage?.actor?._id)
+  $: actor = game.actors.get(FFMessage?.actor?._id);
+  $: {
+    // Update appliedDamageByTarget when damageResults changes
+    appliedDamageByTarget = new Map();
+    damageResults.forEach((_, id) => appliedDamageByTarget.set(id, true));
+  }
 </script>
 
 <template lang="pug">
@@ -263,10 +288,10 @@
                     .flex0
                       .flexcol
                         .flex1
-                          button.stealth.apply-trait(on:click!="{applyResult(target)}" disabled="{target.isUnlinked || hasAppliedDamage(target)}")
+                          button.stealth.apply-trait(on:click!="{applyResult(target)}" disabled="{target.isUnlinked || appliedDamageByTarget.has(target.id)}")
                             i.fa-solid.fa-check
                         .flex1
-                          button.stealth.apply-trait(on:click!="{undoResult(target)}" disabled="{target.isUnlinked || !hasAppliedDamage(target)}")
+                          button.stealth.apply-trait(on:click!="{undoResult(target)}" disabled="{target.isUnlinked || !appliedDamageByTarget.has(target.id)}")
                             i.fa-solid.fa-refresh
 </template>
 
