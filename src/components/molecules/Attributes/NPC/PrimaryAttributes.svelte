@@ -12,8 +12,8 @@ let data = [
 </script>
 <template lang='pug'>
   .molecule
-    .flexrow.header.underscore.mb-md Primary Attributes
-    AttributeCol( key="primary" showSign="{true}" abbreviateLabel="{true}" data="{data}")
+    .flexrow.mb-md
+      AttributeCol( key="primary" showSign="{true}" abbreviateLabel="{true}" data="{data}")
 </template>
 <style lang='sass'>
   @import '../../../../styles/Mixins.sass'

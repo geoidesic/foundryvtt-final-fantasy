@@ -12,8 +12,8 @@
   </script>
   <template lang='pug'>
     .molecule
-      .flexrow.header.underscore.mb-md Secondary Attributes
-      AttributeCol(data="{data}" key="secondary")
+      .flexrow.mb-md 
+        AttributeCol(data="{data}" key="secondary")
       
   </template>
 

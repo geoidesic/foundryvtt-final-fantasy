@@ -1,8 +1,8 @@
 <script>
   import { onMount } from "svelte";
   import { getSizeOptions } from "~/src/helpers/constants";
-  import PrimaryAttributes from "~/src/components/molecules/Attributes/PrimaryAttributes.svelte";
-  import SecondaryAttributes from "~/src/components/molecules/Attributes/SecondaryAttributes.svelte";
+  import PrimaryAttributes from "~/src/components/molecules/Attributes/NPC/PrimaryAttributes.svelte";
+  import SecondaryAttributes from "~/src/components/molecules/Attributes/NPC/SecondaryAttributes.svelte";
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
 
   const sizeOptions = getSizeOptions();

@@ -9,52 +9,48 @@
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import Portrait from "~/src/components/organisms/actor/Portrait.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
+  import DescriptionBlockNPC from "~/src/components/molecules/DescriptionBlockNPC.svelte";
 
   const documentStore = getContext("#doc");
+
+  const application = getContext("#external").application;
+  const { width } = application.position.stores;
+
+  $: smallwindow = $width <= 750
+  $: largewindow = $width > 750
 </script>
 
 <template lang="pug">
   .panel.overflow
-    .flexrow.high
-      .flex2
-        .flexcol.purple
-          .background
-            .texture
-            .flexrow.panel.borderless.wide
-              .flex1
-                Portrait
-              .flex2.wide
-                .portrait-frame.pr-xs.wide
-                  PortraitFrame(style="min-width: 182px;")
-                    .flexcol.wide
-                      .flex1
-                        h2.font-cinzel {localize(`${SYSTEM_CODE}.Points`)}
-                      .flex1
-                        .left.panel.borderless.overflow
-                          PointsSection
-      .flex3
-        AttributeSection
-        .flexcol.navy
-          .background
-            .texture
-            .flexrow.panel.borderless.wide
-              .flex2.wide
-                .portrait-frame.pr-xs.wide
-                  PortraitFrame(style="min-width: 182px;")
-                    .flexcol.wide.gold
-                      .flex1
-                        h2.font-cinzel {localize(`${SYSTEM_CODE}.Description`)}
-                      .flex1
-                        .flexrow.justify-vertical
-                          .flex2.left.pl-md
-                            label.gold {localize(`${SYSTEM_CODE}.Name`)}
-                          .flex2.wide
-                            DocInput.wide(id="name" name="name" valuePath="name")
-                      hr
-                      .flex3
-                        .left.panel.borderless.overflow.prose
-                          ProseMirror( editable="{true}" attr="system.description" )
+    .flexrow
+      div(class="{smallwindow ? 'flex2' : 'flex3'}")
+        .flexcol
+          .purple
+            .background
+              .texture
+              .flexrow.panel.borderless.wide
+                .flex1
+                  Portrait
+                .flex2.wide
+                  .portrait-frame.pr-xs.wide
+                    PortraitFrame(style="min-width: 182px;")
+                      .flexcol.wide
+                        .flex1
+                          h2.font-cinzel {localize(`${SYSTEM_CODE}.Points`)}
+                        .flex1
+                          .left.panel.borderless.overflow
+                            PointsSection
+        +if("largewindow")
+          .flexcol
+            DescriptionBlockNPC 
 
+
+      div(class="{largewindow ? 'flex2' : 'flex3'}" style="min-width: 250px;")
+        AttributeSection
+
+    +if("smallwindow")
+      .flexcol
+        DescriptionBlockNPC
                        
 
 </template>

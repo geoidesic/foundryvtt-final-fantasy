@@ -10,6 +10,8 @@ export let abbreviateLabel = false;
 export let showSign = false;
 
 const actor = getContext('#doc');
+const application = getContext("#external").application;
+const { width } = application.position.stores;
 // game.system.log.d('actor', actor);
 // game.system.log.d('$actor', $actor);
 
@@ -23,11 +25,15 @@ const remove = () => {
   $actor.update({system: {attributes: {[key]: { [code]: {val: value - 1}}}}})
 }
 
+
+
 $: label = abbreviateLabel ? localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`) : localize(`${SYSTEM_CODE}.Types.Actor.Types.PC.Attributes.${key}.${code}.Label`);
 $: value = $actor?.system?.attributes?.[key]?.[code]?.val;
 $: isEditing = $actor?.system?.isEditing;
 $: sign = showSign ? value > 0 ? '+' : value < 0 ? '' : '' : '';
 $: disabled = isEditing ? '' : 'disabled'
+
+$: abbreviateLabel = $width <= 600;
 
 onMount(() => {
 });
