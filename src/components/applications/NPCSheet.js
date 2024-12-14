@@ -33,7 +33,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
 
   async close(options = {}) {
-    this.reactive.document.update({system: {isEditing: false}});
+    this.reactive.document?.update({system: {isEditing: false}});
     await super.close(options);
   }
 
