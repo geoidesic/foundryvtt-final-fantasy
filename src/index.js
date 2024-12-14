@@ -8,7 +8,8 @@ import { mappedGameTargets } from '~/src/stores';
 import { getDefaultStatusEffects } from "./helpers/Conditions";
 import WelcomeApplication from "~/src/components/applications/WelcomeApplication"
 import FF15Actor from '~/src/extensions/actor.js'
-import FF15ActorSheet from "~/src/components/applications/ActorSheet";
+import FF15PCSheet from "~/src/components/applications/PCSheet";
+import FF15NPCSheet from "~/src/components/applications/NPCSheet";
 import FF15ItemSheet from "~/src/components/applications/ItemSheet";
 import ItemSheetStandard from "~/src/components/applications/ItemSheetStandard";
 import systemconfig from "~/src/helpers/systemconfig.ts"
@@ -66,8 +67,13 @@ Hooks.once("init", async (a, b, c) => {
   game.system.log.d(game.system.config)
 
   //- Regiser Sheets
-  Actors.registerSheet("foundryvtt-final-fantasy", FF15ActorSheet, {
+  Actors.registerSheet("foundryvtt-final-fantasy", FF15PCSheet, {
     makeDefault: true,
+    types: ["PC"]
+  });
+  Actors.registerSheet("foundryvtt-final-fantasy", FF15NPCSheet, {
+    makeDefault: true,
+    types: ["NPC"]
   });
   Items.registerSheet("foundryvtt-final-fantasy", FF15ItemSheet, {
     makeDefault: true,
