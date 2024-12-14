@@ -9,6 +9,12 @@
   import ItemBucket from "~/src/components/molecules/ItemBucket.svelte";
 
   const item = getContext("#doc");
+  
+  const grantColumns = [{
+    header: "Action Type",
+    path: "type",
+    itemType: "action"
+  }];
 
 </script>
 
@@ -28,13 +34,9 @@
         .flex1
           DocInput.wide(type="text" name="role" valuePath="system.role")
     .flex3.left.high
-      ItemBucket(
-        title="Grants",
-        key="grants",
-      )
+      ItemBucket(title="Granted Abilities" key="grants" additionalColumns="{grantColumns}")
 
 </template>
-
 
 <style lang="sass">
   @import '../../../../../../styles/Mixins.sass'
