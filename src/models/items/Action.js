@@ -36,6 +36,8 @@ export class ActionModel extends FFItemDataModel {
       formula: new StringField({ required: false, initial: '' }),
       hasCost: new BooleanField({ required: false, initial: false }),
       cost: new NumberField({ required: false, initial: 0 }),
+      hasProcTrigger: new BooleanField({ required: false, initial: false }),
+      procTrigger: new NumberField({ required: false, initial: null }),
       grants: new SchemaField({
         list: new ArrayField(
           new ObjectField({ // Use ObjectField to allow storing objects
