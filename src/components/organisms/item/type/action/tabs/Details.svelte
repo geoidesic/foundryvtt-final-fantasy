@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
-  import { getRangeOptions, getLimitationOptions, getAspectedOptions, getTargetOptions, getHeavyshotOptions, getTriggerOptions, getDirectHitOptions } from "~/src/helpers/constants.js";
+  import { getRangeOptions, getLimitationOptions, getAspectedOptions, getTargetOptions, getHeavyshotOptions, getTriggerOptions, getDirectHitOptions, getTypeOptions } from "~/src/helpers/constants.js";
   import { getCROptions } from "~/src/helpers/constants.js";
   import { PCModel } from "~/src/models/actors/PC.js";
   import { getDefaultStatusEffects } from "~/src/helpers/Conditions.js";
@@ -34,16 +34,9 @@
   const targetOptions = getTargetOptions();
   const aspectedOptions = getAspectedOptions();
   const directHitOptions = getDirectHitOptions();
-
+  const typeOptions = getTypeOptions();
   const directHitConditionOptions = getDefaultStatusEffects().map((effect) => ({ value: effect.id, label: effect.name }));
 
-  const typeOptions = [
-    { value: "primary", label: localize("FF15.Types.Item.Types.Options.Type.primary") },
-    { value: "secondary", label: localize("FF15.Types.Item.Types.Options.Type.secondary") },
-    { value: "reaction", label: localize("FF15.Types.Item.Types.Options.Type.reaction") },
-    { value: "limit", label: localize("FF15.Types.Item.Types.Options.Type.limit") },
-    { value: "combo", label: localize("FF15.Types.Item.Types.Options.Type.combo") },
-  ];
 
   const costOptions = [
     { value: 1, label: localize("FF15.Types.Item.Types.Options.Cost.1") },
@@ -64,10 +57,10 @@
 <template lang="pug">
   .item-sheet.details.overflow.wide
     .flexcol.flex3.left.high.wide
-      h3.left General
+      h3.left {localize("FF15.General")}
       .flexrow.sheet-row.justify-vertical.wide
         .flex1
-          label(for="type") Type
+          label(for="type") {localize("FF15.Type")}
         .flex4.right.wide
           DocSelect.wide.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
       
@@ -79,54 +72,54 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left CR
+          h3.left {localize("FF15.CR")}
         .flex0.right
           DocCheckbox( name="hasCR" valuePath="system.hasCR")
 
       +if("$item.system.hasCR")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="CR") CR Type
+            label(for="CR") {localize("FF15.Type")}
           .flex4.right.wide
             DocSelect.wide.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
 
       .flexrow.justify-vertical
         .flex4
-          h3.left Trigger
+          h3.left {localize("FF15.Types.Item.Trigger")}
         .flex0.right
           DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
 
       +if("$item.system.hasTrigger")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="trigger") Type
+            label(for="trigger") {localize("FF15.Type")}
           .flex4.right.wide
             DocSelect.wide.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
     
       
       .flexrow.justify-vertical
         .flex4
-          h3.left Target
+          h3.left {localize("FF15.Types.Item.Target")}
         .flex0.right
           DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
 
       +if("$item.system.hasTarget")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="target") Type
+            label(for="target") {localize("FF15.Type")}
           .flex4.right.wide
             DocSelect.wide.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
       
       .flexrow.justify-vertical
         .flex4
-          h3.left Range
+          h3.left {localize("FF15.Types.Item.Range")}
         .flex0.right
           DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
       +if("$item.system.hasRanged")
 
         .flexrow.sheet-row.justify-vertical.wide
             .flex1
-              label(for="rangeType") Type
+              label(for="rangeType") {localize("FF15.Type")}
             .flex4.right.wide
               DocSelect.wide.right.wide(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
 
@@ -195,7 +188,7 @@
       +if("$item.system.hasHeavierShot")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="heavierShot") Heavier Shot Type
+            label(for="heavierShot") {localize("FF15.Type")}
           .flex4.right.wide
             DocSelect.wide.right(id="heavierShot" name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
 
@@ -209,7 +202,7 @@
       +if("$item.system.hasDirectHit")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="directHitType") Type
+            label(for="directHitType") {localize("FF15.Type")}
           .flex4.right.wide
             DocSelect.wide.right(id="directHitType" name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
 

@@ -15,18 +15,21 @@
     }
   },
   "FF15": {
-    "Name": "Name",
-    "Description": "Description",
     "BaseEffect": "Base Effect",
     "ChatText": "Chat Text",
+    "Description": "Description",
     "Details": "Details",
     "Effects": "Effects",
-    "None": "None",
-    "Points": "Points",
-    "Links": "Links",
+    "General": "General",
     "Grants": "Grants",
+    "Links": "Links",
+    "Name": "Name",
+    "None": "None",
     "Other": "Other",
+    "Points": "Points",
     "Title": "Final Fantasy TTRPG",
+    "Type": "Type",
+    "CR": "CR",
     "SystemDescription": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
     "Chat": {
       "Buttons": {
@@ -45,6 +48,11 @@
         "AlreadyExists": "This container already contains that item",
         "LimitBreakAlreadyExists": "A Job can only have one Limit Break",
         "Label": "Item",
+        "Range": "Range",
+        "Target": "Target",
+        "Effect": "Effect",
+        "Trigger": "Trigger",
+        "Size": "Size",
         "Types": {
           "action": {
             "Label": "Action",
@@ -75,6 +83,14 @@
           "limitbreak": {
             "Label": "Limit Break",
             "Description": "Each Job has a single definitive limit Break ability."
+          },
+          "telegraph": {
+            "Label": "Telegraph",
+            "Description": "A telegraph is a passive ability that can be used to trigger other abilities.",
+            "Source": "Source",
+            "Controller": "Controller",
+            "Classification": "Classification",
+            "Origin": "Origin"
           },
           "Options": {
             "DirectHit": {
@@ -156,6 +172,17 @@
               "turn": "Turn",
               "phase": "Phase",
               "round": "Round"
+            },
+            "Telegraph": {
+              "fixed": "Fixed Telegraph",
+              "movable": "Movable Telegraph",
+              "Size": {
+                "small": "Small [1x1]",
+                "medium": "Medium [1x1]",
+                "large": "Large [2x2]",
+                "huge": "Huge [3x3]",
+                "gargantuan": "Gargantuan [4x4 or larger]"
+              }
             }
           }
         }

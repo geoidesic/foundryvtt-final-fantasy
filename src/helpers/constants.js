@@ -4,6 +4,22 @@ export const SYSTEM_CODE = 'FF15';
 export const LOG_PREFIX = `${SYSTEM_CODE} |`;
 export const ASSET_PATH = `systems/${SYSTEM_ID}/assets`;
 
+export const getTypeOptions = () => [
+  { value: "primary", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.primary") },
+  { value: "secondary", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.secondary") },
+  { value: "reaction", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.reaction") },
+  { value: "limit", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.limit") },
+  { value: "combo", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.combo") },
+];
+
+export const getSizeOptions = () => [
+  { value: "small", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.small") },
+  { value: "medium", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.medium") },
+  { value: "large", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.large") },
+  { value: "huge", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.huge") },
+  { value: "gargantuan", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.gargantuan") }
+];
+
 export const getRangeOptions = () => [
   { value: "1sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.1sq") },
   { value: "5sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5sq") },

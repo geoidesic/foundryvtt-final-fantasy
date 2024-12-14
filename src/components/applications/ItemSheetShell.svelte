@@ -18,7 +18,8 @@
     job: components.JobHeader,
     trait: components.TraitHeader,
     limitbreak: components.LimitbreakHeader,
-    effect: components.EffectHeader
+    effect: components.EffectHeader,
+    telegraph: components.TelegraphHeader
   }
   const tabMap = {
     action: components.ActionTabs,
@@ -26,7 +27,8 @@
     job: components.JobTabs,
     trait: components.TraitTabs,
     limitbreak: components.LimitbreakTabs,
-    effect: components.EffectTabs
+    effect: components.EffectTabs,
+    telegraph: components.TelegraphTabs
   }
 
   const application = getContext("#external").application;

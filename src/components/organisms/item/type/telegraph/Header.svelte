@@ -15,16 +15,17 @@
             +if("$item.system.source")
               li Source: {$item.system.source}
             +if("$item.system.controller")
-              li Controller: {$item.system.controller}
-            li Classification: {$item.system.classification === 'fixed' ? 'Fixed Telegraph' : 'Movable Telegraph'}
+              li {$item.system.controller}
+            +if("$item.system.classification")
+              li {$item.system.classification}
             +if("$item.system.origin")
-              li Origin: {$item.system.origin}
+              li {$item.system.origin}
             +if("$item.system.range")
-              li Range: {$item.system.range}
+              li {$item.system.range}
             +if("$item.system.target")
-              li Target: {$item.system.target}
+              li {$item.system.target}
             +if("$item.system.activationTrigger")
-              li Trigger: {$item.system.activationTrigger}
+              li {$item.system.activationTrigger}
 </template>
 
 <style lang="sass">
