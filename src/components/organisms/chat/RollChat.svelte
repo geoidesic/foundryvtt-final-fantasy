@@ -12,8 +12,7 @@
   let showTraitButton = false;
 
   onMount(async () => {
-    game.system.log.d("RollChat mounted");
-    game.system.log.d("FFMessage", FFMessage);
+    game.system.log.d("RollChat mounted", FFMessage);
 
     if (FFMessage?.item?.type === "action") {
       const roll = FFMessage.roll;
@@ -24,20 +23,22 @@
 
       // If we have targets, check their defense/magic defense
       if (hasTargets) {
-        const targets = game.user.targets;
+        const targets = Array.from(game.user.targets);
         let allTargetsHit = true;
-        let damageFormula = item.system.formula || "0";
-        let directHitFormula = item.system.directHitDamage || "0";
+        let damageFormula = item.system?.formula || "0";
+        let directHitFormula = item.system?.directHitDamage || "0";
 
         for (const target of targets) {
-          const defense = target.actor.system.attributes.secondary.defence.val;
-          const magicDefense = target.actor.system.attributes.secondary.magicDefence.val;
+          if (!target.actor?.system?.attributes?.secondary) continue;
+
+          const defense = target.actor.system.attributes.secondary.defence?.val || 0;
+          const magicDefense = target.actor.system.attributes.secondary.magicDefence?.val || 0;
           const defenseToUse = Math.max(defense, magicDefense);
 
           if (totalRoll >= defenseToUse) {
             actionResult += `Hit ${target.name} (Defense: ${defenseToUse})<br>`;
             actionResult += `Damage Formula: ${damageFormula}<br>`;
-            if (item.system.hasDirectHit) {
+            if (item.system?.hasDirectHit) {
               actionResult += `Direct Hit Formula: ${directHitFormula}<br>`;
             }
           } else {
@@ -48,7 +49,7 @@
         }
 
         // Show trait button if all targets were hit
-        showTraitButton = allTargetsHit && item.system.enables?.list?.length > 0;
+        showTraitButton = allTargetsHit && item.system?.enables?.list?.length > 0;
       } else {
         actionResult = "No targets selected. Select targets and roll again.";
       }
@@ -62,8 +63,11 @@
     if (!trait) return;
 
     // Apply trait to all targets
-    for (const target of game.user.targets) {
-      await target.actor.createEmbeddedDocuments("Item", [trait]);
+    const targets = Array.from(game.user.targets);
+    for (const target of targets) {
+      if (target.actor) {
+        await target.actor.createEmbeddedDocuments("Item", [trait]);
+      }
     }
 
     showTraitButton = false;
@@ -75,9 +79,11 @@
 .FF15
   .flexrow
     .flex0.img.mr-xs
-      img.actor-img(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
+      img.actor-img(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}")
     .flex3.content
       div {@html content}
+  .flexrow
+    .flex4
       +if("FFMessage?.item?.type === 'action'")
         .action-result
           div {@html actionResult}
