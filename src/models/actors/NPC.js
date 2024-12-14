@@ -8,6 +8,7 @@ export class NPCModel extends FFActorDataModel {
   static defineSchema() {
     return {
       ...super.defineSchema(),
+      size: new StringField({ initial: "" }),
     }
   }
 }

@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import AttributeBlock from "~/src/components/molecules/Attributes/AttributeBlock.svelte";
+  import AttributeBlock from "~/src/components/molecules/Attributes/NPC/AttributeBlock.svelte";
   import TitleBlock from "~/src/components/molecules/TitleBlock.svelte";
   import { ASSET_PATH } from "~/src/helpers/constants";
 
