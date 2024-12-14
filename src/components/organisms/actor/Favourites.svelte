@@ -123,7 +123,7 @@
         tr
           td.img
             img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
-          td.left
+          td.left.clip
             a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
           td
           td
@@ -223,5 +223,11 @@ input
   background-color: white
   height: 1.2rem
        
-
+td
+  &.clip
+    text-overflow: ellipsis
+    overflow: hidden
+    height: 2rem
+    max-height: 2rem
+    display: block
 </style>
