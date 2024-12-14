@@ -15,6 +15,7 @@ import systemconfig from "~/src/helpers/systemconfig.ts"
 import FFChat from "~/src/components/organisms/chat/FFChat.svelte";
 import FFTokenHUD from './extensions/token-hud.js'
 import FFCombatTracker from './extensions/combat-tracker.js'
+import { Timing } from "@typhonjs-fvtt/runtime/util";
 
 //- helpers
 function setupDSN() {
@@ -80,57 +81,49 @@ Hooks.once("init", async (a, b, c) => {
 
   // Override the default combat tracker behavior
   Hooks.on("renderCombatTracker", (app, html) => {
-
     const isCombatActive = game.combat?.started ? true : false;
     console.log('isCombatActive', isCombatActive);
 
+    // Create a debounced update function
+    const updateDebounced = Timing.debounce(async (combatant, value) => {
+      const newInitiative = parseInt(value);
+      if (!isNaN(newInitiative)) {
+        await combatant.update({ initiative: newInitiative });
+      }
+    }, 1000);
+
     // Pass isCombatActive to the template context
     html.find(".combatant").each(function (index, element) {
-      console.log('element', element);
       const combatantId = $(element).data("combatant-id");
       const combatant = game.combat?.combatants.get(combatantId);
-      console.log('combatant-id', combatantId);
-      console.log('combatant', combatant);
+
       // Make initiative editable if combat is not active
-      if (isCombatActive) {
-
-      } else {
+      if (!isCombatActive) {
         $(element).find(".initiative").each(function () {
-          console.log('initiative element', this);
-
           // Listen for changes in the initiative input
-          $(this).on("input", async function (event, val) {
-            const newInitiative = parseInt($(this).val());
-            console.log('$(this)', $(this));
-            console.log('$(this).val()', $(this).val());
-            console.log('newInitiative', newInitiative);
-            if (!isNaN(newInitiative)) {
-              await combatant.update({ initiative: newInitiative });
-            }
+          $(this).on("input", function (event) {
+            updateDebounced(combatant, $(this).val());
           });
 
           $(this).on("dblclick", function (event) {
-            alert('dblclick');
-            event.stopPropagation(); // Prevents other listeners from being called
-            event.preventDefault(); // Prevents the default action
+            event.stopPropagation();
+            event.preventDefault();
           });
 
           $(this).on("contextmenu", function (event) {
-            alert('contextmenu');
-            event.stopPropagation(); // Prevent the click from bubbling up
-            event.preventDefault(); // Prevents the default action
+            event.stopPropagation();
+            event.preventDefault();
           });
 
           $(this).on("blur", async function () {
             const newInitiative = parseInt($(this).text(), 10);
             if (!isNaN(newInitiative)) {
-              await combatant.updateCombatant({ initiative: newInitiative });
+              await combatant.update({ initiative: newInitiative });
             }
           });
         });
       }
     });
-
   });
 });
 
