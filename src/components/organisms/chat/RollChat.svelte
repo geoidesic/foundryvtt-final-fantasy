@@ -7,9 +7,9 @@
   export let content;
 
   const message = getContext("message");
-
-  let actionResult = "";
   let showTraitButton = false;
+  let targets = [];
+  let totalRoll = 0;
 
   onMount(async () => {
     game.system.log.d("RollChat mounted", FFMessage);
@@ -19,39 +19,15 @@
       const item = FFMessage.item;
       const hasTargets = FFMessage.hasTargets;
       const modifier = FFMessage.extraModifiers?.modifier || 0;
-      const totalRoll = roll + modifier;
+      totalRoll = roll + modifier;
 
       // If we have targets, check their defense/magic defense
       if (hasTargets) {
-        const targets = Array.from(game.user.targets);
+        targets = Array.from(game.user.targets);
         let allTargetsHit = true;
-        let damageFormula = item.system?.formula || "0";
-        let directHitFormula = item.system?.directHitDamage || "0";
-
-        for (const target of targets) {
-          if (!target.actor?.system?.attributes?.secondary) continue;
-
-          const defense = target.actor.system.attributes.secondary.defence?.val || 0;
-          const magicDefense = target.actor.system.attributes.secondary.magicDefence?.val || 0;
-          const defenseToUse = Math.max(defense, magicDefense);
-
-          if (totalRoll >= defenseToUse) {
-            actionResult += `Hit ${target.name} (Defense: ${defenseToUse})<br>`;
-            actionResult += `Damage Formula: ${damageFormula}<br>`;
-            if (item.system?.hasDirectHit) {
-              actionResult += `Direct Hit Formula: ${directHitFormula}<br>`;
-            }
-          } else {
-            allTargetsHit = false;
-            actionResult += `Miss ${target.name} (Defense: ${defenseToUse})<br>`;
-            actionResult += `Damage Formula: ${damageFormula}<br>`;
-          }
-        }
 
         // Show trait button if all targets were hit
         showTraitButton = allTargetsHit && item.system?.enables?.list?.length > 0;
-      } else {
-        actionResult = "No targets selected. Select targets and roll again.";
       }
     }
   });
@@ -63,7 +39,6 @@
     if (!trait) return;
 
     // Apply trait to all targets
-    const targets = Array.from(game.user.targets);
     for (const target of targets) {
       if (target.actor) {
         await target.actor.createEmbeddedDocuments("Item", [trait]);
@@ -71,7 +46,17 @@
     }
 
     showTraitButton = false;
-    actionResult += `<br>Applied ${trait.name} to targets`;
+  }
+
+  function getDefenseValue(target) {
+    if (!target.actor?.system?.attributes?.secondary) return 0;
+    const defense = target.actor.system.attributes.secondary.defence?.val || 0;
+    const magicDefense = target.actor.system.attributes.secondary.magicDefence?.val || 0;
+    return Math.max(defense, magicDefense);
+  }
+
+  function isHit(target) {
+    return totalRoll >= getDefenseValue(target);
   }
 </script>
 
@@ -82,11 +67,34 @@
       img.actor-img(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}")
     .flex3.content
       div {@html content}
-  .flexrow
-    .flex4
-      +if("FFMessage?.item?.type === 'action'")
+  +if("FFMessage?.item?.type === 'action'")
+    .flexrow
+      .flex4
         .action-result
-          div {@html actionResult}
+          +if("targets.length === 0")
+            .no-targets No targets selected. Select targets and roll again.
+            +else
+              .target-list
+                +each("targets as target")
+                  .target-row.flexrow.gap-4
+                    .flex0.target-info
+                      img.target-img(src="{target.document?.texture?.src || target.actor?.img}" alt="{target.name}")
+                    .flex1
+                      .target-name {target.name}
+                    .flex1
+                      .flexcol
+                        .col.target-defense DEF {getDefenseValue(target)}
+                    
+                        .col.flexrow
+                          .flex2 {isHit(target) ? "Hit" : "Miss"}
+                          .flex1
+                            i.fa-solid(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                         
+                    .flex2
+                      +if("FFMessage.item.system?.formula")
+                        .flex1.formula Damage: {FFMessage.item.system.formula}
+                      +if("FFMessage.item.system?.hasDirectHit")
+                        .flex1.formula Direct Hit: {FFMessage.item.system.directHitDamage}
           +if("showTraitButton")
             button.apply-trait(on:click="{applyTrait}") Apply Trait
 
@@ -100,9 +108,63 @@
 
 .action-result
   margin-top: 0.5em
-  padding: 0.5em
   background: rgba(0, 0, 0, 0.05)
   border-radius: 3px
+
+.no-targets
+  color: #666
+  font-style: italic
+
+.target-list
+  display: flex
+  flex-direction: column
+  gap: 0.5em
+
+.target-row
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 0.3em
+  background: rgba(0, 0, 0, 0.03)
+  border-radius: 3px
+  border: 1px solid rgba(0, 0, 0, 0.1)
+
+.target-info
+  display: flex
+  align-items: center
+  gap: 0.5em
+  
+  .target-img
+    width: 36px
+    height: 36px
+    border: none
+  
+  .target-name
+    font-weight: bold
+  
+  .target-defense
+    color: #666
+    font-size: 0.9em
+
+.target-outcome
+  display: flex
+  align-items: center
+  gap: 0.5em
+  
+  .hit
+    color: #19762d
+    font-weight: bold
+  
+  .miss
+    color: #9c0f0f
+    font-weight: bold
+  
+  .formula
+    color: #666
+    font-size: 0.9em
+    &:before
+      content: "•"
+      margin: 0 0.3em
 
 .apply-trait
   margin-top: 0.5em
