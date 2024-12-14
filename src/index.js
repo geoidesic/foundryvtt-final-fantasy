@@ -185,9 +185,6 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
     return;
   }
 
-  // Wait a moment for the base combat tracker to finish its updates
-  await new Promise(resolve => setTimeout(resolve, 100));
-
   // Get and sort all combatants
   const turns = combat.turns;
 
@@ -211,7 +208,7 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
   const firstNPCIndex = turns.findIndex(t => t.actor?.type === "NPC");
 
   // Update the turn order in the combat document
-  await combat.update({ turn: 0, turns: turns });
+  await combat.update({ turns: turns });
 
   // Add visual grouping via CSS
   if (firstNPCIndex > 0 && firstNPCIndex < turns.length) {
@@ -237,7 +234,6 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
       } else if (index === firstNPCIndex - 1) {
         $element.addClass('pc-group-end');
       }
-
     });
   }
 
