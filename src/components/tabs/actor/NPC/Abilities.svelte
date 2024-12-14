@@ -15,7 +15,7 @@
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
   const typeSearch = createFilterQuery("type");
-  typeSearch.set(["trait", "action"]); // Updated to filter for both types
+  typeSearch.set(["trait", "action", "telegraph"]); // Updated to filter for both types
   const input = {
     store: typeSearch,
     efx: rippleFocus(),
@@ -75,7 +75,7 @@
       title: localize("FF15.Types.Actor.Abilities.confirmDeleteAllTitle"),
       content: localize("FF15.Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {  
-        await $Actor.deleteAllItems(["trait", "action"]);
+        await $Actor.deleteAllItems(["trait", "action", "telegraph"]);
       },
       no: () => {},
     });
