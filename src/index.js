@@ -16,6 +16,8 @@ import FFChat from "~/src/components/organisms/chat/FFChat.svelte";
 import FFTokenHUD from './extensions/token-hud.js'
 import FFCombatTracker from './extensions/combat-tracker.js'
 import { Timing } from "@typhonjs-fvtt/runtime/util";
+import FFCombat from './extensions/combat.js'
+import FFCombatant from './extensions/combatant.js'
 
 //- helpers
 function setupDSN() {
@@ -36,6 +38,9 @@ function setupDSN() {
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
 CONFIG.ui.combat = FFCombatTracker;
+CONFIG.Combat.documentClass = FFCombat
+CONFIG.Combatant.documentClass = FFCombatant
+
 
 //- Set initiative dice
 CONFIG.Combat.initiative = {
@@ -172,21 +177,9 @@ Hooks.on("renderCombatTracker", (app, html, data) => {
  * Handle combat tracker sorting and visual grouping
  */
 Hooks.on("updateCombatant", async (combatant, updateData) => {
-  game.system.log.d('updateCombatant: hook fired', { 
-    combatant: {
-      id: combatant.id,
-      name: combatant.name,
-      initiative: combatant.initiative,
-      isNPC: combatant.actor?.type === "NPC"
-    }, 
-    updateData 
-  });
+
   
-  // Only process if initiative was changed
-  if (updateData.initiative === undefined) {
-    game.system.log.d('updateCombatant: skipping - no initiative change');
-    return;
-  }
+
 
   const combat = combatant.parent;
   if (!combat) {
@@ -195,17 +188,11 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
   }
 
   // Wait a moment for the base combat tracker to finish its updates
-  game.system.log.d('updateCombatant: waiting for base combat tracker');
   await new Promise(resolve => setTimeout(resolve, 100));
 
   // Get and sort all combatants
   const turns = combat.turns;
-  game.system.log.d('updateCombatant: pre-sort turns', turns.map(t => ({
-    id: t.id,
-    name: t.name,
-    initiative: t.initiative,
-    isNPC: t.actor?.type === "NPC"
-  })));
+
 
   // Sort the turns array
   turns.sort((a, b) => {
@@ -221,25 +208,12 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
     return ib - ia;
   });
 
-  game.system.log.d('updateCombatant: post-sort turns', turns.map(t => ({
-    id: t.id,
-    name: t.name,
-    initiative: t.initiative,
-    isNPC: t.actor?.type === "NPC"
-  })));
 
   // Find the first NPC index
   const firstNPCIndex = turns.findIndex(t => t.actor?.type === "NPC");
-  game.system.log.d('updateCombatant: first NPC index', { 
-    index: firstNPCIndex,
-    totalTurns: turns.length,
-    willApplyCSS: firstNPCIndex > 0 && firstNPCIndex < turns.length
-  });
 
   // Update the turn order in the combat document
-  game.system.log.d('updateCombatant: updating combat document');
   await combat.update({ turn: 0, turns: turns });
-  game.system.log.d('updateCombatant: combat document updated');
 
   // Add visual grouping via CSS
   if (firstNPCIndex > 0 && firstNPCIndex < turns.length) {
@@ -250,19 +224,11 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
     }
 
     const combatants = tracker.element.find('.combatant');
-    game.system.log.d('updateCombatant: found DOM elements', { 
-      expectedElements: turns.length,
-      foundElements: combatants.length 
-    });
 
     combatants.each((index, element) => {
       const $element = $(element);
       const currentClasses = $element.attr('class');
-      game.system.log.d(`updateCombatant: processing element ${index}`, {
-        currentClasses,
-        isNPCStart: index === firstNPCIndex,
-        isPCEnd: index === firstNPCIndex - 1
-      });
+
 
       // Remove existing border classes
       $element.removeClass('npc-group-start pc-group-end');
@@ -274,13 +240,9 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
         $element.addClass('pc-group-end');
       }
 
-      game.system.log.d(`updateCombatant: element ${index} final classes`, {
-        finalClasses: $element.attr('class')
-      });
     });
   }
 
-  game.system.log.d('updateCombatant: hook complete');
 });
 
 
