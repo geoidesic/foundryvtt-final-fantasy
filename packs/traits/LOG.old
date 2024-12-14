@@ -1,3 +1,21 @@
-2024/12/14-16:10:15.799577 17368f000 Recovering log #83
-2024/12/14-16:10:15.800228 17368f000 Delete type=3 #82
-2024/12/14-16:10:15.800336 17368f000 Delete type=0 #83
+2024/12/14-16:40:07.720409 1735eb000 Recovering log #85
+2024/12/14-16:40:07.720818 1735eb000 Delete type=3 #84
+2024/12/14-16:40:07.720868 1735eb000 Delete type=0 #85
+2024/12/14-17:33:52.973008 17468f000 Level-0 table #89: started
+2024/12/14-17:33:52.973050 17468f000 Level-0 table #89: 0 bytes OK
+2024/12/14-17:33:52.973794 17468f000 Delete type=0 #87
+2024/12/14-17:33:52.975958 17468f000 Manual compaction at level-0 from '!items!0tX24ufqPUgFVKMc' @ 72057594037927935 : 1 .. '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC' @ 0 : 0; will stop at '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC' @ 17 : 1
+2024/12/14-17:33:52.975977 17468f000 Compacting 1@0 + 0@1 files
+2024/12/14-17:33:52.976612 17468f000 Generated table #90@0: 24 keys, 6690 bytes
+2024/12/14-17:33:52.976629 17468f000 Compacted 1@0 + 0@1 files => 6690 bytes
+2024/12/14-17:33:52.976744 17468f000 compacted to: files[ 0 1 1 0 0 0 0 ]
+2024/12/14-17:33:52.976816 17468f000 Delete type=2 #73
+2024/12/14-17:33:52.979163 17468f000 Manual compaction at level-0 from '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC' @ 17 : 1 .. '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC' @ 0 : 0; will stop at (end)
+2024/12/14-17:33:52.980693 17468f000 Manual compaction at level-1 from '!items!0tX24ufqPUgFVKMc' @ 72057594037927935 : 1 .. '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC' @ 0 : 0; will stop at '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC' @ 17 : 1
+2024/12/14-17:33:52.980708 17468f000 Compacting 1@1 + 1@2 files
+2024/12/14-17:33:52.981491 17468f000 Generated table #91@1: 20 keys, 6612 bytes
+2024/12/14-17:33:52.981517 17468f000 Compacted 1@1 + 1@2 files => 6612 bytes
+2024/12/14-17:33:52.982165 17468f000 compacted to: files[ 0 0 1 0 0 0 0 ]
+2024/12/14-17:33:52.982286 17468f000 Delete type=2 #9
+2024/12/14-17:33:52.982449 17468f000 Delete type=2 #90
+2024/12/14-17:33:52.988612 17468f000 Manual compaction at level-1 from '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC' @ 17 : 1 .. '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC' @ 0 : 0; will stop at (end)
