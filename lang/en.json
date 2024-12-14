@@ -10,7 +10,8 @@
       "job": "Job",
       "trait": "Trait",
       "effect": "Effect",
-      "limitbreak": "Limit Break"
+      "limitbreak": "Limit Break",
+      "telegraph": "Telegraph"
     }
   },
   "FF15": {
