@@ -43,7 +43,7 @@
           const targetUuids = targets.map((t) => t.document.uuid);
 
           // Update the message with target UUIDs
-          await $message.update({
+          await $message?.update({
             flags: {
               [SYSTEM_ID]: {
                 targetUuids,
@@ -62,27 +62,36 @@
     if (!target.actor || target.isUnlinked || !isHit(target)) return;
 
     const item = FFMessage.item;
+    const modifier = FFMessage.extraModifiers?.modifier || 0;
     let totalDamage = 0;
     const results = { damage: 0, directHit: 0 };
 
     // Calculate base damage
     if (item.system?.formula) {
-      if (item.system.formula.includes('d')) {
-        const damageRoll = await new Roll(item.system.formula).evaluate({async: true});
+      const formula = item.system.formula.includes('d') 
+        ? `${item.system.formula} + ${modifier}`  // Add modifier to dice rolls
+        : `${parseInt(item.system.formula) + modifier}`; // Add modifier to static values
+      
+      if (formula.includes('d')) {
+        const damageRoll = await new Roll(formula).evaluate({async: true});
         results.damage = damageRoll.total;
       } else {
-        results.damage = parseInt(item.system.formula) || 0;
+        results.damage = parseInt(formula) || 0;
       }
       totalDamage += results.damage;
     }
 
     // Calculate direct hit damage if applicable
     if (item.system?.hasDirectHit && item.system?.directHitDamage) {
-      if (item.system.directHitDamage.includes('d')) {
-        const directHitRoll = await new Roll(item.system.directHitDamage).evaluate({async: true});
+      const directHitFormula = item.system.directHitDamage.includes('d')
+        ? `${item.system.directHitDamage} + ${modifier}`  // Add modifier to dice rolls
+        : `${parseInt(item.system.directHitDamage) + modifier}`; // Add modifier to static values
+
+      if (directHitFormula.includes('d')) {
+        const directHitRoll = await new Roll(directHitFormula).evaluate({async: true});
         results.directHit = directHitRoll.total;
       } else {
-        results.directHit = parseInt(item.system.directHitDamage) || 0;
+        results.directHit = parseInt(directHitFormula) || 0;
       }
       totalDamage += results.directHit;
     }
@@ -97,7 +106,8 @@
     damageResults.set(target.id, {
       damage: results.damage,
       directHit: results.directHit,
-      originalHP: currentHP
+      originalHP: currentHP,
+      modifier
     });
 
     // Update message flags
@@ -170,10 +180,10 @@
   }
 
   function getDefenseValue(target) {
-    game.system.log.d("Getting defense for target", target);
-    game.system.log.d("Target actor", target.actor);
-    game.system.log.d("Target actor system", target.actor?.system);
-    game.system.log.d("Target actor attributes", target.actor?.system?.attributes);
+    // game.system.log.d("Getting defense for target", target);
+    // game.system.log.d("Target actor", target.actor);
+    // game.system.log.d("Target actor system", target.actor?.system);
+    // game.system.log.d("Target actor attributes", target.actor?.system?.attributes);
     
     if (target.isUnlinked || !target.actor?.system?.attributes) return 0;
     
@@ -187,7 +197,7 @@
     // For PCs, defense is in secondary attributes
     const defense = target.actor.system.attributes.secondary?.def?.val || 0;
     const magicDefense = target.actor.system.attributes.secondary?.mag?.val || 0;
-    game.system.log.d("PC defense values", { defense, magicDefense });
+    // game.system.log.d("PC defense values", { defense, magicDefense });
     return Math.max(defense, magicDefense);
   }
 

@@ -51,8 +51,23 @@ export default class RollCalcActor extends RollCalc {
     const targets = game.user.targets;
     const hasTargets = targets.size > 0;
 
-    // Roll d20 + Ability Modifier
-    const roll = await new Roll("1d20").evaluate({async: true});
+    // Build roll formula and data
+    let rollFormula = `1d20 + ${extraModifiers.modifier} `;
+    const rollData = {};
+
+    // Add attribute check if specified
+    if(item.system.hasCheck) {
+      game.system.log.d('check', item.system.checkAttribute);
+      const attrVal = this.params.actor.system.attributes.primary[item.system.checkAttribute]?.val || 0;
+      rollData[item.system.checkAttribute] = attrVal;
+      rollFormula += ` + @${item.system.checkAttribute}`;
+    }
+
+    game.system.log.d('rollFormula', rollFormula);
+    game.system.log.d('rollData', rollData);
+    
+    // Evaluate roll with actor data
+    const roll = await new Roll(rollFormula, rollData).evaluate({async: true});
     
     // Create chat message data
     const messageData = {
