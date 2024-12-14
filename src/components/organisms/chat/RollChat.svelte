@@ -77,24 +77,33 @@
               .target-list
                 +each("targets as target")
                   .target-row.flexrow.gap-4
-                    .flex0.target-info
-                      img.target-img(src="{target.document?.texture?.src || target.actor?.img}" alt="{target.name}")
-                    .flex1
-                      .target-name {target.name}
-                    .flex1
+                    .flex2
+                      .flexrow.justify-vertical.gap-4
+                      
+                        .flex0.target-info
+                          img.target-img(src="{target.document?.texture?.src || target.actor?.img}" alt="{target.name}")
+                        .flex1
+                          .target-name {target.name}
+                    .flex1.thin-border
                       .flexcol
-                        .col.target-defense DEF {getDefenseValue(target)}
+                        .col.target-defense.flexrow.justify-vertical
+                          .flex1.left.font-cinzel.smallest DEF 
+                          .flex1.right.pr-smd {getDefenseValue(target)}
                     
-                        .col.flexrow
-                          .flex2 {isHit(target) ? "Hit" : "Miss"}
+                        .col.flexrow.justify-vertical
+                          .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
                           .flex1
                             i.fa-solid(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                          
-                    .flex2
+                    .flex2.thin-border
                       +if("FFMessage.item.system?.formula")
-                        .flex1.formula Damage: {FFMessage.item.system.formula}
+                        .flex1.formula.flexrow.justify-vertical
+                          .flex3.left.font-cinzel.smallest Damage 
+                          .flex1.right {FFMessage.item.system.formula}
                       +if("FFMessage.item.system?.hasDirectHit")
-                        .flex1.formula Direct Hit: {FFMessage.item.system.directHitDamage}
+                        .flex1.formula.flexrow.justify-vertical
+                          .flex3.left.font-cinzel.smallest Direct Hit 
+                          .flex1.right {FFMessage.item.system.directHitDamage}
           +if("showTraitButton")
             button.apply-trait(on:click="{applyTrait}") Apply Trait
 
