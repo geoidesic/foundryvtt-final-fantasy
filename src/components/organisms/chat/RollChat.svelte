@@ -98,7 +98,7 @@
                           .flex1
                             i.fa-solid(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                          
-                    .flex2.thin-border
+                    .flex2.thin-border.bg-gold.wheat
                       +if("FFMessage.item.system?.formula")
                         .flex1.formula.flexrow.justify-vertical
                           .flex3.left.font-cinzel.smallest Damage 
