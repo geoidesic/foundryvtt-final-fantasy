@@ -248,7 +248,8 @@
           tr
             th.img.shrink(scope="col")
             th.left.expand.ml-sm(scope="col") Name
-            th.fixed(scope="col") Type
+            th.left(scope="col") Item Type
+            th.left(scope="col") Action Type
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
@@ -258,10 +259,11 @@
             //- pre item.type {item.type}
             tr
               td.img
-                img.icon(src="{item.img}" alt="{item.name}" on:click!="{executeAction(item)}" style="cursor: pointer;")
+                img.icon(src="{item.img}" alt="{item.name}" on:click!="{() => executeAction(item)}" style="cursor: pointer;")
               td.left
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-              td {ucfirst(item.type)}
+              td.left {ucfirst(item.type)}
+              td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
               td
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
