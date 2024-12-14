@@ -1,4 +1,4 @@
-import ActorSheetShell from "./ActorSheetShell.svelte";
+import PCSheetShell from "./PCSheetShell.svelte";
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import { localize } from "#runtime/svelte/helper";
@@ -25,7 +25,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
       headerButtonNoLabel: game.settings.get(SYSTEM_ID, 'applicationWindowHeaderIconsOnly') || false, //- @why: without this the initial value on first load of this app after a page refresh will be wrong, despite a reactive setting in the .svelte template; I don't really know why
       dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],
       svelte: {
-        class: ActorSheetShell,
+        class: PCSheetShell,
         target: document.body,
       },
     });
