@@ -8,10 +8,10 @@
   const actor = getContext("#doc");
 
   //- truncate everything after and including the first space
-  $: jobName = $actor.system.job.name.split(' ')[0].toUpperCase();
-  $: roleName = $actor.system.job.role.toUpperCase();
+  $: jobName = $actor.system.job?.name.split(' ')[0].toUpperCase();
+  $: roleName = $actor.system.job?.role.toUpperCase();
   $: level = $actor.system.job?.level || ''
-  $: hasJob = $actor.system.job.name ? true : false;
+  $: hasJob = $actor.system.job?.name ? true : false;
 
   onMount(() => {
     // console.log('TitleBlock mounted');
