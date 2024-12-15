@@ -81,12 +81,14 @@
     game.system.log.d("roll");
     game.system.log.d(item);
   }
+
   function useItem(item) {
-    const result = new RollCalcActor({ actorUuid: $Actor.uuid, itemUuid: item.uuid, rollType: "equipment" }).send();
+    const result = new RollCalcActor().equipment({ actor: $Actor, item: item, rollType: "equipment" });
 
     game.system.log.d("useItem");
     game.system.log.d(item);
   }
+  
   function toggleLock(event) {
     game.system.log.d("a");
     event.stopPropagation();
@@ -143,7 +145,7 @@
             //- pre item.type {item.type}
             tr
               td.img
-                img.icon(src="{item.img}" alt="{item.name}")
+                img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
               td.left
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
               td 

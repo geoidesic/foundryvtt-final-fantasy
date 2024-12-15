@@ -103,7 +103,7 @@ export default class RollCalc {
       flags: { [SYSTEM_ID]: { data } },
       // content: `Rolling 1d20+5: ${data.roll.result}`, // Customize the standard message content (text only)
       // rolls: [data.roll], //- makes it a standard roll chat
-      rollMode: "roll" //- makes it a public roll
+      // rollMode: "roll" //- makes it a public roll
     });
     // AudioHelper.play({ src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false });
     this.playMessageSound();

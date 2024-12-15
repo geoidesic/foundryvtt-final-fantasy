@@ -26,7 +26,7 @@
       flags: {
         [SYSTEM_ID]: {
           data: {
-            chatTemplate: "RollChat",
+            chatTemplate: "AttributeRollChat",
             actor: {
               _id: $actor._id,
               name: $actor.name,

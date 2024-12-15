@@ -3,13 +3,20 @@ import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "./constants.js"
 
 export default class RollCalcActor extends RollCalc {
+  
   async equipment(params) {
+    
+    ChatMessage.create({
+      user: game.user.id,
+      flags: { [SYSTEM_ID]: { data: {...params, chatTemplate: 'EquipmentChat'} } }
+    })
+    return;
+
     const message = await this.defaultItem(params);
 
     game.system.log.d('equipment params', params);
     message.rollType = params.rollType;
     message.chatTemplate = 'EquipmentChat';
-    message.title = 'Use';
 
     return message;
   }
@@ -79,7 +86,7 @@ export default class RollCalcActor extends RollCalc {
       flags: {
         [SYSTEM_ID]: {
           data: {
-            chatTemplate: "RollChat",
+            chatTemplate: "ActionRollChat",
             actor: {
               _id: this.params.actor._id,
               uuid: this.params.actor.uuid,
@@ -107,7 +114,7 @@ export default class RollCalcActor extends RollCalc {
             damageResults: false,
             initialised: false
           },
-          // css: 'leather'
+          css: 'leather'
         }
       }
     };

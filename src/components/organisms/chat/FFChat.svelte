@@ -14,13 +14,11 @@
   let message = new TJSDocument(void 0);
   let messageColor;
   let messageContrast;
-  let foundryChatMessageDocument = new TJSDocument(void 0);
 
   onMount(async () => {
     game.system.log.i("race ---- START FFChat mount----");
     const sourceActor = game.actors.get(FFMessage.actor._id);
     actor.set(sourceActor);
-    foundryChatMessageDocument.set(game.messages.get(messageId));
     message.set(game.messages.get(messageId));
     game.system.log.d("race FFChat messageId", messageId)
     game.system.log.d("race FFChat message", message)
@@ -40,7 +38,6 @@
   <svelte:component
     this={ChatComponents[FFMessage.chatTemplate]}
     {...$$props}
-    foundryChatMessageDocument={foundryChatMessageDocument}
     --message-color={messageColor}
     --message-contrast={messageContrast}
   />
