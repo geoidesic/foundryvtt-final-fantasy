@@ -132,21 +132,21 @@
       img.icon.right(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
     .flexrow.justify-vertical.mt-sm
       .flex4.buttons
-        button.short.wide.stealth.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
+        button.short.wide.stealth.gold.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
           .flex3.pa-sm {window.game.i18n.format(`FF15.Chat.Buttons.${applied ? 'AppliedTo' : 'ApplyItemToTarget'}`, [FFMessage.item.name, FFMessage.actor.name])}
           .flex0
-            i.fa.fa-crosshairs.mr-sm.right.mt-sm
+            i.fa.fa-crosshairs.mr-sm.right.mt-sm.gold
 
 </template>
 
 <style lang="sass">
   @import '../../../styles/Mixins.sass'
-
+  
   .chat
     +buttons
     .title
       border-radius: var(--border-radius)
       color: white
       
-      +texture-background(rgba(144, 29, 20, 0.7), 0.1, 80%)
+      +texture-background(rgb(76 47 76 / 70%), 0.1, 80%)
 </style>

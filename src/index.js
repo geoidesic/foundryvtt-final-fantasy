@@ -1,7 +1,7 @@
 import './styles/Main.sass';
 
 import { log } from "~/src/helpers/util"
-import { SYSTEM_ID } from "~/src/helpers/constants"
+import { SYSTEM_ID, SYSTEM_CODE} from "~/src/helpers/constants"
 import { setupModels } from './config/models';
 import { registerSettings } from "~/src/settings"
 import { mappedGameTargets } from '~/src/stores';
@@ -268,7 +268,13 @@ Hooks.on('renderChatMessage', (message, html) => {
   
   if (typeof FFMessage === 'object') {
     const originalContent = html[0].innerHTML;
-    html[0].innerHTML = '';
+
+    if(FFMessage.chatTemplate !== 'EquipmentChat') {
+      html[0].innerHTML = '';
+    }
+    html.addClass(SYSTEM_CODE);
+    html.addClass('leather');
+
     
     game.system.log.d("race creating new FFChat instance", {
       messageId: message.id,
