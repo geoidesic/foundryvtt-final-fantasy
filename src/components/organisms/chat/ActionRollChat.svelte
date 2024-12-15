@@ -272,9 +272,9 @@
 <template lang="pug">
 .FF15.leather
   
-  button.stealth.apply-trait(on:click="{log}")
-    i.fa-solid.fa-bug
-  .flexrow
+  //- button.stealth.apply-trait(on:click="{log}")
+  //-   i.fa-solid.fa-bug
+  .flexrow.gap-4.justify-vertical
     .flex0.portrait-frame.pr-xs.wide
       PortraitFrame.narrow.frame
         img.actor-img.clickable(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
@@ -409,4 +409,12 @@ button:disabled
 
 .leatherbook
   +background(rgb(98 49 50), 0.05, none )
+
+.portrait-frame
+  // margin-right: 5px
+  & + .content
+    display: flex
+    flex-direction: column
+    gap: 5px
+
 </style>
