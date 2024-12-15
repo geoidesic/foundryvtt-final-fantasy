@@ -1,4 +1,5 @@
 import RollCalc from "./RollCalc.js"
+import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "./constants.js"
 export default class RollCalcActor extends RollCalc {
 
@@ -71,6 +72,7 @@ export default class RollCalcActor extends RollCalc {
     
     // Create chat message data
     const messageData = {
+      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
       speaker: ChatMessage.getSpeaker({ actor: this.params.actor }),
       flavor: `${item.name}`,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
