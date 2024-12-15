@@ -86,12 +86,7 @@
     game.system.log.d("roll");
     game.system.log.d(item);
   }
-  function useItem(item) {
-    const result = new RollCalcActor({ actor: $Actor, item: item, rollType: "equipment" }).send();
 
-    game.system.log.d("useItem");
-    game.system.log.d(item);
-  }
   function toggleLock(event) {
     game.system.log.d("a");
     event.stopPropagation();

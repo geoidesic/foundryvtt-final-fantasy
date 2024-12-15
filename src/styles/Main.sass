@@ -254,15 +254,16 @@
     color: var(--color-highlight)
   .gold-light
     color: var(--color-highlight-light)
+  
 
   .border-gold
     border: 2px groove var(--color-highlight) !important
   .bg-gold
     background-color: var(--color-highlight) !important
-
   .wheat
     color: wheat
-
+  .offwhite
+    color: #fffad8
   input[type="text"]
     all: unset
     width: 100%
@@ -610,3 +611,28 @@
     color: var(--color-text-light)
     background: rgba(144, 29, 20, 0.7)
     padding: 0 0.3rem
+
+.chat-message.message .FF15.leather, .chat-message.message.leather
+  background: var(--color-lowlight)
+  color: white
+  .content
+    padding: 5px 2px 3px 2px
+    .message-header
+      line-height: 20px
+      color: var(--color-text-light)
+      background: rgba(144, 29, 20, 0.7)
+      padding: 0 0.3rem
+      border: 1px ouset var(--color-lowlight)
+      border-radius: var(--border-radius)
+      margin: 0 0 4px 0
+
+
+  .message-content
+    .dice-roll
+      .dice-result
+        .dice-formula
+        .dice-total
+          font-weight: bold
+          color: white
+          background: var(--color-highlight)
+          border: 2px ridge var(--color-highlight)

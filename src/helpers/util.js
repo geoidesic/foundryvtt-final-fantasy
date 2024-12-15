@@ -1,4 +1,4 @@
-import { LOG_PREFIX } from './constants';
+import { LOG_PREFIX, LOG_STYLES, LOG_PREFIX_COLOR } from './constants';
 
 export const log = {
   ASSERT: 1, ERROR: 2, WARN: 3, INFO: 4, DEBUG: 5, VERBOSE: 6,
@@ -9,11 +9,18 @@ export const log = {
     this.i = (level >= this.INFO) ? console.info.bind(window.console, LOG_PREFIX) : () => { };
     this.d = (level >= this.DEBUG) ? console.debug.bind(window.console, LOG_PREFIX) : () => { };
     this.v = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX) : () => { };
+
+    // Colorized log methods
+    this.p = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.p) : () => { };
+    this.g = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.g) : () => { };
+    this.r = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.r) : () => { };
+    this.o = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.o) : () => { };
+    this.b = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.b) : () => { };
+
     this.loggingLevel = level;
   },
   get level() { return this.loggingLevel; }
 };
-
 
 export async function toggleBookmark(item, callback = () => { }) {
   await item.update({ ["system.favourite"]: !item.system.favourite });

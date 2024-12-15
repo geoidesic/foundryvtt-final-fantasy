@@ -1,9 +1,8 @@
 import RollCalc from "./RollCalc.js"
 import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "./constants.js"
+
 export default class RollCalcActor extends RollCalc {
-
-
   async equipment(params) {
     const message = await this.defaultItem(params);
 
@@ -13,17 +12,15 @@ export default class RollCalcActor extends RollCalc {
     message.title = 'Use';
 
     return message;
-   
   }
 
   async defaultItem(params) {
-    const item = params.item
-    const actor = params?.actor
-    const { roll, die, error } = await this.roll(6, 1)
+    const item = params.item;
+    const actor = params?.actor;
+    const { roll, die, error } = await this.roll(6, 1);
     if (error) return false;
     return { item, actor, roll, die, formula: '' };
   }
-
 
   async executeAction(item) {
     if (item.type !== "action") return;
@@ -50,6 +47,7 @@ export default class RollCalcActor extends RollCalc {
 
     // Check if we have targeted entities
     const targets = game.user.targets;
+    game.system.log.d("race targets", targets);
     const hasTargets = targets.size > 0;
 
     // Build roll formula and data
@@ -57,7 +55,7 @@ export default class RollCalcActor extends RollCalc {
     const rollData = {};
 
     // Add attribute check if specified
-    if(item.system.hasCheck) {
+    if (item.system.hasCheck) {
       game.system.log.d('check', item.system.checkAttribute);
       const attrVal = this.params.actor.system.attributes.primary[item.system.checkAttribute]?.val || 0;
       rollData[item.system.checkAttribute] = attrVal;
@@ -76,6 +74,7 @@ export default class RollCalcActor extends RollCalc {
       speaker: ChatMessage.getSpeaker({ actor: this.params.actor }),
       flavor: `${item.name}`,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      classes: ['testy', 'leather'],
       roll,
       flags: {
         [SYSTEM_ID]: {
@@ -83,20 +82,32 @@ export default class RollCalcActor extends RollCalc {
             chatTemplate: "RollChat",
             actor: {
               _id: this.params.actor._id,
+              uuid: this.params.actor.uuid,
               name: this.params.actor.name,
               img: this.params.actor.img
             },
             item: {
               _id: item._id,
+              uuid: item.uuid,
               name: item.name,
               img: item.img,
               type: item.type,
-              system: item.system
+              system: {
+                formula: item.system?.formula,
+                directHitDamage: item.system?.directHitDamage,
+                hasDirectHit: item.system?.hasDirectHit
+              }
             },
             hasTargets,
             roll: roll.total,
-            extraModifiers
-          }
+            extraModifiers,
+            targets: Array.from(targets).map((target) => target.id)
+          },
+          state: {
+            damageResults: false,
+            initialised: false
+          },
+          // css: 'leather'
         }
       }
     };

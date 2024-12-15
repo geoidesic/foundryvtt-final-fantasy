@@ -12,13 +12,13 @@
   box-shadow: $shadow
   // background: green
 
-=background($color: rgb(154 48 53), $opacity: 0.05)
+=background($color: rgb(154 48 53), $opacity: 0.05, $border: 4px ridge var(--ff-border-color))
   .background
     width: 100%
     background-color: $color
     position: relative
     overflow: hidden
-    border: 4px ridge var(--ff-border-color)
+    border: $border
 
     .texture
       position: absolute

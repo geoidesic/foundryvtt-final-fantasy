@@ -2,8 +2,15 @@
 export const SYSTEM_ID = 'foundryvtt-final-fantasy';
 export const SYSTEM_CODE = 'FF15';
 export const LOG_PREFIX = `${SYSTEM_CODE} |`;
+export const LOG_PREFIX_COLOR = `%c[${SYSTEM_CODE}] |`;
 export const ASSET_PATH = `systems/${SYSTEM_ID}/assets`;
-
+export const LOG_STYLES = {
+  p: 'color: purple;',
+  g: 'color: green;',
+  r: 'color: red;',
+  o: 'color: orange;',
+  b: 'color: blue;'
+};
 export const getTypeOptions = () => [
   { value: "primary", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.primary") },
   { value: "secondary", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.secondary") },

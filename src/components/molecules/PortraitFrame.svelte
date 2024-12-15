@@ -30,12 +30,12 @@ onMount(() => {
   .frame
     position: relative
     display: flex
-    min-width: 100px
-    min-height: 100px
     border: 3px solid var(--ff-border-color) // Matching CSS border
-    
     border-radius: 17px
     padding: 0px // Adjust based on SVG size
+    :not(.narrow)
+      min-width: 100px
+      min-height: 100px
 
 
   :global(.corner)

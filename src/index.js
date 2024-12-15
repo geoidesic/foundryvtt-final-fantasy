@@ -54,7 +54,7 @@ CONFIG.Combat.initiative = {
 Hooks.once("init", async (a, b, c) => {
 
   game.system.log = log;
-  log.level = log.DEBUG;
+  log.level = log.VERBOSE;
   game.system.log.i(`Starting System ${SYSTEM_ID}`);
 
   // CONFIG.debug.hooks = true;
@@ -256,11 +256,15 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
  */
 Hooks.on('renderChatMessage', (message, html) => {
   const FFMessage = message.getFlag(SYSTEM_ID, 'data');
-  game.system.log.d("race renderChatMessage hook triggered", {
+  const FFMessageState = message.getFlag(SYSTEM_ID, 'state');
+  game.system.log.p(">>>>>> race renderChatMessage HOOK TRIGGERED <<<<<<", {
     messageId: message.id,
     hasFFMessage: !!FFMessage,
     flags: message.flags[SYSTEM_ID]
   });
+  if (message.flags[SYSTEM_ID]?.css) {
+    html.addClass(message.flags[SYSTEM_ID].css);
+  }
   
   if (typeof FFMessage === 'object') {
     const originalContent = html[0].innerHTML;
@@ -274,7 +278,9 @@ Hooks.on('renderChatMessage', (message, html) => {
     message._svelteComponent = new FFChat({
       target: html[0],
       props: {
+        classes: 'leather',
         FFMessage,
+        FFMessageState,
         messageId: message._id,
         content: originalContent
       }

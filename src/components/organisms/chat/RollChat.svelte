@@ -1,35 +1,67 @@
 <script>
+  game.system.log.d("race ---- START RollChat ----");
   import { onMount, getContext, tick } from "svelte";
   import { writable, derived } from "svelte/store";
   import { SYSTEM_ID } from "~/src/helpers/constants";
+  import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
 
-  export let FFMessage;
-  export let messageId;
-  export let content;
+  export let FFMessage
+  export let FFMessageState
+  export let messageId
+  export let content
 
+  const item = fromUuidSync(FFMessage.item.uuid);
+  game.system.log.d("race RollChat item", item);
 
   const message = getContext("message");
+
+  game.system.log.d("race RollChat message", message);
   let showTraitButton = false;
-  let targets = [];
   let totalRoll = 0;
   let isMounted = false;
-
-  // Create stores
-  const damageResults = writable(new Map());
-  const appliedDamageByTarget = writable(new Map());
-  const displayValues = writable(new Map());
-
-  // Derived store for button states
-  const hasAppliedDamage = derived(appliedDamageByTarget, ($appliedDamageByTarget) => {
-    return new Map(targets.map((target) => [target.id, $appliedDamageByTarget.has(target.id)]));
-  });
+  let targetTokens = [];
 
   $: actor = game.actors.get(FFMessage?.actor?._id);
+  $: isApplyDisabled = (target)  => target.isUnlinked || FFMessageState.damageResults[target.id]?.applied;
+  $: displayDamage = (target)  => FFMessageState.damageResults[target.id]?.damage;
+  $: displayDirectHitDamage = (target)  =>
+    isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit;
+  // $: displayVal = (target, type) =>  $displayValues.get(target.id)?.[type] || "";
+  $: console.log("FFMessageState.damageResults", FFMessageState.damageResults);
 
-  $: isApplyDisabled = (target) => target.isUnlinked || $hasAppliedDamage.get(target.id);
-  $: displayVal = (target, type) =>  $displayValues.get(target.id)?.[type] || "";
+  function getInitialDamageResults(passedTargets) {
+    game.system.log.d("race setInitialDamageResults passedTargets", passedTargets);
+    const initialDamageResults = new Map();
+    for (const id of passedTargets) {
+      let token = canvas.tokens.get(id);
+      initialDamageResults.set(id, {
+        damage: item.system?.formula,
+        directHit: item.system?.directHitDamage,
+        directHitResult: false,
+        applied: false,
+        originalHP: token.actor.system.points.HP.val,
+        wasKOd: false,
+      });
+    }
+    return initialDamageResults;
+  }
+
+  function getTargetTokens(targets) {
+    return targets.map((id) => canvas.tokens.get(id));
+  }
+
+  function setTargetTokens(targets) {
+    targetTokens = getTargetTokens(targets);
+  }
 
   async function initializeStores() {
+    if(FFMessageState.initialised) {
+      setTargetTokens(FFMessage.targets);
+      game.system.log.d("race ---- ALREADY INITIALIZED ABORTING INITIALIZE ----");
+      return;
+    }
+    game.system.log.d("race ---- START INITIALIZE ----");
+
     if (FFMessage?.item?.type === "action") {
       const roll = FFMessage.roll;
       const item = FFMessage.item;
@@ -39,42 +71,39 @@
 
       // If we have targets, either load from flags or current targets
       if (hasTargets) {
-        const storedTargetUuids = $message?.flags?.[SYSTEM_ID]?.targetUuids || [];
-        const storedDamageResults = $message?.flags?.[SYSTEM_ID]?.damageResults || {};
-        const storedAppliedDamage = $message?.flags?.[SYSTEM_ID]?.appliedDamageByTarget || {};
-        const storedDisplayValues = $message?.flags?.[SYSTEM_ID]?.displayValues || {};
+        game.system.log.d("race hasTargets", hasTargets);
 
-        if (storedTargetUuids.length > 0) {
+        let storedDamageResults = FFMessageState.damageResults;
+
+        if (FFMessage.targets.length > 0) {
+          game.system.log.d("race FFMessage.targets", FFMessage.targets);
           // Load targets from stored UUIDs
-          targets = await Promise.all(
-            storedTargetUuids.map(async (uuid) => {
-              const token = await fromUuid(uuid);
-              return token || { isUnlinked: true, name: "Unlinked Token" };
-            }),
-          );
-          // Load stored values
-          damageResults.set(new Map(Object.entries(storedDamageResults)));
-          appliedDamageByTarget.set(new Map(Object.entries(storedAppliedDamage)));
-          displayValues.set(new Map(Object.entries(storedDisplayValues)));
-        } else {
-          // Initialize display values for each target
-          const initialDisplayValues = new Map();
-          targets = Array.from(game.user.targets);
-          targets.forEach((target) => {
-            initialDisplayValues.set(target.id, {
-              damage: FFMessage.item.system?.formula,
-              directHit: FFMessage.item.system?.directHitDamage,
-            });
-          });
-          displayValues.set(initialDisplayValues);
-
-          // Store current targets
-          const targetUuids = targets.map((t) => t.document.uuid);
-          await $message?.update({
+          game.system.log.d("race storedDamageResults", storedDamageResults);
+          if (!storedDamageResults) {
+            storedDamageResults = getInitialDamageResults(FFMessage.targets);
+          }
+          
+          targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id));
+          $message.update({
             flags: {
               [SYSTEM_ID]: {
-                targetUuids,
-                displayValues: Object.fromEntries($displayValues),
+                state: {
+                  damageResults: Object.fromEntries(storedDamageResults),
+                  initialised: true
+                }
+              },
+            },
+          });
+        } else {
+          game.system.log.d("race FFMessage.targets", FFMessage.targets);
+          
+          // Store current targets 
+          $message.update({
+            flags: {
+              [SYSTEM_ID]: {
+                state: {
+                  damageResults: getInitialDamageResults(FFMessage.targets)
+                }
               },
             },
           });
@@ -84,10 +113,11 @@
   }
 
   onMount(async () => {
-    game.system.log.d("RollChat isMounted", isMounted);
+    game.system.log.d("race RollChat isMounted", isMounted);
     if (!isMounted) {
-      game.system.log.d("RollChat mounted", FFMessage);
+      game.system.log.d("race RollChat mounted", FFMessage);
       await initializeStores();
+      game.system.log.d("race INITIIALIZED damageResults", FFMessageState.damageResults);
       isMounted = true;
     }
   });
@@ -100,7 +130,6 @@
 
     game.system.log.d("race ---- START APPLY ----");
 
-    const item = FFMessage.item;
     const modifier = FFMessage.extraModifiers?.modifier || 0;
     let totalDamage = 0;
     const results = { damage: 0, directHit: 0 };
@@ -110,50 +139,17 @@
       results.damage = parseInt(item.system.formula) || 0;
       totalDamage = results.damage;
     }
-    // game.system.log.d("rollchat base damage", { results, totalDamage });
 
     // Calculate direct hit damage if applicable - only if it's a hit
     if (isHit(target) && item.system?.hasDirectHit && item.system?.directHitDamage) {
       const directHitRoll = await new Roll(item.system.directHitDamage).evaluate({ async: true });
-      results.directHit = directHitRoll.total;
-      totalDamage += results.directHit;
-
-      // game.system.log.d("rollchat total damage", { results, totalDamage });
-      // Update display values to show formula and result
-      displayValues.update((map) => {
-        map.set(target.id, {
-          damage: results.damage.toString(),
-          directHit: `${item.system.directHitDamage} (${results.directHit})`,
-        });
-        return map;
-      });
-    } else {
-      // Update display values for damage only
-      displayValues.update((map) => {
-        map.set(target.id, {
-          damage: results.damage.toString(),
-          directHit: item.system?.directHitDamage || "",
-        });
-        return map;
-      });
-    }
-
-    // game.system.log.d("damage calculated", {
-    //   results,
-    //   totalDamage,
-    //   modifier,
-    //   breakdown: `${results.damage} + ${results.directHit} + ${modifier} = ${totalDamage}`,
-    // });
+      results.directHitResult = directHitRoll.total;
+      totalDamage += results.directHitResult;
+    } 
 
     // Apply damage to target
     const currentHP = target.actor.system.points.HP.val;
     const newHP = Math.max(0, currentHP - totalDamage);
-
-    // game.system.log.d("HP update", {
-    //   currentHP,
-    //   totalDamage,
-    //   newHP,
-    // });
 
     await target.actor.update({
       "system.points.HP.val": newHP,
@@ -163,33 +159,26 @@
     if (currentHP > 0 && newHP <= 0) {
       await target.actor.toggleStatusEffect("ko");
     }
-
     // Update stores
-    const newDamageResults = new Map($damageResults);
-    newDamageResults.set(target.id, {
-      damage: results.damage,
-      directHit: results.directHit,
-      originalHP: currentHP,
-      wasKOd: currentHP > 0 && newHP <= 0,
-    });
-    damageResults.set(newDamageResults);
+    game.system.log.r(FFMessageState.damageResults[target.id])
+    const newDamageResults = {...FFMessageState.damageResults};
+    newDamageResults[target.id].damage = results.damage;
+    newDamageResults[target.id].directHitResult = results.directHitResult;
+    newDamageResults[target.id].originalHP = currentHP;
+    newDamageResults[target.id].applied = true;
+    newDamageResults[target.id].wasKOd = currentHP > 0 && newHP <= 0;
 
-    await tick();
-    await tick();
-    await tick();
-    await tick();
-    await tick();
-    await tick();
-    // Update message flags
-      await $message.update({
-        flags: {
-          [SYSTEM_ID]: {
-            damageResults: Object.fromEntries(newDamageResults),
-            displayValues: Object.fromEntries($displayValues),
-            appliedDamageByTarget: Object.fromEntries($appliedDamageByTarget),
-          },
+    await $message.update({
+      flags: {
+        [SYSTEM_ID]: {
+          state: {
+            damageResults: newDamageResults
+          }
         },
-      });
+      },
+    });
+
+    game.system.log.d("race APPLY post update message", game.messages.get(messageId));
   }
 
   /**************
@@ -197,18 +186,11 @@
    **************/
   async function undoResult(target) {
     game.system.log.d("race ---- START UNDO ----");
-    game.system.log.d("race undoResult initial state", {
-      targetId: target.id,
-      hasAppliedDamage: $hasAppliedDamage,
-      appliedDamageByTarget: $appliedDamageByTarget
-    });
-
     if (!target.actor || target.isUnlinked) return;
 
-    const result = $damageResults.get(target.id);
+    const result = FFMessageState.damageResults[target.id]
     if (!result) return;
 
-    // game.system.log.d("rollchat undoResult result", result);
     // Restore original HP
     await target.actor.update({
       "system.points.HP.val": result.originalHP,
@@ -219,87 +201,31 @@
       await target.actor.toggleStatusEffect("ko");
     }
 
-    appliedDamageByTarget.update((map) => {
-      const newMap = new Map(map);
-      newMap.delete(target.id);
-      game.system.log.d("race undoResult store update - appliedDamageByTarget", {
-        before: map,
-        after: newMap
-      });
-      return newMap;
-    });
-    damageResults.update((map) => {
-      const newMap = new Map(map);
-      newMap.delete(target.id);
-      return newMap; // Replacing the Map ensures the derived store updates properly
-    });
-    displayValues.update((map) => {
-      const newMap = new Map(map);
-      newMap.set(target.id, {
-        damage: FFMessage.item.system?.formula,
-        directHit: FFMessage.item.system?.directHitDamage,
-      });
-      return newMap; // Replacing the Map ensures the derived store updates properly
-    });
-    await tick();
-    await tick();
-    await tick();
-    await tick();
-    await tick();
-    await tick();
-    // game.system.log.d("rollchat undoResult $appliedDamageByTarget", $appliedDamageByTarget);
-    // game.system.log.d("rollchat undoResult $isApplyDisabled", isApplyDisabled(target));
-    // game.system.log.d("rollchat undoResult isUnlinked", target.isUnlinked)
-    // game.system.log.d("rollchat undoResult $hasAppliedDamage.get(target.id)", $hasAppliedDamage.get(target.id))
-
-
-    // setTimeout(async () => {
-      console.log("rollchat setTimeout $appliedDamageByTarget", $appliedDamageByTarget);
-      await $message.update({
-        flags: {
-          [SYSTEM_ID]: {
-            data: {
-              damageResults: Object.fromEntries($damageResults),
-              appliedDamageByTarget: Object.fromEntries($appliedDamageByTarget),
-              displayValues: Object.fromEntries($displayValues),
-            }
-          }
-        }
-      });
-    // }, 1500);
-
-    game.system.log.d("race undoResult before message update", {
-      appliedDamageByTarget: $appliedDamageByTarget,
-      hasAppliedDamage: $hasAppliedDamage
-    });
+    const newDamageResults = {...FFMessageState.damageResults};
+    newDamageResults[target.id].applied = false;
+    newDamageResults[target.id].wasKOd = false;
 
     await $message.update({
       flags: {
         [SYSTEM_ID]: {
-          data: {
-            damageResults: Object.fromEntries($damageResults),
-            appliedDamageByTarget: Object.fromEntries($appliedDamageByTarget),
-            displayValues: Object.fromEntries($displayValues),
+          state: {  
+            damageResults: newDamageResults
           }
-        }
-      }
+        },
+      },
     });
 
-    game.system.log.d("race undoResult after message update", {
-      appliedDamageByTarget: $appliedDamageByTarget,
-      hasAppliedDamage: $hasAppliedDamage
-    });
   }
 
   function log() {
-    game.system.log.d("RollChat hasAppliedDamage", $hasAppliedDamage);
-    game.system.log.d("RollChat appliedDamageByTarget", $appliedDamageByTarget);
+    game.system.log.d("RollChat message", $message);
+    game.system.log.d("RollChat damageResults", FFMessageState.damageResults);
   }
 
   async function applyTrait() {
-    if (!FFMessage?.item?.system?.enables?.list?.length) return;
+    if (!item?.system?.enables?.list?.length) return;
 
-    const trait = await fromUuid(FFMessage.item.system.enables.list[0].uuid);
+    const trait = await fromUuid(item.system.enables.list[0].uuid);
     if (!trait) return;
 
     // Apply trait to all existing targets
@@ -313,11 +239,6 @@
   }
 
   function getDefenseValue(target) {
-    // game.system.log.d("Getting defense for target", target);
-    // game.system.log.d("Target actor", target.actor);
-    // game.system.log.d("Target actor system", target.actor?.system);
-    // game.system.log.d("Target actor attributes", target.actor?.system?.attributes);
-
     if (target.isUnlinked || !target.actor?.system?.attributes) return 0;
 
     // For NPCs, defense is directly in attributes
@@ -330,7 +251,6 @@
     // For PCs, defense is in secondary attributes
     const defense = target.actor.system.attributes.secondary?.def?.val || 0;
     const magicDefense = target.actor.system.attributes.secondary?.mag?.val || 0;
-    // game.system.log.d("PC defense values", { defense, magicDefense });
     return Math.max(defense, magicDefense);
   }
 
@@ -350,61 +270,70 @@
 </script>
 
 <template lang="pug">
-.FF15
+.FF15.leather
+  
   button.stealth.apply-trait(on:click="{log}")
     i.fa-solid.fa-bug
   .flexrow
-    .flex0.img.mr-xs.pointer
-      img.actor-img.clickable(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
+    .flex0.portrait-frame.pr-xs.wide
+      PortraitFrame.narrow.frame
+        img.actor-img.clickable(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
     .flex3.content
       div {@html content}
   +if("FFMessage?.item?.type === 'action'")
     .flexrow
       .flex4
         .action-result
-          +if("targets.length === 0")
+          +if("targetTokens.length === 0")
             .no-targets No targets selected. Select targets and roll again.
             +else
               .target-list
-                +each("targets as target")
-                  .target-row.flexrow.gap-4(class="{target.isUnlinked ? 'unlinked' : ''}")
-                    .flex3
-                      .flexrow.justify-vertical.gap-4
-                        .flex0.target-info.pointer
-                          +if("!target.isUnlinked")
-                            img.target-img.clickable(src="{getTargetImage(target)}" alt="{target.name}" on:click!="{openActorSheet(target.actor)}")
-                        .flex1
-                          .target-name.font-cinzel.smaller {target.name}
-                    .flex1.thin-border
-                      .flexcol
-                        .col.target-defense.flexrow.justify-vertical
-                          .flex1.left.font-cinzel.smallest DEF 
-                          .flex1.m1-xs.center {getDefenseValue(target)}
-                        .col.flexrow.justify-vertical
-                          .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
-                          .flex1
-                            i.fa-solid(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
-                    .flex2.thin-border.bg-gold.wheat
-                      +if("FFMessage.item.system?.formula")
-                        .flex1.formula.flexrow.justify-vertical
-                          .flex3.left.font-cinzel.smallest Damage 
-                          .flex1.right {displayVal(target, 'damage')}
-                      +if("FFMessage.item.system?.hasDirectHit")
-                        .flex1.formula.flexrow.justify-vertical.smaller
-                          .flex3.left.font-cinzel.smallest Direct Hit 
-                          .flex1.right {isHit(target) ? displayVal(target, 'directHit') : 'N/A'}
-                    .flex0
-                      .flexcol
-                        .flex1
-                          button.stealth.apply-trait(on:click!="{applyResult(target)}" disabled="{isApplyDisabled(target)}")
-                            i.fa-solid.fa-check
-                        .flex1
-                          button.stealth.apply-trait(on:click!="{undoResult(target)}" disabled="{!isApplyDisabled(target)}")
-                            i.fa-solid.fa-refresh
+                +each("targetTokens as target")
+                  .leatherbook
+                    .background
+                      .texture
+                      .target-row.flexrow.gap-4(class="{target.isUnlinked ? 'unlinked' : ''}")
+                        .flex3
+                          .flexrow.justify-vertical.gap-4
+                            .flex0.target-info.pointer
+                              +if("!target.isUnlinked")
+                                img.target-img.clickable(src="{getTargetImage(target)}" alt="{target.name}" on:click!="{openActorSheet(target.actor)}")
+                            .flex1
+                              .target-name.font-cinzel.smaller {target.name}
+                        .flex1.thin-border
+                          .flexcol
+                            .col.target-defense.flexrow.justify-vertical
+                              .flex1.left.font-cinzel.smallest DEF 
+                              .flex1.m1-xs.center {getDefenseValue(target)}
+                            .col.flexrow.justify-vertical
+                              .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
+                              .flex1
+                                i.fa-solid(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                        .flex2.thin-border.bg-gold.offwhite
+                          +if("item.system?.formula")
+                            .flex1.formula.flexrow.justify-vertical
+                              .flex3.left.font-cinzel.smaller Damage 
+                              .flex1.right {displayDamage(target)}
+                          +if("item.system?.hasDirectHit")
+                            .flex1.formula.flexrow.justify-vertical.smaller
+                              .flex3.left.font-cinzel.smaller Direct Hit 
+                              .flex1.right {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
+                        .flex0
+                          .flexcol
+                            .flex1
+                              button.stealth.apply-trait(on:click!="{applyResult(target)}" disabled="{isApplyDisabled(target)}")
+                                i.fa-solid.fa-check
+                            .flex1
+                              button.stealth.apply-trait(on:click!="{undoResult(target)}" disabled="{!isApplyDisabled(target)}")
+                                i.fa-solid.fa-refresh
 </template>
 
 <style lang="sass">
 @import '../../../styles/Mixins.sass'
+
+.portrait-frame
+  margin-right: -2px
+  z-index: 2
 .img, img
   max-width: 100px
   max-height: 100px
@@ -477,4 +406,7 @@
 button:disabled
   opacity: 0.3
   cursor: not-allowed
+
+.leatherbook
+  +background(rgb(98 49 50), 0.05, none )
 </style>
