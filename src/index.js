@@ -256,12 +256,20 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
  */
 Hooks.on('renderChatMessage', (message, html) => {
   const FFMessage = message.getFlag(SYSTEM_ID, 'data');
-  game.system.log.d('FFMessage', FFMessage);
+  game.system.log.d("race renderChatMessage hook triggered", {
+    messageId: message.id,
+    hasFFMessage: !!FFMessage,
+    flags: message.flags[SYSTEM_ID]
+  });
+  
   if (typeof FFMessage === 'object') {
-    // Store the original content
     const originalContent = html[0].innerHTML;
-    // Clear the original content
     html[0].innerHTML = '';
+    
+    game.system.log.d("race creating new FFChat instance", {
+      messageId: message.id,
+      chatTemplate: FFMessage.chatTemplate
+    });
     
     message._svelteComponent = new FFChat({
       target: html[0],

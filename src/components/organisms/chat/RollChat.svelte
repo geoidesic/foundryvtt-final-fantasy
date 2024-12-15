@@ -98,7 +98,7 @@
   async function applyResult(target) {
     if (!target.actor || target.isUnlinked) return;
 
-    game.system.log.d("applyResult start", { targetId: target.id });
+    game.system.log.d("race ---- START APPLY ----");
 
     const item = FFMessage.item;
     const modifier = FFMessage.extraModifiers?.modifier || 0;
@@ -174,10 +174,6 @@
     });
     damageResults.set(newDamageResults);
 
-    const newAppliedDamage = new Map($appliedDamageByTarget);
-    newAppliedDamage.set(target.id, true);
-    appliedDamageByTarget.set(newAppliedDamage);
-
     await tick();
     await tick();
     await tick();
@@ -190,7 +186,7 @@
           [SYSTEM_ID]: {
             damageResults: Object.fromEntries(newDamageResults),
             displayValues: Object.fromEntries($displayValues),
-            appliedDamageByTarget: Object.fromEntries(newAppliedDamage),
+            appliedDamageByTarget: Object.fromEntries($appliedDamageByTarget),
           },
         },
       });
@@ -200,6 +196,13 @@
    * Undo Result
    **************/
   async function undoResult(target) {
+    game.system.log.d("race ---- START UNDO ----");
+    game.system.log.d("race undoResult initial state", {
+      targetId: target.id,
+      hasAppliedDamage: $hasAppliedDamage,
+      appliedDamageByTarget: $appliedDamageByTarget
+    });
+
     if (!target.actor || target.isUnlinked) return;
 
     const result = $damageResults.get(target.id);
@@ -219,9 +222,11 @@
     appliedDamageByTarget.update((map) => {
       const newMap = new Map(map);
       newMap.delete(target.id);
-      game.system.log.d("rollchat undoResult appliedDamageByTarget map", map);
-      game.system.log.d("rollchat undoResult appliedDamageByTarget newMap", newMap);
-      return newMap; // Replacing the Map ensures the derived store updates properly
+      game.system.log.d("race undoResult store update - appliedDamageByTarget", {
+        before: map,
+        after: newMap
+      });
+      return newMap;
     });
     damageResults.update((map) => {
       const newMap = new Map(map);
@@ -248,18 +253,42 @@
     // game.system.log.d("rollchat undoResult $hasAppliedDamage.get(target.id)", $hasAppliedDamage.get(target.id))
 
 
-    setTimeout(async () => {
+    // setTimeout(async () => {
       console.log("rollchat setTimeout $appliedDamageByTarget", $appliedDamageByTarget);
       await $message.update({
         flags: {
           [SYSTEM_ID]: {
+            data: {
+              damageResults: Object.fromEntries($damageResults),
+              appliedDamageByTarget: Object.fromEntries($appliedDamageByTarget),
+              displayValues: Object.fromEntries($displayValues),
+            }
+          }
+        }
+      });
+    // }, 1500);
+
+    game.system.log.d("race undoResult before message update", {
+      appliedDamageByTarget: $appliedDamageByTarget,
+      hasAppliedDamage: $hasAppliedDamage
+    });
+
+    await $message.update({
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
             damageResults: Object.fromEntries($damageResults),
             appliedDamageByTarget: Object.fromEntries($appliedDamageByTarget),
             displayValues: Object.fromEntries($displayValues),
-          },
-        },
-      });
-    }, 3000);
+          }
+        }
+      }
+    });
+
+    game.system.log.d("race undoResult after message update", {
+      appliedDamageByTarget: $appliedDamageByTarget,
+      hasAppliedDamage: $hasAppliedDamage
+    });
   }
 
   function log() {

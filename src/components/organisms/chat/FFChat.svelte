@@ -24,11 +24,17 @@
   $: setContext("message", message);
 
   onMount(async () => {
-    game.system.log.d(FFMessage);
-    game.system.log.d(FFMessage.chatTemplate);
+    game.system.log.d("race FFChat mounting", {
+      messageId,
+      chatTemplate: FFMessage.chatTemplate
+    });
     const sourceActor = await game.actors.get(FFMessage.actor._id);
-    actor.set(sourceActor); //@todo: something wasn't ported here, sourceActor is undefined
+    actor.set(sourceActor);
     await foundryChatMessageDocument.set(await game.messages.get(messageId));
+    game.system.log.d("race FFChat mounted", {
+      messageId,
+      hasSourceActor: !!sourceActor
+    });
   });
 
 </script>
