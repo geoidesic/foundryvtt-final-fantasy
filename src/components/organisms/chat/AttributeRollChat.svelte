@@ -8,6 +8,9 @@
 
   const message = getContext("message");
 
+  $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
+
+
   onMount(async () => {
     game.system.log.d("RollChat mounted");
     game.system.log.d("FFMessage", FFMessage);
@@ -17,8 +20,9 @@
 <template lang="pug">
 .FF15
   .flexrow
-    .flex0.img.mr-xs
-      img.actor-img(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
+    +if("showProfileImage") 
+      .flex0.img.mr-xs
+        img.actor-img(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
     .flex3.content {@html content}
 </template>
 

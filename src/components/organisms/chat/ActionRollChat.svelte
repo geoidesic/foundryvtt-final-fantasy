@@ -4,7 +4,6 @@
   import { writable, derived } from "svelte/store";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
-  import { gameSettings } from '~/src/config/gameSettings';
 
   export let FFMessage
   export let FFMessageState
@@ -30,7 +29,7 @@
   // $: displayVal = (target, type) =>  $displayValues.get(target.id)?.[type] || "";
   $: console.log("FFMessageState.damageResults", FFMessageState.damageResults);
 
-  $: showProfileImage = gameSettings.get('showChatProfileImages');
+  $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
 
   function getInitialDamageResults(passedTargets) {
     game.system.log.d("race setInitialDamageResults passedTargets", passedTargets);
@@ -278,9 +277,10 @@
   //- button.stealth.apply-trait(on:click="{log}")
   //-   i.fa-solid.fa-bug
   .flexrow.gap-4.justify-vertical
-    .flex0.portrait-frame.pr-xs.wide
-      PortraitFrame.narrow.frame
-        img.actor-img.clickable(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
+    +if("showProfileImage")
+      .flex0.portrait-frame.pr-xs.wide
+        PortraitFrame.narrow.frame
+          img.actor-img.clickable(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
     .flex3.content
       div {@html content}
   +if("FFMessage?.item?.type === 'action'")
