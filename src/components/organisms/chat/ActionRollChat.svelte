@@ -313,11 +313,11 @@
                           +if("item.system?.formula")
                             .flex1.formula.flexrow.justify-vertical
                               .flex3.left.font-cinzel.smaller Damage 
-                              .flex1.right {displayDamage(target)}
+                              .flex1.right.no-wrap {displayDamage(target)}
                           +if("item.system?.hasDirectHit")
                             .flex1.formula.flexrow.justify-vertical.smaller
                               .flex3.left.font-cinzel.smaller Direct Hit 
-                              .flex1.right {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
+                              .flex1.right.no-wrap {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
                         .flex0
                           .flexcol
                             .flex1
