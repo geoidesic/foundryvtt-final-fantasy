@@ -276,7 +276,7 @@
   
   //- button.stealth.apply-trait(on:click="{log}")
   //-   i.fa-solid.fa-bug
-  .flexrow.gap-4.justify-vertical
+  .flexrow.gap-4
     +if("showProfileImage")
       .flex0.portrait-frame.pr-xs.wide
         PortraitFrame.narrow.frame
