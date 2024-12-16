@@ -28,7 +28,8 @@ const onclick = async (key, code) => {
             name: $actor.name,
             img: $actor.img
           }
-        }
+        },
+        css: 'attribute-roll'
       }
     }
   };
