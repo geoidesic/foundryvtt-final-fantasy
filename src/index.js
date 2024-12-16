@@ -276,7 +276,7 @@ Hooks.on('renderChatMessage', (message, html) => {
   if (typeof FFMessage === 'object') {
     const originalContent = html[0].innerHTML;
 
-    if(FFMessage.chatTemplate !== 'EquipmentChat') {
+    if(!['EquipmentChat', 'RollChat'].includes(FFMessage.chatTemplate)) {
       html[0].innerHTML = '';
     }
     html.addClass(SYSTEM_CODE);
