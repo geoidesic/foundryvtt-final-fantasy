@@ -5,7 +5,9 @@
   export let data;
   export let overlayValue = '';
   export let overlayColor = 'black';
-
+  export let overlaySize = '0.8em';
+  export let overlayMargin = '2px 0 0 0';
+  export let title = '';
   const message = getContext("message");
 
   game.system.log.d("ChatTitle - message context:", message);
@@ -20,13 +22,13 @@
     .portrait.left
       img.actor-img(src="{data.actor.img}" alt="{data.actor.name}")
   .flex4.title-block.font-cinzel
-    .flavor {data.flavor}
+    .flavor {title}
   +if("showProfileImage")
     .portrait.right
       slot(name="rightImage")
         img.actor-img(src="{data.item?.img || data.actor.img}" alt="{data.item?.name || data.actor.name}")
       +if("overlayValue")
-        .overlay(style="color: {overlayColor}") {overlayValue}
+        .overlay(style="margin: {overlayMargin}; font-size: {overlaySize}; color: {overlayColor}") {overlayValue}
 </template>
 
 <style lang="sass">

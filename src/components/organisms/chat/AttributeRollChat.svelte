@@ -9,27 +9,38 @@
   export let content;
   export let classes;
   export let FFMessageState;
+  export let enableToggle = true;
+
+  let isContentVisible = false;
 
   const message = getContext("message");
-
+  
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
-
+  $: title = FFMessage.flavor
+  $: height = isContentVisible ? '1000px' : '0';
+  $: style = `max-height: ${height}; overflow: hidden; transition: max-height 0.3s ease;`;
 
   onMount(async () => {
     game.system.log.g("AttributeRollChat mounted");
     game.system.log.g("FFMessage", FFMessage);
-    game.system.log.g("message", message);
+    game.system.log.g("message", $message);
   });
+
+
+  function toggleContent() {
+    if (enableToggle) {
+      isContentVisible = !isContentVisible;
+    }
+  }
 </script>
 
 <template lang="pug">
-.FF15
-  .flexcol
-    .col
-      ChatTitle(data="{FFMessage}" overlayValue="42" overlayColor="red")
-        svelte:fragment(slot="rightImage")
-          Meteor(fill="var(--ff-border-color)" innerOpacity="0" opacity="1")
-    .col.content {@html content}
+.flexcol.pointer
+  .col(on:click="{toggleContent}")
+    ChatTitle(title="{title}" data="{FFMessage}" overlayValue="{$message.rolls[0].total}" overlayColor="var(--off-white)")
+      svelte:fragment(slot="rightImage")
+        Meteor(fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1")
+  .col.content(style="{style}") {@html content}
 </template>
 
 <style lang="sass">

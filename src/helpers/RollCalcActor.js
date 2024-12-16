@@ -33,7 +33,10 @@ export default class RollCalcActor extends RollCalc {
               name: this.params.actor.name,
               img: this.params.actor.img
             },
-            flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`
+            flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
+            key: key,
+            code: code,
+            modifier: attributeValue
           },
           css: 'attribute-roll'
         }
