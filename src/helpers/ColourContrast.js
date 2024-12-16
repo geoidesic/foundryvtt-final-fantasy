@@ -64,14 +64,14 @@ export default class ColourContrastCalculator {
     let highestContrastRgb;
 
     if (this.calculationType === "brightness") {
-      // Calculate the highest contrast color based on brightness
-      highestContrastRgb = this.brightnessContrast(inputRgb) >= 0.5 ? [64, 51, 40] : [255, 255, 255];
+      // Adjust threshold from 0.5 to 0.7 to make more colors use dark text
+      highestContrastRgb = this.brightnessContrast(inputRgb) >= 0.5 ? [40, 32, 26] : [255, 255, 255];
     } else if (this.calculationType === "difference") {
       // Calculate the highest contrast color based on difference
-      highestContrastRgb = this.differenceContrast(inputRgb, [64, 51, 40]) >= this.differenceContrast(inputRgb, [255, 255, 255]) ? [64, 51, 40] : [255, 255, 255];
+      highestContrastRgb = this.differenceContrast(inputRgb, [40, 32, 26]) >= this.differenceContrast(inputRgb, [255, 255, 255]) ? [40, 32, 26] : [255, 255, 255];
     } else if (this.calculationType === "contrast") {
-      // Calculate the highest contrast color based on contrast
-      highestContrastRgb = this.brightnessContrast(inputRgb) >= 0.5 ? [64, 51, 40] : [255, 255, 255];
+      // Use same threshold as brightness for consistency
+      highestContrastRgb = this.brightnessContrast(inputRgb) >= 0.5 ? [40, 32, 26] : [255, 255, 255];
     } else {
       throw new Error("Invalid calculationType");
     }

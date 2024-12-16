@@ -125,7 +125,7 @@
 .FF15
   .chat.pa-xs
     .flexrow.justify-vertical.title
-      .texture
+      //- .texture
       img.icon(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
       .flex4 {FFMessage.actor.name}
       .flex3.right {FFMessage.item.name}
@@ -150,7 +150,7 @@
       position: relative
       padding: 0.2rem
       
-      +texture-background(var(--message-color), 0.1, 45%)
+      +texture-background(var(--message-color), 0.05, 48%)
       
       .texture
         position: absolute
