@@ -135,15 +135,18 @@
       .col.font-cinzel.smaller {FFMessage.item.name}
     img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
   .flexrow
-    .flex4#chat-description {@html FFMessage.item.system.description} 
+    .flex4#chat-description.inset {@html FFMessage.item.system.description} 
 </template>
 
 <style lang="sass">
   @import '../../../styles/Mixins.sass'
+  .inset
+    +inset
   :global(.FF15 #chat-description)
     background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
     color: var(--color-text-dark)
     padding: 0.2rem 0.5rem
+    margin-top: 0.2rem
   :global(.FF15 #chat-description p)
     font-size: 0.7rem
     line-height: 1.2rem
@@ -153,18 +156,6 @@
       &.icon
         flex: 0
         min-width: 30px
-        &.item
-          position: absolute
-          top: 3px
-          right: 0
-          min-width: 35px
-          min-height: 39px
-        &.avatar
-          position: absolute
-          top: 3px
-          left: 0
-          min-width: 35px
-          min-height: 39px
     +buttons
     .title
       border-radius: var(--border-radius)

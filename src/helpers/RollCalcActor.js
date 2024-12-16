@@ -8,6 +8,7 @@ export default class RollCalcActor extends RollCalc {
     
     ChatMessage.create({
       user: game.user.id,
+      speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: params.actor }) : null,
       flags: { [SYSTEM_ID]: { data: {...params, chatTemplate: 'EquipmentChat'} } }
     })
     return;
@@ -48,6 +49,7 @@ export default class RollCalcActor extends RollCalc {
 
     ChatMessage.create({
       user: game.user.id,
+      speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
       flags: { [SYSTEM_ID]: { data: {...message, chatTemplate: 'RollChat'} } }
     })
   }
@@ -101,7 +103,8 @@ export default class RollCalcActor extends RollCalc {
     // Create chat message data
     const messageData = {
       id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
-      speaker: ChatMessage.getSpeaker({ actor: this.params.actor }),
+      speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      // speaker: ChatMessage.getSpeaker({ actor: this.params.actor }), //- this sets the speaker to the actor owner, without it, it will be the user that triggered the action
       flavor: `${item.name}`,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       classes: ['testy', 'leather'],

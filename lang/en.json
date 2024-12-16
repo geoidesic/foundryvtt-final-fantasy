@@ -322,6 +322,10 @@
       "showChatProfileImages": {
         "Name": "Show Profile Images in Chat",
         "Hint": "If unchecked, actor profile images will not be shown in chat messages."
+      },
+      "chatMessageSenderIsActorOwner": {
+        "Name": "Chat Message Sender is Actor Owner",
+        "Hint": "If checked, the sender text of the chat message will be the actor owner. If unchecked, the sender text of the chat message will be the user that triggered the action."
       }
     },
     "TitleBlock": {

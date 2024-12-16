@@ -561,8 +561,25 @@
     border-bottom-left-radius: var(--border-radius)
     border-top-right-radius: 0px
     border-bottom-right-radius: 0px
+    
     &:not(.nopointer)
       cursor: pointer
+    
+    &.item
+      position: absolute
+      top: 3px
+      right: 0
+      min-width: 35px
+      min-height: 39px
+      object-fit: contain
+    &.avatar
+      position: absolute
+      top: 3px
+      left: 0
+      min-width: 35px
+      min-height: 39px
+      object-fit: contain
+    
 
   .chat
     .flexrow

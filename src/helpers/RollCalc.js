@@ -101,6 +101,7 @@ export default class RollCalc {
     const message = await ChatMessage.create({
       user: game.user.id,
       flags: { [SYSTEM_ID]: { data } },
+      speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: actor }) : null,
       // content: `Rolling 1d20+5: ${data.roll.result}`, // Customize the standard message content (text only)
       // rolls: [data.roll], //- makes it a standard roll chat
       // rollMode: "roll" //- makes it a public roll

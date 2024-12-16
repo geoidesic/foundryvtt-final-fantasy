@@ -15,7 +15,8 @@ const onclick = async (key, code) => {
   const roll = await new Roll(rollFormula).evaluate({async: true});
   
   const messageData = {
-    speaker: ChatMessage.getSpeaker({ actor: $actor }),
+    speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: $actor }) : null,
+    // speaker: ChatMessage.getSpeaker({ actor: $actor }), //- this sets the speaker to the actor owner, without it, it will be the user that triggered the action
     flavor: `${attributeName} Check`,
     type: CONST.CHAT_MESSAGE_TYPES.ROLL,
     roll,

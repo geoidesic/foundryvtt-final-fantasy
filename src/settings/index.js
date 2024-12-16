@@ -12,6 +12,22 @@ export function registerSettings() {
   showStatusEffectNames()
   manualInitiative()
   showChatProfileImages()
+  chatMessageSenderIsActorOwner()
+}
+
+function chatMessageSenderIsActorOwner() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'chatMessageSenderIsActorOwner',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.chatMessageSenderIsActorOwner.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.chatMessageSenderIsActorOwner.Hint`),
+      scope: 'user',
+      config: true,
+      default: true,
+      type: Boolean
+    }
+  });
 }
 
 function manualInitiative() {

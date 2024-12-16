@@ -3,7 +3,6 @@
   import { activeEffectModes, SYSTEM_ID } from "~/src/helpers/constants";
   import { mappedGameTargets } from "~/src/stores";
   import { resolveDotpath } from "~/src/helpers/paths";
-  import { gameSettings } from '~/src/config/gameSettings';
 
   // export let messageId;
   export let FFMessage;
@@ -119,8 +118,8 @@
   $: disabled = hasTargets ? false : true;
   $: buttonCss = disabled || applied ? "disabled" : "";
   $: applied = $message?.flags[SYSTEM_ID]?.data?.applied;
-  $: showProfileImage = gameSettings.get('showChatProfileImages');
-
+  $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
+  $: senderIsOwner = game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner');
 </script>
 
 <template lang="pug">
@@ -128,10 +127,12 @@
   .chat.pa-xs
     .flexrow.justify-vertical.title
       //- .texture
-      img.icon(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
-      .flex4 {FFMessage.actor.name}
-      .flex3.right {FFMessage.item.name}
-      img.icon.right(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
+      +if("showProfileImage")
+        img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
+      +if("!senderIsOwner")
+        .flex4.ml-sm {FFMessage.actor.name}
+      .flex3.left.ml-sm {FFMessage.item.name}
+      img.icon.right.item(class="{senderIsOwner ? 'push' : ''}" src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
     .flexrow.justify-vertical.mt-sm
       .flex4.buttons
         button.short.wide.stealth.gold.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
@@ -165,4 +166,27 @@
       img, .flex4, .flex3
         position: relative
         z-index: 2
+
+      img.icon.avatar
+        min-height: 35px
+        top: 0px
+        left: -4px
+        padding: 0
+        margin-bottom: -3px
+      img.icon.item
+        min-height: 35px
+        top: -1px
+        padding: 0
+        margin-bottom: -3px
+        right: -4px
+        margin-right: 0px
+        &.push
+          margin-right: -7px
+        
+  @supports (-webkit-appearance: none) and (not (aspect-ratio: 1 / 1)) 
+    .chat
+      .title  
+        .img.icon.item.push
+          margin-right: -15px
+  
 </style>
