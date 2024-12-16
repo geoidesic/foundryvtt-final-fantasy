@@ -648,4 +648,28 @@
   .action-result
     .no-targets
       color: var(--color-text-light) !important
-    
+
+//- default chat message header content - add texture background
+.message-header
+  position: relative
+  overflow: hidden
+
+  .texture
+    pointer-events: none
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background-image: url("systems/foundryvtt-final-fantasy/assets/diamonds.png")
+    background-size: 30%
+    background-repeat: repeat
+    mix-blend-mode: multiply
+    filter: opacity(0.05)
+    z-index: 1
+
+  // Ensure header content is above texture
+  > *:not(.texture)
+    position: relative
+    z-index: 2
+  

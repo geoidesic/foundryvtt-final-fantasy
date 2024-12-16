@@ -114,6 +114,7 @@ export function generateRandomElementId(length = 8) {
 export function getActorOwner(actor) {
   const owners = getOwners(actor);
   if (owners.length === 0) {
+    game.system.log.g('owner 0', owner)
     return game.user;
   }
   if (owners.length === 1) {
@@ -124,19 +125,22 @@ export function getActorOwner(actor) {
     if (!currentOwner.isGM) {
       owner = currentOwner;
     }
+    game.system.log.g('owner 1', owner)
     return owner;
   }, null);
 
   if (!owner) {
     if (game.user.isGM) {
+      game.system.log.g('owner 2', owner)
       return game.user;
     }
   }
 
   if (!owner) {
-    return game.user;
+    game.system.log.g('owner 3', owner)
+    return game.users.find(u => u.isGM);
   }
-
+  game.system.log.g('owner 4', owner)
   return owner;
 }
 

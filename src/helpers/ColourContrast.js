@@ -11,16 +11,33 @@ export default class ColourContrastCalculator {
   }
 
   hexToRgb(hex) {
-    // Remove the hash symbol and parse the hex values to integers
-    hex = hex.replace(/^#/, '');
-    const bigint = parseInt(hex, 16);
+    // Handle Color object from Foundry
+    if (hex instanceof Color) {
+      // Convert from 0-1 range to 0-255 range
+      return [
+        Math.round(hex.r * 255),
+        Math.round(hex.g * 255),
+        Math.round(hex.b * 255)
+      ];
+    }
 
-    // Extract RGB values using bitwise operations
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
+    // Handle string hex values
+    if (typeof hex === 'string') {
+      // Remove the hash symbol and parse the hex values to integers
+      hex = hex.replace(/^#/, '');
+      const bigint = parseInt(hex, 16);
+      
+      // Extract RGB values using bitwise operations
+      const r = (bigint >> 16) & 255;
+      const g = (bigint >> 8) & 255;
+      const b = bigint & 255;
+      
+      return [r, g, b];
+    }
 
-    return [r, g, b];
+    // If neither a Color object nor a string, return a default color
+    console.warn('Invalid color format provided to hexToRgb:', hex);
+    return [0, 0, 0];
   }
 
   rgbToHex(rgb) {
@@ -43,7 +60,7 @@ export default class ColourContrastCalculator {
   }
 
   calculateHighestContrastColour() {
-    const inputRgb = this.colour instanceof Color ? this.hexToRgb(this.colour.toString()) : this.hexToRgb(this.colour);
+    const inputRgb = this.hexToRgb(this.colour);
     let highestContrastRgb;
 
     if (this.calculationType === "brightness") {
@@ -76,7 +93,18 @@ export default class ColourContrastCalculator {
     }
   }
 
-  adjustAlpha
+  /**
+   * Get CSS variables for a color including contrast and RGB values
+   * @returns {{color: string, contrast: string, rgb: string}} Object containing CSS-ready color values
+   */
+  getCSSVariables() {
+    const rgbValues = this.hexToRgb(this.colour);
+    return {
+      color: this.colour instanceof Color ? this.colour.toString() : this.colour,
+      contrast: this.calculateContrast(),
+      rgb: rgbValues.join(', ')
+    };
+  }
 }
 
 

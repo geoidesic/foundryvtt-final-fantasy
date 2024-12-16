@@ -14,6 +14,7 @@
   let message = new TJSDocument(void 0);
   let messageColor;
   let messageContrast;
+  let messageColorRGB;
 
   onMount(async () => {
     game.system.log.i("race ---- START FFChat mount----");
@@ -26,8 +27,16 @@
   });
 
   $: if ($actor) {
-    messageColor = getActorOwner($actor).color;
-    messageContrast = new ColourContrast(messageColor).calculateContrast();
+    const ownerColor = getActorOwner($actor).color;
+    const colorCalc = new ColourContrast(ownerColor);
+    const cssVars = colorCalc.getCSSVariables();
+    messageColor = cssVars.color;
+    messageContrast = cssVars.contrast;
+    messageColorRGB = cssVars.rgb;
+    game.system.log.g('messageColor', messageColor)
+    game.system.log.g('messageContrast', messageContrast)
+    game.system.log.g('messageColorRGB', messageColorRGB)
+    game.system.log.g('$actor', $actor)
   }
 
   $: setContext("sourceActor", actor);
@@ -40,5 +49,6 @@
     {...$$props}
     --message-color={messageColor}
     --message-contrast={messageContrast}
+    --message-color-rgb={messageColorRGB}
   />
 {/if}

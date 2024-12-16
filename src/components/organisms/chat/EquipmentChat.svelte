@@ -146,7 +146,21 @@
     +buttons
     .title
       border-radius: var(--border-radius)
-      color: white
+      color: var(--message-contrast)
+      position: relative
+      padding: 0.2rem
       
-      +texture-background(rgb(76 47 76 / 70%), 0.1, 80%)
+      +texture-background(var(--message-color), 0.1, 45%)
+      
+      .texture
+        position: absolute
+        top: 0
+        left: 0
+        width: 100%
+        height: 100%
+        z-index: 1
+      
+      img, .flex4, .flex3
+        position: relative
+        z-index: 2
 </style>

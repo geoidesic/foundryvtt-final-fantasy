@@ -262,6 +262,13 @@ Hooks.on('renderChatMessage', (message, html) => {
     hasFFMessage: !!FFMessage,
     flags: message.flags[SYSTEM_ID]
   });
+
+  // Add texture div to message header if it exists
+  const messageHeader = html.find('.message-header');
+  if (messageHeader.length) {
+    messageHeader.prepend('<div class="texture"></div>');
+  }
+
   if (message.flags[SYSTEM_ID]?.css) {
     html.addClass(message.flags[SYSTEM_ID].css);
   }
@@ -274,7 +281,6 @@ Hooks.on('renderChatMessage', (message, html) => {
     }
     html.addClass(SYSTEM_CODE);
     html.addClass('leather');
-
     
     game.system.log.d("race creating new FFChat instance", {
       messageId: message.id,
