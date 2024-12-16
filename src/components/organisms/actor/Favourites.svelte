@@ -75,10 +75,39 @@
     game.system.log.d(item);
   }
   function useItem(item) {
-    const result = new RollCalcActor({ actor: $Actor, item: item, rollType: "equipment" }).send();
+    switch (item.type) {
+      case 'action':
+        new RollCalcActor({ actor: $Actor}).ability(item.type, item);
+        break;
 
-    game.system.log.d("useItem");
-    game.system.log.d(item);
+      case 'trait':
+        new RollCalcActor({ actor: $Actor}).ability(item.type, item);
+        break;
+
+      case 'equipment':
+        new RollCalcActor({ actor: $Actor }).equipment(item);
+        break;
+
+      case 'effect':
+        ui.notifications.warn("Effects cannot be used directly");
+        break;
+
+      case 'job':
+        ui.notifications.warn("Jobs cannot be used directly");
+        break;
+
+      case 'limitbreak':
+        new RollCalcActor({ actor: $Actor}).ability(item.type, item);
+        break;
+
+      case 'telegraph':
+        new RollCalcActor({ actor: $Actor}).ability(item.type, item);
+        break;
+
+      default:
+        console.warn(`Unhandled item type: ${item.type}`);
+        new RollCalcActor({ actor: $Actor }).send();
+    }
   }
   function toggleLock(event) {
     game.system.log.d("a");

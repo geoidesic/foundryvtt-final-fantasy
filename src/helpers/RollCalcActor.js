@@ -3,45 +3,56 @@ import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "./constants.js"
 
 export default class RollCalcActor extends RollCalc {
-  
-  async equipment(params) {
-    
+
+
+  async equipment(item) {
+    this.params.item = item;
     ChatMessage.create({
       user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: params.actor }) : null,
-      flags: { [SYSTEM_ID]: { data: {...params, chatTemplate: 'EquipmentChat'} } }
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      flags: { [SYSTEM_ID]: { data: { ...this.params, chatTemplate: 'EquipmentChat' } } }
     })
-    return;
-
-    const message = await this.defaultItem(params);
-
-    game.system.log.d('equipment params', params);
-    message.rollType = params.rollType;
-    message.chatTemplate = 'EquipmentChat';
-
-    return message;
   }
 
-  async defaultItem(params) {
-    const item = params.item;
-    const actor = params?.actor;
-    const { roll, die, error } = await this.roll(6, 1);
-    if (error) return false;
-    return { item, actor, roll, die, formula: '' };
+  async attribute(key, code) {
+    const attributeValue = this.params.actor.system.attributes[key][code].val;
+    const rollFormula = `1d20 + ${attributeValue}`;
+    const attributeName = code.toUpperCase();
+    const roll = await new Roll(rollFormula).evaluate({ async: true });
+    const messageData = {
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: $actor }) : null,
+      flavor: `${attributeName} Check`,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      roll,
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "AttributeRollChat",
+            actor: {
+              _id: this.params.actor._id,
+              name: this.params.actor.name,
+              img: this.params.actor.img
+            }
+          },
+          css: 'attribute-roll'
+        }
+      }
+    };
+    await roll.toMessage(messageData);
   }
 
-  async execute(type, item) {
-    game.system.log.d('execute', type, item);
-    if(type === 'action') {
-      return this.executeAction(item);
+  async ability(type, item) {
+    game.system.log.d('ability', type, item);
+    if (type === 'action') {
+      return this.abilityAction(item);
     }
-    if(type === 'trait') {
-      return this.executeTrait(item);
+    if (type === 'trait') {
+      return this.abilityTrait(item);
     }
   }
 
-  async executeTrait(item) {
-    game.system.log.d('executeTrait', item);
+  async abilityTrait(item) {
+    game.system.log.d('abilityTrait', item);
     this.params.item = item;
     this.params.rollType = 'RollChat';
     const message = await this.defaultItem(this.params);
@@ -49,12 +60,12 @@ export default class RollCalcActor extends RollCalc {
 
     ChatMessage.create({
       user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      flags: { [SYSTEM_ID]: { data: {...message, chatTemplate: 'RollChat'} } }
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      flags: { [SYSTEM_ID]: { data: { ...message, chatTemplate: 'RollChat' } } }
     })
   }
 
-  async executeAction(item) {
+  async abilityAction(item) {
     if (item.type !== "action") return;
 
     // Show dialog for extra modifiers
@@ -96,14 +107,14 @@ export default class RollCalcActor extends RollCalc {
 
     game.system.log.d('rollFormula', rollFormula);
     game.system.log.d('rollData', rollData);
-    
+
     // Evaluate roll with actor data
-    const roll = await new Roll(rollFormula, rollData).evaluate({async: true});
-    
+    const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
+
     // Create chat message data
     const messageData = {
       id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
-      speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
       // speaker: ChatMessage.getSpeaker({ actor: this.params.actor }), //- this sets the speaker to the actor owner, without it, it will be the user that triggered the action
       flavor: `${item.name}`,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,

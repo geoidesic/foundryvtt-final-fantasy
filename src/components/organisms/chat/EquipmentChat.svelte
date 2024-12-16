@@ -131,7 +131,7 @@
         img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
       +if("!senderIsOwner")
         .flex4.ml-sm {FFMessage.actor.name}
-      .flex3.left.ml-sm {FFMessage.item.name}
+      .flex2.ml-sm(class="{senderIsOwner ? 'left' : 'right'}") {FFMessage.item.name}
       img.icon.right.item(class="{senderIsOwner ? 'push' : ''}" src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
     .flexrow.justify-vertical.mt-sm
       .flex4.buttons

@@ -83,10 +83,7 @@
   }
 
   function useItem(item) {
-    const result = new RollCalcActor().equipment({ actor: $Actor, item: item, rollType: "equipment" });
-
-    game.system.log.d("useItem");
-    game.system.log.d(item);
+    const result = new RollCalcActor({ actor: $Actor }).equipment(item);
   }
   
   function toggleLock(event) {
