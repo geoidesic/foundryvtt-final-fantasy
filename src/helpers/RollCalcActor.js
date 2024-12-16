@@ -29,6 +29,29 @@ export default class RollCalcActor extends RollCalc {
     return { item, actor, roll, die, formula: '' };
   }
 
+  async execute(type, item) {
+    game.system.log.d('execute', type, item);
+    if(type === 'action') {
+      return this.executeAction(item);
+    }
+    if(type === 'trait') {
+      return this.executeTrait(item);
+    }
+  }
+
+  async executeTrait(item) {
+    game.system.log.d('executeTrait', item);
+    this.params.item = item;
+    this.params.rollType = 'RollChat';
+    const message = await this.defaultItem(this.params);
+    game.system.log.d('message', message);
+
+    ChatMessage.create({
+      user: game.user.id,
+      flags: { [SYSTEM_ID]: { data: {...message, chatTemplate: 'RollChat'} } }
+    })
+  }
+
   async executeAction(item) {
     if (item.type !== "action") return;
 

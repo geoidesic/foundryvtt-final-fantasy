@@ -194,7 +194,7 @@
             //- pre item.type {item.type}
             tr
               td.img
-                img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.executeAction(item)}")
+                img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.execute(item.type, item)}")
               td.left
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
               td.left {ucfirst(item.type)}
