@@ -4,6 +4,7 @@
   import { writable, derived } from "svelte/store";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
+  import { gameSettings } from '~/src/config/gameSettings';
 
   export let FFMessage
   export let FFMessageState
@@ -28,6 +29,8 @@
     isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit;
   // $: displayVal = (target, type) =>  $displayValues.get(target.id)?.[type] || "";
   $: console.log("FFMessageState.damageResults", FFMessageState.damageResults);
+
+  $: showProfileImage = gameSettings.get('showChatProfileImages');
 
   function getInitialDamageResults(passedTargets) {
     game.system.log.d("race setInitialDamageResults passedTargets", passedTargets);

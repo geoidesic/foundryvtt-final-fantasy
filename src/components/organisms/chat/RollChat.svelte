@@ -3,6 +3,7 @@
   import { activeEffectModes, SYSTEM_ID } from "~/src/helpers/constants";
   import { mappedGameTargets } from "~/src/stores";
   import { resolveDotpath } from "~/src/helpers/paths";
+  import { gameSettings } from '~/src/config/gameSettings';
 
   // export let messageId;
   export let FFMessage;
@@ -118,6 +119,7 @@
   $: disabled = hasTargets ? false : true;
   $: buttonCss = disabled || applied ? "disabled" : "";
   $: applied = $message?.flags[SYSTEM_ID]?.data?.applied;
+  $: showProfileImage = gameSettings.get('showChatProfileImages');
 
 </script>
 

@@ -11,6 +11,7 @@ export function registerSettings() {
   chatMessageSound()
   showStatusEffectNames()
   manualInitiative()
+  showChatProfileImages()
 }
 
 function manualInitiative() {
@@ -113,6 +114,20 @@ function chatMessageSound() {
       default: `sounds/notify.wav`,
       type: String,
       filePicker: "any",
+    }
+  });
+}
+function showChatProfileImages() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'showChatProfileImages',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.showChatProfileImages.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.showChatProfileImages.Hint`),
+      scope: 'user',
+      config: true,
+      default: true,
+      type: Boolean
     }
   });
 }

@@ -318,6 +318,10 @@
       "ManualInitiative": {
         "Name": "Manual Initiative",
         "Hint": "If checked, initiative will be manually set by the GM and or Players. If unchecked, initiative will be set automatically based on 1d20 + DEX."
+      },
+      "showChatProfileImages": {
+        "Name": "Show Profile Images in Chat",
+        "Hint": "If unchecked, actor profile images will not be shown in chat messages."
       }
     },
     "TitleBlock": {
