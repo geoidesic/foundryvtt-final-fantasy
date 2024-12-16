@@ -126,7 +126,10 @@
   .flexrow.title
     img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
     .flexcol.text
-      .col {FFMessage.actor.name}
+      .col 
+        .flexrow
+          .flex4 {FFMessage.actor.name}
+          .flex2.font-cinzel.smaller.gold {FFMessage.item.type}
       .col.font-cinzel.smaller {FFMessage.item.name}
     img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
   .flexrow
