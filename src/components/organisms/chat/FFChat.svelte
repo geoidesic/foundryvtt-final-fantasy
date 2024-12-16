@@ -10,19 +10,29 @@
   export let messageId;
   
   let isReady = false;
+
   let actor = new TJSDocument(void 0, { delete: () => {} });
   let message = new TJSDocument(void 0);
+  const sourceActor = game.actors.get(FFMessage.actor._id);
+  const sourceMessage = game.messages.get(messageId);
+  actor.set(sourceActor);
+  message.set(sourceMessage);
+  
+  setContext("sourceActor", actor);
+  setContext("message", message);
+  
   let messageColor;
   let messageContrast;
   let messageColorRGB;
-
-  onMount(async () => {
+  
+  onMount(() => {
     game.system.log.i("race ---- START FFChat mount----");
-    const sourceActor = game.actors.get(FFMessage.actor._id);
-    actor.set(sourceActor);
-    message.set(game.messages.get(messageId));
-    game.system.log.d("race FFChat messageId", messageId)
-    game.system.log.d("race FFChat message", message)
+    game.system.log.b("race sourceActor", sourceActor)
+    game.system.log.b("race sourceMessage", sourceMessage)
+    game.system.log.b("race FFChat messageId", messageId)
+    game.system.log.b("race FFChat $message", $message)
+    game.system.log.b("race FFChat $actor", $actor)
+    game.system.log.b("race FFChat FFMessage", FFMessage)
     isReady = true;
   });
 
@@ -33,14 +43,12 @@
     messageColor = cssVars.color;
     messageContrast = cssVars.contrast;
     messageColorRGB = cssVars.rgb;
-    game.system.log.g('messageColor', messageColor)
-    game.system.log.g('messageContrast', messageContrast)
-    game.system.log.g('messageColorRGB', messageColorRGB)
-    game.system.log.g('$actor', $actor)
+    // game.system.log.g('messageColor', messageColor)
+    // game.system.log.g('messageContrast', messageContrast)
+    // game.system.log.g('messageColorRGB', messageColorRGB)
+    // game.system.log.g('$actor', $actor)
   }
 
-  $: setContext("sourceActor", actor);
-  $: setContext("message", message);
 </script>
 
 {#if isReady}

@@ -7,6 +7,7 @@ export let img = false;
 export let imgSrc = `${ASSET_PATH}/portraits/witch2.webp`;
 export let strokeColor="#514030";
 export let onClick;
+export let size = 50;
 
 onMount(() => {
 });
@@ -18,10 +19,10 @@ onMount(() => {
       img(src="{imgSrc}" alt="avatar" on:click="{onClick}")
       +else
         slot
-    Corner.corner.bottom-right(strokeColor="{strokeColor}" size="50")
-    Corner.corner.bottom-left( flip="horizontal" strokeColor="{strokeColor}" size="50")
-    Corner.corner.top-right(flip="vertical" strokeColor="{strokeColor}" size="50")
-    Corner.corner.top-left( flip="both" strokeColor="{strokeColor}" size="50")
+    Corner.corner.bottom-right(strokeColor="{strokeColor}" size="{size}")
+    Corner.corner.bottom-left( flip="horizontal" strokeColor="{strokeColor}" size="{size}")
+    Corner.corner.top-right(flip="vertical" strokeColor="{strokeColor}" size="{size}")
+    Corner.corner.top-left( flip="both" strokeColor="{strokeColor}" size="{size}")
 </template>
 
 <style lang='sass'>

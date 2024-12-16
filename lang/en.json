@@ -17,6 +17,7 @@
   "FF15": {
     "BaseEffect": "Base Effect",
     "ChatText": "Chat Text",
+    "Check": "Check",
     "Description": "Description",
     "Details": "Details",
     "Effects": "Effects",

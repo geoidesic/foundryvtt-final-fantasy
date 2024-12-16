@@ -279,7 +279,7 @@
   .flexrow.gap-4
     +if("showProfileImage")
       .flex0.portrait-frame.pr-xs.wide
-        PortraitFrame.narrow.frame
+        PortraitFrame.narrow.frame(size="25")
           img.actor-img.clickable(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
     .flex3.content
       div {@html content}
@@ -338,8 +338,8 @@
   margin-right: -2px
   z-index: 2
 .img, img
-  max-width: 100px
-  max-height: 100px
+  max-width: 35px
+  max-height: 35px
 
 .action-result
   margin-top: 0.2em

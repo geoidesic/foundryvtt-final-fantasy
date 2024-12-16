@@ -21,7 +21,7 @@
             .flexrow.panel.borderless.wide
               .flex2.wide
                 .portrait-frame.pr-xs.wide
-                  PortraitFrame(style="min-width: 182px;")
+                  PortraitFrame(size="40" style="min-width: 182px;")
                     .flexcol.wide.gold
                       .flex1
                         h2.font-cinzel {localize(`${SYSTEM_CODE}.Description`)}
@@ -35,7 +35,7 @@
             .flexrow.panel.borderless.wide
               .flex2.wide
                 .portrait-frame.pr-xs.wide
-                  PortraitFrame(style="min-width: 182px;")
+                  PortraitFrame(size="40" style="min-width: 182px;")
                     .flexcol.wide
                       .flex1
                         h2.font-cinzel {localize(`${SYSTEM_CODE}.Points`)}
@@ -48,7 +48,7 @@
             .flexrow.panel.borderless.wide
             .flex2.gold
               .portrait-frame.pr-xs
-                PortraitFrame(style="min-width: 182px;")
+                PortraitFrame(size="40" style="min-width: 182px;")
                   Favourites.high.wide
         .flexcol.teal
           .background
@@ -56,7 +56,7 @@
             .flexrow.panel.borderless.wide
               .flex2.gold
                 .portrait-frame.pr-xs
-                  PortraitFrame(style="min-width: 182px;")
+                  PortraitFrame(size="40" style="min-width: 182px;")
                     EffectsSection.high.wide
                        
 

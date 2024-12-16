@@ -17,11 +17,11 @@ export default class RollCalcActor extends RollCalc {
   async attribute(key, code) {
     const attributeValue = this.params.actor.system.attributes[key][code].val;
     const rollFormula = `1d20 + ${attributeValue}`;
-    const attributeName = code.toUpperCase();
+    const attributeName = game.i18n.localize(`FF15.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
     const roll = await new Roll(rollFormula).evaluate({ async: true });
     const messageData = {
       speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: $actor }) : null,
-      flavor: `${attributeName} Check`,
+      flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       roll,
       flags: {
@@ -32,7 +32,8 @@ export default class RollCalcActor extends RollCalc {
               _id: this.params.actor._id,
               name: this.params.actor.name,
               img: this.params.actor.img
-            }
+            },
+            flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`
           },
           css: 'attribute-roll'
         }

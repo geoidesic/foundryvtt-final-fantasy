@@ -257,8 +257,10 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
  * controlled by TRL itself, so you must also manually destroy this component when the chat message is deleted.
  */
 Hooks.on('renderChatMessage', (message, html) => {
+
   const FFMessage = message.getFlag(SYSTEM_ID, 'data');
   const FFMessageState = message.getFlag(SYSTEM_ID, 'state');
+
   game.system.log.p(">>>>>> race renderChatMessage HOOK TRIGGERED <<<<<<", {
     messageId: message.id,
     hasFFMessage: !!FFMessage,
@@ -297,6 +299,8 @@ Hooks.on('renderChatMessage', (message, html) => {
       header.style.setProperty('--message-color-rgb', cssVars.rgb);
     }
     
+    let content;
+
     // For Attribute and Action rolls, extract just the message content
     if(['AttributeRollChat', 'ActionRollChat'].includes(FFMessage.chatTemplate)) {
       // Extract the message content and flavor text
@@ -306,7 +310,6 @@ Hooks.on('renderChatMessage', (message, html) => {
         ${flavorText ? `<span class="flavor-text">${flavorText.innerHTML}</span>` : ''}
         ${messageContent ? messageContent.innerHTML : ''}
       `;
-      
       // Remove flavor text from header and update HTML
       if (header) {
         const headerFlavorText = header.querySelector('.flavor-text');
@@ -315,20 +318,7 @@ Hooks.on('renderChatMessage', (message, html) => {
         }
         html[0].innerHTML = header.outerHTML;
       }
-      
-      html.addClass(SYSTEM_CODE);
-      html.addClass('leather');
-      
-      message._svelteComponent = new FFChat({
-        target: html[0],
-        props: {
-          classes: 'leather',
-          FFMessage,
-          FFMessageState,
-          messageId: message._id,
-          content: contentToPass
-        }
-      });
+      content = contentToPass;
     } else {
       // For other message types, update header colors but keep original content
       if (header) {
@@ -337,21 +327,21 @@ Hooks.on('renderChatMessage', (message, html) => {
           originalHeader.outerHTML = header.outerHTML;
         }
       }
-      
-      html.addClass(SYSTEM_CODE);
-      html.addClass('leather');
-      
-      message._svelteComponent = new FFChat({
-        target: html[0],
-        props: {
-          classes: 'leather',
-          FFMessage,
-          FFMessageState,
-          messageId: message._id,
-          content: originalContent
-        }
-      });
+      content = originalContent;
     }
+    html.addClass(SYSTEM_CODE);
+    html.addClass('leather');
+    
+    message._svelteComponent = new FFChat({
+      target: html[0],
+      props: {
+        classes: 'leather',
+        FFMessage,
+        FFMessageState,
+        messageId: message._id,
+        content
+      }
+    });
   }
 });
 
