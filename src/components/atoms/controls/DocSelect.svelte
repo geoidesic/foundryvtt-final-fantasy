@@ -10,6 +10,7 @@
   export let preventDefault = false;
   export let disabled = false;
   export let label = "";
+  export let callback = void 0;
 
   let inputValue = null, // Initialize to null to avoid preselection
     LABEL = !!label,
@@ -22,6 +23,7 @@
   const update = async () => {
     if (preventDefault) return;
     await $doc.update({ [valuePath]: inputValue });
+    await callback(inputValue);
   };
 
   onMount(() => {
