@@ -199,12 +199,12 @@
       .padded
         //- add in the job item if it exists
         +if("$Actor.system.job?.name")
-          h1.left.gold Job
+          h1.left.gold {localize('FF15.Job')}
           table.borderless
             tr
               td.img.shrink(scope="col")
                 img.icon(src="{$Actor.system.job?.img}" alt="{$Actor.system.job?.img}")
-              td.left.expand(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
+              td.left.expand.gold.larger(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
               td.right.expand.scaleup.kerned.glow.gold(scope="col") {$Actor.system.job?.level}
               td.buttons(scope="col")
                 button.stealth(on:click="{deleteJob}")
