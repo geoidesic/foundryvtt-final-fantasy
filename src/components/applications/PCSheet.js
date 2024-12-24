@@ -249,30 +249,93 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   async _onDropJob(event, data) {
-    // console.log('_onDropJob', data);
     const actor = this.reactive.document;
 
     if (!actor.isOwner) {
       return false;
     }
-    //- get the grants from the job item and apply them to the actor
+    
     const job = await fromUuid(data.uuid);
     const grants = job.system.grants;
-    //- apply the grants to the actor,
-    //- iterate over the grants collection as an array and await the fromUuid call, collate these items into an array  
     const grantItems = [];
+    const failedUuids = []; // Track UUIDs that couldn't be found
+    
+    game.system.log.d('_onDropJob: Job grants:', grants);
+    
     for(let grantObject of grants.list) {
-      //- grants in the job are stored as uuids,
-      const grantItem = await fromUuid(grantObject.uuid);
-      //- filter out any grants that are already owned by the actor by name
+      game.system.log.d('_onDropJob: Processing grant:', grantObject);
+      
+      // Try to get item, handling both short and full UUID formats
+      let grantItem;
+      if (grantObject.uuid.startsWith('Item.')) {
+        grantItem = game.items.get(grantObject.uuid.replace('Item.', ''));
+        game.system.log.d('_onDropJob: Attempting to find world item:', grantItem);
+      } else {
+        grantItem = await fromUuid(grantObject.uuid);
+        game.system.log.d('_onDropJob: Attempting to find compendium item:', grantItem);
+      }
+      
+      if (!grantItem) {
+        game.system.log.w(`_onDropJob: Failed to find item with UUID: ${grantObject.uuid}`);
+        failedUuids.push(grantObject.uuid);
+        continue;
+      }
+      
       if(!actor.items.some(x => x.name === grantItem.name)) {
         grantItems.push(grantItem);
       }
     }
-    //- apply the grants to the actor
-    await actor.createEmbeddedDocuments("Item", grantItems);
-    //- also add the job uuid to the actor
-    await actor.update({system: {job: {uuid: job.uuid, name: job.name, grants: grants.list, level: job.system.level, role: job.system.role, img: job.img}}});
+    
+    if (failedUuids.length > 0) {
+      const confirmed = await Dialog.confirm({
+        title: "Missing Items Found",
+        content: `
+          <p>The following items could not be found:</p>
+          <p>${failedUuids.join('<br>')}</p>
+          <p>Would you like to remove these invalid references from the job?</p>
+        `,
+        yes: () => true,
+        no: () => false
+      });
+      
+      if (confirmed) {
+        // Get fresh copy of job
+        const jobToUpdate = await fromUuid(data.uuid);
+        
+        // Filter out failed UUIDs
+        const updatedGrants = {
+          ...jobToUpdate.system.grants,
+          list: jobToUpdate.system.grants.list.filter(g => !failedUuids.includes(g.uuid))
+        };
+        
+        // Update the job
+        await jobToUpdate.update({
+          'system.grants': updatedGrants
+        });
+        
+        ui.notifications.info(`Removed ${failedUuids.length} invalid references from job.`);
+      } else {
+        ui.notifications.error(`Job import cancelled due to missing items.`);
+        return false;
+      }
+    }
+    
+    if (grantItems.length > 0) {
+      await actor.createEmbeddedDocuments("Item", grantItems);
+    }
+    
+    await actor.update({
+      system: {
+        job: {
+          uuid: job.uuid,
+          name: job.name,
+          grants: grants.list,
+          level: job.system.level,
+          role: job.system.role,
+          img: job.img
+        }
+      }
+    });
   }
 
   async _onDropItemCreate(itemData) {
