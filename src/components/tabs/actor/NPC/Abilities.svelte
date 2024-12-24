@@ -15,8 +15,9 @@
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
+  const RollCalc = new RollCalcActor({ actor: $Actor });
   const typeSearch = createFilterQuery("type");
-  typeSearch.set(["trait", "action", "telegraph"]); // Updated to filter for both types
+  typeSearch.set(["trait", "action"]); // Updated to filter for both types
   const input = {
     store: typeSearch,
     efx: rippleFocus(),
@@ -24,6 +25,29 @@
     type: "search",
     id: "search",
   };
+
+  let combat;
+  
+  function onCombatUpdate() {
+    combat = game.combat;
+  }
+
+  onMount(() => {
+    // Initial combat state
+    combat = game.combat;
+    
+    // Subscribe to combat updates
+    Hooks.on('createCombat', onCombatUpdate);
+    Hooks.on('deleteCombat', onCombatUpdate);
+    Hooks.on('updateCombat', onCombatUpdate);
+    
+    return () => {
+      // Cleanup hooks on component destroy
+      Hooks.off('createCombat', onCombatUpdate);
+      Hooks.off('deleteCombat', onCombatUpdate);
+      Hooks.off('updateCombat', onCombatUpdate);
+    };
+  });
 
   /** @type {import('@typhonjs-fvtt/runtime/svelte/store').DynMapReducer<string, Item>} */
   const wildcard = doc.embedded.create(Item, {
@@ -197,7 +221,7 @@
                 img.icon(src="{item.img}" alt="{item.name}")
               td.left
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-                +if("item.system.hasLimitation && game.combat")
+                +if("item.system.hasLimitation && combat")
                   span.ml-sm
                     Badge(type!="{badgeType(item)}") {remaining(item)}
               td {ucfirst(item.type)}

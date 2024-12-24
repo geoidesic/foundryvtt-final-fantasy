@@ -32,6 +32,29 @@
     sort: (a, b) => a.name.localeCompare(b.name),
   });
 
+  let combat;
+  
+  function onCombatUpdate() {
+    combat = game.combat;
+  }
+
+  onMount(() => {
+    // Initial combat state
+    combat = game.combat;
+    
+    // Subscribe to combat updates
+    Hooks.on('createCombat', onCombatUpdate);
+    Hooks.on('deleteCombat', onCombatUpdate);
+    Hooks.on('updateCombat', onCombatUpdate);
+    
+    return () => {
+      // Cleanup hooks on component destroy
+      Hooks.off('createCombat', onCombatUpdate);
+      Hooks.off('deleteCombat', onCombatUpdate);
+      Hooks.off('updateCombat', onCombatUpdate);
+    };
+  });
+
   function editItem(item) {
     item.sheet.render(true);
 
@@ -130,8 +153,6 @@
     item.sheet.render(true);
   }
 
-  onMount(async () => {});
-
   $: items = [...$wildcard];
   $: lockCSS = $doc.system.inventoryLocked ? "lock" : "lock-open";
   $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock negative" : "fa-lock-open positive";
@@ -154,7 +175,8 @@
       tr
         th.img.shrink(scope="col")
         th.left.expand(scope="col") {localize(`${SYSTEM_CODE}.Name`)}
-        th.fixed(scope="col") 
+        +if("combat")
+          th
         th.shrink(scope="col")
           
       +each("items as item, index")
@@ -163,10 +185,10 @@
             img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
           td.left.clip
             a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-            +if("item.system.hasLimitation && game.combat")
-              span.ml-sm
+          +if("combat")
+            td.left
+              +if("item.system.hasLimitation")
                 Badge(type!="{badgeType(item)}") {remaining(item)}
-          td
           td
             button.stealth(on:click="{toggleBookmark(item)}") 
               i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
