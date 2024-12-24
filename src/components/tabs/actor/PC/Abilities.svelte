@@ -225,11 +225,13 @@
             tr
               td.img(data-tooltip="{localize('FF15.Use')}")
                 img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.ability(item.type, item)}")
-              td.left(data-tooltip="{localize('FF15.View')}")
-                a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-                +if("item.system.hasLimitation && combat")
-                  span.ml-sm
-                    Badge(type!="{badgeType(item)}") {remaining(item)}
+              td.left
+                .flexrow
+                  .flex3.left(data-tooltip="{localize('FF15.View')}")
+                    a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+                  +if("item.system.hasLimitation && combat")
+                    .flex0.right.ml-sm(data-tooltip="{localize('FF15.Uses')}")
+                      Badge(type!="{badgeType(item)}") {remaining(item)}
               td.left {ucfirst(item.type)}
               td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
               td(data-tooltip="{localize('FF15.Bookmark')}")

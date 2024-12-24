@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
-  import { getRangeOptions, getLimitationOptions, getAspectedOptions, getTargetOptions, getHeavyshotOptions, getTriggerOptions, getDirectHitOptions, getTypeOptions } from "~/src/helpers/constants.js";
+  import { getRangeOptions, getLimitationOptions, getLimitationUnits, getAspectedOptions, getTargetOptions, getHeavyshotOptions, getTriggerOptions, getDirectHitOptions, getTypeOptions } from "~/src/helpers/constants.js";
   import { getCROptions } from "~/src/helpers/constants.js";
   import { PCModel } from "~/src/models/actors/PC.js";
   import { getDefaultStatusEffects } from "~/src/helpers/Conditions.js";
@@ -36,7 +36,7 @@
   const directHitOptions = getDirectHitOptions();
   const typeOptions = getTypeOptions();
   const directHitConditionOptions = getDefaultStatusEffects().map((effect) => ({ value: effect.id, label: effect.name }));
-
+  const limitationUnitsOptions = getLimitationUnits();
 
   const costOptions = [
     { value: 1, label: localize("FF15.Types.Item.Types.Options.Cost.1") },
@@ -146,12 +146,8 @@
 
       +if("$item.system.hasLimitation")
         .flexrow.sheet-row.justify-vertical.wide
-          .flex1
-            label(for="limitation") {localize("FF15.Types.Item.Types.Options.Limitation.Uses")}
-          .flex2.right
-            DocSelect.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
-          .flex1
-            label(for="limitationUnits") {localize("FF15.Types.Item.Types.Options.Limitation.Units")}
+          .flex2.left
+            DocSelect.left(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
           .flex2.right
             DocSelect.right(id="limitationUnits" name="limitationUnits" options="{limitationUnitsOptions}" valuePath="system.limitationUnits")
 

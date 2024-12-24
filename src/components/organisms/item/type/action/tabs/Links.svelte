@@ -18,15 +18,15 @@
   .flexcol
     .flex3.left.high
       ItemBucket(
-        title="Target Effects",
+        title="{localize('FF15.Target')} {localize('Effects')}",
         key="grants",
       )
       ItemBucket(
-        title="Enabled Traits",
+        title="{localize('FF15.Enabled')} {localize('Traits')}",
         key="enables",
       )
       ItemBucket(
-        title="Combos",
+        title="{localize('FF15.Combos')}",
         key="combos",
       )
 

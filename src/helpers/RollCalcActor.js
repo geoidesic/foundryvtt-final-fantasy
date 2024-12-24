@@ -126,6 +126,75 @@ export default class RollCalcActor extends RollCalc {
     game.system.log.g('trait chat message created');
   }
 
+  async _handleEffectEnabling(item) {
+    game.system.log.g('_handleEffectEnabling start', { item });
+    
+    if (!game.combat || !item.system.enables?.value) {
+      game.system.log.g('Early return - no combat or enables not set', { 
+        inCombat: !!game.combat, 
+        enablesValue: item.system.enables?.value 
+      });
+      return;
+    }
+
+    const enablesList = item.system.enables.list;
+    if (!enablesList?.length) {
+      game.system.log.g('Early return - no enables list or empty', { enablesList });
+      return;
+    }
+    game.system.log.g('Processing enables list', { enablesList });
+
+    // Get all active effects currently on the actor
+    const actorEffects = this.params.actor.effects;
+    game.system.log.g('Actor effects', { actorEffects });
+
+    // Iterate through the enables list
+    for (const enableItemRef of enablesList) {
+      game.system.log.g('Processing enable item reference', { enableItemRef });
+      
+      // Get the actual item from the UUID
+      const enableItem = await fromUuid(enableItemRef.uuid);
+      if (!enableItem) {
+        game.system.log.g('Skipping - could not resolve item from UUID', { uuid: enableItemRef.uuid });
+        continue;
+      }
+      game.system.log.g('Resolved enable item', { enableItem });
+      
+      // Get the item's effects
+      const itemEffects = enableItem.effects;
+      if (!itemEffects?.size) {
+        game.system.log.g('Skipping - no item effects', { enableItem });
+        continue;
+      }
+      game.system.log.g('Item effects found', { itemEffects: Array.from(itemEffects) });
+
+      // For each effect on the enabled item
+      for (const effect of itemEffects) {
+        game.system.log.g('Processing effect', { effect });
+        
+        // Find matching effect on actor (if any)
+        const matchingEffect = actorEffects.find(ae => 
+          ae.label === effect.label && 
+          ae.disabled // Only enable if it's currently disabled
+        );
+        
+        game.system.log.g('Matching effect search result', { 
+          matchingEffect,
+          effectLabel: effect.label,
+          matchFound: !!matchingEffect
+        });
+
+        // If we found a matching disabled effect, enable it
+        if (matchingEffect) {
+          game.system.log.g('Enabling matching effect', { matchingEffect });
+          await matchingEffect.update({ disabled: false });
+          game.system.log.g('Effect enabled');
+        }
+      }
+    }
+    game.system.log.g('_handleEffectEnabling complete');
+  }
+
   async abilityAction(item) {
     game.system.log.g('abilityAction start', { item });
     if (item.type !== "action") {
@@ -149,11 +218,23 @@ export default class RollCalcActor extends RollCalc {
       callback: (html) => {
         const form = html[0].querySelector("form");
         return {
-          modifier: parseInt(form.modifier.value) || 0
+          modifier: parseInt(form.modifier.value) || 0,
+          confirmed: true
         };
-      }
+      },
+      rejectClose: true // This ensures we get a proper reject when dialog is closed
     });
-    game.system.log.g('modifier dialog complete', { extraModifiers });
+    
+    game.system.log.g('modifier dialog result', { extraModifiers });
+    
+    // If dialog was cancelled or closed, return early
+    if (!extraModifiers?.confirmed) {
+      game.system.log.g('modifier dialog cancelled or closed, returning');
+      return;
+    }
+
+    // Handle effect enabling after successful modifier dialog
+    await this._handleEffectEnabling(item);
 
     // Check if we have targeted entities
     const targets = game.user.targets;

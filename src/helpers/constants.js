@@ -10,6 +10,13 @@ export const LOG_STYLES = {
   o: 'color: orange;',
   b: 'color: blue;'
 };
+
+
+export const getLimitationUnits = () => [
+  { value: "phase", label: game.i18n.localize("FF15.Phase") },
+  { value: "turn", label: game.i18n.localize("FF15.Turn") }
+];
+
 export const getTypeOptions = () => [
   { value: "primary", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.primary") },
   { value: "secondary", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.secondary") },
@@ -118,7 +125,3 @@ export const activeEffectModes = [
   }
 ]
 
-export const getLimitationUnits = () => [
-  { value: "phase", label: "Phase" },
-  { value: "turn", label: "Turn" }
-];
