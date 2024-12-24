@@ -1,7 +1,7 @@
 <script>
 import { onMount, getContext } from 'svelte';
 import { SYSTEM_ID } from '~/src/helpers/constants';
-import { ucfirst } from '~/src/helpers/util';
+import { ucfirst, localize } from '~/src/helpers/util';
 import DocCheckbox from '~/src/components/atoms/controls/DocCheckbox.svelte'
 
 export let title
@@ -9,6 +9,7 @@ export let key
 export let valuePath = `system.${key}.value`;
 export let additionalColumns = []; // Array of {header: string, path: string} objects
 export let warnOnCompendiumDrops = true;
+export let preventDuplicates = true;
 
 const item = getContext("#doc");
 let localList = []
@@ -20,18 +21,14 @@ $: if ($item.system[key]?.list) {
 
 async function updateLocalList() {
   localList = [];
-  const currentList = $item.system[key]?.list || [];
-  
-  for (let listItem of currentList) {
+  for (let listItem of $item.system[key].list) {
     try {
       const item = await fromUuid(listItem.uuid);
       if (item) {
         localList = [...localList, item];
-      } else {
-        console.warn(`Item with UUID ${listItem.uuid} not found`);
       }
     } catch (error) {
-      console.error(`Error loading item with UUID ${listItem.uuid}:`, error);
+      console.error(error);
     }
   }
 }
@@ -41,6 +38,11 @@ async function onDrop(event) {
   const data = JSON.parse(event.dataTransfer.getData("text/plain"));
   const droppedItem = await Item.implementation.fromDropData(data);
   if (!droppedItem) return;
+
+  if (preventDuplicates && localList.some(item => item.uuid === droppedItem.uuid)) {
+    ui.notifications.warn(`${droppedItem.name} is already in the list.`);
+    return;
+  }
 
   // Check if it's a non-compendium drop and warning is enabled
   if (warnOnCompendiumDrops && !droppedItem.uuid.startsWith('Compendium.')) {
@@ -55,16 +57,10 @@ async function onDrop(event) {
     if (!confirmed) return;
   }
 
-  // Get current list and ensure it's an array
-  const currentList = $item.system[key]?.list || [];
-  const newList = [...currentList];
-  
-  // Check if item is already in the list
-  const isDuplicate = newList.some(listItem => listItem.uuid === droppedItem.uuid);
-  if (!isDuplicate) {
-    newList.push({ uuid: droppedItem.uuid });
-    await $item.update({ [`system.${key}.list`]: newList });
-  }
+  const list = [...$item.system[key].list];
+  list.push({ uuid: droppedItem.uuid });
+
+  await $item.update({ [`system.${key}.list`]: list });
 }
 
 async function deleteLink(index) {
@@ -85,30 +81,36 @@ function showItemSheet(item) {
       .flex3
           h2.wide {title}
       .flex0.right
-        DocCheckbox.right.wide({...$$restProps} valuePath="{valuePath}")
+        DocCheckbox.right.wide(
+        {...$$restProps}
+        valuePath="{valuePath}"
+      )
     slot
-    +if("checkboxValue")
+    +if("checkboxValue && localList.length > 0")
       table.standard-list.small-text.borderless
         tr
-          th.img.shrink(scope="col")
-          th.left.expand(scope="col") Name
-          th.left.fixed(scope="col") Item Type
+          th.img.expand(scope="col")
+          th.left.expand.no-wrap(scope="col") {localize("Name")}
+          th.left.shrink(scope="col") {localize("Type")}
           +each("additionalColumns as col")
             th.left.fixed(scope="col") {col.header}
           th.buttons
             button.stealth
-              i.fa.fa-trash
         +each("localList as item, index")
           tr
             td.img
               img.icon.nopointer(src="{item.img}" alt="{item.name}")
-            td.left.pointer(on:click!="{showItemSheet(item)}") {item?.name}
+            td.left.pointer.no-wrap(on:click!="{() => showItemSheet(item)}") {item?.name}
             td.left {ucfirst(item?.type)}
             +each("additionalColumns as col")
               td.left {item.type === col.itemType ? ucfirst(item.system?.[col.path] || '') : ''}
             td.buttons.right
-              button.stealth(on:click!="{deleteLink(index)}")
+              //- do not remove the closure here, it causes all hell to break loose!
+              button.stealth(on:click!="{() => deleteLink(index)}")
                 i.left.fa.fa-trash.pointer
+      +else
+        .empty-list
+          p.empty-list-text Drop items here to add them to the list.
 
 </template>
 
@@ -117,21 +119,55 @@ function showItemSheet(item) {
 
 .item-bucket
   padding: 0.5em
-  margin-bottom: 1em
+  margin-bottom: 1.5em
   border: 1px solid rgba(0, 0, 0, 0.1)
   border-radius: 3px
+  background-color: var(--color-lowlight)
 
-.standard-list
+.empty-list
+  padding: 0.5em
+  margin-bottom: 1em
+  border: 3px dotted var(--ff-border-color)
+  border-radius: 10px
+  text-align: center
+  color: silver
+
+table.standard-list
   width: 100%
   margin-top: 0.5em
+  color: white
+  tr
+    position: relative
+    td:first-child
+      border-bottom-left-radius: 7px
+      border-top-left-radius: 7px
+    &:nth-child(even)
+      background-color: var(--color-lowlight-dark)
+      td
+    &:not(:first-child):nth-child(odd)
+      background-color: var(--color-lowlight-dark)
+      td
+        border-top: 2px solid transparent
+        border-bottom: 2px solid transparent
 
+  th
+    color: wheat
   th, td
-    padding: 0.3em
+    padding: 0 0.3em
     &.img
-      width: 40px
+      img
+        position: absolute
+        left: 0
+        top: -5px
+        width: 36px
+        height: 36px
+        object-fit: cover
+        border: none
     &.buttons
       width: 40px
       text-align: right
+    &:not(:first-child)
+      border-bottom: 2px solid transparent
 
 .icon
   width: 36px

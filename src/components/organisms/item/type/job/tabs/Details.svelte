@@ -11,7 +11,7 @@
   const item = getContext("#doc");
   
   const grantColumns = [{
-    header: "Action Type",
+    header: "",
     path: "type",
     itemType: "action"
   }];
