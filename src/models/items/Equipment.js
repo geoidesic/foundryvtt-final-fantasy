@@ -6,6 +6,7 @@ export class EquipmentModel extends FFItemDataModel {
     return {
       ...super.defineSchema(),  // Merge with the base model schema
       quantity: new NumberField({ required: false, integer: true, min: 0, initial: 1 }),
+      actionType: new SelectField({ required: true, options: ['primary', 'secondary'], initial: 'secondary' }),
     };
   }
 
