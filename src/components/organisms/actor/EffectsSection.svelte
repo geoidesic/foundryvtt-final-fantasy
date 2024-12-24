@@ -170,7 +170,7 @@
 
 <template lang="pug">
  .favourites({...$$restProps})
-    h2.font-cinzel Effects
+    h2.font-cinzel {localize('FF15.Effects')}
     div.pa-xs
       +if("ActiveEffects.length > 0")
         table.borderless

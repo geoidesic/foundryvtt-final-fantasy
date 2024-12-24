@@ -49,7 +49,7 @@
               img.rest-icon(src="systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp")
 
         .flex4.nowrap.font-inter.lvcontainer.glow
-          .scaleup LV 
+          .scaleup {localize('FF15.LV')} 
           .scaleup {level}
 
     .flex4.no-wrap.font-cinzel.job  {roleName} /  {jobName}
