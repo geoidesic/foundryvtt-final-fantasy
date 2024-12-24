@@ -61,7 +61,8 @@
       "NotOwner": "You are not the owner of this actor.",
       "EffectItemsNotAllowed": "Effect items are not allowed to be dropped directly on the actor. Instead use the status effects token HUD, or effects can be applied to the actor by other items.",
       "GMOnly": "You must be a GM to perform this action.",
-      "DuplicateTag": "Tag already exists"
+      "DuplicateTag": "Tag already exists",
+      "CannotMoveWhileFocused": "Cannot move while `focus` condition is active on token."
     },
     "Types": {
       "Item": {

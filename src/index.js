@@ -157,6 +157,18 @@ Hooks.on('canvasReady', () => {
 
 })
 
+Hooks.on('preUpdateToken', async (tokenDocument, update) => {
+  // prevent movement while targeting
+  console.log('preUpdateToken', tokenDocument);
+  const actor = game.actors.get(tokenDocument.actorId);
+  console.log('actor', actor);
+  if (actor.statuses.has('focus') && (update.x || update.y)) {
+    delete update.x;
+    delete update.y;
+    ui.notifications.warn(game.i18n.localize("FF15.Errors.CannotMoveWhileFocused"))
+  }
+});
+
 Hooks.on("combatStart", async () => {
   const combatStartSound = game.settings.get(SYSTEM_ID, 'combatStartSound').trim();
   if (combatStartSound !== '') {
