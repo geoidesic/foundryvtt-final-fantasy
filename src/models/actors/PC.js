@@ -19,9 +19,18 @@ export class PCModel extends FFActorDataModel {
         role: new StringField({ required: true, initial: '' }),
         name: new StringField({ required: true, initial: '' }),
         img: new StringField({ required: true, initial: '' })
+      }),
+      actionState: new SchemaField({
+        available: new ArrayField(new StringField(), {
+          initial: ['primary', 'secondary']
+        }),
+        used: new ArrayField(new SchemaField({
+          type: new StringField({ required: true }),
+          messageId: new StringField({ required: true })
+        }), {
+          initial: []
+        })
       })
-      
-      
     }
   }
 }

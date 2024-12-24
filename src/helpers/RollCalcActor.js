@@ -321,8 +321,26 @@ export default class RollCalcActor extends RollCalc {
       }
     };
 
-    await roll.toMessage(messageData);
+    // Before creating the message, check if this action type is available
+    const actionType = item.system.actionType || 'primary'; // default to primary if not set
+    const { actionState } = this.params.actor.system;
+    
+    if (!actionState.available.includes(actionType)) {
+      ui.notifications.warn(`No ${actionType} action available.`);
+      return;
+    }
 
+    // Create the message
+    const message = await roll.toMessage(messageData);
+
+    // Update the actor's actionState
+    await this.params.actor.update({
+      'system.actionState.available': actionState.available.filter(a => a !== actionType),
+      'system.actionState.used': [...actionState.used, {
+        type: actionType,
+        messageId: message.id
+      }]
+    });
 
     // Handle effect enabling after successful modifier dialog
     await this._handleEffectEnabling(item);

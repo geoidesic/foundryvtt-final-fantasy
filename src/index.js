@@ -431,3 +431,49 @@ Hooks.on("updateCombat", async (combat, changed, options, userId) => {
   }
 });
 
+// Reset action state at end of turn
+Hooks.on("updateCombat", async (combat, changed, options, userId) => {
+  // Only process if the turn actually changed
+  if (!("turn" in changed) || changed.turn === null) return;
+
+  // Get the previous combatant
+  const previousTurn = combat.turns[combat.previous?.turn];
+  if (!previousTurn) return;
+
+  const actor = previousTurn.actor;
+  if (!actor) return;
+
+  // Reset action state
+  const baseActions = ['primary', 'secondary'];
+  const extraActions = actor.statuses.has('focus') ? ['secondary'] : [];
+  
+  await actor.update({
+    'system.actionState': {
+      available: [...baseActions, ...extraActions],
+      used: []
+    }
+  });
+});
+
+// Add this new hook
+Hooks.on("preDeleteChatMessage", async (message) => {
+  // Check if this is an action message
+  const FFMessage = message.getFlag(SYSTEM_ID, 'data');
+  if (!FFMessage?.item?.type === 'action') return;
+
+  const actor = game.actors.get(FFMessage.actor._id);
+  if (!actor) return;
+
+  // Find if this message is tracked in used actions
+  const { actionState } = actor.system;
+  const usedAction = actionState.used.find(u => u.messageId === message.id);
+  
+  if (usedAction) {
+    // Restore the action
+    await actor.update({
+      'system.actionState.available': [...actionState.available, usedAction.type],
+      'system.actionState.used': actionState.used.filter(u => u.messageId !== message.id)
+    });
+  }
+});
+
