@@ -1,4 +1,4 @@
-export default class SurgeCombat extends Combat {
+export default class FFCombat extends Combat {
   constructor(data, context) {
     super(data, context);
     game.system.log.d('>>>>>>>>>> SurgeCombat constructor')

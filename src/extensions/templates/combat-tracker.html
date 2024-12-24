@@ -60,6 +60,7 @@
 
     <ol id="combat-tracker" class="directory-list">
         {{#each turns}}
+        {{log "FFCombatTracker turn" this}}
         <li class="combatant actor directory-item flexrow {{this.css}}" data-combatant-id="{{this.id}}">
             <img class="token-image" data-src="{{this.img}}" alt="{{this.name}}"/>
             <div class="token-name flexcol">
@@ -88,23 +89,6 @@
                         <img class="token-effect" src="{{this}}"/>
                         {{/each}}
                     </div>
-                    {{log "[COMBAT_BADGES] Combatant data:" this}}
-                    {{log "[COMBAT_BADGES] Actor data:" this.actor}}
-                    {{#if this.actor.type}}
-                    {{log "[COMBAT_BADGES] Actor type:" this.actor.type}}
-                    {{#if (eq this.actor.type "PC")}}
-                    {{log "[COMBAT_BADGES] PC actionState:" this.actor.system.actionState}}
-                    <div class="action-badges">
-                        {{#each this.actor.system.actionState.available}}
-                        {{log "[COMBAT_BADGES] Action type:" this}}
-                        <span class="badge round badge-{{this}}" data-tooltip="{{capitalize this}} Action">
-                            {{#if (eq this "primary")}}P{{/if}}
-                            {{#if (eq this "secondary")}}S{{/if}}
-                        </span>
-                        {{/each}}
-                    </div>
-                    {{/if}}
-                    {{/if}}
                 </div>
             </div>
 
@@ -113,7 +97,13 @@
                 <span class="resource">{{this.resource}}</span>
             </div>
             {{/if}}
+            {{#if this.hasActions}}
+            <div class="token-resource">
+                <span class="resource mr-xs">{{{this.actions}}}</span>
+            </div>
+            {{/if}}
 
+         
             <div class="token-initiative">
                 {{#if this.hasRolled}}
                     {{#if (not ../combat.started)}}

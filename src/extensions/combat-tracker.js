@@ -17,6 +17,28 @@ export default class FFCombatTracker extends CombatTracker {
     });
   }
 
+  async getData() {
+    const data = await super.getData();
+    for(const turn of data.turns) {
+      const combatant = game.combat.combatants.get(turn.id);
+      const actor = combatant.actor
+      turn.hasActions = true
+      turn.actions = ''
+      if(actor.system.actionState?.available) {
+        for(const action of actor.system.actionState.available) {
+          turn.actions += `<badge class="${action}">${action[0].capitalize()}</badge>`
+        }
+      }
+      if(actor.system.actionState?.used) {
+        for(const action of actor.system.actionState.used) {
+          turn.actions += `<badge class="used">${action[0].capitalize()}</badge>`
+        }
+      }
+    }
+    game.system.log.d('FFCombatTracker getData', data);
+    return data;
+  }
+
   async _onCombatantMouseDown(event) {
     event.preventDefault();
     // event.stopPropagation(); //- this breaks the context menu, so removing it and the input click still works as expected

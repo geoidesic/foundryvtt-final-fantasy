@@ -24,6 +24,15 @@
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
 
+badge
+  &.primary
+    +badge(var(--color-primary-action), white)
+  &.secondary
+    +badge(var(--color-secondary-action), white)
+  &.reaction
+    +badge(var(--color-reaction), white)
+  &.used
+    +badge(var(--color-highlight), white)
 .icon-critical:before
   content: "\e900"
 
