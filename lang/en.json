@@ -376,6 +376,10 @@
       "name": "Enabled",
       "description": "Character has a trait enabled."
     },
+    "focus": {
+      "name": "Focus",
+      "description": "Character is focused on a target and thus gets an additional Secondary Action but cannot move."
+    },
     "ko": {
       "name": "Knocked Out",
       "description": "A knocked out character is unconscious and cannot act."

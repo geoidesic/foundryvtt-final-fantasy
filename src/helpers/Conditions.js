@@ -111,12 +111,19 @@ export function getDefaultStatusEffects() {
         },
       ]
     },
-
     {
       id: "enabled",
       name: game.i18n.localize("statusEffects.enabled.name"),
       icon: `icons/svg/upgrade.svg`,
       description: game.i18n.localize("statusEffects.enabled.description"),
+      flags: { [SYSTEM_ID]: { periodic: false, special: true } },
+      changes: []
+    },
+    {
+      id: "focus",
+      name: game.i18n.localize("statusEffects.focus.name"),
+      icon: `icons/svg/eye.svg`,
+      description: game.i18n.localize("statusEffects.focus.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: true } },
       changes: []
     }
