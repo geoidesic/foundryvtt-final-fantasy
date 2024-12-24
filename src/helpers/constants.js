@@ -117,3 +117,8 @@ export const activeEffectModes = [
     label: "upgrade" // i.e. limit the minimum value
   }
 ]
+
+export const getLimitationUnits = () => [
+  { value: "phase", label: "Phase" },
+  { value: "turn", label: "Turn" }
+];

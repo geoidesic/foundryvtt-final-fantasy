@@ -11,10 +11,11 @@ export class TraitModel extends FFItemDataModel {
       type: new StringField({ required: false, initial: '' }),
       hasLimitation: new BooleanField({ required: false, initial: false }),
       limitation: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
+      limitationUnits: new StringField({ required: false, initial: "phase" }),
       uses: new NumberField({ required: false, initial: 0, integer: true, min: 0 }),
       hasModifier: new BooleanField({ required: false, initial: false }),
       modType: new StringField({ required: false, initial: '' }),
-      operator: new StringField({ required: false, initial: '' }),
+      operator: new StringField({ required: false, initial: '+' }),
       modAmount: new NumberField({ required: false, initial: 0 }),
     };
   }

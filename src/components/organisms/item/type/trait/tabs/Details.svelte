@@ -1,8 +1,7 @@
-
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
-  import { getLimitationOptions } from "~/src/helpers/constants"
+  import { getLimitationOptions, getLimitationUnits } from "~/src/helpers/constants"
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
@@ -10,6 +9,7 @@
   const item = getContext("#doc");
 
   const limitationOptions = getLimitationOptions();
+  const limitationUnitsOptions = getLimitationUnits();
 
 
   const typeOptions = [
@@ -48,10 +48,10 @@
         DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
     +if("$item.system.hasLimitation")
       .flexrow.sheet-row.justify-vertical
-        .flex2
-          label(for="limitation") Limitation
+        .flex2.left
+          DocSelect.left(id="limitation" name="limitation" options="{limitationOptions}" valuePath="system.limitation")
         .flex2.right
-          DocSelect.right(id="limitation" name="limitation" options="{limitationOptions}" valuePath="system.limitation")
+          DocSelect.right(id="limitationUnits" name="limitationUnits" options="{limitationUnitsOptions}" valuePath="system.limitationUnits")
   
       
     .flexrow.justify-vertical

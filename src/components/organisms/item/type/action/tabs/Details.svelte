@@ -147,9 +147,13 @@
       +if("$item.system.hasLimitation")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="limitation") Limitation
-          .flex4.right.wide
-            DocSelect.wide.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
+            label(for="limitation") {localize("FF15.Types.Item.Types.Options.Limitation.Uses")}
+          .flex2.right
+            DocSelect.right(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
+          .flex1
+            label(for="limitationUnits") {localize("FF15.Types.Item.Types.Options.Limitation.Units")}
+          .flex2.right
+            DocSelect.right(id="limitationUnits" name="limitationUnits" options="{limitationUnitsOptions}" valuePath="system.limitationUnits")
 
       .flexrow.justify-vertical
         .flex4

@@ -31,6 +31,7 @@ export class ActionModel extends FFItemDataModel {
       heavierShot: new StringField({ required: false, initial: '' }),
       hasLimitation: new BooleanField({ required: false, initial: false }),
       limitation: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
+      limitationUnits: new StringField({ required: false, initial: "phase" }),
       uses: new NumberField({ required: false, initial: 0, integer: true, min: 0 }),
       type: new StringField({ required: false, initial: '' }),
       formula: new StringField({ required: false, initial: '' }),
@@ -72,6 +73,7 @@ export class ActionModel extends FFItemDataModel {
       tags: new ArrayField(
         new StringField({ required: false, initial: '' })
       ),
+      isMagic: new BooleanField({ required: false, initial: false }),
     };
   }
 

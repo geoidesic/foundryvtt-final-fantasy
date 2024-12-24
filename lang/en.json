@@ -125,9 +125,11 @@
               "ice": "Ice"
             },
             "Limitation": {
-              "once": "Once per phase",
-              "twice": "Twice per phase",
-              "thrice": "Thrice per phase"
+              "once": "Once per",
+              "twice": "Twice per",
+              "thrice": "Thrice per",
+              "Uses": "Uses",
+              "Units": "Units"
             },
             "ModType": {
               "Allchecks": "All Checks",
