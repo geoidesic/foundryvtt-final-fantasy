@@ -8,6 +8,7 @@ export let title
 export let key
 export let valuePath = `system.${key}.value`;
 export let additionalColumns = []; // Array of {header: string, path: string} objects
+export let warnOnCompendiumDrops = true;
 
 const item = getContext("#doc");
 let localList = []
@@ -36,6 +37,19 @@ async function onDrop(event) {
   const data = JSON.parse(event.dataTransfer.getData("text/plain"));
   const droppedItem = await Item.implementation.fromDropData(data);
   if (!droppedItem) return;
+
+  // Check if it's a non-compendium drop and warning is enabled
+  if (warnOnCompendiumDrops && !droppedItem.uuid.startsWith('Compendium.')) {
+    const confirmed = await Dialog.confirm({
+      title: "Non-Compendium Item",
+      content: `<p>Warning: You are adding an item from the game world rather than from a compendium. If this item is deleted from the game, it could cause inconsistencies.</p><p>Are you sure you want to add this item?</p>`,
+      yes: () => true,
+      no: () => false,
+      defaultYes: false
+    });
+    
+    if (!confirmed) return;
+  }
 
   const list = [...$item.system[key].list];
   list.push({ uuid: droppedItem.uuid });

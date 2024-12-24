@@ -61,7 +61,7 @@
   }
 
   async function removeAllItems() {
-    const okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteAllItems`));
+    const okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteAll`));
     if (okToDelete) {
       await $Actor.deleteAllItems('equipment');
     }
