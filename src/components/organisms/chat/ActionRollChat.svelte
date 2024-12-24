@@ -402,9 +402,9 @@
   justify-content: space-between
   align-items: center
   padding: 0.1em 0.3em
-  background: rgba(0, 0, 0, 0.03)
+  background: rgba(0, 0, 0, 0.3)
   border-radius: 3px
-  border: 1px solid rgba(0, 0, 0, 0.1)
+  border: 3px outset rgba(0, 0, 0, 0.1)
   &.unlinked
     opacity: 0.7
     background: rgba(0, 0, 0, 0.05)
