@@ -272,68 +272,110 @@
 </script>
 
 <template lang="pug">
-.FF15.leather
+
+.chat
+  .flexrow.title.mb-smd
+    +if("showProfileImage")   
+      img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
+    .flexcol(class="{showProfileImage ? 'text' : ''}")
+      .col 
+        .flexrow
+          .flex4 {FFMessage.actor.name}
+          .flex1.mr-xl-h.type-label.smaller.gold {FFMessage.item.type}
+      .col.font-cinzel.smaller {FFMessage.item.name}
+    img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
   
   //- button.stealth.apply-trait(on:click="{log}")
   //-   i.fa-solid.fa-bug
-  .flexrow.gap-4
-    +if("showProfileImage")
-      .flex0.portrait-frame.pr-xs.wide
-        PortraitFrame.narrow.frame(size="25")
-          img.actor-img.clickable(src="{FFMessage?.actor?.img}" alt="{FFMessage?.actor?.name}" on:click!="{openActorSheet(actor)}")
+  .flexrow.gap-4.leather
     .flex3.content
       div {@html content}
   +if("FFMessage?.item?.type === 'action'")
-    .flexrow
-      .flex4
-        .action-result
-          +if("targetTokens.length === 0")
-            .no-targets No targets selected. Select targets and roll again.
-            +else
-              .target-list
-                +each("targetTokens as target")
-                  .leatherbook
-                    .background
-                      .texture
-                      .target-row.flexrow.gap-4(class="{target.isUnlinked ? 'unlinked' : ''}")
-                        .flex3
-                          .flexrow.justify-vertical.gap-4
-                            .flex0.target-info.pointer
-                              +if("!target.isUnlinked")
-                                img.target-img.clickable(src="{getTargetImage(target)}" alt="{target.name}" on:click!="{openActorSheet(target.actor)}")
-                            .flex1
-                              .target-name.font-cinzel.smaller {target.name}
-                        .flex1.thin-border
-                          .flexcol
-                            .col.target-defense.flexrow.justify-vertical
-                              .flex1.left.font-cinzel.smallest DEF 
-                              .flex1.m1-xs.center {getDefenseValue(target)}
-                            .col.flexrow.justify-vertical
-                              .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
-                              .flex1
-                                i.fa-solid(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
-                        .flex2.thin-border.bg-gold.offwhite
-                          +if("item.system?.formula")
-                            .flex1.formula.flexrow.justify-vertical
-                              .flex3.left.font-cinzel.smaller Damage 
-                              .flex1.right.no-wrap {displayDamage(target)}
-                          +if("item.system?.hasDirectHit")
-                            .flex1.formula.flexrow.justify-vertical.smaller
-                              .flex3.left.font-cinzel.smaller Direct Hit 
-                              .flex1.right.no-wrap {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
-                        .flex0
-                          .flexcol
-                            .flex1
-                              button.stealth.apply-trait(on:click!="{applyResult(target)}" disabled="{isApplyDisabled(target)}")
-                                i.fa-solid.fa-check
-                            .flex1
-                              button.stealth.apply-trait(on:click!="{undoResult(target)}" disabled="{!isApplyDisabled(target)}")
-                                i.fa-solid.fa-refresh
+    .action-result
+      .target-list
+        +each("targetTokens as target")
+          .leatherbook
+            .background
+              .texture
+              .target-row.flexrow(class="{target.isUnlinked ? 'unlinked' : ''}")
+                .flex3
+                  .flexrow.justify-vertical.gap-4
+                    .flex0.target-info.pointer
+                      +if("!target.isUnlinked")
+                        img.target-img.clickable(src="{getTargetImage(target)}" alt="{target.name}" on:click!="{openActorSheet(target.actor)}")
+                    .flex1
+                      .target-name.font-cinzel.smaller {target.name}
+                .flex1.thin-border
+                  .flexcol
+                    .col.target-defense.flexrow.justify-vertical.no-wrap
+                      .flex1.left.font-cinzel.smallest DEF 
+                      .flex1.m1-xs.center {getDefenseValue(target)}
+                    .col.flexrow.justify-vertical.no-wrap
+                      .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
+                      .flex1
+                        i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                .flex2.thin-border.bg-gold.offwhite(style="min-height: 2.6rem")
+                  +if("item.system?.formula")
+                    .flex1.formula.flexrow.justify-vertical
+                      .flex3.left.font-cinzel.smaller Damage 
+                      .flex1.right.no-wrap {displayDamage(target)}
+                  +if("item.system?.hasDirectHit")
+                    .flex1.formula.flexrow.justify-vertical.smaller
+                      .flex3.left.font-cinzel.even-smaller Direct Hit 
+                      .flex1.right.no-wrap {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
+                .flex0
+                  .flexcol
+                    .flex1
+                      button.stealth.apply-trait(on:click!="{applyResult(target)}" disabled="{isApplyDisabled(target)}")
+                        i.fa-solid.fa-check
+                    .flex1
+                      button.stealth.apply-trait(on:click!="{undoResult(target)}" disabled="{!isApplyDisabled(target)}")
+                        i.fa-solid.fa-refresh
 </template>
 
 <style lang="sass">
 @import '../../../styles/Mixins.sass'
 
+.inset
+  +inset
+:global(.FF15 #chat-description)
+  background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
+  color: var(--color-text-dark)
+  padding: 0.2rem 0.5rem
+  margin-top: 0.2rem
+:global(.FF15 #chat-description p)
+  font-size: 0.7rem
+  line-height: 1.2rem
+  font-family: "Trirong", serif
+.chat
+  .type-label
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1)
+    font-weight: 600
+    font-family: "Cinzel", serif
+
+  img
+    &.icon
+      flex: 0
+      min-width: 30px
+  +buttons
+  .title
+    border-radius: var(--border-radius)
+    color: var(--message-contrast)
+    position: relative
+    padding: 0.2rem
+    overflow: hidden
+    .text
+      margin-left: 40px
+    
+    +texture-background(var(--message-color), 0.1, 45%)
+    
+    .texture
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      z-index: 1
 .portrait-frame
   margin-right: -2px
   z-index: 2
