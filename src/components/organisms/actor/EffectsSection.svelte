@@ -172,9 +172,10 @@
  .favourites({...$$restProps})
     h2.font-cinzel Effects
     div.pa-xs
-      table.borderless
-        tr
-          th.img.shrink(scope="col")
+      +if("ActiveEffects.length > 0")
+        table.borderless
+          tr
+            th.img.shrink(scope="col")
           th.left.expand(scope="col") {localize(`${SYSTEM_CODE}.Name`)}
           th.fixed(scope="col") 
             
@@ -186,6 +187,8 @@
             td.left
               a.ml-sm.stealth.link(on:click="{editItem(index, item)}") {item.name}
             td
+        +else
+          p(style="margin-top: -10px; margin-bottom: 0px;") {localize("FF15.NoEffects")}
 
 </template>
 

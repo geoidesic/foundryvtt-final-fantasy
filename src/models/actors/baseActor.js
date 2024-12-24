@@ -81,4 +81,9 @@ export class FFActorDataModel extends FFTypeDataModel {
       })
     }
   }
+
+  /** Check if the actor has any favourited items */
+  hasFavouriteItems() {
+    return this.parent.items.some(item => item.system.favourite === true);
+  }
 }

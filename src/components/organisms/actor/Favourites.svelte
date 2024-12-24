@@ -169,32 +169,30 @@
 
 <template lang="pug">
 .favourites({...$$restProps})
-  h2.font-cinzel {localize("Favourites.Title")}
-  div.pa-xs
-    table.borderless
-      tr
-        th.img.shrink(scope="col")
-        th.left.expand(scope="col") {localize(`${SYSTEM_CODE}.Name`)}
-        +if("combat")
-          th
-        th.shrink(scope="col")
-          
-      +each("items as item, index")
+  +if("$doc.system.hasFavouriteItems()")
+    h2.font-cinzel {localize("Favourites.Title")}
+    div.pa-xs
+      table.borderless.low-contrast
         tr
-          td.img
-            img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
-          td.left.clip
-            a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+          th.img.shrink(scope="col")
+          th.left.expand(scope="col") {localize(`${SYSTEM_CODE}.Name`)}
           +if("combat")
-            td.left
-              +if("item.system.hasLimitation")
-                Badge(type!="{badgeType(item)}") {remaining(item)}
-          td
-            button.stealth(on:click="{toggleBookmark(item)}") 
-              i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
-          
-          
+            th
+          th.shrink(scope="col")
             
+        +each("items as item, index")
+          tr
+            td.img
+              img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
+            td.left.clip
+              a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+            +if("combat")
+              td.left
+                +if("item.system.hasLimitation")
+                  Badge(type!="{badgeType(item)}") {remaining(item)}
+            td
+              button.stealth(on:click="{toggleBookmark(item)}") 
+                i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
 </template>
 
 <style lang="sass">

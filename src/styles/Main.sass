@@ -508,11 +508,15 @@
 
   // Ensur
   table
+    border-radius: var(--border-radius)
     &.standard-list
       width: 100%
     &.borderless
       border: none
-
+    tr.gold
+      color: var(--ff-border-color)
+    th
+      font-family: "Cinzel", serif
     th, td
       padding: 0 0.2rem
       line-height: 2rem
@@ -552,6 +556,13 @@
           width: 9%
         &.min
           width: 3%
+
+    &:not(.low-contrast)
+      tr:nth-child(even) 
+        background-color: rgba(255, 255, 255, 0.4)
+    &.low-contrast
+      tr:nth-child(even) 
+        background-color: rgba(255, 255, 255, 0.07)
 
   img.icon
     margin-top: -0.2rem

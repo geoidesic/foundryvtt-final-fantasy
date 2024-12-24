@@ -192,7 +192,7 @@
       .padded
         //- add in the job item if it exists
         +if("$Actor.system.job?.name")
-          h1.left.gold Job
+          h1.left.gold {localize('FF15.Job')}
           table.borderless
             tr
               td.img.shrink(scope="col")
@@ -207,8 +207,8 @@
         table.borderless
           tr
             th.img.shrink(scope="col")
-            th.left.expand.ml-sm(scope="col") Name
-            th.fixed(scope="col") Type
+            th.left.expand.ml-sm(scope="col") {localize('FF15.Name')}
+            th.fixed(scope="col") {localize('FF15.Type')}
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")

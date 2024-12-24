@@ -127,12 +127,12 @@
 
     .panel.overflow.containerx
       .padded
-        h1.gold Inventory
+        h1.gold {localize('FF15.Inventory')}
         table.borderless
-          tr
+          tr.gold
             th.img.shrink(scope="col")
-            th.left.expand(scope="col") Name
-            th.fixed(scope="col") Quantity
+            th.left.expand(scope="col") {localize('FF15.Name')}
+            th.fixed(scope="col") {localize('FF15.Quantity')}
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
@@ -141,15 +141,15 @@
           +each("items as item, index")
             //- pre item.type {item.type}
             tr
-              td.img
+              td.img(data-tooltip="{localize('FF15.Use')}")
                 img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
-              td.left
+              td.left(data-tooltip="{localize('FF15.View')}")
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
               td 
                 button.stealth.clickable.wide(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
-              td
+              td( data-tooltip="{localize('FF15.Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
-                  i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
+                  i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}")
               td.min.buttons.right
                 +if("!$doc.system.inventoryLocked")
                   button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")

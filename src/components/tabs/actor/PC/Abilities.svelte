@@ -211,13 +211,12 @@
                   i.fa-solid.fa-trash
 
 
-        h1.gold Abilities
+        h1.gold {localize('FF15.Abilities')}
         table.borderless
-          tr
+          tr.gold
             th.img.shrink(scope="col")
-            th.left.expand.ml-sm(scope="col") Name
-            th.left(scope="col") Item Type
-            th.left(scope="col") Action Type
+            th.left.expand.ml-sm(scope="col") {localize('FF15.Name')}
+            th.left(scope="col" colspan="2") {localize('FF15.Type')}
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
@@ -226,16 +225,16 @@
           +each("items as item, index")
             //- pre item.type {item.type}
             tr
-              td.img
+              td.img(data-tooltip="{localize('FF15.Use')}")
                 img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.ability(item.type, item)}")
-              td.left
+              td.left(data-tooltip="{localize('FF15.View')}")
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
                 +if("item.system.hasLimitation && combat")
                   span.ml-sm
                     Badge(type!="{badgeType(item)}") {remaining(item)}
               td.left {ucfirst(item.type)}
               td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
-              td
+              td(data-tooltip="{localize('FF15.Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
               td.min.buttons.right
