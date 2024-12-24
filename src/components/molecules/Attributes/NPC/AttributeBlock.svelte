@@ -10,6 +10,27 @@
 
   const actor = getContext("#doc");
 
+  // Add size-to-grid mapping
+  const sizeToGrid = {
+    tiny: 0.5,
+    small: 1,
+    medium: 1,
+    large: 2,
+    huge: 3,
+    gargantuan: 4
+  };
+
+  // Handle size changes
+  const onSizeChange = async (newSize) => {
+    const gridSize = sizeToGrid[newSize.toLowerCase()] || 1;
+    
+    // Update the prototype token dimensions
+    await $actor.update({
+      "prototypeToken.width": gridSize,
+      "prototypeToken.height": gridSize
+    });
+  };
+
   const onclick = async (key, code) => {
     game.system.log.d('actor', $actor);
     const attributeValue = $actor.system.attributes[key][code].val;
@@ -49,7 +70,12 @@
     .flex1.ml-md.mt-md.left.white
       label Size
     .flex1.mt-md.mr-md.right
-      DocSelect.right.white(name="size" valuePath="system.size" options="{sizeOptions}")
+      DocSelect.right.white(
+        name="size" 
+        valuePath="system.size" 
+        options="{sizeOptions}"
+        callback="{onSizeChange}"
+      )
   .flexrow
 
     .flex
