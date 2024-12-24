@@ -135,7 +135,15 @@
   $: items = [...$wildcard];
   $: lockCSS = $doc.system.inventoryLocked ? "lock" : "lock-open";
   $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock negative" : "fa-lock-open positive";
-  $: badgeColor = $doc.system.uses >= $doc.system.limitation ? 'danger' : 'success';
+  
+  const badgeType = (item) => {
+    return item.system.uses >= item.system.limitation ? 'danger' : 'success';
+  }
+  
+  const remaining = (item) => {
+    return item.system.hasLimitation ? 
+      parseInt(item.system.limitation || 0) - parseInt(item.system.uses || 0) : 10;
+  } 
 </script>
 
 <template lang="pug">
@@ -150,7 +158,6 @@
         th.shrink(scope="col")
           
       +each("items as item, index")
-        //- pre item.type {item.type}
         tr
           td.img
             img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
@@ -158,7 +165,7 @@
             a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
             +if("item.system.hasLimitation && game.combat")
               span.ml-sm
-                Badge(type="{badgeColor}") {item.system.uses || 0}/{item.system.limitation}
+                Badge(type!="{badgeType(item)}") {remaining(item)}
           td
           td
             button.stealth(on:click="{toggleBookmark(item)}") 

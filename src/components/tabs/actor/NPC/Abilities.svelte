@@ -150,7 +150,15 @@
   $: lockCSS = $doc.system.inventoryLocked ? "lock" : "lock-open";
   $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock negative" : "fa-lock-open positive";
   $: hasItems = $Actor.items.some(x=> ['action', 'trait'].includes(x.type));
-  $: badgeColor = $doc.system.uses >= $doc.system.limitation ? 'danger' : 'success';
+  
+  const badgeType = (item) => {
+    return item.system.uses >= item.system.limitation ? 'danger' : 'success';
+  }
+  
+  const remaining = (item) => {
+    return item.system.hasLimitation ? 
+      parseInt(item.system.limitation || 0) - parseInt(item.system.uses || 0) : 10;
+  } 
 
 </script>
 
@@ -191,7 +199,7 @@
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
                 +if("item.system.hasLimitation && game.combat")
                   span.ml-sm
-                    Badge(type="{badgeColor}") {item.system.uses || 0}/{item.system.limitation}
+                    Badge(type!="{badgeType(item)}") {remaining(item)}
               td {ucfirst(item.type)}
               td
                 button.stealth(on:click="{toggleBookmark(item)}") 

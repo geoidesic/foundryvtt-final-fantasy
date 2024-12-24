@@ -1,7 +1,7 @@
 import './styles/Main.sass';
 
 import { log } from "~/src/helpers/util"
-import { SYSTEM_ID, SYSTEM_CODE} from "~/src/helpers/constants"
+import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants"
 import { setupModels } from './config/models';
 import { registerSettings } from "~/src/settings"
 import { mappedGameTargets } from '~/src/stores';
@@ -201,10 +201,10 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
   turns.sort((a, b) => {
     const aIsNPC = a.actor?.type === "NPC";
     const bIsNPC = b.actor?.type === "NPC";
-    
+
     // First sort by PC/NPC status
     if (aIsNPC !== bIsNPC) return aIsNPC ? 1 : -1;
-    
+
     // Then sort by initiative within each group
     const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
     const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
@@ -235,7 +235,7 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
 
       // Remove existing border classes
       $element.removeClass('npc-group-start pc-group-end');
-      
+
       // Add appropriate border class
       if (index === firstNPCIndex) {
         $element.addClass('npc-group-start');
@@ -276,14 +276,14 @@ Hooks.on('renderChatMessage', (message, html) => {
   if (message.flags[SYSTEM_ID]?.css) {
     html.addClass(message.flags[SYSTEM_ID].css);
   }
-  
+
   if (typeof FFMessage === 'object') {
     const originalContent = html[0].innerHTML;
-    
+
     // Create tempDiv for all message types
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = originalContent;
-    
+
     // Apply color variables to header for all message types
     const header = tempDiv.querySelector('.message-header');
     if (header) {
@@ -292,17 +292,17 @@ Hooks.on('renderChatMessage', (message, html) => {
       const ownerColor = getActorOwner(sourceActor).color;
       const colorCalc = new ColourContrast(ownerColor);
       const cssVars = colorCalc.getCSSVariables();
-      
+
       // Apply color variables to header
       header.style.setProperty('--message-color', cssVars.color);
       header.style.setProperty('--message-contrast', cssVars.contrast);
       header.style.setProperty('--message-color-rgb', cssVars.rgb);
     }
-    
+
     let content;
 
     // For Attribute and Action rolls, extract just the message content
-    if(['AttributeRollChat', 'ActionRollChat'].includes(FFMessage.chatTemplate)) {
+    if (['AttributeRollChat', 'ActionRollChat'].includes(FFMessage.chatTemplate)) {
       // Extract the message content and flavor text
       const messageContent = tempDiv.querySelector('.message-content');
       const flavorText = tempDiv.querySelector('.flavor-text');
@@ -331,7 +331,7 @@ Hooks.on('renderChatMessage', (message, html) => {
     }
     html.addClass(SYSTEM_CODE);
     html.addClass('leather');
-    
+
     message._svelteComponent = new FFChat({
       target: html[0],
       props: {
@@ -374,7 +374,7 @@ Hooks.on("targetToken", (User, Token) => {
 Hooks.on("deleteCombat", async (combat) => {
   // Get all combatants from the ended combat
   const combatants = combat.combatants.contents;
-  
+
   // For each combatant
   for (const combatant of combatants) {
     const actor = combatant.actor;
@@ -382,7 +382,7 @@ Hooks.on("deleteCombat", async (combat) => {
 
     // Get all items that have limitations
     const items = actor.items.filter(i => i.system.hasLimitation);
-    
+
     // Reset uses for each item
     for (const item of items) {
       // Preserve existing system data and only update the uses field
@@ -390,6 +390,32 @@ Hooks.on("deleteCombat", async (combat) => {
       systemData.uses = 0;
       await item.update({ system: systemData });
     }
+  }
+});
+
+// Reset uses at end of turn for abilities with 'turn' limitation units
+Hooks.on("updateCombat", async (combat, changed, options, userId) => {
+  // Only process if the turn actually changed
+  if (!("turn" in changed) || changed.turn === null) return;
+
+  // Get the previous combatant
+  const previousTurn = combat.turns[combat.previous?.turn];
+  if (!previousTurn) return;
+
+  const actor = previousTurn.actor;
+  if (!actor) return;
+
+  // Find all items with turn-based limitations
+  const turnLimitedItems = actor.items.filter(i =>
+    i.system.hasLimitation &&
+    i.system.limitationUnits === "turn"
+  );
+
+  // Reset uses for those items
+  for (const item of turnLimitedItems) {
+    const systemData = foundry.utils.deepClone(item.system);
+    systemData.uses = 0;
+    await item.update({ system: systemData });
   }
 });
 
