@@ -46,33 +46,95 @@ export default class RollCalcActor extends RollCalc {
   }
 
   async ability(type, item) {
-    game.system.log.d('ability', type, item);
+    game.system.log.g('ability method start', { type, item });
+
+    // Check for limitations only if in combat
+    if (item.system.hasLimitation && game.combat) {
+      game.system.log.g('item has limitation and in combat', { maxUses: item.system.limitation, currentUses: item.system.uses });
+      const maxUses = item.system.limitation;
+      
+      // Check remaining uses
+      const remainingUses = maxUses - (item.system.uses || 0);
+      if (remainingUses <= 0) {
+        game.system.log.g('no uses remaining');
+        ui.notifications.warn(`${item.name} has no remaining uses.`);
+        return;
+      }
+
+      // Confirm use
+      game.system.log.g('showing confirmation dialog');
+      const confirmed = await Dialog.confirm({
+        title: "Confirm Ability Use",
+        content: `<p>Use ${item.name}? (${remainingUses} use${remainingUses > 1 ? 's' : ''} remaining)</p>`,
+        yes: () => true,
+        no: () => false,
+        defaultYes: true
+      });
+
+      game.system.log.g('dialog result', { confirmed });
+      if (!confirmed) return;
+
+      // Update uses while preserving other system data
+      game.system.log.g('updating uses');
+      const systemData = foundry.utils.deepClone(item.system);
+      systemData.uses = (systemData.uses || 0) + 1;
+      await item.update({ system: systemData });
+      game.system.log.g('uses updated', { newUses: systemData.uses });
+    }
+
+    // Execute the appropriate ability type
+    game.system.log.g('executing ability type', { type });
     if (type === 'action') {
-      return this.abilityAction(item);
+      game.system.log.g('calling abilityAction');
+      await this.abilityAction(item);
+      game.system.log.g('abilityAction completed');
+    } else if (type === 'trait') {
+      game.system.log.g('calling abilityTrait');
+      await this.abilityTrait(item);
+      game.system.log.g('abilityTrait completed');
     }
-    if (type === 'trait') {
-      return this.abilityTrait(item);
-    }
+    game.system.log.g('ability method complete');
   }
 
   async abilityTrait(item) {
-    game.system.log.d('abilityTrait', item);
-    this.params.item = item;
-    this.params.rollType = 'RollChat';
-    const message = await this.defaultItem(this.params);
-    game.system.log.d('message', message);
-
-    ChatMessage.create({
+    game.system.log.g('abilityTrait start', { item });
+    
+    await ChatMessage.create({
       user: game.user.id,
       speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      flags: { [SYSTEM_ID]: { data: { ...message, chatTemplate: 'RollChat' } } }
-    })
+      flags: { 
+        [SYSTEM_ID]: { 
+          data: { 
+            chatTemplate: 'RollChat',
+            actor: {
+              _id: this.params.actor._id,
+              name: this.params.actor.name,
+              img: this.params.actor.img
+            },
+            item: {
+              _id: item._id,
+              uuid: item.uuid,
+              name: item.name,
+              img: item.img,
+              type: item.type,
+              system: item.system
+            }
+          } 
+        } 
+      }
+    });
+    game.system.log.g('trait chat message created');
   }
 
   async abilityAction(item) {
-    if (item.type !== "action") return;
+    game.system.log.g('abilityAction start', { item });
+    if (item.type !== "action") {
+      game.system.log.g('not an action item, returning');
+      return;
+    }
 
     // Show dialog for extra modifiers
+    game.system.log.g('showing modifier dialog');
     const extraModifiers = await Dialog.prompt({
       title: "Extra Modifiers",
       content: `
@@ -91,6 +153,7 @@ export default class RollCalcActor extends RollCalc {
         };
       }
     });
+    game.system.log.g('modifier dialog complete', { extraModifiers });
 
     // Check if we have targeted entities
     const targets = game.user.targets;

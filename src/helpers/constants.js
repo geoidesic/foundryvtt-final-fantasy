@@ -1,4 +1,3 @@
-
 export const SYSTEM_ID = 'foundryvtt-final-fantasy';
 export const SYSTEM_CODE = 'FF15';
 export const LOG_PREFIX = `${SYSTEM_CODE} |`;
@@ -48,9 +47,9 @@ export const getCROptions = () => [
 ];
 
 export const getLimitationOptions = () => [
-  { value: "once", label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.once") },
-  { value: "twice", label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.twice") },
-  { value: "thrice", label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.thrice") },
+  { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.once") },
+  { value: 2, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.twice") },
+  { value: 3, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.thrice") },
 ];
 
 export const getTargetOptions = () => [

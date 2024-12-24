@@ -131,7 +131,7 @@
       .col 
         .flexrow
           .flex4 {FFMessage.actor.name}
-          .flex2.font-cinzel.smaller.gold {FFMessage.item.type}
+          .flex2.type-label.smaller.gold {FFMessage.item.type}
       .col.font-cinzel.smaller {FFMessage.item.name}
     img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
   .flexrow
@@ -152,6 +152,11 @@
     line-height: 1.2rem
     font-family: "Trirong", serif
   .chat
+    .type-label
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1)
+      font-weight: 600
+      font-family: "Cinzel", serif
+
     img
       &.icon
         flex: 0

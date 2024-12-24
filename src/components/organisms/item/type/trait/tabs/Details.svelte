@@ -2,18 +2,16 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
+  import { getLimitationOptions } from "~/src/helpers/constants"
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
 
   const item = getContext("#doc");
 
+  const limitationOptions = getLimitationOptions();
 
-  const limitationOptions = [
-    { value: "once", label: localize("FF15.Types.Item.Types.Options.Limitation.once") },
-    { value: "twice", label: localize("FF15.Types.Item.Types.Options.Limitation.twice") },
-    { value: "thrice", label: localize("FF15.Types.Item.Types.Options.Limitation.thrice") },
-  ];
+
   const typeOptions = [
     { value: "Buff", label: localize("FF15.Types.Item.Types.Options.TraitType.Buff") },
     { value: "Debuff", label: localize("FF15.Types.Item.Types.Options.TraitType.Debuff") },

@@ -371,3 +371,25 @@ Hooks.on("targetToken", (User, Token) => {
 
 });
 
+Hooks.on("deleteCombat", async (combat) => {
+  // Get all combatants from the ended combat
+  const combatants = combat.combatants.contents;
+  
+  // For each combatant
+  for (const combatant of combatants) {
+    const actor = combatant.actor;
+    if (!actor) continue;
+
+    // Get all items that have limitations
+    const items = actor.items.filter(i => i.system.hasLimitation);
+    
+    // Reset uses for each item
+    for (const item of items) {
+      // Preserve existing system data and only update the uses field
+      const systemData = foundry.utils.deepClone(item.system);
+      systemData.uses = 0;
+      await item.update({ system: systemData });
+    }
+  }
+});
+

@@ -12,7 +12,6 @@ export class ActionModel extends FFItemDataModel {
       aspected: new StringField({ required: false, initial: '' }),
       hasRanged: new BooleanField({ required: false, initial: false }),
       rangeType: new StringField({ required: false, initial: '' }),
-      // rangeValue: new NumberField({ required: false, initial: 0 }),
       hasTrigger: new BooleanField({ required: false, initial: false }),
       trigger: new StringField({ required: false, initial: '' }),
       hasTarget: new BooleanField({ required: false, initial: false }),
@@ -31,7 +30,8 @@ export class ActionModel extends FFItemDataModel {
       hasHeavierShot: new BooleanField({ required: false, initial: false }),
       heavierShot: new StringField({ required: false, initial: '' }),
       hasLimitation: new BooleanField({ required: false, initial: false }),
-      limitation: new StringField({ required: false, initial: '' }),
+      limitation: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
+      uses: new NumberField({ required: false, initial: 0, integer: true, min: 0 }),
       type: new StringField({ required: false, initial: '' }),
       formula: new StringField({ required: false, initial: '' }),
       hasCost: new BooleanField({ required: false, initial: false }),
@@ -40,7 +40,7 @@ export class ActionModel extends FFItemDataModel {
       procTrigger: new NumberField({ required: false, initial: null }),
       grants: new SchemaField({
         list: new ArrayField(
-          new ObjectField({ // Use ObjectField to allow storing objects
+          new ObjectField({
             fields: {
               uuid: new StringField({ required: true, initial: '' })
             }
@@ -50,7 +50,7 @@ export class ActionModel extends FFItemDataModel {
       }),
       enables: new SchemaField({
         list: new ArrayField(
-          new ObjectField({ // Use ObjectField to allow storing objects
+          new ObjectField({
             fields: {
               uuid: new StringField({ required: true, initial: '' })
             }
@@ -60,7 +60,7 @@ export class ActionModel extends FFItemDataModel {
       }),
       combos: new SchemaField({
         list: new ArrayField(
-          new ObjectField({ // Use ObjectField to allow storing objects
+          new ObjectField({
             fields: {
               uuid: new StringField({ required: true, initial: '' })
             }
@@ -70,8 +70,9 @@ export class ActionModel extends FFItemDataModel {
       }),
       hasTags: new BooleanField({ required: false, initial: false }),
       tags: new ArrayField(
-          new StringField({ required: false, initial: '' })
+        new StringField({ required: false, initial: '' })
       ),
     };
   }
+
 }

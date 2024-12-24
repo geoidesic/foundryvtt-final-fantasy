@@ -13,6 +13,27 @@ export function registerSettings() {
   manualInitiative()
   showChatProfileImages()
   chatMessageSenderIsActorOwner()
+  automaticUses()
+}
+
+/**
+ * Some abilities have limitations on how many times they can be used.
+ * This setting controls whether the system should automatically deduct uses from the actor's pool when an ability is used.
+ * If disabled, the user will be prompted to deduct uses from the actor's pool when an ability is used.
+ */
+function automaticUses() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'automaticUses',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.automaticUses.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.automaticUses.Hint`),
+      scope: 'user',
+      config: true,
+      default: true,
+      type: Boolean
+    }
+  });
 }
 
 function chatMessageSenderIsActorOwner() {

@@ -292,6 +292,10 @@
     },
     "SystemName": "Final Fantasy",
     "Setting": {
+      "automaticUses": {
+        "Name": "Automatic Uses",
+        "Hint": "If checked, abilities with usage limitations will automatically track usage. Otherwise, the user will be prompted for confirmation prior to deducting uses."
+      },
       "ShowStatusEffects": {
         "Name": "Show enfeeblements labels",
         "Hint": "If unchecked, will only show icons in the token HUD."
