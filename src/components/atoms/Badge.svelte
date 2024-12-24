@@ -1,4 +1,3 @@
-
 <script>
   export let type = '';
   
@@ -23,6 +22,11 @@
   line-height: 1
   white-space: nowrap
   background-color: var(--color-text-dark-inactive)
+  &.round
+    border-radius: 50%
+    padding: 0.25rem
+    min-width: 1.5rem
+    min-height: 1.5rem
 
 .badge-success
   background-color: var(--color-positive)
@@ -32,4 +36,10 @@
 
 .badge-danger
   background-color: var(--color-negative)
+
+.badge-primary
+  background-color: rgb(205, 83, 110)
+
+.badge-secondary
+  background-color: rgb(205, 83, 110)
 </style> 

@@ -322,7 +322,7 @@ export default class RollCalcActor extends RollCalc {
     };
 
     // Before creating the message, check if this action type is available
-    const actionType = item.system.actionType || 'primary'; // default to primary if not set
+    const actionType = item.system.type || 'primary'; // default to primary if not set
     const { actionState } = this.params.actor.system;
     
     if (!actionState.available.includes(actionType)) {

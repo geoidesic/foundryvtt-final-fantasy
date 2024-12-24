@@ -88,6 +88,23 @@
                         <img class="token-effect" src="{{this}}"/>
                         {{/each}}
                     </div>
+                    {{log "[COMBAT_BADGES] Combatant data:" this}}
+                    {{log "[COMBAT_BADGES] Actor data:" this.actor}}
+                    {{#if this.actor.type}}
+                    {{log "[COMBAT_BADGES] Actor type:" this.actor.type}}
+                    {{#if (eq this.actor.type "PC")}}
+                    {{log "[COMBAT_BADGES] PC actionState:" this.actor.system.actionState}}
+                    <div class="action-badges">
+                        {{#each this.actor.system.actionState.available}}
+                        {{log "[COMBAT_BADGES] Action type:" this}}
+                        <span class="badge round badge-{{this}}" data-tooltip="{{capitalize this}} Action">
+                            {{#if (eq this "primary")}}P{{/if}}
+                            {{#if (eq this "secondary")}}S{{/if}}
+                        </span>
+                        {{/each}}
+                    </div>
+                    {{/if}}
+                    {{/if}}
                 </div>
             </div>
 

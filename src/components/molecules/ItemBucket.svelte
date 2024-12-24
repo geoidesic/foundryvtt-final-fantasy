@@ -20,14 +20,18 @@ $: if ($item.system[key]?.list) {
 
 async function updateLocalList() {
   localList = [];
-  for (let listItem of $item.system[key].list) {
+  const currentList = $item.system[key]?.list || [];
+  
+  for (let listItem of currentList) {
     try {
       const item = await fromUuid(listItem.uuid);
       if (item) {
         localList = [...localList, item];
+      } else {
+        console.warn(`Item with UUID ${listItem.uuid} not found`);
       }
     } catch (error) {
-      console.error(error);
+      console.error(`Error loading item with UUID ${listItem.uuid}:`, error);
     }
   }
 }
@@ -51,10 +55,16 @@ async function onDrop(event) {
     if (!confirmed) return;
   }
 
-  const list = [...$item.system[key].list];
-  list.push({ uuid: droppedItem.uuid });
-
-  await $item.update({ [`system.${key}.list`]: list });
+  // Get current list and ensure it's an array
+  const currentList = $item.system[key]?.list || [];
+  const newList = [...currentList];
+  
+  // Check if item is already in the list
+  const isDuplicate = newList.some(listItem => listItem.uuid === droppedItem.uuid);
+  if (!isDuplicate) {
+    newList.push({ uuid: droppedItem.uuid });
+    await $item.update({ [`system.${key}.list`]: newList });
+  }
 }
 
 async function deleteLink(index) {
@@ -75,10 +85,7 @@ function showItemSheet(item) {
       .flex3
           h2.wide {title}
       .flex0.right
-        DocCheckbox.right.wide(
-        {...$$restProps}
-        valuePath="{valuePath}"
-      )
+        DocCheckbox.right.wide({...$$restProps} valuePath="{valuePath}")
     slot
     +if("checkboxValue")
       table.standard-list.small-text.borderless
@@ -100,7 +107,7 @@ function showItemSheet(item) {
             +each("additionalColumns as col")
               td.left {item.type === col.itemType ? ucfirst(item.system?.[col.path] || '') : ''}
             td.buttons.right
-              button.stealth(on:click!="{() => deleteLink(index)}")
+              button.stealth(on:click!="{deleteLink(index)}")
                 i.left.fa.fa-trash.pointer
 
 </template>

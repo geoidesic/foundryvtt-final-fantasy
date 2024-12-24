@@ -5,6 +5,27 @@ const {
 } = foundry.data.fields;
 
 export class ActionModel extends FFItemDataModel {
+  static migrateData(source) {
+    // If hasLimitation is false, ensure limitation is set to default
+    if (!source.hasLimitation) {
+      source.limitation = 0;
+    }
+    // If limitation exists and is a string, convert it
+    else if (source.limitation) {
+      const limitMap = {
+        'once': 1,
+        'twice': 2,
+        'thrice': 3
+      };
+      
+      if (typeof source.limitation === 'string') {
+        source.limitation = limitMap[source.limitation.toLowerCase()] || 0;
+      }
+    }
+
+    return source;
+  }
+
   static defineSchema() {
     return {
       ...super.defineSchema(),  // Merge with the base model schema
@@ -30,10 +51,19 @@ export class ActionModel extends FFItemDataModel {
       hasHeavierShot: new BooleanField({ required: false, initial: false }),
       heavierShot: new StringField({ required: false, initial: '' }),
       hasLimitation: new BooleanField({ required: false, initial: false }),
-      limitation: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
+      limitation: new NumberField({ 
+        required: false, 
+        initial: 0, 
+        integer: true, 
+        min: 0, 
+        max: 3 
+      }),
       limitationUnits: new StringField({ required: false, initial: "phase" }),
       uses: new NumberField({ required: false, initial: 0, integer: true, min: 0 }),
-      type: new StringField({ required: false, initial: '' }),
+      type: new StringField({ 
+        required: false, 
+        choices: ['primary', 'secondary', 'reaction', 'limit', 'combo']
+      }),
       formula: new StringField({ required: false, initial: '' }),
       hasCost: new BooleanField({ required: false, initial: false }),
       cost: new NumberField({ required: false, initial: 0 }),

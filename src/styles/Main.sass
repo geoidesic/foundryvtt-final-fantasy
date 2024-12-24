@@ -628,6 +628,18 @@
       background-color: var(--color-scrollbar)
       &::after
         border: 2px ridge var(--color-highlight)
+    
+    .action-badges
+      display: flex
+      gap: 0.25rem
+      margin-left: 0.5rem
+      align-items: center
+      
+      .badge
+        font-size: 0.7rem
+        min-width: 1.2rem
+        min-height: 1.2rem
+        padding: 0.2rem
 
 .drag-over
   border: 2px dashed #007bff
@@ -736,4 +748,27 @@
     > *:not(.texture)
       position: relative
       z-index: 2
+  
+  :root
+    --color-primary-action: rgb(205, 83, 110)
+    --color-secondary-action: rgb(205, 83, 110)
+
+  .action-badge
+    display: inline-flex
+    align-items: center
+    justify-content: center
+    width: 1.2rem
+    height: 1.2rem
+    border-radius: 50%
+    font-size: 0.8rem
+    font-weight: bold
+    margin: 0 0.2rem
+    color: white
+    &.primary
+      background-color: var(--color-primary-action)
+    &.secondary
+      background-color: var(--color-secondary-action)
+    &.disabled
+      opacity: 0.5
+      filter: grayscale(100%)
   
