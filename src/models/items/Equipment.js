@@ -9,7 +9,5 @@ export class EquipmentModel extends FFItemDataModel {
     };
   }
 
-  static migrateData(source) {
-    return source;
-  }
+
 }

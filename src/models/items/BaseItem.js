@@ -10,16 +10,4 @@ export class FFItemDataModel extends FFTypeDataModel {
       effectActionsLocked: new BooleanField({ initial: false }),
     };
   }
-
-  static migrateData(source) {
-    // Migrate base model fields
-    source = super.migrateData(source);
-    
-    // Custom migration logic for this model
-    if (source.favourite === undefined) {
-      source.favourite = false;
-    }
-    
-    return source;
-  }
 }
