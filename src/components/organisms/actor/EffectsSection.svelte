@@ -157,12 +157,14 @@
   });
 
   // $: ActiveEffects = $filterDoc.effects;
-  $: ActiveEffects = [...$wildcard].map((effect) => {
-    const originInstance = getEffectOrigin(effect, true);
-    if(!effect.flags.surge) effect.flags.surge = {};
-    effect.flags.surge.originInstance = originInstance;
-    return effect
-  });
+  $: ActiveEffects = [...$wildcard]
+    .filter(effect => !effect.disabled)
+    .map((effect) => {
+      const originInstance = getEffectOrigin(effect, true);
+      if(!effect.flags.surge) effect.flags.surge = {};
+      effect.flags.surge.originInstance = originInstance;
+      return effect
+    });
   $: lockCSS = $doc.system.effectActionsLocked ? "lock" : "lock-open";
   $: faLockCSS = $doc.system.effectActionsLocked ? "fa-lock negative" : "fa-lock-open positive";
   $: xpUnspent = parseInt($doc.system.xp?.unspent) || 0;

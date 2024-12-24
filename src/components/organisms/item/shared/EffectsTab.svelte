@@ -7,6 +7,7 @@
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
   import { getEffectOrigin } from "~/src/helpers/util";
+  import { localize } from "~/src/helpers/util";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
 
   export let sheet;
@@ -187,10 +188,9 @@
 .item-sheet.details.overflow
   //- i.fa.fa-circle-check(on:click="{debug}")
   .flexcol.flex3.left
-    h1.gold.center Effects
     .flexrow.justify-vertical.my-sm
       .flexcol.flex1.label-container 
-        label(for="search") Search
+        label(for="search") {localize('Search')}
       .flex3.left
         TJSInput({input})
 
@@ -199,14 +199,14 @@
         li.flexrow.header.justify-vertical.standard-list-row
           .li-image
           .flex4.left
-            div Name
+            div {localize('Name')}
           .actions.right
             button.stealth.row-action-button.rowimgbezelbutton.pointer(class="{lockCSS}" on:click="{toggleLock}")
               i.fa(class="{faLockCSS}")
         +each("ActiveEffects as effect, index")
-          li.flexrow.justify-vertical.standard-list-row
+          li.flexrow.justify-vertical.standard-list-row(class="{effect.disabled ? 'disabled' : ''}")
             .li-image(class="{effect.isSuppressed ? 'suspended' : 'active'}")
-              img.icon(src="{getAvatarForVersion(effect, window.game.version)}" alt="avatar for game version")
+              img.icon.nopointer(src="{getAvatarForVersion(effect, window.game.version)}" alt="avatar for game version")
             .flex4.left
               div {effect.name}
             
@@ -246,4 +246,7 @@
     flex-wrap: nowrap
     justify-content: flex-end
 
+  .disabled
+    opacity: 0.5
+    filter: grayscale(100%)
 </style>

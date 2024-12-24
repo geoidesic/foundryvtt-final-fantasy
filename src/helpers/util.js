@@ -1,4 +1,4 @@
-import { LOG_PREFIX, LOG_STYLES, LOG_PREFIX_COLOR } from './constants';
+import { LOG_PREFIX, LOG_STYLES, LOG_PREFIX_COLOR, SYSTEM_CODE } from './constants';
 
 export const log = {
   ASSERT: 1, ERROR: 2, WARN: 3, INFO: 4, DEBUG: 5, VERBOSE: 6,
@@ -54,7 +54,7 @@ export function getEffectOrigin(effect, tryFromUuidSync = false) {
 }
 
 export function localize(string) {
-  return game.i18n.localize(`${SYSTEM_ID}.${string}`);
+  return game.i18n.localize(`${SYSTEM_CODE}.${string}`);
 }
 
 export function isNumber(value) {

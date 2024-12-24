@@ -38,6 +38,7 @@
     "Other": "Other",
     "Points": "Points",
     "Quantity": "Quantity",
+    "Search": "Search",
     "Title": "Final Fantasy TTRPG",
     "Type": "Type",
     "Use": "Use",
@@ -363,6 +364,10 @@
     "comatose": {
       "name": "Comatose",
       "description": "A comatose character cannot move, nor act, nor speak and is unaware of their surroundings."
+    },
+    "enabled": {
+      "name": "Enabled",
+      "description": "Character has a trait enabled."
     },
     "ko": {
       "name": "Knocked Out",

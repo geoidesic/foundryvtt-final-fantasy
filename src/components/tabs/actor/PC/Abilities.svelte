@@ -205,7 +205,7 @@
               td.img.shrink(scope="col")
                 img.icon(src="{$Actor.system.job?.img}" alt="{$Actor.system.job?.img}")
               td.left.expand(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
-              td.right.expand(scope="col") {$Actor.system.job?.level}
+              td.right.expand.scaleup.kerned.glow.gold(scope="col") {$Actor.system.job?.level}
               td.buttons(scope="col")
                 button.stealth(on:click="{deleteJob}")
                   i.fa-solid.fa-trash
@@ -217,9 +217,7 @@
             th.img.shrink(scope="col")
             th.left.expand.ml-sm(scope="col") {localize('FF15.Name')}
             th.left(scope="col" colspan="2") {localize('FF15.Type')}
-            th.shrink(scope="col")
-              i.fa-solid.fa-bookmark
-            th.buttons(scope="col" class="{lockCSS}")
+            th.buttons(scope="col" class="{lockCSS}" colspan="2")
               button.stealth(class="{lockCSS}")
                 i.fa(class="{faLockCSS}" on:click="{toggleLock}")
           +each("items as item, index")
