@@ -11,6 +11,7 @@
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
   import RollCalcActor from "~/src/helpers/RollCalcActor";
+  import Badge from "~/src/components/atoms/Badge.svelte";
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
@@ -145,8 +146,9 @@
   $: lockCSS = $doc.system.inventoryLocked ? "lock" : "lock-open";
   $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock negative" : "fa-lock-open positive";
   $: hasItems = $Actor.items.some(x=> ['action', 'trait'].includes(x.type));
-  $: console.log($Actor.items.map(x=>x.type))
+  $: badgeColor = $doc.system.uses >= $doc.system.limitation ? 'danger' : 'success';
   
+  $: console.log($Actor.items.map(x=>x.type))
 
 </script>
 
@@ -197,6 +199,9 @@
                 img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.ability(item.type, item)}")
               td.left
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+                +if("item.system.hasLimitation && game.combat")
+                  span.ml-sm
+                    Badge(type="{badgeColor}") {item.system.uses || 0}/{item.system.limitation}
               td.left {ucfirst(item.type)}
               td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
               td

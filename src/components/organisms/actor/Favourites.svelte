@@ -11,6 +11,7 @@
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
   import RollCalcActor from "~/src/helpers/RollCalcActor";
+  import Badge from "~/src/components/atoms/Badge.svelte";
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
@@ -134,6 +135,7 @@
   $: items = [...$wildcard];
   $: lockCSS = $doc.system.inventoryLocked ? "lock" : "lock-open";
   $: faLockCSS = $doc.system.inventoryLocked ? "fa-lock negative" : "fa-lock-open positive";
+  $: badgeColor = $doc.system.uses >= $doc.system.limitation ? 'danger' : 'success';
 </script>
 
 <template lang="pug">
@@ -154,6 +156,9 @@
             img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
           td.left.clip
             a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+            +if("item.system.hasLimitation && game.combat")
+              span.ml-sm
+                Badge(type="{badgeColor}") {item.system.uses || 0}/{item.system.limitation}
           td
           td
             button.stealth(on:click="{toggleBookmark(item)}") 
