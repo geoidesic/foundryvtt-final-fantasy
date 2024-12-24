@@ -1,41 +1,22 @@
-<svelte:options accessors={true} />
-
 <script>
-  import { getContext, setContext, onMount, onDestroy } from "svelte";
+  import { getContext, onMount } from "svelte";
   import { rippleFocus } from "@typhonjs-fvtt/runtime/svelte/action/animate";
+  import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
   import { TJSInput } from "@typhonjs-fvtt/svelte-standard/component";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
-  import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
-  import { localize } from "#runtime/svelte/helper";
-  import { SYSTEM_CODE } from "~/src/helpers/constants";
   import { getEffectOrigin } from "~/src/helpers/util";
+  import { localize } from "#runtime/svelte/helper";
+  import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
+  import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
+  import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
+  import RollCalcActor from "~/src/helpers/RollCalcActor";
+  import Badge from "~/src/components/atoms/Badge.svelte";
 
-  export let sheet;
-  export function resetEffectList() {
-    game.system.log.d("resetEffectList");
-    filterDoc = new TJSDocument($doc);
-    wildcard = filterDoc.embedded.create(ActiveEffect, wildcardConfig);
-  }
-
-  let key = false,
-    keyUp = true,
-    prevValue,
-    triggerFilterValue,
-    ActiveEffects = [];
-  // const documentStore = getContext("#doc");
-  const doc = getContext("#doc");
-  const app = getContext("#external").application;
-
+  const Actor = getContext("#doc");
+  const doc = new TJSDocument($Actor);
   const triggerSearch = createFilterQuery("trigger");
   const nameSearch = createFilterQuery("label");
-  const wildcardConfig = {
-    name: "wildcard",
-    filters: [nameSearch, triggerSearch],
-    // filters: [nameSearch],
-  };
-  let filterDoc = new TJSDocument($doc);
-
   const input = {
     store: nameSearch,
     efx: rippleFocus(),
@@ -45,7 +26,17 @@
   };
 
   /** @type {import('@typhonjs-fvtt/runtime/svelte/store').DynMapReducer<string, Item>} */
-  let wildcard = filterDoc.embedded.create(ActiveEffect, wildcardConfig);
+  const wildcardConfig = doc.embedded.create(Item, {
+    name: "wildcard",
+    filters: [nameSearch, triggerSearch],
+  });
+
+
+  /** @type {import('@typhonjs-fvtt/runtime/svelte/store').DynMapReducer<string, Item>} */
+  let wildcard = doc.embedded.create(ActiveEffect, wildcardConfig);
+
+  let combat;
+  
 
   function debug(val) {
     game.system.log.d(val);
@@ -144,19 +135,6 @@
     return version < 12 ? source.icon : source.img
   }
   
-
-  onMount(() => {
-    Hooks.on('createActiveEffect', resetEffectList);
-    Hooks.on('deleteActiveEffect', resetEffectList);
-
-  });
-  onDestroy(() => {
-    Hooks.off('createActiveEffect', resetEffectList);
-    Hooks.off('deleteActiveEffect', resetEffectList);
-
-  });
-
-  // $: ActiveEffects = $filterDoc.effects;
   $: ActiveEffects = [...$wildcard]
     .filter(effect => !effect.disabled)
     .map((effect) => {
@@ -168,38 +146,123 @@
   $: lockCSS = $doc.system.effectActionsLocked ? "lock" : "lock-open";
   $: faLockCSS = $doc.system.effectActionsLocked ? "fa-lock negative" : "fa-lock-open positive";
   $: xpUnspent = parseInt($doc.system.xp?.unspent) || 0;
+
 </script>
 
 <template lang="pug">
- .favourites({...$$restProps})
+.effects({...$$restProps})
+  +if("ActiveEffects.length > 0")
     h2.font-cinzel {localize('FF15.Effects')}
-    div.pa-xs
+    div.px-xs
       +if("ActiveEffects.length > 0")
-        table.borderless
-          tr
-            th.img.shrink(scope="col")
-          th.left.expand(scope="col") {localize(`${SYSTEM_CODE}.Name`)}
-          th.fixed(scope="col") 
-            
-        +each("ActiveEffects as item, index")
-          //- pre item.type {item.type}
-          tr
-            td.img
-              img.icon(src="{item.img}" alt="{item.name}")
-            td.left
-              a.ml-sm.stealth.link(on:click="{editItem(index, item)}") {item.name}
-            td
-        +else
-          p(style="margin-top: -10px; margin-bottom: 0px;") {localize("FF15.NoEffects")}
 
+        table.borderless.low-contrast
+              
+          +each("ActiveEffects as item, index")
+            tr
+              td.img.shrink(scope="col")
+                img.icon(src="{item.img}" alt="{item.name}")
+              td.left
+                a.ml-sm.stealth.link(on:click="{editItem(index, item)}") {item.name}
+
+    +else
+      p(style="margin-top: -2px; margin-bottom: 0px;") {localize("FF15.NoEffects")}
 </template>
 
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
+@import '../../../styles/Mixins.sass'
+.favourites
+  +inset(0.5rem, 0 0 5px rgba(165,0,0,1) inset)
+  width: 100%
+.fa-bookmark
+  color: var(--color-highlight) !important
+.portrait-frame
+  margin-right: -2px
+  z-index: 2
+.pulse
+  @include pulse
 
-  .actions
-    display: flex
-    flex-wrap: nowrap
-    justify-content: flex-end
+  .buttons
+  @include buttons
 
+.actions
+  margin-left: 0.5rem
+  margin-right: 0
+  justify-content: right
+  :not(:last-child)
+    margin-right: 2px
+
+.clickable
+  max-height: 1.3rem
+  line-height: 1.3rem
+  background: rgba(255, 255, 255, 0.2)
+
+i.disable
+  color: grey
+  cursor: not-allowed
+
+.fa-bookmark
+  cursor: pointer
+  &.row
+    color: rgba(100, 0, 100, 1)
+
+ol
+  height: 100%
+  margin: 0
+  padding: 0.1rem
+  border: 1px solid grey
+  li
+    padding: 3px
+    margin: 0 2px 2px 2px
+    align-items: center
+    &:not(.header):not(.footer)
+      background-color: #cdc8c7
+    &.header
+      padding: 0 3px
+      line-height: 1rem
+      text-align: top
+      justify-content: top
+      border-bottom-left-radius: 0
+      border-bottom-right-radius: 0
+      margin-bottom: 0
+      border-bottom: none
+
+.itemrow
+  height: 1.9rem
+
+.rowimgbezelbutton
+  border-style: solid
+  border-width: 1px
+  border-color: #bbb #aaa #999
+  text-shadow: 0 1px 0 #eee
+  background: #ccc
+  color: #333
+  font-family: "Lucida Grande"
+  font-size: 12px
+  font-weight: bold
+  text-decoration: none
+  -webkit-border-radius: 3px
+  -webkit-box-shadow: inset 0 1px 1px #fff, inset 0 -1px 1px #aaa, 0 2px 4px -3px #666
+  &.lock-open
+    background-color: #19762d
+    color: white
+  &.lock
+    background-color: #9c0f0f
+    color: white
+
+.rowimgbezelbutton:active
+  -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
+  border-color: #888 #aaa #eee
+
+input
+  background-color: white
+  height: 1.2rem
+       
+td
+  &.clip
+    text-overflow: ellipsis
+    overflow: hidden
+    height: 2rem
+    max-height: 2rem
+    display: block
 </style>

@@ -51,6 +51,15 @@
     +if("smallwindow")
       .flexcol
         DescriptionBlockNPC
+    
+    .flexcol.teal
+      .background
+        .texture
+        .flexrow.panel.borderless.wide
+          .flex2.gold
+            .portrait-frame.pr-xs
+              PortraitFrame(size="40" style="min-width: 182px;")
+                EffectsSection.high.wide
                        
 
 </template>
