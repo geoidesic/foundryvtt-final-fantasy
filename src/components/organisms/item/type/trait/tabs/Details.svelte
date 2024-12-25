@@ -5,6 +5,7 @@
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
+  import TagInput from "~/src/components/molecules/TagInput.svelte";
 
   const item = getContext("#doc");
 
@@ -68,6 +69,16 @@
         .flex3.right
           DocInput.wide.right(id="modAmount" name="modAmount" valuePath="system.modAmount")
   
+    .flexrow.sheet-row.justify-vertical
+      .flex4
+        h3.left Tags
+      .flex0.right
+        DocCheckbox( name="hasTags" valuePath="system.hasTags")
+    +if("$item.system.hasTags")
+      .px-sm
+        TagInput
+      //- allow breathing space at the bottom of the scroll area
+      .pb-lg 
 </template>
 
 <style lang="sass">
