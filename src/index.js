@@ -35,7 +35,7 @@ function setupDSN() {
 }
 
 //- debug hooks
-CONFIG.debug.hooks = true;
+// CONFIG.debug.hooks = true;
 
 
 //- Foundry Class Extensions
