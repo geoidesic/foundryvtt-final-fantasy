@@ -1,7 +1,7 @@
 import './styles/Main.sass';
 
 import { log } from "~/src/helpers/util"
-import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants"
+import { SYSTEM_ID, SYSTEM_CODE, activeEffectModes } from "~/src/helpers/constants"
 import { setupModels } from './config/models';
 import { registerSettings } from "~/src/settings"
 import { mappedGameTargets } from '~/src/stores';
@@ -21,6 +21,7 @@ import FFCombat from './extensions/combat.js'
 import FFCombatant from './extensions/combatant.js'
 import ColourContrast from "~/src/helpers/ColourContrast";
 import { getActorOwner } from "~/src/helpers/util";
+import CustomEffect from "~/src/helpers/CustomEffect";
 
 //- helpers
 function setupDSN() {
@@ -189,10 +190,33 @@ const resetActionState = async (actor) => {
 
 
 Hooks.on("preCreateActiveEffect", async (actor, data, meta, id) => {
+  game.system.log.d('EFFECTS preCreateActiveEffect', { actor, data, meta, id });
 });
 
 Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
+  game.system.log.d('EFFECTS | applyActiveEffect', { actor, data, id, state, obj });
+  
+  const customEffect = new CustomEffect(actor);
+  
+  //- iterate effects and then within that loop iterate changes
+  for (const effect of actor.effects) {
+    for (const change of effect.changes) {
+      game.system.log.d('EFFECTS | applyActiveEffect change', { effect, change });
+      
+      //- if the change is a custom mode
+      if (activeEffectModes.find(e => e.value === change.mode)) {
+        game.system.log.d('EFFECTS | applyActiveEffect custom change', { change });
+        await customEffect.handleChange(change);
+      }
+    }
+  }
 });
+
+
+Hooks.on("updateActiveEffect", async (effect, data, meta, id) => {
+  game.system.log.d('EFFECTS updateActiveEffect', { effect, data, meta, id });
+});
+
 
 Hooks.on("preDeleteActiveEffect", async (effect, data, id) => {
 });
