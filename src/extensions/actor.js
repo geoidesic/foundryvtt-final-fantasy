@@ -20,7 +20,19 @@ export default class FF15Actor extends Actor {
     return arr;
   };
 
+  /**
+   * Only applies via the token HUD
+   * @param {*} statusId 
+   * @param {*} options 
+   * @returns {Promise<ActiveEffect|boolean|undefined>}  A promise which resolves to one of the following values:
+   *                                 - ActiveEffect if a new effect need to be created
+   *                                 - true if was already an existing effect
+   *                                 - false if an existing effect needed to be removed
+   *                                 - undefined if no changes need to be made
+   */ 
   async toggleStatusEffect(statusId, options) {
+    game.system.log.g('EFFECTS | toggleStatusEffect', { statusId, options });
+    
     if(game.combat && statusId === 'focus' ) {
       //- if actor has focus, and there are no secondary action slots left, prevent the effect from being removed
       if(this.statuses.has('focus') && !this.system.actionState.available.includes('secondary')) {
