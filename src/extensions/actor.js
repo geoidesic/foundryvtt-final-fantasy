@@ -21,7 +21,6 @@ export default class FF15Actor extends Actor {
   };
 
   async toggleStatusEffect(statusId, options) {
-    console.log('actor', this)
     if(game.combat && statusId === 'focus' ) {
       //- if actor has focus, and there are no secondary action slots left, prevent the effect from being removed
       if(this.statuses.has('focus') && !this.system.actionState.available.includes('secondary')) {
@@ -40,6 +39,11 @@ export default class FF15Actor extends Actor {
         await this.update({ system: { actionState: { available: this.removeFirstDuplicate(this.system.actionState.available, 'secondary') } } });
       }
     }
+
+    if(game.combat && statusId === 'enabled' ) {
+      console.log('enabled', options);
+    }
+
     return super.toggleStatusEffect(statusId, options);
   }
 

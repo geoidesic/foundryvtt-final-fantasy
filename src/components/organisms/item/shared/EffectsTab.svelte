@@ -26,6 +26,15 @@
   const doc = getContext("#doc");
   const app = getContext("#external").application;
 
+  // Determine if this is an actor sheet
+  $: isActorSheet = sheet === 'actor';
+  // Check if user is GM
+  $: isGM = game.user.isGM;
+  // Show delete buttons only if GM or not an actor sheet
+  $: showDelete = !isActorSheet || isGM;
+  // Show add/remove all buttons only if GM or not an actor sheet
+  $: showAddRemoveButtons = !isActorSheet || isGM;
+
   const triggerSearch = createFilterQuery("trigger");
   const nameSearch = createFilterQuery("label");
   const wildcardConfig = {
@@ -87,8 +96,7 @@
       if (
         parent instanceof Actor &&
         origin instanceof Item &&
-        origin.type != "effect" &&
-        item.flags?.surge?.trigger != "contact"
+        (origin.type === "job" || (origin.type != "effect" && item.flags?.surge?.trigger != "contact"))
       ) {
         return true;
       }
@@ -211,7 +219,7 @@
               div {effect.name}
             
             .actions.right
-              +if("!$doc.system.effectActionsLocked")
+              +if("!$doc.system.effectActionsLocked && showDelete")
                 div.hide.row-action-button.rowimgbezelbutton.pointer
                   i.left.fa.fa-edit.mr-md
                 button.stealth.row-action-button.rowimgbezelbutton.pointer( on:click="{editItem(index, effect)}")
@@ -219,18 +227,18 @@
                 button.stealth.row-action-button.rowimgbezelbutton.pointer( on:click="{deleteItem(index, effect)}")
                   i.left.fa.fa-trash.mr-md
         li.flexrow.footer
+    +if("showAddRemoveButtons")
+      .flexrow(style="justify-content: space-evenly")
+        .flex1.center
+          button.truncate.mt-sm.glossy-button.gold-light.hover-shine(on:click="{openActiveEffectEditor}") + Add Effect
+        .flex1.center
+          button.truncate.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllEffects}") - Remove All Effects
 
-    .flexrow(style="justify-content: space-evenly")
-      .flex1.center
-        button.truncate.mt-sm.glossy-button.gold-light.hover-shine(on:click="{openActiveEffectEditor}") + Add Effect
-      .flex1.center
-        button.truncate.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllEffects}") - Remove All Effects
-
-    h5 Notes: 
-    ul.pa-sm.left.pa-md(style="margin-top: -20px")
-      li Each of the effects listed are collections. 
-      li Click edit next to the collection to see its contents.
-      li You should set your item's profile image before adding an effect as the effect will inherit that image. 
+    //- h5 Notes: 
+    //- ul.pa-sm.left.pa-md(style="margin-top: -20px")
+    //-   li Each of the effects listed are collections. 
+    //-   li Click edit next to the collection to see its contents.
+    //-   li You should set your item's profile image before adding an effect as the effect will inherit that image. 
     
 </template>
 
