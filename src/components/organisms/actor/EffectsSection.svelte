@@ -183,7 +183,7 @@
   @include pulse
 
   .buttons
-  @include buttons
+    @include buttons
 
 .actions
   margin-left: 0.5rem

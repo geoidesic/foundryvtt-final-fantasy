@@ -204,7 +204,7 @@
               td.img.shrink(scope="col")
                 img.icon(src="{$Actor.system.job?.img}" alt="{$Actor.system.job?.img}")
               td.left.expand.gold.larger(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
-              td.right.expand.scaleup.kerned.glow.gold(scope="col") {$Actor.system.job?.level}
+              td.expand.scaleup.kerned.glow.gold.largerer(scope="col") {$Actor.system.job?.level}
               td.buttons(scope="col")
                 button.stealth(on:click="{deleteJob}")
                   i.fa-solid.fa-trash

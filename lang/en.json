@@ -80,7 +80,8 @@
         "Types": {
           "action": {
             "Label": "Action",
-            "Description": "An ability that can be used in combat."
+            "Description": "An ability that can be used in combat.",
+            "SlotNotAvailable": "No %s action slot available."
           },
           "equipment": {
             "Label": "Equipment",
