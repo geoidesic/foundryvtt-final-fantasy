@@ -28,19 +28,23 @@ export default class FFCombatTracker extends CombatTracker {
 
   async getData() {
     const data = await super.getData();
-    for(const turn of data.turns) {
+    for (const turn of data.turns) {
       const combatant = game.combat.combatants.get(turn.id);
       const actor = combatant.actor
-      turn.hasActions = true
-      turn.actions = ''
-      if(actor.system.actionState?.available) {
-        for(const action of actor.system.actionState.available) {
-          turn.actions += `<badge class="${action}">${action[0].capitalize()}</badge>`
+      turn.actorId = actor.id
+      if(turn.active) {
+        turn.hasActions = true
+        turn.actions = ''
+        if (actor.system.actionState?.available) {
+          for (const action of actor.system.actionState.available.sort()) {
+            turn.actions += `<badge class="${action}">${action[0].capitalize()}</badge>`
+          }
         }
-      }
-      if(actor.system.actionState?.used) {
-        for(const action of actor.system.actionState.used) {
-          turn.actions += `<badge class="used">${action[0].capitalize()}</badge>`
+        if (actor.system.actionState?.used) {
+          game.system.log.d("FFCombatTracker getData actor.system.actionState.used", actor.system.actionState.used)
+          for (const action of actor.system.actionState.used.sort()) {
+            turn.actions += `<badge class="used">${action.type[0].capitalize()}</badge>`
+          }
         }
       }
     }
@@ -55,22 +59,22 @@ export default class FFCombatTracker extends CombatTracker {
     const li = event.currentTarget;
     const combatant = this.viewed.combatants.get(li.dataset.combatantId);
     const token = combatant.token;
-    if ( !combatant.actor?.testUserPermission(game.user, "OBSERVER") ) return;
+    if (!combatant.actor?.testUserPermission(game.user, "OBSERVER")) return;
     const now = Date.now();
 
     // Handle double-left click to open sheet
     const dt = now - this._clickTime;
     this._clickTime = now;
-    if ( dt <= 250 ) {
+    if (dt <= 250) {
       //- #19 - prevent double click from opening sheet when clicking on the initiative field
-      if(event.target.type === undefined) {
+      if (event.target.type === undefined) {
         return combatant.actor?.sheet.render(true);
       }
     }
 
     // Control and pan to Token object
-    if ( token?.object ) {
-      token.object?.control({releaseOthers: true});
+    if (token?.object) {
+      token.object?.control({ releaseOthers: true });
       return canvas.animatePan(token.object.center);
     }
   }
@@ -81,8 +85,8 @@ export default class FFCombatTracker extends CombatTracker {
     let currentClass = this.constructor;
 
     while (currentClass) {
-        classNames.push(currentClass.name);
-        currentClass = Object.getPrototypeOf(currentClass);
+      classNames.push(currentClass.name);
+      currentClass = Object.getPrototypeOf(currentClass);
     }
 
     return classNames;

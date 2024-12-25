@@ -34,6 +34,194 @@ export default class RollCalcActor extends RollCalc {
     game.system.log.g('trait chat message created');
   }
 
+  async equipment(item) {
+    this.params.item = item;
+    ChatMessage.create({
+      user: game.user.id,
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      flags: { [SYSTEM_ID]: { data: { ...this.params, chatTemplate: 'EquipmentChat' } } }
+    })
+  }
+
+  async attribute(key, code) {
+    const attributeValue = this.params.actor.system.attributes[key][code].val;
+    const rollFormula = `1d20 + ${attributeValue}`;
+    const attributeName = game.i18n.localize(`FF15.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
+    const roll = await new Roll(rollFormula).evaluate({ async: true });
+    const messageData = {
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: $actor }) : null,
+      flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      roll,
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "AttributeRollChat",
+            actor: {
+              _id: this.params.actor._id,
+              name: this.params.actor.name,
+              img: this.params.actor.img
+            },
+            flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
+            key: key,
+            code: code,
+            modifier: attributeValue
+          },
+          css: 'attribute-roll'
+        }
+      }
+    };
+    await roll.toMessage(messageData);
+  }
+
+  async ability(type, item) {
+    game.system.log.g('ability method start', { type, item });
+
+    await this._routeAbility(item);
+  }
+
+  async abilityTrait(item) {
+    await this.defaultChat(item);
+  }
+
+
+  async abilityAction(item) {
+    game.system.log.g('abilityAction start', { item });
+    if (item.type !== "action") {
+      game.system.log.g('not an action item, returning');
+      return;
+    }
+
+    // Check if we have targeted entities
+    const targets = game.user.targets;
+    game.system.log.d("race targets", targets);
+    const hasTargets = targets.size > 0;
+
+    // if no targets, then don't roll
+    if (!hasTargets) {
+      ui.notifications.warn(`${item.name} has no targets. Please select targets and roll again.`);
+      return;
+    }
+
+    await this._handleRemainingUses(item);
+
+    // Show dialog for extra modifiers
+    const extraModifiers = await this._showModifierDialog(item);
+    game.system.log.g('modifier dialog result', { extraModifiers });
+
+    // If dialog was cancelled or closed, return early
+    if (!extraModifiers?.confirmed) {
+      game.system.log.g('modifier dialog cancelled or closed, returning');
+      return;
+    }
+
+    // Build roll formula and data
+    let formula = `1d20 + ${extraModifiers.modifier} `;
+    let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
+
+    // Evaluate roll with actor data
+    const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
+
+    // Create chat message data
+    const messageData = {
+      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      // speaker: ChatMessage.getSpeaker({ actor: this.params.actor }), //- this sets the speaker to the actor owner, without it, it will be the user that triggered the action
+      flavor: `${item.name}`,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      classes: ['testy', 'leather'],
+      roll,
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "ActionRollChat",
+            actor: {
+              _id: this.params.actor._id,
+              uuid: this.params.actor.uuid,
+              name: this.params.actor.name,
+              img: this.params.actor.img
+            },
+            item: {
+              _id: item._id,
+              uuid: item.uuid,
+              name: item.name,
+              img: item.img,
+              type: item.type,
+              system: {
+                formula: item.system?.formula,
+                directHitDamage: item.system?.directHitDamage,
+                hasDirectHit: item.system?.hasDirectHit
+              }
+            },
+            hasTargets,
+            roll: roll.total,
+            extraModifiers,
+            targets: Array.from(targets).map((target) => target.id)
+          },
+          state: {
+            damageResults: false,
+            initialised: false
+          },
+          css: 'leather'
+        }
+      }
+    };
+
+    // Before creating the message, check if this action type is available
+    const actionType = item.system.type || 'primary'; // default to primary if not set
+    const { actionState } = this.params.actor.system;
+    
+    if (!actionState.available.includes(actionType)) {
+      ui.notifications.warn(`No ${actionType} action available.`);
+      return;
+    }
+
+    // Create the message
+    const message = await roll.toMessage(messageData);
+
+    // Find the index of the first matching action type
+    const indexToRemove = actionState.available.findIndex(a => a === actionType);
+
+    // Create new available array without the used action
+    const newAvailable = [...actionState.available];
+    if (indexToRemove !== -1) {
+      newAvailable.splice(indexToRemove, 1);
+    }
+
+    // Update the actor's actionState
+    await this.params.actor.update({
+      'system.actionState.available': newAvailable,
+      'system.actionState.used': [...actionState.used, {
+        type: actionType,
+        messageId: message.id
+      }]
+    });
+
+    // Handle effect enabling after successful modifier dialog
+    await this._handleEffectEnabling(item);
+
+  }
+
+
+  /******************
+   * Private methods
+   ******************/
+
+  async _updateActionState(actionType, messageId) {
+    const { actionState } = this.params.actor.system;
+    
+    // Update the actor's actionState
+    await this.params.actor.update({
+      'system.actionState': {
+        
+        available: [...actionState.available.filter(a => a !== actionType)],
+        used: [...actionState.used, {
+          type: actionType,
+          messageId: messageId
+        }]
+      }
+    });
+  }
 
   async _handleEffectEnabling(item) {
     game.system.log.g('_handleEffectEnabling start', { item });
@@ -150,45 +338,6 @@ export default class RollCalcActor extends RollCalc {
     }
   }
 
-  async equipment(item) {
-    this.params.item = item;
-    ChatMessage.create({
-      user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      flags: { [SYSTEM_ID]: { data: { ...this.params, chatTemplate: 'EquipmentChat' } } }
-    })
-  }
-
-  async attribute(key, code) {
-    const attributeValue = this.params.actor.system.attributes[key][code].val;
-    const rollFormula = `1d20 + ${attributeValue}`;
-    const attributeName = game.i18n.localize(`FF15.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
-    const roll = await new Roll(rollFormula).evaluate({ async: true });
-    const messageData = {
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: $actor }) : null,
-      flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      roll,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "AttributeRollChat",
-            actor: {
-              _id: this.params.actor._id,
-              name: this.params.actor.name,
-              img: this.params.actor.img
-            },
-            flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
-            key: key,
-            code: code,
-            modifier: attributeValue
-          },
-          css: 'attribute-roll'
-        }
-      }
-    };
-    await roll.toMessage(messageData);
-  }
 
   async _showModifierDialog(item) {
     game.system.log.g('showing modifier dialog');
@@ -224,126 +373,5 @@ export default class RollCalcActor extends RollCalc {
       rollFormula += ` + @${item.system.checkAttribute}`;
     }
     return { rollFormula, rollData };
-  }
-
-  async ability(type, item) {
-    game.system.log.g('ability method start', { type, item });
-
-    await this._routeAbility(item);
-  }
-
-  async abilityTrait(item) {
-    await this.defaultChat(item);
-  }
-
-
-  async abilityAction(item) {
-    game.system.log.g('abilityAction start', { item });
-    if (item.type !== "action") {
-      game.system.log.g('not an action item, returning');
-      return;
-    }
-
-    // Check if we have targeted entities
-    const targets = game.user.targets;
-    game.system.log.d("race targets", targets);
-    const hasTargets = targets.size > 0;
-
-    // if no targets, then don't roll
-    if (!hasTargets) {
-      ui.notifications.warn(`${item.name} has no targets. Please select targets and roll again.`);
-      return;
-    }
-
-    await this._handleRemainingUses(item);
-
-    // Show dialog for extra modifiers
-    const extraModifiers = await this._showModifierDialog(item);
-    game.system.log.g('modifier dialog result', { extraModifiers });
-
-    // If dialog was cancelled or closed, return early
-    if (!extraModifiers?.confirmed) {
-      game.system.log.g('modifier dialog cancelled or closed, returning');
-      return;
-    }
-
-
-
-    // Build roll formula and data
-    let formula = `1d20 + ${extraModifiers.modifier} `;
-    let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
-
-    // Evaluate roll with actor data
-    const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
-
-    // Create chat message data
-    const messageData = {
-      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      // speaker: ChatMessage.getSpeaker({ actor: this.params.actor }), //- this sets the speaker to the actor owner, without it, it will be the user that triggered the action
-      flavor: `${item.name}`,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      classes: ['testy', 'leather'],
-      roll,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "ActionRollChat",
-            actor: {
-              _id: this.params.actor._id,
-              uuid: this.params.actor.uuid,
-              name: this.params.actor.name,
-              img: this.params.actor.img
-            },
-            item: {
-              _id: item._id,
-              uuid: item.uuid,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: {
-                formula: item.system?.formula,
-                directHitDamage: item.system?.directHitDamage,
-                hasDirectHit: item.system?.hasDirectHit
-              }
-            },
-            hasTargets,
-            roll: roll.total,
-            extraModifiers,
-            targets: Array.from(targets).map((target) => target.id)
-          },
-          state: {
-            damageResults: false,
-            initialised: false
-          },
-          css: 'leather'
-        }
-      }
-    };
-
-    // Before creating the message, check if this action type is available
-    const actionType = item.system.type || 'primary'; // default to primary if not set
-    const { actionState } = this.params.actor.system;
-    
-    if (!actionState.available.includes(actionType)) {
-      ui.notifications.warn(`No ${actionType} action available.`);
-      return;
-    }
-
-    // Create the message
-    const message = await roll.toMessage(messageData);
-
-    // Update the actor's actionState
-    await this.params.actor.update({
-      'system.actionState.available': actionState.available.filter(a => a !== actionType),
-      'system.actionState.used': [...actionState.used, {
-        type: actionType,
-        messageId: message.id
-      }]
-    });
-
-    // Handle effect enabling after successful modifier dialog
-    await this._handleEffectEnabling(item);
-
   }
 }

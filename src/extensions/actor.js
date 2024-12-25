@@ -8,6 +8,41 @@ export default class FF15Actor extends Actor {
     super(data, context);
   }
 
+  hasSpecificDuplicate (arr, str) {
+    return arr.filter(item => item === str).length > 1;
+  } 
+
+  removeFirstDuplicate (arr, name) {
+    const index = arr.indexOf(name); // Find the first occurrence
+    if (index !== -1 && arr.slice(index + 1).includes(name)) {
+      arr.splice(index, 1); // Remove only the first duplicate
+    }
+    return arr;
+  };
+
+  async toggleStatusEffect(statusId, options) {
+    console.log('actor', this)
+    if(game.combat && statusId === 'focus' ) {
+      //- if actor has focus, and there are no secondary action slots left, prevent the effect from being removed
+      if(this.statuses.has('focus') && !this.system.actionState.available.includes('secondary')) {
+        ui.notifications.warn('You cannot change Focus while you have no secondary action slots left.');
+        return false;
+      }
+      if(!this.statuses.has('focus') && this.system.hasMoved) {
+        ui.notifications.warn('You cannot change Focus while you have moved this turn.');
+        return false;
+      }
+      //- if actor has focus, and has not moved, add the secondary action slot
+      if(!this.statuses.has('focus') && !this.system.hasMoved && !this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
+        await this.update({ system: { actionState: { available: [...this.system.actionState.available, 'secondary'] } } });
+      }
+      if(this.statuses.has('focus') && !this.system.hasMoved && this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
+        await this.update({ system: { actionState: { available: this.removeFirstDuplicate(this.system.actionState.available, 'secondary') } } });
+      }
+    }
+    return super.toggleStatusEffect(statusId, options);
+  }
+
 
   /** @override */
   prepareData() {
@@ -60,6 +95,8 @@ export default class FF15Actor extends Actor {
     // }
   }
 
+  
+
   async deleteAllItems(type) {
     game.system.log.d(type)
     game.system.log.d(typeof type)
@@ -80,6 +117,7 @@ export default class FF15Actor extends Actor {
 
   async _onDrop(event) {
     console.log('_onDrop in the actor.js', event);
-
   }
+
+  
 }

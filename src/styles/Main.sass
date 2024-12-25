@@ -32,7 +32,7 @@ badge
   &.reaction
     +badge(var(--color-reaction), white)
   &.used
-    +badge(var(--color-highlight), white)
+    +badge(var(--color-used-bg), var(--color-used))
 .icon-critical:before
   content: "\e900"
 
@@ -631,6 +631,11 @@ badge
 #combat-tracker
   .combatant
     padding-right: 0.5rem
+    position: relative
+    .token-actions
+      position: absolute
+      top: -8px
+      right: 56px
     input
       color: white
     &.active

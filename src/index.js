@@ -35,12 +35,11 @@ function setupDSN() {
 }
 
 //- debug hooks
-// CONFIG.debug.hooks = true;
+CONFIG.debug.hooks = true;
 
 
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
-CONFIG.ui.combat = FFCombatTracker;
 CONFIG.Combat.documentClass = FFCombat
 CONFIG.Combatant.documentClass = FFCombatant
 
@@ -55,6 +54,7 @@ CONFIG.Combat.initiative = {
 //- Foundry System Hooks
 Hooks.once("init", async (a, b, c) => {
 
+  CONFIG.ui.combat = FFCombatTracker;
   game.system.log = log;
   log.level = log.VERBOSE;
   game.system.log.i(`Starting System ${SYSTEM_ID}`);
@@ -158,22 +158,64 @@ Hooks.on('canvasReady', () => {
 })
 
 Hooks.on('preUpdateToken', async (tokenDocument, update) => {
-  // prevent movement while targeting
-  console.log('preUpdateToken', tokenDocument);
+  // prevent movement while focused
   const actor = game.actors.get(tokenDocument.actorId);
-  console.log('actor', actor);
   if (actor.statuses.has('focus') && (update.x || update.y)) {
     delete update.x;
     delete update.y;
     ui.notifications.warn(game.i18n.localize("FF15.Errors.CannotMoveWhileFocused"))
   }
+  
+  //- indicate that the actor has moved
+  if(update.x || update.y) {
+    actor.update({ system: { hasMoved: true } });
+  }
 });
 
-Hooks.on("combatStart", async () => {
+
+const resetActionState = async (actor) => {
+  // Reset action state
+  const baseActions = ['primary', 'secondary'];
+  const extraActions = actor.statuses.has('focus') ? ['secondary'] : [];
+
+  await actor.update({
+    'system.actionState': {
+      available: [...baseActions, ...extraActions],
+      used: []
+    }
+  });
+};
+
+
+
+Hooks.on("preCreateActiveEffect", async (actor, data, meta, id) => {
+  //- if actor has focus, and there are no secondary action slots left, prevent the effect from being created
+  data.preventUpdate = true;
+  return false;
+  if(actor.statuses.has('focus') && actor.system.actionState.available.length === 1) {
+  }
+});
+
+Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
+  return false;
+});
+
+Hooks.on("preDeleteActiveEffect", async (effect, data, id) => {
+  const actor = effect.actor;
+  if (!actor) return;
+});
+
+Hooks.on("deleteActiveEffect", async (effect, data, id) => {
+  const actor = effect.actor;
+  if (!actor) return;
+});
+
+Hooks.on("combatStart", async (app, data, meta, id) => {
   const combatStartSound = game.settings.get(SYSTEM_ID, 'combatStartSound').trim();
   if (combatStartSound !== '') {
     AudioHelper.play({ src: combatStartSound, volume: 1, autoplay: true, loop: false });
   }
+
 });
 
 Hooks.on("renderCombatTracker", (app, html, data) => {
@@ -191,6 +233,16 @@ Hooks.on("renderCombatTracker", (app, html, data) => {
     // Call the hook with the first combatant and empty update data
     Hooks.call('updateCombatant', data.combat.turns[0], {});
   }
+});
+
+Hooks.on("preCreateCombatant", async (combatant, data, meta, id) => {
+  game.system.log.d('preCreateCombatant', { combatant, data, meta, id });
+
+  const actor = combatant.actor;
+  if (!actor) return;
+
+  await resetActionState(actor);
+
 });
 
 /**
@@ -256,6 +308,65 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
       }
     });
   }
+
+});
+
+
+Hooks.on("deleteCombat", async (combat) => {
+  // Get all combatants from the ended combat
+  const combatants = combat.combatants.contents;
+
+  // For each combatant
+  for (const combatant of combatants) {
+    const actor = combatant.actor;
+    if (!actor) continue;
+
+    // Get all items that have limitations
+    const items = actor.items.filter(i => i.system.hasLimitation);
+
+    // Reset uses for each item
+    for (const item of items) {
+      // Preserve existing system data and only update the uses field
+      const systemData = foundry.utils.deepClone(item.system);
+      systemData.uses = 0;
+      await item.update({ system: systemData });
+    }
+  }
+});
+
+
+// Reset uses at end of turn for abilities with 'turn' limitation units
+Hooks.on("updateCombat", async (combat, changed, options, userId) => {
+  
+  
+  // Only process if the turn actually changed
+  if (!("turn" in changed) || changed.turn === null) return;
+
+  // Get the previous combatant
+  const previousTurn = combat.turns[combat.previous?.turn];
+  if (!previousTurn) return;
+
+  const actor = previousTurn.actor;
+  if (!actor) return;
+
+  // Find all items with turn-based limitations
+  const turnLimitedItems = actor.items.filter(i =>
+    i.system.hasLimitation &&
+    i.system.limitationUnits === "turn"
+  );
+
+  // Reset uses for those items
+  for (const item of turnLimitedItems) {
+    const systemData = foundry.utils.deepClone(item.system);
+    systemData.uses = 0;
+    await item.update({ system: systemData });
+  }
+
+  // Reset action state at end of turn
+  await resetActionState(actor, true);
+
+  //- reset hasMoved flag
+  await actor.update({ system: { hasMoved: false } });
 
 });
 
@@ -357,6 +468,31 @@ Hooks.on('renderChatMessage', (message, html) => {
   }
 });
 
+// Add this new hook
+Hooks.on("preDeleteChatMessage", async (message) => {
+  // Check if this is an action message
+  const FFMessage = message.getFlag(SYSTEM_ID, 'data');
+  if (!FFMessage?.item?.type === 'action') return;
+
+  const actor = game.actors.get(FFMessage.actor._id);
+  if (!actor) return;
+
+  // Find if this message is tracked in used actions
+  const { actionState } = actor.system;
+  const usedAction = actionState.used.find(u => u.messageId === message.id);
+
+  if (usedAction) {
+    // Restore the action
+    await actor.update({
+      'system.actionState': {
+        available: [...actionState.available, usedAction.type],
+        used: actionState.used.filter(u => u.messageId !== message.id)
+      }
+    });
+  }
+});
+
+
 /**
  * Used by chat messages to react to targeting changes.
  */
@@ -383,97 +519,5 @@ Hooks.on("targetToken", (User, Token) => {
 
 });
 
-Hooks.on("deleteCombat", async (combat) => {
-  // Get all combatants from the ended combat
-  const combatants = combat.combatants.contents;
 
-  // For each combatant
-  for (const combatant of combatants) {
-    const actor = combatant.actor;
-    if (!actor) continue;
-
-    // Get all items that have limitations
-    const items = actor.items.filter(i => i.system.hasLimitation);
-
-    // Reset uses for each item
-    for (const item of items) {
-      // Preserve existing system data and only update the uses field
-      const systemData = foundry.utils.deepClone(item.system);
-      systemData.uses = 0;
-      await item.update({ system: systemData });
-    }
-  }
-});
-
-// Reset uses at end of turn for abilities with 'turn' limitation units
-Hooks.on("updateCombat", async (combat, changed, options, userId) => {
-  // Only process if the turn actually changed
-  if (!("turn" in changed) || changed.turn === null) return;
-
-  // Get the previous combatant
-  const previousTurn = combat.turns[combat.previous?.turn];
-  if (!previousTurn) return;
-
-  const actor = previousTurn.actor;
-  if (!actor) return;
-
-  // Find all items with turn-based limitations
-  const turnLimitedItems = actor.items.filter(i =>
-    i.system.hasLimitation &&
-    i.system.limitationUnits === "turn"
-  );
-
-  // Reset uses for those items
-  for (const item of turnLimitedItems) {
-    const systemData = foundry.utils.deepClone(item.system);
-    systemData.uses = 0;
-    await item.update({ system: systemData });
-  }
-});
-
-// Reset action state at end of turn
-Hooks.on("updateCombat", async (combat, changed, options, userId) => {
-  // Only process if the turn actually changed
-  if (!("turn" in changed) || changed.turn === null) return;
-
-  // Get the previous combatant
-  const previousTurn = combat.turns[combat.previous?.turn];
-  if (!previousTurn) return;
-
-  const actor = previousTurn.actor;
-  if (!actor) return;
-
-  // Reset action state
-  const baseActions = ['primary', 'secondary'];
-  const extraActions = actor.statuses.has('focus') ? ['secondary'] : [];
-  
-  await actor.update({
-    'system.actionState': {
-      available: [...baseActions, ...extraActions],
-      used: []
-    }
-  });
-});
-
-// Add this new hook
-Hooks.on("preDeleteChatMessage", async (message) => {
-  // Check if this is an action message
-  const FFMessage = message.getFlag(SYSTEM_ID, 'data');
-  if (!FFMessage?.item?.type === 'action') return;
-
-  const actor = game.actors.get(FFMessage.actor._id);
-  if (!actor) return;
-
-  // Find if this message is tracked in used actions
-  const { actionState } = actor.system;
-  const usedAction = actionState.used.find(u => u.messageId === message.id);
-  
-  if (usedAction) {
-    // Restore the action
-    await actor.update({
-      'system.actionState.available': [...actionState.available, usedAction.type],
-      'system.actionState.used': actionState.used.filter(u => u.messageId !== message.id)
-    });
-  }
-});
 
