@@ -52,6 +52,7 @@
     "Use": "Use",
     "Uses": "Uses",
     "View": "View",
+    "Volley": "Volley",
     "SystemDescription": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
     "Chat": {
       "Buttons": {
@@ -185,7 +186,8 @@
               "secondary": "Secondary",
               "reaction": "Reaction",
               "limit": "Limit",
-              "combo": "Combo"
+              "combo": "Combo",
+              "volley": "Volley"
             },
             "Cost": {
               "1": "1 MP",

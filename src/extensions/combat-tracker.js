@@ -1,4 +1,4 @@
-import { SYSTEM_ID } from "~/src/helpers/constants"
+import { SYSTEM_ID, getTypeOptions } from "~/src/helpers/constants"
 import { viewedCombat } from "~/src/stores"
 
 export default class FFCombatTracker extends CombatTracker {
@@ -37,7 +37,12 @@ export default class FFCombatTracker extends CombatTracker {
         turn.actions = ''
         if (actor.system.actionState?.available) {
           for (const action of actor.system.actionState.available.sort()) {
-            turn.actions += `<badge class="${action}">${action[0].capitalize()}</badge>`
+            //- if action is custom, i.e. not in getTypeOptions, then use the class name: custom-action
+            if (!getTypeOptions().some(e => e.value === action)) {  
+              turn.actions += `<badge data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="custom-action">${action[0].capitalize()}</badge>`
+            } else {
+              turn.actions += `<badge data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="${action}">${action[0].capitalize()}</badge>`
+            }
           }
         }
         if (actor.system.actionState?.used) {
