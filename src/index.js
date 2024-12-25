@@ -189,25 +189,15 @@ const resetActionState = async (actor) => {
 
 
 Hooks.on("preCreateActiveEffect", async (actor, data, meta, id) => {
-  //- if actor has focus, and there are no secondary action slots left, prevent the effect from being created
-  data.preventUpdate = true;
-  return false;
-  if (actor.statuses.has('focus') && actor.system.actionState.available.length === 1) {
-  }
 });
 
 Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
-  return false;
 });
 
 Hooks.on("preDeleteActiveEffect", async (effect, data, id) => {
-  const actor = effect.actor;
-  if (!actor) return;
 });
 
 Hooks.on("deleteActiveEffect", async (effect, data, id) => {
-  const actor = effect.actor;
-  if (!actor) return;
 });
 
 Hooks.on("combatStart", async (app, data, meta, id) => {
