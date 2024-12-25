@@ -19,7 +19,7 @@
 </script>
 
 <template lang="pug">
-  .badge(class="{!remover ? 'small' : ''}")
+  .badge({...$$restProps})
     .label {tag}
     +if("remover")
       .remove.right(on:click!="{() => removeTag(tag)}")
@@ -42,14 +42,16 @@
       padding: 0 2px
       margin-right: 2px
       font-size: 0.6rem
+      vertical-align: 0%
+    &.low
       vertical-align: -10%
     
       .label
         vertical-align: 0%
+
     .label
       font-size: 0.8rem
       color: white
-      vertical-align: 10%
       display: inline-block
     .remove
       display: inline-block

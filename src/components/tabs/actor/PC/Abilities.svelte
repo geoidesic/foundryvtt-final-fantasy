@@ -13,6 +13,7 @@
   import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
   import RollCalcActor from "~/src/helpers/RollCalcActor";
   import Badge from "~/src/components/atoms/Badge.svelte";
+  import Tag from "~/src/components/atoms/Tag.svelte";
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
@@ -36,7 +37,18 @@
   const wildcard = doc.embedded.create(Item, {
     name: "wildcard",
     filters: [typeSearch],
-    sort: (a, b) => a.name.localeCompare(b.name),
+    sort: (a, b) => {
+      //- compare a.type to b.type and then a.system.type to b.system.type and then a.name to b.name
+      //- for b.system.type place secondary before reaction and primary before secondary
+      const typeOrder = [ 'primary', 'secondary', 'reaction'];
+      if (a.type === b.type) {
+        if (a.system.type === b.system.type) {
+          return a.name.localeCompare(b.name)
+        }
+        return typeOrder.indexOf(a.system.type) - typeOrder.indexOf(b.system.type)
+      }
+      return a.type.localeCompare(b.type)
+    }
   });
 
   function editItem(item) {
@@ -164,6 +176,10 @@
   
   $: console.log($Actor.items.map(x=>x.type))
 
+  const actionTypeClass = (item) => {
+    return item.type === 'action' ? item.system?.type : 'trait';
+  }
+
 </script>
 
 <template lang="pug">
@@ -195,17 +211,18 @@
 
 
         h1.gold {localize('FF15.Abilities')}
-        table.borderless
+        table.borderless.even
           tr.gold
             th.img.shrink(scope="col")
             th.left.expand.ml-sm(scope="col") {localize('FF15.Name')}
-            th.left(scope="col" colspan="2") {localize('FF15.Type')}
+            //- th.left(scope="col" colspan="1") {localize('FF15.Type')}
+            th(scope="col" colspan="1") Tags
             th.buttons(scope="col" class="{lockCSS}" colspan="2")
               button.stealth(class="{lockCSS}")
                 i.fa(class="{faLockCSS}" on:click="{toggleLock}")
           +each("items as item, index")
             //- pre item.type {item.type}
-            tr
+            tr(class="{actionTypeClass(item)}")
               td.img(data-tooltip="{localize('FF15.Use')}")
                 img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.ability(item.type, item)}")
               td.left
@@ -215,8 +232,12 @@
                   +if("item.system.hasLimitation && $viewedCombat")
                     .flex0.right.ml-sm(data-tooltip="{localize('FF15.Uses')}")
                       Badge(type!="{badgeType(item)}") {remaining(item)}
-              td.left {ucfirst(item.type)}
-              td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
+              //- td.left {ucfirst(item.type)}
+              //- td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
+              td.right
+                +if("item.system.tags") 
+                  +each("item.system.tags as tag")
+                    Tag.badge.small({tag}, remover="{false}" style="margin-top: -2px;")
               td(data-tooltip="{localize('FF15.Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
@@ -271,26 +292,35 @@ i.disable
   &.row
     color: rgba(100, 0, 100, 1)
 
-ol
-  height: 100%
-  margin: 0
-  padding: 0.1rem
-  border: 1px solid grey
-  li
-    padding: 3px
-    margin: 0 2px 2px 2px
-    align-items: center
-    &:not(.header):not(.footer)
-      background-color: #cdc8c7
-    &.header
-      padding: 0 3px
-      line-height: 1rem
-      text-align: top
-      justify-content: top
-      border-bottom-left-radius: 0
-      border-bottom-right-radius: 0
-      margin-bottom: 0
-      border-bottom: none
+// table tr
+//   td
+//     line-height: 1.5rem
+//   &.reaction
+//     td:nth-child(2)
+//       color: var(--color-reaction)
+//   &.primary
+//     td:nth-child(2)
+//       color: var(--color-primary-action)
+//   &.secondary
+//     td:nth-child(2)
+//       color: var(--color-secondary-action)
+
+table tr
+  td
+    vertical-align: middle
+    line-height: 1.7rem
+  &.reaction
+    background-color: var(--color-reaction)
+    color: white
+  &.primary
+    background-color: var(--color-primary-action)
+    color: white
+  &.secondary
+    background-color: var(--color-secondary-action)
+    color: white
+  &.trait
+    background-color: var(--color-trait)
+    color: white
 
 .itemrow
   height: 1.9rem
