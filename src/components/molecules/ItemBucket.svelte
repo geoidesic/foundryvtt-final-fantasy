@@ -3,6 +3,7 @@ import { onMount, getContext } from 'svelte';
 import { SYSTEM_ID } from '~/src/helpers/constants';
 import { ucfirst, localize } from '~/src/helpers/util';
 import DocCheckbox from '~/src/components/atoms/controls/DocCheckbox.svelte'
+import Tag from "~/src/components/atoms/Tag.svelte";
 
 export let title
 export let key
@@ -73,10 +74,12 @@ function showItemSheet(item) {
   item.sheet.render(true);
 }
 
+$: activeClass = checkboxValue ? 'active' : '';
+
 </script>
 
 <template lang="pug">
-  .item-bucket(role="application" aria-dropeffect="link" on:drop|preventDefault|stopPropagation="{onDrop}")
+  .item-bucket(class="{activeClass}" role="application" aria-dropeffect="link" on:drop|preventDefault|stopPropagation="{onDrop}")
     .flexrow.sheet-row.justify-vertical
       .flex3
           h2.wide {title}
@@ -108,9 +111,9 @@ function showItemSheet(item) {
               //- do not remove the closure here, it causes all hell to break loose!
               button.stealth(on:click!="{() => deleteLink(index)}")
                 i.left.fa.fa-trash.pointer
-      +else
-        .empty-list
-          p.empty-list-text Drop items here to add them to the list.
+    +if("checkboxValue && localList.length === 0")
+      .empty-list
+        p.empty-list-text Drop items here to add them to the list.
 
 </template>
 
@@ -120,9 +123,11 @@ function showItemSheet(item) {
 .item-bucket
   padding: 0.5em
   margin-bottom: 1.5em
-  border: 1px solid rgba(0, 0, 0, 0.1)
-  border-radius: 3px
-  background-color: var(--color-lowlight)
+  &.active
+    transition: background-color 0.3s ease
+    border: 1px solid rgba(0, 0, 0, 0.1)
+    border-radius: 3px
+    background-color: var(--color-lowlight)
 
 .empty-list
   padding: 0.5em

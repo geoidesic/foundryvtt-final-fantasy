@@ -1,14 +1,16 @@
 <script>
   import { getContext, onMount } from "svelte";
   import { SYSTEM_ID } from "~/src/helpers/constants";
+  import Tag from "~/src/components/atoms/Tag.svelte";
   
   const message = getContext("message");
   const FFMessage = $message.getFlag(SYSTEM_ID, 'data')
   const actor = game.actors.get(FFMessage.actor._id)
+  let item = {}
   console.log("FFMessage", FFMessage)
+  console.log("item", item)
   const openItemSheet = async (uuid) => {
     console.log("uuid", uuid)
-    const item = await fromUuid(uuid)
     console.log("item", item)
     item.sheet.render(true);
   }
@@ -17,21 +19,33 @@
     actor.sheet.render(true);
   }
 
+  onMount(async () => {
+    item = await fromUuid(FFMessage.item.uuid)
+  })
+
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
 
 </script>
 
 <template lang="pug">
 .chat-title
-  .flexrow.title
+  .flexrow.title.mb-smd
     +if("showProfileImage")   
       img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
-    .flexcol(class="{showProfileImage ? 'text' : ''}")
+    .flex2.flexcol(class="{showProfileImage ? 'text' : ''}")
       .col 
         .flexrow
           .flex4.link.pointer(on:click!="{openActorSheet}") {FFMessage.actor.name}
-          .flex2.type-label.smaller.gold {FFMessage.item.type}
       .col.font-cinzel.smaller.pointer(on:click!="{() => openItemSheet(FFMessage.item.uuid)}") {FFMessage.item.name}
+    .flex3
+      .flexcol
+        .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
+        +if("item?.system?.tags?.length > 0") 
+          .flex3.right(style="margin-right: 2.2rem;")
+            .flexrow.right(style="justify-content: flex-end; gap: 2px")
+              +each("item?.system?.tags as tag")
+                .flex0.right
+                  Tag({tag} remover="{false}")
     img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
 </template>
 
