@@ -2,6 +2,7 @@ import RollCalc from "./RollCalc.js"
 import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "./constants.js"
 
+
 export default class RollCalcActor extends RollCalc {
 
   async defaultChat(item) {
@@ -83,30 +84,16 @@ export default class RollCalcActor extends RollCalc {
 
 
   async abilityAction(item) {
-    if (item.type !== "action") {
+    if (!(await this._handleGuards(item, [
+      this.RG.isAction,
+      this.RG.hasTargets,
+      this.RG.hasModifiers,
+      this.RG.hasActiveEnablerSlot
+    ]))) {
       return;
     }
-
-    // Check if we have targeted entities
-    const targets = game.user.targets;
-    game.system.log.d("race targets", targets);
-    const hasTargets = targets.size > 0;
-
-    // if no targets, then don't roll
-    if (!hasTargets) {
-      ui.notifications.warn(`${item.name} has no targets. Please select targets and roll again.`);
-      return;
-    }
-
+    
     await this._handleRemainingUses(item);
-
-    // Show dialog for extra modifiers
-    const extraModifiers = await this._showModifierDialog(item);
-
-    // If dialog was cancelled or closed, return early
-    if (!extraModifiers?.confirmed) {
-      return;
-    }
 
     // Build roll formula and data
     let formula = `1d20 + ${extraModifiers.modifier} `;
@@ -163,7 +150,7 @@ export default class RollCalcActor extends RollCalc {
     // Before creating the message, check if this action type is available
     const actionType = item.system.type || 'primary'; // default to primary if not set
     const { actionState } = this.params.actor.system;
-    
+
     if (!actionState.available.includes(actionType)) {
       ui.notifications.warn(`No ${actionType} action available.`);
       return;
@@ -181,7 +168,7 @@ export default class RollCalcActor extends RollCalc {
       newAvailable.splice(indexToRemove, 1);
     }
 
-    // Update the actor's actionState
+    // Mark the action as used
     await this.params.actor.update({
       'system.actionState.available': newAvailable,
       'system.actionState.used': [...actionState.used, {
@@ -190,7 +177,7 @@ export default class RollCalcActor extends RollCalc {
       }]
     });
 
-    // Handle effect enabling after successful modifier dialog
+    // Enable the effects of the action
     await this._handleEffectEnabling(item);
 
   }
@@ -200,39 +187,22 @@ export default class RollCalcActor extends RollCalc {
    * Private methods
    ******************/
 
-  async _updateActionState(actionType, messageId) {
-    const { actionState } = this.params.actor.system;
-    
-    // Update the actor's actionState
-    await this.params.actor.update({
-      'system.actionState': {
-        
-        available: [...actionState.available.filter(a => a !== actionType)],
-        used: [...actionState.used, {
-          type: actionType,
-          messageId: messageId
-        }]
-      }
-    });
-  }
 
+  /**
+   * Check item's enablers and enable any disabled actor effects that match
+   */
   async _handleEffectEnabling(item) {
 
-    if (!game.combat || !item.system.enables?.value) {
-      
+    if (!(await this._handleGuards(item, [
+      this.RG.hasEnablers
+    ]))) {
       return;
     }
 
-    const enablesList = item.system.enables.list;
-    if (!enablesList?.length) {
-      return;
-    }
-
-    // Get all active effects currently on the actor
     const actorEffects = this.params.actor.effects;
-
+    
     // Iterate through the enables list
-    for (const enableItemRef of enablesList) {
+    for (const enableItemRef of item.system.enables.list) {
 
       // Get the actual item from the UUID
       const enableItem = await fromUuid(enableItemRef.uuid);
@@ -262,10 +232,28 @@ export default class RollCalcActor extends RollCalc {
         }
       }
 
+      //- create a chat message for the enabled effect, to remind the user and GM that it is in play
       this.ability(enableItem.type, enableItem);
     }
   }
 
+  /**
+   * Check if the item passes all the guards
+   * @param {*} item 
+   * @param {*} guardMethodsArry 
+   * @returns Boolean
+   */
+  async _handleGuards(item, guardMethodsArry) {
+    const guards = await Promise.all(guardMethodsArry.map(guardMethod => guardMethod(item)));
+    if (guards.includes(false)) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
+   * Route the ability to the appropriate method based on the item type
+   */
   async _routeAbility(item) {
     if (item.type === "action") {
       await this.abilityAction(item);
@@ -274,6 +262,11 @@ export default class RollCalcActor extends RollCalc {
     }
   }
 
+  /**
+   * Tracks action usage for limited actions.
+   * Check for limitations only if in combat 
+   * and if the item has limitations but fewer uses, then add uses
+   */
   async _handleRemainingUses(item) {
     // Check for limitations only if in combat
     if (item.system.hasLimitation && game.combat) {
@@ -305,31 +298,14 @@ export default class RollCalcActor extends RollCalc {
   }
 
 
-  async _showModifierDialog(item) {
-
-    return await Dialog.prompt({
-      title: "Extra Modifiers",
-      content: `
-        <form>
-          <div class="form-group">
-            <label>Additional Modifier:</label>
-            <input type="number" name="modifier" value="0">
-          </div>
-        </form>
-      `,
-      label: "Roll",
-      callback: (html) => {
-        const form = html[0].querySelector("form");
-        return {
-          modifier: parseInt(form.modifier.value) || 0,
-          confirmed: true
-        };
-      },
-      rejectClose: true // This ensures we get a proper reject when dialog is closed
-    });
-  }
-
-  async _handleAttributeCheck(item, rollFormula, rollData={}) {
+  /**
+   * Add attribute check to the roll formula if specified
+   * @param {*} item 
+   * @param {*} rollFormula 
+   * @param {*} rollData 
+   * @returns 
+   */
+  async _handleAttributeCheck(item, rollFormula, rollData = {}) {
     // Add attribute check if specified
     if (item.system.hasCheck) {
       game.system.log.d('check', item.system.checkAttribute);
