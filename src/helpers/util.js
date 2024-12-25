@@ -23,7 +23,7 @@ export const log = {
 };
 
 export async function toggleBookmark(item, callback = () => { }) {
-  await item.update({ ["system.favourite"]: !item.system.favourite });
+  await item.update({ system: { favourite: !item.system.favourite } });
   callback();
 }
 

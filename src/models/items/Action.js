@@ -5,26 +5,7 @@ const {
 } = foundry.data.fields;
 
 export class ActionModel extends FFItemDataModel {
-  static migrateData(source) {
-    // If hasLimitation is false, ensure limitation is set to default
-    if (!source.hasLimitation) {
-      source.limitation = 0;
-    }
-    // If limitation exists and is a string, convert it
-    else if (source.limitation) {
-      const limitMap = {
-        'once': 1,
-        'twice': 2,
-        'thrice': 3
-      };
-      
-      if (typeof source.limitation === 'string') {
-        source.limitation = limitMap[source.limitation.toLowerCase()] || 0;
-      }
-    }
-
-    return source;
-  }
+  
 
   static defineSchema() {
     return {

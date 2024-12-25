@@ -165,9 +165,9 @@ Hooks.on('preUpdateToken', async (tokenDocument, update) => {
     delete update.y;
     ui.notifications.warn(game.i18n.localize("FF15.Errors.CannotMoveWhileFocused"))
   }
-  
+
   //- indicate that the actor has moved
-  if(update.x || update.y) {
+  if (update.x || update.y) {
     actor.update({ system: { hasMoved: true } });
   }
 });
@@ -192,7 +192,7 @@ Hooks.on("preCreateActiveEffect", async (actor, data, meta, id) => {
   //- if actor has focus, and there are no secondary action slots left, prevent the effect from being created
   data.preventUpdate = true;
   return false;
-  if(actor.statuses.has('focus') && actor.system.actionState.available.length === 1) {
+  if (actor.statuses.has('focus') && actor.system.actionState.available.length === 1) {
   }
 });
 
@@ -311,6 +311,11 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
 
 });
 
+const _resetUses = async (items) => {
+  for (const item of items) {
+    await item.update({ system: { uses: 0 } });
+  }
+}
 
 Hooks.on("deleteCombat", async (combat) => {
   // Get all combatants from the ended combat
@@ -324,21 +329,15 @@ Hooks.on("deleteCombat", async (combat) => {
     // Get all items that have limitations
     const items = actor.items.filter(i => i.system.hasLimitation);
 
-    // Reset uses for each item
-    for (const item of items) {
-      // Preserve existing system data and only update the uses field
-      const systemData = foundry.utils.deepClone(item.system);
-      systemData.uses = 0;
-      await item.update({ system: systemData });
-    }
+    await _resetUses(items);
   }
 });
 
 
 // Reset uses at end of turn for abilities with 'turn' limitation units
 Hooks.on("updateCombat", async (combat, changed, options, userId) => {
-  
-  
+
+
   // Only process if the turn actually changed
   if (!("turn" in changed) || changed.turn === null) return;
 
@@ -355,12 +354,7 @@ Hooks.on("updateCombat", async (combat, changed, options, userId) => {
     i.system.limitationUnits === "turn"
   );
 
-  // Reset uses for those items
-  for (const item of turnLimitedItems) {
-    const systemData = foundry.utils.deepClone(item.system);
-    systemData.uses = 0;
-    await item.update({ system: systemData });
-  }
+  await _resetUses(turnLimitedItems);
 
   // Reset action state at end of turn
   await resetActionState(actor, true);
