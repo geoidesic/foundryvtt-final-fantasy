@@ -21,9 +21,6 @@
   $: style = `max-height: ${height}; overflow: hidden; transition: max-height 0.3s ease;`;
 
   onMount(async () => {
-    game.system.log.g("AttributeRollChat mounted");
-    game.system.log.g("FFMessage", FFMessage);
-    game.system.log.g("message", $message);
   });
 
 

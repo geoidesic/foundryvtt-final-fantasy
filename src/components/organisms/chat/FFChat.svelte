@@ -43,10 +43,6 @@
     messageColor = cssVars.color;
     messageContrast = cssVars.contrast;
     messageColorRGB = cssVars.rgb;
-    // game.system.log.g('messageColor', messageColor)
-    // game.system.log.g('messageContrast', messageContrast)
-    // game.system.log.g('messageColorRGB', messageColorRGB)
-    // game.system.log.g('$actor', $actor)
   }
 
 </script>
