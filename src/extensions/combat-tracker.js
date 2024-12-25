@@ -1,12 +1,21 @@
 import { SYSTEM_ID } from "~/src/helpers/constants"
+import { viewedCombat } from "~/src/stores"
 
 export default class FFCombatTracker extends CombatTracker {
 
   constructor(options) {
     game.system.log.d('FFCombatTracker constructor');
-    
+
     super(options);
   }
+
+  initialize(options) {
+    super.initialize(options);
+
+    // Set a store here. 
+    viewedCombat.set(this.viewed);
+  }
+
   /** @inheritdoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
