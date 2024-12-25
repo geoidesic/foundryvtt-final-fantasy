@@ -332,7 +332,7 @@ const _resetUses = async (items) => {
 }
 
 Hooks.on("deleteCombat", async (combat) => {
-  // Get all combatants from the ended combat
+  game.system.log.d("[COMBAT] Combat ended, cleaning up combatants");
   const combatants = combat.combatants.contents;
 
   // For each combatant
@@ -342,8 +342,13 @@ Hooks.on("deleteCombat", async (combat) => {
 
     // Get all items that have limitations
     const items = actor.items.filter(i => i.system.hasLimitation);
-
     await _resetUses(items);
+
+    // Disable all status effects
+    for (const effect of actor.effects) {
+      game.system.log.d("[COMBAT] Disabling effect", effect.label, "on", actor.name);
+      await effect.update({ disabled: true });
+    }
   }
 });
 
