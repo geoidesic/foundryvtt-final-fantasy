@@ -31,11 +31,11 @@
 .chat-title
   .flexrow.title.mb-smd
     +if("showProfileImage")   
-      img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
+      img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}" on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}")
     .flex2.flexcol(class="{showProfileImage ? 'text' : ''}")
       .col 
         .flexrow
-          .flex4.link.pointer(on:click!="{openActorSheet}") {FFMessage.actor.name}
+          .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
       .col.font-cinzel.smaller.pointer(on:click!="{() => openItemSheet(FFMessage.item.uuid)}") {FFMessage.item.name}
     .flex3
       .flexcol
