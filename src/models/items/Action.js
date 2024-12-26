@@ -5,7 +5,6 @@ const {
 } = foundry.data.fields;
 
 export class ActionModel extends FFItemDataModel {
-  
 
   static defineSchema() {
     return {
@@ -32,14 +31,11 @@ export class ActionModel extends FFItemDataModel {
       hasHeavierShot: new BooleanField({ required: false, initial: false }),
       heavierShot: new StringField({ required: false, initial: '' }),
       hasLimitation: new BooleanField({ required: false, initial: false }),
-      limitation: new NumberField({ 
-        required: false, 
-        initial: 0, 
-        integer: true, 
-        min: 0, 
-        max: 3 
-      }),
+      limitation: new NumberField({  required: false, initial: 0, integer: true, min: 0, max: 3 }),
       limitationUnits: new StringField({ required: false, initial: "phase" }),
+      hasDuration: new BooleanField({ required: false, initial: false }),
+      duration: new NumberField({  required: false, initial: 0, integer: true, min: 0, max: 3 }),
+      durationUnits: new StringField({ required: false, initial: "phase" }),
       uses: new NumberField({ required: false, initial: 0, integer: true, min: 0 }),
       type: new StringField({ 
         required: false, 

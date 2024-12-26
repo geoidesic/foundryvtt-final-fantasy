@@ -12,6 +12,22 @@ export const LOG_STYLES = {
 };
 
 
+export const getDurationOptions = () => [
+  { value: 1, label: game.i18n.localize("FF15.one") },
+  { value: 2, label: game.i18n.localize("FF15.two") },
+  { value: 3, label: game.i18n.localize("FF15.three") },
+];
+
+export const getDurationUnits = () => [
+  { value: "phase", label: game.i18n.localize("FF15.Phase") },
+  { value: "turn", label: game.i18n.localize("FF15.Turn") }
+];
+export const getLimitationOptions = () => [
+  { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.once") },
+  { value: 2, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.twice") },
+  { value: 3, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.thrice") },
+];
+
 export const getLimitationUnits = () => [
   { value: "phase", label: game.i18n.localize("FF15.Phase") },
   { value: "turn", label: game.i18n.localize("FF15.Turn") }
@@ -53,13 +69,8 @@ export const getCROptions = () => [
   // { value: "special", label: game.i18n.localize("FF15.Types.Item.Types.Options.CR.special") },
 ];
 
-export const getLimitationOptions = () => [
-  { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.once") },
-  { value: 2, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.twice") },
-  { value: 3, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.thrice") },
-];
-
 export const getTargetOptions = () => [
+  { value: "self", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.self") },
   { value: "single", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.single") },
   { value: "enemy", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.enemy") },
   { value: "all", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.all") },
