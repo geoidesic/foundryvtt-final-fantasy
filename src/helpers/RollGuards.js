@@ -53,10 +53,13 @@ export default class RollGuards {
     return item.type === 'action';
   }
 
+  async isCombat() {
+    return game.combat;
+  }
+
   async hasTargets(item) {
     // Check if we have targeted entities
     const targets = game.user.targets;
-    game.system.log.d("race targets", targets);
     const hasTargets = targets.size > 0;
 
     // if no targets, then don't roll
@@ -88,25 +91,19 @@ export default class RollGuards {
   async hasActiveEnablerSlot(item) {
     const { actionState } = this.actor.system;
     const actionType = item.system.type || 'primary'; // default to primary if not set
-    game.system.log.d("[SLOT_CHECK] Action type:", actionType);
-    game.system.log.d("[SLOT_CHECK] Available slots:", actionState.available);
-    game.system.log.d("[SLOT_CHECK] Item tags:", item.system.tags);
 
     // Get enabler slots (non-primary/secondary slots)
     const enablerSlots = actionState.available.filter(slot => 
       slot !== 'primary' && slot !== 'secondary'
     );
-    game.system.log.d("[SLOT_CHECK] Enabler slots:", enablerSlots);
 
     // First check if any of the item's tags match enabler slots
     if (item.system.tags?.some(tag => enablerSlots.includes(tag))) {
-      game.system.log.d("[SLOT_CHECK] Found matching tag slot");
       return true;
     }
 
     // Then check if we have a matching action slot (primary/secondary)
     if (actionState.available.includes(actionType)) {
-      game.system.log.d("[SLOT_CHECK] Found matching action slot");
       return true;
     }
 
@@ -115,7 +112,6 @@ export default class RollGuards {
       const enabledEffects = this.actor.effects.filter(
         effect => effect.statuses.has('enabled')
       );
-      game.system.log.d("[SLOT_CHECK] Enabled effects:", enabledEffects);
 
       if (enabledEffects?.length) {
         const enabledEffectsLinkedToEnablerSlots = enabledEffects.filter(
@@ -124,7 +120,6 @@ export default class RollGuards {
             return originItem?.system.tags?.includes(slot);
           })
         );
-        game.system.log.d("[SLOT_CHECK] Matching enabled effects:", enabledEffectsLinkedToEnablerSlots);
 
         if (enabledEffectsLinkedToEnablerSlots.length) {
           return true;
