@@ -84,7 +84,8 @@
           "action": {
             "Label": "Action",
             "Description": "An ability that can be used in combat.",
-            "SlotNotAvailable": "No %s action slot available."
+            "SlotNotAvailable": "No %s action slot available.",
+            "SingleTarget": "%s requires a single target. Please select just one target and roll again."
           },
           "equipment": {
             "Label": "Equipment",

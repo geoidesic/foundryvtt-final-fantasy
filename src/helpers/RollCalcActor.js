@@ -91,6 +91,7 @@ export default class RollCalcActor extends RollCalc {
     if (!(await this._handleGuards(item, [
       this.RG.isAction,
       this.RG.hasTargets,
+      this.RG.targetsMatchActionIntent,
       this.RG.hasActiveEnablerSlot,
       this.RG.hasModifiers,
     ]))) {
@@ -153,7 +154,7 @@ export default class RollCalcActor extends RollCalc {
     const message = await roll.toMessage(messageData);
 
     // Mark the action as used
-    await this._markActionAsUsed(item, item.system.type || 'primary', message);
+    await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
 
     // Enable the effects of the action
     await this._handleEffectEnabling(item);

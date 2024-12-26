@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
-  import { getRangeOptions, getLimitationOptions, getLimitationUnits, getAspectedOptions, getTargetOptions, getHeavyshotOptions, getTriggerOptions, getDirectHitOptions, getTypeOptions } from "~/src/helpers/constants.js";
+  import { getRangeOptions, getDurationOptions, getDurationUnits, getLimitationOptions, getLimitationUnits, getAspectedOptions, getTargetOptions, getHeavyshotOptions, getTriggerOptions, getDirectHitOptions, getTypeOptions } from "~/src/helpers/constants.js";
   import { getCROptions } from "~/src/helpers/constants.js";
   import { PCModel } from "~/src/models/actors/PC.js";
   import { getDefaultStatusEffects } from "~/src/helpers/Conditions.js";
@@ -28,6 +28,9 @@
 
   const CROptions = getCROptions();
   const limitationOptions = getLimitationOptions();
+  const limitationUnitsOptions = getLimitationUnits();
+  const durationOptions = getDurationOptions();
+  const durationUnitsOptions = getDurationUnits();
   const rangeOptions = getRangeOptions();
   const heavyshotOptions = getHeavyshotOptions();
   const triggerOptions = getTriggerOptions();
@@ -36,7 +39,6 @@
   const directHitOptions = getDirectHitOptions();
   const typeOptions = getTypeOptions();
   const directHitConditionOptions = getDefaultStatusEffects().map((effect) => ({ value: effect.id, label: effect.name }));
-  const limitationUnitsOptions = getLimitationUnits();
 
   const costOptions = [
     { value: 1, label: localize("FF15.Types.Item.Types.Options.Cost.1") },
@@ -150,6 +152,19 @@
             DocSelect.left(id="limitation" name="limitation" type="number" options="{limitationOptions}" valuePath="system.limitation")
           .flex2.right
             DocSelect.right(id="limitationUnits" name="limitationUnits" options="{limitationUnitsOptions}" valuePath="system.limitationUnits")
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Duration
+        .flex0.right
+          DocCheckbox( name="hasDuration" valuePath="system.hasDuration")
+
+      +if("$item.system.hasDuration")
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex2.left
+            DocSelect.left(id="duration" name="duration" type="number" options="{durationOptions}" valuePath="system.duration")
+          .flex2.right
+            DocSelect.right(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
 
       .flexrow.justify-vertical
         .flex4

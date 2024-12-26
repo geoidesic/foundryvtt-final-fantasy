@@ -70,6 +70,33 @@ export default class RollGuards {
     return true;
   }
 
+  async targetsMatchActionIntent(item) {
+    if(!item.system.hasTarget) { return true }
+    const targets = game.user.targets;
+    const target = item.system.target;
+
+    game.system.log.g('targetsMatchActionIntent',  target );
+    game.system.log.g('targetsMatchActionIntent targets.size', targets.size);
+
+    switch (target) {
+      case "single":
+        const allow =  targets.size === 1;
+        if (!allow) {
+          const msg = localize("Types.Item.Types.action.SingleTarget").replace("%s", item.name);
+          ui.notifications.warn(msg);
+        }
+        return allow;
+      case "enemy":
+        return targets.some(t => t.isEnemy);
+      case "ally":
+        return targets.some(t => t.isAlly);
+      case "all":
+        return targets.size > 0;
+      default:
+        return false;
+    }
+  }
+
   async hasModifiers(item) {
     // Show dialog for extra modifiers
     this.shuttle.hasModifiers.extraModifiers = await this._showModifierDialog(item);
