@@ -27,7 +27,6 @@ import CustomEffect from "~/src/helpers/CustomEffect";
 function setupDSN() {
   // Set up Dice So Nice to icrementally show attacks then damge rolls
   if (game.modules.get("dice-so-nice")?.active && !game.settings.get(game.system.id, ICON.settings.dsn_setup)) {
-    console.log(`First login setup for Dice So Nice`);
     game.settings.set("dice-so-nice", "enabledSimultaneousRolls", true);
     game.settings.set("dice-so-nice", "enabledSimultaneousRollForMessage", true);
     game.settings.set("dice-so-nice", "immediatelyDisplayChatMessages", true);
@@ -96,7 +95,6 @@ Hooks.once("init", async (a, b, c) => {
   // Override the default combat tracker behavior
   Hooks.on("renderCombatTracker", (app, html) => {
     const isCombatActive = game.combat?.started ? true : false;
-    console.log('isCombatActive', isCombatActive);
 
     // Create a debounced update function
     const updateDebounced = Timing.debounce(async (combatant, value) => {
@@ -190,22 +188,18 @@ const resetActionState = async (actor) => {
 
 
 Hooks.on("preCreateActiveEffect", async (actor, data, meta, id) => {
-  game.system.log.d('EFFECTS preCreateActiveEffect', { actor, data, meta, id });
 });
 
 Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
-  game.system.log.d('EFFECTS | applyActiveEffect', { actor, data, id, state, obj });
   
   const customEffect = new CustomEffect(actor);
   
   //- iterate effects and then within that loop iterate changes
   for (const effect of actor.effects) {
     for (const change of effect.changes) {
-      game.system.log.d('EFFECTS | applyActiveEffect change', { effect, change });
       
       //- if the change is a custom mode
       if (activeEffectModes.find(e => e.value === change.mode)) {
-        game.system.log.d('EFFECTS | applyActiveEffect custom change', { change });
         await customEffect.handleChange(change);
       }
     }
@@ -214,7 +208,6 @@ Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
 
 
 Hooks.on("updateActiveEffect", async (effect, data, meta, id) => {
-  game.system.log.d('EFFECTS updateActiveEffect', { effect, data, meta, id });
 });
 
 
@@ -233,24 +226,22 @@ Hooks.on("combatStart", async (app, data, meta, id) => {
 });
 
 Hooks.on("renderCombatTracker", (app, html, data) => {
-  game.system.log.d('renderCombatTracker fired', {
-    turns: data.combat?.turns?.map(t => ({
-      name: t.name,
-      initiative: t.initiative,
-      isNPC: t.actor?.type === "NPC"
-    }))
-  });
+  // game.system.log.d('renderCombatTracker fired', {
+  //   turns: data.combat?.turns?.map(t => ({
+  //     name: t.name,
+  //     initiative: t.initiative,
+  //     isNPC: t.actor?.type === "NPC"
+  //   }))
+  // });
 
   // If we have combat and turns, trigger the updateCombatant hook
   if (data.combat?.turns?.length) {
-    game.system.log.d('css-debug: Triggering updateCombatant hook');
     // Call the hook with the first combatant and empty update data
     Hooks.call('updateCombatant', data.combat.turns[0], {});
   }
 });
 
 Hooks.on("preCreateCombatant", async (combatant, data, meta, id) => {
-  game.system.log.d('preCreateCombatant', { combatant, data, meta, id });
 
   const actor = combatant.actor;
   if (!actor) return;
@@ -267,7 +258,6 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
 
   const combat = combatant.parent;
   if (!combat) {
-    game.system.log.d('updateCombatant: skipping - no combat parent');
     return;
   }
 
@@ -300,7 +290,6 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
   if (firstNPCIndex > 0 && firstNPCIndex < turns.length) {
     const tracker = ui.combat;
     if (!tracker) {
-      game.system.log.d('updateCombatant: skipping CSS - no tracker UI');
       return;
     }
 
@@ -332,7 +321,6 @@ const _resetUses = async (items) => {
 }
 
 Hooks.on("deleteCombat", async (combat) => {
-  game.system.log.d("[COMBAT] Combat ended, cleaning up combatants");
   const combatants = combat.combatants.contents;
 
   // For each combatant
@@ -346,7 +334,6 @@ Hooks.on("deleteCombat", async (combat) => {
 
     // Disable all status effects
     for (const effect of actor.effects) {
-      game.system.log.d("[COMBAT] Disabling effect", effect.label, "on", actor.name);
       await effect.update({ disabled: true });
     }
   }
@@ -527,7 +514,6 @@ Hooks.on("targetToken", (User, Token) => {
           tokenUuid: target.document.uuid
         }
       })
-  game.system.log.d('targets', targets);
   mappedGameTargets.set(targets);
 
 });
