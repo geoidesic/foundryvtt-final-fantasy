@@ -257,6 +257,7 @@ export default class RollCalcActor extends RollCalc {
   async _handleEffectEnabling(item) {
 
     if (!(await this._handleGuards(item, [
+      this.RG.isCombat,
       this.RG.hasEnablers
     ]))) {
       return;
