@@ -1,22 +1,26 @@
 <script>
-  import { getContext, onMount } from "svelte";
+  import { getContext, onMount, createEventDispatcher } from "svelte";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import Tag from "~/src/components/atoms/Tag.svelte";
   
+  const dispatch = createEventDispatcher();
   const message = getContext("message");
   const FFMessage = $message.getFlag(SYSTEM_ID, 'data')
   const actor = game.actors.get(FFMessage.actor._id)
   let item = {}
-  console.log("FFMessage", FFMessage)
-  console.log("item", item)
-  const openItemSheet = async (uuid) => {
-    console.log("uuid", uuid)
-    console.log("item", item)
+
+  const openItemSheet = async (e, uuid) => {
+    e.stopPropagation();
     item.sheet.render(true);
   }
 
-  const openActorSheet = () => {
+  const openActorSheet = (e) => {
+    e.stopPropagation();
     actor.sheet.render(true);
+  }
+
+  const handleTitleClick = () => {
+    dispatch('toggleDescription');
   }
 
   onMount(async () => {
@@ -29,14 +33,14 @@
 
 <template lang="pug">
 .chat-title
-  .flexrow.title.mb-smd
+  .flexrow.title(on:click="{handleTitleClick}" role="button")
     +if("showProfileImage")   
       img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}" on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}")
     .flex2.flexcol(class="{showProfileImage ? 'text' : ''}")
       .col 
         .flexrow
           .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
-      .col.font-cinzel.smaller.pointer.item-name(on:click!="{() => openItemSheet(FFMessage.item.uuid)}") {FFMessage.item.name}
+      .col.font-cinzel.smaller.pointer.item-name(on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}") {FFMessage.item.name}
     .flex3
       .flexcol
         .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
@@ -53,7 +57,7 @@
   @import '../../../../styles/Mixins.sass'
   .chat-title
     .item-name
-      verflow: hidden
+      overflow: hidden
       text-overflow: ellipsis
       line-height: 1rem
       max-height: 1rem
@@ -73,6 +77,7 @@
       position: relative
       padding: 0.2rem
       overflow: hidden
+      cursor: pointer
       .text
         margin-left: 40px
       

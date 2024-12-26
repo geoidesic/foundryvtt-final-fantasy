@@ -1,10 +1,13 @@
 <script>
   game.system.log.d("race ---- START RollChat ----");
-  import { onMount, getContext, tick } from "svelte";
+  import { onMount, getContext, setContext, tick } from "svelte";
   import { writable, derived } from "svelte/store";
   import { SYSTEM_ID } from "~/src/helpers/constants";
+  import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
+
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
+  import Header from "~/src/components/organisms/item/type/action/Header.svelte";
 
   export let FFMessage
   export let FFMessageState
@@ -12,6 +15,11 @@
   export let content
 
   const item = fromUuidSync(FFMessage.item.uuid);
+  const Item = new TJSDocument()
+  Item.set(item);
+
+  setContext("#doc", Item);
+
   game.system.log.d("race RollChat item", item);
 
   const message = getContext("message");
@@ -21,6 +29,7 @@
   let totalRoll = 0;
   let isMounted = false;
   let targetTokens = [];
+  let showDescription = false;
 
   $: actor = game.actors.get(FFMessage?.actor?._id);
   $: isApplyDisabled = (target)  => target.isUnlinked || FFMessageState.damageResults[target.id]?.applied;
@@ -270,17 +279,25 @@
     if (!actor) return;
     actor.sheet.render(true);
   }
+
+  const handleToggleDescription = () => {
+    showDescription = !showDescription;
+  };
 </script>
 
 <template lang="pug">
 
 .chat
-  ChatTitle
-  //- button.stealth.apply-trait(on:click="{log}")
-  //-   i.fa-solid.fa-bug
-  .flexrow.gap-4.leather
-    .flex3.content
-      div {@html content}
+  ChatTitle(on:toggleDescription="{handleToggleDescription}")
+  .description-wrapper(class="{showDescription ? 'expanded' : ''}")
+    +if("showDescription")
+      .flexrow.mt-xs
+        .flex4#chat-description.inset {@html item.system.description}
+          Header
+  +if("content")
+    .flexrow.gap-4.leather.mt-xs
+      .flex3.content
+        div {@html content}
   +if("FFMessage?.item?.type === 'action'")
     .action-result
       .target-list
@@ -326,6 +343,13 @@
 
 <style lang="sass">
 @import '../../../styles/Mixins.sass'
+
+.description-wrapper
+  max-height: 0
+  overflow: hidden
+  transition: max-height 0.3s ease-out
+  &.expanded
+    max-height: 500px  // Large enough to fit most descriptions
 
 .inset
   +inset
