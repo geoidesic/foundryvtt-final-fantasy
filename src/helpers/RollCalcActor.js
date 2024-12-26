@@ -170,7 +170,14 @@ export default class RollCalcActor extends RollCalc {
    * @param {string} actionType - The type of action (primary/secondary) or custom slot
    * @param {ChatMessage} message - The chat message created for this action
    */
-  async _markActionAsUsed(item, actionType, message) {
+  async _markCombatTrackerActionSlotAsUsed(item, actionType, message) {
+
+    if (!(await this._handleGuards(item, [
+      this.RG.isCombat
+    ]))) {
+      return;
+    }
+
     const { actionState } = this.params.actor.system;
     game.system.log.d("[SLOT_UPDATE] Starting slot update for:", item.name);
     game.system.log.d("[SLOT_UPDATE] Available slots:", actionState.available);
