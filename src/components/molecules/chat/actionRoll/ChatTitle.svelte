@@ -36,7 +36,7 @@
       .col 
         .flexrow
           .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
-      .col.font-cinzel.smaller.pointer(on:click!="{() => openItemSheet(FFMessage.item.uuid)}") {FFMessage.item.name}
+      .col.font-cinzel.smaller.pointer.item-name(on:click!="{() => openItemSheet(FFMessage.item.uuid)}") {FFMessage.item.name}
     .flex3
       .flexcol
         .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
@@ -50,9 +50,14 @@
 </template>
 
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
+  @import '../../../../styles/Mixins.sass'
   .chat-title
-
+    .item-name
+      verflow: hidden
+      text-overflow: ellipsis
+      line-height: 1rem
+      max-height: 1rem
+      white-space: nowrap
     .type-label
       text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1)
       font-weight: 600

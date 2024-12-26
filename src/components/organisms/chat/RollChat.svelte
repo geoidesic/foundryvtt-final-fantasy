@@ -3,7 +3,7 @@
   import { activeEffectModes, SYSTEM_ID } from "~/src/helpers/constants";
   import { mappedGameTargets } from "~/src/stores";
   import { resolveDotpath } from "~/src/helpers/paths";
-  import ChatTitle from "~/src/components/atoms/item/ChatTitle.svelte";
+  import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
 
   // export let messageId;
   export let FFMessage;

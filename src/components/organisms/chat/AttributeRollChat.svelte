@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { SYSTEM_ID } from "~/src/helpers/constants";
-  import ChatTitle from "~/src/components/molecules/chat/ChatTitle.svelte";
+  import ChatTitle from "~/src/components/molecules/chat/attributeRoll/ChatTitle.svelte";
   import Meteor from "~/src/components/atoms/meteor.svelte";
 
   export let FFMessage;

@@ -4,7 +4,7 @@
   import { writable, derived } from "svelte/store";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
-  import ChatTitle from "~/src/components/atoms/item/ChatTitle.svelte";
+  import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
 
   export let FFMessage
   export let FFMessageState
