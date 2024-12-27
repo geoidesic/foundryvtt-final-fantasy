@@ -39,7 +39,7 @@
     .px-sm
       TagInput
     //- allow breathing space at the bottom of the scroll area
-    .pb-lg 
+  .pb-lg 
 </template>
 
 
