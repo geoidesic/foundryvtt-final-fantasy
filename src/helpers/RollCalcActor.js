@@ -100,6 +100,16 @@ export default class RollCalcActor extends RollCalc {
     if (!(await this._handleGuards(item, guards))) {
       return;
     }
+    
+    // Handle target effects if the action grants them
+    if (item.system.grants?.value && hasTargets) {
+      await this._handleTargetEffects(item, targets);
+    }
+    
+    if(!item.system.hasCR) {
+      await this.abilityTrait(item);
+      return;
+    }
 
     // Build roll formula and data
     let formula = '1d20'
@@ -110,10 +120,6 @@ export default class RollCalcActor extends RollCalc {
 
     let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
 
-    // Handle target effects if the action grants them
-    if (item.system.grants?.value && hasTargets) {
-      await this._handleTargetEffects(item, targets);
-    }
 
     // Evaluate roll with actor data
     const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
