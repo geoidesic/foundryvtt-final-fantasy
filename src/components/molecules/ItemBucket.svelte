@@ -62,14 +62,13 @@ async function processItem(item, list, jobTraits, isJob) {
 
   // If this is a job and we're dropping an action with enabled traits
   if (isJob && item.type === 'action' && item.system.enables?.value) {
+    // Get all enabled traits from the action
     const enabledTraits = item.system.enables.list || [];
     
-    // Add each enabled trait that isn't already in the job's traits
-    for (const trait of enabledTraits) {
-      if (!jobTraits.some(t => t.uuid === trait.uuid)) {
-        jobTraits.push({ uuid: trait.uuid });
-      }
-    }
+    // Add each enabled trait directly to the list
+    enabledTraits.map(trait => {  
+      list.push({ uuid: trait.uuid });
+    });
   }
 }
 
