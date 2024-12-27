@@ -11,6 +11,11 @@ export const LOG_STYLES = {
   b: 'color: blue;'
 };
 
+export const getDamageDiceRerollOptions = () => [
+  { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.one") },
+  { value: 2, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.two") },
+  { value: 3, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.three") },
+];
 
 export const getDurationOptions = () => [
   { value: 1, label: game.i18n.localize("FF15.one") },

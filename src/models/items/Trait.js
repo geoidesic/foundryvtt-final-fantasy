@@ -17,7 +17,8 @@ export class TraitModel extends FFItemDataModel {
       modType: new StringField({ required: false, initial: '' }),
       operator: new StringField({ required: false, initial: '+' }),
       modAmount: new NumberField({ required: false, initial: 0 }),
-
+      hasDamageDiceReroll: new BooleanField({ required: false, initial: false }),
+      damageDiceReroll: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
       hasTags: new BooleanField({ required: false, initial: false }),
       tags: new ArrayField(
         new StringField({ required: false, initial: '' })
