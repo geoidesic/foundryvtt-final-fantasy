@@ -65,37 +65,39 @@
     _launchStandardProfileEditor(event);
   }
 
-  async function handleDrop(event) {
-    const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+  //- @deprecated: not in use
+  // async function handleDrop(event) {
+  //   alert('2')
+  //   const data = JSON.parse(event.dataTransfer.getData("text/plain"));
 
-    let droppedItem;
-    let split = data.uuid.split(".");
-    let type = split[0];
+  //   let droppedItem;
+  //   let split = data.uuid.split(".");
+  //   let type = split[0];
 
-    if (type === "Item") {
-      console.log("handleDrop 1");
+  //   if (type === "Item") {
+  //     console.log("handleDrop 1");
 
-      droppedItem = await game.items.get(split[1]);
-    } else if (type === "Compendium") {
-      console.log("handleDrop 2");
-      const compendiumName = `${split[1]}.${split[2]}`;
-      const pack = game.packs.get(compendiumName);
-      droppedItem = await pack.getDocument(split[4]);
-    }
+  //     droppedItem = await game.items.get(split[1]);
+  //   } else if (type === "Compendium") {
+  //     console.log("handleDrop 2");
+  //     const compendiumName = `${split[1]}.${split[2]}`;
+  //     const pack = game.packs.get(compendiumName);
+  //     droppedItem = await pack.getDocument(split[4]);
+  //   }
 
-    if (droppedItem.type == "effect") {
-      console.log("handleDrop 3");
-      console.log(">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<");
-      console.log(droppedItem.effects);
-      const effects = Array.from(droppedItem.effects);
-      console.log("effects", effects);
+  //   if (droppedItem.type == "effect") {
+  //     console.log("handleDrop 3");
+  //     console.log(">>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<");
+  //     console.log(droppedItem.effects);
+  //     const effects = Array.from(droppedItem.effects);
+  //     console.log("effects", effects);
 
-      //- get the effects from the item
-      //- add the effect from the item to this item
-      await $documentStore?.createEmbeddedDocuments("ActiveEffect", effects);
-      console.log("$documentStore", $documentStore);
-    }
-  }
+  //     //- get the effects from the item
+  //     //- add the effect from the item to this item
+  //     await $documentStore?.createEmbeddedDocuments("ActiveEffect", effects);
+  //     console.log("$documentStore", $documentStore);
+  //   }
+  // }
 
   onMount(() => {
     game.system.log.d("ItemSheetShell mounted", $documentStore);
