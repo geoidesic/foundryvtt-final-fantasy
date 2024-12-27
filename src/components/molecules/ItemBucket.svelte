@@ -35,9 +35,73 @@ async function updateLocalList() {
 }
 
 async function onDrop(event) {
-  game.system.log.g("onDrop", event);
   event.preventDefault();
   const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+  
+  // Handle folder drops
+  if (data.type === "Folder") {
+    const folder = await Folder.implementation.fromDropData(data);
+    if (!folder) return;
+
+    // Get current lists
+    const list = [...$item.system[key].list];
+    const jobTraits = [...($item.system.traits?.list || [])];
+    const isJob = $item.type === 'job';
+
+    // Process each item in the folder
+    for (const folderItem of folder.contents) {
+      // Get the actual Item instance
+      const item = await Item.implementation.fromDropData(folderItem);
+      if (!item) continue;
+
+      // Skip if item already exists in list
+      if (preventDuplicates && localList.some(existing => existing.uuid === item.uuid)) {
+        ui.notifications.warn(`${item.name} is already in the list.`);
+        continue;
+      }
+
+      // Check if it's a non-compendium item and warning is enabled
+      if (warnOnCompendiumDrops && !item.uuid.startsWith('Compendium.')) {
+        const confirmed = await Dialog.confirm({
+          title: "Non-Compendium Item",
+          content: `<p>Warning: You are adding an item from the game world rather than from a compendium. If this item is deleted from the game, it could cause inconsistencies.</p><p>Are you sure you want to add this item?</p>`,
+          yes: () => true,
+          no: () => false,
+          defaultYes: false
+        });
+        
+        if (!confirmed) continue;
+      }
+
+      // Add item to list
+      list.push({ uuid: item.uuid });
+
+      // If this is a job and we're dropping an action with enabled traits
+      if (isJob && item.type === 'action' && item.system.enables?.value) {
+        const enabledTraits = item.system.enables.list || [];
+        
+        // Add each enabled trait that isn't already in the job's traits
+        for (const trait of enabledTraits) {
+          if (!jobTraits.some(t => t.uuid === trait.uuid)) {
+            jobTraits.push({ uuid: trait.uuid });
+          }
+        }
+      }
+    }
+
+    // Update both lists in a single transaction
+    if (isJob) {
+      await $item.update({ 
+        [`system.${key}.list`]: list,
+        'system.traits.list': jobTraits
+      });
+    } else {
+      await $item.update({ [`system.${key}.list`]: list });
+    }
+    return;
+  }
+
+  // Handle single item drops
   const droppedItem = await Item.implementation.fromDropData(data);
   if (!droppedItem) return;
 
@@ -66,15 +130,26 @@ async function onDrop(event) {
   if ($item.type === 'job' && droppedItem.type === 'action' && droppedItem.system.enables?.value) {
     // Get all enabled traits from the action
     const enabledTraits = droppedItem.system.enables.list || [];
-    game.system.log.g("enabledTraits", enabledTraits);
+    
     // Get current traits list from job
-    enabledTraits.map(trait => {  
-      list.push({ uuid: trait.uuid })
-    })
-    game.system.log.g("list", list);
+    const jobTraits = [...($item.system.traits?.list || [])];
+    
+    // Add each enabled trait that isn't already in the job's traits
+    for (const trait of enabledTraits) {
+      if (!jobTraits.some(t => t.uuid === trait.uuid)) {
+        jobTraits.push({ uuid: trait.uuid });
+      }
+    }
+
+    // Update both the enables list and traits list
+    await $item.update({ 
+      [`system.${key}.list`]: list,
+      'system.traits.list': jobTraits
+    });
+  } else {
+    // Normal update for non-job items
+    await $item.update({ [`system.${key}.list`]: list });
   }
-  // Normal update for non-job items
-  await $item.update({ [`system.${key}.list`]: list });
 }
 
 async function deleteLink(index) {
