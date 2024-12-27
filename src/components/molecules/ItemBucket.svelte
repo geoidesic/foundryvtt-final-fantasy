@@ -174,11 +174,23 @@ async function deleteLink(index) {
   await $item.update({ [`system.${key}.list`]: list });
 }
 
+async function removeAllItems() {
+  const okToDelete = await Dialog.confirm({
+    title: localize("Types.Actor.Abilities.confirmDeleteAllTitle"),
+    content: localize("Types.Actor.Abilities.confirmDeleteAll"),
+    yes: async () => {  
+      await $item.update({ [`system.${key}.list`]: [] });
+    },
+    no: () => {},
+  });
+}
+
 function showItemSheet(item) {
   item.sheet.render(true);
 }
 
 $: activeClass = checkboxValue ? 'active' : '';
+$: hasItems = localList.length > 0;
 
 </script>
 
@@ -215,6 +227,8 @@ $: activeClass = checkboxValue ? 'active' : '';
               //- do not remove the closure here, it causes all hell to break loose!
               button.stealth(on:click!="{() => deleteLink(index)}")
                 i.left.fa.fa-trash.pointer
+    +if("checkboxValue && hasItems")
+      button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
     +if("checkboxValue && localList.length === 0")
       .empty-list
         p.empty-list-text Drop items here to add them to the list.
