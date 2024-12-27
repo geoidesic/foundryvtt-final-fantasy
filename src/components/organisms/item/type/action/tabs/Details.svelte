@@ -84,6 +84,20 @@
             label(for="CR") {localize("FF15.Type")}
           .flex4.right.wide
             DocSelect.wide.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
+      
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Checks
+        .flex0.right
+          DocCheckbox( name="hasCheck" valuePath="system.hasCheck")
+
+      +if("$item.system.hasCheck")
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex2
+            label(for="checkAttribute") Check Attribute
+          .flex4.right.wide
+            DocSelect.wide.right(id="checkAttribute" name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
+
 
       .flexrow.justify-vertical
         .flex4
@@ -124,20 +138,6 @@
               label(for="rangeType") {localize("FF15.Type")}
             .flex4.right.wide
               DocSelect.wide.right.wide(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
-
-      
-      .flexrow.justify-vertical
-        .flex4
-          h3.left Checks
-        .flex0.right
-          DocCheckbox( name="hasCheck" valuePath="system.hasCheck")
-
-      +if("$item.system.hasCheck")
-        .flexrow.sheet-row.justify-vertical.wide
-          .flex2
-            label(for="checkAttribute") Check Attribute
-          .flex4.right.wide
-            DocSelect.wide.right(id="checkAttribute" name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
 
 
       .flexrow.justify-vertical

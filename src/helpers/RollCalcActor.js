@@ -87,21 +87,26 @@ export default class RollCalcActor extends RollCalc {
     // Get targets before showing dialog
     const targets = game.user.targets;
     const hasTargets = targets.size > 0;
-
-    if (!(await this._handleGuards(item, [
+    const guards = [
       this.RG.isAction,
       this.RG.hasTargets,
       this.RG.targetsMatchActionIntent,
       this.RG.hasActiveEnablerSlot,
       this.RG.hasModifiers,
-    ]))) {
+      this.RG.hasRemainingUses,
+    ]
+
+    if (!(await this._handleGuards(item, guards))) {
       return;
     }
     
-    await this._handleRemainingUses(item);
-
     // Build roll formula and data
-    let formula = `1d20 + ${this.RG.shuttle.hasModifiers.extraModifiers.modifier} `;
+    let formula = '1d20'
+    
+    if(this.RG.shuttle.hasModifiers.extraModifiers) {
+      formula += ` + ${this.RG.shuttle.hasModifiers.extraModifiers.modifier} `;
+    }
+
     let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
 
     // Evaluate roll with actor data
@@ -325,41 +330,6 @@ export default class RollCalcActor extends RollCalc {
       await this.abilityAction(item);
     } else if (item.type === "trait") {
       await this.abilityTrait(item);
-    }
-  }
-
-  /**
-   * Tracks action usage for limited actions.
-   * Check for limitations only if in combat 
-   * and if the item has limitations but fewer uses, then add uses
-   */
-  async _handleRemainingUses(item) {
-    // Check for limitations only if in combat
-    if (item.system.hasLimitation && game.combat) {
-      const maxUses = item.system.limitation;
-
-      // Check remaining uses
-      const remainingUses = maxUses - (item.system.uses || 0);
-      if (remainingUses <= 0) {
-        ui.notifications.warn(`${item.name} has no remaining uses.`);
-        return;
-      }
-
-      // Confirm use
-      const confirmed = await Dialog.confirm({
-        title: "Confirm Ability Use",
-        content: `<p>Use ${item.name}? (${remainingUses} use${remainingUses > 1 ? 's' : ''} remaining)</p>`,
-        yes: () => true,
-        no: () => false,
-        defaultYes: true
-      });
-
-      if (!confirmed) return;
-
-      // Update uses while preserving other system data
-      const systemData = foundry.utils.deepClone(item.system);
-      systemData.uses = (systemData.uses || 0) + 1;
-      await item.update({ system: systemData });
     }
   }
 

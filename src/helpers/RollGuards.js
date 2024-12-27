@@ -77,10 +77,18 @@ export default class RollGuards {
 
     game.system.log.g('targetsMatchActionIntent',  target );
     game.system.log.g('targetsMatchActionIntent targets.size', targets.size);
-
+    let allow = false;
     switch (target) {
+      case "self":
+
+        allow = targets.size === 1 && Array.from(targets).map((target) => target.actor.id).includes(this.actor.id);
+        if (!allow) {
+          const msg = localize("Types.Item.Types.action.TargetSelf").replace("%s", item.name);
+          ui.notifications.warn(msg);
+        }
+        return allow;
       case "single":
-        const allow =  targets.size === 1;
+        allow =  targets.size === 1;
         if (!allow) {
           const msg = localize("Types.Item.Types.action.SingleTarget").replace("%s", item.name);
           ui.notifications.warn(msg);
@@ -97,7 +105,49 @@ export default class RollGuards {
     }
   }
 
+
+  /**
+   * Tracks action usage for limited actions.
+   * Check for limitations only if in combat 
+   * and if the item has limitations but fewer uses, then add uses
+   */
+  async hasRemainingUses(item) {
+    // Check for limitations only if in combat
+    if (item.system.hasLimitation && game.combat) {
+      const maxUses = item.system.limitation;
+
+      // Check remaining uses
+      const remainingUses = maxUses - (item.system.uses || 0);
+      if (remainingUses <= 0) {
+        ui.notifications.warn(`${item.name} has no remaining uses.`);
+        return false;
+      }
+
+      // Confirm use
+      const confirmed = await Dialog.confirm({
+        title: "Confirm Ability Use",
+        content: `<p>Use ${item.name}? (${remainingUses} use${remainingUses > 1 ? 's' : ''} remaining)</p>`,
+        yes: () => true,
+        no: () => false,
+        defaultYes: true
+      });
+
+      if (!confirmed) return false;
+
+      // Update uses while preserving other system data
+      const systemData = foundry.utils.deepClone(item.system);
+      systemData.uses = (systemData.uses || 0) + 1;
+      await item.update({ system: systemData });
+    }
+    return true;
+  }
+
   async hasModifiers(item) {
+
+    if(!item.system.hasCR) {
+      return true;
+    }
+
     // Show dialog for extra modifiers
     this.shuttle.hasModifiers.extraModifiers = await this._showModifierDialog(item);
 
