@@ -387,6 +387,18 @@ export default class RollCalcActor extends RollCalc {
 
           // Get all effects from the effect item
           return effectItem.effects.map(effect => {
+            // Check if effect already exists on target
+            const existingEffect = targetActor.effects.find(e => 
+              e.name === effect.name && 
+              e.origin === item.uuid
+            );
+            
+            // Skip if effect already exists
+            if (existingEffect) {
+              game.system.log.d(`Effect ${effect.name} already exists on ${targetActor.name}`);
+              return null;
+            }
+
             // Clean up the data to only include valid ActiveEffect fields
             const cleanData = {
               name: effect.name,
