@@ -197,6 +197,9 @@ Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
   
   //- iterate effects and then within that loop iterate changes
   for (const effect of actor.effects) {
+    //- if effect is suppressed, or disabled, skip it
+    if (effect.isSuppressed || effect.disabled) continue;
+
     for (const change of effect.changes) {
       
       //- if the change is a custom mode
@@ -341,14 +344,16 @@ Hooks.on("deleteCombat", async (combat) => {
     const items = actor.items.filter(i => i.system.hasLimitation);
     await _resetUses(items);
 
-    // Disable all status effects
+    // Disable or delete all status effects
     for (const effect of actor.effects) {
-      await effect.update({ disabled: true });
+      if (effect.isTransferred) {
+        await effect.update({ disabled: true });
+      } else {
+        await effect.delete();
+      }
     }
     await resetActionState(actor, true);
   }
-
-
 });
 
 
