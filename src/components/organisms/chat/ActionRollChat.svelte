@@ -15,10 +15,14 @@
   export let content
 
   const item = fromUuidSync(FFMessage.item.uuid);
-  const Item = new TJSDocument()
-  Item.set(item);
-
-  setContext("#doc", Item);
+  if(item) {
+    const Item = new TJSDocument()
+    game.system.log.d("race RollChat item", item);
+    game.system.log.d("race RollChat Item", Item);
+    Item.set(item);
+  
+    setContext("#doc", Item);
+  }
 
   game.system.log.d("race RollChat item", item);
 
