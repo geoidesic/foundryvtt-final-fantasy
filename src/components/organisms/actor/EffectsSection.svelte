@@ -45,35 +45,6 @@
   function dataTooltip(effect) {
     return effect.isSuppressed ? "Disabled because the item granting this is not equipped" : "SURGE.ToggleEnabled";
   }
-  async function deleteItem(index, effect) {
-    if (isPassiveEffectFromItem(effect)) {
-      ui.notifications.warn("This effect is granted by an item. To remove the effect, you can remove the item.");
-      return;
-    }
-    await effect.delete();
-    // reset the data for the filter
-    resetEffectList();
-  }
-  function editItem(index, item) {
-    game.system.log.d(item);
-    item.sheet.render(true);
-  }
-  function isPassiveEffectFromItem(item) {
-    game.system.log.d("isPassiveEffectFromItem item", item);
-    if (item instanceof ActiveEffect) {
-      const origin = getEffectOrigin(item, true);
-      const parent = item.parent;
-      if (
-        parent instanceof Actor &&
-        origin instanceof Item &&
-        origin.type != "effect" &&
-        item.flags?.[SYSTEM_ID]?.trigger != "contact"
-      ) {
-        return true;
-      }
-    }
-    return false;
-  }
   function toggleLock(event) {
     $doc.update(
       {
