@@ -168,6 +168,12 @@
               "Movement": "Movement",
               "DOT": "DOT"
             },
+            "DamageDiceReroll": {
+              "label": "Reroll Damage Dice",
+              "one": "One dice",
+              "two": "Two dice",
+              "three": "Three dice"
+            },
             "Heavyshot": {
               "straignt": "Grants Straight Shot Ready",
               "spread": "Grants Spread Shot Ready"
