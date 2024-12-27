@@ -1,6 +1,6 @@
 import './styles/Main.sass';
 
-import { log } from "~/src/helpers/util"
+import { log, slugify } from "~/src/helpers/util"
 import { SYSTEM_ID, SYSTEM_CODE, activeEffectModes } from "~/src/helpers/constants"
 import { setupModels } from './config/models';
 import { registerSettings } from "~/src/settings"
@@ -11,7 +11,9 @@ import FF15Actor from '~/src/extensions/actor.js'
 import FF15PCSheet from "~/src/components/applications/PCSheet";
 import FF15NPCSheet from "~/src/components/applications/NPCSheet";
 import FF15ItemSheet from "~/src/components/applications/ItemSheet";
+import FFActiveEffect from "~/src/extensions/active-effect.js"
 import ItemSheetStandard from "~/src/components/applications/ItemSheetStandard";
+import FFToken from "~/src/extensions/token.js"
 import systemconfig from "~/src/helpers/systemconfig.ts"
 import FFChat from "~/src/components/organisms/chat/FFChat.svelte";
 import FFTokenHUD from './extensions/token-hud.js'
@@ -35,13 +37,16 @@ function setupDSN() {
 }
 
 //- debug hooks
-// CONFIG.debug.hooks = true;
+CONFIG.debug.hooks = true;
 
 
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
 CONFIG.Combat.documentClass = FFCombat
 CONFIG.Combatant.documentClass = FFCombatant
+CONFIG.Token.objectClass = FFToken
+CONFIG.ActiveEffect.documentClass = FFActiveEffect
+
 
 
 //- Set initiative dice
@@ -171,7 +176,6 @@ Hooks.on('preUpdateToken', async (tokenDocument, update) => {
   }
 });
 
-
 const resetActionState = async (actor) => {
   // Reset action state
   const baseActions = ['primary', 'secondary'];
@@ -185,13 +189,10 @@ const resetActionState = async (actor) => {
   });
 };
 
-
-
 Hooks.on("preCreateActiveEffect", async (actor, data, meta, id) => {
 });
 
 Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
-  
   const customEffect = new CustomEffect(actor);
   
   //- iterate effects and then within that loop iterate changes
@@ -381,6 +382,18 @@ Hooks.on("updateCombat", async (combat, changed, options, userId) => {
 
 });
 
+Hooks.on("renderActiveEffectConfig", (app, jq) => {
+  const ae = app.document;
+  jq.find("[name=statuses]")
+    .closest(".form-group")
+    .before(
+      `<div class="form-group">
+        <label>Is Overlay?</label>
+        <input type=checkbox name="flags.${SYSTEM_ID}.overlay" ${ae.flags?.[SYSTEM_ID]?.overlay ? "checked" : ""}>
+      </div>`
+    );
+  app.setPosition();
+});
 
 
 /**

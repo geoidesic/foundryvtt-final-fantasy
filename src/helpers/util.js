@@ -79,6 +79,10 @@ export function isPassiveEffectFromItem(item) {
   return false;
 }
 
+export function slugify(str) {
+  return str.toLowerCase().replace(/ /g, '-');
+}
+
 export function isParentActor(item) {
   return item?.parent?.constructor?.name === 'FF15Actor';
 }

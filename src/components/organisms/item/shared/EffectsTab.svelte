@@ -7,6 +7,7 @@
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
   import { getEffectOrigin } from "~/src/helpers/util";
+  import { SYSTEM_ID } from "~/src/helpers/constants";
   import { localize } from "~/src/helpers/util";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
 
@@ -96,7 +97,7 @@
       if (
         parent instanceof Actor &&
         origin instanceof Item &&
-        (origin.type === "job" || (origin.type != "effect" && item.flags?.surge?.trigger != "contact"))
+        (origin.type === "job" || (origin.type != "effect" && item.flags?.[SYSTEM_ID]?.trigger != "contact"))
       ) {
         return true;
       }
@@ -137,7 +138,7 @@
         disabled: false,
         transfer: true,
         flags: {
-          surge: {
+          [SYSTEM_ID]: {
             source: "user",
             trigger: "passive",
           },
@@ -154,7 +155,7 @@
   // @todo: could convert this to an IconSelect, which provides better state handling (i.e. currently this select will show an incorrect value if the update fails until the Application is reloaded)
   async function updateTrigger(effect, event) {
     try {
-      await effect.update({ ["flags.surge.trigger"]: event.target.value });
+      await effect.update({ [`flags.${SYSTEM_ID}.trigger`]: event.target.value });
     } catch (error) {
       ui.notifications.notify(error.message, "error");
     }
@@ -182,8 +183,8 @@
   // $: ActiveEffects = $filterDoc.effects;
   $: ActiveEffects = [...$wildcard].map((effect) => {
     const originInstance = getEffectOrigin(effect, true);
-    if(!effect.flags.surge) effect.flags.surge = {};
-    effect.flags.surge.originInstance = originInstance;
+    if(!effect.flags[SYSTEM_ID]) effect.flags[SYSTEM_ID] = {};
+    effect.flags[SYSTEM_ID].originInstance = originInstance;
     return effect
   });
   $: lockCSS = $doc.system.effectActionsLocked ? "lock" : "lock-open";

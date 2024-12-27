@@ -67,7 +67,7 @@
         parent instanceof Actor &&
         origin instanceof Item &&
         origin.type != "effect" &&
-        item.flags?.surge?.trigger != "contact"
+        item.flags?.[SYSTEM_ID]?.trigger != "contact"
       ) {
         return true;
       }
@@ -108,7 +108,7 @@
         disabled: false,
         transfer: true,
         flags: {
-          surge: {
+          [SYSTEM_ID]: {
             source: "user",
             trigger: "passive",
           },
@@ -125,7 +125,7 @@
   // @todo: could convert this to an IconSelect, which provides better state handling (i.e. currently this select will show an incorrect value if the update fails until the Application is reloaded)
   async function updateTrigger(effect, event) {
     try {
-      await effect.update({ ["flags.surge.trigger"]: event.target.value });
+      await effect.update({ [`flags.${SYSTEM_ID}.trigger`]: event.target.value });
     } catch (error) {
       ui.notifications.notify(error.message, "error");
     }
@@ -139,8 +139,8 @@
     .filter(effect => !effect.disabled)
     .map((effect) => {
       const originInstance = getEffectOrigin(effect, true);
-      if(!effect.flags.surge) effect.flags.surge = {};
-      effect.flags.surge.originInstance = originInstance;
+      if(!effect.flags[SYSTEM_ID]) effect.flags[SYSTEM_ID] = {};
+      effect.flags[SYSTEM_ID].originInstance = originInstance;
       return effect
     });
   $: lockCSS = $doc.system.effectActionsLocked ? "lock" : "lock-open";
