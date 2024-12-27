@@ -1,6 +1,7 @@
-import RollCalc from "./RollCalc.js"
 import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "./constants.js"
+import RollCalc from "./RollCalc.js"
+import FFActiveEffect from "~/src/extensions/active-effect.js"
 
 
 export default class RollCalcActor extends RollCalc {
@@ -99,15 +100,20 @@ export default class RollCalcActor extends RollCalc {
     if (!(await this._handleGuards(item, guards))) {
       return;
     }
-    
+
     // Build roll formula and data
     let formula = '1d20'
-    
-    if(this.RG.shuttle.hasModifiers.extraModifiers) {
+
+    if (this.RG.shuttle.hasModifiers.extraModifiers) {
       formula += ` + ${this.RG.shuttle.hasModifiers.extraModifiers.modifier} `;
     }
 
     let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
+
+    // Handle target effects if the action grants them
+    if (item.system.grants?.value && hasTargets) {
+      await this._handleTargetEffects(item, targets);
+    }
 
     // Evaluate roll with actor data
     const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
@@ -191,14 +197,14 @@ export default class RollCalcActor extends RollCalc {
 
     // First try to find a matching tag-based slot
     let slotToUse;
-    const customSlots = actionState.available.filter(slot => 
+    const customSlots = actionState.available.filter(slot =>
       slot !== 'primary' && slot !== 'secondary'
     );
     game.system.log.d("[SLOT_UPDATE] Custom slots:", customSlots);
-    
+
     // Check for matching tag slot first
     if (item.system.tags?.length) {
-      const matchingSlot = customSlots.find(slot => 
+      const matchingSlot = customSlots.find(slot =>
         item.system.tags.includes(slot)
       );
       if (matchingSlot) {
@@ -209,7 +215,7 @@ export default class RollCalcActor extends RollCalc {
         const enabledEffects = this.params.actor.effects.filter(
           effect => effect.statuses.has('enabled')
         );
-        
+
         for (const effect of enabledEffects) {
           const originItem = fromUuidSync(effect.origin);
           if (originItem?.system.tags?.includes(slotToUse)) {
@@ -270,7 +276,7 @@ export default class RollCalcActor extends RollCalc {
     }
 
     const actorEffects = this.params.actor.effects;
-    
+
     // Iterate through the enables list
     for (const enableItemRef of item.system.enables.list) {
 
@@ -350,5 +356,63 @@ export default class RollCalcActor extends RollCalc {
       rollFormula += ` + @${item.system.checkAttribute}`;
     }
     return { rollFormula, rollData };
+  }
+
+  /**
+   * Handle transferring effects to target actors
+   * @param {Item} item - The action item being used
+   * @param {Set} targets - The set of targeted tokens
+   */
+  async _handleTargetEffects(item, targets) {
+    if (!item.system.grants?.list?.length) return;
+
+    for (const target of targets) {
+      const targetActor = target.actor;
+      if (!targetActor) continue;
+
+      try {
+        // Get all effects from the grants list
+        const effectPromises = item.system.grants.list.flatMap(async (grantRef) => {
+          const effectItem = await fromUuid(grantRef.uuid);
+          if (!effectItem) {
+            game.system.log.w(`Effect item with UUID ${grantRef.uuid} not found`);
+            return [];
+          }
+
+          // Get all effects from the effect item
+          return effectItem.effects.map(effect => {
+            // Clean up the data to only include valid ActiveEffect fields
+            const cleanData = {
+              name: effect.name,
+              label: effect.label,
+              icon: effect.icon,
+              changes: foundry.utils.deepClone(effect.changes),
+              duration: effect.duration,
+              disabled: false,
+              flags: foundry.utils.deepClone(effect.flags),
+              origin: item.uuid,
+            };
+
+            // Set up statuses if needed
+            if (effect.statuses?.size) {
+              cleanData.statuses = Array.from(effect.statuses);
+            }
+
+            return cleanData;
+          });
+        });
+
+        // Wait for all effect data to be prepared and flatten the array
+        const effectData = (await Promise.all(effectPromises)).flat().filter(Boolean);
+        
+        if (effectData.length) {
+          // Create all effects at once
+          await targetActor.createEmbeddedDocuments('ActiveEffect', effectData);
+        }
+      } catch (error) {
+        game.system.log.e("Error applying effects to target", error);
+        ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
+      }
+    }
   }
 }

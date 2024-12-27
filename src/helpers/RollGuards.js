@@ -166,6 +166,7 @@ export default class RollGuards {
   }
 
   async hasActiveEnablerSlot(item) {
+    
     const { actionState } = this.actor.system;
     const actionType = item.system.type || 'primary'; // default to primary if not set
 
