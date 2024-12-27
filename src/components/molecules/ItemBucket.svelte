@@ -35,6 +35,7 @@ async function updateLocalList() {
 }
 
 async function onDrop(event) {
+  game.system.log.g("onDrop", event);
   event.preventDefault();
   const data = JSON.parse(event.dataTransfer.getData("text/plain"));
   const droppedItem = await Item.implementation.fromDropData(data);
@@ -61,6 +62,18 @@ async function onDrop(event) {
   const list = [...$item.system[key].list];
   list.push({ uuid: droppedItem.uuid });
 
+  // If this is a job item and we're dropping an action with enabled traits
+  if ($item.type === 'job' && droppedItem.type === 'action' && droppedItem.system.enables?.value) {
+    // Get all enabled traits from the action
+    const enabledTraits = droppedItem.system.enables.list || [];
+    game.system.log.g("enabledTraits", enabledTraits);
+    // Get current traits list from job
+    enabledTraits.map(trait => {  
+      list.push({ uuid: trait.uuid })
+    })
+    game.system.log.g("list", list);
+  }
+  // Normal update for non-job items
   await $item.update({ [`system.${key}.list`]: list });
 }
 
