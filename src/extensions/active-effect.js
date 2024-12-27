@@ -15,11 +15,10 @@ export default class FFActiveEffect extends ActiveEffect {
      * @returns {boolean}
      */
     get isTransferred() {
-      const originInstance = this.flags?.[SYSTEM_ID]?.originInstance;
-      if (!originInstance?.transferredEffects) return false;
-      
-      return Array.isArray(originInstance.transferredEffects) && 
-             originInstance.transferredEffects.length > 0;
+      const origin = fromUuidSync(this.origin);
+      if (!origin?.transferredEffects?.length) return false;
+      return Array.isArray(origin.transferredEffects) && 
+             origin.transferredEffects.length > 0;
     }
 
 }

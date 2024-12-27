@@ -360,7 +360,7 @@ Hooks.on("deleteCombat", async (combat) => {
 // Reset uses at end of turn for abilities with 'turn' limitation units
 Hooks.on("updateCombat", async (combat, changed, options, userId) => {
 
-
+  
   // Only process if the turn actually changed
   if (!("turn" in changed) || changed.turn === null) return;
 
