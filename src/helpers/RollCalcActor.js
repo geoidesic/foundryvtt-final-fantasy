@@ -105,9 +105,9 @@ export default class RollCalcActor extends RollCalc {
     if (item.system.grants?.value && hasTargets) {
       await this._handleTargetEffects(item, targets);
     }
-    
+
     if(!item.system.hasCR) {
-      await this.abilityTrait(item);
+      await this.defaultChat(item);
       return;
     }
 
