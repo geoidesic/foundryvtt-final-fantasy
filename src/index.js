@@ -206,10 +206,8 @@ Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
   }
 });
 
-
 Hooks.on("updateActiveEffect", async (effect, data, meta, id) => {
 });
-
 
 Hooks.on("preDeleteActiveEffect", async (effect, data, id) => {
 });
@@ -217,12 +215,22 @@ Hooks.on("preDeleteActiveEffect", async (effect, data, id) => {
 Hooks.on("deleteActiveEffect", async (effect, data, id) => {
 });
 
-Hooks.on("combatStart", async (app, data, meta, id) => {
+Hooks.on("combatStart", async (combat, data, meta, id) => {
   const combatStartSound = game.settings.get(SYSTEM_ID, 'combatStartSound').trim();
   if (combatStartSound !== '') {
     AudioHelper.play({ src: combatStartSound, volume: 1, autoplay: true, loop: false });
   }
 
+  const combatants = combat.combatants.contents;
+
+  // For each combatant
+  for (const combatant of combatants) {
+    const actor = combatant.actor;
+    if (!actor) continue;
+    await resetActionState(actor);
+  }
+
+  
 });
 
 Hooks.on("renderCombatTracker", (app, html, data) => {
@@ -336,7 +344,10 @@ Hooks.on("deleteCombat", async (combat) => {
     for (const effect of actor.effects) {
       await effect.update({ disabled: true });
     }
+    await resetActionState(actor, true);
   }
+
+
 });
 
 
