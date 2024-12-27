@@ -97,7 +97,7 @@
       if (
         parent instanceof Actor &&
         origin instanceof Item &&
-        (origin.type === "job" || (origin.type != "effect" && item.flags?.[SYSTEM_ID]?.trigger != "contact"))
+        item.isTransferred
       ) {
         return true;
       }

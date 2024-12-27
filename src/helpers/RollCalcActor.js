@@ -8,7 +8,7 @@ export default class RollCalcActor extends RollCalc {
 
   async defaultChat(item) {
 
-    await ChatMessage.create({
+    return await ChatMessage.create({
       user: game.user.id,
       speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
       flags: {
@@ -80,7 +80,7 @@ export default class RollCalcActor extends RollCalc {
   }
 
   async abilityTrait(item) {
-    await this.defaultChat(item);
+    return await this.defaultChat(item);
   }
 
 
@@ -96,6 +96,7 @@ export default class RollCalcActor extends RollCalc {
       this.RG.hasModifiers,
       this.RG.hasRemainingUses,
     ]
+    let message;
 
     if (!(await this._handleGuards(item, guards))) {
       return;
@@ -107,7 +108,12 @@ export default class RollCalcActor extends RollCalc {
     }
 
     if(!item.system.hasCR) {
-      await this.defaultChat(item);
+      message = await this.defaultChat(item);
+       // Mark the action as used
+      await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
+
+      // Enable the effects of the action
+      await this._handleEffectEnabling(item);
       return;
     }
 
@@ -168,13 +174,15 @@ export default class RollCalcActor extends RollCalc {
     };
 
     // Create the message
-    const message = await roll.toMessage(messageData);
+    message = await roll.toMessage(messageData);
 
     // Mark the action as used
     await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
 
     // Enable the effects of the action
     await this._handleEffectEnabling(item);
+
+    return message
   }
 
 
