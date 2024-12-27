@@ -131,26 +131,42 @@
       return;
     }
 
-    //- confirm by Dialog
     const okToDelete = await Dialog.confirm({
       title: localize("FF15.Types.Actor.Abilities.confirmDeleteJobTitle"),
       content: localize("FF15.Types.Actor.Abilities.confirmDeleteJob"),
       yes: async () => {
         //- get the job by uuid
         const job = await fromUuid($doc.system.job.uuid);
+        
         //- get the grants from the job
         const grants = job.system.grants;
-        //- iterate over the grant (which are uuids) and get the item by uuid
+
+        //- get all the granted items by uuid first
+        const grantedItems = [];
         for (let grant of grants.list) {
           const item = await fromUuid(grant.uuid);
-          //- find the corresponding item in the actor by name
-          const actorItem = $doc.items.find((x) => x.name === item.name);
-          if (actorItem) {
-            actorItem.delete();
+          if (item) grantedItems.push(item);
+        }
+        
+        //- find and delete matching items on actor
+        const actorItems = $doc.items.filter(x => ['action', 'trait'].includes(x.type));
+        
+        for (let grantedItem of grantedItems) {
+          // Find matching items by name and type
+          const matchingItems = actorItems.filter(x => 
+            x.name === grantedItem.name && 
+            x.type === grantedItem.type
+          );
+          
+          // Delete all matching items
+          for (let item of matchingItems) {
+            game.system.log.d("Deleting item:", item);
+            await item.delete();
           }
         }
+
         //- update the actor to remove the job uuid
-        $doc.update({ system: { job: { uuid: "", name: "", grants: [], level: null, img: null, role: '' } } });
+        await $doc.update({ system: { job: { uuid: "", name: "", grants: [], level: null, img: null, role: '' } } });
       },
       no: () => {},
     });
