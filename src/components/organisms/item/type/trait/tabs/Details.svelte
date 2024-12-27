@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
-  import { getLimitationOptions, getLimitationUnits } from "~/src/helpers/constants"
+  import { getLimitationOptions, getLimitationUnits, getDamageDiceRerollOptions } from "~/src/helpers/constants"
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
@@ -11,7 +11,7 @@
 
   const limitationOptions = getLimitationOptions();
   const limitationUnitsOptions = getLimitationUnits();
-
+  const damageDiceRerollOptions = getDamageDiceRerollOptions();
 
   const typeOptions = [
     { value: "Buff", label: localize("FF15.Types.Item.Types.Options.TraitType.Buff") },
@@ -68,6 +68,20 @@
           DocSelect(style="width: 2em;" id="operator" name="operator" options="{operatorOptions}" valuePath="system.operator")
         .flex3.right
           DocInput.wide.right(id="modAmount" name="modAmount" valuePath="system.modAmount")
+  
+      
+    .flexrow.justify-vertical
+      .flex4
+        h3.left Reroll Damage Dice
+      .flex0.right
+        DocCheckbox( name="hasDamageDiceReroll" valuePath="system.hasDamageDiceReroll")
+    +if("$item.system.hasDamageDiceReroll")
+      .flexrow.sheet-row.justify-vertical
+
+        .flex3
+          label(for="damageDiceReroll") {localize("FF15.Types.Item.Types.Options.DamageDiceReroll.label")}
+        .flex2.right
+          DocSelect.left(style="min-width: 4em;" id="damageDiceReroll" name="damageDiceReroll" options="{damageDiceRerollOptions}" valuePath="system.damageDiceReroll")
   
     .flexrow.sheet-row.justify-vertical
       .flex4
