@@ -179,7 +179,6 @@ export function truncate(str, n) {
   return str.length > n ? str.substr(0, n - 1) + "..." : str;
 }
 
-
 export async function updateMessage(messageId, data) {
   // check if chat message owner is this user
   const message = game.messages.get(messageId);
@@ -197,3 +196,22 @@ export async function updateMessage(messageId, data) {
     await message.update(data)
   }
 }
+
+export const resetUses = async (items) => {
+  for (const item of items) {
+    await item.update({ system: { uses: 0 } });
+  }
+}
+
+export const resetActionState = async (actor) => {
+  // Reset action state
+  const baseActions = ['primary', 'secondary'];
+  const extraActions = actor.statuses.has('focus') ? ['secondary'] : [];
+
+  await actor.update({
+    'system.actionState': {
+      available: [...baseActions, ...extraActions],
+      used: []
+    }
+  });
+};
