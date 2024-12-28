@@ -24,7 +24,7 @@ import FFCombatant from './extensions/combatant.js'
 import ColourContrast from "~/src/helpers/ColourContrast";
 import { getActorOwner } from "~/src/helpers/util";
 import CustomEffect from "~/src/helpers/CustomEffect";
-
+import RollGuards from "~/src/helpers/RollGuards";
 //- helpers
 function setupDSN() {
   // Set up Dice So Nice to icrementally show attacks then damge rolls
@@ -46,6 +46,9 @@ CONFIG.Combat.documentClass = FFCombat
 CONFIG.Combatant.documentClass = FFCombatant
 CONFIG.Token.objectClass = FFToken
 CONFIG.ActiveEffect.documentClass = FFActiveEffect
+CONFIG.FF15 = {
+  RollGuards: RollGuards
+}
 
 
 

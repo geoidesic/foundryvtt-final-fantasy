@@ -1,6 +1,5 @@
 import { writable, get } from 'svelte/store';
 import { SYSTEM_ID } from '~/src/helpers/constants';
-import RollGuards from "~/src/helpers/RollGuards.js"
 
 /**
  * Possible Values for rollMode:
@@ -26,7 +25,7 @@ export default class RollCalc {
     this.subscribe = this.store.subscribe;
     this.set = this.store.set;
     this.update = this.store.update;
-    this.RG = new RollGuards(this.params.actor);
+    this.RG = new CONFIG.FF15.RollGuards(this.params.actor);
   }
 
   async send() {
