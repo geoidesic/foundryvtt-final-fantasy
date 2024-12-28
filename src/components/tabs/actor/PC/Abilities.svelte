@@ -6,7 +6,6 @@
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { toggleBookmark, ucfirst } from "~/src/helpers/util";
   import { localize } from "#runtime/svelte/helper";
-  import { viewedCombat } from "~/src/stores";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
@@ -30,7 +29,6 @@
 
   onMount(() => {
     // Initial combat state
-    game.system.log.d("viewedCombat", $viewedCombat);
   });
 
   /** @type {import('@typhonjs-fvtt/runtime/svelte/store').DynMapReducer<string, Item>} */
@@ -245,7 +243,7 @@
                 .flexrow
                   .flex3.left(data-tooltip="{localize('FF15.View')}")
                     a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
-                  +if("item.system.hasLimitation && $viewedCombat")
+                  +if("item.system.hasLimitation && game.combat")
                     .flex0.right.ml-sm(data-tooltip="{localize('FF15.Uses')}")
                       Badge(type!="{badgeType(item)}") {remaining(item)}
               //- td.left {ucfirst(item.type)}

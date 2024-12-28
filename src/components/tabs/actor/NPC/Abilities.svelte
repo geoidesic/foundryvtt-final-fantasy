@@ -6,7 +6,6 @@
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { toggleBookmark, ucfirst } from "~/src/helpers/util";
   import { localize } from "#runtime/svelte/helper";
-  import { viewedCombat } from "~/src/stores";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
@@ -36,7 +35,6 @@
   onMount(() => {
     // Initial combat state
     combat = game.combat;
-    game.system.log.d("viewedCombat", viewedCombat);
     
     // Subscribe to combat updates
     Hooks.on('createCombat', onCombatUpdate);

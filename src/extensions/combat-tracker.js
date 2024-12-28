@@ -1,19 +1,34 @@
 import { SYSTEM_ID, getTypeOptions } from "~/src/helpers/constants"
-import { viewedCombat } from "~/src/stores"
+import { TJSDocument }   from '@typhonjs-fvtt/runtime/svelte/store/fvtt/document';
 
 export default class FFCombatTracker extends CombatTracker {
 
-  constructor(options) {
-    game.system.log.d('FFCombatTracker constructor');
+  #combat;
+  #combatants;
 
-    super(options);
-  }
+  constructor(options)
+  {
+     super(options);
 
-  initialize(options) {
-    super.initialize(options);
+     this.#combat = new TJSDocument();
 
-    // Set a store here. 
-    viewedCombat.set(this.viewed);
+     // For the time being until the next TRL release don't add just a sort
+     // function as there is an edge case I'm fixing.
+     this.#combatants = this.#combat.embedded.create(Combatant, 'combatants');
+
+     // This will create a permanent listener to TJSDocument so the combatants
+     // embedded collection will always receive updates on change. This is safe
+     // in this context, but be wary of doing this adhoc.
+     this.#combat.subscribe(() => void 0);
+
+     this.#combatants.subscribe((values) =>
+     {
+        console.log(`Combatants ------`);
+        for (const combatant of values)
+        {
+           console.log(combatant.name);
+        }
+     });
   }
 
   /** @inheritdoc */
