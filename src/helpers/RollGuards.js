@@ -2,7 +2,7 @@ import { localize } from "~/src/helpers/util";
 
 export default class RollGuards {
 
-  actor; 
+  actor;
 
   //- shuttle is used to pass data from the guards to the roll calculator
   shuttle = {
@@ -10,7 +10,7 @@ export default class RollGuards {
       extraModifiers: null
     }
   }
-  
+
   constructor(actor) {
     this.actor = actor;
   }
@@ -72,56 +72,27 @@ export default class RollGuards {
 
   async targetsMatchActionIntent(item) {
     game.system.log.d('targetsMatchActionIntent start', { item });
-    
+
     const target = item.system.target;
     const targets = game.user.targets;
     const size = targets.size;
-    
+
     // Store original targets to restore later if needed
     const originalTargets = new Set(game.user.targets);
-    
+    let token;
     try {
       // Handle self-targeting
       if (target === 'self') {
-        game.system.log.d('Self-targeting detected');
-        // Clear current targets
-        game.user.targets.forEach(t => t.setTarget(false, { user: game.user, releaseOthers: false }));
-        
-        // Get token and log details about canvas state
-        game.system.log.d('Canvas state:', {
-          hasCanvas: !!canvas,
-          hasTokens: !!canvas?.tokens,
-          placeablesCount: canvas?.tokens?.placeables?.length
-        });
-        
-        const token = this.actor.activeToken;
-        game.system.log.d('Token found:', {
-          token,
-          actorId: this.actor.id,
-          tokenActorId: token?.actor?.id,
-          isVisible: token?.isVisible,
-          isOwner: token?.isOwner
-        });
-        
+        token = this.actor.activeToken;
         if (!token) {
           ui.notifications.warn("No token found for self-targeting");
           return false;
         }
-
         // Try to target
-        try {
-          token.setTarget(true, { user: game.user, releaseOthers: true });
-          game.system.log.d('After targeting:', {
-            targetsSize: game.user.targets.size,
-            hasToken: game.user.targets.has(token)
-          });
-          return true;
-        } catch (error) {
-          game.system.log.e('Error targeting token:', error);
-          return false;
-        }
+        token.setTarget(true, { user: game.user, releaseOthers: true });
+        return true;
       }
-
+      
       // Handle other targeting types
       switch (target) {
         case 'single':
@@ -129,10 +100,20 @@ export default class RollGuards {
             ui.notifications.warn("This ability requires exactly one target");
             return false;
           }
+          token = this.actor.activeToken;
+          if(targets.has(token)) {
+            ui.notifications.warn("This ability cannot target yourself");
+            return false;
+          }
           break;
         case 'enemy':
           if (size < 1) {
             ui.notifications.warn("This ability requires at least one enemy target");
+            return false;
+          }
+          token = this.actor.activeToken;
+          if(targets.has(token)) {
+            ui.notifications.warn("This ability cannot target yourself");
             return false;
           }
           // Additional enemy validation could go here
@@ -151,7 +132,7 @@ export default class RollGuards {
           }
           break;
       }
-      
+
       return true;
     } catch (error) {
       game.system.log.e('Error in targetsMatchActionIntent:', error);
@@ -205,15 +186,15 @@ export default class RollGuards {
   async hasModifiers(item) {
 
 
-    if(!item.system.hasCR) {
+    if (!item.system.hasCR) {
       return true;
     }
 
     // Show dialog for extra modifiers
     this.shuttle.hasModifiers.extraModifiers = await this._showModifierDialog(item);
 
-    Hooks.call('FF15.processTargetRollAdditionalModifiers', {item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor});
-    
+    Hooks.call('FF15.processTargetRollAdditionalModifiers', { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
+
     // If dialog was cancelled or closed, return early
     if (!this.shuttle.hasModifiers.extraModifiers?.confirmed) {
       return false;
@@ -234,7 +215,7 @@ export default class RollGuards {
     const actionType = item.system.type || 'primary'; // default to primary if not set
 
     // Get enabler slots (non-primary/secondary slots)
-    const enablerSlots = actionState.available.filter(slot => 
+    const enablerSlots = actionState.available.filter(slot =>
       slot !== 'primary' && slot !== 'secondary'
     );
 
