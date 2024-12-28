@@ -327,7 +327,7 @@
                 .flex1.thin-border
                   .flexcol
                     .col.target-defense.flexrow.justify-vertical.no-wrap
-                      .flex1.left.font-cinzel.smallest DEF 
+                      .flex1.left.font-cinzel.smallest(data-tooltip-class="FF15-tooltip" data-tooltip="Defense") DEF 
                       .flex1.m1-xs.center {getDefenseValue(target)}
                     .col.flexrow.justify-vertical.no-wrap
                       .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
@@ -335,7 +335,7 @@
                         i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                 .flex2.thin-border.bg-gold.offwhite(style="min-height: 2.6rem")
                   +if("item.system?.formula")
-                    .flex1.formula.flexrow.justify-vertical(data-tooltip="{displayDamageFormula(target)}")
+                    .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDamageFormula(target)}")
                       .flex3.left.font-cinzel.smaller Damage 
                       .flex1.right.no-wrap {displayDamage(target)}
                   +if("item.system?.hasDirectHit")
@@ -418,6 +418,24 @@
     width: 36px
     height: 36px
     border: none
+    position: relative
+    
+    // Add corner elements for tooltips
+    &[data-tooltip]::after
+      content: ''
+      position: absolute
+      
+    &[data-tooltip]::before,
+    &[data-tooltip] .corner-tl,
+    &[data-tooltip] .corner-tr,
+    &[data-tooltip] .corner-bl,
+    &[data-tooltip] .corner-br
+      content: ''
+      position: absolute
+      width: 10px
+      height: 10px
+      pointer-events: none
+      z-index: 1
   
   .target-name
     font-weight: bold

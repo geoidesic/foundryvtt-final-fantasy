@@ -797,3 +797,28 @@ badge
       opacity: 0.5
       filter: grayscale(100%)
   
+
+:is(#tooltip, .locked-tooltip)
+  &.FF15-tooltip
+    text-align: start
+    color: var(--color-lowlight-dark)
+    font-family: "Cinzel", serif
+    border-radius: 5px
+    // background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
+
+    background: url("/systems/foundryvtt-final-fantasy/assets/texture-gray1.webp") no-repeat top left, url("/systems/foundryvtt-final-fantasy/assets/texture-gray2.webp") no-repeat bottom right,  #f1ebe8
+    box-shadow: 0 0 10px black
+    border: 5px solid var(--ff-border-color)
+    border-image: linear-gradient( var(--color-highlight-light), var(--ff-border-color)) 1
+    .content
+      padding: 0 .5rem .25rem
+
+    .header
+      h2
+        margin: 0
+        border: none
+        font-size: 1.5em
+        font-weight: bold
+
+
+

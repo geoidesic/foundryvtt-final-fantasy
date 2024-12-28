@@ -237,14 +237,14 @@
           +each("items as item, index")
             //- pre item.type {item.type}
             tr(class="{actionTypeClass(item)}")
-              td.img(data-tooltip="{localize('FF15.Use')}")
+              td.img(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Use')}")
                 img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.ability(item.type, item)}")
               td.left
                 .flexrow
-                  .flex3.left(data-tooltip="{localize('FF15.View')}")
+                  .flex3.left(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.View')}")
                     a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
                   +if("item.system.hasLimitation && game.combat")
-                    .flex0.right.ml-sm(data-tooltip="{localize('FF15.Uses')}")
+                    .flex0.right.ml-sm(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Item.Types.action.UsesRemaining')}")
                       Badge(type!="{badgeType(item)}") {remaining(item)}
               //- td.left {ucfirst(item.type)}
               //- td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
@@ -252,16 +252,16 @@
                 +if("item.system.tags") 
                   +each("item.system.tags as tag")
                     Tag.badge.small({tag}, remover="{false}" style="margin-top: -2px;")
-              td(data-tooltip="{localize('FF15.Bookmark')}")
+              td(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
               td.min.buttons.right
                 +if("!$doc.system.inventoryLocked")
-                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                  button.stealth( data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
                     i.left.fa.fa-edit
-                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                  button.stealth( data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
                     i.left.fa.fa-copy
-                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                  button.stealth( data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
                     i.left.fa.fa-trash
             
       +if("hasItems")
