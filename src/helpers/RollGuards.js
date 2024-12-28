@@ -71,7 +71,6 @@ export default class RollGuards {
   }
 
   async targetsMatchActionIntent(item) {
-    game.system.log.d('targetsMatchActionIntent start', { item });
 
     const target = item.system.target;
     const targets = game.user.targets;
@@ -89,7 +88,7 @@ export default class RollGuards {
           return false;
         }
         // Try to target
-        token.setTarget(true, { user: game.user, releaseOthers: true });
+        await token.setTarget(true, { user: game.user, releaseOthers: true });
         return true;
       }
       
