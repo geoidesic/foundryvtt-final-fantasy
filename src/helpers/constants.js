@@ -113,31 +113,21 @@ export const getDirectHitOptions = () => [
   { value: "condition", label: game.i18n.localize("FF15.Types.Item.Types.Options.DirectHit.condition") },
 ];
 
+export const ACTIVE_EFFECT_MODES = {
+  CUSTOM: 0,
+  MULTIPLY: 1,
+  ADD: 2,
+  OVERRIDE: 3,
+  DOWNGRADE: 4,
+  UPGRADE: 5
+};
 
 export const activeEffectModes = [
-  {
-    value: 0,
-    label: "custom"
-  },
-  {
-    value: 1,
-    label: "multiply" // i.e. multiply value (can be a fraction and thus division)
-  },
-  {
-    value: 2,
-    label: "add" // i.e. add a scalar amount to the value (can be negative)
-  },
-  {
-    value: 3,
-    label: "override" // i.e. replace the value entirely
-  },
-  {
-    value: 4,
-    label: "downgrade" // i.e. limit the maximum value
-  },
-  {
-    value: 5,
-    label: "upgrade" // i.e. limit the minimum value
-  }
-]
+  { value: ACTIVE_EFFECT_MODES.CUSTOM, label: "custom" },
+  { value: ACTIVE_EFFECT_MODES.MULTIPLY, label: "multiply" },
+  { value: ACTIVE_EFFECT_MODES.ADD, label: "add" },
+  { value: ACTIVE_EFFECT_MODES.OVERRIDE, label: "override" },
+  { value: ACTIVE_EFFECT_MODES.DOWNGRADE, label: "downgrade" },
+  { value: ACTIVE_EFFECT_MODES.UPGRADE, label: "upgrade" }
+];
 

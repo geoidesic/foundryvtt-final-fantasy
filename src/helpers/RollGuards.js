@@ -71,16 +71,24 @@ export default class RollGuards {
   }
 
   async targetsMatchActionIntent(item) {
-    if(!item.system.hasTarget) { return true }
+    game.system.log.g('targetsMatchActionIntent called with item:', item);
+    game.system.log.g('targetsMatchActionIntent this:', this);
+    game.system.log.g('targetsMatchActionIntent item.system:', item.system);
+    if(!item.system.hasTarget) { 
+      game.system.log.g('targetsMatchActionIntent returning true - no target required');
+      return true;
+    }
+
     const targets = game.user.targets;
     const target = item.system.target;
 
-    game.system.log.g('targetsMatchActionIntent',  target );
-    game.system.log.g('targetsMatchActionIntent targets.size', targets.size);
+    game.system.log.g('targetsMatchActionIntent target:', target);
+    game.system.log.g('targetsMatchActionIntent targets.size:', targets.size);
+    game.system.log.g('targetsMatchActionIntent returning false');
+    
     let allow = false;
     switch (target) {
       case "self":
-
         allow = targets.size === 1 && Array.from(targets).map((target) => target.actor.id).includes(this.actor.id);
         if (!allow) {
           const msg = localize("Types.Item.Types.action.TargetSelf").replace("%s", item.name);
@@ -91,6 +99,11 @@ export default class RollGuards {
         allow =  targets.size === 1;
         if (!allow) {
           const msg = localize("Types.Item.Types.action.SingleTarget").replace("%s", item.name);
+          ui.notifications.warn(msg);
+        }
+        allow = allow && !Array.from(targets).map((target) => target.actor.id).includes(this.actor.id);
+        if (!allow) {
+          const msg = localize("Types.Item.Types.action.SingleTargetNotSelf").replace("%s", item.name);
           ui.notifications.warn(msg);
         }
         return allow;
@@ -144,6 +157,7 @@ export default class RollGuards {
 
   async hasModifiers(item) {
 
+
     if(!item.system.hasCR) {
       return true;
     }
@@ -151,6 +165,8 @@ export default class RollGuards {
     // Show dialog for extra modifiers
     this.shuttle.hasModifiers.extraModifiers = await this._showModifierDialog(item);
 
+    Hooks.call('FF15.processTargetRollAdditionalModifiers', {item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor});
+    
     // If dialog was cancelled or closed, return early
     if (!this.shuttle.hasModifiers.extraModifiers?.confirmed) {
       return false;
@@ -166,7 +182,7 @@ export default class RollGuards {
   }
 
   async hasActiveEnablerSlot(item) {
-    
+
     const { actionState } = this.actor.system;
     const actionType = item.system.type || 'primary'; // default to primary if not set
 

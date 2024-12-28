@@ -98,9 +98,12 @@ export default class RollCalcActor extends RollCalc {
     ]
     let message;
 
+    game.system.log.g('Running Guards for ability action');
     if (!(await this._handleGuards(item, guards))) {
-      return;
+      game.system.log.g('Guards failed, exiting abilityAction');
+      return undefined;
     }
+    game.system.log.g('All Guards passed, continuing with ability action');
     
     // Handle target effects if the action grants them
     if (item.system.grants?.value && hasTargets) {
@@ -335,10 +338,15 @@ export default class RollCalcActor extends RollCalc {
   async _handleGuards(item, guardMethodsArray) {
     // Run guards sequentially, stop on first failure
     for (const guardMethod of guardMethodsArray) {
-      if (!(await guardMethod.call(this.RG, item))) {
+      game.system.log.g('_handleGuards running guard:', guardMethod.name);
+      const result = await guardMethod.call(this.RG, item);  // Store the awaited result
+      game.system.log.g(`Guard ${guardMethod.name} returned:`, result);  // Log the result
+      if (!result) {  // Check the result immediately
+        game.system.log.g(`_handleGuards guard ${guardMethod.name} failed, returning false`);
         return false;
       }
     }
+    game.system.log.g('_handleGuards all guards passed');
     return true;
   }
 

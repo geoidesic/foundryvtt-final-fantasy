@@ -242,6 +242,7 @@
           .flex2.left.prose.high
             ProseMirror( id="directHitText" name="directHitText" attr="system.directHitText")
 
+
 </template>
 
 <style lang="sass">

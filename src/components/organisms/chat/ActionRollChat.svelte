@@ -38,6 +38,7 @@
   $: actor = game.actors.get(FFMessage?.actor?._id);
   $: isApplyDisabled = (target)  => target.isUnlinked || FFMessageState.damageResults[target.id]?.applied;
   $: displayDamage = (target)  => FFMessageState.damageResults[target.id]?.damage;
+  $: displayDamageFormula = (target)  => FFMessageState.damageResults[target.id]?.baseDamageFormula;
   $: displayDirectHitDamage = (target)  =>
     isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit;
   // $: displayVal = (target, type) =>  $displayValues.get(target.id)?.[type] || "";
@@ -45,13 +46,15 @@
 
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
 
-  function getInitialDamageResults(passedTargets) {
-    game.system.log.d("race setInitialDamageResults passedTargets", passedTargets);
-    const initialDamageResults = new Map();
+  function getDamageResults(passedTargets) {
+    game.system.log.d("race setDamageResults passedTargets", passedTargets);
+    
+    const DamageResults = new Map();
     for (const id of passedTargets) {
       let token = canvas.tokens.get(id);
-      initialDamageResults.set(id, {
+      DamageResults.set(id, {
         damage: item.system?.formula,
+        baseDamageFormula: 'Base Damage',
         directHit: item.system?.directHitDamage,
         directHitResult: false,
         applied: false,
@@ -59,10 +62,14 @@
         wasKOd: false,
       });
     }
-    return initialDamageResults;
+    Hooks.callAll('FF15.processAdditionalBaseDamageFromItem', {item, actor, DamageResults});
+    return DamageResults;
   }
 
   function getTargetTokens(targets) {
+    if(!targets.length) return [];
+    game.system.log.d("race getTargetTokens targets", targets);
+    game.system.log.d("canvas.tokens", canvas.tokens);
     return targets.map((id) => canvas.tokens.get(id));
   }
 
@@ -96,7 +103,7 @@
           // Load targets from stored UUIDs
           game.system.log.d("race storedDamageResults", storedDamageResults);
           if (!storedDamageResults) {
-            storedDamageResults = getInitialDamageResults(FFMessage.targets);
+            storedDamageResults = getDamageResults(FFMessage.targets);
           }
           
           targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id));
@@ -118,7 +125,7 @@
             flags: {
               [SYSTEM_ID]: {
                 state: {
-                  damageResults: getInitialDamageResults(FFMessage.targets)
+                  damageResults: getDamageResults(FFMessage.targets)
                 }
               },
             },
@@ -328,7 +335,7 @@
                         i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                 .flex2.thin-border.bg-gold.offwhite(style="min-height: 2.6rem")
                   +if("item.system?.formula")
-                    .flex1.formula.flexrow.justify-vertical
+                    .flex1.formula.flexrow.justify-vertical(data-tooltip="{displayDamageFormula(target)}")
                       .flex3.left.font-cinzel.smaller Damage 
                       .flex1.right.no-wrap {displayDamage(target)}
                   +if("item.system?.hasDirectHit")

@@ -3,6 +3,7 @@ import './styles/Main.sass';
 import { log, slugify } from "~/src/helpers/util"
 import { SYSTEM_ID, SYSTEM_CODE, activeEffectModes } from "~/src/helpers/constants"
 import { setupModels } from './config/models';
+import { setupEffectsProcessors } from './config/effectsProcessors';
 import { registerSettings } from "~/src/settings"
 import { mappedGameTargets } from '~/src/stores';
 import { getDefaultStatusEffects } from "./helpers/Conditions";
@@ -50,14 +51,10 @@ CONFIG.FF15 = {
   RollGuards: RollGuards
 }
 
-
-
 //- Set initiative dice
 CONFIG.Combat.initiative = {
   formula: "1d20 + (@attributes.primary.dex.val)",
 };
-
-
 
 //- Foundry System Hooks
 Hooks.once("init", async (a, b, c) => {
@@ -71,6 +68,7 @@ Hooks.once("init", async (a, b, c) => {
 
   registerSettings();
   setupModels();
+  setupEffectsProcessors();
 
   game.system.config = systemconfig;
   game.system.log.d(game.system.id)
@@ -504,7 +502,7 @@ Hooks.on('renderChatMessage', (message, html) => {
 Hooks.on("preDeleteChatMessage", async (message) => {
   // Check if this is an action message
   const FFMessage = message.getFlag(SYSTEM_ID, 'data');
-  if (!FFMessage?.item?.type === 'action') return;
+  if (!FFMessage || !FFMessage.actor || !FFMessage.item || FFMessage.item.type !== 'action') return;
 
   const actor = game.actors.get(FFMessage.actor._id);
   if (!actor) return;
