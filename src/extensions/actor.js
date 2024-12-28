@@ -8,6 +8,15 @@ export default class FF15Actor extends Actor {
     super(data, context);
   }
 
+  get activeToken() {
+    for(const token of canvas.tokens.placeables) {
+      if(token.actor === this) {
+        return token;
+      }
+    }
+    return null;
+  }
+
   hasSpecificDuplicate (arr, str) {
     return arr.filter(item => item === str).length > 1;
   } 
@@ -31,7 +40,6 @@ export default class FF15Actor extends Actor {
    *                                 - undefined if no changes need to be made
    */ 
   async toggleStatusEffect(statusId, options) {
-    game.system.log.g('EFFECTS | toggleStatusEffect', { statusId, options });
     
     if(game.combat && statusId === 'focus' ) {
       //- if actor has focus, and there are no secondary action slots left, prevent the effect from being removed

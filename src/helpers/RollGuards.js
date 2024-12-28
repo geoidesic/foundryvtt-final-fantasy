@@ -71,50 +71,97 @@ export default class RollGuards {
   }
 
   async targetsMatchActionIntent(item) {
-    game.system.log.g('targetsMatchActionIntent called with item:', item);
-    game.system.log.g('targetsMatchActionIntent this:', this);
-    game.system.log.g('targetsMatchActionIntent item.system:', item.system);
-    if(!item.system.hasTarget) { 
-      game.system.log.g('targetsMatchActionIntent returning true - no target required');
-      return true;
-    }
-
-    const targets = game.user.targets;
-    const target = item.system.target;
-
-    game.system.log.g('targetsMatchActionIntent target:', target);
-    game.system.log.g('targetsMatchActionIntent targets.size:', targets.size);
-    game.system.log.g('targetsMatchActionIntent returning false');
+    game.system.log.d('targetsMatchActionIntent start', { item });
     
-    let allow = false;
-    switch (target) {
-      case "self":
-        allow = targets.size === 1 && Array.from(targets).map((target) => target.actor.id).includes(this.actor.id);
-        if (!allow) {
-          const msg = localize("Types.Item.Types.action.TargetSelf").replace("%s", item.name);
-          ui.notifications.warn(msg);
+    const target = item.system.target;
+    const targets = game.user.targets;
+    const size = targets.size;
+    
+    // Store original targets to restore later if needed
+    const originalTargets = new Set(game.user.targets);
+    
+    try {
+      // Handle self-targeting
+      if (target === 'self') {
+        game.system.log.d('Self-targeting detected');
+        // Clear current targets
+        game.user.targets.forEach(t => t.setTarget(false, { user: game.user, releaseOthers: false }));
+        
+        // Get token and log details about canvas state
+        game.system.log.d('Canvas state:', {
+          hasCanvas: !!canvas,
+          hasTokens: !!canvas?.tokens,
+          placeablesCount: canvas?.tokens?.placeables?.length
+        });
+        
+        const token = this.actor.activeToken;
+        game.system.log.d('Token found:', {
+          token,
+          actorId: this.actor.id,
+          tokenActorId: token?.actor?.id,
+          isVisible: token?.isVisible,
+          isOwner: token?.isOwner
+        });
+        
+        if (!token) {
+          ui.notifications.warn("No token found for self-targeting");
+          return false;
         }
-        return allow;
-      case "single":
-        allow =  targets.size === 1;
-        if (!allow) {
-          const msg = localize("Types.Item.Types.action.SingleTarget").replace("%s", item.name);
-          ui.notifications.warn(msg);
+
+        // Try to target
+        try {
+          token.setTarget(true, { user: game.user, releaseOthers: true });
+          game.system.log.d('After targeting:', {
+            targetsSize: game.user.targets.size,
+            hasToken: game.user.targets.has(token)
+          });
+          return true;
+        } catch (error) {
+          game.system.log.e('Error targeting token:', error);
+          return false;
         }
-        allow = allow && !Array.from(targets).map((target) => target.actor.id).includes(this.actor.id);
-        if (!allow) {
-          const msg = localize("Types.Item.Types.action.SingleTargetNotSelf").replace("%s", item.name);
-          ui.notifications.warn(msg);
-        }
-        return allow;
-      case "enemy":
-        return targets.some(t => t.isEnemy);
-      case "ally":
-        return targets.some(t => t.isAlly);
-      case "all":
-        return targets.size > 0;
-      default:
-        return false;
+      }
+
+      // Handle other targeting types
+      switch (target) {
+        case 'single':
+          if (size !== 1) {
+            ui.notifications.warn("This ability requires exactly one target");
+            return false;
+          }
+          break;
+        case 'enemy':
+          if (size < 1) {
+            ui.notifications.warn("This ability requires at least one enemy target");
+            return false;
+          }
+          // Additional enemy validation could go here
+          break;
+        case 'ally':
+          if (size < 1) {
+            ui.notifications.warn("This ability requires at least one ally target");
+            return false;
+          }
+          // Additional ally validation could go here
+          break;
+        case 'all':
+          if (size < 1) {
+            ui.notifications.warn("This ability requires at least one target");
+            return false;
+          }
+          break;
+      }
+      
+      return true;
+    } catch (error) {
+      game.system.log.e('Error in targetsMatchActionIntent:', error);
+      return false;
+    } finally {
+      // Only restore original targets if we're NOT doing self-targeting
+      if (target !== 'self' && originalTargets.size > 0) {
+        game.user.targets.forEach(t => t.setTarget(false, { user: game.user, releaseOthers: false }));
+        originalTargets.forEach(t => t.setTarget(true, { user: game.user, releaseOthers: false }));
+      }
     }
   }
 
