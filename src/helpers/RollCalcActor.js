@@ -86,22 +86,21 @@ export default class RollCalcActor extends RollCalc {
 
   async abilityAction(item) {
     // Get targets before showing dialog
-    const targets = game.user.targets;
-    const hasTargets = targets.size > 0;
     const guards = [
       this.RG.isAction,
-      // this.RG.hasTargets,
       this.RG.targetsMatchActionIntent,
       this.RG.hasActiveEnablerSlot,
       this.RG.hasModifiers,
       this.RG.hasRemainingUses,
     ]
     let message;
-
+    
     if (!(await this._handleGuards(item, guards))) {
       return undefined;
     }
-    
+
+    const targets = game.user.targets;
+    const hasTargets = targets.size > 0;
     // Handle target effects if the action grants them
     if (item.system.grants?.value && hasTargets) {
       await this._handleTargetEffects(item, targets);
@@ -368,9 +367,11 @@ export default class RollCalcActor extends RollCalc {
    */
   async _handleTargetEffects(item, targets) {
     if (!item.system.grants?.list?.length) return;
+    game.system.log.o('[_handleTargetEffects] targets', targets);
 
     for (const target of targets) {
       const targetActor = target.actor;
+      game.system.log.o('[_handleTargetEffects] targetActor', targetActor);
       if (!targetActor) continue;
 
       try {
