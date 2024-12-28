@@ -3,9 +3,8 @@ import { resetUses, resetActionState } from '~/src/helpers/util.js';
 export default function renderCombatTracker() {
   // Reset uses at end of turn for abilities with 'turn' limitation units
   Hooks.on("updateCombat", async (combat, changed, options, userId) => {
-    // Only process if the turn actually changed
-    // Only process if the turn actually changed
-    if (!("turn" in changed) || changed.turn === null) return;
+    // Only process if the turn or round actually changed
+    if (!("turn" in changed || "round" in changed) || changed.turn === null) return;
   
     // Get the previous combatant
     const previousTurn = combat.turns[combat.previous?.turn];
@@ -28,19 +27,27 @@ export default function renderCombatTracker() {
     //- reset hasMoved flag
     await actor.update({ system: { hasMoved: false } });
   
-    //- reset any ActiveEffects that have origin actions with a duration of 'turn'
-    // const effects = actor.effects.filter(e => e.origin?.action?.system.durationUnits === 'turn');
-    // for (const effect of effects) {
-    //   //- for enabler effects, disable them
-    //   if (effect.origin?.action?.type === 'enabler') {
-    //     await effect.update({ disabled: true });
-    //   }
-    //   //- for other effects, delete them
-    //   else {
-    //     await effect.delete();
-    //   }
-    // }
-  
+    // Check for expired effects on all actors in combat
+    for (const combatant of combat.turns) {
+      const currentActor = combatant.actor;
+      if (!currentActor) continue;
+
+      const effects = currentActor.effects;
+      for (const effect of effects) {
+        // Skip effects without duration
+        if (!effect.duration?.rounds && !effect.duration?.turns) continue;
+
+        // Check if effect has expired
+        const isExpired = effect.duration.remaining <= 0;
+        if (!isExpired) continue;
+
+        // Handle expired effect based on type
+        if (effect.origin?.action?.type === 'enabler') {
+          await effect.update({ disabled: true });
+        } else {
+          await effect.delete();
+        }
+      }
+    }
   });
-  
 }

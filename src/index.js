@@ -52,6 +52,7 @@ hooks.renderChatMessage();
 hooks.targetToken();
 hooks.updateCombat();
 hooks.updateCombatant();
+hooks.deleteCombat();
 
 
 
