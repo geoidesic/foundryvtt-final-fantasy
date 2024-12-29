@@ -16,26 +16,27 @@
     itemType: "action"
   }];
 
+  const levelLabel = localize(`${SYSTEM_CODE}.Types.Item.Types.job.Level`);
+  const roleLabel = localize(`${SYSTEM_CODE}.Types.Item.Types.job.Role`);
+
 </script>
 
 <template lang="pug">
-
 .item-sheet.details.overflow.high
   .flexcol
     .flex0.pa-sm
       .flexrow
         .flex1.left
-          label(for="level") {localize(`${SYSTEM_CODE}.Types.Item.Types.job.Level`)}
+          label(for="level")=levelLabel
         .flex1
           DocInput.wide(type="text" name="level" valuePath="system.level")
       .flexrow  
         .flex1.left
-          label(for="role") {localize(`${SYSTEM_CODE}.Types.Item.Types.job.Role`)}
+          label(for="role")=roleLabel
         .flex1
           DocInput.wide(type="text" name="role" valuePath="system.role")
     .flex3.left.high
-      ItemBucket(title="Granted Abilities" key="grants" additionalColumns="{grantColumns}")
-
+      ItemBucket(title="Granted Abilities" key="grants" additionalColumns=grantColumns)
 </template>
 
 <style lang="sass">

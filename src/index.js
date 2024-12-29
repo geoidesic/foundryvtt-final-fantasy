@@ -28,6 +28,7 @@ CONFIG.Combat.documentClass = FFCombat
 CONFIG.Combatant.documentClass = FFCombatant
 CONFIG.Token.objectClass = FFToken
 CONFIG.ActiveEffect.documentClass = FFActiveEffect
+
 CONFIG.FF15 = {
   RollGuards: RollGuards
 }

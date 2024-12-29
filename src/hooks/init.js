@@ -5,6 +5,7 @@ import { registerSettings } from "~/src/settings"
 import { setupModels } from '~/src/config/models';
 import { setupEffectsProcessors } from '~/src/config/effectsProcessors';
 
+import FFActiveEffectSheet from "~/src/components/applications/FFActiveEffectSheet";
 import FF15PCSheet from "~/src/components/applications/PCSheet";
 import FF15NPCSheet from "~/src/components/applications/NPCSheet";
 import FF15ItemSheet from "~/src/components/applications/ItemSheet";
@@ -44,6 +45,12 @@ export default function init() {
     Items.registerSheet("foundryvtt-final-fantasy", FF15ItemSheet, {
       makeDefault: true,
     });
+
+    DocumentSheetConfig.registerSheet(ActiveEffect, "foundryvtt-final-fantasy", FFActiveEffectSheet, {
+      makeDefault: true,
+    });
+
+
   
     Handlebars.registerHelper("getSetting", function (moduleName, settingKey) {
       return game.settings.get(moduleName, settingKey);
