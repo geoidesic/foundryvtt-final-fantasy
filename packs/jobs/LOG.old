@@ -1,3 +1,5 @@
-2024/12/24-09:11:32.815836 16df47000 Recovering log #99
-2024/12/24-09:11:32.816261 16df47000 Delete type=3 #98
-2024/12/24-09:11:32.816307 16df47000 Delete type=0 #99
+2024/12/29-19:08:34.283324 173533000 Log #191: 0 ops saved to Table #194 OK
+2024/12/29-19:08:34.283476 173533000 Archiving /Users/noeldacosta/code/FoundryVTT-Data-12/Data/systems/foundryvtt-final-fantasy/packs/jobs/000191.log: OK
+2024/12/29-19:08:34.283543 173533000 Table #193: 7 entries OK
+2024/12/29-19:08:34.283705 173533000 Archiving /Users/noeldacosta/code/FoundryVTT-Data-12/Data/systems/foundryvtt-final-fantasy/packs/jobs/MANIFEST-000102: OK
+2024/12/29-19:08:34.284010 173533000 **** Repaired leveldb /Users/noeldacosta/code/FoundryVTT-Data-12/Data/systems/foundryvtt-final-fantasy/packs/jobs; recovered 1 files; 2463 bytes. Some data may have been lost. ****
