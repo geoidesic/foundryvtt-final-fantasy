@@ -56,13 +56,23 @@
         damage: item.system?.formula,
         baseDamageFormula: 'Base Damage',
         directHit: item.system?.directHitDamage,
+        directHitFormula: item.system?.directHitDamage,
         directHitResult: false,
         applied: false,
         originalHP: token.actor.system.points.HP.val,
         wasKOd: false,
       });
     }
+
+    /**
+     *  @why callAll? - We need callAll because multiple game features or modules 
+     * might need to modify the damage calculation independently 
+     * - for example, one module might add elemental damage while another adds
+     *  status effect bonuses. Using call would only allow the first modification
+     *  to occur.
+    */
     Hooks.callAll('FF15.processAdditionalBaseDamageFromItem', {item, actor, DamageResults});
+    Hooks.callAll('FF15.RerollDamageDice', {item, actor, DamageResults});
     return DamageResults;
   }
 
