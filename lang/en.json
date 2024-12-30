@@ -65,7 +65,9 @@
       }
     },
     "EFFECT": {
-      "ConfigTitle": "Active Effect"
+      "ConfigTitle": "Active Effect",
+      "Changes": "Changes",
+      "Config": "Config"
     },
     "Errors": {
       "NotOwner": "You are not the owner of this actor.",
