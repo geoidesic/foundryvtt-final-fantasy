@@ -8,19 +8,19 @@
   
   export let elementRoot = void 0;
   
-  const application = getContext('#external').application;
-  setContext("#doc", application.reactive.document);
+   const doc = getContext('#external').doc;
+  // setContext("#doc", application.reactive.document);
   
   let activeTab = "details";
   
-  const tabs = [
-    { 
-      label: localize('EFFECT.Details'), 
-      id: "details", 
-      component: Details,
-      img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp'
-    }
-  ];
+  // const tabs = [
+  //   { 
+  //     label: localize('EFFECT.Details'), 
+  //     id: "details", 
+  //     component: Details,
+  //     img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp'
+  //   }
+  // ];
 
   onMount(() => {
     // Any initialization if needed
@@ -32,7 +32,8 @@
 <template lang="pug">
   ApplicationShell(bind:elementRoot)
     .effect-sheet
-      Tabs.tabs.tall(tabs="{tabs}" bind:activeTab="{activeTab}")
+      pre yo
+      //- Tabs.tabs.tall(tabs="{tabs}" bind:activeTab="{activeTab}")
 </template>
 
 <style lang="sass">

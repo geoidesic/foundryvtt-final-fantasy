@@ -1,8 +1,17 @@
+import { SvelteApplication } from "#runtime/svelte/application";
+import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
+import { generateRandomElementId } from "~/src/helpers/util";
+import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import FFActiveEffectShell from './FFActiveEffectShell.svelte';
-import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
-import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants"
 
 export default class FFActiveEffectSheet extends SvelteApplication {
+   #doc;
+
+   constructor(doc, options) {
+      super(options);
+      this.#doc = new TJSDocument(doc, { delete: () => this.close() });
+   }
+
    /**
     * Default Application options
     *
@@ -11,39 +20,29 @@ export default class FFActiveEffectSheet extends SvelteApplication {
     */
    static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
-         id: `${SYSTEM_ID}--active-effect-config`,
+         id: `${SYSTEM_ID}--active-effect-sheet-${generateRandomElementId()}`,
          classes: [SYSTEM_CODE, 'sheet', 'active-effect-config'],
          title: 'EFFECT.ConfigTitle',
-         template: `systems/${SYSTEM_ID}/templates/active-effect-config.html`,
          width: 560,
          height: 'auto',
-         tabs: [{navSelector: '.tabs', contentSelector: '.content', initial: 'details'}],
-         dragDrop: [{dragSelector: null, dropSelector: null}],
          svelte: {
             class: FFActiveEffectShell,
-            target: document.body
+            target: document.body,
+            props: {
+               doc: null
+            }
          }
       });
    }
 
-   getData() {
-      const effect = this.object;
-      const data = {
-         effect: effect,
-         isActorEffect: effect.parent.documentName === 'Actor',
-         isItemEffect: effect.parent.documentName === 'Item',
-         submitText: 'EFFECT.Submit',
-         modes: Object.entries(CONST.ACTIVE_EFFECT_MODES).reduce((obj, e) => {
-            obj[e[1]] = game.i18n.localize('EFFECT.MODE_' + e[0]);
-            return obj;
-         }, {})
-      };
-
-      return data;
+   /** @override */
+   get document() {
+      return this.#doc;
    }
 
-   _updateObject(event, formData) {
-      const effect = this.object;
-      return effect.update(formData);
+   /** @override */
+   async _injectHTML(html) {
+      this.options.svelte.props.doc = this.document;
+      return super._injectHTML(html);
    }
 }
