@@ -1,4 +1,5 @@
 {
+  
   "TYPES": {
     "Actor": {
       "PC": "Player Character",
@@ -62,6 +63,9 @@
         "ApplyItemToTarget": "Apply {0} to target(s)",
         "AppliedTo": "Applied to {1}"
       }
+    },
+    "EFFECT": {
+      "ConfigTitle": "Active Effect"
     },
     "Errors": {
       "NotOwner": "You are not the owner of this actor.",
