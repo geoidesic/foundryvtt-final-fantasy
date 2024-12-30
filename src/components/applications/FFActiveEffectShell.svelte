@@ -4,8 +4,8 @@
   import { localize } from "#runtime/svelte/helper";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
-  import Details from "~/src/components/tabs/activeEffect/Details.svelte";
-  
+  import Changes from "~/src/components/tabs/activeEffect/Changes.svelte";
+  import Config from "~/src/components/tabs/activeEffect/Config.svelte";
   export let elementRoot = void 0;
   
    const doc = getContext('#external').doc;
@@ -13,14 +13,20 @@
   
   let activeTab = "details";
   
-  // const tabs = [
-  //   { 
-  //     label: localize('EFFECT.Details'), 
-  //     id: "details", 
-  //     component: Details,
-  //     img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp'
-  //   }
-  // ];
+  const tabs = [
+    { 
+      label: localize('EFFECT.Config'), 
+      id: "config", 
+      component: Config,
+      img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/cog.webp'
+    },
+    { 
+      label: localize('EFFECT.Changes'), 
+      id: "changes", 
+      component: Changes,
+      img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/list.webp'
+    },
+  ];
 
   onMount(() => {
     // Any initialization if needed
@@ -32,8 +38,7 @@
 <template lang="pug">
   ApplicationShell(bind:elementRoot)
     .effect-sheet
-      pre yo
-      //- Tabs.tabs.tall(tabs="{tabs}" bind:activeTab="{activeTab}")
+      Tabs.tabs.tall(tabs="{tabs}" bind:activeTab="{activeTab}")
 </template>
 
 <style lang="sass">
