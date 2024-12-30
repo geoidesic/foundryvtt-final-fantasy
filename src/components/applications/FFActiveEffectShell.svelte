@@ -6,12 +6,15 @@
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import Changes from "~/src/components/tabs/activeEffect/Changes.svelte";
   import Config from "~/src/components/tabs/activeEffect/Config.svelte";
+  
   export let elementRoot = void 0;
-  
-   const doc = getContext('#external').doc;
+  export let doc;
+
+   const application = getContext('#external').application;
   // setContext("#doc", application.reactive.document);
+  setContext("#doc", doc);
   
-  let activeTab = "details";
+  let activeTab = "config";
   
   const tabs = [
     { 
@@ -30,6 +33,9 @@
 
   onMount(() => {
     // Any initialization if needed
+    game.system.log.g('FFActiveEffectShell doc', doc);
+    game.system.log.g('FFActiveEffectShell $doc', $doc);
+    game.system.log.g('FFActiveEffectShell application', application);
   });
 </script>
 
