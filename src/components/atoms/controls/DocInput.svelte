@@ -15,6 +15,9 @@
   export let updateOnInput = false;
   export let enabled = false;
   export let textClasses = "";
+  export let alwaysEditable = false;
+  export let fullWidth = false;
+  export let updateOnBlur = false;
 
   let inputValue,
     LABEL = !!label,
@@ -28,24 +31,27 @@
 
   function handleKeyDown(event, index) {
     game.system.log.d('DocInput keydown: ' + event.key);
-    if (event.key === "Enter") {
+    if (!updateOnBlur && event.key === "Enter") {
         event.preventDefault();
         inputElement.blur();
         editable = false;
         update(event);
     }
-    
   }
 
   function handleBlur(event, index) {
-    // return;
     game.system.log.d('DocInput blurring');
-    editable = false;
-    enabled = false;
+    if (!alwaysEditable) {
+      editable = false;
+      enabled = false;
+    }
+    if (updateOnBlur) {
+      update(event);
+    }
   }
 
   async function enableInput(event) {
-    if(enabled) return;
+    if(enabled || alwaysEditable) return;
     enabled = true;
     console.log('enableInput', event);
     if (event.key === 'Space') {
@@ -58,14 +64,13 @@
 
     inputElement.focus();
     inputElement.select();
-
   }
  
   function handleButtonKeyDown(event) {
     if (event.key === " ") {
         event.preventDefault(); // Prevent space from triggering the button click
     }
-}
+  }
 
   async function update(event) {
     game.system.log.d('DocInput updating value: ' + `${event.target.value}`);
@@ -87,7 +92,9 @@
       pulseClass = "pulse";
       setTimeout(() => pulseClass = "", 1000);
     }
-    enabled = false;
+    if (!alwaysEditable) {
+      enabled = false;
+    }
   }
 
   $: {
@@ -99,6 +106,7 @@
   $: displayValue = inputValue === '' || inputValue == 0 ? '' : inputValue;
   $: isEmpty = inputValue === '';
   $: hasFocus = inputElement === document.activeElement;
+  $: editable = alwaysEditable || editable;
 
   onMount(async () => {
     inputValue = resolveDotpath($doc, valuePath);
@@ -114,16 +122,25 @@
 </script>
 
 <template lang="pug">
-button.stealth(class="{$$props?.class?.includes('widebutton') ? 'wide' : ' '} + {$$props?.class?.includes('left') ? 'left' : ' '}" on:click!="{clickType=='click' ? enableInput : () => {}}")
-  .flexrow.gap-15.wide.doc-input
-    +if('LABEL')
++if("alwaysEditable")
+  .flexrow.gap-15(class=fullWidth ? 'wide' : '')
+    +if("LABEL")
       .flex1.wide
         label.bold.gold(for="{inputElement?.id}") {label} 
-    +if("editable")
-      .flex5.wide
-        input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
-      +else
-        .output( class="{pulseClass} {textClasses}" class:empty="{inputValue === ''}") {displayValue || placeholder}
+    .flex5.wide
+    
+      input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
++if("!alwaysEditable")
+  button.stealth(class="{$$props?.class?.includes('widebutton') ? 'wide' : ' ' + $$props?.class?.includes('left') ? 'left' : ' '}" on:click!="{clickType=='click' ? enableInput : () => {}}")
+    .flexrow.gap-15.wide.doc-input
+      +if("LABEL")
+        .flex1.wide
+          label.bold.gold(for="{inputElement?.id}") {label} 
+      +if("editable")
+        .flex5.wide
+          input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
+        +else
+          .output(class="{pulseClass} {textClasses}" class:empty="{isEmpty}") {displayValue || placeholder}
 </template>
 
 <style lang="sass">
@@ -161,5 +178,14 @@ button.stealth(class="{$$props?.class?.includes('widebutton') ? 'wide' : ' '} + 
   .output:not([type="checkbox"])
     // margin-right: 0.5em
 
-  
+  .wide
+    width: 100%
+
+  input
+    width: 100%
+    background-color: white
+    height: 1.5rem
+    border: 1px solid #ccc
+    border-radius: 3px
+    padding: 0 0.5rem
 </style>
