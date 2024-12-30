@@ -6,8 +6,11 @@ import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
 import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
 import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
 import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
+import TagInput from "~/src/components/molecules/TagInput.svelte";
 
 const doc = getContext("#doc");
+
+$: hasTags = $doc.getFlag(SYSTEM_ID, "hasTags");
 
 onMount(async () => {
   console.log('ActiveEffectSheet Config');
@@ -48,6 +51,14 @@ onMount(async () => {
       .flex4
         p.caption  {localize("EFFECT.Suspended.Caption")}
 
+    .flexrow.sheet-row.justify-vertical
+      .flex4
+        h3.left Tags
+      .flex0.right
+        DocCheckbox( name="hasTags" valuePath="{`flags.${SYSTEM_ID}.hasTags`}")
+  +if("hasTags")
+    .px-sm
+      TagInput
 </template>
 <style lang="sass">
   label
