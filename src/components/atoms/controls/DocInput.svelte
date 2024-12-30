@@ -1,30 +1,50 @@
 <script>
-  import { getContext, onMount, tick } from "svelte";
+  import { getContext, onMount, tick, createEventDispatcher } from "svelte";
   import { Timing } from "@typhonjs-fvtt/runtime/util";
   import { resolveDotpath } from "~/src/helpers/paths";
 
+  const dispatch = createEventDispatcher();
+
+  // For empty state display
   export let placeholder = "--";
+  // For input length constraints
   export let maxlength = "40";
+  // For targeting specific document properties
   export let valuePath = "";
+  // For accessibility and form organization
   export let label = "";
+  // When you need to override the default document context
   export let document = false;
+  // For controlling edit state
   export let editable = false;
+  // For input validation and formatting
   export let type = "standard";
+  // For controlling click behavior
   export let clickType = "click";
+  // For visual feedback when values change
   export let pulse = false;
+  // For real-time update behavior
   export let updateOnInput = false;
+  // For controlling input state
   export let enabled = false;
+  // For custom styling of the output text
   export let textClasses = "";
+  // For cases where you want the input to always be in edit mode
   export let alwaysEditable = false;
+  // For layout control
   export let fullWidth = false;
+  // For UX patterns where immediate updates would be disruptive
   export let updateOnBlur = false;
+  // Set to false when DocInput should not update the document directly
+  export let handleOwnUpdates = true;
 
   let inputValue,
     LABEL = !!label,
     inputElement,
     pulseClass = "",
-    initialRender = true
-  ;
+    initialRender = true,
+    internalUpdate = false,
+    externalValue;
 
   const doc = document || getContext("#doc");
   const updateDebounce = Timing.debounce(update, 500);
@@ -46,7 +66,11 @@
       enabled = false;
     }
     if (updateOnBlur) {
-      update(event);
+      if (handleOwnUpdates) {
+        update(event);
+      } else {
+        dispatch('change', { value: event.target.value, path: valuePath });
+      }
     }
   }
 
@@ -73,7 +97,7 @@
   }
 
   async function update(event) {
-    game.system.log.d('DocInput updating value: ' + `${event.target.value}`);
+    internalUpdate = true;
     let val = event.target.value;
     if(type == 'number' && $$props.max !== undefined && val > $$props.max) {
       val = $$props.max;
@@ -83,26 +107,34 @@
       val = $$props.min;
       ui.notifications.warn(`Value cannot exceed ${$$props.min}`);
     }
-    inputValue = type == 'number' ? Number(val) : val;  // Update the local value
-    await $doc.update({[valuePath]: val});   // Update the document value
-    game.system.log.d(`Updated value: ${val}`);
+    inputValue = type == 'number' ? Number(val) : val;
 
-    // Apply pulse animation only when update is triggered by user interaction
-    if(pulse) {
-      pulseClass = "pulse";
-      setTimeout(() => pulseClass = "", 1000);
-    }
-    if (!alwaysEditable) {
+    if (handleOwnUpdates) {
+      await $doc.update({[valuePath]: val});
+      game.system.log.d(`Updated value: ${val}`);
+      if (pulse) {
+        pulseClass = "pulse";
+        setTimeout(() => pulseClass = "", 1000);
+      }
       enabled = false;
+    } else {
+      dispatch('change', { value: val, path: valuePath });
+    }
+    internalUpdate = false;
+  }
+
+  $: {
+    if (!internalUpdate) {
+      externalValue = resolveDotpath($doc, valuePath);
     }
   }
 
   $: {
-    let newValue = resolveDotpath($doc, valuePath);
-    if (!initialRender && newValue !== inputValue) {
-      inputValue = type == 'number' ? Number(newValue) : newValue;
+    if (!internalUpdate && !initialRender && externalValue !== inputValue) {
+      inputValue = type == 'number' ? Number(externalValue) : externalValue;
     }
-  } 
+  }
+
   $: displayValue = inputValue === '' || inputValue == 0 ? '' : inputValue;
   $: isEmpty = inputValue === '';
   $: hasFocus = inputElement === document.activeElement;
