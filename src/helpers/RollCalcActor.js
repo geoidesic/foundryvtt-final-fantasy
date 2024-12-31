@@ -222,7 +222,7 @@ export default class RollCalcActor extends RollCalc {
 
         // If we're using a tag slot, we need to disable any matching enabler effects
         const enabledEffects = this.params.actor.effects.filter(
-          effect => effect.statuses.has('enabled')
+          effect => effect.system.tags?.includes('enabler')
         );
 
         for (const effect of enabledEffects) {

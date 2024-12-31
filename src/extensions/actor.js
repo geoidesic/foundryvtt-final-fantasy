@@ -80,10 +80,6 @@ export default class FF15Actor extends Actor {
       }
     }
 
-    if(game.combat && statusId === 'enabled' ) {
-      console.log('enabled', options);
-    }
-
     return super.toggleStatusEffect(statusId, options);
   }
 
