@@ -17,6 +17,26 @@ export default class FF15Actor extends Actor {
     return null;
   }
 
+  get allyTokens() {
+    // Get all tokens on the canvas
+    const tokens = canvas.tokens.placeables;
+    if (!tokens?.length) return [];
+
+    // Get current combat
+    const combat = game.combat;
+    if (!combat) return [];
+
+    // Get all combatant actor IDs for quick lookup
+    const combatantActorIds = new Set(combat.combatants.contents.map(c => c.actor?.id).filter(Boolean));
+
+    // Find all ally tokens (non-hostile) that are also combatants
+    return tokens.filter(token => 
+      token.actor && // Must have an actor
+      !token.actor.hostile && // Must not be hostile
+      combatantActorIds.has(token.actor.id) // Must be a combatant in the current combat
+    );
+  }
+
   hasSpecificDuplicate (arr, str) {
     return arr.filter(item => item === str).length > 1;
   } 
@@ -58,10 +78,6 @@ export default class FF15Actor extends Actor {
       if(this.statuses.has('focus') && !this.system.hasMoved && this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
         await this.update({ system: { actionState: { available: this.removeFirstDuplicate(this.system.actionState.available, 'secondary') } } });
       }
-    }
-
-    if(game.combat && statusId === 'enabled' ) {
-      console.log('enabled', options);
     }
 
     return super.toggleStatusEffect(statusId, options);

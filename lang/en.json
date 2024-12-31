@@ -1,4 +1,5 @@
 {
+  
   "TYPES": {
     "Actor": {
       "PC": "Player Character",
@@ -24,6 +25,7 @@
     "ChatText": "Chat Text",
     "Check": "Check",
     "Combos": "Combos",
+    "Config": "Configuration",
     "CR": "CR",
     "Description": "Description",
     "Details": "Details",
@@ -61,6 +63,32 @@
       "Buttons": {
         "ApplyItemToTarget": "Apply {0} to target(s)",
         "AppliedTo": "Applied to {1}"
+      }
+    },
+    "EFFECT": {
+      "ConfigTitle": "Active Effect",
+      "Changes": "Changes",
+      "Config": "Config",
+      "Change": {
+        "Key": "Key",
+        "Mode": "Mode",
+        "Value": "Value"
+      },
+      "Description": {
+        "Label": "Description",
+        "Caption": "A description of the Effect."
+      },
+      "TransferEffectToActor": {
+        "Label": "Transfer Effect to Actor",
+        "Caption": "If checked, this Effect will be copied to the Actor when this Effect's parent Item is created on an Actor, and deleted if that Item is ever removed."
+      },
+      "Overlay": {
+        "Label": "Overlay",
+        "Caption": "If checked, this Effect will be displayed as an overlay on the Actor's token, when active."
+      },
+      "Suspended": {
+        "Label": "Suspended",
+        "Caption": "If checked, this Effect will be greyed out and inactive."
       }
     },
     "Errors": {

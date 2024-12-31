@@ -311,6 +311,10 @@ badge
     &.h4
       font-size: var(--size-ms-h)
 
+  p
+    &.caption
+      font-family: "Inter", sans-serif !important
+      font-size: smaller
   select
     @include input
     // max-width: 200pz // Set a maximum width
@@ -411,13 +415,16 @@ badge
     opacity: 0.5
 
   .prose
-    min-height: 300px
     height: 100%
     background-color: rgba(255, 255, 255, 0.05)
     // border: 5px ridge var(--border-highlight)
     // border-radius: var(--border-radius)
     padding: 0.1em 0.2em
     font-family: "Newsreader", serif
+    &.short
+      min-height: 100px
+    &:not(.short)
+      min-height: 300px
 
     .editor.prosemirror.tjs-editor
       height: 100%

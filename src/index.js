@@ -2,6 +2,7 @@ import './styles/Main.sass';
 
 import FF15Actor from '~/src/extensions/actor.js'
 import FFActiveEffect from "~/src/extensions/active-effect.js"
+import FFEffectModel from "~/src/models/ActiveEffectModel.js"
 import FFToken from "~/src/extensions/token.js"
 import FFCombat from './extensions/combat.js'
 import FFCombatant from './extensions/combatant.js'
@@ -28,6 +29,8 @@ CONFIG.Combat.documentClass = FFCombat
 CONFIG.Combatant.documentClass = FFCombatant
 CONFIG.Token.objectClass = FFToken
 CONFIG.ActiveEffect.documentClass = FFActiveEffect
+CONFIG.ActiveEffect.dataModels.base = FFEffectModel
+
 CONFIG.FF15 = {
   RollGuards: RollGuards
 }

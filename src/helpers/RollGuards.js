@@ -231,7 +231,7 @@ export default class RollGuards {
     // Finally check enabled effects if we have enablers
     if (await this.hasEnablers(item)) {
       const enabledEffects = this.actor.effects.filter(
-        effect => effect.statuses.has('enabled')
+        effect => effect.system.tags?.includes('enabler')
       );
 
       if (enabledEffects?.length) {

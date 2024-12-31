@@ -215,3 +215,12 @@ export const resetActionState = async (actor) => {
     }
   });
 };
+
+/**
+ * Check if an effect has the enabler tag
+ * @param {ActiveEffect} effect - The effect to check
+ * @returns {boolean} - Whether the effect has the enabler tag
+ */
+export function isEnablerEffect(effect) {
+  return effect?.system?.tags?.includes('enabler') ?? false;
+}
