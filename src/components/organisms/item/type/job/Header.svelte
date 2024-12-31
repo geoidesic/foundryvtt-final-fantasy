@@ -11,8 +11,8 @@ const item = getContext("#doc");
     .flexrow
       .flexcol.flex1.left
         ol.properties-list
-          li Role: {$item.system.role.capitalize()}
-          li LV {$item.system.level}
+          li Role: {$item?.system?.role?.capitalize()}
+          li LV {$item?.system?.level}
     
 </template>
 <style lang='sass'>
