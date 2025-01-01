@@ -44,7 +44,8 @@
     pulseClass = "",
     initialRender = true,
     internalUpdate = false,
-    externalValue;
+    externalValue,
+    displayValue = "";
 
   const doc = document || getContext("#doc");
   const updateDebounce = Timing.debounce(update, 500);
@@ -111,7 +112,6 @@
 
     if (handleOwnUpdates) {
       await $doc.update({[valuePath]: val});
-      game.system.log.d(`Updated value: ${val}`);
       if (pulse) {
         pulseClass = "pulse";
         setTimeout(() => pulseClass = "", 1000);
@@ -125,7 +125,7 @@
 
   $: {
     if (!internalUpdate) {
-      externalValue = resolveDotpath($doc, valuePath);
+      externalValue = resolveDotpath($doc, valuePath) ?? "";
     }
   }
 
@@ -135,13 +135,18 @@
     }
   }
 
-  $: displayValue = inputValue === '' || inputValue == 0 ? '' : inputValue;
+  $: {
+    displayValue = inputValue === undefined || inputValue === '' || inputValue == 0 ? '' : inputValue;
+  }
+
   $: isEmpty = inputValue === '';
   $: hasFocus = inputElement === document.activeElement;
   $: editable = alwaysEditable || editable;
 
   onMount(async () => {
-    inputValue = resolveDotpath($doc, valuePath);
+    const resolved = resolveDotpath($doc, valuePath);
+    inputValue = resolved ?? "";
+    
     initialRender = false;
     if($$props.type == 'number') {
       inputValue = Number(inputValue);
@@ -172,7 +177,7 @@
         .flex5.wide
           input({...$$restProps} type="{$$props.type}" bind:this="{inputElement}" value="{inputValue}" on:keydown|stopPropagation="{handleKeyDown}" on:input|stopPropagation!="{updateOnInput ? updateDebounce : () => {}}" on:blur|stopPropagation="{handleBlur}" placeholder="{placeholder}" maxlength="{maxlength}")
         +else
-          .output(class="{pulseClass} {textClasses}" class:empty="{isEmpty}") {displayValue || placeholder}
+          .output(class="{pulseClass} {textClasses}" class:empty="{isEmpty}") {inputValue ? inputValue : placeholder}
 </template>
 
 <style lang="sass">
