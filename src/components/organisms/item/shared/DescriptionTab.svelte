@@ -6,7 +6,6 @@ import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
 
 .item-sheet.details.overflow.high
   .flexcol.flex3.left.high
-
       ProseMirror( attr="system.description" )
 </template>
 <style lang='sass'>
