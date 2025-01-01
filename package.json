@@ -43,7 +43,7 @@
     "not IE 11"
   ],
   "scripts": {
-    "dev": "node modifySystemJson.js remove && vite",
+    "dev": "node scripts/modifySystemJson.js remove && vite",
     "build": "vite build && node modifySystemJson.js restore",
     "eslint": "eslint .",
     "test:unit": "vitest"
