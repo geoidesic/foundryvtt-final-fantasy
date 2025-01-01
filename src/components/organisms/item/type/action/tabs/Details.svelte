@@ -1,7 +1,12 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
-  import { getRangeOptions, getDurationOptions, getDurationUnits, getLimitationOptions, getLimitationUnits, getAspectedOptions, getTargetOptions, getHeavyshotOptions, getTriggerOptions, getDirectHitOptions, getTypeOptions } from "~/src/helpers/constants.js";
+  import { 
+    getRangeOptions, getDurationOptions, getDurationUnits, 
+    getLimitationOptions, getLimitationUnits, getAspectedOptions, 
+    getTargetOptions, getHeavyshotOptions, getTriggerOptions, 
+    getDirectHitOptions, getTypeOptions, getBaseEffectTypeOptions 
+  } from "~/src/helpers/constants.js";
   import { getCROptions } from "~/src/helpers/constants.js";
   import { PCModel } from "~/src/models/actors/PC.js";
   import { getDefaultStatusEffects } from "~/src/helpers/Conditions.js";
@@ -25,7 +30,7 @@
     .filter(([key, value]) => value instanceof SchemaField)
     .map(([key, value]) => ({ key, value }));
 
-
+  const baseEffectTypeOptions = getBaseEffectTypeOptions();
   const CROptions = getCROptions();
   const limitationOptions = getLimitationOptions();
   const limitationUnitsOptions = getLimitationUnits();
@@ -66,11 +71,19 @@
         .flex4.right.wide
           DocSelect.wide.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
       
-      .flexrow.sheet-row.justify-vertical
-        .flex3
-          label(for="formula") Damage / Heal Formula
-        .flex2.right
-          DocInput(id="formula" name="formula" valuePath="system.formula")
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left {localize("FF15.BaseEffect")}
+        .flex0.right
+          DocCheckbox( name="hasBaseEffect" valuePath="system.hasBaseEffect")
+      +if("$item.system.hasBaseEffect")
+      
+        .flexrow.sheet-row.justify-vertical
+          .flex3
+            DocSelect.wide.left(id="baseEffectType" name="baseEffectType" type="number" options="{baseEffectTypeOptions}" valuePath="system.baseEffectType")
+          .flex2.right
+            DocInput(id="formula" name="formula" valuePath="system.formula")
 
       .flexrow.justify-vertical
         .flex4

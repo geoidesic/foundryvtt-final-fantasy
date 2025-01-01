@@ -395,7 +395,18 @@ export default class RollCalcActor extends RollCalc {
               return null;
             }
 
-            // Clean up the data to only include valid ActiveEffect fields
+            // If the effect has statuses, toggle them instead of creating a new effect
+            if (effect.statuses?.size) {
+              const statuses = Array.from(effect.statuses);
+              // Only toggle statuses that aren't already active
+              const statusesToToggle = statuses.filter(status => !targetActor.statuses.has(status));
+              if (statusesToToggle.length) {
+                targetActor.toggleActiveEffect({ id: statusesToToggle[0], statuses: statusesToToggle });
+              }
+              return null;
+            }
+
+            // For non-status effects, clean up the data to only include valid ActiveEffect fields
             const cleanData = {
               name: effect.name,
               label: effect.label,
@@ -407,11 +418,6 @@ export default class RollCalcActor extends RollCalc {
               origin: item.uuid,
             };
 
-            // Set up statuses if needed
-            if (effect.statuses?.size) {
-              cleanData.statuses = Array.from(effect.statuses);
-            }
-
             return cleanData;
           });
         });
@@ -420,7 +426,7 @@ export default class RollCalcActor extends RollCalc {
         const effectData = (await Promise.all(effectPromises)).flat().filter(Boolean);
         
         if (effectData.length) {
-          // Create all effects at once
+          // Create all non-status effects at once
           await targetActor.createEmbeddedDocuments('ActiveEffect', effectData);
         }
       } catch (error) {

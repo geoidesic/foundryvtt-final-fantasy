@@ -158,6 +158,10 @@
             "Origin": "Origin"
           },
           "Options": {
+            "BaseEffectType": {
+              "damage": "Damage",
+              "heal": "Heal"
+            },
             "DirectHit": {
               "damage": "Damage",
               "markers": "Remove Markers",
