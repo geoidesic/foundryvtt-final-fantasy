@@ -25,6 +25,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^1.0.3",
     "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
     "@typhonjs-config/eslint-config": "^0.6.3",
     "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
@@ -44,8 +45,10 @@
   ],
   "scripts": {
     "dev": "node scripts/modifySystemJson.js remove && vite",
-    "build": "vite build && node modifySystemJson.js restore",
+    "build": "vite build && node scripts/modifySystemJson.js restore",
     "eslint": "eslint .",
-    "test:unit": "vitest"
+    "test:unit": "vitest",
+    "pack": "node scripts/db-pack.js",
+    "unpack": "node scripts/unpack-db.js"
   }
 }
