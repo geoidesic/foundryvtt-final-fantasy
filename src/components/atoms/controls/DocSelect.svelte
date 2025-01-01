@@ -1,8 +1,10 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { onMount, getContext } from "svelte";
-  import { resolveDotpath } from "~/src/helpers/paths";
+  import { onMount, getContext, createEventDispatcher } from "svelte";
+  import { resolveDotpath, formatDotpath } from "~/src/helpers/paths";
+
+  const dispatch = createEventDispatcher();
 
   export let options = void 0; //- {value: string, label: string}[]
   export let valuePath = "";
@@ -11,6 +13,7 @@
   export let disabled = false;
   export let label = "";
   export let callback = void 0;
+  export let handleOwnUpdates = true;
 
   let inputValue = null, // Initialize to null to avoid preselection
     LABEL = !!label,
@@ -22,8 +25,16 @@
 
   const update = async () => {
     if (preventDefault) return;
-    await $doc.update({ [valuePath]: inputValue });
-    await callback(inputValue);
+    
+    if (handleOwnUpdates) {
+      const updateObj = { [formatDotpath(valuePath)]: inputValue }
+      game.system.log.b('DocSelect:updateObj', updateObj);
+      await $doc.update(updateObj);
+      game.system.log.b($doc)
+      if (callback) await callback(inputValue);
+    } else {
+      dispatch('change', { value: inputValue, path: valuePath });
+    }
   };
 
   onMount(() => {
