@@ -18,6 +18,10 @@
   .flexcol
     .flex3.left.high
       ItemBucket(
+        title="{localize('FF15.Requires')}"
+        key="requires",
+      )
+      ItemBucket(
         title="{localize('FF15.Target')} {localize('Effects')}",
         key="grants",
       )
