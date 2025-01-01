@@ -259,6 +259,8 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     const grants = job.system.grants;
     const grantItems = [];
     const failedUuids = []; // Track UUIDs that couldn't be found
+    const existingGrants = actor.system.job?.grants || [];
+    const existingUuids = new Set(actor.items.map(item => item.uuid));
     
     game.system.log.d('_onDropJob: Job grants:', grants);
     
@@ -281,8 +283,10 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
         continue;
       }
       
-      if(!actor.items.some(x => x.name === grantItem.name)) {
+      // Only add if we don't already have this item
+      if(!existingUuids.has(grantItem.uuid)) {
         grantItems.push(grantItem);
+        existingUuids.add(grantItem.uuid); // Add to set to prevent duplicates within the same job
       }
     }
     
@@ -319,7 +323,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
         return false;
       }
     }
-    
+
     if (grantItems.length > 0) {
       await actor.createEmbeddedDocuments("Item", grantItems);
     }
