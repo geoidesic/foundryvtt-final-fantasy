@@ -2,15 +2,16 @@
 import { getContext, onMount } from "svelte";
 import { localize } from "~/src/helpers/util";
 import { SYSTEM_ID } from "~/src/helpers/constants";
+import { getDefaultStatusEffects } from "~/src/helpers/Conditions";
 import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
 import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
 import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
 import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
-import TagInput from "~/src/components/molecules/TagInput.svelte";
+import TagSelect from "~/src/components/molecules/TagSelect.svelte";
 
 const doc = getContext("#doc");
 
-$: hasTags = $doc.getFlag(SYSTEM_ID, "hasTags");
+$: statusOptions = getDefaultStatusEffects().map(status => status.id);
 
 onMount(async () => {
   console.log('ActiveEffectSheet Config');
@@ -55,11 +56,12 @@ onMount(async () => {
         .flex4
           p.caption  {localize("EFFECT.Suspended.Caption")}
 
-      .flexrow.sheet-row.justify-vertical
+      .flexrow.justify-vertical
         .flex4
-          h3.left Tags
-        .flex0.right
-          DocCheckbox( name="hasTags" valuePath="{`flags.${SYSTEM_ID}.hasTags`}")
+          label.gold(for="statuses") {localize("EFFECT.Label.Statuses")}
+      .flexcol.sheet-row.justify-vertical
+        .flex2.left
+          TagSelect(availableTags="{statusOptions}" tagsPath="statuses")
     
     .flex1.mb-xl
       .flexrow.justify-vertical
@@ -68,9 +70,7 @@ onMount(async () => {
       .flexcol.sheet-row.justify-vertical.high
         .flex2.left.prose.high.short
           ProseMirror( id="description" name="description" attr="description")
-  +if("hasTags")
-    .px-sm
-      TagInput
+    
 </template>
 <style lang="sass">
   @import '../../../styles/Mixins.sass'

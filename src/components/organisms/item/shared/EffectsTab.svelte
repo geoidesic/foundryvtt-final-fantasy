@@ -135,8 +135,7 @@
         label: $doc.name,
         icon: $doc.img,
         origin: $doc.uuid,
-        disabled: false,
-        transfer: true,
+        renderSheet:true,
         flags: {
           [SYSTEM_ID]: {
             source: "user",
@@ -149,8 +148,9 @@
 
     game.system.log.d("effect", effect);
 
-    const effectConfig = new ActiveEffectConfig(effect, { editable: true });
-    effectConfig.render(true);
+    //- @deprecated, this opens the Foundry sheet instead of the custom sheet
+    // const effectConfig = new ActiveEffectConfig(effect, { editable: true });
+    // effectConfig.render(true);
   }
   // @todo: could convert this to an IconSelect, which provides better state handling (i.e. currently this select will show an incorrect value if the update fails until the Application is reloaded)
   async function updateTrigger(effect, event) {
