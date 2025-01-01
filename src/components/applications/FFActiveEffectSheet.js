@@ -33,15 +33,13 @@ export default class FFActiveEffectSheet extends SvelteApplication {
    static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {
          id: `${SYSTEM_ID}--active-effect-sheet-${generateRandomElementId()}`,
-         width: 540,
+         width: 594,
          height: 428,
          minHeight: 180,
          minWidth: 282,
          resizable: true,
          minimizable: true,
          classes: [SYSTEM_CODE, 'sheet', 'active-effect-config'],
-         width: 560,
-         height: 'auto',
          svelte: {
             class: FFActiveEffectShell,
             target: document.body,
