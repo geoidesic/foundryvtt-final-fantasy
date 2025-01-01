@@ -90,6 +90,10 @@
       "Suspended": {
         "Label": "Suspended",
         "Caption": "If checked, this Effect will be greyed out and inactive."
+      },
+      "Label": {
+        "Statuses": "Statuses",
+        "SelectTag": "Select Tag"
       }
     },
     "Errors": {
@@ -407,67 +411,67 @@
       "ConfirmRest": "Are you sure you want to rest?",
       "PointsRestored": "Your points have been restored to max.",
       "Rest": "Rest"
-    }
-  },
-  "Favourites": {
-    "Title": "Favourites"
-  },
-  "statusEffects": {
-    "dead": {
-      "name": "Dead",
-      "description": "A dead character cannot participate in the game."
     },
-    "comatose": {
-      "name": "Comatose",
-      "description": "A comatose character cannot move, nor act, nor speak and is unaware of their surroundings."
+    "Favourites": {
+      "Title": "Favourites"
     },
-    "enabled": {
-      "name": "Enabled",
-      "description": "Character has a trait enabled."
-    },
-    "focus": {
-      "name": "Focus",
-      "description": "Character is focused on a target and thus gets an additional Secondary Action but cannot move."
-    },
-    "ko": {
-      "name": "Knocked Out",
-      "description": "A knocked out character is unconscious and cannot act."
-    },
-    "surprised": {
-      "name": "Surprised",
-      "description": "A surprised character cannot act on their turn."
-    },
-    "brink": {
-      "name": "Brink of Death",
-      "description": "A character on the brink of death suffers severe penalties."
-    },
-    "bind": {
-      "name": "Bind",
-      "description": "A bound character cannot move."
-    },
-    "enmity": {
-      "name": "Enmity",
-      "description": "A character with enmity suffers penalties against the target."
-    },
-    "weakness": {
-      "name": "Weak",
-      "description": "A weakened character incurs penalties on checks."
-    },
-    "stun": {
-      "name": "Stunned",
-      "description": "A stunned character cannot act during their turn."
-    },
-    "prone": {
-      "name": "Prone",
-      "description": "A prone character has fallen face-down."
-    },
-    "blind": {
-      "name": "Blind",
-      "description": "A blind creature cannot see and automatically fails any checks related to sight."
-    },
-    "slow": {
-      "name": "Slow",
-      "description": "The character's speed is halved."
+    "statusEffects": {
+      "dead": {
+        "name": "Dead",
+        "description": "A dead character cannot participate in the game."
+      },
+      "comatose": {
+        "name": "Comatose",
+        "description": "A comatose character cannot move, nor act, nor speak and is unaware of their surroundings."
+      },
+      "enabled": {
+        "name": "Enabled",
+        "description": "Character has a trait enabled."
+      },
+      "focus": {
+        "name": "Focus",
+        "description": "Character is focused on a target and thus gets an additional Secondary Action but cannot move."
+      },
+      "ko": {
+        "name": "Knocked Out",
+        "description": "A knocked out character is unconscious and cannot act."
+      },
+      "surprised": {
+        "name": "Surprised",
+        "description": "A surprised character cannot act on their turn."
+      },
+      "brink": {
+        "name": "Brink of Death",
+        "description": "A character on the brink of death suffers severe penalties."
+      },
+      "bind": {
+        "name": "Bind",
+        "description": "A bound character cannot move."
+      },
+      "enmity": {
+        "name": "Enmity",
+        "description": "A character with enmity suffers penalties against the target."
+      },
+      "weakness": {
+        "name": "Weak",
+        "description": "A weakened character incurs penalties on checks."
+      },
+      "stun": {
+        "name": "Stunned",
+        "description": "A stunned character cannot act during their turn."
+      },
+      "prone": {
+        "name": "Prone",
+        "description": "A prone character has fallen face-down."
+      },
+      "blind": {
+        "name": "Blind",
+        "description": "A blind creature cannot see and automatically fails any checks related to sight."
+      },
+      "slow": {
+        "name": "Slow",
+        "description": "The character's speed is halved."
+      }
     }
   }
 }
