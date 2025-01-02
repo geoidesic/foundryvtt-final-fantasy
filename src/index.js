@@ -1,6 +1,7 @@
 import './styles/Main.sass';
 
 import FF15Actor from '~/src/extensions/actor.js'
+import FF15Item from '~/src/extensions/item.js'
 import FFActiveEffect from "~/src/extensions/active-effect.js"
 import FFEffectModel from "~/src/models/ActiveEffectModel.js"
 import FFToken from "~/src/extensions/token.js"
@@ -25,6 +26,7 @@ function setupDSN() {
 
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor
+CONFIG.Item.documentClass = FF15Item
 CONFIG.Combat.documentClass = FFCombat
 CONFIG.Combatant.documentClass = FFCombatant
 CONFIG.Token.objectClass = FFToken
