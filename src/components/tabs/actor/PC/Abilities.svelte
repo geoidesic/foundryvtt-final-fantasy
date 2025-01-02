@@ -183,10 +183,7 @@
     return item.system.uses >= item.system.limitation ? 'danger' : 'success';
   }
   
-  const remaining = (item) => {
-    return item.system.hasLimitation ? 
-      parseInt(item.system.limitation || 0) - parseInt(item.system.uses || 0) : 10;
-  } 
+
   
   $: console.log($Actor.items.map(x=>x.type))
 
@@ -245,7 +242,7 @@
                     a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
                   +if("item.system.hasLimitation && game.combat")
                     .flex0.right.ml-sm(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Item.Types.action.UsesRemaining')}")
-                      Badge(type!="{badgeType(item)}") {remaining(item)}
+                      Badge(type!="{badgeType(item)}") {item.usesRemaining}
               //- td.left {ucfirst(item.type)}
               //- td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
               td.right

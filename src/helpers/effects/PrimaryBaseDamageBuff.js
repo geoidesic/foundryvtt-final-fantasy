@@ -17,7 +17,7 @@ export default class PrimaryBaseDamageBuff {
           for (const [targetId, targetData] of DamageResults) {
             const oldDamage = targetData.damage;
             targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
-            targetData.baseDamageFormula += ` + ${origin.name}`;
+            targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
            
           }
         }

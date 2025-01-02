@@ -269,48 +269,106 @@ export default class RollCalcActor extends RollCalc {
    * Check item's enablers and enable any disabled actor effects that match
    */
   async _handleEffectEnabling(item) {
+    
+    game.system.log.o('[ENABLE] Starting _handleEffectEnabling for item:', item.name);
+    game.system.log.o('[ENABLE] Starting _handleEffectEnabling item:', item);
 
     if (!(await this._handleGuards(item, [
       this.RG.isCombat,
       this.RG.hasEnablers
     ]))) {
+      game.system.log.o('[ENABLE] Failed guards check');
       return;
     }
 
     const actorEffects = this.params.actor.effects;
+    game.system.log.o('[ENABLE] Actor effects:', actorEffects);
 
     // Iterate through the enables list
+    game.system.log.o('[ENABLE] Enables list:', item.system.enables.list);
     for (const enableItemRef of item.system.enables.list) {
-
       // Get the actual item from the UUID
       const enableItem = await fromUuid(enableItemRef.uuid);
       if (!enableItem) {
+        game.system.log.o('[ENABLE] Could not find item for UUID:', enableItemRef.uuid);
         continue;
       }
+      game.system.log.o('[ENABLE] Processing enable item.name:', enableItem.name);
+      game.system.log.o('[ENABLE] Processing enable item:', enableItem);
 
       // Get the item's effects
       const itemEffects = enableItem.effects;
       if (!itemEffects?.size) {
+        game.system.log.o('[ENABLE] No effects found on item:', enableItem.name);
         continue;
       }
+      game.system.log.o('[ENABLE] Item effects:', itemEffects);
 
-      // For each effect on the enabled item
-      for (const effect of itemEffects) {
+      // Check if any effects are disabled (meaning the trait hasn't been used yet)
+      const hasDisabledEffects = Array.from(itemEffects).some(effect => {
+        const matchingEffect = actorEffects.find(ae => ae.name === effect.name);
+        return matchingEffect?.disabled;
+      });
 
-        // Find matching effect on actor (if any)
-        const matchingEffect = actorEffects.find(ae =>
-          ae.label === effect.label &&
-          ae.disabled // Only enable if it's currently disabled
-        );
+      // Check if we've hit the usage limit
+      if (enableItem.system.hasLimitation) {
+        game.system.log.o('[ENABLE] Before check - system.uses:', enableItem.system.uses);
+        game.system.log.o('[ENABLE] Before check - currentUses:', enableItem.currentUses);
+        game.system.log.o('[ENABLE] Before check - usesRemaining:', enableItem.usesRemaining);
+        game.system.log.o('[ENABLE] Before check - maxUses:', enableItem.maxUses);
+        
+        // If the trait hasn't been used (has disabled effects) but shows uses, reset it
+        if (hasDisabledEffects && enableItem.system.uses) {
+          game.system.log.o('[ENABLE] Found disabled effects but uses is set, resetting uses for', enableItem.name);
+          await enableItem.update({ 'system.uses': 0 });
+        }
 
-        // If we found a matching disabled effect, enable it
-        if (matchingEffect) {
-          await matchingEffect.update({ disabled: false });
+        let hasUsesRemaining = enableItem.usesRemaining;
+       
+        if (!hasUsesRemaining) {
+          game.system.log.w("[ENABLE]", `${enableItem.name} has been used ${enableItem.currentUses} times, reaching its usage limit of ${enableItem.maxUses}`);
+          continue;
         }
       }
 
-      //- create a chat message for the enabled effect, to remind the user and GM that it is in play
-      this.ability(enableItem.type, enableItem);
+      let effectEnabled = false;
+      // Enable any disabled effects
+      for (const effect of itemEffects) {
+        game.system.log.o('[ENABLE] Processing effect:', effect.name);
+        // Find matching effect on actor (if any)
+        const matchingEffect = actorEffects.find(ae =>
+          ae.name === effect.name &&
+          ae.disabled // Only enable if it's currently disabled
+        );
+        game.system.log.o('[ENABLE] Found matching effect:', matchingEffect?.name, 'disabled:', matchingEffect?.disabled);
+
+        if (matchingEffect) {
+          await matchingEffect.update({ disabled: false });
+          effectEnabled = true;
+          game.system.log.o('[ENABLE] Enabled effect:', matchingEffect.name);
+        }
+      }
+
+      // If we enabled any effects, increment uses and create chat message
+      if (effectEnabled) {
+        game.system.log.o('[ENABLE] Effects were enabled for:', enableItem.name);
+        if (enableItem.system.hasLimitation) {
+          game.system.log.o('[ENABLE] Before increment - system.uses:', enableItem.system.uses);
+          game.system.log.o('[ENABLE] Before increment - currentUses:', enableItem.currentUses);
+          await enableItem.update({ 'system.uses': enableItem.currentUses + 1 });
+          game.system.log.o('[ENABLE] After increment - system.uses:', enableItem.system.uses);
+          game.system.log.o('[ENABLE] After increment - currentUses:', enableItem.currentUses);
+        }
+
+        // Log current available slots
+        const { actionState } = this.params.actor.system;
+        game.system.log.o('[ENABLE] Current available slots:', actionState.available);
+
+        // Just send a chat message instead of recursively calling ability
+        await this.defaultChat(enableItem);
+      } else {
+        game.system.log.o('[ENABLE] No effects were enabled for:', enableItem.name);
+      }
     }
   }
 

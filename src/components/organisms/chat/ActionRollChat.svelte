@@ -54,7 +54,7 @@
       let token = canvas.tokens.get(id);
       DamageResults.set(id, {
         damage: item.system?.formula,
-        baseDamageFormula: 'Base Damage',
+        baseDamageFormula: `Base Damage (${item.system?.formula})`,
         directHit: item.system?.directHitDamage,
         directHitFormula: item.system?.directHitDamage,
         directHitResult: false,
