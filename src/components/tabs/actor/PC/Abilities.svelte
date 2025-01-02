@@ -51,15 +51,9 @@
 
   function editItem(item) {
     item.sheet.render(true);
-
-    game.system.log.d("editItem");
-    game.system.log.d(item);
   }
 
   function addQuantity(item) {
-    game.system.log.d("addQuantity");
-    game.system.log.d(item);
-
     const quantity = item.system.quantity + 1;
     item.update({ system: { quantity: quantity } });
   }
@@ -70,11 +64,8 @@
   }
 
   function duplicateItem(item) {
-    game.system.log.d("duplicateItem");
-    game.system.log.d(item);
     const itemData = item.toObject();
     delete itemData._id;
-    game.system.log.d("itemData", itemData);
     $Actor.sheet._onDropItemCreate(itemData);
   }
 
@@ -171,7 +162,6 @@
   }
 
   onMount(async () => {
-    game.system.log.d("items", $doc.items);
   });
 
   $: items = [...$wildcard];
@@ -183,9 +173,6 @@
     return item.system.uses >= item.system.limitation ? 'danger' : 'success';
   }
   
-
-  
-  $: console.log($Actor.items.map(x=>x.type))
 
   const actionTypeClass = (item) => {
     return item.type === 'action' ? item.system?.type : 'trait';

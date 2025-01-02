@@ -17,11 +17,11 @@ export default function renderChatMessage() {
     const FFMessage = message.getFlag(SYSTEM_ID, 'data');
     const FFMessageState = message.getFlag(SYSTEM_ID, 'state');
 
-    game.system.log.p(">>>>>> race renderChatMessage HOOK TRIGGERED <<<<<<", {
-      messageId: message.id,
-      hasFFMessage: !!FFMessage,
-      flags: message.flags[SYSTEM_ID]
-    });
+    // game.system.log.p(">>>>>> race renderChatMessage HOOK TRIGGERED <<<<<<", {
+    //   messageId: message.id,
+    //   hasFFMessage: !!FFMessage,
+    //   flags: message.flags[SYSTEM_ID]
+    // });
 
     // Add texture div to message header if it exists
     const messageHeader = html.find('.message-header');

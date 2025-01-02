@@ -1,5 +1,5 @@
 <script>
-  game.system.log.d("race ---- START RollChat ----");
+  // game.system.log.d("race ---- START RollChat ----");
   import { onMount, getContext, setContext, tick } from "svelte";
   import { writable, derived } from "svelte/store";
   import { SYSTEM_ID } from "~/src/helpers/constants";
@@ -17,18 +17,12 @@
   const item = fromUuidSync(FFMessage.item.uuid);
   if(item) {
     const Item = new TJSDocument()
-    game.system.log.d("race RollChat item", item);
-    game.system.log.d("race RollChat Item", Item);
     Item.set(item);
-  
     setContext("#doc", Item);
   }
 
-  game.system.log.d("race RollChat item", item);
-
   const message = getContext("message");
 
-  game.system.log.d("race RollChat message", message);
   let showTraitButton = false;
   let totalRoll = 0;
   let isMounted = false;
@@ -42,12 +36,10 @@
   $: displayDirectHitDamage = (target)  =>
     isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit;
   // $: displayVal = (target, type) =>  $displayValues.get(target.id)?.[type] || "";
-  $: console.log("FFMessageState.damageResults", FFMessageState.damageResults);
 
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
 
   function getDamageResults(passedTargets) {
-    game.system.log.d("race setDamageResults passedTargets", passedTargets);
     
     const DamageResults = new Map();
     for (const id of passedTargets) {
@@ -78,8 +70,6 @@
 
   function getTargetTokens(targets) {
     if(!targets.length) return [];
-    game.system.log.d("race getTargetTokens targets", targets);
-    game.system.log.d("canvas.tokens", canvas.tokens);
     return targets.map((id) => canvas.tokens.get(id));
   }
 
@@ -90,10 +80,8 @@
   async function initializeStores() {
     if(FFMessageState.initialised) {
       setTargetTokens(FFMessage.targets);
-      game.system.log.d("race ---- ALREADY INITIALIZED ABORTING INITIALIZE ----");
       return;
     }
-    game.system.log.d("race ---- START INITIALIZE ----");
 
     if (FFMessage?.item?.type === "action") {
       const roll = FFMessage.roll;
@@ -104,14 +92,11 @@
 
       // If we have targets, either load from flags or current targets
       if (hasTargets) {
-        game.system.log.d("race hasTargets", hasTargets);
 
         let storedDamageResults = FFMessageState.damageResults;
 
         if (FFMessage.targets.length > 0) {
-          game.system.log.d("race FFMessage.targets", FFMessage.targets);
           // Load targets from stored UUIDs
-          game.system.log.d("race storedDamageResults", storedDamageResults);
           if (!storedDamageResults) {
             storedDamageResults = getDamageResults(FFMessage.targets);
           }
@@ -128,8 +113,6 @@
             },
           });
         } else {
-          game.system.log.d("race FFMessage.targets", FFMessage.targets);
-          
           // Store current targets 
           $message.update({
             flags: {
@@ -146,11 +129,8 @@
   }
 
   onMount(async () => {
-    game.system.log.d("race RollChat isMounted", isMounted);
     if (!isMounted) {
-      game.system.log.d("race RollChat mounted", FFMessage);
       await initializeStores();
-      game.system.log.d("race INITIIALIZED damageResults", FFMessageState.damageResults);
       isMounted = true;
     }
   });
@@ -161,7 +141,6 @@
   async function applyResult(target) {
     if (!target.actor || target.isUnlinked) return;
 
-    game.system.log.d("race ---- START APPLY ----");
 
     const modifier = FFMessage.extraModifiers?.modifier || 0;
     let totalDamage = 0;
@@ -193,7 +172,6 @@
       await target.actor.toggleStatusEffect("ko");
     }
     // Update stores
-    game.system.log.r(FFMessageState.damageResults[target.id])
     const newDamageResults = {...FFMessageState.damageResults};
     newDamageResults[target.id].damage = results.damage;
     newDamageResults[target.id].directHitResult = results.directHitResult;
@@ -211,14 +189,12 @@
       },
     });
 
-    game.system.log.d("race APPLY post update message", game.messages.get(messageId));
   }
 
   /**************
    * Undo Result
    **************/
   async function undoResult(target) {
-    game.system.log.d("race ---- START UNDO ----");
     if (!target.actor || target.isUnlinked) return;
 
     const result = FFMessageState.damageResults[target.id]
@@ -277,7 +253,6 @@
     // For NPCs, defense is directly in attributes
     if (target.actor.type === "npc") {
       const defense = target.actor.system.attributes.defence?.val || 0;
-      game.system.log.d("NPC defense value", defense);
       return defense;
     }
 

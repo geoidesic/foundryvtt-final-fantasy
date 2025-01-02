@@ -26,13 +26,13 @@
   let messageColorRGB;
   
   onMount(() => {
-    game.system.log.i("race ---- START FFChat mount----");
-    game.system.log.b("race sourceActor", sourceActor)
-    game.system.log.b("race sourceMessage", sourceMessage)
-    game.system.log.b("race FFChat messageId", messageId)
-    game.system.log.b("race FFChat $message", $message)
-    game.system.log.b("race FFChat $actor", $actor)
-    game.system.log.b("race FFChat FFMessage", FFMessage)
+    // game.system.log.i("race ---- START FFChat mount----");
+    // game.system.log.b("race sourceActor", sourceActor)
+    // game.system.log.b("race sourceMessage", sourceMessage)
+    // game.system.log.b("race FFChat messageId", messageId)
+    // game.system.log.b("race FFChat $message", $message)
+    // game.system.log.b("race FFChat $actor", $actor)
+    // game.system.log.b("race FFChat FFMessage", FFMessage)
     isReady = true;
   });
 

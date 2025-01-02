@@ -23,10 +23,10 @@ export default class FFCombatTracker extends CombatTracker {
 
      this.#combatants.subscribe((values) =>
      {
-        console.log(`Combatants ------`);
+        // console.log(`Combatants ------`);
         for (const combatant of values)
         {
-           console.log(combatant.name);
+          //  console.log(combatant.name);
         }
      });
   }
@@ -61,14 +61,13 @@ export default class FFCombatTracker extends CombatTracker {
           }
         }
         if (actor.system.actionState?.used) {
-          game.system.log.d("FFCombatTracker getData actor.system.actionState.used", actor.system.actionState.used)
+          // game.system.log.d("FFCombatTracker getData actor.system.actionState.used", actor.system.actionState.used)
           for (const action of actor.system.actionState.used.sort()) {
             turn.actions += `<badge class="used">${action.type[0].capitalize()}</badge>`
           }
         }
       }
     }
-    game.system.log.d('FFCombatTracker getData', data);
     return data;
   }
 

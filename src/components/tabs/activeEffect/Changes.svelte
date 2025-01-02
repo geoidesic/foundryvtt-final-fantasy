@@ -53,7 +53,6 @@ function save() {
   //- validate changes
   if(pendingChanges.length === 0) {
     $doc.update({ changes: [] });
-    game.system.log.info('No changes to save');
     buttonAnimation = 'success-glow hover-disabled';
     return;
   }
