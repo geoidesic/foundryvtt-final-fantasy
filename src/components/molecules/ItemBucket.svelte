@@ -35,12 +35,14 @@ async function updateLocalList() {
 }
 
 // Process a single item and add it to the lists if valid
-async function processItem(item, list, jobTraits, isJob) {
+async function processItem(item, list, isJob) {
   if (!item) return;
 
   // Skip if item already exists in list
-  if (preventDuplicates && localList.some(existing => existing.uuid === item.uuid)) {
-    ui.notifications.warn(`${item.name} is already in the list.`);
+  const existingInList = list.some(existing => existing.uuid === item.uuid);
+  
+  if (preventDuplicates && existingInList) {
+    game.system.log.w("Item already in list:", item);
     return;
   }
 
@@ -65,60 +67,48 @@ async function processItem(item, list, jobTraits, isJob) {
     // Get all enabled traits from the action
     const enabledTraits = item.system.enables.list || [];
     
-    // Add each enabled trait directly to the list
-    enabledTraits.map(trait => {  
-      list.push({ uuid: trait.uuid });
-    });
+    // Add each enabled trait that isn't already in the list
+    for (const trait of enabledTraits) {
+      const traitExists = list.some(existing => existing.uuid === trait.uuid);
+      if (!traitExists) {
+        list.push({ uuid: trait.uuid });
+      }
+    }
   }
 }
 
 // Recursively process a folder and its contents
-async function processFolder(folder, list, jobTraits, isJob) {
-  game.system.log.d("Processing folder:", {
-    folder,
-    contents: folder?.contents,
-    children: folder?.children,
-    entries: folder?.children?.[0]?.entries
-  });
-
+async function processFolder(folder, list, isJob) {
   if (!folder) return;
 
   // Process each child folder
   if (folder.children?.length) {
-    game.system.log.d("Processing child folders:", folder.children);
     for (const child of folder.children) {
-      game.system.log.d("Processing child:", child);
-      
       // Process entries in this child folder
       if (child.entries?.length) {
-        game.system.log.d("Processing entries:", child.entries);
         for (const entry of child.entries) {
-          game.system.log.d("Processing entry:", entry);
           const item = await fromUuid(entry.uuid);
-          await processItem(item, list, jobTraits, isJob);
+          await processItem(item, list, isJob);
         }
       }
 
       // If this child has nested folders, process them
       if (child.children?.length) {
         const subFolder = await fromUuid(child.folder.uuid);
-        await processFolder(subFolder, list, jobTraits, isJob);
+        await processFolder(subFolder, list, isJob);
       }
     }
   }
 
   // Process any direct contents (for non-compendium folders)
   if (folder.contents?.length) {
-    game.system.log.d("Processing folder contents:", folder.contents);
     for (const content of folder.contents) {
       if (content.type === "Folder") {
-        game.system.log.d("Found nested folder:", content);
         const subFolder = await fromUuid(content.uuid);
-        await processFolder(subFolder, list, jobTraits, isJob);
+        await processFolder(subFolder, list, isJob);
       } else {
-        game.system.log.d("Processing item from folder:", content);
         const item = await fromUuid(content.uuid);
-        await processItem(item, list, jobTraits, isJob);
+        await processItem(item, list, isJob);
       }
     }
   }
@@ -127,45 +117,23 @@ async function processFolder(folder, list, jobTraits, isJob) {
 async function onDrop(event) {
   event.preventDefault();
   const data = JSON.parse(event.dataTransfer.getData("text/plain"));
-  game.system.log.d("Drop data:", data);
   
   // Get current lists
   const list = [...$item.system[key].list];
-  const jobTraits = [...($item.system.traits?.list || [])];
   const isJob = $item.type === 'job';
 
   // Handle folder drops
   if (data.type === "Folder") {
-    game.system.log.d("Handling folder drop");
     const folder = await fromUuid(data.uuid);
-    game.system.log.d("Retrieved folder:", folder);
-    await processFolder(folder, list, jobTraits, isJob);
-
-    // Update both lists in a single transaction
-    if (isJob) {
-      await $item.update({ 
-        [`system.${key}.list`]: list,
-        'system.traits.list': jobTraits
-      });
-    } else {
-      await $item.update({ [`system.${key}.list`]: list });
-    }
+    await processFolder(folder, list, isJob);
+    await $item.update({ [`system.${key}.list`]: list });
     return;
   }
 
   // Handle single item drops
   const droppedItem = await Item.implementation.fromDropData(data);
-  await processItem(droppedItem, list, jobTraits, isJob);
-
-  // Update both lists in a single transaction
-  if (isJob) {
-    await $item.update({ 
-      [`system.${key}.list`]: list,
-      'system.traits.list': jobTraits
-    });
-  } else {
-    await $item.update({ [`system.${key}.list`]: list });
-  }
+  await processItem(droppedItem, list, isJob);
+  await $item.update({ [`system.${key}.list`]: list });
 }
 
 async function deleteLink(index) {
