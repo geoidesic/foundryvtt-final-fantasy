@@ -27,22 +27,40 @@ async function updateLocalList() {
       const item = await fromUuid(listItem.uuid);
       if (item) {
         localList = [...localList, item];
+      } else {
+        // Add a placeholder for invalid items
+        localList = [...localList, {
+          name: "Missing Item",
+          type: "unknown",
+          img: "icons/svg/hazard.svg",
+          uuid: '',
+          isMissing: true
+        }];
       }
     } catch (error) {
       console.error(error);
+      // Add a placeholder for errored items
+      localList = [...localList, {
+        name: "Invalid Item",
+        type: "error",
+        img: "icons/svg/hazard.svg",
+        uuid: listItem.uuid,
+        isMissing: true
+      }];
     }
   }
 }
 
 // Process a single item and add it to the lists if valid
-async function processItem(item, list, isJob) {
+async function processItem(item, list, isJob, sourceContext = {}) {
   if (!item) return;
 
   game.system.log.o("ItemBucket:processItem", "Processing item:", { 
     item, 
     uuid: item.uuid,
     type: item.type,
-    list: list.map(x => x.uuid)
+    list: list.map(x => x.uuid),
+    sourceContext
   });
 
   // Skip if item already exists in list
@@ -89,7 +107,15 @@ async function processItem(item, list, isJob) {
           game.system.log.o("ItemBucket:processItem", "Adding verified trait to list:", trait.uuid);
           list.push({ uuid: trait.uuid });
         } else {
-          game.system.log.w("ItemBucket:processItem", `Failed to find trait with UUID: ${trait.uuid}`);
+          game.system.log.w("ItemBucket:processItem", `Failed to find trait with UUID: ${trait.uuid}`, {
+            sourceAction: {
+              name: item.name,
+              id: item._id,
+              uuid: item.uuid
+            },
+            sourceFolder: sourceContext,
+            invalidTrait: trait
+          });
         }
       }
     }
@@ -98,8 +124,14 @@ async function processItem(item, list, isJob) {
 
 // Recursively process a folder and its contents
 async function processFolder(folder, list, isJob) {
+  const folderContext = {
+    name: folder.name,
+    id: folder._id,
+    uuid: folder.uuid
+  };
+
   game.system.log.o("ItemBucket:processFolder", "Processing folder:", {
-    folder,
+    folder: folderContext,
     contents: folder?.contents,
     children: folder?.children,
     entries: folder?.children?.[0]?.entries
@@ -119,7 +151,7 @@ async function processFolder(folder, list, isJob) {
         for (const entry of child.entries) {
           game.system.log.o("ItemBucket:processFolder", "Processing entry:", entry);
           const item = await fromUuid(entry.uuid);
-          await processItem(item, list, isJob);
+          await processItem(item, list, isJob, folderContext);
         }
       }
 
@@ -142,7 +174,7 @@ async function processFolder(folder, list, isJob) {
       } else {
         game.system.log.o("ItemBucket:processFolder", "Processing item from folder:", content);
         const item = await fromUuid(content.uuid);
-        await processItem(item, list, isJob);
+        await processItem(item, list, isJob, folderContext);
       }
     }
   }
@@ -231,15 +263,15 @@ $: hasItems = localList.length > 0;
           th.buttons
             button.stealth
         +each("localList as item, index")
-          tr
+          tr(class="{item.isMissing ? 'missing-item' : ''}")
             td.img
               img.icon.nopointer(src="{item.img}" alt="{item.name}")
-            td.left.pointer.no-wrap(on:click!="{() => showItemSheet(item)}") {item?.name}
+            td.left.pointer.no-wrap(class="{item.isMissing ? 'missing-text' : ''}" on:click!="{() => !item.isMissing && showItemSheet(item)}")
+              span {item.isMissing ? `${item.name} (${item.uuid})` : item?.name}
             td.left {ucfirst(item?.type)}
             +each("additionalColumns as col")
               td.left {item.type === col.itemType ? ucfirst(item.system?.[col.path] || '') : ''}
             td.buttons.right
-              //- do not remove the closure here, it causes all hell to break loose!
               button.stealth(on:click!="{() => deleteLink(index)}")
                 i.left.fa.fa-trash.pointer
     +if("checkboxValue && hasItems")
@@ -261,6 +293,15 @@ $: hasItems = localList.length > 0;
     border: 1px solid rgba(0, 0, 0, 0.1)
     border-radius: 3px
     background-color: var(--color-lowlight)
+
+.missing-item
+  opacity: 0.6
+  background-color: rgba(255, 0, 0, 0.1) !important
+
+.missing-text
+  color: #ff6b6b
+  font-style: italic
+  cursor: not-allowed
 
 .empty-list
   padding: 0.5em
