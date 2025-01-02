@@ -8,6 +8,10 @@ export default class FF15Item extends Item {
     return this.system.hasLimitation;
   }
 
+  get hasRequires() {
+    return this.system.requires?.value === true;
+  }
+
   get usesRemaining() {
     // game.system.log.o('[ENABLE] [USES REMAINING] usesRemaining:', this.system.uses);
     if (!this.system.hasLimitation) return 0;

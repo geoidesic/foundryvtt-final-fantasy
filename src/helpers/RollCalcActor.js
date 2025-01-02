@@ -88,6 +88,7 @@ export default class RollCalcActor extends RollCalc {
     const guards = [
       this.RG.isAction,
       this.RG.targetsMatchActionIntent,
+      this.RG.hasRequiredEffects,
       this.RG.hasActiveEnablerSlot,
       this.RG.hasModifiers,
       this.RG.hasRemainingUses,
@@ -275,28 +276,72 @@ export default class RollCalcActor extends RollCalc {
     });
   }
 
+
   async _disableEnablerEffectsOnActor(item, recentlyEnabledEffects = []) {
+    game.system.log.p("[DISABLE] Starting disable check for item:", item.name);
+    game.system.log.p("[DISABLE] Recently enabled effects:", recentlyEnabledEffects);
+
     if (!(await this._handleGuards(item, [
       this.RG.isCombat,
     ]))) {
+      game.system.log.p("[DISABLE] Failed combat guard check");
       return;
     }
 
-    const itemTags = item.system.tags;
     for(const effect of this.params.actor.effects) {
+      game.system.log.p("[DISABLE] Checking effect:", effect.name);
+      
       // Skip effects we just enabled
-      if (recentlyEnabledEffects.includes(effect.uuid)) continue;
+      if (recentlyEnabledEffects.includes(effect.uuid)) {
+        game.system.log.p("[DISABLE] Skipping recently enabled effect:", effect.name);
+        continue;
+      }
 
       const originUuid = effect.origin;
       const origin = await fromUuid(originUuid);
-      if(origin.system.tags?.some(tag => {
-        return itemTags.includes(tag)
-      })) {
+      game.system.log.p("[DISABLE] Effect origin item:", origin?.name);
+
+      const shouldDisableByTags = await this._shouldDisableByTags(item, origin);
+      const shouldDisableByRequirement = await this._shouldDisableByRequirements(item, origin, effect);
+
+      if (shouldDisableByTags || shouldDisableByRequirement) {
+        game.system.log.p("[DISABLE] Disabling effect:", effect.name);
         await effect.update({ disabled: true });
       } else {
-        game.system.log.w("[_disableEnablerEffectsOnActor] no match");
+        game.system.log.p("[DISABLE] No match for effect:", effect.name);
       }
     }
+  }
+
+  async _shouldDisableByTags(item, origin) {
+    const itemTags = item?.system?.tags || [];
+    game.system.log.p("[DISABLE] Item tags:", itemTags);
+    
+    const shouldDisable = origin?.system?.tags?.some(tag => itemTags.includes(tag)) || false;
+    game.system.log.p("[DISABLE] Should disable by tags:", shouldDisable);
+    
+    return shouldDisable;
+  }
+
+  async _shouldDisableByRequirements(item, origin, effect) {
+    game.system.log.p("[DISABLE] Current item has requires:", item.hasRequires);
+    if (!item.hasRequires) return false;
+    
+    const requiresList = item.system.requires.list || [];
+    game.system.log.p("[DISABLE] Current item requires list:", requiresList.map(req => req.name));
+    game.system.log.p("[DISABLE] Effect name:", effect.name);
+    
+    // Get all required items first
+    const requiredItems = await Promise.all(requiresList.map(req => fromUuid(req.uuid)));
+    
+    // Then compare names
+    const shouldDisable = requiredItems.some(requiredItem => {
+      game.system.log.p("[DISABLE] Required item name:", requiredItem?.name);
+      return requiredItem?.name === effect.name;
+    });
+    game.system.log.p("[DISABLE] Should disable by requirement:", shouldDisable);
+    
+    return shouldDisable;
   }
 
   /**
@@ -304,7 +349,6 @@ export default class RollCalcActor extends RollCalc {
    * @returns {Promise<void>}
    */
   async _enableEnablerEffectsOnActor(item) {
-
     if (!(await this._handleGuards(item, [
       this.RG.isCombat,
       this.RG.hasEnablers
@@ -320,10 +364,9 @@ export default class RollCalcActor extends RollCalc {
   }
 
   async _handleSingleItemEffectEnabling(enablesItemRef) {
-    
     // Get the actual item from the UUID
     const enabledItem = await fromUuid(enablesItemRef.uuid);
-    if (!enabledItem) {  return [] }
+    if (!enabledItem) { return [] }
     if (!enabledItem.hasEffects) { return [] }
 
     // Check if we've hit the usage limit
