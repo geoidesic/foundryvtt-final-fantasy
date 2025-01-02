@@ -254,4 +254,8 @@ export default class RollGuards {
     return false;
   }
 
+  async matchesEnablerEffect(item) {
+    return this.actor.itemTagsMatchEnablerEffectTags(item);
+  }
+
 }

@@ -1,3 +1,6 @@
+import FF15Item from "./item";
+import { activeEffectModes } from "~/src/helpers/constants"
+
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -40,6 +43,90 @@ export default class FF15Actor extends Actor {
   hasSpecificDuplicate (arr, str) {
     return arr.filter(item => item === str).length > 1;
   } 
+
+  /**
+   * Check if an enabler item (e.g. a Trait) has any effects that are disabled (meaning the trait hasn't been used yet)
+   * @param {FF15Item} item 
+   * @returns {boolean}
+   */
+  hasDisabledEnablerEffects(item) {
+    return Array.from(item.effects).some(effect => {
+      const matchingEffect = this.effects.find(ae => ae.name === effect.name);
+      return matchingEffect?.disabled;
+    });
+  }
+
+  async actorItemHasRemainingUses(item) {
+    if(!item.system.hasLimitation) { return true }
+    // If the trait hasn't been used (has disabled effects) but shows uses, reset it
+    if (this.hasDisabledEnablerEffects(item) && item.currentUses) {
+      await item.update({ 'system.uses': 0 });
+    }
+    return item.usesRemaining > 0;
+  }
+
+
+  itemTagsMatchEnablerEffectTags(item) {
+    const itemTags = item.system.tags;
+    for(const effect of this.effects) {
+      if(effect.system.tags?.some(tag => itemTags.includes(tag))) { 
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Find a matching effect based on provided criteria
+   * @param {ActiveEffect} effect - The effect to match against
+   * @param {Object} criteria - Object with keys matching effect properties and values to match against
+   * @returns {ActiveEffect|undefined} The matching effect or undefined if none found
+   */
+  matchingEffect(effect, criteria = { }) {
+    return this.effects.find(ae => {
+      // Always match on name
+      if (ae.name !== effect.name) return false;
+
+      // Check each criteria
+      for (const [key, value] of Object.entries(criteria)) {
+        // If the value is a function, use it as a predicate
+        if (typeof value === 'function') {
+          if (!value(ae[key])) return false;
+        }
+        // Otherwise do a direct comparison
+        else if (ae[key] !== value) return false;
+      }
+      return true;
+    });
+  }
+
+  async enableTraitEffects(item) {
+    let effectsEnabled = [];
+
+    for (const effect of item.effects) {
+
+      // Find matching effect on actor (if any)
+      const matchingEffect = this.matchingEffect(effect, { disabled: true });
+
+      if (matchingEffect) {
+        await matchingEffect.update({ disabled: false });
+        effectsEnabled.push(matchingEffect.uuid);
+        game.system.log.b("[ENABLE] matchingEffect", matchingEffect);
+        if (effect.isSuppressed) continue;
+        for (const change of effect.changes) {
+          game.system.log.b("[ENABLE] change", change);
+          //- if the change is a custom mode
+          if (activeEffectModes.find(e => e.value === change.mode)) {
+            game.system.log.b("[ENABLE] change", change);
+            await Hooks.callAll(`FF15.${change.key}`, { actor: this, change });
+          }
+        }
+      }
+    }
+    return effectsEnabled;
+  }
+
+  async disableEnablerEffects(item) {};
 
   removeFirstDuplicate (arr, name) {
     const index = arr.indexOf(name); // Find the first occurrence

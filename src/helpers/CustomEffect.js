@@ -1,3 +1,8 @@
+/**
+ * @deprecated: use custom Hooks instead. 
+ * Define them in config/effectsProcessors.js
+ * Then add a matching effect helper in src/helpers/effects/
+ */
 export default class CustomEffect {
   constructor(actor) {
     this.actor = actor;
@@ -8,7 +13,7 @@ export default class CustomEffect {
    * @param {string} path - The data path (e.g. "@array.push:system.actionState.available")
    * @returns {Object} The parsed components { method, target }
    */
-  static parsePath(path) {
+  static _parsePath(path) {
     const [method, target] = path.split(':');
     return {
       method: method.replace('@', ''),
@@ -45,6 +50,11 @@ export default class CustomEffect {
     });
   }
 
+  async enableSlot(change) {
+    this.arrayPush('system.actionState.available', change.value);
+    game.system.log.d('EFFECTS | enables', { change });
+  }
+
   /**
    * Handle a custom effect change
    * @param {Object} change - The effect change data
@@ -52,11 +62,14 @@ export default class CustomEffect {
   async handleChange(change) {
     game.system.log.d('EFFECTS | handleChange', { change });
     
-    const { method, target } = CustomEffect.parsePath(change.key);
+    const { method, target } = CustomEffect._parsePath(change.key);
     
     switch (method) {
       case 'array.push':
         await this.arrayPush(target, change.value);
+        break;
+      case 'enableSlot':
+        await this.enableSlot(change);
         break;
       default:
         game.system.log.w('EFFECTS | Unknown custom effect method', { method });

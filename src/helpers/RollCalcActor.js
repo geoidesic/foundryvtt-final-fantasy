@@ -7,7 +7,6 @@ import FFActiveEffect from "~/src/extensions/active-effect.js"
 export default class RollCalcActor extends RollCalc {
 
   async defaultChat(item) {
-
     return await ChatMessage.create({
       user: game.user.id,
       speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
@@ -94,7 +93,7 @@ export default class RollCalcActor extends RollCalc {
       this.RG.hasRemainingUses,
     ]
     let message;
-    
+
     if (!(await this._handleGuards(item, guards))) {
       return undefined;
     }
@@ -106,13 +105,19 @@ export default class RollCalcActor extends RollCalc {
       await this._handleTargetEffects(item, targets);
     }
 
-    if(!item.system.hasCR) {
+    if (!item.system.hasCR) {
       message = await this.defaultChat(item);
-       // Mark the action as used
+      // Mark the action as used
       await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
 
       // Enable the effects of the action
-      await this._handleEffectEnabling(item);
+      let allEnabledEffects = [];
+      // Iterate through the enables list on the item that was used for the roll
+      for (const enablesItemRef of item.system.enables.list) {
+        const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
+        allEnabledEffects = allEnabledEffects.concat(effects);
+      }
+      await this._disableEnablerEffectsOnActor(item, allEnabledEffects);
       return;
     }
 
@@ -178,8 +183,14 @@ export default class RollCalcActor extends RollCalc {
     // Mark the action as used
     await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
 
-    // Enable the effects of the action
-    await this._handleEffectEnabling(item);
+    // Enable or disable enabler effects as appropriate
+    let allEnabledEffects = [];
+    // Iterate through the enables list on the item that was used for the roll
+    for (const enablesItemRef of item.system.enables.list) {
+      const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
+      allEnabledEffects = allEnabledEffects.concat(effects);
+    }
+    await this._disableEnablerEffectsOnActor(item, allEnabledEffects);
 
     return message
   }
@@ -257,7 +268,6 @@ export default class RollCalcActor extends RollCalc {
       messageId: message.id
     }];
 
-
     // Update the actor's action state
     await this.params.actor.update({
       'system.actionState.available': newAvailable,
@@ -265,111 +275,73 @@ export default class RollCalcActor extends RollCalc {
     });
   }
 
+  async _disableEnablerEffectsOnActor(item, recentlyEnabledEffects = []) {
+    if (!(await this._handleGuards(item, [
+      this.RG.isCombat,
+    ]))) {
+      return;
+    }
+
+    const itemTags = item.system.tags;
+    for(const effect of this.params.actor.effects) {
+      // Skip effects we just enabled
+      if (recentlyEnabledEffects.includes(effect.uuid)) continue;
+
+      const originUuid = effect.origin;
+      const origin = await fromUuid(originUuid);
+      if(origin.system.tags?.some(tag => {
+        return itemTags.includes(tag)
+      })) {
+        await effect.update({ disabled: true });
+      } else {
+        game.system.log.w("[_disableEnablerEffectsOnActor] no match");
+      }
+    }
+  }
+
   /**
    * Check item's enablers and enable any disabled actor effects that match
+   * @returns {Promise<void>}
    */
-  async _handleEffectEnabling(item) {
-    
-    game.system.log.o('[ENABLE] Starting _handleEffectEnabling for item:', item.name);
-    game.system.log.o('[ENABLE] Starting _handleEffectEnabling item:', item);
+  async _enableEnablerEffectsOnActor(item) {
 
     if (!(await this._handleGuards(item, [
       this.RG.isCombat,
       this.RG.hasEnablers
     ]))) {
-      game.system.log.o('[ENABLE] Failed guards check');
       return;
     }
 
-    const actorEffects = this.params.actor.effects;
-    game.system.log.o('[ENABLE] Actor effects:', actorEffects);
-
-    // Iterate through the enables list
-    game.system.log.o('[ENABLE] Enables list:', item.system.enables.list);
-    for (const enableItemRef of item.system.enables.list) {
-      // Get the actual item from the UUID
-      const enableItem = await fromUuid(enableItemRef.uuid);
-      if (!enableItem) {
-        game.system.log.o('[ENABLE] Could not find item for UUID:', enableItemRef.uuid);
-        continue;
-      }
-      game.system.log.o('[ENABLE] Processing enable item.name:', enableItem.name);
-      game.system.log.o('[ENABLE] Processing enable item:', enableItem);
-
-      // Get the item's effects
-      const itemEffects = enableItem.effects;
-      if (!itemEffects?.size) {
-        game.system.log.o('[ENABLE] No effects found on item:', enableItem.name);
-        continue;
-      }
-      game.system.log.o('[ENABLE] Item effects:', itemEffects);
-
-      // Check if any effects are disabled (meaning the trait hasn't been used yet)
-      const hasDisabledEffects = Array.from(itemEffects).some(effect => {
-        const matchingEffect = actorEffects.find(ae => ae.name === effect.name);
-        return matchingEffect?.disabled;
-      });
-
-      // Check if we've hit the usage limit
-      if (enableItem.system.hasLimitation) {
-        game.system.log.o('[ENABLE] Before check - system.uses:', enableItem.system.uses);
-        game.system.log.o('[ENABLE] Before check - currentUses:', enableItem.currentUses);
-        game.system.log.o('[ENABLE] Before check - usesRemaining:', enableItem.usesRemaining);
-        game.system.log.o('[ENABLE] Before check - maxUses:', enableItem.maxUses);
-        
-        // If the trait hasn't been used (has disabled effects) but shows uses, reset it
-        if (hasDisabledEffects && enableItem.system.uses) {
-          game.system.log.o('[ENABLE] Found disabled effects but uses is set, resetting uses for', enableItem.name);
-          await enableItem.update({ 'system.uses': 0 });
-        }
-
-        let hasUsesRemaining = enableItem.usesRemaining;
-       
-        if (!hasUsesRemaining) {
-          game.system.log.w("[ENABLE]", `${enableItem.name} has been used ${enableItem.currentUses} times, reaching its usage limit of ${enableItem.maxUses}`);
-          continue;
-        }
-      }
-
-      let effectEnabled = false;
-      // Enable any disabled effects
-      for (const effect of itemEffects) {
-        game.system.log.o('[ENABLE] Processing effect:', effect.name);
-        // Find matching effect on actor (if any)
-        const matchingEffect = actorEffects.find(ae =>
-          ae.name === effect.name &&
-          ae.disabled // Only enable if it's currently disabled
-        );
-        game.system.log.o('[ENABLE] Found matching effect:', matchingEffect?.name, 'disabled:', matchingEffect?.disabled);
-
-        if (matchingEffect) {
-          await matchingEffect.update({ disabled: false });
-          effectEnabled = true;
-          game.system.log.o('[ENABLE] Enabled effect:', matchingEffect.name);
-        }
-      }
-
-      // If we enabled any effects, increment uses and create chat message
-      if (effectEnabled) {
-        game.system.log.o('[ENABLE] Effects were enabled for:', enableItem.name);
-        if (enableItem.system.hasLimitation) {
-          game.system.log.o('[ENABLE] Before increment - system.uses:', enableItem.system.uses);
-          game.system.log.o('[ENABLE] Before increment - currentUses:', enableItem.currentUses);
-          await enableItem.update({ 'system.uses': enableItem.currentUses + 1 });
-          game.system.log.o('[ENABLE] After increment - system.uses:', enableItem.system.uses);
-          game.system.log.o('[ENABLE] After increment - currentUses:', enableItem.currentUses);
-        }
-
-        // Log current available slots
-        const { actionState } = this.params.actor.system;
-        game.system.log.o('[ENABLE] Current available slots:', actionState.available);
-
-        // Just send a chat message instead of recursively calling ability
-        await this.defaultChat(enableItem);
-      } else {
-        game.system.log.o('[ENABLE] No effects were enabled for:', enableItem.name);
-      }
+    // Iterate through the enables list on the item that was used for the roll
+    for (const enablesItemRef of item.system.enables.list) {
+      game.system.log.b("[ENABLE] enablesItemRef", enablesItemRef);
+      await this._handleSingleItemEffectEnabling(enablesItemRef);
     }
+  }
+
+  async _handleSingleItemEffectEnabling(enablesItemRef) {
+    
+    // Get the actual item from the UUID
+    const enabledItem = await fromUuid(enablesItemRef.uuid);
+    if (!enabledItem) {  return [] }
+    if (!enabledItem.hasEffects) { return [] }
+
+    // Check if we've hit the usage limit
+    if (!await this.params.actor.actorItemHasRemainingUses(enabledItem)) {
+      game.system.log.w("[ENABLE]", `${enabledItem.name} has been used ${enabledItem.currentUses} times, reaching its usage limit of ${enabledItem.maxUses}`);
+      return [];
+    }
+
+    // Enable any disabled effects and get their UUIDs
+    const effectsEnabled = await this.params.actor.enableTraitEffects(enabledItem);
+
+    // If we enabled any effects, create chat message
+    if (effectsEnabled.length) {
+      // Just send a chat message instead of recursively calling ability
+      await this.defaultChat(enabledItem);
+    }
+
+    return effectsEnabled;
   }
 
   /**
@@ -425,11 +397,9 @@ export default class RollCalcActor extends RollCalc {
    */
   async _handleTargetEffects(item, targets) {
     if (!item.system.grants?.list?.length) return;
-    game.system.log.o('[_handleTargetEffects] targets', targets);
 
     for (const target of targets) {
       const targetActor = target.actor;
-      game.system.log.o('[_handleTargetEffects] targetActor', targetActor);
       if (!targetActor) continue;
 
       try {
@@ -443,11 +413,11 @@ export default class RollCalcActor extends RollCalc {
           // Get all effects from the effect item
           return effectItem.effects.map(effect => {
             // Check if effect already exists on target
-            const existingEffect = targetActor.effects.find(e => 
-              e.name === effect.name && 
+            const existingEffect = targetActor.effects.find(e =>
+              e.name === effect.name &&
               e.origin === item.uuid
             );
-            
+
             // Skip if effect already exists
             if (existingEffect) {
               return null;
@@ -482,7 +452,7 @@ export default class RollCalcActor extends RollCalc {
 
         // Wait for all effect data to be prepared and flatten the array
         const effectData = (await Promise.all(effectPromises)).flat().filter(Boolean);
-        
+
         if (effectData.length) {
           // Create all non-status effects at once
           await targetActor.createEmbeddedDocuments('ActiveEffect', effectData);
