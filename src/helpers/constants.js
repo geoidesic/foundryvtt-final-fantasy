@@ -30,7 +30,8 @@ export const getDurationOptions = () => [
 
 export const getDurationUnits = () => [
   { value: "phase", label: game.i18n.localize("FF15.Phase") },
-  { value: "turn", label: game.i18n.localize("FF15.Turn") }
+  { value: "turn", label: game.i18n.localize("FF15.Turn") },
+  { value: "round", label: game.i18n.localize("FF15.Round") }
 ];
 export const getLimitationOptions = () => [
   { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.once") },
