@@ -58,6 +58,7 @@ hooks.targetToken();
 hooks.updateCombat();
 hooks.updateCombatant();
 hooks.deleteCombat();
+hooks.updateActiveEffect();
 
 
 

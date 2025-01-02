@@ -15,6 +15,8 @@ import init from './init.js';
 import canvasReady from './canvasReady.js';
 import ready from './ready.js';
 import preCreateCombatant from './preCreateCombatant.js';
+import { registerUpdateActiveEffectHook } from './updateActiveEffect.js';
+
 // Export effects as an object
 export default {
   renderCombatTracker,
@@ -33,6 +35,7 @@ export default {
   canvasReady,
   ready,
   preCreateCombatant,
+  updateActiveEffect: registerUpdateActiveEffectHook,
 };
 
 export { 
@@ -52,4 +55,5 @@ export {
   canvasReady,
   ready,
   preCreateCombatant,
+  registerUpdateActiveEffectHook as updateActiveEffect,
 };
