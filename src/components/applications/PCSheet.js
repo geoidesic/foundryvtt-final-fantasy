@@ -291,6 +291,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     }
     
     if (failedUuids.length > 0) {
+      game.system.log.g('ItemBucket:_onDropJob: Failed Uuids:', failedUuids);
       const confirmed = await Dialog.confirm({
         title: "Missing Items Found",
         content: `

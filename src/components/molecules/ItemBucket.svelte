@@ -38,11 +38,18 @@ async function updateLocalList() {
 async function processItem(item, list, isJob) {
   if (!item) return;
 
+  game.system.log.o("ItemBucket:processItem", "Processing item:", { 
+    item, 
+    uuid: item.uuid,
+    type: item.type,
+    list: list.map(x => x.uuid)
+  });
+
   // Skip if item already exists in list
   const existingInList = list.some(existing => existing.uuid === item.uuid);
   
   if (preventDuplicates && existingInList) {
-    game.system.log.w("Item already in list:", item);
+    game.system.log.w(`${item.name} is already in the list.`);
     return;
   }
 
@@ -60,6 +67,7 @@ async function processItem(item, list, isJob) {
   }
 
   // Add item to list
+  game.system.log.o("ItemBucket:processItem", "Adding item to list:", { uuid: item.uuid });
   list.push({ uuid: item.uuid });
 
   // If this is a job and we're dropping an action with enabled traits
@@ -67,11 +75,22 @@ async function processItem(item, list, isJob) {
     // Get all enabled traits from the action
     const enabledTraits = item.system.enables.list || [];
     
+    game.system.log.o("ItemBucket:processItem", "Processing enabled traits:", enabledTraits);
+    
     // Add each enabled trait that isn't already in the list
     for (const trait of enabledTraits) {
       const traitExists = list.some(existing => existing.uuid === trait.uuid);
+      game.system.log.o("ItemBucket:processItem", "Checking trait:", { trait, exists: traitExists });
+      
       if (!traitExists) {
-        list.push({ uuid: trait.uuid });
+        // Verify the trait exists before adding it
+        const traitItem = await fromUuid(trait.uuid);
+        if (traitItem) {
+          game.system.log.o("ItemBucket:processItem", "Adding verified trait to list:", trait.uuid);
+          list.push({ uuid: trait.uuid });
+        } else {
+          game.system.log.w("ItemBucket:processItem", `Failed to find trait with UUID: ${trait.uuid}`);
+        }
       }
     }
   }
@@ -79,14 +98,26 @@ async function processItem(item, list, isJob) {
 
 // Recursively process a folder and its contents
 async function processFolder(folder, list, isJob) {
+  game.system.log.o("ItemBucket:processFolder", "Processing folder:", {
+    folder,
+    contents: folder?.contents,
+    children: folder?.children,
+    entries: folder?.children?.[0]?.entries
+  });
+
   if (!folder) return;
 
   // Process each child folder
   if (folder.children?.length) {
+    game.system.log.o("ItemBucket:processFolder", "Processing child folders:", folder.children);
     for (const child of folder.children) {
+      game.system.log.o("ItemBucket:processFolder", "Processing child:", child);
+      
       // Process entries in this child folder
       if (child.entries?.length) {
+        game.system.log.o("ItemBucket:processFolder", "Processing entries:", child.entries);
         for (const entry of child.entries) {
+          game.system.log.o("ItemBucket:processFolder", "Processing entry:", entry);
           const item = await fromUuid(entry.uuid);
           await processItem(item, list, isJob);
         }
@@ -102,11 +133,14 @@ async function processFolder(folder, list, isJob) {
 
   // Process any direct contents (for non-compendium folders)
   if (folder.contents?.length) {
+    game.system.log.o("ItemBucket:processFolder", "Processing folder contents:", folder.contents);
     for (const content of folder.contents) {
       if (content.type === "Folder") {
+        game.system.log.o("ItemBucket:processFolder", "Found nested folder:", content);
         const subFolder = await fromUuid(content.uuid);
         await processFolder(subFolder, list, isJob);
       } else {
+        game.system.log.o("ItemBucket:processFolder", "Processing item from folder:", content);
         const item = await fromUuid(content.uuid);
         await processItem(item, list, isJob);
       }
@@ -117,15 +151,26 @@ async function processFolder(folder, list, isJob) {
 async function onDrop(event) {
   event.preventDefault();
   const data = JSON.parse(event.dataTransfer.getData("text/plain"));
+  game.system.log.o("ItemBucket:onDrop", "Drop data:", data);
   
   // Get current lists
   const list = [...$item.system[key].list];
   const isJob = $item.type === 'job';
 
+  game.system.log.o("ItemBucket:onDrop", "Current state:", {
+    key,
+    list: list.map(x => x.uuid),
+    isJob
+  });
+
   // Handle folder drops
   if (data.type === "Folder") {
+    game.system.log.o("ItemBucket:onDrop", "Handling folder drop");
     const folder = await fromUuid(data.uuid);
+    game.system.log.o("ItemBucket:onDrop", "Retrieved folder:", folder);
     await processFolder(folder, list, isJob);
+
+    game.system.log.o("ItemBucket:onDrop", "Final list after folder processing:", list.map(x => x.uuid));
     await $item.update({ [`system.${key}.list`]: list });
     return;
   }
@@ -133,6 +178,8 @@ async function onDrop(event) {
   // Handle single item drops
   const droppedItem = await Item.implementation.fromDropData(data);
   await processItem(droppedItem, list, isJob);
+  
+  game.system.log.o("ItemBucket:onDrop", "Final list after item processing:", list.map(x => x.uuid));
   await $item.update({ [`system.${key}.list`]: list });
 }
 
@@ -234,7 +281,6 @@ table.standard-list
       border-top-left-radius: 7px
     &:nth-child(even)
       background-color: var(--color-lowlight-dark)
-      td
     &:not(:first-child):nth-child(odd)
       background-color: var(--color-lowlight-dark)
       td
