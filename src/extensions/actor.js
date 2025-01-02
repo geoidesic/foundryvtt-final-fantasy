@@ -118,7 +118,7 @@ export default class FF15Actor extends Actor {
           //- if the change is a custom mode
           if (activeEffectModes.find(e => e.value === change.mode)) {
             game.system.log.b("[ENABLE] change", change);
-            await Hooks.callAll(`FF15.${change.key}`, { actor: this, change });
+            await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
           }
         }
       }

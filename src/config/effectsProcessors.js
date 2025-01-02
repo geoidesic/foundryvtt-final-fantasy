@@ -15,4 +15,9 @@ export function setupEffectsProcessors() {
     const processor = new effects.EnableCombatTurnSlot(event.actor);
     await processor.process(event);
   });
+
+  Hooks.on('FF15.TransferEffectToAllies', async (event) => {
+    const processor = new effects.TransferEffectToAllies(event.actor);
+    await processor.process(event);
+  });
 }

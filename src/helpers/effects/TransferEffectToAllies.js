@@ -6,56 +6,57 @@ export default class TransferEffectToAllies {
   }
 
   async process(event) {
-    const { item } = event;
-    
-    // Get all ally tokens that are combatants
-    const allyTokens = this.actor.allyTokens;
-    if (!allyTokens?.length) return;
+    game.system.log.p("[TRANSFER] Starting effect transfer process", event);
+    const { change, effect } = event;
+    game.system.log.p("[TRANSFER] Source actor:", this.actor.name);
+    game.system.log.p("[TRANSFER] Effect:", effect);
 
-    for (const effect of this.actor.effects) {
-      if (effect.disabled || effect.isSuppressed) continue;
+    // Get all friendly tokens except those belonging to the source actor
+    const allyTokens = canvas.tokens.placeables.filter(token => 
+      token.document.disposition === 1 && // Friendly disposition
+      token.actor?.id !== this.actor.id // Not the source actor
+    );
+    game.system.log.p("[TRANSFER] Found ally tokens:", allyTokens.map(t => t.name));
+
+    // Create the effect on each ally's actor
+    for (const token of allyTokens) {
+      game.system.log.p("[TRANSFER] Processing token:", token.name);
       
-      for (const change of effect.changes) {
-        if (change.key === '@TransferEffectToAllies' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          // Get the origin item of this effect
-          const originItem = fromUuidSync(effect.origin);
-          if (!originItem) continue;
+      // Skip if no actor
+      if (!token.actor) {
+        game.system.log.p("[TRANSFER] No actor for token, skipping");
+        continue;
+      }
 
-          // Clone all changes from the parent effect except @TransferEffectToAllies
-          const clonedChanges = effect.changes
-            .filter(c => c.key !== '@TransferEffectToAllies')
-            .map(c => foundry.utils.deepClone(c));
+      // Check if ally already has this effect (enabled or disabled)
+      const existingEffect = token.actor.effects.find(e => e.name === effect.name);
+      if (existingEffect) {
+        game.system.log.p("[TRANSFER] Found existing effect, enabling it");
+        await existingEffect.update({ disabled: false });
+        continue;
+      }
 
-          // Create the new effect data with the cloned changes
-          const newEffectData = {
-            name: `${originItem.name} (Transferred)`,
-            icon: effect.icon,
-            changes: clonedChanges,
-            disabled: false,
-            duration: {
-              rounds: originItem.system.durationUnits === 'round' ? originItem.system.duration : undefined,
-              turns: originItem.system.durationUnits === 'turn' ? originItem.system.duration : undefined,
-              startTime: game.time.worldTime,
-              combat: game.combat?.id
-            },
-            flags: foundry.utils.deepClone(effect.flags),
-            origin: effect.origin,
-            statuses: new Set(effect.statuses)
-          };
+      // Create a copy of the effect on the ally
+      const effectData = {
+        name: effect.name,
+        label: effect.label,
+        icon: effect.icon,
+        changes: foundry.utils.deepClone(effect.changes),
+        duration: effect.duration,
+        flags: foundry.utils.deepClone(effect.flags),
+        origin: effect.origin,
+        disabled: false
+      };
+      game.system.log.p("[TRANSFER] Created effect data:", effectData);
 
-          // Create the effect on each ally
-          for (const token of allyTokens) {
-            // Skip if the effect already exists
-            const existingEffect = token.actor.effects.find(e => 
-              e.origin === effect.origin && 
-              e.changes.some(c => c.key === clonedChanges[0]?.key)
-            );
-            
-            if (!existingEffect) {
-              await token.actor.createEmbeddedDocuments('ActiveEffect', [newEffectData]);
-            }
-          }
-        }
+      // Add a flag to mark this as a transferred effect
+      effectData.flags.transferredFrom = this.actor.uuid;
+
+      try {
+        await token.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);
+        game.system.log.p("[TRANSFER] Successfully created effect on", token.name);
+      } catch (error) {
+        game.system.log.e("[TRANSFER] Error creating effect:", error);
       }
     }
   }

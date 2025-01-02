@@ -82,6 +82,63 @@ export default class RollCalcActor extends RollCalc {
     return await this.defaultChat(item);
   }
 
+  /**
+   * Create message data for an action
+   * @param {Item} item - The action item
+   * @param {boolean} hasTargets - Whether there are targets
+   * @param {Array} targets - Array of target ids
+   * @param {Roll} roll - Optional roll data
+   * @returns {Object} Message data object
+   */
+  _createActionMessageData(item, hasTargets, targets, roll = null) {
+    const messageData = {
+      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      flavor: `${item.name}`,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      classes: ['testy', 'leather'],
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "ActionRollChat",
+            actor: {
+              _id: this.params.actor._id,
+              uuid: this.params.actor.uuid,
+              name: this.params.actor.name,
+              img: this.params.actor.img
+            },
+            item: {
+              _id: item._id,
+              uuid: item.uuid,
+              name: item.name,
+              img: item.img,
+              type: item.type,
+              system: {
+                formula: item.system?.formula,
+                directHitDamage: item.system?.directHitDamage,
+                hasDirectHit: item.system?.hasDirectHit
+              }
+            },
+            hasTargets,
+            targets
+          },
+          state: {
+            damageResults: false,
+            initialised: false
+          },
+          css: 'leather'
+        }
+      }
+    };
+
+    // Add roll data if provided
+    if (roll) {
+      messageData.roll = roll;
+      messageData.flags[SYSTEM_ID].data.roll = roll.total;
+    }
+
+    return messageData;
+  }
 
   async abilityAction(item) {
     // Get targets before showing dialog
@@ -107,7 +164,18 @@ export default class RollCalcActor extends RollCalc {
     }
 
     if (!item.system.hasCR) {
-      message = await this.defaultChat(item);
+      // Use action template if item has base damage effect
+      if (item.system.hasBaseEffect && item.system.baseEffectType === 'damage') {
+        const messageData = this._createActionMessageData(
+          item, 
+          hasTargets, 
+          Array.from(targets).map((target) => target.id)
+        );
+        message = await ChatMessage.create(messageData);
+      } else {
+        message = await this.defaultChat(item);
+      }
+
       // Mark the action as used
       await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
 
@@ -131,52 +199,16 @@ export default class RollCalcActor extends RollCalc {
 
     let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
 
-
     // Evaluate roll with actor data
     const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
 
     // Create chat message data
-    const messageData = {
-      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      flavor: `${item.name}`,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      classes: ['testy', 'leather'],
-      roll,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "ActionRollChat",
-            actor: {
-              _id: this.params.actor._id,
-              uuid: this.params.actor.uuid,
-              name: this.params.actor.name,
-              img: this.params.actor.img
-            },
-            item: {
-              _id: item._id,
-              uuid: item.uuid,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: {
-                formula: item.system?.formula,
-                directHitDamage: item.system?.directHitDamage,
-                hasDirectHit: item.system?.hasDirectHit
-              }
-            },
-            hasTargets,
-            roll: roll.total,
-            targets: Array.from(targets).map((target) => target.id)
-          },
-          state: {
-            damageResults: false,
-            initialised: false
-          },
-          css: 'leather'
-        }
-      }
-    };
+    const messageData = this._createActionMessageData(
+      item, 
+      hasTargets, 
+      Array.from(targets).map((target) => target.id),
+      roll
+    );
 
     // Create the message
     message = await roll.toMessage(messageData);
@@ -322,24 +354,6 @@ export default class RollCalcActor extends RollCalc {
       return requiredItem?.name === effect.name;
     });
     return shouldDisable;
-  }
-
-  /**
-   * Check item's enablers and enable any disabled actor effects that match
-   * @returns {Promise<void>}
-   */
-  async _enableEnablerEffectsOnActor(item) {
-    if (!(await this._handleGuards(item, [
-      this.RG.isCombat,
-      this.RG.hasEnablers
-    ]))) {
-      return;
-    }
-
-    // Iterate through the enables list on the item that was used for the roll
-    for (const enablesItemRef of item.system.enables.list) {
-      await this._handleSingleItemEffectEnabling(enablesItemRef);
-    }
   }
 
   async _handleSingleItemEffectEnabling(enablesItemRef) {
