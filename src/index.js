@@ -37,6 +37,8 @@ CONFIG.FF15 = {
   RollGuards: RollGuards
 }
 
+CONFIG.time.roundTime = 6;
+
 //- Set initiative dice
 CONFIG.Combat.initiative = {
   formula: "1d20 + (@attributes.primary.dex.val)",
