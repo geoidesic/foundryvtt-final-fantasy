@@ -100,14 +100,36 @@ export default class FF15Actor extends Actor {
     });
   }
 
+  /**
+   * Add a trait effect to the actor
+   * @param {FF15Item} item 
+   * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
+   */
+  async addTraitEffects(item) {
+    game.system.log.o("[ENABLE] addTraitEffect", item);
+    
+    if (!item.hasEffects) return [];
+
+    const effects = Array.from(item.effects);
+    await this.createEmbeddedDocuments("ActiveEffect", effects);
+    
+    return effects.map(e => e.uuid);
+  }
+
+  /**
+   * Enable effects for a trait
+   * @param {FF15Item} item 
+   * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
+   */
   async enableTraitEffects(item) {
+    game.system.log.o("[ENABLE] enableTraitEffects", item);
     let effectsEnabled = [];
 
     for (const effect of item.effects) {
-
+      game.system.log.o("[ENABLE] effect", effect);
       // Find matching effect on actor (if any)
       const matchingEffect = this.matchingEffect(effect, { disabled: true });
-
+      game.system.log.o("[ENABLE] matchingEffect", matchingEffect);
       if (matchingEffect) {
         await matchingEffect.update({ disabled: false });
         effectsEnabled.push(matchingEffect.uuid);
@@ -118,6 +140,15 @@ export default class FF15Actor extends Actor {
           //- if the change is a custom mode
           if (activeEffectModes.find(e => e.value === change.mode)) {
             game.system.log.b("[ENABLE] change", change);
+            await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
+          }
+        }
+      } else {
+        game.system.log.w("[ENABLE] no matching effect found");
+        this.addTraitEffects(item);
+        for (const effect of item.effects) {
+          if (effect.isSuppressed) continue;
+          for (const change of effect.changes) {
             await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
           }
         }
