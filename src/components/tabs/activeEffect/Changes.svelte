@@ -116,11 +116,12 @@ onMount(async () => {
               button.stealth(on:click!="{() => deleteChange(i)}" )
                 i.fa.fa-trash
 
-    button.mt-sm.glossy-button.gold-light.hover-shine(
-      class="{buttonAnimation}"
-      on:click="{save}"
-      on:mouseleave="{handleMouseLeave}"
-    ) Save Changes
+    .flexrow.mt-sm
+      button.glossy-button.gold-light.hover-shine(
+        class="{buttonAnimation}"
+        on:click="{save}"
+        on:mouseleave="{handleMouseLeave}"
+      ) Save Changes
 
 </template>
 <style lang="sass">
