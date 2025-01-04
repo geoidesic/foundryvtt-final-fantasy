@@ -162,8 +162,6 @@
           }
         }
 
-        //- get all the granted items by uuid first
-
         //- update the actor to remove the job uuid
         await $doc.update({ system: { job: { uuid: "", name: "", grants: [], level: null, img: null, role: '' } } });
       },
