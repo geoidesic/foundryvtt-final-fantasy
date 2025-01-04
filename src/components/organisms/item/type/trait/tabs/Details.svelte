@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
-  import { getLimitationOptions, getLimitationUnits, getDamageDiceRerollOptions } from "~/src/helpers/constants"
+  import { getLimitationOptions, getDurationOptions, getLimitationUnits, getDamageDiceRerollOptions } from "~/src/helpers/constants"
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
@@ -12,6 +12,7 @@
   const limitationOptions = getLimitationOptions();
   const limitationUnitsOptions = getLimitationUnits();
   const damageDiceRerollOptions = getDamageDiceRerollOptions();
+  const durationOptions = getDurationOptions();
 
   const typeOptions = [
     { value: "Buff", label: localize("FF15.Types.Item.Types.Options.TraitType.Buff") },
@@ -53,7 +54,20 @@
           DocSelect.left(id="limitation" name="limitation" options="{limitationOptions}" valuePath="system.limitation")
         .flex2.right
           DocSelect.right(id="limitationUnits" name="limitationUnits" options="{limitationUnitsOptions}" valuePath="system.limitationUnits")
-  
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Duration
+        .flex0.right
+          DocCheckbox( name="hasDuration" valuePath="system.hasDuration")
+
+      +if("$item.system.hasDuration")
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex2.left
+            DocSelect.left(id="duration" name="duration" type="number" options="{durationOptions}" valuePath="system.duration")
+          .flex2.right
+            DocSelect.right(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
+
       
     .flexrow.justify-vertical
       .flex4
