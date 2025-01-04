@@ -135,31 +135,34 @@
         const job = await fromUuid($doc.system.job.uuid);
         
         //- get the grants from the job
-        const grants = job.system.grants;
+        const grants = job?.system?.grants;
+        if (grants) {
 
-        //- get all the granted items by uuid first
-        const grantedItems = [];
-        for (let grant of grants.list) {
-          const item = await fromUuid(grant.uuid);
-          if (item) grantedItems.push(item);
-        }
-        
-        //- find and delete matching items on actor
-        const actorItems = $doc.items.filter(x => ['action', 'trait'].includes(x.type));
-        
-        for (let grantedItem of grantedItems) {
-          // Find matching items by name and type
-          const matchingItems = actorItems.filter(x => 
-            x.name === grantedItem.name && 
-            x.type === grantedItem.type
-          );
+          const grantedItems = [];
+          for (let grant of grants.list) {
+            const item = await fromUuid(grant.uuid);
+            if (item) grantedItems.push(item);
+          }
           
-          // Delete all matching items
-          for (let item of matchingItems) {
-            game.system.log.d("Deleting item:", item);
-            await item.delete();
+          //- find and delete matching items on actor
+          const actorItems = $doc.items.filter(x => ['action', 'trait'].includes(x.type));
+          
+          for (let grantedItem of grantedItems) {
+            // Find matching items by name and type
+            const matchingItems = actorItems.filter(x => 
+              x.name === grantedItem.name && 
+              x.type === grantedItem.type
+            );
+            
+            // Delete all matching items
+            for (let item of matchingItems) {
+              game.system.log.d("Deleting item:", item);
+              await item.delete();
+            }
           }
         }
+
+        //- get all the granted items by uuid first
 
         //- update the actor to remove the job uuid
         await $doc.update({ system: { job: { uuid: "", name: "", grants: [], level: null, img: null, role: '' } } });
