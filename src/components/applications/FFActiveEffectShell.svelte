@@ -34,9 +34,9 @@
 
   onMount(() => {
     // Any initialization if needed
-    game.system.log.g('FFActiveEffectShell doc', doc);
-    game.system.log.g('FFActiveEffectShell $doc', $doc);
-    game.system.log.g('FFActiveEffectShell application', application);
+    // game.system.log.g('FFActiveEffectShell doc', doc);
+    // game.system.log.g('FFActiveEffectShell $doc', $doc);
+    // game.system.log.g('FFActiveEffectShell application', application);
   });
 </script>
 
