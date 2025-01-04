@@ -70,7 +70,7 @@
 
   function getTargetTokens(targets) {
     if(!targets.length) return [];
-    return targets.map((id) => canvas.tokens.get(id));
+    return targets.map((id) => canvas?.tokens?.get(id));
   }
 
   function setTargetTokens(targets) {
@@ -147,29 +147,29 @@
     const results = { damage: 0, directHit: 0 };
 
     // Calculate base damage
-    if (item.system?.formula) {
-      results.damage = parseInt(item.system.formula) || 0;
+    if (item?.system?.formula) {
+      results.damage = parseInt(item?.system.formula) || 0;
       totalDamage = results.damage;
     }
 
     // Calculate direct hit damage if applicable - only if it's a hit
-    if (isHit(target) && item.system?.hasDirectHit && item.system?.directHitDamage) {
-      const directHitRoll = await new Roll(item.system.directHitDamage).evaluate({ async: true });
+    if (isHit(target) && item?.system?.hasDirectHit && item?.system?.directHitDamage) {
+      const directHitRoll = await new Roll(item?.system?.directHitDamage).evaluate({ async: true });
       results.directHitResult = directHitRoll.total;
       totalDamage += results.directHitResult;
     } 
 
     // Apply damage to target
-    const currentHP = target.actor.system.points.HP.val;
+    const currentHP = target?.actor?.system?.points?.HP?.val;
     const newHP = Math.max(0, currentHP - totalDamage);
 
-    await target.actor.update({
+    await target?.actor?.update({
       "system.points.HP.val": newHP,
     });
 
     // Toggle KO condition if HP drops to 0
     if (currentHP > 0 && newHP <= 0) {
-      await target.actor.toggleStatusEffect("ko");
+      await target?.actor?.toggleStatusEffect("ko");
     }
     // Update stores
     const newDamageResults = {...FFMessageState.damageResults};
@@ -201,13 +201,13 @@
     if (!result) return;
 
     // Restore original HP
-    await target.actor.update({
+    await target?.actor?.update({
       "system.points.HP.val": result.originalHP,
     });
 
     // Remove KO if we applied it
     if (result.wasKOd) {
-      await target.actor.toggleStatusEffect("ko");
+      await target?.actor?.toggleStatusEffect("ko");
     }
 
     const newDamageResults = {...FFMessageState.damageResults};
@@ -239,8 +239,8 @@
 
     // Apply trait to all existing targets
     for (const target of targets) {
-      if (target.actor && !target.isUnlinked) {
-        await target.actor.createEmbeddedDocuments("Item", [trait]);
+      if (target?.actor && !target?.isUnlinked) {
+        await target?.actor?.createEmbeddedDocuments("Item", [trait]);
       }
     }
 
@@ -248,17 +248,17 @@
   }
 
   function getDefenseValue(target) {
-    if (target.isUnlinked || !target.actor?.system?.attributes) return 0;
+    if (target?.isUnlinked || !target?.actor?.system?.attributes) return 0;
 
     // For NPCs, defense is directly in attributes
-    if (target.actor.type === "npc") {
-      const defense = target.actor.system.attributes.defence?.val || 0;
+    if (target?.actor?.type === "npc") {
+      const defense = target?.actor?.system?.attributes?.defence?.val || 0;
       return defense;
     }
 
     // For PCs, defense is in secondary attributes
-    const defense = target.actor.system.attributes.secondary?.def?.val || 0;
-    const magicDefense = target.actor.system.attributes.secondary?.mag?.val || 0;
+    const defense = target?.actor?.system?.attributes?.secondary?.def?.val || 0;
+    const magicDefense = target?.actor?.system?.attributes?.secondary?.mag?.val || 0;
     return Math.max(defense, magicDefense);
   }
 
@@ -267,13 +267,13 @@
   }
 
   function getTargetImage(target) {
-    if (target.isUnlinked) return null;
-    return target.document?.texture?.src || target.actor?.img;
+    if (target?.isUnlinked) return null;
+    return target?.document?.texture?.src || target?.actor?.img;
   }
 
   function openActorSheet(actor) {
     if (!actor) return;
-    actor.sheet.render(true);
+    actor?.sheet?.render(true);
   }
 
   const handleToggleDescription = () => {
