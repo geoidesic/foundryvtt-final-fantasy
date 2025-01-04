@@ -1,4 +1,5 @@
 import FF15Item from "./item";
+import FFActiveEffect from "./active-effect";
 import { activeEffectModes } from "~/src/helpers/constants"
 
 /**
@@ -110,10 +111,17 @@ export default class FF15Actor extends Actor {
     
     if (!item.hasEffects) return [];
 
-    const effects = Array.from(item.effects);
-    await this.createEmbeddedDocuments("ActiveEffect", effects);
-    
-    return effects.map(e => e.uuid);
+    // Convert effects to plain objects and set combat duration
+    const effectsData = Array.from(item.effects).map(effect => effect.toObject());
+    game.system.log.o("[ENABLE] addTraitEffect effectsData", effectsData);
+    for (const effectData of effectsData) {
+      await FFActiveEffect.setCombatDuration(effectData);
+    }
+
+    // Create the effects
+    const created = await this.createEmbeddedDocuments("ActiveEffect", effectsData);
+    game.system.log.o("[ENABLE] addTraitEffect created", created);
+    return created.map(e => e.uuid);
   }
 
   /**
@@ -122,30 +130,21 @@ export default class FF15Actor extends Actor {
    * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
    */
   async enableTraitEffects(item) {
-    game.system.log.o("[ENABLE] enableTraitEffects", item);
     let effectsEnabled = [];
-
     for (const effect of item.effects) {
-      game.system.log.o("[ENABLE] effect", effect);
-      // Find matching effect on actor (if any)
       const matchingEffect = this.matchingEffect(effect, { disabled: true });
-      game.system.log.o("[ENABLE] matchingEffect", matchingEffect);
       if (matchingEffect) {
+        const updatedEffectData = matchingEffect.toObject();
         await matchingEffect.update({ disabled: false });
         effectsEnabled.push(matchingEffect.uuid);
-        game.system.log.b("[ENABLE] matchingEffect", matchingEffect);
         if (effect.isSuppressed) continue;
         for (const change of effect.changes) {
-          game.system.log.b("[ENABLE] change", change);
-          //- if the change is a custom mode
           if (activeEffectModes.find(e => e.value === change.mode)) {
-            game.system.log.b("[ENABLE] change", change);
             await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
           }
         }
       } else {
-        game.system.log.w("[ENABLE] no matching effect found");
-        this.addTraitEffects(item);
+        await this.addTraitEffects(item);
         for (const effect of item.effects) {
           if (effect.isSuppressed) continue;
           for (const change of effect.changes) {

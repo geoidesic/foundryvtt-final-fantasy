@@ -54,7 +54,7 @@ export default class TransferEffectToAllies {
 
       try {
         await token.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);
-        game.system.log.p("[TRANSFER] Successfully created effect on", token.name);
+        game.system.log.p("[TRANSFER] Successfully created effect on", token.name, effectData, token.actor);
       } catch (error) {
         game.system.log.e("[TRANSFER] Error creating effect:", error);
       }
