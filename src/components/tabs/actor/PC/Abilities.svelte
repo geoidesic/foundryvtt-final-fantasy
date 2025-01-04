@@ -90,6 +90,13 @@
     });
   }
 
+  async function resetAllUses() {
+    const items = $Actor.items.filter(item => item.system.hasLimitation);
+    for (const item of items) {
+      await item.update({ 'system.uses': 0 });
+    }
+  }
+
   function roll(item) {
     game.system.log.d("roll");
     game.system.log.d(item);
@@ -250,6 +257,7 @@
             
       +if("hasItems")
         button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
+        button.glossy-button.gold-light.hover-shine.ml-sm(on:click="{resetAllUses}") Reset Uses
 
 </template>
 
