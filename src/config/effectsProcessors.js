@@ -6,8 +6,8 @@ export function setupEffectsProcessors() {
     processor.process(event);
   });
 
-  Hooks.on('FF15.RerollDamageDice', (event) => {
-    const processor = new effects.RerollDamageDice(event.actor);
+  Hooks.on('FF15.DamageDiceReroll', (event) => {
+    const processor = new effects.DamageDiceReroll(event.actor);
     processor.process(event);
   });
 

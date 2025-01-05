@@ -42,20 +42,17 @@ export default class TransferEffectToAllies {
         continue;
       }
 
-      // Check if ally already has this effect (enabled or disabled)
-      const existingEffect = token.actor.effects.find(e => e.name === effect.name);
-      if (existingEffect) {
-        game.system.log.p("[TRANSFER] Found existing effect, enabling it");
-        await existingEffect.update({ disabled: false });
-        continue;
-      }
+
+      let changes = foundry.utils.deepClone(effect.changes);
+      //- remove the TransferEffectToAllies change
+      changes = changes.filter(change => change.key !== 'TransferEffectToAllies');
 
       // Create a copy of the effect on the ally
       const effectData = {
         name: effect.name,
         label: effect.label,
         icon: effect.icon,
-        changes: foundry.utils.deepClone(effect.changes),
+        changes,
         flags: foundry.utils.deepClone(effect.flags),
         origin: effect.origin,
         disabled: false

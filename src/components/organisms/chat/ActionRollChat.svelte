@@ -64,7 +64,7 @@
      *  to occur.
     */
     Hooks.callAll('FF15.processAdditionalBaseDamageFromItem', {item, actor, DamageResults});
-    Hooks.callAll('FF15.RerollDamageDice', {item, actor, DamageResults});
+    Hooks.callAll('FF15.DamageDiceReroll', {item, actor, DamageResults});
     return DamageResults;
   }
 

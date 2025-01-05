@@ -197,7 +197,7 @@
       tr.gold
         th.img.shrink(scope="col")
         th.left.expand.ml-sm(scope="col") {localize('Name')}
-        th.left(scope="col") {localize('Origin')}
+        th.left.shrink(scope="col") {localize('Origin')}
         th.buttons(scope="col" class="{lockCSS}")
           button.stealth(class="{lockCSS}" on:click="{toggleLock}")
             i.fa(class="{faLockCSS}")
@@ -210,11 +210,16 @@
               alt="avatar for game version"
             )
           td.left.expand.no-wrap {effect.name}
-          td.img
-            img.icon.nopointer(
-              src="{effect.getFlag(SYSTEM_ID, 'origin.actor.img')}" 
-              alt="avatar for effect origin"
-            )
+          td.img.left
+            +if("effect.getFlag(SYSTEM_ID, 'origin.actor.img')")
+              img.icon.nopointer(
+                src="{effect.getFlag(SYSTEM_ID, 'origin.actor.img')}" 
+                alt="avatar for effect origin"
+                data-tooltip="{effect.getFlag(SYSTEM_ID, 'origin.actor.name')}"
+                data-tooltip-class="FF15-tooltip"
+              )
+              +else
+                span.no-wrap {localize('Unknown')}
           td.buttons.right.no-wrap
             +if("!$doc.system.effectActionsLocked && showDelete")
               button.stealth(on:click="{editItem(index, effect)}")

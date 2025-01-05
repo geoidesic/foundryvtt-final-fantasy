@@ -1,6 +1,6 @@
 import FF15Item from "./item";
 import FFActiveEffect from "./active-effect";
-import { activeEffectModes } from "~/src/helpers/constants"
+import { activeEffectModes, SYSTEM_ID } from "~/src/helpers/constants"
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -13,8 +13,8 @@ export default class FF15Actor extends Actor {
   }
 
   get activeToken() {
-    for(const token of canvas.tokens.placeables) {
-      if(token.actor === this) {
+    for (const token of canvas.tokens.placeables) {
+      if (token.actor === this) {
         return token;
       }
     }
@@ -34,16 +34,17 @@ export default class FF15Actor extends Actor {
     const combatantActorIds = new Set(combat.combatants.contents.map(c => c.actor?.id).filter(Boolean));
 
     // Find all ally tokens (non-hostile) that are also combatants
-    return tokens.filter(token => 
-      token.actor && // Must have an actor
-      token.document.disposition === 1 && // Must be friendly
-      combatantActorIds.has(token.actor.id) // Must be a combatant in the current combat
+    return tokens.filter(token =>
+      token.actor // Must have an actor
+      && token.document.disposition === 1 // Must be friendly
+      && combatantActorIds.has(token.actor.id) // Must be a combatant in the current combat
+      && token.actor.id !== this.id // Must not be the source actor
     );
   }
 
-  hasSpecificDuplicate (arr, str) {
+  hasSpecificDuplicate(arr, str) {
     return arr.filter(item => item === str).length > 1;
-  } 
+  }
 
   /**
    * Check if an enabler item (e.g. a Trait) has any effects that are disabled (meaning the trait hasn't been used yet)
@@ -58,7 +59,7 @@ export default class FF15Actor extends Actor {
   }
 
   async actorItemHasRemainingUses(item) {
-    if(!item.system.hasLimitation) { return true }
+    if (!item.system.hasLimitation) { return true }
     // If the trait hasn't been used (has disabled effects) but shows uses, reset it
     if (this.hasDisabledEnablerEffects(item) && item.currentUses) {
       await item.update({ 'system.uses': 0 });
@@ -69,8 +70,8 @@ export default class FF15Actor extends Actor {
 
   itemTagsMatchEnablerEffectTags(item) {
     const itemTags = item.system.tags;
-    for(const effect of this.effects) {
-      if(effect.system.tags?.some(tag => itemTags.includes(tag))) { 
+    for (const effect of this.effects) {
+      if (effect.system.tags?.some(tag => itemTags.includes(tag))) {
         return true;
       }
     }
@@ -83,7 +84,7 @@ export default class FF15Actor extends Actor {
    * @param {Object} criteria - Object with keys matching effect properties and values to match against
    * @returns {ActiveEffect|undefined} The matching effect or undefined if none found
    */
-  matchingEffect(effect, criteria = { }) {
+  matchingEffect(effect, criteria = {}) {
     return this.effects.find(ae => {
       // Always match on name
       if (ae.name !== effect.name) return false;
@@ -108,11 +109,26 @@ export default class FF15Actor extends Actor {
    */
   async addTraitEffects(item) {
     game.system.log.o("[ENABLE] addTraitEffect", item);
-    
+
     if (!item.hasEffects) return [];
 
     // Convert effects to plain objects and set combat duration
-    const effectsData = Array.from(item.effects).map(effect => effect.toObject());
+    const effectsData = Array.from(item.effects).map(effect => ({
+      ...effect.toObject(),
+      flags: {
+        ...effect.flags,
+        [SYSTEM_ID]: {
+          origin: {
+            actor: {
+              uuid: this.uuid,
+              name: this.name,
+              img: this.img
+            }
+          }
+        }
+      }
+    }));
+
     game.system.log.o("[ENABLE] addTraitEffect effectsData", effectsData);
     for (const effectData of effectsData) {
       await FFActiveEffect.setCombatDuration(effectData);
@@ -156,9 +172,9 @@ export default class FF15Actor extends Actor {
     return effectsEnabled;
   }
 
-  async disableEnablerEffects(item) {};
+  async disableEnablerEffects(item) { };
 
-  removeFirstDuplicate (arr, name) {
+  removeFirstDuplicate(arr, name) {
     const index = arr.indexOf(name); // Find the first occurrence
     if (index !== -1 && arr.slice(index + 1).includes(name)) {
       arr.splice(index, 1); // Remove only the first duplicate
@@ -175,24 +191,24 @@ export default class FF15Actor extends Actor {
    *                                 - true if was already an existing effect
    *                                 - false if an existing effect needed to be removed
    *                                 - undefined if no changes need to be made
-   */ 
+   */
   async toggleStatusEffect(statusId, options) {
-    
-    if(game.combat && statusId === 'focus' ) {
+
+    if (game.combat && statusId === 'focus') {
       //- if actor has focus, and there are no secondary action slots left, prevent the effect from being removed
-      if(this.statuses.has('focus') && !this.system.actionState.available.includes('secondary')) {
+      if (this.statuses.has('focus') && !this.system.actionState.available.includes('secondary')) {
         ui.notifications.warn('You cannot change Focus while you have no secondary action slots left.');
         return false;
       }
-      if(!this.statuses.has('focus') && this.system.hasMoved) {
+      if (!this.statuses.has('focus') && this.system.hasMoved) {
         ui.notifications.warn('You cannot change Focus while you have moved this turn.');
         return false;
       }
       //- if actor has focus, and has not moved, add the secondary action slot
-      if(!this.statuses.has('focus') && !this.system.hasMoved && !this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
+      if (!this.statuses.has('focus') && !this.system.hasMoved && !this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
         await this.update({ system: { actionState: { available: [...this.system.actionState.available, 'secondary'] } } });
       }
-      if(this.statuses.has('focus') && !this.system.hasMoved && this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
+      if (this.statuses.has('focus') && !this.system.hasMoved && this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
         await this.update({ system: { actionState: { available: this.removeFirstDuplicate(this.system.actionState.available, 'secondary') } } });
       }
     }
@@ -252,13 +268,13 @@ export default class FF15Actor extends Actor {
     // }
   }
 
-  
+
 
   async deleteAllItems(type) {
     game.system.log.d(type)
     game.system.log.d(typeof type)
     for (let item of this.items) {
-      if(Array.isArray(type) && type.includes(item.type) || !type || type === 'all' || item.type === type) {
+      if (Array.isArray(type) && type.includes(item.type) || !type || type === 'all' || item.type === type) {
         await item.delete();
       }
     }
@@ -266,7 +282,7 @@ export default class FF15Actor extends Actor {
 
   async _preCreate() {
     game.system.log.d('preCreate', this);
-    if(this.type === 'PC') {
+    if (this.type === 'PC') {
       const prototypeToken = { disposition: 1, actorLink: true }; // Set disposition to "Friendly"
       this.updateSource({ prototypeToken });
     }
@@ -276,5 +292,5 @@ export default class FF15Actor extends Actor {
     console.log('_onDrop in the actor.js', event);
   }
 
-  
+
 }
