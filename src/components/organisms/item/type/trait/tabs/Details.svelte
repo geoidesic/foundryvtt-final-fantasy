@@ -63,11 +63,16 @@
         DocCheckbox( name="hasDuration" valuePath="system.hasDuration")
 
     +if("$item.system.hasDuration")
-      .flexrow.sheet-row.justify-vertical.wide
+      .flexrow.sheet-row.justify-vertical.wide.px-sm
         .flex2.left
-          DocSelect.left(id="duration" name="duration" type="number" options="{durationOptions}" valuePath="system.duration")
+          label(for="duration.turns") Turns
         .flex2.right
-          DocSelect.right(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
+          DocInput.right(id="duration.turns" name="duration.turns" type="number" valuePath="system.duration.turns")
+      .flexrow.sheet-row.justify-vertical.wide.px-sm
+        .flex2.left
+          label(for="duration.rounds") Rounds
+        .flex2.right
+          DocInput.right(id="duration.rounds" name="duration.rounds" type="number" valuePath="system.duration.rounds")
 
       
     .flexrow.justify-vertical
