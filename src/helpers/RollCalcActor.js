@@ -186,7 +186,6 @@ export default class RollCalcActor extends RollCalc {
         const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
         allEnabledEffects = allEnabledEffects.concat(effects);
       }
-      await this._disableEnablerEffectsOnActor(item, allEnabledEffects);
       return;
     }
 
@@ -223,7 +222,6 @@ export default class RollCalcActor extends RollCalc {
       const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
       allEnabledEffects = allEnabledEffects.concat(effects);
     }
-    await this._disableEnablerEffectsOnActor(item, allEnabledEffects);
 
     return message
   }
@@ -309,34 +307,7 @@ export default class RollCalcActor extends RollCalc {
   }
 
 
-  async _disableEnablerEffectsOnActor(item, recentlyEnabledEffects = []) {
 
-    if (!(await this._handleGuards(item, [
-      this.RG.isCombat,
-    ]))) {
-      return;
-    }
-
-    for(const effect of this.params.actor.effects) {
-      
-      // Skip effects we just enabled
-      if (recentlyEnabledEffects.includes(effect.uuid)) {
-        continue;
-      }
-
-      const originUuid = effect.origin;
-      const origin = await fromUuid(originUuid);
-
-      const shouldDisableByTags = await this._shouldDisableByTags(item, origin);
-      const shouldDisableByRequirement = await this._shouldDisableByRequirements(item, origin, effect);
-
-      if (shouldDisableByTags || shouldDisableByRequirement) {
-        await effect.update({ disabled: true });
-      } else {
-        game.system.log.w("[DISABLE] No match for effect:", effect.name);
-      }
-    }
-  }
 
   async _shouldDisableByTags(item, origin) {
     const itemTags = item?.system?.tags || [];
