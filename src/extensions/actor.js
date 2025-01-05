@@ -113,22 +113,36 @@ export default class FF15Actor extends Actor {
     if (!item.hasEffects) return [];
 
     // Convert effects to plain objects and set combat duration
-    const effectsData = Array.from(item.effects).map(effect => ({
-      ...effect.toObject(),
-      flags: {
-        ...effect.flags,
-        [SYSTEM_ID]: {
-          overlay: effect.getFlag(SYSTEM_ID, 'overlay'),
-          origin: {
-            actor: {
-              uuid: this.uuid,
-              name: this.name,
-              img: this.img
+    const effectsData = Array.from(item.effects).map(effect => {
+      // Check for existing effect with same ID
+      const existingEffect = this.effects.find(e => 
+        e.name === effect.name && 
+        effect.origin.actor.uuid === this.uuid
+      );
+      if (existingEffect) {
+        game.system.log.w("[ENABLE] Effect already exists with ID:", effect._id);
+        return null;
+      }
+
+      return {
+        ...effect.toObject(),
+        flags: {
+          ...effect.flags,
+          [SYSTEM_ID]: {
+            overlay: effect.getFlag(SYSTEM_ID, 'overlay'),
+            origin: {
+              actor: {
+                uuid: this.uuid,
+                name: this.name,
+                img: this.img
+              }
             }
           }
         }
-      }
-    }));
+      };
+    }).filter(Boolean); // Remove null entries for existing effects
+
+    if (!effectsData.length) return [];
 
     game.system.log.o("[ENABLE] addTraitEffect effectsData", effectsData);
     for (const effectData of effectsData) {
