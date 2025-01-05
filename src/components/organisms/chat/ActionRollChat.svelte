@@ -38,7 +38,8 @@
   $: displayDirectHitDamage = (target)  =>
     isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit;
   // $: displayVal = (target, type) =>  $displayValues.get(target.id)?.[type] || "";
-
+  $: displayDirectHitDisplayFormula = (target) => FFMessageState.damageResults[target.id]?.directHitDisplayFormula;
+  
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
 
   $: roll = FFMessage?.roll || 0;
@@ -66,6 +67,7 @@
         baseDamageFormula: `Base Damage (${item.system?.formula})`,
         directHit: item.system?.directHitDamage,
         directHitFormula: item.system?.directHitDamage,
+        directHitDisplayFormula: `Direct Hit (${item.system?.directHitDamage})`,
         directHitResult: false,
         applied: false,
         originalHP: token.actor.system.points.HP.val,
@@ -320,7 +322,7 @@
                       .flex3.left.font-cinzel.smaller Damage 
                       .flex1.right.no-wrap {displayDamage(target)}
                   +if("item.system?.hasDirectHit")
-                    .flex1.formula.flexrow.justify-vertical.smaller
+                    .flex1.formula.flexrow.justify-vertical.smaller(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDirectHitDisplayFormula(target)}")
                       .flex3.left.font-cinzel.even-smaller Direct Hit 
                       .flex1.right.no-wrap {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
                 .flex0

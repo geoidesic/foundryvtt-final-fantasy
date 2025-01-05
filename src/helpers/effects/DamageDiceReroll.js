@@ -24,6 +24,7 @@ export default class DamageDiceReroll {
             const kh = numDice;
             targetData.directHit = `${newNumDice}d${dieType}kh${kh}`;
             targetData.baseDamageFormula += ` + ${origin.name}`;
+            targetData.directHitDisplayFormula += ` + ${effect.name}`;
           }
         }
       }
