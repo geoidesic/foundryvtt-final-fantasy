@@ -69,29 +69,8 @@
     }
     effect.update({ disabled: !effect.disabled });
   }
-  async function openActiveEffectEditor() {
-    game.system.log.d("openActiveEffectEditor");
-    const effect = await ActiveEffect.create(
-      {
-        label: $doc.name,
-        icon: $doc.img,
-        origin: $doc.uuid,
-        disabled: false,
-        transfer: true,
-        flags: {
-          [SYSTEM_ID]: {
-            source: "user",
-            trigger: "passive",
-          },
-        },
-      },
-      { parent: $doc },
-    );
-
-    game.system.log.d("effect", effect);
-
-    const effectConfig = new ActiveEffectConfig(effect, { editable: true });
-    effectConfig.render(true);
+  function openItem(index, item) {
+    item.sheet.render(true);
   }
   // @todo: could convert this to an IconSelect, which provides better state handling (i.e. currently this select will show an incorrect value if the update fails until the Application is reloaded)
   async function updateTrigger(effect, event) {
@@ -109,9 +88,9 @@
   $: ActiveEffects = [...$wildcard]
     .filter(effect => !effect.disabled)
     .map((effect) => {
-      const originInstance = getEffectOrigin(effect, true);
-      if(!effect.flags[SYSTEM_ID]) effect.flags[SYSTEM_ID] = {};
-      effect.flags[SYSTEM_ID].originInstance = originInstance;
+      // const originInstance = getEffectOrigin(effect, true);
+      // if(!effect.flags[SYSTEM_ID]) effect.flags[SYSTEM_ID] = {};
+      // effect.flags[SYSTEM_ID].originInstance = originInstance;
       return effect
     });
   $: lockCSS = $doc.system.effectActionsLocked ? "lock" : "lock-open";
@@ -134,7 +113,7 @@
               td.img.shrink(scope="col")
                 img.icon(src="{item.img}" alt="{item.name}")
               td.left
-                a.ml-sm.stealth.link.no-wrap(on:click="{editItem(index, item)}") {item.name}
+                a.ml-sm.stealth.link.no-wrap(on:click="{openItem(index, item)}") {item.name}
 
     +else
       p(style="margin-top: -2px; margin-bottom: 0px;") {localize("FF15.NoEffects")}
