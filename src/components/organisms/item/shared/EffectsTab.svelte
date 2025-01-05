@@ -137,10 +137,7 @@
         origin: $doc.uuid,
         renderSheet:true,
         flags: {
-          [SYSTEM_ID]: {
-            source: "user",
-            trigger: "passive",
-          },
+          [SYSTEM_ID]: {},
         },
       },
       { parent: $doc },
@@ -182,9 +179,9 @@
 
   // $: ActiveEffects = $filterDoc.effects;
   $: ActiveEffects = [...$wildcard].map((effect) => {
-    const originInstance = getEffectOrigin(effect, true);
-    if(!effect.flags[SYSTEM_ID]) effect.flags[SYSTEM_ID] = {};
-    effect.flags[SYSTEM_ID].originInstance = originInstance;
+    // const originInstance = getEffectOrigin(effect, true);
+    // if(!effect.flags[SYSTEM_ID]) effect.flags[SYSTEM_ID] = {};
+    // effect.flags[SYSTEM_ID].originInstance = originInstance;
     return effect
   });
   $: lockCSS = $doc.system.effectActionsLocked ? "lock" : "lock-open";
@@ -193,54 +190,42 @@
 </script>
 
 <template lang="pug">
+.panel.overflow.containerx
+  .padded
+    h1.gold {localize('Effects')}
+    table.borderless.even
+      tr.gold
+        th.img.shrink(scope="col")
+        th.left.expand.ml-sm(scope="col") {localize('Name')}
+        th.left(scope="col") {localize('Origin')}
+        th.buttons(scope="col" class="{lockCSS}")
+          button.stealth(class="{lockCSS}" on:click="{toggleLock}")
+            i.fa(class="{faLockCSS}")
+      +each("ActiveEffects as effect, index")
+        tr(class="{effect.disabled ? 'disabled' : ''}")
+          td.img
+            img.icon(
+              class="{effect.isSuppressed ? 'suspended' : 'active'}" 
+              src="{getAvatarForVersion(effect, window.game.version)}" 
+              alt="avatar for game version"
+            )
+          td.left.expand.no-wrap {effect.name}
+          td.img
+            img.icon.nopointer(
+              src="{effect.getFlag(SYSTEM_ID, 'origin.actor.img')}" 
+              alt="avatar for effect origin"
+            )
+          td.buttons.right.no-wrap
+            +if("!$doc.system.effectActionsLocked && showDelete")
+              button.stealth(on:click="{editItem(index, effect)}")
+                i.left.fa.fa-edit
+              button.stealth(on:click="{deleteItem(index, effect)}")
+                i.left.fa.fa-trash
 
-.item-sheet.details.overflow
-  //- i.fa.fa-circle-check(on:click="{debug}")
-  .flexcol.flex3.left
-    .flexrow.justify-vertical.my-sm
-      .flexcol.flex1.label-container 
-        label(for="search") {localize('Search')}
-      .flex3.left
-        TJSInput({input})
-
-    div
-      ol.standard-list
-        li.flexrow.header.justify-vertical.standard-list-row
-          .li-image
-          .flex4.left
-            div {localize('Name')}
-          .actions.right
-            button.stealth.row-action-button.rowimgbezelbutton.pointer(class="{lockCSS}" on:click="{toggleLock}")
-              i.fa(class="{faLockCSS}")
-        +each("ActiveEffects as effect, index")
-          li.flexrow.justify-vertical.standard-list-row(class="{effect.disabled ? 'disabled' : ''}")
-            .li-image(class="{effect.isSuppressed ? 'suspended' : 'active'}")
-              img.icon.nopointer(src="{getAvatarForVersion(effect, window.game.version)}" alt="avatar for game version")
-            .flex4.left
-              div {effect.name}
-            
-            .actions.right
-              +if("!$doc.system.effectActionsLocked && showDelete")
-                div.hide.row-action-button.rowimgbezelbutton.pointer
-                  i.left.fa.fa-edit.mr-md
-                button.stealth.row-action-button.rowimgbezelbutton.pointer( on:click="{editItem(index, effect)}")
-                  i.left.fa.fa-edit.mr-md
-                button.stealth.row-action-button.rowimgbezelbutton.pointer( on:click="{deleteItem(index, effect)}")
-                  i.left.fa.fa-trash.mr-md
-        li.flexrow.footer
     +if("showAddRemoveButtons")
-      .flexrow(style="justify-content: space-evenly")
-        .flex1.center
-          button.truncate.mt-sm.glossy-button.gold-light.hover-shine(on:click="{openActiveEffectEditor}") + Add Effect
-        .flex1.center
-          button.truncate.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllEffects}") - Remove All Effects
-
-    //- h5 Notes: 
-    //- ul.pa-sm.left.pa-md(style="margin-top: -20px")
-    //-   li Each of the effects listed are collections. 
-    //-   li Click edit next to the collection to see its contents.
-    //-   li You should set your item's profile image before adding an effect as the effect will inherit that image. 
-    
+      .flexrow.mt-sm(style="justify-content: space-evenly")
+        button.glossy-button.gold-light.hover-shine.no-wrap(on:click="{openActiveEffectEditor}") + Add Effect
+        button.glossy-button.gold-light.hover-shine.no-wrap(on:click="{removeAllEffects}") - Remove All Effects
 </template>
 
 <style lang="sass">

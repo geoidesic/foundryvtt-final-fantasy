@@ -10,6 +10,7 @@ export class FFActorDataModel extends FFTypeDataModel {
       isEditing: new BooleanField({initial: false}),
       hasMoved: new BooleanField({initial: false}),
       inventoryLocked: new BooleanField({ initial: false }),
+      effectActionsLocked: new BooleanField({ initial: false }),
       description: new HTMLField(),
       DOT: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
       globalCheckMod: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
