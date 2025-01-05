@@ -56,6 +56,9 @@ const _FF15Item = class _FF15Item extends Item {
     return parseInt(this.system.limitation || 0);
   }
   get currentUses() {
+    game.system.log.o("[ENABLE] [CURRENT USES] currentUses on item:", this);
+    game.system.log.o("[ENABLE] [CURRENT USES] currentUses on item.name:", this.name);
+    game.system.log.o("[ENABLE] [CURRENT USES] currentUses raw value:", this.system.uses);
     if (this.system.uses === void 0 || this.system.uses === null || this.system.uses === "")
       return 0;
     const parsed = parseInt(this.system.uses);
@@ -268,26 +271,32 @@ const _FF15Actor = class _FF15Actor extends Actor {
       // Must not be the source actor
     );
   }
+  /**
+   * @returns {Array<ActiveEffect>} effects on the actor that have a change with key = EnableCombatTurnSlot mode = custom
+   */
+  get enablerEffects() {
+    return this.effects.filter(
+      (effect) => effect.changes.some(
+        (change) => change.key === "EnableCombatTurnSlot" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
+      )
+    );
+  }
   hasSpecificDuplicate(arr, str) {
     return arr.filter((item) => item === str).length > 1;
   }
   /**
-   * Check if an enabler item (e.g. a Trait) has any effects that are disabled (meaning the trait hasn't been used yet)
+   * Check if an item has remaining uses
    * @param {FF15Item} item 
    * @returns {boolean}
    */
-  hasDisabledEnablerEffects(item) {
-    return Array.from(item.effects).some((effect) => {
-      const matchingEffect = this.effects.find((ae) => ae.name === effect.name);
-      return matchingEffect?.disabled;
-    });
-  }
   async actorItemHasRemainingUses(item) {
+    game.system.log.p("[USES] Checking remaining uses for:", item);
+    game.system.log.p("[USES] Checking remaining uses item name:", item.name);
+    game.system.log.p("[USES] hasLimitation:", item.system.hasLimitation);
+    game.system.log.p("[USES] currentUses:", item.currentUses);
+    game.system.log.p("[USES] usesRemaining:", item.usesRemaining);
     if (!item.system.hasLimitation) {
       return true;
-    }
-    if (this.hasDisabledEnablerEffects(item) && item.currentUses) {
-      await item.update({ "system.uses": 0 });
     }
     return item.usesRemaining > 0;
   }
@@ -310,6 +319,10 @@ const _FF15Actor = class _FF15Actor extends Actor {
     return this.effects.find((ae) => {
       if (ae.name !== effect.name)
         return false;
+      const originItemId = effect.origin?.split(".").pop();
+      const existingItemId = ae.origin?.split(".").pop();
+      if (originItemId !== existingItemId)
+        return false;
       for (const [key, value] of Object.entries(criteria)) {
         if (typeof value === "function") {
           if (!value(ae[key]))
@@ -326,30 +339,70 @@ const _FF15Actor = class _FF15Actor extends Actor {
    * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
    */
   async addTraitEffects(item) {
-    game.system.log.o("[ENABLE] addTraitEffect", item);
-    if (!item.hasEffects)
+    game.system.log.p("[ADD] Starting addTraitEffects for item:", item.name);
+    if (!item.hasEffects) {
+      game.system.log.p("[ADD] Item has no effects, returning");
       return [];
-    const effectsData = Array.from(item.effects).map((effect) => ({
-      ...effect.toObject(),
-      flags: {
-        ...effect.flags,
-        [SYSTEM_ID]: {
-          origin: {
-            actor: {
-              uuid: this.uuid,
-              name: this.name,
-              img: this.img
+    }
+    const effectsData = Array.from(item.effects).map((effect) => {
+      game.system.log.p("[ADD] Processing effect:", {
+        name: effect.name,
+        id: effect._id,
+        disabled: effect.disabled,
+        origin: effect.origin
+      });
+      const existingEffect = this.effects.find(
+        (e) => e.name === effect.name && effect.origin?.actor?.uuid === this.uuid
+      );
+      if (existingEffect) {
+        game.system.log.p("[ADD] Found existing effect:", {
+          name: existingEffect.name,
+          id: existingEffect._id,
+          disabled: existingEffect.disabled
+        });
+        return null;
+      }
+      const effectData = {
+        ...effect.toObject(),
+        disabled: false,
+        // Explicitly set disabled to false
+        flags: {
+          ...effect.flags,
+          [SYSTEM_ID]: {
+            overlay: effect.getFlag(SYSTEM_ID, "overlay"),
+            origin: {
+              actor: {
+                uuid: this.uuid,
+                name: this.name,
+                img: this.img
+              },
+              effect: {
+                uuid: effect.uuid
+              }
             }
           }
         }
-      }
-    }));
-    game.system.log.o("[ENABLE] addTraitEffect effectsData", effectsData);
+      };
+      game.system.log.p("[ADD] Created effect data:", {
+        name: effectData.name,
+        disabled: effectData.disabled,
+        flags: effectData.flags
+      });
+      return effectData;
+    }).filter(Boolean);
+    if (!effectsData.length) {
+      game.system.log.p("[ADD] No effects to create after filtering");
+      return [];
+    }
     for (const effectData of effectsData) {
       await FFActiveEffect.setCombatDuration(effectData);
     }
     const created = await this.createEmbeddedDocuments("ActiveEffect", effectsData);
-    game.system.log.o("[ENABLE] addTraitEffect created", created);
+    game.system.log.p("[ADD] Created effects:", created.map((e) => ({
+      name: e.name,
+      id: e._id,
+      disabled: e.disabled
+    })));
     return created.map((e) => e.uuid);
   }
   /**
@@ -358,34 +411,63 @@ const _FF15Actor = class _FF15Actor extends Actor {
    * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
    */
   async enableTraitEffects(item) {
+    game.system.log.p("[ENABLE] Starting enableTraitEffects for item:", item.name);
     let effectsEnabled = [];
     for (const effect of item.effects) {
-      const matchingEffect = this.matchingEffect(effect, { disabled: true });
+      game.system.log.p("[ENABLE] Processing effect:", {
+        name: effect.name,
+        disabled: effect.disabled,
+        isTransferred: effect.isTransferred,
+        origin: effect.origin,
+        originItemId: effect.origin?.split(".").pop()
+      });
+      const matchingEffect = this.matchingEffect(effect);
+      game.system.log.p("[ENABLE] Effect matching results:", {
+        effectName: effect.name,
+        effectOrigin: effect.origin,
+        effectOriginId: effect.origin?.split(".").pop(),
+        foundMatch: !!matchingEffect,
+        matchName: matchingEffect?.name,
+        matchOrigin: matchingEffect?.origin,
+        matchOriginId: matchingEffect?.origin?.split(".").pop(),
+        matchDisabled: matchingEffect?.disabled
+      });
       if (matchingEffect) {
-        matchingEffect.toObject();
-        await matchingEffect.update({ disabled: false });
-        effectsEnabled.push(matchingEffect.uuid);
-        if (effect.isSuppressed)
+        if (matchingEffect.disabled) {
+          game.system.log.p("[ENABLE] Updating existing effect to enabled");
+          await matchingEffect.update({ disabled: false });
+          effectsEnabled.push(matchingEffect.uuid);
+        } else {
+          game.system.log.p("[ENABLE] Matching effect already enabled");
+        }
+        if (effect.isSuppressed) {
+          game.system.log.p("[ENABLE] Effect is suppressed, skipping hooks");
           continue;
+        }
         for (const change of effect.changes) {
           if (activeEffectModes.find((e) => e.value === change.mode)) {
+            game.system.log.p("[ENABLE] Calling hook for change:", change.key);
             await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
           }
         }
       } else {
-        await this.addTraitEffects(item);
+        game.system.log.p("[ENABLE] No matching effect found, adding new effect");
+        const addedEffects = await this.addTraitEffects(item);
+        game.system.log.p("[ENABLE] Added new effects:", addedEffects);
         for (const effect2 of item.effects) {
-          if (effect2.isSuppressed)
+          if (effect2.isSuppressed) {
+            game.system.log.p("[ENABLE] New effect is suppressed, skipping hooks");
             continue;
+          }
           for (const change of effect2.changes) {
+            game.system.log.p("[ENABLE] Calling hook for new effect change:", change.key);
             await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect: effect2 });
           }
         }
       }
     }
+    game.system.log.p("[ENABLE] Finished enableTraitEffects, enabled:", effectsEnabled);
     return effectsEnabled;
-  }
-  async disableEnablerEffects(item) {
   }
   removeFirstDuplicate(arr, name) {
     const index = arr.indexOf(name);
@@ -496,65 +578,6 @@ const _FFToken = class _FFToken extends Token {
 };
 __name(_FFToken, "FFToken");
 let FFToken = _FFToken;
-const _FFCombat = class _FFCombat extends Combat {
-  constructor(data, context) {
-    super(data, context);
-    game.system.log.d(">>>>>>>>>> FFCombat constructor");
-  }
-  /**
-   * Return the Array of combatants sorted into initiative order, breaking ties alphabetically by name.
-   * @returns {Combatant[]}
-   */
-  setupTurns() {
-    this.turns ||= [];
-    const turns = this.combatants.contents.sort(this._sortCombatants);
-    if (this.turn !== null)
-      this.turn = Math.clamp(this.turn, 0, turns.length - 1);
-    let c = turns[this.turn];
-    this.current = this._getCurrentState(c);
-    if (!this.previous)
-      this.previous = this.current;
-    return this.turns = turns;
-  }
-  /**
-  * Define how the array of Combatants is sorted in the displayed list of the tracker.
-  * This method can be overridden by a system or module which needs to display combatants in an alternative order.
-  * The default sorting rules sort in descending order of initiative using combatant IDs for tiebreakers.
-  * @param {Combatant} a     Some combatant
-  * @param {Combatant} b     Some other combatant
-  * @protected
-  */
-  _sortCombatants(a, b) {
-    const aIsNPC = a.actor?.type === "NPC";
-    const bIsNPC = b.actor?.type === "NPC";
-    if (aIsNPC && !bIsNPC) {
-      a.css = "npc-group-start";
-      b.css = "pc-group-end";
-      return 1;
-    } else if (!aIsNPC && bIsNPC) {
-      a.css = "pc-group-end";
-      b.css = "npc-group-start";
-      return -1;
-    }
-    if (a.initiative === null && b.initiative === null)
-      return 0;
-    if (a.initiative === null)
-      return 1;
-    if (b.initiative === null)
-      return -1;
-    return b.initiative - a.initiative;
-  }
-};
-__name(_FFCombat, "FFCombat");
-let FFCombat = _FFCombat;
-const _FFCombatants = class _FFCombatants extends Combatant {
-  constructor(object, options = {}) {
-    game.system.log.d("FFCombatants constructor");
-    super(object, options);
-  }
-};
-__name(_FFCombatants, "FFCombatants");
-let FFCombatants = _FFCombatants;
 const log$1 = {
   ASSERT: 1,
   ERROR: 2,
@@ -688,6 +711,107 @@ const resetActionState = /* @__PURE__ */ __name(async (actor) => {
     }
   });
 }, "resetActionState");
+const _FFCombat = class _FFCombat extends Combat {
+  constructor(data, context) {
+    super(data, context);
+    game.system.log.d(">>>>>>>>>> FFCombat constructor");
+  }
+  /**
+   * Returns true if the current turn represents the end of the adventurer step
+   * (i.e., if the current turn is the last PC and the next turn is an NPC)
+   * @type {boolean}
+   */
+  get isAdventurerStepEnd() {
+    if (!this.started || this.turn === null)
+      return false;
+    const currentCombatant = this.turns[this.turn];
+    const nextCombatant = this.turns[this.turn + 1];
+    return currentCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC";
+  }
+  /**
+   * Returns true if the current turn represents the end of the enemy step
+   * (i.e., if the current turn is the last NPC and the next turn is a PC or the round ends)
+   * @type {boolean}
+   */
+  get isEnemyStepEnd() {
+    if (!this.started || this.turn === null)
+      return false;
+    const currentCombatant = this.turns[this.turn];
+    const nextCombatant = this.turns[this.turn + 1];
+    return currentCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
+  }
+  async resetCombatantAbilities() {
+    const combatants = this.combatants.contents;
+    for (const combatant of combatants) {
+      const actor = combatant.actor;
+      if (!actor)
+        continue;
+      const items = actor.items.filter((i) => i.system.hasLimitation);
+      await resetUses(items);
+      for (const effect of actor.effects) {
+        if (effect.isTransferred) {
+          await effect.update({ disabled: true });
+        } else {
+          await effect.delete();
+        }
+      }
+      await resetActionState(actor);
+    }
+  }
+  /**
+   * Return the Array of combatants sorted into initiative order, breaking ties alphabetically by name.
+   * @returns {Combatant[]}
+   */
+  setupTurns() {
+    this.turns ||= [];
+    const turns = this.combatants.contents.sort(this._sortCombatants);
+    if (this.turn !== null)
+      this.turn = Math.clamp(this.turn, 0, turns.length - 1);
+    let c = turns[this.turn];
+    this.current = this._getCurrentState(c);
+    if (!this.previous)
+      this.previous = this.current;
+    return this.turns = turns;
+  }
+  /**
+   * Define how the array of Combatants is sorted in the displayed list of the tracker.
+   * This method can be overridden by a system or module which needs to display combatants in an alternative order.
+   * The default sorting rules sort in descending order of initiative using combatant IDs for tiebreakers.
+   * @param {Combatant} a     Some combatant
+   * @param {Combatant} b     Some other combatant
+   * @protected
+   */
+  _sortCombatants(a, b) {
+    const aIsNPC = a.actor?.type === "NPC";
+    const bIsNPC = b.actor?.type === "NPC";
+    if (aIsNPC && !bIsNPC) {
+      a.css = "npc-group-start";
+      b.css = "pc-group-end";
+      return 1;
+    } else if (!aIsNPC && bIsNPC) {
+      a.css = "pc-group-end";
+      b.css = "npc-group-start";
+      return -1;
+    }
+    if (a.initiative === null && b.initiative === null)
+      return 0;
+    if (a.initiative === null)
+      return 1;
+    if (b.initiative === null)
+      return -1;
+    return b.initiative - a.initiative;
+  }
+};
+__name(_FFCombat, "FFCombat");
+let FFCombat = _FFCombat;
+const _FFCombatants = class _FFCombatants extends Combatant {
+  constructor(object, options = {}) {
+    game.system.log.d("FFCombatants constructor");
+    super(object, options);
+  }
+};
+__name(_FFCombatants, "FFCombatants");
+let FFCombatants = _FFCombatants;
 const _RollGuards = class _RollGuards {
   actor;
   //- shuttle is used to pass data from the guards to the roll calculator
@@ -844,10 +968,20 @@ const _RollGuards = class _RollGuards {
       return true;
     }
     this.shuttle.hasModifiers.extraModifiers = await this._showModifierDialog(item);
-    Hooks.call("FF15.processTargetRollAdditionalModifiers", { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
     if (!this.shuttle.hasModifiers.extraModifiers?.confirmed) {
+      for (const effect of this.actor.effects) {
+        if (effect.getFlag(SYSTEM_ID, "pendingDeletion")) {
+          await effect.unsetFlag(SYSTEM_ID, "pendingDeletion");
+        }
+      }
       return false;
     }
+    for (const effect of this.actor.effects) {
+      if (effect.getFlag(SYSTEM_ID, "pendingDeletion")) {
+        await effect.delete();
+      }
+    }
+    Hooks.call("FF15.processTargetRollAdditionalModifiers", { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
     return true;
   }
   async hasEnablers(item) {
@@ -903,10 +1037,14 @@ const _RollGuards = class _RollGuards {
       const requiredItem = await fromUuid(requireRef.uuid);
       if (!requiredItem)
         continue;
-      const hasActiveEffect = requiredItem.effects.some((effect) => {
-        const matchingEffect = this.actor.effects.find((ae) => ae.name === effect.name);
-        return matchingEffect && !matchingEffect.disabled;
-      });
+      let hasActiveEffect = false;
+      for (const effect of this.actor.effects) {
+        if (effect.name === requiredItem.name) {
+          hasActiveEffect = true;
+          await effect.setFlag(SYSTEM_ID, "pendingDeletion", true);
+          break;
+        }
+      }
       if (!hasActiveEffect) {
         ui.notifications.warn(game.i18n.format("FF15.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
         return false;
@@ -1112,9 +1250,59 @@ function renderCombatTracker() {
       const currentActor = combatant.actor;
       if (!currentActor)
         continue;
+      game.system.log.o("[EFFECT] Processing actor:", {
+        name: currentActor.name,
+        type: currentActor.type,
+        id: currentActor.id
+      });
       const effects2 = currentActor.effects;
+      game.system.log.o("[EFFECT] Actor effects count:", effects2.size);
       for (const effect of effects2) {
-        game.system.log.o("[EFFECT] updateCombat effect", effect);
+        game.system.log.o("[EFFECT] Processing effect:", {
+          name: effect.name,
+          disabled: effect.disabled,
+          changes: effect.changes
+        });
+        const previousCombatant = combat.turns[combat.previous?.turn];
+        const nextCombatant = combat.turns[combat.previous?.turn + 1];
+        const wasAdventurerStepEnd = previousCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC";
+        const wasEnemyStepEnd = previousCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
+        game.system.log.o("[EFFECT] Previous combat state:", {
+          wasAdventurerStepEnd,
+          wasEnemyStepEnd,
+          previousCombatant: previousCombatant?.actor?.name,
+          nextCombatant: nextCombatant?.actor?.name
+        });
+        if (!effect.disabled) {
+          if (wasAdventurerStepEnd && currentActor.type === "PC") {
+            game.system.log.o("[EFFECT] Processing PC DOT at adventurer step end");
+            for (const change of effect.changes) {
+              game.system.log.o("[EFFECT] Checking PC change:", {
+                key: change.key,
+                mode: change.mode,
+                value: change.value,
+                expectedMode: ACTIVE_EFFECT_MODES.CUSTOM
+              });
+              if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+                await Hooks.callAll("FF15.DamageOverTime", { actor: currentActor, change, effect });
+              }
+            }
+          } else if (wasEnemyStepEnd && currentActor.type === "NPC") {
+            game.system.log.o("[EFFECT] Processing NPC DOT at enemy step end");
+            for (const change of effect.changes) {
+              game.system.log.o("[EFFECT] Checking NPC change:", {
+                key: change.key,
+                mode: change.mode,
+                value: change.value,
+                expectedMode: ACTIVE_EFFECT_MODES.CUSTOM
+              });
+              if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+                game.system.log.o("[EFFECT] Found valid DOT change, calling hook");
+                await Hooks.callAll("FF15.DamageOverTime", { actor: currentActor, change, effect });
+              }
+            }
+          }
+        }
         if (!effect.duration?.rounds && !effect.duration?.turns)
           continue;
         const isExpired = effect.duration.remaining <= 0;
@@ -1128,7 +1316,7 @@ function renderCombatTracker() {
           }
         }
         for (const change of effect.changes) {
-          if (activeEffectModes.find((e) => e.value === change.mode)) {
+          if (ACTIVE_EFFECT_MODES.CUSTOM === change.mode) {
             await Hooks.callAll(`FF15.${change.key}Delete`, { actor: currentActor, change, effect });
           }
         }
@@ -5560,8 +5748,8 @@ function create_fragment$1j(ctx) {
       );
       attr(div1, "class", "flexrow");
       attr(div2, "class", "col");
-      attr(div3, "class", "col font-cinzel smaller pointer item-name svelte-FF15-11uesrg");
-      attr(div4, "class", div4_class_value = "flex2 flexcol " + /*showProfileImage*/
+      attr(div3, "class", "col font-cinzel smaller pointer item-name nooverflow svelte-FF15-11uesrg");
+      attr(div4, "class", div4_class_value = "flex3 flexcol nooverflow " + /*showProfileImage*/
       (ctx[1] ? "text" : "") + " svelte-FF15-11uesrg");
       attr(div5, "class", "flex1 mr-xl-h right type-label smaller gold svelte-FF15-11uesrg");
       attr(div6, "class", "flexcol");
@@ -5639,7 +5827,7 @@ function create_fragment$1j(ctx) {
         if_block0 = null;
       }
       if (!current || dirty & /*showProfileImage*/
-      2 && div4_class_value !== (div4_class_value = "flex2 flexcol " + /*showProfileImage*/
+      2 && div4_class_value !== (div4_class_value = "flex3 flexcol nooverflow " + /*showProfileImage*/
       (ctx2[1] ? "text" : "") + " svelte-FF15-11uesrg")) {
         attr(div4, "class", div4_class_value);
       }
@@ -7065,7 +7253,7 @@ let Header$6 = (_b = class extends SvelteComponent {
 const ActionRollChat_svelte_svelte_type_style_lang = "";
 function get_each_context$g(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[32] = list[i];
+  child_ctx[33] = list[i];
   return child_ctx;
 }
 __name(get_each_context$g, "get_each_context$g");
@@ -7075,7 +7263,7 @@ function create_if_block_5$2(ctx) {
   let html_tag;
   let raw_value = (
     /*item*/
-    ctx[8].system.description + ""
+    ctx[9].system.description + ""
   );
   let html_anchor;
   let header;
@@ -7185,8 +7373,8 @@ function create_if_block$t(ctx) {
       }
     },
     p(ctx2, dirty) {
-      if (dirty[0] & /*targetTokens, isApplyDisabled, undoResult, applyResult, isHit, displayDirectHitDamage, item, displayDamageFormula, displayDamage, openActorSheet*/
-      31212) {
+      if (dirty[0] & /*targetTokens, isApplyDisabled, undoResult, applyResult, displayDirectHitDisplayFormula, isHit, displayDirectHitDamage, item, displayDamageFormula, displayDamage, openActorSheet*/
+      62444) {
         each_value = ensure_array_like(
           /*targetTokens*/
           ctx2[3]
@@ -7229,11 +7417,11 @@ function create_if_block_3$9(ctx) {
       attr(img, "class", "target-img clickable svelte-FF15-9qju1k");
       if (!src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
-        ctx[32]
+        ctx[33]
       )))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*target*/
-      ctx[32].name);
+      ctx[33].name);
     },
     m(target, anchor) {
       insert(target, img, anchor);
@@ -7241,14 +7429,14 @@ function create_if_block_3$9(ctx) {
         dispose = listen(img, "click", function() {
           if (is_function(
             /*openActorSheet*/
-            ctx[14](
+            ctx[15](
               /*target*/
-              ctx[32].actor
+              ctx[33].actor
             )
           ))
-            ctx[14](
+            ctx[15](
               /*target*/
-              ctx[32].actor
+              ctx[33].actor
             ).apply(this, arguments);
         });
         mounted = true;
@@ -7259,13 +7447,13 @@ function create_if_block_3$9(ctx) {
       if (dirty[0] & /*targetTokens*/
       8 && !src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
-        ctx[32]
+        ctx[33]
       ))) {
         attr(img, "src", img_src_value);
       }
       if (dirty[0] & /*targetTokens*/
       8 && img_alt_value !== (img_alt_value = /*target*/
-      ctx[32].name)) {
+      ctx[33].name)) {
         attr(img, "alt", img_alt_value);
       }
     },
@@ -7285,9 +7473,9 @@ function create_if_block_2$e(ctx) {
   let div1;
   let t1_value = (
     /*displayDamage*/
-    ctx[7](
+    ctx[8](
       /*target*/
-      ctx[32]
+      ctx[33]
     ) + ""
   );
   let t1;
@@ -7304,9 +7492,9 @@ function create_if_block_2$e(ctx) {
       attr(div2, "class", "flex1 formula flexrow justify-vertical active");
       attr(div2, "data-tooltip-class", "FF15-tooltip");
       attr(div2, "data-tooltip", div2_data_tooltip_value = /*displayDamageFormula*/
-      ctx[6](
+      ctx[7](
         /*target*/
-        ctx[32]
+        ctx[33]
       ));
     },
     m(target, anchor) {
@@ -7317,17 +7505,17 @@ function create_if_block_2$e(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*displayDamage, targetTokens*/
-      136 && t1_value !== (t1_value = /*displayDamage*/
-      ctx2[7](
+      264 && t1_value !== (t1_value = /*displayDamage*/
+      ctx2[8](
         /*target*/
-        ctx2[32]
+        ctx2[33]
       ) + ""))
         set_data(t1, t1_value);
       if (dirty[0] & /*displayDamageFormula, targetTokens*/
-      72 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDamageFormula*/
-      ctx2[6](
+      136 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDamageFormula*/
+      ctx2[7](
         /*target*/
-        ctx2[32]
+        ctx2[33]
       ))) {
         attr(div2, "data-tooltip", div2_data_tooltip_value);
       }
@@ -7346,18 +7534,19 @@ function create_if_block_1$i(ctx) {
   let div1;
   let t1_value = (
     /*isHit*/
-    (ctx[13](
+    (ctx[14](
       /*target*/
-      ctx[32]
+      ctx[33]
     ) ? (
       /*displayDirectHitDamage*/
-      ctx[5](
+      ctx[6](
         /*target*/
-        ctx[32]
+        ctx[33]
       )
     ) : "N/A") + ""
   );
   let t1;
+  let div2_data_tooltip_value;
   return {
     c() {
       div2 = element("div");
@@ -7368,6 +7557,12 @@ function create_if_block_1$i(ctx) {
       attr(div0, "class", "flex3 left font-cinzel even-smaller");
       attr(div1, "class", "flex1 right no-wrap");
       attr(div2, "class", "flex1 formula flexrow justify-vertical smaller");
+      attr(div2, "data-tooltip-class", "FF15-tooltip");
+      attr(div2, "data-tooltip", div2_data_tooltip_value = /*displayDirectHitDisplayFormula*/
+      ctx[5](
+        /*target*/
+        ctx[33]
+      ));
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -7377,18 +7572,26 @@ function create_if_block_1$i(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*targetTokens, displayDirectHitDamage*/
-      40 && t1_value !== (t1_value = /*isHit*/
-      (ctx2[13](
+      72 && t1_value !== (t1_value = /*isHit*/
+      (ctx2[14](
         /*target*/
-        ctx2[32]
+        ctx2[33]
       ) ? (
         /*displayDirectHitDamage*/
-        ctx2[5](
+        ctx2[6](
           /*target*/
-          ctx2[32]
+          ctx2[33]
         )
       ) : "N/A") + ""))
         set_data(t1, t1_value);
+      if (dirty[0] & /*displayDirectHitDisplayFormula, targetTokens*/
+      40 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDirectHitDisplayFormula*/
+      ctx2[5](
+        /*target*/
+        ctx2[33]
+      ))) {
+        attr(div2, "data-tooltip", div2_data_tooltip_value);
+      }
     },
     d(detaching) {
       if (detaching) {
@@ -7410,7 +7613,7 @@ function create_each_block$g(ctx) {
   let div2;
   let t0_value = (
     /*target*/
-    ctx[32].name + ""
+    ctx[33].name + ""
   );
   let t0;
   let div13;
@@ -7420,16 +7623,16 @@ function create_each_block$g(ctx) {
   let div7;
   let t2_value = getDefenseValue(
     /*target*/
-    ctx[32]
+    ctx[33]
   ) + "";
   let t2;
   let div11;
   let div9;
   let t3_value = (
     /*isHit*/
-    ctx[13](
+    ctx[14](
       /*target*/
-      ctx[32]
+      ctx[33]
     ) ? "Hit" : "Miss"
   );
   let t3;
@@ -7452,14 +7655,14 @@ function create_each_block$g(ctx) {
   let mounted;
   let dispose;
   let if_block0 = !/*target*/
-  ctx[32].isUnlinked && create_if_block_3$9(ctx);
+  ctx[33].isUnlinked && create_if_block_3$9(ctx);
   let if_block1 = (
     /*item*/
-    ctx[8].system?.formula && create_if_block_2$e(ctx)
+    ctx[9].system?.formula && create_if_block_2$e(ctx)
   );
   let if_block2 = (
     /*item*/
-    ctx[8].system?.hasDirectHit && create_if_block_1$i(ctx)
+    ctx[9].system?.hasDirectHit && create_if_block_1$i(ctx)
   );
   return {
     c() {
@@ -7514,9 +7717,9 @@ function create_each_block$g(ctx) {
       attr(div8, "class", "col target-defense flexrow justify-vertical no-wrap");
       attr(div9, "class", "flex2 font-cinzel smallest");
       attr(i0, "class", i0_class_value = "fa-solid bg-white round " + /*isHit*/
-      (ctx[13](
+      (ctx[14](
         /*target*/
-        ctx[32]
+        ctx[33]
       ) ? "fa-circle-check positive" : "fa-circle-xmark negative"));
       attr(div10, "class", "flex1");
       attr(div11, "class", "col flexrow justify-vertical no-wrap");
@@ -7529,7 +7732,7 @@ function create_each_block$g(ctx) {
       button0.disabled = button0_disabled_value = /*isApplyDisabled*/
       ctx[2](
         /*target*/
-        ctx[32]
+        ctx[33]
       );
       attr(div15, "class", "flex1");
       attr(i2, "class", "fa-solid fa-refresh");
@@ -7537,13 +7740,13 @@ function create_each_block$g(ctx) {
       button1.disabled = button1_disabled_value = !/*isApplyDisabled*/
       ctx[2](
         /*target*/
-        ctx[32]
+        ctx[33]
       );
       attr(div16, "class", "flex1");
       attr(div17, "class", "flexcol");
       attr(div18, "class", "flex0");
       attr(div19, "class", div19_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-FF15-9qju1k");
+      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FF15-9qju1k");
       attr(div20, "class", "background svelte-FF15-9qju1k");
       attr(div21, "class", "leatherbook svelte-FF15-9qju1k");
     },
@@ -7590,27 +7793,27 @@ function create_each_block$g(ctx) {
           listen(button0, "click", function() {
             if (is_function(
               /*applyResult*/
-              ctx[11](
+              ctx[12](
                 /*target*/
-                ctx[32]
+                ctx[33]
               )
             ))
-              ctx[11](
+              ctx[12](
                 /*target*/
-                ctx[32]
+                ctx[33]
               ).apply(this, arguments);
           }),
           listen(button1, "click", function() {
             if (is_function(
               /*undoResult*/
-              ctx[12](
+              ctx[13](
                 /*target*/
-                ctx[32]
+                ctx[33]
               )
             ))
-              ctx[12](
+              ctx[13](
                 /*target*/
-                ctx[32]
+                ctx[33]
               ).apply(this, arguments);
           })
         ];
@@ -7620,7 +7823,7 @@ function create_each_block$g(ctx) {
     p(new_ctx, dirty) {
       ctx = new_ctx;
       if (!/*target*/
-      ctx[32].isUnlinked) {
+      ctx[33].isUnlinked) {
         if (if_block0) {
           if_block0.p(ctx, dirty);
         } else {
@@ -7634,44 +7837,44 @@ function create_each_block$g(ctx) {
       }
       if (dirty[0] & /*targetTokens*/
       8 && t0_value !== (t0_value = /*target*/
-      ctx[32].name + ""))
+      ctx[33].name + ""))
         set_data(t0, t0_value);
       if (dirty[0] & /*targetTokens*/
       8 && t2_value !== (t2_value = getDefenseValue(
         /*target*/
-        ctx[32]
+        ctx[33]
       ) + ""))
         set_data(t2, t2_value);
       if (dirty[0] & /*targetTokens*/
       8 && t3_value !== (t3_value = /*isHit*/
-      ctx[13](
+      ctx[14](
         /*target*/
-        ctx[32]
+        ctx[33]
       ) ? "Hit" : "Miss"))
         set_data(t3, t3_value);
       if (dirty[0] & /*targetTokens*/
       8 && i0_class_value !== (i0_class_value = "fa-solid bg-white round " + /*isHit*/
-      (ctx[13](
+      (ctx[14](
         /*target*/
-        ctx[32]
+        ctx[33]
       ) ? "fa-circle-check positive" : "fa-circle-xmark negative"))) {
         attr(i0, "class", i0_class_value);
       }
       if (
         /*item*/
-        ctx[8].system?.formula
+        ctx[9].system?.formula
       )
         if_block1.p(ctx, dirty);
       if (
         /*item*/
-        ctx[8].system?.hasDirectHit
+        ctx[9].system?.hasDirectHit
       )
         if_block2.p(ctx, dirty);
       if (dirty[0] & /*isApplyDisabled, targetTokens*/
       12 && button0_disabled_value !== (button0_disabled_value = /*isApplyDisabled*/
       ctx[2](
         /*target*/
-        ctx[32]
+        ctx[33]
       ))) {
         button0.disabled = button0_disabled_value;
       }
@@ -7679,13 +7882,13 @@ function create_each_block$g(ctx) {
       12 && button1_disabled_value !== (button1_disabled_value = !/*isApplyDisabled*/
       ctx[2](
         /*target*/
-        ctx[32]
+        ctx[33]
       ))) {
         button1.disabled = button1_disabled_value;
       }
       if (dirty[0] & /*targetTokens*/
       8 && div19_class_value !== (div19_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-FF15-9qju1k")) {
+      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FF15-9qju1k")) {
         attr(div19, "class", div19_class_value);
       }
     },
@@ -7719,7 +7922,7 @@ function create_fragment$1e(ctx) {
   chattitle.$on(
     "toggleDescription",
     /*handleToggleDescription*/
-    ctx[15]
+    ctx[16]
   );
   let if_block0 = (
     /*showDescription*/
@@ -7770,7 +7973,7 @@ function create_fragment$1e(ctx) {
           div0,
           "click",
           /*log*/
-          ctx[10]
+          ctx[11]
         );
         mounted = true;
       }
@@ -7894,6 +8097,7 @@ function instance$16($$self, $$props, $$invalidate) {
   let displayDamage;
   let displayDamageFormula;
   let displayDirectHitDamage;
+  let displayDirectHitDisplayFormula;
   let modifier;
   let totalRoll;
   let $message;
@@ -7908,7 +8112,7 @@ function instance$16($$self, $$props, $$invalidate) {
     setContext("#doc", Item2);
   }
   const message = getContext("message");
-  component_subscribe($$self, message, (value) => $$invalidate(27, $message = value));
+  component_subscribe($$self, message, (value) => $$invalidate(28, $message = value));
   let totalDamage = 0;
   let isMounted = false;
   let targetTokens = [];
@@ -7921,6 +8125,9 @@ function instance$16($$self, $$props, $$invalidate) {
     game.system.log.b("RollChat totalRoll", totalRoll);
     game.system.log.b("RollChat totalDamage", totalDamage);
     game.system.log.b("RollChat hasTargets", hasTargets);
+    game.system.log.b("RollChat item?.system?.hasDirectHit", item?.system?.hasDirectHit);
+    game.system.log.b("RollChat item?.system?.directHitDamage", item?.system?.directHitDamage);
+    game.system.log.b("RollChat item?.currentUses", item?.currentUses);
   }
   __name(log2, "log");
   function getDamageResults(passedTargets) {
@@ -7932,6 +8139,7 @@ function instance$16($$self, $$props, $$invalidate) {
         baseDamageFormula: `Base Damage (${item.system?.formula})`,
         directHit: item.system?.directHitDamage,
         directHitFormula: item.system?.directHitDamage,
+        directHitDisplayFormula: `Direct Hit (${item.system?.directHitDamage})`,
         directHitResult: false,
         applied: false,
         originalHP: token.actor.system.points.HP.val,
@@ -7991,7 +8199,10 @@ function instance$16($$self, $$props, $$invalidate) {
       totalDamage = results.damage;
     }
     if (isHit(target) && item?.system?.hasDirectHit && item?.system?.directHitDamage) {
-      const directHitRoll = await new Roll(item?.system?.directHitDamage).evaluate({ async: true });
+      const directHitRoll = await new Roll(FFMessageState.damageResults[target.id].directHit).evaluate({ async: true });
+      if (game.modules.get("dice-so-nice")?.active) {
+        await game.dice3d.showForRoll(directHitRoll);
+      }
       results.directHitResult = directHitRoll.total;
       totalDamage += results.directHitResult;
     }
@@ -8057,9 +8268,9 @@ function instance$16($$self, $$props, $$invalidate) {
     if ("FFMessage" in $$props2)
       $$invalidate(0, FFMessage = $$props2.FFMessage);
     if ("FFMessageState" in $$props2)
-      $$invalidate(16, FFMessageState = $$props2.FFMessageState);
+      $$invalidate(17, FFMessageState = $$props2.FFMessageState);
     if ("messageId" in $$props2)
-      $$invalidate(17, messageId = $$props2.messageId);
+      $$invalidate(18, messageId = $$props2.messageId);
     if ("content" in $$props2)
       $$invalidate(1, content = $$props2.content);
   };
@@ -8069,31 +8280,35 @@ function instance$16($$self, $$props, $$invalidate) {
       actor = game.actors.get(FFMessage?.actor?._id);
     }
     if ($$self.$$.dirty[0] & /*FFMessageState*/
-    65536) {
+    131072) {
       $$invalidate(2, isApplyDisabled = /* @__PURE__ */ __name((target) => target.isUnlinked || FFMessageState.damageResults[target.id]?.applied, "isApplyDisabled"));
     }
     if ($$self.$$.dirty[0] & /*FFMessageState*/
-    65536) {
-      $$invalidate(7, displayDamage = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.damage, "displayDamage"));
+    131072) {
+      $$invalidate(8, displayDamage = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.damage, "displayDamage"));
     }
     if ($$self.$$.dirty[0] & /*FFMessageState*/
-    65536) {
-      $$invalidate(6, displayDamageFormula = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.baseDamageFormula, "displayDamageFormula"));
+    131072) {
+      $$invalidate(7, displayDamageFormula = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.baseDamageFormula, "displayDamageFormula"));
     }
     if ($$self.$$.dirty[0] & /*isApplyDisabled, FFMessageState*/
-    65540) {
-      $$invalidate(5, displayDirectHitDamage = /* @__PURE__ */ __name((target) => isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit, "displayDirectHitDamage"));
+    131076) {
+      $$invalidate(6, displayDirectHitDamage = /* @__PURE__ */ __name((target) => isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit, "displayDirectHitDamage"));
+    }
+    if ($$self.$$.dirty[0] & /*FFMessageState*/
+    131072) {
+      $$invalidate(5, displayDirectHitDisplayFormula = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.directHitDisplayFormula, "displayDirectHitDisplayFormula"));
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
     1) {
-      $$invalidate(18, roll = FFMessage?.roll || 0);
+      $$invalidate(19, roll = FFMessage?.roll || 0);
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
     1) {
-      $$invalidate(19, modifier = FFMessage?.extraModifiers?.modifier || 0);
+      $$invalidate(20, modifier = FFMessage?.extraModifiers?.modifier || 0);
     }
     if ($$self.$$.dirty[0] & /*roll, modifier*/
-    786432) {
+    1572864) {
       totalRoll = roll + modifier;
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
@@ -8108,6 +8323,7 @@ function instance$16($$self, $$props, $$invalidate) {
     isApplyDisabled,
     targetTokens,
     showDescription,
+    displayDirectHitDisplayFormula,
     displayDirectHitDamage,
     displayDamageFormula,
     displayDamage,
@@ -8137,8 +8353,8 @@ const _ActionRollChat = class _ActionRollChat extends SvelteComponent {
       safe_not_equal,
       {
         FFMessage: 0,
-        FFMessageState: 16,
-        messageId: 17,
+        FFMessageState: 17,
+        messageId: 18,
         content: 1
       },
       null,
@@ -9387,22 +9603,7 @@ function targetToken() {
 __name(targetToken, "targetToken");
 function deleteCombat() {
   Hooks.on("deleteCombat", async (combat) => {
-    const combatants = combat.combatants.contents;
-    for (const combatant of combatants) {
-      const actor = combatant.actor;
-      if (!actor)
-        continue;
-      const items = actor.items.filter((i) => i.system.hasLimitation);
-      await resetUses(items);
-      for (const effect of actor.effects) {
-        if (effect.isTransferred) {
-          await effect.update({ disabled: true });
-        } else {
-          await effect.delete();
-        }
-      }
-      await resetActionState(actor);
-    }
+    await combat.resetCombatantAbilities();
   });
 }
 __name(deleteCombat, "deleteCombat");
@@ -9455,13 +9656,7 @@ function combatStart() {
     if (combatStartSound2 !== "") {
       AudioHelper.play({ src: combatStartSound2, volume: 1, autoplay: true, loop: false });
     }
-    const combatants = combat.combatants.contents;
-    for (const combatant of combatants) {
-      const actor = combatant.actor;
-      if (!actor)
-        continue;
-      await resetActionState(actor);
-    }
+    await combat.resetCombatantAbilities();
   });
 }
 __name(combatStart, "combatStart");
@@ -27484,9 +27679,10 @@ const _DamageDiceReroll = class _DamageDiceReroll {
               continue;
             const additionalDice = Number(change.value) || 1;
             const newNumDice = numDice + additionalDice;
-            const kh = numDice - additionalDice;
+            const kh = numDice;
             targetData.directHit = `${newNumDice}d${dieType}kh${kh}`;
             targetData.baseDamageFormula += ` + ${origin.name}`;
+            targetData.directHitDisplayFormula += ` + ${effect.name}`;
           }
         }
       }
@@ -27576,11 +27772,72 @@ const _EnableCombatTurnSlot = class _EnableCombatTurnSlot {
 };
 __name(_EnableCombatTurnSlot, "EnableCombatTurnSlot");
 let EnableCombatTurnSlot = _EnableCombatTurnSlot;
+const _DamageOverTime = class _DamageOverTime {
+  constructor(actor) {
+    this.actor = actor;
+  }
+  async process(event) {
+    game.system.log.o("[DOT] Processing event:", event);
+    const { change, effect } = event;
+    const currentHP = this.actor.system.points.HP.val;
+    const dotDamage = parseInt(change.value) || 0;
+    game.system.log.o("[DOT] Current state:", {
+      actorName: this.actor.name,
+      currentHP,
+      dotDamage,
+      change
+    });
+    if (dotDamage <= 0) {
+      game.system.log.o("[DOT] No damage to apply");
+      return;
+    }
+    const newHP = Math.max(0, currentHP - dotDamage);
+    game.system.log.o("[DOT] Applying damage:", {
+      actorName: this.actor.name,
+      currentHP,
+      newHP,
+      damage: dotDamage
+    });
+    await this.actor.update({ "system.points.HP.val": newHP });
+    if (currentHP > 0 && newHP <= 0) {
+      game.system.log.o("[DOT] Actor KO'd by DOT");
+      await this.actor.toggleStatusEffect("ko");
+    }
+    await ChatMessage.create({
+      user: game.user.id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "RollChat",
+            actor: {
+              _id: this.actor.id,
+              name: this.actor.name,
+              img: this.actor.img
+            },
+            item: {
+              name: effect.name,
+              img: effect.icon,
+              type: "effect",
+              system: {
+                description: `${this.actor.name} takes ${dotDamage} damage from ${effect.name}`,
+                formula: dotDamage.toString()
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+};
+__name(_DamageOverTime, "DamageOverTime");
+let DamageOverTime = _DamageOverTime;
 const effects = {
   PrimaryBaseDamageBuff,
   DamageDiceReroll,
   TransferEffectToAllies,
-  EnableCombatTurnSlot
+  EnableCombatTurnSlot,
+  DamageOverTime
 };
 function setupEffectsProcessors() {
   Hooks.on("FF15.processAdditionalBaseDamageFromItem", (event) => {
@@ -27602,6 +27859,10 @@ function setupEffectsProcessors() {
   Hooks.on("FF15.TransferEffectToAlliesDelete", async (event) => {
     const processor = new effects.TransferEffectToAllies(event.actor);
     await processor.delete(event);
+  });
+  Hooks.on("FF15.DamageOverTime", async (event) => {
+    const processor = new effects.DamageOverTime(event.actor);
+    await processor.process(event);
   });
 }
 __name(setupEffectsProcessors, "setupEffectsProcessors");
@@ -32652,8 +32913,8 @@ const _RollCalcActor = class _RollCalcActor extends RollCalc {
       this.RG.targetsMatchActionIntent,
       this.RG.hasRequiredEffects,
       this.RG.hasActiveEnablerSlot,
-      this.RG.hasModifiers,
-      this.RG.hasRemainingUses
+      this.RG.hasRemainingUses,
+      this.RG.hasModifiers
     ];
     let message;
     if (!await this._handleGuards(item, guards)) {
@@ -32681,7 +32942,6 @@ const _RollCalcActor = class _RollCalcActor extends RollCalc {
         const effects2 = await this._handleSingleItemEffectEnabling(enablesItemRef);
         allEnabledEffects2 = allEnabledEffects2.concat(effects2);
       }
-      await this._disableEnablerEffectsOnActor(item, allEnabledEffects2);
       return;
     }
     let formula = "1d20";
@@ -32703,7 +32963,6 @@ const _RollCalcActor = class _RollCalcActor extends RollCalc {
       const effects2 = await this._handleSingleItemEffectEnabling(enablesItemRef);
       allEnabledEffects = allEnabledEffects.concat(effects2);
     }
-    await this._disableEnablerEffectsOnActor(item, allEnabledEffects);
     return message;
   }
   /******************
@@ -32726,22 +32985,24 @@ const _RollCalcActor = class _RollCalcActor extends RollCalc {
     const customSlots = actionState.available.filter(
       (slot) => slot !== "primary" && slot !== "secondary"
     );
-    game.system.log.d("[SLOT_UPDATE] Custom slots:", customSlots);
     if (item.system.tags?.length) {
       const matchingSlot = customSlots.find(
         (slot) => item.system.tags.includes(slot)
       );
       if (matchingSlot) {
         slotToUse = matchingSlot;
-        const enabledEffects = this.params.actor.effects.filter(
-          (effect) => effect.system.tags?.includes("enabler")
+        const enablerEffectForThisSlot = this.params.actor.enablerEffects.find(
+          (effect) => effect.changes.some(
+            (change) => change.value === matchingSlot
+          )
         );
-        for (const effect of enabledEffects) {
-          const originItem = fromUuidSync(effect.origin);
-          if (originItem?.system.tags?.includes(slotToUse)) {
-            await effect.update({ disabled: true });
-          }
+        const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, "origin.effect.uuid").split(".").slice(0, -2).join(".");
+        const originItem = fromUuidSync(originItemUuid);
+        if (originItem) {
+          const uses = (originItem.system.uses || 0) + 1;
+          await originItem.update({ system: { uses } });
         }
+        enablerEffectForThisSlot.delete();
       }
     }
     if (!slotToUse && actionState.available.includes(actionType)) {
@@ -32764,27 +33025,6 @@ const _RollCalcActor = class _RollCalcActor extends RollCalc {
       "system.actionState.used": newUsed
     });
   }
-  async _disableEnablerEffectsOnActor(item, recentlyEnabledEffects = []) {
-    if (!await this._handleGuards(item, [
-      this.RG.isCombat
-    ])) {
-      return;
-    }
-    for (const effect of this.params.actor.effects) {
-      if (recentlyEnabledEffects.includes(effect.uuid)) {
-        continue;
-      }
-      const originUuid = effect.origin;
-      const origin = await fromUuid(originUuid);
-      const shouldDisableByTags = await this._shouldDisableByTags(item, origin);
-      const shouldDisableByRequirement = await this._shouldDisableByRequirements(item, origin, effect);
-      if (shouldDisableByTags || shouldDisableByRequirement) {
-        await effect.update({ disabled: true });
-      } else {
-        game.system.log.w("[DISABLE] No match for effect:", effect.name);
-      }
-    }
-  }
   async _shouldDisableByTags(item, origin) {
     const itemTags = item?.system?.tags || [];
     const shouldDisable = origin?.system?.tags?.some((tag) => itemTags.includes(tag)) || false;
@@ -32801,23 +33041,26 @@ const _RollCalcActor = class _RollCalcActor extends RollCalc {
     return shouldDisable;
   }
   async _handleSingleItemEffectEnabling(enablesItemRef) {
-    const enabledItem = await fromUuid(enablesItemRef.uuid);
-    game.system.log.o("[ENABLE] enabledItem", enabledItem);
-    game.system.log.o("[ENABLE] enabledItem.hasEffects", enabledItem.hasEffects);
-    if (!enabledItem) {
+    const compendiumItem = await fromUuid(enablesItemRef.uuid);
+    if (!compendiumItem) {
       return [];
     }
-    if (!enabledItem.hasEffects) {
+    const actorItem = this.params.actor.items.find(
+      (item) => item.name === compendiumItem.name && item.type === compendiumItem.type
+    );
+    if (!actorItem) {
       return [];
     }
-    if (!await this.params.actor.actorItemHasRemainingUses(enabledItem)) {
-      game.system.log.w("[ENABLE]", `${enabledItem.name} has been used ${enabledItem.currentUses} times, reaching its usage limit of ${enabledItem.maxUses}`);
+    if (!actorItem.hasEffects) {
       return [];
     }
-    const effectsEnabled = await this.params.actor.enableTraitEffects(enabledItem);
-    game.system.log.o("[ENABLE] effectsEnabled", effectsEnabled);
+    if (!await this.params.actor.actorItemHasRemainingUses(actorItem)) {
+      game.system.log.w("[ENABLE]", `${actorItem.name} has been used ${actorItem.currentUses} times, reaching its usage limit of ${actorItem.maxUses}`);
+      return [];
+    }
+    const effectsEnabled = await this.params.actor.enableTraitEffects(actorItem);
     if (effectsEnabled.length) {
-      await this.defaultChat(enabledItem);
+      await this.defaultChat(actorItem);
     }
     return effectsEnabled;
   }
@@ -32880,7 +33123,6 @@ const _RollCalcActor = class _RollCalcActor extends RollCalc {
             return [];
           }
           return effectItem.effects.map((effect) => {
-            game.system.log.o("[EFFECT] _handleTargetEffects effect", effect);
             const existingEffect = targetActor.effects.find(
               (e) => e.name === effect.name && e.origin === item.uuid
             );
