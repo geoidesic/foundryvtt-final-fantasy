@@ -147,8 +147,8 @@ export default class RollCalcActor extends RollCalc {
       this.RG.targetsMatchActionIntent,
       this.RG.hasRequiredEffects,
       this.RG.hasActiveEnablerSlot,
-      this.RG.hasModifiers,
       this.RG.hasRemainingUses,
+      this.RG.hasModifiers
     ]
     let message;
 
@@ -306,9 +306,6 @@ export default class RollCalcActor extends RollCalc {
     });
   }
 
-
-
-
   async _shouldDisableByTags(item, origin) {
     const itemTags = item?.system?.tags || [];
     const shouldDisable = origin?.system?.tags?.some(tag => itemTags.includes(tag)) || false;
@@ -328,27 +325,36 @@ export default class RollCalcActor extends RollCalc {
   }
 
   async _handleSingleItemEffectEnabling(enablesItemRef) {
-    // Get the actual item from the UUID
-    const enabledItem = await fromUuid(enablesItemRef.uuid);
-    game.system.log.o("[ENABLE] enabledItem", enabledItem);
-    game.system.log.o("[ENABLE] enabledItem.hasEffects", enabledItem.hasEffects);
-    if (!enabledItem) { return [] }
-    if (!enabledItem.hasEffects) { return [] }
+    // Get the compendium item for reference
+    const compendiumItem = await fromUuid(enablesItemRef.uuid);
+    if (!compendiumItem) { return [] }
 
-    // Check if we've hit the usage limit
-    if (!await this.params.actor.actorItemHasRemainingUses(enabledItem)) {
-      game.system.log.w("[ENABLE]", `${enabledItem.name} has been used ${enabledItem.currentUses} times, reaching its usage limit of ${enabledItem.maxUses}`);
+    // Find the actor's version of the item by matching name and type
+    const actorItem = this.params.actor.items.find(item => 
+      item.name === compendiumItem.name && 
+      item.type === compendiumItem.type
+    );
+
+    game.system.log.o("[ENABLE] actorItem", actorItem);
+    game.system.log.o("[ENABLE] actorItem.hasEffects", actorItem?.hasEffects);
+
+    if (!actorItem) { return [] }
+    if (!actorItem.hasEffects) { return [] }
+
+    // Check if we've hit the usage limit using the actor's version of the item
+    if (!await this.params.actor.actorItemHasRemainingUses(actorItem)) {
+      game.system.log.w("[ENABLE]", `${actorItem.name} has been used ${actorItem.currentUses} times, reaching its usage limit of ${actorItem.maxUses}`);
       return [];
     }
 
     // Enable any disabled effects and get their UUIDs
-    const effectsEnabled = await this.params.actor.enableTraitEffects(enabledItem);
+    const effectsEnabled = await this.params.actor.enableTraitEffects(actorItem);
     game.system.log.o("[ENABLE] effectsEnabled", effectsEnabled);
 
     // If we enabled any effects, create chat message
     if (effectsEnabled.length) {
       // Just send a chat message instead of recursively calling ability
-      await this.defaultChat(enabledItem);
+      await this.defaultChat(actorItem);
     }
 
     return effectsEnabled;

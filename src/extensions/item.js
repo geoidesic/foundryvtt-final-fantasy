@@ -24,7 +24,9 @@ export default class FF15Item extends Item {
   }
 
   get currentUses() {
-    // game.system.log.o('[ENABLE] [CURRENT USES] currentUses raw value:', this.system.uses);
+    game.system.log.o('[ENABLE] [CURRENT USES] currentUses on item:', this);
+    game.system.log.o('[ENABLE] [CURRENT USES] currentUses on item.name:', this.name);
+    game.system.log.o('[ENABLE] [CURRENT USES] currentUses raw value:', this.system.uses);
     // Only return a number if uses is explicitly set to a number
     if (this.system.uses === undefined || this.system.uses === null || this.system.uses === '') return 0;
     const parsed = parseInt(this.system.uses);

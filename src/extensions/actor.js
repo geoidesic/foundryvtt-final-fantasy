@@ -47,23 +47,18 @@ export default class FF15Actor extends Actor {
   }
 
   /**
-   * Check if an enabler item (e.g. a Trait) has any effects that are disabled (meaning the trait hasn't been used yet)
+   * Check if an item has remaining uses
    * @param {FF15Item} item 
    * @returns {boolean}
    */
-  hasDisabledEnablerEffects(item) {
-    return Array.from(item.effects).some(effect => {
-      const matchingEffect = this.effects.find(ae => ae.name === effect.name);
-      return matchingEffect?.disabled;
-    });
-  }
-
   async actorItemHasRemainingUses(item) {
+    game.system.log.p("[USES] Checking remaining uses for:", item);
+    game.system.log.p("[USES] Checking remaining uses item name:", item.name);
+    game.system.log.p("[USES] hasLimitation:", item.system.hasLimitation);
+    game.system.log.p("[USES] currentUses:", item.currentUses);
+    game.system.log.p("[USES] usesRemaining:", item.usesRemaining);
+    
     if (!item.system.hasLimitation) { return true }
-    // If the trait hasn't been used (has disabled effects) but shows uses, reset it
-    if (this.hasDisabledEnablerEffects(item) && item.currentUses) {
-      await item.update({ 'system.uses': 0 });
-    }
     return item.usesRemaining > 0;
   }
 
@@ -86,10 +81,16 @@ export default class FF15Actor extends Actor {
    */
   matchingEffect(effect, criteria = {}) {
     return this.effects.find(ae => {
-      // Always match on name
+      // Match on name
       if (ae.name !== effect.name) return false;
 
-      // Check each criteria
+      // Match on origin, handling compendium references
+      // Extract the item ID from the compendium reference
+      const originItemId = effect.origin?.split('.').pop();
+      const existingItemId = ae.origin?.split('.').pop();
+      if (originItemId !== existingItemId) return false;
+
+      // Check each additional criteria
       for (const [key, value] of Object.entries(criteria)) {
         // If the value is a function, use it as a predicate
         if (typeof value === 'function') {
@@ -108,24 +109,40 @@ export default class FF15Actor extends Actor {
    * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
    */
   async addTraitEffects(item) {
-    game.system.log.o("[ENABLE] addTraitEffect", item);
+    game.system.log.p("[ADD] Starting addTraitEffects for item:", item.name);
 
-    if (!item.hasEffects) return [];
+    if (!item.hasEffects) {
+      game.system.log.p("[ADD] Item has no effects, returning");
+      return [];
+    }
 
     // Convert effects to plain objects and set combat duration
     const effectsData = Array.from(item.effects).map(effect => {
+      game.system.log.p("[ADD] Processing effect:", {
+        name: effect.name,
+        id: effect._id,
+        disabled: effect.disabled,
+        origin: effect.origin
+      });
+
       // Check for existing effect with same ID
       const existingEffect = this.effects.find(e => 
         e.name === effect.name && 
-        effect.origin.actor.uuid === this.uuid
+        effect.origin?.actor?.uuid === this.uuid
       );
+      
       if (existingEffect) {
-        game.system.log.w("[ENABLE] Effect already exists with ID:", effect._id);
+        game.system.log.p("[ADD] Found existing effect:", {
+          name: existingEffect.name,
+          id: existingEffect._id,
+          disabled: existingEffect.disabled
+        });
         return null;
       }
 
-      return {
+      const effectData = {
         ...effect.toObject(),
+        disabled: false,  // Explicitly set disabled to false
         flags: {
           ...effect.flags,
           [SYSTEM_ID]: {
@@ -140,18 +157,33 @@ export default class FF15Actor extends Actor {
           }
         }
       };
-    }).filter(Boolean); // Remove null entries for existing effects
 
-    if (!effectsData.length) return [];
+      game.system.log.p("[ADD] Created effect data:", {
+        name: effectData.name,
+        disabled: effectData.disabled,
+        flags: effectData.flags
+      });
 
-    game.system.log.o("[ENABLE] addTraitEffect effectsData", effectsData);
+      return effectData;
+    }).filter(Boolean);
+
+    if (!effectsData.length) {
+      game.system.log.p("[ADD] No effects to create after filtering");
+      return [];
+    }
+
     for (const effectData of effectsData) {
       await FFActiveEffect.setCombatDuration(effectData);
     }
 
     // Create the effects
     const created = await this.createEmbeddedDocuments("ActiveEffect", effectsData);
-    game.system.log.o("[ENABLE] addTraitEffect created", created);
+    game.system.log.p("[ADD] Created effects:", created.map(e => ({
+      name: e.name,
+      id: e._id,
+      disabled: e.disabled
+    })));
+
     return created.map(e => e.uuid);
   }
 
@@ -161,29 +193,72 @@ export default class FF15Actor extends Actor {
    * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
    */
   async enableTraitEffects(item) {
+    game.system.log.p("[ENABLE] Starting enableTraitEffects for item:", item.name);
     let effectsEnabled = [];
+
     for (const effect of item.effects) {
-      const matchingEffect = this.matchingEffect(effect, { disabled: true });
+      game.system.log.p("[ENABLE] Processing effect:", {
+        name: effect.name,
+        disabled: effect.disabled,
+        isTransferred: effect.isTransferred,
+        origin: effect.origin,
+        originItemId: effect.origin?.split('.').pop()
+      });
+
+      // First find any matching effect, regardless of disabled state
+      const matchingEffect = this.matchingEffect(effect);
+      game.system.log.p("[ENABLE] Effect matching results:", {
+        effectName: effect.name,
+        effectOrigin: effect.origin,
+        effectOriginId: effect.origin?.split('.').pop(),
+        foundMatch: !!matchingEffect,
+        matchName: matchingEffect?.name,
+        matchOrigin: matchingEffect?.origin,
+        matchOriginId: matchingEffect?.origin?.split('.').pop(),
+        matchDisabled: matchingEffect?.disabled
+      });
+
       if (matchingEffect) {
-        const updatedEffectData = matchingEffect.toObject();
-        await matchingEffect.update({ disabled: false });
-        effectsEnabled.push(matchingEffect.uuid);
-        if (effect.isSuppressed) continue;
+        // Only update if it's disabled
+        if (matchingEffect.disabled) {
+          game.system.log.p("[ENABLE] Updating existing effect to enabled");
+          await matchingEffect.update({ disabled: false });
+          effectsEnabled.push(matchingEffect.uuid);
+        } else {
+          game.system.log.p("[ENABLE] Matching effect already enabled");
+        }
+        
+        if (effect.isSuppressed) {
+          game.system.log.p("[ENABLE] Effect is suppressed, skipping hooks");
+          continue;
+        }
+
         for (const change of effect.changes) {
           if (activeEffectModes.find(e => e.value === change.mode)) {
+            game.system.log.p("[ENABLE] Calling hook for change:", change.key);
             await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
           }
         }
       } else {
-        await this.addTraitEffects(item);
+        game.system.log.p("[ENABLE] No matching effect found, adding new effect");
+        const addedEffects = await this.addTraitEffects(item);
+        game.system.log.p("[ENABLE] Added new effects:", addedEffects);
+
         for (const effect of item.effects) {
-          if (effect.isSuppressed) continue;
+          if (effect.isSuppressed) {
+            game.system.log.p("[ENABLE] New effect is suppressed, skipping hooks");
+            continue;
+          }
+          
           for (const change of effect.changes) {
+            game.system.log.p("[ENABLE] Calling hook for new effect change:", change.key);
             await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
           }
         }
       }
     }
+
+    game.system.log.p("[ENABLE] Finished enableTraitEffects, enabled:", effectsEnabled);
     return effectsEnabled;
   }
 
