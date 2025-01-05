@@ -24,10 +24,12 @@
   const message = getContext("message");
 
   let showTraitButton = false;
-  let totalRoll = 0;
+  let totalDamage = 0;
   let isMounted = false;
   let targetTokens = [];
   let showDescription = false;
+  let roll = 0;
+  let hasTargets = false;
 
   $: actor = game.actors.get(FFMessage?.actor?._id);
   $: isApplyDisabled = (target)  => target.isUnlinked || FFMessageState.damageResults[target.id]?.applied;
@@ -38,6 +40,19 @@
   // $: displayVal = (target, type) =>  $displayValues.get(target.id)?.[type] || "";
 
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
+
+  $: roll = FFMessage?.roll || 0;
+  $: modifier = FFMessage?.extraModifiers?.modifier || 0;
+  $: totalRoll = roll + modifier;
+  $: hasTargets = FFMessage?.hasTargets || false;
+
+  function log() {
+    game.system.log.b("RollChat roll", roll);
+    game.system.log.b("RollChat modifier", modifier);
+    game.system.log.b("RollChat totalRoll", totalRoll);
+    game.system.log.b("RollChat totalDamage", totalDamage);
+    game.system.log.b("RollChat hasTargets", hasTargets);
+  }
 
   function getDamageResults(passedTargets) {
     
@@ -84,19 +99,10 @@
     }
 
     if (FFMessage?.item?.type === "action") {
-      const roll = FFMessage.roll;
-      const item = FFMessage.item;
-      const hasTargets = FFMessage.hasTargets;
-      const modifier = FFMessage.extraModifiers?.modifier || 0;
-      totalRoll = roll + modifier;
-
-      // If we have targets, either load from flags or current targets
       if (hasTargets) {
-
         let storedDamageResults = FFMessageState.damageResults;
 
         if (FFMessage.targets.length > 0) {
-          // Load targets from stored UUIDs
           if (!storedDamageResults) {
             storedDamageResults = getDamageResults(FFMessage.targets);
           }
@@ -108,17 +114,6 @@
                 state: {
                   damageResults: Object.fromEntries(storedDamageResults),
                   initialised: true
-                }
-              },
-            },
-          });
-        } else {
-          // Store current targets 
-          $message.update({
-            flags: {
-              [SYSTEM_ID]: {
-                state: {
-                  damageResults: getDamageResults(FFMessage.targets)
                 }
               },
             },
@@ -141,9 +136,7 @@
   async function applyResult(target) {
     if (!target.actor || target.isUnlinked) return;
 
-
     const modifier = FFMessage.extraModifiers?.modifier || 0;
-    let totalDamage = 0;
     const results = { damage: 0, directHit: 0 };
 
     // Calculate base damage
@@ -226,10 +219,6 @@
 
   }
 
-  function log() {
-    game.system.log.d("RollChat message", $message);
-    game.system.log.d("RollChat damageResults", FFMessageState.damageResults);
-  }
 
   async function applyTrait() {
     if (!item?.system?.enables?.list?.length) return;
@@ -284,6 +273,8 @@
 <template lang="pug">
 
 .chat
+  div.pointer(on:click!="{log}") 
+    i.fa-solid.fa-bug
   ChatTitle(on:toggleDescription="{handleToggleDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")
     +if("showDescription")
