@@ -52,6 +52,8 @@
     game.system.log.b("RollChat totalRoll", totalRoll);
     game.system.log.b("RollChat totalDamage", totalDamage);
     game.system.log.b("RollChat hasTargets", hasTargets);
+    game.system.log.b("RollChat item?.system?.hasDirectHit", item?.system?.hasDirectHit);
+    game.system.log.b("RollChat item?.system?.directHitDamage", item?.system?.directHitDamage);
   }
 
   function getDamageResults(passedTargets) {
@@ -147,7 +149,10 @@
 
     // Calculate direct hit damage if applicable - only if it's a hit
     if (isHit(target) && item?.system?.hasDirectHit && item?.system?.directHitDamage) {
-      const directHitRoll = await new Roll(item?.system?.directHitDamage).evaluate({ async: true });
+      const directHitRoll = await new Roll(FFMessageState.damageResults[target.id].directHit).evaluate({ async: true });
+      if (game.modules.get('dice-so-nice')?.active) {
+        await game.dice3d.showForRoll(directHitRoll);
+      }
       results.directHitResult = directHitRoll.total;
       totalDamage += results.directHitResult;
     } 
