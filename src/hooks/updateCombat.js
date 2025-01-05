@@ -45,6 +45,16 @@ export default function renderCombatTracker() {
         const isExpired = effect.duration.remaining <= 0;
         if (!isExpired) continue;
 
+        //- delete the effect if it still exists
+        if(actor.effects.find(e => e.id === effect.id)) {
+          try {
+            await effect.delete();
+          } catch (error) {
+            game.system.log.e("[EFFECT] Error deleting effect:", error);
+          }
+        }
+
+
         //- transmit delete hook for any custom changes
         for (const change of effect.changes) {
           if (activeEffectModes.find(e => e.value === change.mode)) {
@@ -52,8 +62,6 @@ export default function renderCombatTracker() {
           }
         }
 
-        //- delete the effect
-        await effect.delete();
       }
     }
   });
