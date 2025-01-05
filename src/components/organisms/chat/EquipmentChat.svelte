@@ -3,6 +3,7 @@
   import { activeEffectModes, SYSTEM_ID } from "~/src/helpers/constants";
   import { mappedGameTargets } from "~/src/stores";
   import { resolveDotpath } from "~/src/helpers/paths";
+  import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
 
   // export let messageId;
   export let FFMessage;
@@ -124,15 +125,8 @@
 
 <template lang="pug">
 .FF15
-  .chat.pa-xs
-    .flexrow.justify-vertical.title
-      //- .texture
-      +if("showProfileImage")
-        img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
-      +if("!senderIsOwner")
-        .flex4.ml-sm {FFMessage.actor.name}
-      .flex2.ml-sm(class="{senderIsOwner ? 'left' : 'right'}") {FFMessage.item.name}
-      img.icon.right.item(class="{senderIsOwner ? 'push' : ''}" src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
+  .chat
+    ChatTitle
     .flexrow.justify-vertical.mt-sm
       .flex4.buttons
         button.short.wide.stealth.gold.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
