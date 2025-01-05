@@ -359,6 +359,8 @@ export default class RollCalcActor extends RollCalc {
   async _handleSingleItemEffectEnabling(enablesItemRef) {
     // Get the actual item from the UUID
     const enabledItem = await fromUuid(enablesItemRef.uuid);
+    game.system.log.o("[ENABLE] enabledItem", enabledItem);
+    game.system.log.o("[ENABLE] enabledItem.hasEffects", enabledItem.hasEffects);
     if (!enabledItem) { return [] }
     if (!enabledItem.hasEffects) { return [] }
 
@@ -370,6 +372,7 @@ export default class RollCalcActor extends RollCalc {
 
     // Enable any disabled effects and get their UUIDs
     const effectsEnabled = await this.params.actor.enableTraitEffects(enabledItem);
+    game.system.log.o("[ENABLE] effectsEnabled", effectsEnabled);
 
     // If we enabled any effects, create chat message
     if (effectsEnabled.length) {
@@ -448,6 +451,7 @@ export default class RollCalcActor extends RollCalc {
 
           // Get all effects from the effect item
           return effectItem.effects.map(effect => {
+            game.system.log.o("[EFFECT] _handleTargetEffects effect", effect);
             // Check if effect already exists on target
             const existingEffect = targetActor.effects.find(e =>
               e.name === effect.name &&
@@ -476,7 +480,7 @@ export default class RollCalcActor extends RollCalc {
               label: effect.label,
               icon: effect.icon,
               changes: foundry.utils.deepClone(effect.changes),
-              duration: effect.duration,
+              duration: effectItem.system.duration,
               disabled: false,
               flags: foundry.utils.deepClone(effect.flags),
               origin: item.uuid,

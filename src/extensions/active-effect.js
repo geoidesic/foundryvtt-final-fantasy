@@ -28,18 +28,13 @@ export default class FFActiveEffect extends ActiveEffect {
     game.system.log.o("[EFFECT] setCombatDuration originItem", originItem);
     if (!originItem?.system?.duration) return;
     
-    effectData.duration = {
-      startRound: game.combat?.round ?? 0,
-      startTurn: game.combat?.turn ?? 0
-    }
+    // effectData.duration = {
+    //   startRound: game.combat?.round ?? 0,
+    //   startTurn: game.combat?.turn ?? 0
+    // }
     
-    if(originItem.system.durationUnits === "round") {
-      effectData.duration.rounds = originItem.system.duration;
-      effectData.duration.turns = 0;
-    } else if(originItem.system.durationUnits === "turn") {
-      effectData.duration.turns = originItem.system.duration;
-      effectData.duration.rounds = 0;
-    }
+    effectData.duration = originItem.system.duration;
+
     game.system.log.o("[ENABLE] setCombatDuration effectsData post", effectData);
   }
 

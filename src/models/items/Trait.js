@@ -24,8 +24,10 @@ export class TraitModel extends FFItemDataModel {
         new StringField({ required: false, initial: '' })
       ),
       hasDuration: new BooleanField({ required: false, initial: false }),
-      duration: new NumberField({  required: false, initial: 0, integer: true, min: 0, max: 3 }),
-      durationUnits: new StringField({ required: false, initial: "phase" }),
+      duration: new SchemaField({
+        turns: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
+        rounds: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
+      }),
     };
   }
 
