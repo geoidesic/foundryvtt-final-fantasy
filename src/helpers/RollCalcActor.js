@@ -252,7 +252,6 @@ export default class RollCalcActor extends RollCalc {
     const customSlots = actionState.available.filter(slot =>
       slot !== 'primary' && slot !== 'secondary'
     );
-    game.system.log.d("[SLOT_UPDATE] Custom slots:", customSlots);
 
     // Check for matching tag slot first
     if (item.system.tags?.length) {
@@ -267,14 +266,10 @@ export default class RollCalcActor extends RollCalc {
             change.value === matchingSlot
           )
         );
-        game.system.log.o("[SLOT_UPDATE] enablerEffectForThisSlot ", enablerEffectForThisSlot);
-        game.system.log.o("[SLOT_UPDATE] this.params.actor.enablerEffects ", this.params.actor.enablerEffects);
 
         //- the effect's origin item flag contains the original effect uuid, which can be disected to get the original item
         const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, 'origin.effect.uuid').split('.').slice(0, -2).join('.');
-        game.system.log.o("[SLOT_UPDATE] originItemUuid ", originItemUuid);
         const originItem = fromUuidSync(originItemUuid);
-        game.system.log.o("[SLOT_UPDATE] originItem ", originItem);
         if (originItem) {
           const uses = (originItem.system.uses || 0) + 1;
           await originItem.update({ system: { uses } });
@@ -344,9 +339,6 @@ export default class RollCalcActor extends RollCalc {
       item.type === compendiumItem.type
     );
 
-    game.system.log.o("[ENABLE] actorItem", actorItem);
-    game.system.log.o("[ENABLE] actorItem.hasEffects", actorItem?.hasEffects);
-
     if (!actorItem) { return [] }
     if (!actorItem.hasEffects) { return [] }
 
@@ -358,7 +350,6 @@ export default class RollCalcActor extends RollCalc {
 
     // Enable any disabled effects and get their UUIDs
     const effectsEnabled = await this.params.actor.enableTraitEffects(actorItem);
-    game.system.log.o("[ENABLE] effectsEnabled", effectsEnabled);
 
     // If we enabled any effects, create chat message
     if (effectsEnabled.length) {
@@ -437,7 +428,6 @@ export default class RollCalcActor extends RollCalc {
 
           // Get all effects from the effect item
           return effectItem.effects.map(effect => {
-            game.system.log.o("[EFFECT] _handleTargetEffects effect", effect);
             // Check if effect already exists on target
             const existingEffect = targetActor.effects.find(e =>
               e.name === effect.name &&

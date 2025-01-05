@@ -276,11 +276,7 @@ export default class RollGuards {
     // Check each required effect
     for (const requireRef of item.system.requires.list) {
       const requiredItem = await fromUuid(requireRef.uuid);
-      game.system.log.o('[ENABLE] [HAS ACTIVE EFFECT] requiredItem:', requiredItem);
       if (!requiredItem) continue;
-      game.system.log.o('[ENABLE] [HAS ACTIVE EFFECT] requiredItem.effects:', requiredItem.effects);
-      
-
       // Check if any of the required item's effects are active (not disabled)
       let hasActiveEffect = false;
       for (const effect of this.actor.effects) {
