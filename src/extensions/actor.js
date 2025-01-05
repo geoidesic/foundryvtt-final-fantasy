@@ -118,6 +118,7 @@ export default class FF15Actor extends Actor {
       flags: {
         ...effect.flags,
         [SYSTEM_ID]: {
+          overlay: effect.getFlag(SYSTEM_ID, 'overlay'),
           origin: {
             actor: {
               uuid: this.uuid,
