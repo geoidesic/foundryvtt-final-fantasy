@@ -1,3 +1,5 @@
+import { SYSTEM_ID } from "~/src/helpers/constants";
+
 export default class DamageOverTime {
   constructor(actor) {
     this.actor = actor;
@@ -5,7 +7,7 @@ export default class DamageOverTime {
 
   async process(event) {
     game.system.log.o("[DOT] Processing event:", event);
-    const { change } = event;
+    const { change, effect } = event;
     const currentHP = this.actor.system.points.HP.val;
     const dotDamage = parseInt(change.value) || 0;
     
@@ -37,10 +39,31 @@ export default class DamageOverTime {
       await this.actor.toggleStatusEffect("ko");
     }
 
-    // Create a chat message to show the DOT damage
+    // Create a chat message using RollChat template
     await ChatMessage.create({
-      content: `${this.actor.name} takes ${dotDamage} damage from ${event.effect.name}`,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor })
+      user: game.user.id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "RollChat",
+            actor: {
+              _id: this.actor.id,
+              name: this.actor.name,
+              img: this.actor.img
+            },
+            item: {
+              name: effect.name,
+              img: effect.icon,
+              type: "effect",
+              system: {
+                description: `${this.actor.name} takes ${dotDamage} damage from ${effect.name}`,
+                formula: dotDamage.toString()
+              }
+            }
+          }
+        }
+      }
     });
   }
 } 
