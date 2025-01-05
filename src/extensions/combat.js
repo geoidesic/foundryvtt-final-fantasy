@@ -1,7 +1,32 @@
+import { resetActionState, resetUses } from '~/src/helpers/util.js';
+
 export default class FFCombat extends Combat {
   constructor(data, context) {
     super(data, context);
     game.system.log.d('>>>>>>>>>> FFCombat constructor')
+  }
+
+  async resetCombatantAbilities() {
+    const combatants = this.combatants.contents;
+    // For each combatant
+    for (const combatant of combatants) {
+      const actor = combatant.actor;
+      if (!actor) continue;
+
+      // Get all items that have limitations
+      const items = actor.items.filter(i => i.system.hasLimitation);
+      await resetUses(items);
+
+      // Disable or delete all status effects
+      for (const effect of actor.effects) {
+        if (effect.isTransferred) {
+          await effect.update({ disabled: true });
+        } else {
+          await effect.delete();
+        }
+      }
+      await resetActionState(actor, true);
+    }
   }
 
   

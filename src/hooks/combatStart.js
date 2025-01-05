@@ -1,4 +1,3 @@
-import { resetActionState } from '~/src/helpers/util.js';
 import { SYSTEM_ID } from "~/src/helpers/constants";
 
 export default function combatStart() {
@@ -8,16 +7,6 @@ export default function combatStart() {
     if (combatStartSound !== '') {
       AudioHelper.play({ src: combatStartSound, volume: 1, autoplay: true, loop: false });
     }
-  
-    const combatants = combat.combatants.contents;
-  
-    // For each combatant
-    for (const combatant of combatants) {
-      const actor = combatant.actor;
-      if (!actor) continue;
-      await resetActionState(actor);
-    }
-  
-    
+    await combat.resetCombatantAbilities();
   });
 }
