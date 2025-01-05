@@ -20,4 +20,9 @@ export function setupEffectsProcessors() {
     const processor = new effects.TransferEffectToAllies(event.actor);
     await processor.process(event);
   });
+  
+  Hooks.on('FF15.TransferEffectToAlliesDelete', async (event) => {
+    const processor = new effects.TransferEffectToAllies(event.actor);
+    await processor.delete(event);
+  });
 }

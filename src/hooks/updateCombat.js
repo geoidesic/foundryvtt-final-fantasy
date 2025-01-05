@@ -1,4 +1,7 @@
 import { resetUses, resetActionState } from '~/src/helpers/util.js';
+import { activeEffectModes } from "~/src/helpers/constants";
+
+
 
 export default function renderCombatTracker() {
   // Reset uses at end of turn for abilities with 'turn' limitation units
@@ -34,6 +37,7 @@ export default function renderCombatTracker() {
 
       const effects = currentActor.effects;
       for (const effect of effects) {
+        game.system.log.o("[EFFECT] updateCombat effect", effect);
         // Skip effects without duration
         if (!effect.duration?.rounds && !effect.duration?.turns) continue;
 
@@ -41,12 +45,15 @@ export default function renderCombatTracker() {
         const isExpired = effect.duration.remaining <= 0;
         if (!isExpired) continue;
 
-        // Handle expired effect based on type
-        if (effect.origin?.action?.type === 'enabler') {
-          await effect.update({ disabled: true });
-        } else {
-          await effect.delete();
+        //- transmit delete hook for any custom changes
+        for (const change of effect.changes) {
+          if (activeEffectModes.find(e => e.value === change.mode)) {
+            await Hooks.callAll(`FF15.${change.key}Delete`, { actor: currentActor, change, effect });
+          }
         }
+
+        //- delete the effect
+        await effect.delete();
       }
     }
   });

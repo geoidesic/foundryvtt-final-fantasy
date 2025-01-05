@@ -1,8 +1,28 @@
 import { activeEffectModes, ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
+import { SYSTEM_ID } from "../constants";
 
 export default class TransferEffectToAllies {
   constructor(actor) {
     this.actor = actor;
+  }
+
+
+  async delete(event) {
+    const { change, effect } = event;
+
+    const transferredEffects = game.actors.reduce((acc, actor) => {
+      return acc.concat(actor.effects.filter(e => 
+        e.getFlag(SYSTEM_ID, 'origin.actor.uuid') === this.actor.uuid &&
+        e.name === effect.name
+      ));
+    }, []);
+    
+    game.system.log.p("[EFFECT] Removing transferredEffects", transferredEffects);
+    game.system.log.p("[EFFECT] Removing transferred effects for", effect.name);
+    
+    for (const transferredEffect of transferredEffects) {
+      await transferredEffect.delete();
+    }
   }
 
   async process(event) {
@@ -11,15 +31,9 @@ export default class TransferEffectToAllies {
     game.system.log.p("[TRANSFER] Source actor:", this.actor.name);
     game.system.log.p("[TRANSFER] Effect:", effect);
 
-    // Get all friendly tokens except those belonging to the source actor
-    const allyTokens = canvas.tokens.placeables.filter(token => 
-      token.document.disposition === 1 && // Friendly disposition
-      token.actor?.id !== this.actor.id // Not the source actor
-    );
-    game.system.log.p("[TRANSFER] Found ally tokens:", allyTokens.map(t => t.name));
-
+   
     // Create the effect on each ally's actor
-    for (const token of allyTokens) {
+    for (const token of this.actor.allyTokens) {
       game.system.log.p("[TRANSFER] Processing token:", token.name);
       
       // Skip if no actor
@@ -42,15 +56,24 @@ export default class TransferEffectToAllies {
         label: effect.label,
         icon: effect.icon,
         changes: foundry.utils.deepClone(effect.changes),
-        duration: effect.duration,
         flags: foundry.utils.deepClone(effect.flags),
         origin: effect.origin,
         disabled: false
       };
+
+      //NB: do not set duration as this will be controlled by the origin item
+      effectData.flags[SYSTEM_ID].origin = {
+        actor: {
+          uuid: this.actor.uuid,
+          name: this.actor.name,
+          img: this.actor.img
+        }
+      }
+
       game.system.log.p("[TRANSFER] Created effect data:", effectData);
 
       // Add a flag to mark this as a transferred effect
-      effectData.flags.transferredFrom = this.actor.uuid;
+      // effectData.flags[SYSTEM_ID].transferredFrom = this.actor.uuid;
 
       try {
         await token.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);

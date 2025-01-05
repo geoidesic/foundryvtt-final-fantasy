@@ -36,7 +36,7 @@ export default class FF15Actor extends Actor {
     // Find all ally tokens (non-hostile) that are also combatants
     return tokens.filter(token => 
       token.actor && // Must have an actor
-      !token.actor.hostile && // Must not be hostile
+      token.document.disposition === 1 && // Must be friendly
       combatantActorIds.has(token.actor.id) // Must be a combatant in the current combat
     );
   }
