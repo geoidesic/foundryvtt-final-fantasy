@@ -1,6 +1,6 @@
 import FF15Item from "./item";
 import FFActiveEffect from "./active-effect";
-import { activeEffectModes, SYSTEM_ID } from "~/src/helpers/constants"
+import { activeEffectModes, SYSTEM_ID, ACTIVE_EFFECT_MODES } from "~/src/helpers/constants"
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -57,7 +57,7 @@ export default class FF15Actor extends Actor {
     game.system.log.p("[USES] hasLimitation:", item.system.hasLimitation);
     game.system.log.p("[USES] currentUses:", item.currentUses);
     game.system.log.p("[USES] usesRemaining:", item.usesRemaining);
-    
+
     if (!item.system.hasLimitation) { return true }
     return item.usesRemaining > 0;
   }
@@ -126,11 +126,11 @@ export default class FF15Actor extends Actor {
       });
 
       // Check for existing effect with same ID
-      const existingEffect = this.effects.find(e => 
-        e.name === effect.name && 
+      const existingEffect = this.effects.find(e =>
+        e.name === effect.name &&
         effect.origin?.actor?.uuid === this.uuid
       );
-      
+
       if (existingEffect) {
         game.system.log.p("[ADD] Found existing effect:", {
           name: existingEffect.name,
@@ -152,6 +152,9 @@ export default class FF15Actor extends Actor {
                 uuid: this.uuid,
                 name: this.name,
                 img: this.img
+              },
+              effect: {
+                uuid: effect.uuid,
               }
             }
           }
@@ -227,7 +230,7 @@ export default class FF15Actor extends Actor {
         } else {
           game.system.log.p("[ENABLE] Matching effect already enabled");
         }
-        
+
         if (effect.isSuppressed) {
           game.system.log.p("[ENABLE] Effect is suppressed, skipping hooks");
           continue;
@@ -249,7 +252,7 @@ export default class FF15Actor extends Actor {
             game.system.log.p("[ENABLE] New effect is suppressed, skipping hooks");
             continue;
           }
-          
+
           for (const change of effect.changes) {
             game.system.log.p("[ENABLE] Calling hook for new effect change:", change.key);
             await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
@@ -262,7 +265,17 @@ export default class FF15Actor extends Actor {
     return effectsEnabled;
   }
 
-  async disableEnablerEffects(item) { };
+  /**
+   * @returns {Array<ActiveEffect>} effects on the actor that have a change with key = EnableCombatTurnSlot mode = custom
+   */
+  get enablerEffects() {
+    return this.effects.filter(effect =>
+      effect.changes.some(change =>
+        change.key === 'EnableCombatTurnSlot' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
+      )
+    );
+  }
+
 
   removeFirstDuplicate(arr, name) {
     const index = arr.indexOf(name); // Find the first occurrence

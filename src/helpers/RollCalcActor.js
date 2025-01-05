@@ -262,17 +262,26 @@ export default class RollCalcActor extends RollCalc {
       if (matchingSlot) {
         slotToUse = matchingSlot;
 
-        // If we're using a tag slot, we need to disable any matching enabler effects
-        const enabledEffects = this.params.actor.effects.filter(
-          effect => effect.system.tags?.includes('enabler')
+        const enablerEffectForThisSlot = this.params.actor.enablerEffects.find(effect => 
+          effect.changes.some(change => 
+            change.value === matchingSlot
+          )
         );
+        game.system.log.o("[SLOT_UPDATE] enablerEffectForThisSlot ", enablerEffectForThisSlot);
+        game.system.log.o("[SLOT_UPDATE] this.params.actor.enablerEffects ", this.params.actor.enablerEffects);
 
-        for (const effect of enabledEffects) {
-          const originItem = fromUuidSync(effect.origin);
-          if (originItem?.system.tags?.includes(slotToUse)) {
-            await effect.update({ disabled: true });
-          }
+        //- the effect's origin item flag contains the original effect uuid, which can be disected to get the original item
+        const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, 'origin.effect.uuid').split('.').slice(0, -2).join('.');
+        game.system.log.o("[SLOT_UPDATE] originItemUuid ", originItemUuid);
+        const originItem = fromUuidSync(originItemUuid);
+        game.system.log.o("[SLOT_UPDATE] originItem ", originItem);
+        if (originItem) {
+          const uses = (originItem.system.uses || 0) + 1;
+          await originItem.update({ system: { uses } });
         }
+
+        //- also remove the enabler effect from the actor
+        enablerEffectForThisSlot.delete();
       }
     }
 

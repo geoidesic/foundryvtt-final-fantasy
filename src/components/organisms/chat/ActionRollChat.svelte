@@ -55,6 +55,7 @@
     game.system.log.b("RollChat hasTargets", hasTargets);
     game.system.log.b("RollChat item?.system?.hasDirectHit", item?.system?.hasDirectHit);
     game.system.log.b("RollChat item?.system?.directHitDamage", item?.system?.directHitDamage);
+    game.system.log.b("RollChat item?.currentUses", item?.currentUses);
   }
 
   function getDamageResults(passedTargets) {
@@ -280,8 +281,8 @@
 <template lang="pug">
 
 .chat
-  //- div.pointer(on:click!="{log}") 
-  //-   i.fa-solid.fa-bug
+  div.pointer(on:click!="{log}") 
+    i.fa-solid.fa-bug
   ChatTitle(on:toggleDescription="{handleToggleDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")
     +if("showDescription")
