@@ -6,6 +6,30 @@ export default class FFCombat extends Combat {
     game.system.log.d('>>>>>>>>>> FFCombat constructor')
   }
 
+  /**
+   * Returns true if the current turn represents the end of the adventurer step
+   * (i.e., if the current turn is the last PC and the next turn is an NPC)
+   * @type {boolean}
+   */
+  get isAdventurerStepEnd() {
+    if (!this.started || this.turn === null) return false;
+    const currentCombatant = this.turns[this.turn];
+    const nextCombatant = this.turns[this.turn + 1];
+    return currentCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC";
+  }
+
+  /**
+   * Returns true if the current turn represents the end of the enemy step
+   * (i.e., if the current turn is the last NPC and the next turn is a PC or the round ends)
+   * @type {boolean}
+   */
+  get isEnemyStepEnd() {
+    if (!this.started || this.turn === null) return false;
+    const currentCombatant = this.turns[this.turn];
+    const nextCombatant = this.turns[this.turn + 1];
+    return currentCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
+  }
+
   async resetCombatantAbilities() {
     const combatants = this.combatants.contents;
     // For each combatant
@@ -29,7 +53,6 @@ export default class FFCombat extends Combat {
     }
   }
 
-  
   /**
    * Return the Array of combatants sorted into initiative order, breaking ties alphabetically by name.
    * @returns {Combatant[]}
@@ -52,7 +75,7 @@ export default class FFCombat extends Combat {
     return this.turns = turns;
   }
 
-    /**
+  /**
    * Define how the array of Combatants is sorted in the displayed list of the tracker.
    * This method can be overridden by a system or module which needs to display combatants in an alternative order.
    * The default sorting rules sort in descending order of initiative using combatant IDs for tiebreakers.
@@ -60,24 +83,24 @@ export default class FFCombat extends Combat {
    * @param {Combatant} b     Some other combatant
    * @protected
    */
-    _sortCombatants(a, b) {
-      const aIsNPC = a.actor?.type === "NPC";
-      const bIsNPC = b.actor?.type === "NPC";
-      
-      // Set CSS classes based on the order
-      if (aIsNPC && !bIsNPC) {
-        a.css = 'npc-group-start'; // First NPC
-        b.css = 'pc-group-end'; // Last PC before NPC
-        return 1;
-      } else if (!aIsNPC && bIsNPC) {
-        a.css = 'pc-group-end'; // Last PC before NPC
-        b.css = 'npc-group-start'; // First NPC
-        return -1;
-      }
-
-      if (a.initiative === null && b.initiative === null) return 0;
-      if (a.initiative === null) return 1;
-      if (b.initiative === null) return -1;
-      return b.initiative - a.initiative;
+  _sortCombatants(a, b) {
+    const aIsNPC = a.actor?.type === "NPC";
+    const bIsNPC = b.actor?.type === "NPC";
+    
+    // Set CSS classes based on the order
+    if (aIsNPC && !bIsNPC) {
+      a.css = 'npc-group-start'; // First NPC
+      b.css = 'pc-group-end'; // Last PC before NPC
+      return 1;
+    } else if (!aIsNPC && bIsNPC) {
+      a.css = 'pc-group-end'; // Last PC before NPC
+      b.css = 'npc-group-start'; // First NPC
+      return -1;
     }
+
+    if (a.initiative === null && b.initiative === null) return 0;
+    if (a.initiative === null) return 1;
+    if (b.initiative === null) return -1;
+    return b.initiative - a.initiative;
+  }
 }

@@ -36,11 +36,11 @@
   .flexrow.title(on:click="{handleTitleClick}" role="button")
     +if("showProfileImage")   
       img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}" on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}")
-    .flex2.flexcol(class="{showProfileImage ? 'text' : ''}")
+    .flex3.flexcol.nooverflow(class="{showProfileImage ? 'text' : ''}")
       .col 
         .flexrow
           .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
-      .col.font-cinzel.smaller.pointer.item-name(on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}") {FFMessage.item.name}
+      .col.font-cinzel.smaller.pointer.item-name.nooverflow(on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}") {FFMessage.item.name}
     .flex3
       .flexcol
         .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
