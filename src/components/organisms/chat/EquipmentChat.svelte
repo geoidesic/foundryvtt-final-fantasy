@@ -126,7 +126,7 @@
 <template lang="pug">
 .FF15
   .chat
-    ChatTitle
+    ChatTitle(sheet="{FFMessage.item.sheet}")
     .flexrow.justify-vertical.mt-sm
       .flex4.buttons
         button.short.wide.stealth.gold.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
