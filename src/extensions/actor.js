@@ -42,6 +42,20 @@ export default class FF15Actor extends Actor {
     );
   }
 
+
+  /**
+   * @returns {Array<ActiveEffect>} effects on the actor that have a change with key = EnableCombatTurnSlot mode = custom
+   */
+  get enablerEffects() {
+    return this.effects.filter(effect =>
+      effect.changes.some(change =>
+        change.key === 'EnableCombatTurnSlot' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
+      )
+    );
+  }
+
+
+
   hasSpecificDuplicate(arr, str) {
     return arr.filter(item => item === str).length > 1;
   }
@@ -264,18 +278,6 @@ export default class FF15Actor extends Actor {
     game.system.log.p("[ENABLE] Finished enableTraitEffects, enabled:", effectsEnabled);
     return effectsEnabled;
   }
-
-  /**
-   * @returns {Array<ActiveEffect>} effects on the actor that have a change with key = EnableCombatTurnSlot mode = custom
-   */
-  get enablerEffects() {
-    return this.effects.filter(effect =>
-      effect.changes.some(change =>
-        change.key === 'EnableCombatTurnSlot' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
-      )
-    );
-  }
-
 
   removeFirstDuplicate(arr, name) {
     const index = arr.indexOf(name); // Find the first occurrence
