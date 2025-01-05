@@ -1,4 +1,5 @@
 import { localize } from "~/src/helpers/util";
+import { SYSTEM_ID } from "~/src/helpers/constants";
 
 export default class RollGuards {
 
@@ -183,8 +184,6 @@ export default class RollGuards {
   }
 
   async hasModifiers(item) {
-
-
     if (!item.system.hasCR) {
       return true;
     }
@@ -192,12 +191,25 @@ export default class RollGuards {
     // Show dialog for extra modifiers
     this.shuttle.hasModifiers.extraModifiers = await this._showModifierDialog(item);
 
-    Hooks.call('FF15.processTargetRollAdditionalModifiers', { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
-
-    // If dialog was cancelled or closed, return early
+    // If dialog was cancelled or closed, unmark effects for deletion
     if (!this.shuttle.hasModifiers.extraModifiers?.confirmed) {
+      // Remove pending deletion flags from all effects
+      for (const effect of this.actor.effects) {
+        if (effect.getFlag(SYSTEM_ID, 'pendingDeletion')) {
+          await effect.unsetFlag(SYSTEM_ID, 'pendingDeletion');
+        }
+      }
       return false;
     }
+
+    // If confirmed, delete all effects marked for deletion
+    for (const effect of this.actor.effects) {
+      if (effect.getFlag(SYSTEM_ID, 'pendingDeletion')) {
+        await effect.delete();
+      }
+    }
+
+    Hooks.call('FF15.processTargetRollAdditionalModifiers', { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
     return true;
   }
 
@@ -274,7 +286,8 @@ export default class RollGuards {
       for (const effect of this.actor.effects) {
         if (effect.name === requiredItem.name) {
           hasActiveEffect = true;
-          effect.delete()
+          // Flag the effect for deletion instead of deleting it immediately
+          await effect.setFlag(SYSTEM_ID, 'pendingDeletion', true);
           break;
         }
       }
@@ -283,7 +296,6 @@ export default class RollGuards {
         ui.notifications.warn(game.i18n.format("FF15.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
         return false;
       }
-
     }
     return true;
   }
