@@ -264,18 +264,26 @@ export default class RollGuards {
     // Check each required effect
     for (const requireRef of item.system.requires.list) {
       const requiredItem = await fromUuid(requireRef.uuid);
+      game.system.log.o('[ENABLE] [HAS ACTIVE EFFECT] requiredItem:', requiredItem);
       if (!requiredItem) continue;
+      game.system.log.o('[ENABLE] [HAS ACTIVE EFFECT] requiredItem.effects:', requiredItem.effects);
+      
 
       // Check if any of the required item's effects are active (not disabled)
-      const hasActiveEffect = requiredItem.effects.some(effect => {
-        const matchingEffect = this.actor.effects.find(ae => ae.name === effect.name);
-        return matchingEffect && !matchingEffect.disabled;
-      });
+      let hasActiveEffect = false;
+      for (const effect of this.actor.effects) {
+        if (effect.name === requiredItem.name) {
+          hasActiveEffect = true;
+          effect.delete()
+          break;
+        }
+      }
 
       if (!hasActiveEffect) {
         ui.notifications.warn(game.i18n.format("FF15.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
         return false;
       }
+
     }
     return true;
   }
