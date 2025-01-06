@@ -43,13 +43,13 @@
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
 
   $: roll = FFMessage?.roll || 0;
-  $: modifier = FFMessage?.extraModifiers?.modifier || 0;
-  $: totalRoll = roll + modifier;
+  $: penalty = FFMessage?.extraModifiers?.penalty || 0;
+  $: totalRoll = roll - penalty;
   $: hasTargets = FFMessage?.hasTargets || false;
 
   function log() {
     game.system.log.b("RollChat roll", roll);
-    game.system.log.b("RollChat modifier", modifier);
+    game.system.log.b("RollChat penalty", penalty);
     game.system.log.b("RollChat totalRoll", totalRoll);
     game.system.log.b("RollChat totalDamage", totalDamage);
     game.system.log.b("RollChat hasTargets", hasTargets);
@@ -141,7 +141,7 @@
   async function applyResult(target) {
     if (!target.actor || target.isUnlinked) return;
 
-    const modifier = FFMessage.extraModifiers?.modifier || 0;
+    const penalty = FFMessage.extraModifiers?.penalty || 0;
     const results = { damage: 0, directHit: 0 };
 
     // Calculate base damage

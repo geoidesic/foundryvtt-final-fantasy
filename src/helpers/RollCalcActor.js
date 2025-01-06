@@ -191,10 +191,17 @@ export default class RollCalcActor extends RollCalc {
       }
 
       // Build roll formula and data
-      let formula = '1d20'
+      let formulaParts = [1, 20];
+      let formula = '';
 
       if (this.RG.shuttle.hasModifiers.extraModifiers) {
-        formula += ` + ${this.RG.shuttle.hasModifiers.extraModifiers.modifier} `;
+        //- for each bonusDice, add a +1d20
+        if(this.RG.shuttle.hasModifiers.extraModifiers.bonusDice) {
+          formulaParts[0] += parseInt(this.RG.shuttle.hasModifiers.extraModifiers.bonusDice);
+        }
+        formula = formulaParts.join('d');
+
+        formula += ` - ${this.RG.shuttle.hasModifiers.extraModifiers.penalty} `;
       }
 
       let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);

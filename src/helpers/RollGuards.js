@@ -25,25 +25,42 @@ export default class RollGuards {
    * @returns 
    */
   async _showModifierDialog(item) {
-    return await Dialog.prompt({
-      title: "Extra Modifiers",
-      content: `
-        <form>
-          <div class="form-group">
-            <label>Additional Modifier:</label>
-            <input type="number" name="modifier" value="0">
-          </div>
-        </form>
-      `,
-      label: "Roll",
-      callback: (html) => {
-        const form = html[0].querySelector("form");
-        return {
-          modifier: parseInt(form.modifier.value) || 0,
-          confirmed: true
-        };
-      },
-      rejectClose: true // This ensures we get a proper reject when dialog is closed
+    const ModifierDialog = (await import('~/src/components/organisms/dialogs/ModifierDialog.svelte')).default;
+    
+    return new Promise((resolve, reject) => {
+      new Dialog({
+        title: "Extra Modifiers",
+        content: `<div id="modifier-dialog-container"></div>`,
+        buttons: {
+          roll: {
+            label: "Roll",
+            callback: (html) => {
+              resolve({
+                penalty: window._modifierDialogComponent?._state?.penalty || 0,
+                bonusDice: window._modifierDialogComponent?._state?.bonusDice || 0,
+                confirmed: true
+              });
+            }
+          },
+          cancel: {
+            label: "Cancel",
+            callback: () => reject()
+          }
+        },
+        render: (html) => {
+          // Initialize our Svelte component after the dialog HTML is rendered
+          const container = html.find('#modifier-dialog-container')[0];
+          window._modifierDialogComponent = new ModifierDialog({
+            target: container,
+            props: {}
+          });
+        },
+        close: () => {
+          window._modifierDialogComponent?.$destroy();
+          delete window._modifierDialogComponent;
+          reject();
+        }
+      }).render(true);
     });
   }
 

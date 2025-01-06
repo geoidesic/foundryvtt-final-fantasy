@@ -70,6 +70,10 @@
         "AppliedTo": "Applied to {1}"
       }
     },
+    "Modifiers": {
+      "Penalty": "Penalty Modifier",
+      "Advantage": "Bonus Dice"
+    },
     "EFFECT": {
       "ConfigTitle": "Active Effect",
       "Changes": "Changes",
