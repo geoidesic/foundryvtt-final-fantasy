@@ -389,6 +389,10 @@
         "Name": "Show enfeeblements labels",
         "Hint": "If unchecked, will only show icons in the token HUD."
       },
+      "DefaultChatDescriptionVisible": {
+        "Name": "Default chat description visible",
+        "Hint": "If checked, the chat description will be visible by default."
+      },
       "DontShowWelcome": {
         "Name": "Don't show this message again",
         "Hint": "Don't show the welcome application when Foundry first loads. (You can always undo this via Configure Settings)."

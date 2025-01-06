@@ -285,10 +285,9 @@
   //-   i.fa-solid.fa-bug
   ChatTitle(on:toggleDescription="{handleToggleDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")
-    +if("showDescription")
-      .flexrow.mt-xs
-        .flex4#chat-description.inset {@html item.system.description}
-          Header
+    .flexrow.mt-xs(class="{showDescription ? 'visible' : ''}")
+      .flex4#chat-description.inset {@html item.system.description}
+        Header
   +if("content")
     .flexrow.gap-4.leather.mt-xs
       .flex3.content
@@ -340,11 +339,7 @@
 @import '../../../styles/Mixins.sass'
 
 .description-wrapper
-  max-height: 0
-  overflow: hidden
-  transition: max-height 0.3s ease-out
-  &.expanded
-    max-height: 500px  // Large enough to fit most descriptions
+  +description-wrapper
 
 .inset
   +inset

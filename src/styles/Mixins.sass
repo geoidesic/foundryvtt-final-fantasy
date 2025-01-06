@@ -379,3 +379,16 @@
       text-align: center
       font-size: 12px
       line-height: 18px
+
+=description-wrapper
+  max-height: 0
+  overflow: hidden
+  transition: max-height 0.2s cubic-bezier(0, 1, 0, 1)
+  .flexrow
+    opacity: 0
+    transition: opacity 0.15s ease-out
+    &.visible
+      opacity: 1
+  &.expanded
+    max-height: 500px
+    transition: max-height 0.2s cubic-bezier(0.4, 0, 0.2, 1)

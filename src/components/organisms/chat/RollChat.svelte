@@ -9,6 +9,8 @@
   export let FFMessage;
   export let messageId;
 
+  let showDescription = game.settings.get(SYSTEM_ID, 'defaultChatDescriptionVisible');
+
   const message = getContext("message");
 
   async function applyToTarget() {
@@ -84,7 +86,12 @@
 
   }
 
+  const handleToggleDescription = () => {
+    showDescription = !showDescription;
+  };
+  
   onMount(async () => {
+    
   });
 
   $: hasTargets = $mappedGameTargets.size > 0;
@@ -97,15 +104,16 @@
 
 <template lang="pug">
 .chat
-  ChatTitle
-  .flexrow
-    .flex4#chat-description.inset {@html FFMessage.item.system.description} 
+  ChatTitle(on:toggleDescription="{handleToggleDescription}")
+  .description-wrapper(class="{showDescription ? 'expanded' : ''}")
+    .flexrow(class="{showDescription ? 'visible' : ''}")
+      .flex4#chat-description.inset {@html FFMessage.item.system.description} 
 </template>
 
 <style lang="sass">
   @import '../../../styles/Mixins.sass'
-  .inset
-    +inset
+  .description-wrapper
+    +description-wrapper
   :global(.FF15 #chat-description)
     background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
     color: var(--color-text-dark)

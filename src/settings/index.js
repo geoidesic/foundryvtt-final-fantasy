@@ -14,6 +14,7 @@ export function registerSettings() {
   showChatProfileImages()
   chatMessageSenderIsActorOwner()
   automaticUses()
+  defaultChatDescriptionVisible()
 }
 
 /**
@@ -164,6 +165,21 @@ function showChatProfileImages() {
       scope: 'user',
       config: true,
       default: true,
+      type: Boolean
+    }
+  });
+}
+
+function defaultChatDescriptionVisible() {
+  gameSettings.register({
+    namespace: SYSTEM_ID,
+    key: 'defaultChatDescriptionVisible',
+    options: {
+      name: localize(`${SYSTEM_CODE}.Setting.DefaultChatDescriptionVisible.Name`),
+      hint: localize(`${SYSTEM_CODE}.Setting.DefaultChatDescriptionVisible.Hint`),
+      scope: 'world',
+      config: true,
+      default: false,
       type: Boolean
     }
   });
