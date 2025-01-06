@@ -375,7 +375,8 @@ export default class RollCalcActor extends RollCalc {
     game.system.log.d("[ENABLE] Found compendium item:", {
       name: compendiumItem.name,
       type: compendiumItem.type,
-      hasEffects: compendiumItem.hasEffects
+      hasEffects: compendiumItem.hasEffects,
+      effects: compendiumItem.effects?.size || 0
     });
 
     // Find actor's version of the item by matching name and type
@@ -387,7 +388,8 @@ export default class RollCalcActor extends RollCalc {
     game.system.log.d("[ENABLE] Actor item search result:", {
       found: !!actorItem,
       name: actorItem?.name,
-      hasEffects: actorItem?.hasEffects
+      hasEffects: actorItem?.hasEffects,
+      effects: actorItem?.effects?.size || 0
     });
 
     if (!actorItem) { return [] }
@@ -399,7 +401,8 @@ export default class RollCalcActor extends RollCalc {
       itemName: actorItem.name,
       hasRemainingUses,
       currentUses: actorItem.currentUses,
-      maxUses: actorItem.maxUses
+      maxUses: actorItem.maxUses,
+      effects: actorItem.effects?.size || 0
     });
 
     if (!hasRemainingUses) {
@@ -408,10 +411,17 @@ export default class RollCalcActor extends RollCalc {
     }
 
     // Enable any disabled effects and get their UUIDs
+    game.system.log.d("[ENABLE] About to enable effects for:", {
+      itemName: actorItem.name,
+      effects: actorItem.effects?.size || 0,
+      effectsList: Array.from(actorItem.effects || []).map(e => ({ id: e.id, name: e.name, disabled: e.disabled }))
+    });
+    
     const effectsEnabled = await this.params.actor.enableLinkedEffects(actorItem);
     game.system.log.d("[ENABLE] Effects enabled:", {
       itemName: actorItem.name,
-      effectsEnabled
+      effectsEnabled,
+      effectsCount: effectsEnabled.length
     });
 
     // If we enabled any effects, create chat message

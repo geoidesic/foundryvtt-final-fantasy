@@ -176,8 +176,6 @@ export default class FF15Actor extends Actor {
     let effectsEnabled = [];
 
     for (const effect of item.effects) {
-      if (!effect.disabled) continue;
-
       let effectToProcess;
       const matchingEffect = this.matchingEffect(effect);
       
