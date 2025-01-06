@@ -198,6 +198,7 @@ export default class RollCalcActor extends RollCalc {
         //- for each bonusDice, add a +1d20
         if(this.RG.shuttle.hasModifiers.extraModifiers.bonusDice) {
           formulaParts[0] += parseInt(this.RG.shuttle.hasModifiers.extraModifiers.bonusDice);
+          formulaParts[1] = '20kh1'
         }
         formula = formulaParts.join('d');
 

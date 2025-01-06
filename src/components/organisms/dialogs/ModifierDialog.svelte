@@ -20,45 +20,35 @@
   }
 </script>
 
-<form class="modifier-dialog">
-  <div class="flexrow">
-    <div class="flexcol">
-      <svelte:component 
-        this={StarRating}
-        label={localize('Modifiers.Penalty')}
-        value={penalty}
-        on:change={e => handlePenaltyChange(e.detail)}
-        maxStars={6}
-        icon="fas fa-burst"
-        activeColor="var(--color-negative)"
-      />
-    </div>
-    <div class="flexcol">
-      <svelte:component 
-        this={StarRating}
-        label={localize('Modifiers.Advantage')}
-        value={bonusDice}
-        on:change={e => handleBonusChange(e.detail)}
-        maxStars={6}
-        icon="fas fa-dice-d20"
-        activeColor="var(--ff-border-color)"
-      />
-    </div>
-  </div>
-</form>
+<template lang="pug">
+form.modifier-dialog
+  .flexrow.gap-15
+    .flex1
+      .flexcol
+        svelte:component(
+          this="{StarRating}"
+          label="{localize('Modifiers.Penalty')}"
+          value="{penalty}"
+          on:change!="{e => handlePenaltyChange(e.detail)}"
+          maxStars="{7}"
+          icon="fas fa-burst"
+          activeColor="var(--color-negative)"
+        )
+    .flex1
+      .flexcol
+        svelte:component(
+          this="{StarRating}"
+          label="{localize('Modifiers.Advantage')}"
+          value="{bonusDice}"
+          on:change!="{e => handleBonusChange(e.detail)}"
+          maxStars="{7}"
+          icon="fas fa-dice-d20"
+          activeColor="var(--ff-border-color)"
+        )
+</template>
+
 
 <style lang="sass">
   .modifier-dialog
     padding: 1rem
-    
-  :global(.flexrow)
-    display: flex
-    flex-direction: row
-    flex-wrap: wrap
-    justify-content: space-between
-    gap: 1rem
-    
-  :global(.flexcol)
-    flex: 1
-    padding: 0.5rem
 </style> 
