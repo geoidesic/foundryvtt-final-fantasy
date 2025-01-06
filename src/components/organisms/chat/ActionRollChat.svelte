@@ -281,8 +281,8 @@
 <template lang="pug">
 
 .chat
-  div.pointer(on:click!="{log}") 
-    i.fa-solid.fa-bug
+  //- div.pointer(on:click!="{log}") 
+  //-   i.fa-solid.fa-bug
   ChatTitle(on:toggleDescription="{handleToggleDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")
     +if("showDescription")
