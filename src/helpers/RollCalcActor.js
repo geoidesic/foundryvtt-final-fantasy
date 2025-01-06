@@ -3,7 +3,6 @@ import { SYSTEM_ID } from "./constants.js"
 import RollCalc from "./RollCalc.js"
 import FFActiveEffect from "~/src/extensions/active-effect.js"
 
-
 export default class RollCalcActor extends RollCalc {
 
   async defaultChat(item) {
@@ -140,90 +139,96 @@ export default class RollCalcActor extends RollCalc {
     return messageData;
   }
 
-  async abilityAction(item) {
-    // Get targets before showing dialog
-    const guards = [
-      this.RG.isAction,
-      this.RG.targetsMatchActionIntent,
-      this.RG.hasRequiredEffects,
-      this.RG.hasActiveEnablerSlot,
-      this.RG.hasRemainingUses,
-      this.RG.hasModifiers
-    ]
-    let message;
+  async abilityAction(item, options = {}) {
+    try {
+      const guards = [
+        this.RG.isAction,
+        this.RG.isActorsTurn,
+        this.RG.isReaction,
+        this.RG.targetsMatchActionIntent,
+        this.RG.hasRequiredEffects,
+        this.RG.hasActiveEnablerSlot,
+        this.RG.hasRemainingUses,
+        this.RG.hasModifiers,
+      ];
+      let message;
 
-    if (!(await this._handleGuards(item, guards))) {
-      return undefined;
-    }
-
-    const targets = game.user.targets;
-    const hasTargets = targets.size > 0;
-    // Handle target effects if the action grants them
-    if (item.system.grants?.value && hasTargets) {
-      await this._handleTargetEffects(item, targets);
-    }
-
-    if (!item.system.hasCR) {
-      // Use action template if item has base damage effect
-      if (item.system.hasBaseEffect && item.system.baseEffectType === 'damage') {
-        const messageData = this._createActionMessageData(
-          item, 
-          hasTargets, 
-          Array.from(targets).map((target) => target.id)
-        );
-        message = await ChatMessage.create(messageData);
-      } else {
-        message = await this.defaultChat(item);
+      if (!(await this._handleGuards(item, guards))) {
+        return undefined;
       }
+
+      const targets = game.user.targets;
+      const hasTargets = targets.size > 0;
+      // Handle target effects if the action grants them
+      if (item.system.grants?.value && hasTargets) {
+        await this._handleTargetEffects(item, targets);
+      }
+
+      if (!item.system.hasCR) {
+        // Use action template if item has base damage effect
+        if (item.system.hasBaseEffect && item.system.baseEffectType === 'damage') {
+          const messageData = this._createActionMessageData(
+            item, 
+            hasTargets, 
+            Array.from(targets).map((target) => target.id)
+          );
+          message = await ChatMessage.create(messageData);
+        } else {
+          message = await this.defaultChat(item);
+        }
+
+        // Mark the action as used
+        await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
+
+        // Enable the effects of the action
+        let allEnabledEffects = [];
+        // Iterate through the enables list on the item that was used for the roll
+        for (const enablesItemRef of item.system.enables.list) {
+          const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
+          allEnabledEffects = allEnabledEffects.concat(effects);
+        }
+        return;
+      }
+
+      // Build roll formula and data
+      let formula = '1d20'
+
+      if (this.RG.shuttle.hasModifiers.extraModifiers) {
+        formula += ` + ${this.RG.shuttle.hasModifiers.extraModifiers.modifier} `;
+      }
+
+      let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
+
+      // Evaluate roll with actor data
+      const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
+
+      // Create chat message data
+      const messageData = this._createActionMessageData(
+        item, 
+        hasTargets, 
+        Array.from(targets).map((target) => target.id),
+        roll
+      );
+
+      // Create the message
+      message = await roll.toMessage(messageData);
 
       // Mark the action as used
       await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
 
-      // Enable the effects of the action
+      // Enable or disable enabler effects as appropriate
       let allEnabledEffects = [];
       // Iterate through the enables list on the item that was used for the roll
       for (const enablesItemRef of item.system.enables.list) {
         const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
         allEnabledEffects = allEnabledEffects.concat(effects);
       }
-      return;
+
+      return message
+    } catch (error) {
+      game.system.log.e("Error applying effects to target", error);
+      ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
     }
-
-    // Build roll formula and data
-    let formula = '1d20'
-
-    if (this.RG.shuttle.hasModifiers.extraModifiers) {
-      formula += ` + ${this.RG.shuttle.hasModifiers.extraModifiers.modifier} `;
-    }
-
-    let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
-
-    // Evaluate roll with actor data
-    const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
-
-    // Create chat message data
-    const messageData = this._createActionMessageData(
-      item, 
-      hasTargets, 
-      Array.from(targets).map((target) => target.id),
-      roll
-    );
-
-    // Create the message
-    message = await roll.toMessage(messageData);
-
-    // Mark the action as used
-    await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
-
-    // Enable or disable enabler effects as appropriate
-    let allEnabledEffects = [];
-    // Iterate through the enables list on the item that was used for the roll
-    for (const enablesItemRef of item.system.enables.list) {
-      const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
-      allEnabledEffects = allEnabledEffects.concat(effects);
-    }
-
-    return message
   }
 
 
@@ -238,7 +243,6 @@ export default class RollCalcActor extends RollCalc {
    * @param {ChatMessage} message - The chat message created for this action
    */
   async _markCombatTrackerActionSlotAsUsed(item, actionType, message) {
-
     if (!(await this._handleGuards(item, [
       this.RG.isCombat
     ]))) {
@@ -246,6 +250,14 @@ export default class RollCalcActor extends RollCalc {
     }
 
     const { actionState } = this.params.actor.system;
+
+    // Track reaction usage
+    if (item.system.type === 'reaction') {
+      await this.params.actor.update({
+        'system.actionState.usedReaction': true
+      });
+      return;
+    }
 
     // First try to find a matching tag-based slot
     let slotToUse;
@@ -288,7 +300,6 @@ export default class RollCalcActor extends RollCalc {
     if (!slotToUse) {
       return;
     }
-
 
     // Create new available array and remove exactly one instance of the used slot
     const newAvailable = [...actionState.available];

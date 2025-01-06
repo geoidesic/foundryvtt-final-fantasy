@@ -233,7 +233,7 @@
                 img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.ability(item.type, item)}")
               td.left
                 .flexrow
-                  .flex3.left(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.View')}")
+                  .flex3.left(data-tooltip-class="FF15-tooltip wordy" data-tooltip="{item.system.description}")
                     a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
                   +if("item.system.hasLimitation && game.combat")
                     .flex0.right.ml-sm(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Item.Types.action.UsesRemaining')}")

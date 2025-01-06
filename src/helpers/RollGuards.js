@@ -221,6 +221,8 @@ export default class RollGuards {
   }
 
   async hasActiveEnablerSlot(item) {
+    // Skip this check for reactions
+    if (item.system.type === 'reaction') return true;
 
     const { actionState } = this.actor.system;
     const actionType = item.system.type || 'primary'; // default to primary if not set
@@ -294,6 +296,54 @@ export default class RollGuards {
       }
     }
     return true;
+  }
+
+  async isActorsTurn(item) {
+    // Skip this check if not in combat
+    if (!game.combat) return true;
+
+    // Get the current combatant
+    const currentCombatant = game.combat.combatant;
+    if (!currentCombatant) return true;
+
+    // Reactions can be used on any turn
+    if (item.system.type === 'reaction') return true;
+
+    // For non-reactions, check if it's this actor's turn
+    const isCurrentTurn = currentCombatant.actor.id === this.actor.id;
+    if (!isCurrentTurn) {
+      ui.notifications.warn("Cannot use this action outside of your turn.");
+    }
+    return isCurrentTurn;
+  }
+
+  async isReaction(item) {
+    // Only check reactions
+    if (item.system.type !== 'reaction') return true;
+
+    // Skip this check if not in combat
+    if (!game.combat) return true;
+
+    const actionState = this.actor.system.actionState;
+    if (actionState.usedReaction) {
+      ui.notifications.warn("Cannot use multiple reactions in the same turn.");
+      return false;
+    }
+    return true;
+  }
+
+  async hasAvailableSlot(item) {
+    // Skip this check for reactions
+    if (item.system.type === 'reaction') return true;
+
+    const actionState = this.actor.system.actionState;
+    const available = actionState.available || [];
+    const actionType = item.system.type;
+    const hasSlot = available.includes(actionType);
+    if (!hasSlot) {
+      ui.notifications.warn(`No ${actionType} action slot available.`);
+    }
+    return hasSlot;
   }
 
 }

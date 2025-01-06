@@ -29,7 +29,8 @@ export class PCModel extends FFActorDataModel {
           messageId: new StringField({ required: true })
         }), {
           initial: []
-        })
+        }),
+        usedReaction: new BooleanField({ required: true, initial: false })
       })
     }
   }

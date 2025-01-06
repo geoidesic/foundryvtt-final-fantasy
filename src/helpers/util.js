@@ -211,7 +211,8 @@ export const resetActionState = async (actor) => {
   await actor.update({
     'system.actionState': {
       available: [...baseActions, ...extraActions],
-      used: []
+      used: [],
+      usedReaction: false
     }
   });
 };
