@@ -1,8 +1,10 @@
 <script>
   import StarRating from '~/src/components/molecules/StarRating.svelte';
   import { localize } from '~/src/helpers/util';
+  
   export let penalty = 0;
   export let bonusDice = 0;
+  export let mutuallyExclusive = false;
 
   // Make the state accessible to the parent dialog
   $: if (window._modifierDialogComponent) {
@@ -11,12 +13,12 @@
 
   function handlePenaltyChange(value) {
     penalty = value;
-    if (value > 0) bonusDice = 0;
+    if (mutuallyExclusive && value > 0) bonusDice = 0;
   }
 
   function handleBonusChange(value) {
     bonusDice = value;
-    if (value > 0) penalty = 0;
+    if (mutuallyExclusive && value > 0) penalty = 0;
   }
 </script>
 
@@ -46,7 +48,6 @@ form.modifier-dialog
           activeColor="var(--ff-border-color)"
         )
 </template>
-
 
 <style lang="sass">
   .modifier-dialog

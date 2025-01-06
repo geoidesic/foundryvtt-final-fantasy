@@ -52,7 +52,9 @@ export default class RollGuards {
           const container = html.find('#modifier-dialog-container')[0];
           window._modifierDialogComponent = new ModifierDialog({
             target: container,
-            props: {}
+            props: {
+              mutuallyExclusive: false
+            }
           });
         },
         close: () => {
