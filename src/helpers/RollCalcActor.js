@@ -456,7 +456,7 @@ export default class RollCalcActor extends RollCalc {
               // Only toggle statuses that aren't already active
               const statusesToToggle = statuses.filter(status => !targetActor.statuses.has(status));
               if (statusesToToggle.length) {
-                targetActor.toggleActiveEffect({ id: statusesToToggle[0], statuses: statusesToToggle });
+                targetActor.toggleStatusEffect(statusesToToggle[0]);
               }
               return null;
             }

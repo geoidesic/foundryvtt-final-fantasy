@@ -22,8 +22,18 @@ export default function renderCombatTracker() {
   
     await resetUses(turnLimitedItems);
   
-    // Reset action state at end of turn
-    await resetActionState(actor, true);
+    // Reset action state at end of turn for the previous actor
+    await resetActionState(actor);
+  
+    // Reset usedReaction for all actors in combat since reactions are per-turn, not per-actor's-turn
+    for (const combatant of combat.turns) {
+      const currentActor = combatant.actor;
+      if (!currentActor) continue;
+
+      await currentActor.update({
+        'system.actionState.usedReaction': false
+      });
+    }
   
     //- reset hasMoved flag
     await actor.update({ system: { hasMoved: false } });
