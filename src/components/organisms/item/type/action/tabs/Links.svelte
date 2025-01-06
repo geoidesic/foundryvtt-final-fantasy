@@ -33,6 +33,18 @@
         title="{localize('FF15.Combos')}",
         key="combos",
       )
+      ItemBucket(
+        title="{localize('FF15.ProcTriggers')}",
+        key="procs",
+      )
+        +if("$item.system.procs.value")
+          .flexrow.sheet-row.justify-vertical.wide.gold.px-sm
+            .flex1
+              label(for="procTrigger") {localize("Threshold")}
+            .flex4.right.wide
+              DocInput.wide.right(id="procTrigger" name="procTrigger" type="number" valuePath="system.procTrigger")
+      
+
 
   .flexrow.sheet-row.justify-vertical.px-sm
     .flex4
