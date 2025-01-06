@@ -317,7 +317,7 @@
                       .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
                       .flex1
                         i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
-                .flex2.thin-border.bg-gold.offwhite(style="min-height: 2.6rem")
+                .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
                   +if("item.system?.formula")
                     .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDamageFormula(target)}")
                       .flex3.left.font-cinzel.smaller Damage 
