@@ -14,3 +14,12 @@ export default {
   DamageOverTime,
   ProcTrigger
 };
+
+export function registerEffectProcessors() {
+  // ... other registrations ...
+
+  Hooks.on('FF15.procTrigger', (event) => {
+    const processor = new ProcTrigger(event.actor);
+    processor.process(event);
+  });
+}

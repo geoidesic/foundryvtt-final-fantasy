@@ -94,8 +94,8 @@ export default class RollCalcActor extends RollCalc {
       id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
       speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
       flavor: `${item.name}`,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      classes: ['testy', 'leather'],
+      style: CONST.CHAT_MESSAGE_STYLES.ROLL,
+      rolls: roll ? [roll] : [],
       flags: {
         [SYSTEM_ID]: {
           data: {
@@ -130,9 +130,8 @@ export default class RollCalcActor extends RollCalc {
       }
     };
 
-    // Add roll data if provided
+    // Add roll total to flags if provided
     if (roll) {
-      messageData.roll = roll;
       messageData.flags[SYSTEM_ID].data.roll = roll.total;
     }
 
@@ -162,6 +161,16 @@ export default class RollCalcActor extends RollCalc {
       if (item.system.hasCR) {
         // Handle roll with modifiers
         roll = await this._handleRollWithModifiers(item);
+        const d20Term = roll.terms[0];
+        const rawD20 = d20Term.modifiers.includes('kh1') 
+          ? Math.max(...d20Term.results.map(r => r.result))
+          : d20Term.results[0].result;
+
+        game.system.log.d("[PROC] Roll result:", {
+          total: roll.total,
+          terms: roll.terms,
+          rawD20
+        });
         message = await roll.toMessage(this._createActionMessageData(item, hasTargets, targetIds, roll));
       } else {
         message = item.system.hasBaseEffect && item.system.baseEffectType === 'damage'
@@ -171,7 +180,15 @@ export default class RollCalcActor extends RollCalc {
 
       // Check for proc trigger
       if (item.system.procTrigger) {
+        game.system.log.d("[PROC] Checking proc trigger:", {
+          itemName: item.name,
+          procTrigger: item.system.procTrigger,
+          hasCR: item.system.hasCR,
+          hasRoll: !!roll
+        });
+        
         Hooks.callAll('FF15.ProcTrigger', { 
+          actor: this.params.actor, 
           item,
           roll,
           targets
@@ -184,8 +201,8 @@ export default class RollCalcActor extends RollCalc {
 
       return message;
     } catch (error) {
-      game.system.log.e("Error applying effects to target", error);
-      ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
+      game.system.log.e("Error applying effects", error);
+      ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: this.params.actor.name }));
     }
   }
 
@@ -204,13 +221,34 @@ export default class RollCalcActor extends RollCalc {
     }
 
     const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
-    return await new Roll(rollFormula, rollData).evaluate({ async: true });
+    const roll = await new Roll(rollFormula, rollData).evaluate();
+    
+    // For advantage rolls (kh1), we need to get the highest result
+    const d20Term = roll.terms[0];
+    const d20Result = d20Term.modifiers.includes('kh1') 
+      ? Math.max(...d20Term.results.map(r => r.result))
+      : d20Term.results[0].result;
+    
+    game.system.log.d("[PROC] Roll details:", {
+      formula: roll.formula,
+      d20Result,
+      total: roll.total,
+      terms: roll.terms
+    });
+
+    return roll;
   }
 
   // New helper method to handle enabler effects
   async _handleEnablerEffects(item) {
+    game.system.log.d("[ENABLE] Starting _handleEnablerEffects for:", {
+      itemName: item.name,
+      enablesList: item.system.enables.list
+    });
+
     let allEnabledEffects = [];
     for (const enablesItemRef of item.system.enables.list) {
+      game.system.log.d("[ENABLE] Processing enable ref:", enablesItemRef);
       const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
       allEnabledEffects = allEnabledEffects.concat(effects);
     }
@@ -325,27 +363,56 @@ export default class RollCalcActor extends RollCalc {
   }
 
   async _handleSingleItemEffectEnabling(enablesItemRef) {
+    game.system.log.d("[ENABLE] Starting _handleSingleItemEffectEnabling for ref:", enablesItemRef);
+    
     // Get the compendium item for reference
     const compendiumItem = await fromUuid(enablesItemRef.uuid);
-    if (!compendiumItem) { return [] }
+    if (!compendiumItem) {
+      game.system.log.w("[ENABLE] Could not find compendium item for uuid:", enablesItemRef.uuid);
+      return [];
+    }
 
-    // Find the actor's version of the item by matching name and type
+    game.system.log.d("[ENABLE] Found compendium item:", {
+      name: compendiumItem.name,
+      type: compendiumItem.type,
+      hasEffects: compendiumItem.hasEffects
+    });
+
+    // Find actor's version of the item by matching name and type
     const actorItem = this.params.actor.items.find(item => 
       item.name === compendiumItem.name && 
       item.type === compendiumItem.type
     );
 
+    game.system.log.d("[ENABLE] Actor item search result:", {
+      found: !!actorItem,
+      name: actorItem?.name,
+      hasEffects: actorItem?.hasEffects
+    });
+
     if (!actorItem) { return [] }
     if (!actorItem.hasEffects) { return [] }
 
     // Check if we've hit the usage limit using the actor's version of the item
-    if (!await this.params.actor.actorItemHasRemainingUses(actorItem)) {
+    const hasRemainingUses = await this.params.actor.actorItemHasRemainingUses(actorItem);
+    game.system.log.d("[ENABLE] Usage check:", {
+      itemName: actorItem.name,
+      hasRemainingUses,
+      currentUses: actorItem.currentUses,
+      maxUses: actorItem.maxUses
+    });
+
+    if (!hasRemainingUses) {
       game.system.log.w("[ENABLE]", `${actorItem.name} has been used ${actorItem.currentUses} times, reaching its usage limit of ${actorItem.maxUses}`);
       return [];
     }
 
     // Enable any disabled effects and get their UUIDs
     const effectsEnabled = await this.params.actor.enableLinkedEffects(actorItem);
+    game.system.log.d("[ENABLE] Effects enabled:", {
+      itemName: actorItem.name,
+      effectsEnabled
+    });
 
     // If we enabled any effects, create chat message
     if (effectsEnabled.length) {
