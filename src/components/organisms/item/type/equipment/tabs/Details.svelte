@@ -1,15 +1,17 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "#runtime/svelte/helper";
+  import { isParentActor} from "~/src/helpers/util";
+  import { getTypeOptions } from "~/src/helpers/constants.js";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
-  import { isParentActor} from "~/src/helpers/util";
 
   import { PCModel } from "~/src/models/actors/PC.js";
 
   const item = getContext("#doc");
+  const typeOptions = getTypeOptions();
 
 
   $: parentIsActor = isParentActor($item);
@@ -18,7 +20,14 @@
 
 <template lang="pug">
   .item-sheet.details
-    .flexcol.flex3.left
+    .flexcol.flex3.left.high.wide
+      h3.left {localize("FF15.General")}
+      .flexrow.sheet-row.justify-vertical.wide
+        .flex1
+          label(for="type") {localize("FF15.Action")} {localize("FF15.Type")}
+        .flex4.right.wide
+          DocSelect.wide.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
+      
       +if("parentIsActor")
         .flexrow.sheet-row
           .flex2
