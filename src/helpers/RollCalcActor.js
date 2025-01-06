@@ -157,20 +157,25 @@ export default class RollCalcActor extends RollCalc {
         await this._handleTargetEffects(item, targets);
       }
 
+      let roll;
       let message;
-      if (!item.system.hasCR) {
+      if (item.system.hasCR) {
+        // Handle roll with modifiers
+        roll = await this._handleRollWithModifiers(item);
+        message = await roll.toMessage(this._createActionMessageData(item, hasTargets, targetIds, roll));
+      } else {
         message = item.system.hasBaseEffect && item.system.baseEffectType === 'damage'
           ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
           : await this.defaultChat(item);
-      } else {
-        // Handle roll with modifiers
-        const roll = await this._handleRollWithModifiers(item);
-        message = await roll.toMessage(this._createActionMessageData(item, hasTargets, targetIds, roll));
-        
-        // Handle proc triggers
-        if (item.system.procTrigger && roll.total >= item.system.procTrigger) {
-          Hooks.callAll('FF15.procTrigger', { item, roll, targets });
-        }
+      }
+
+      // Check for proc trigger
+      if (item.system.procTrigger) {
+        Hooks.callAll('FF15.ProcTrigger', { 
+          item,
+          roll,
+          targets
+        });
       }
 
       // Mark action as used and handle effects
