@@ -113,7 +113,7 @@
               td.img.shrink(scope="col")
                 img.icon(src="{item.img}" alt="{item.name}")
               td.left
-                a.ml-sm.stealth.link.no-wrap(on:click="{openItem(index, item)}") {item.name}
+                a.ml-sm.stealth.link.no-wrap(on:click="{openItem(index, item)}") {localize(item.name)}
 
     +else
       p(style="margin-top: -2px; margin-bottom: 0px;") {localize("FF15.NoEffects")}
