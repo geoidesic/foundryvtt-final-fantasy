@@ -1,3 +1,4 @@
+import { SYSTEM_ID } from "~/src/helpers/constants";
 export default class ProcTrigger {
   constructor(actor) {
     game.system.log.d("[PROC] Creating ProcTrigger processor for actor:", actor.name);
@@ -71,6 +72,32 @@ export default class ProcTrigger {
       // Enable the effects
       const enabled = await this.actor.enableLinkedEffects(actorItem);
       game.system.log.d("[PROC] Enabled effects:", enabled);
+
+      // Send a chat message for the proc trigger
+      await ChatMessage.create({
+        user: game.user.id,
+        speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
+        flags: {
+          [SYSTEM_ID]: {
+            data: {
+              chatTemplate: 'RollChat',
+              actor: {
+                _id: this.actor._id,
+                name: this.actor.name,
+                img: this.actor.img
+              },
+              item: {
+                _id: actorItem._id,
+                uuid: actorItem.uuid,
+                name: actorItem.name,
+                img: actorItem.img,
+                type: actorItem.type,
+                system: actorItem.system
+              }
+            }
+          }
+        }
+      });
     }
   }
 }

@@ -176,26 +176,34 @@ export default class FF15Actor extends Actor {
     let effectsEnabled = [];
 
     for (const effect of item.effects) {
-      let effectToProcess;
+      // First check if we have a matching effect
       const matchingEffect = this.matchingEffect(effect);
       
       if (matchingEffect) {
+        // If we have a matching effect and it's disabled, enable it
         if (matchingEffect.disabled) {
           await matchingEffect.update({ disabled: false });
           effectsEnabled.push(matchingEffect.uuid);
-          effectToProcess = matchingEffect;
+        }
+        // Process hooks for the matching effect
+        if (!matchingEffect.isSuppressed) {
+          await this._processEffectHooks(matchingEffect);
         }
       } else {
+        // If no matching effect exists, use addLinkedEffects to create it
         const addedEffects = await this.addLinkedEffects(item);
         effectsEnabled = effectsEnabled.concat(addedEffects);
-        effectToProcess = effect;
-      }
 
-      // Process hooks in one place
-      if (effectToProcess && !effectToProcess.isSuppressed) {
-        await this._processEffectHooks(effectToProcess);
+        // Process hooks for newly added effects
+        for (const uuid of addedEffects) {
+          const newEffect = await fromUuid(uuid);
+          if (newEffect && !newEffect.isSuppressed) {
+            await this._processEffectHooks(newEffect);
+          }
+        }
       }
     }
+
     return effectsEnabled;
   }
 
