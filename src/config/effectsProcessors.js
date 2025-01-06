@@ -30,4 +30,9 @@ export function setupEffectsProcessors() {
     const processor = new effects.DamageOverTime(event.actor);
     await processor.process(event);
   });
+
+  Hooks.on('FF15.ProcTrigger', async (event) => {
+    const processor = new effects.ProcTrigger(event.actor);
+    await processor.process(event);
+  });
 }

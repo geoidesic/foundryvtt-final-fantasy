@@ -141,104 +141,76 @@ export default class RollCalcActor extends RollCalc {
 
   async abilityAction(item, options = {}) {
     try {
-      const guards = [
-        this.RG.isAction,
-        this.RG.isActorsTurn,
-        this.RG.isReaction,
-        this.RG.targetsMatchActionIntent,
-        this.RG.hasRequiredEffects,
-        this.RG.hasActiveEnablerSlot,
-        this.RG.hasRemainingUses,
-        this.RG.hasModifiers,
-      ];
-      let message;
-
-      if (!(await this._handleGuards(item, guards))) {
-        return undefined;
-      }
+      // Early return if guards fail
+      if (!(await this._handleGuards(item, [
+        this.RG.isAction, this.RG.isActorsTurn, this.RG.isReaction,
+        this.RG.targetsMatchActionIntent, this.RG.hasRequiredEffects,
+        this.RG.hasActiveEnablerSlot, this.RG.hasRemainingUses, this.RG.hasModifiers
+      ]))) return;
 
       const targets = game.user.targets;
       const hasTargets = targets.size > 0;
-      // Handle target effects if the action grants them
+      const targetIds = Array.from(targets).map(target => target.id);
+
+      // Handle target effects
       if (item.system.grants?.value && hasTargets) {
         await this._handleTargetEffects(item, targets);
       }
 
+      let message;
       if (!item.system.hasCR) {
-        // Use action template if item has base damage effect
-        if (item.system.hasBaseEffect && item.system.baseEffectType === 'damage') {
-          const messageData = this._createActionMessageData(
-            item, 
-            hasTargets, 
-            Array.from(targets).map((target) => target.id)
-          );
-          message = await ChatMessage.create(messageData);
-        } else {
-          message = await this.defaultChat(item);
+        message = item.system.hasBaseEffect && item.system.baseEffectType === 'damage'
+          ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
+          : await this.defaultChat(item);
+      } else {
+        // Handle roll with modifiers
+        const roll = await this._handleRollWithModifiers(item);
+        message = await roll.toMessage(this._createActionMessageData(item, hasTargets, targetIds, roll));
+        
+        // Handle proc triggers
+        if (item.system.procTrigger && roll.total >= item.system.procTrigger) {
+          Hooks.callAll('FF15.procTrigger', { item, roll, targets });
         }
-
-        // Mark the action as used
-        await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
-
-        // Enable the effects of the action
-        let allEnabledEffects = [];
-        // Iterate through the enables list on the item that was used for the roll
-        for (const enablesItemRef of item.system.enables.list) {
-          const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
-          allEnabledEffects = allEnabledEffects.concat(effects);
-        }
-        return;
       }
 
-      // Build roll formula and data
-      let formulaParts = [1, 20];
-      let formula = '';
-
-      if (this.RG.shuttle.hasModifiers.extraModifiers) {
-        //- for each bonusDice, add a +1d20
-        if(this.RG.shuttle.hasModifiers.extraModifiers.bonusDice) {
-          formulaParts[0] += parseInt(this.RG.shuttle.hasModifiers.extraModifiers.bonusDice);
-          formulaParts[1] = '20kh1'
-        }
-        formula = formulaParts.join('d');
-
-        formula += ` - ${this.RG.shuttle.hasModifiers.extraModifiers.penalty} `;
-      }
-
-      let { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
-
-      // Evaluate roll with actor data
-      const roll = await new Roll(rollFormula, rollData).evaluate({ async: true });
-
-      // Create chat message data
-      const messageData = this._createActionMessageData(
-        item, 
-        hasTargets, 
-        Array.from(targets).map((target) => target.id),
-        roll
-      );
-
-      // Create the message
-      message = await roll.toMessage(messageData);
-
-      // Mark the action as used
+      // Mark action as used and handle effects
       await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
+      await this._handleEnablerEffects(item);
 
-      // Enable or disable enabler effects as appropriate
-      let allEnabledEffects = [];
-      // Iterate through the enables list on the item that was used for the roll
-      for (const enablesItemRef of item.system.enables.list) {
-        const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
-        allEnabledEffects = allEnabledEffects.concat(effects);
-      }
-
-      return message
+      return message;
     } catch (error) {
       game.system.log.e("Error applying effects to target", error);
       ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
     }
   }
 
+  // New helper method to handle roll calculations
+  async _handleRollWithModifiers(item) {
+    let [diceCount, diceType] = [1, 20];
+    let formula = '';
+
+    if (this.RG.shuttle.hasModifiers.extraModifiers) {
+      const { bonusDice, penalty } = this.RG.shuttle.hasModifiers.extraModifiers;
+      if (bonusDice) {
+        diceCount += parseInt(bonusDice);
+        diceType = '20kh1';
+      }
+      formula = `${diceCount}d${diceType}${penalty ? ` - ${penalty}` : ''}`;
+    }
+
+    const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
+    return await new Roll(rollFormula, rollData).evaluate({ async: true });
+  }
+
+  // New helper method to handle enabler effects
+  async _handleEnablerEffects(item) {
+    let allEnabledEffects = [];
+    for (const enablesItemRef of item.system.enables.list) {
+      const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
+      allEnabledEffects = allEnabledEffects.concat(effects);
+    }
+    return allEnabledEffects;
+  }
 
   /******************
    * Private methods
@@ -368,7 +340,7 @@ export default class RollCalcActor extends RollCalc {
     }
 
     // Enable any disabled effects and get their UUIDs
-    const effectsEnabled = await this.params.actor.enableTraitEffects(actorItem);
+    const effectsEnabled = await this.params.actor.enableLinkedEffects(actorItem);
 
     // If we enabled any effects, create chat message
     if (effectsEnabled.length) {

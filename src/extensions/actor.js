@@ -118,45 +118,26 @@ export default class FF15Actor extends Actor {
   }
 
   /**
-   * Add a trait effect to the actor
-   * @param {FF15Item} item 
-   * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
+   * Add effects from an item to this actor
+   * @param {Item} item - The item to add effects from
+   * @returns {Array} Array of effect UUIDs that were enabled
    */
-  async addTraitEffects(item) {
-    game.system.log.p("[ADD] Starting addTraitEffects for item:", item.name);
-
-    if (!item.hasEffects) {
-      game.system.log.p("[ADD] Item has no effects, returning");
-      return [];
-    }
+  async addLinkedEffects(item) {
+    if (!item.hasEffects) return [];
 
     // Convert effects to plain objects and set combat duration
     const effectsData = Array.from(item.effects).map(effect => {
-      game.system.log.p("[ADD] Processing effect:", {
-        name: effect.name,
-        id: effect._id,
-        disabled: effect.disabled,
-        origin: effect.origin
-      });
-
       // Check for existing effect with same ID
       const existingEffect = this.effects.find(e =>
         e.name === effect.name &&
         effect.origin?.actor?.uuid === this.uuid
       );
 
-      if (existingEffect) {
-        game.system.log.p("[ADD] Found existing effect:", {
-          name: existingEffect.name,
-          id: existingEffect._id,
-          disabled: existingEffect.disabled
-        });
-        return null;
-      }
+      if (existingEffect) return null;
 
-      const effectData = {
+      return {
         ...effect.toObject(),
-        disabled: false,  // Explicitly set disabled to false
+        disabled: false,
         flags: {
           ...effect.flags,
           [SYSTEM_ID]: {
@@ -168,115 +149,64 @@ export default class FF15Actor extends Actor {
                 img: this.img
               },
               effect: {
-                uuid: effect.uuid,
+                uuid: effect.uuid
               }
             }
           }
         }
       };
-
-      game.system.log.p("[ADD] Created effect data:", {
-        name: effectData.name,
-        disabled: effectData.disabled,
-        flags: effectData.flags
-      });
-
-      return effectData;
     }).filter(Boolean);
 
-    if (!effectsData.length) {
-      game.system.log.p("[ADD] No effects to create after filtering");
-      return [];
-    }
+    if (!effectsData.length) return [];
 
     for (const effectData of effectsData) {
       await FFActiveEffect.setCombatDuration(effectData);
     }
 
-    // Create the effects
     const created = await this.createEmbeddedDocuments("ActiveEffect", effectsData);
-    game.system.log.p("[ADD] Created effects:", created.map(e => ({
-      name: e.name,
-      id: e._id,
-      disabled: e.disabled
-    })));
-
     return created.map(e => e.uuid);
   }
 
   /**
-   * Enable effects for a trait
-   * @param {FF15Item} item 
-   * @returns {Promise<Array<string>>} A promise which resolves to an array of effect UUIDs that were enabled
+   * Enable effects from an item on this actor
+   * @param {Item} item - The item to enable effects from
+   * @returns {Array} Array of effect UUIDs that were enabled
    */
-  async enableTraitEffects(item) {
-    game.system.log.p("[ENABLE] Starting enableTraitEffects for item:", item.name);
+  async enableLinkedEffects(item) {
     let effectsEnabled = [];
 
     for (const effect of item.effects) {
-      game.system.log.p("[ENABLE] Processing effect:", {
-        name: effect.name,
-        disabled: effect.disabled,
-        isTransferred: effect.isTransferred,
-        origin: effect.origin,
-        originItemId: effect.origin?.split('.').pop()
-      });
+      if (!effect.disabled) continue;
 
-      // First find any matching effect, regardless of disabled state
+      let effectToProcess;
       const matchingEffect = this.matchingEffect(effect);
-      game.system.log.p("[ENABLE] Effect matching results:", {
-        effectName: effect.name,
-        effectOrigin: effect.origin,
-        effectOriginId: effect.origin?.split('.').pop(),
-        foundMatch: !!matchingEffect,
-        matchName: matchingEffect?.name,
-        matchOrigin: matchingEffect?.origin,
-        matchOriginId: matchingEffect?.origin?.split('.').pop(),
-        matchDisabled: matchingEffect?.disabled
-      });
-
+      
       if (matchingEffect) {
-        // Only update if it's disabled
         if (matchingEffect.disabled) {
-          game.system.log.p("[ENABLE] Updating existing effect to enabled");
           await matchingEffect.update({ disabled: false });
           effectsEnabled.push(matchingEffect.uuid);
-        } else {
-          game.system.log.p("[ENABLE] Matching effect already enabled");
-        }
-
-        if (effect.isSuppressed) {
-          game.system.log.p("[ENABLE] Effect is suppressed, skipping hooks");
-          continue;
-        }
-
-        for (const change of effect.changes) {
-          if (activeEffectModes.find(e => e.value === change.mode)) {
-            game.system.log.p("[ENABLE] Calling hook for change:", change.key);
-            await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
-          }
+          effectToProcess = matchingEffect;
         }
       } else {
-        game.system.log.p("[ENABLE] No matching effect found, adding new effect");
-        const addedEffects = await this.addTraitEffects(item);
-        game.system.log.p("[ENABLE] Added new effects:", addedEffects);
+        const addedEffects = await this.addLinkedEffects(item);
+        effectsEnabled = effectsEnabled.concat(addedEffects);
+        effectToProcess = effect;
+      }
 
-        for (const effect of item.effects) {
-          if (effect.isSuppressed) {
-            game.system.log.p("[ENABLE] New effect is suppressed, skipping hooks");
-            continue;
-          }
-
-          for (const change of effect.changes) {
-            game.system.log.p("[ENABLE] Calling hook for new effect change:", change.key);
-            await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
-          }
-        }
+      // Process hooks in one place
+      if (effectToProcess && !effectToProcess.isSuppressed) {
+        await this._processEffectHooks(effectToProcess);
       }
     }
-
-    game.system.log.p("[ENABLE] Finished enableTraitEffects, enabled:", effectsEnabled);
     return effectsEnabled;
+  }
+
+  async _processEffectHooks(effect) {
+    for (const change of effect.changes) {
+      if (activeEffectModes.find(e => e.value === change.mode)) {
+        await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
+      }
+    }
   }
 
   removeFirstDuplicate(arr, name) {
