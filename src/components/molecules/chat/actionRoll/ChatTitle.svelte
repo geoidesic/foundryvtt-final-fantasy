@@ -5,9 +5,16 @@
   
   const dispatch = createEventDispatcher();
   const message = getContext("message");
-  const FFMessage = $message.getFlag(SYSTEM_ID, 'data')
-  const actor = game.actors.get(FFMessage.actor._id)
-  let item = {}
+  let FFMessage;
+  let actor;
+  let item = {};
+
+  $: if ($message) {
+    FFMessage = $message.getFlag(SYSTEM_ID, 'data');
+    if (FFMessage?.actor?._id) {
+      actor = game.actors.get(FFMessage.actor._id);
+    }
+  }
 
   const openItemSheet = async (e, uuid) => {
     e.stopPropagation();
@@ -24,7 +31,9 @@
   }
 
   onMount(async () => {
-    item = await fromUuid(FFMessage.item.uuid)
+    if (FFMessage?.item?.uuid) {
+      item = await fromUuid(FFMessage.item.uuid);
+    }
   })
 
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
@@ -33,24 +42,25 @@
 
 <template lang="pug">
 .chat-title
-  .flexrow.title(on:click="{handleTitleClick}" role="button")
-    +if("showProfileImage")   
-      img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}" on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}")
-    .flex3.flexcol.nooverflow(class="{showProfileImage ? 'text' : ''}")
-      .col 
-        .flexrow
-          .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
-      .col.font-cinzel.smaller.pointer.item-name.nooverflow(on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}") {FFMessage.item.name}
-    .flex3
-      .flexcol
-        .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
-        +if("item?.system?.tags?.length > 0") 
-          .flex3.right(style="margin-right: 2.2rem;")
-            .flexrow.right(style="justify-content: flex-end; gap: 2px")
-              +each("item?.system?.tags as tag")
-                .flex0.right
-                  Tag.badge.small.low({tag} remover="{false}")
-    img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
+  +if("FFMessage")
+    .flexrow.title(on:click="{handleTitleClick}" role="button")
+      +if("showProfileImage")   
+        img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}" on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}")
+      .flex3.flexcol.nooverflow(class="{showProfileImage ? 'text' : ''}")
+        .col 
+          .flexrow
+            .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
+        .col.font-cinzel.smaller.pointer.item-name.nooverflow(on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}") {FFMessage.item.name}
+      .flex3
+        .flexcol
+          .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
+          +if("item?.system?.tags?.length > 0") 
+            .flex3.right(style="margin-right: 2.2rem;")
+              .flexrow.right(style="justify-content: flex-end; gap: 2px")
+                +each("item?.system?.tags as tag")
+                  .flex0.right
+                    Tag.badge.small.low({tag} remover="{false}")
+      img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
 </template>
 
 <style lang="sass">
