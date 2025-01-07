@@ -102,7 +102,6 @@ export class ActionModel extends FFItemDataModel {
         new StringField({ required: false, initial: '' })
       ),
       isMagic: new BooleanField({ required: false, initial: false }),
-      isHealerRecovery: new BooleanField({ required: false, initial: false }),
     };
   }
 
