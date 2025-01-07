@@ -59,6 +59,7 @@
     game.system.log.b("RollChat item?.currentUses", item?.currentUses);
     game.system.log.b("RollChat $message", $message);
     game.system.log.b("RollChat FFMessage", FFMessage);
+    game.system.log.b("RollChat FFMessage.isCritical", FFMessage.isCritical);
   }
 
   function getDamageResults(passedTargets) {
@@ -71,7 +72,7 @@
         baseDamageFormula: `Base Damage (${item.system?.formula})`,
         directHit: item.system?.directHitDamage,
         directHitFormula: item.system?.directHitDamage,
-        directHitDisplayFormula: `Direct Hit (${item.system?.directHitDamage})`,
+        directHitDisplayFormula: `Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item.system?.directHitDamage}) `,
         directHitResult: false,
         applied: false,
         originalHP: token.actor.system.points.HP.val,
