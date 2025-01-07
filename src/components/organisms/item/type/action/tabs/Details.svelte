@@ -255,6 +255,12 @@
           .flex2.left.prose.high
             ProseMirror( id="directHitText" name="directHitText" attr="system.directHitText")
 
+      .flexrow.justify-vertical
+        .flex4
+          h3.left {localize("FF15.Types.Item.Types.Action.IsHealerRecovery.Label")}
+          p.caption {localize("FF15.Types.Item.Types.Action.IsHealerRecovery.Hint")}
+        .flex0.right
+          DocCheckbox( name="isHealerRecovery" valuePath="system.isHealerRecovery")
 
 </template>
 
