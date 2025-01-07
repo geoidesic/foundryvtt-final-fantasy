@@ -72,7 +72,7 @@ export default class RollCalc {
     }
     game.system.log.d('playMessageSound', soundPath);
     if(soundPath) {
-      AudioHelper.play({ src: soundPath, volume: 1, autoplay: true, loop: false });
+      foundry.audio.AudioHelper.play({ src: soundPath, volume: 1, autoplay: true, loop: false });
     }
   }
 
