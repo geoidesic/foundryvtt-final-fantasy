@@ -183,7 +183,7 @@
     newDamageResults[target.id].damage = results.damage;
     newDamageResults[target.id].directHitResult = results.directHitResult;
     newDamageResults[target.id].originalHP = currentHP;
-    newDamageResults[target.id].applied = true;
+    newDamageResults[target.id].applied = isCritical;
     newDamageResults[target.id].wasKOd = currentHP > 0 && newHP <= 0;
 
     await $message.update({

@@ -46,6 +46,7 @@ export default class RollCalcActor extends RollCalc {
     const rollFormula = `1d20 + ${attributeValue}`;
     const attributeName = game.i18n.localize(`FF15.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
     const roll = await new Roll(rollFormula).evaluate({ async: true });
+    const isCritical = roll.total === 20;
     const messageData = {
       speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: $actor }) : null,
       flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
@@ -63,9 +64,10 @@ export default class RollCalcActor extends RollCalc {
             flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
             key: key,
             code: code,
-            modifier: attributeValue
+            modifier: attributeValue,
+            isCritical
           },
-          css: 'attribute-roll'
+          css: `attribute-roll ${isCritical ? 'crit' : ''}`
         }
       }
     };

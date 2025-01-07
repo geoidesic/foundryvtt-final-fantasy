@@ -34,9 +34,14 @@
 <template lang="pug">
 .flexcol.pointer
   .col(on:click="{toggleContent}")
-    ChatTitle(title="{title}" data="{FFMessage}" overlayValue="{$message.rolls[0].total}" overlayColor="var(--off-white)")
-      svelte:fragment(slot="rightImage")
-        Meteor(fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1")
+    +if("FFMessage?.isCritical")
+      ChatTitle(title="{title}" data="{FFMessage}" overlayValue="{$message?.rolls[0]?.total}" overlayColor="var(--off-white)" overlaySize="0.8rem")
+        svelte:fragment(slot="rightImage")
+          Meteor(size="28" fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1")
+
+      +else
+        ChatTitle(title="{title}" data="{FFMessage}" overlayValue="{$message?.rolls[0]?.total}" overlayColor="var(--off-white)" overlaySize="1rem" overlayMargin="0 0 0 0")
+          div(slot="rightImage") {' '}
   .col.content(style="{style}") {@html content}
 </template>
 
