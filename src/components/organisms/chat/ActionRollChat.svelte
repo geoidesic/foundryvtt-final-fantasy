@@ -8,6 +8,7 @@
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
   import Header from "~/src/components/organisms/item/type/action/Header.svelte";
+  import Meteor from "~/src/components/atoms/meteor.svelte";
 
   export let FFMessage
   export let FFMessageState
@@ -56,6 +57,8 @@
     game.system.log.b("RollChat item?.system?.hasDirectHit", item?.system?.hasDirectHit);
     game.system.log.b("RollChat item?.system?.directHitDamage", item?.system?.directHitDamage);
     game.system.log.b("RollChat item?.currentUses", item?.currentUses);
+    game.system.log.b("RollChat $message", $message);
+    game.system.log.b("RollChat FFMessage", FFMessage);
   }
 
   function getDamageResults(passedTargets) {
@@ -113,16 +116,19 @@
           }
           
           targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id));
-          $message.update({
-            flags: {
-              [SYSTEM_ID]: {
-                state: {
-                  damageResults: Object.fromEntries(storedDamageResults),
-                  initialised: true
-                }
+          
+          if ($message) {
+            await $message.update({
+              flags: {
+                [SYSTEM_ID]: {
+                  state: {
+                    damageResults: Object.fromEntries(storedDamageResults),
+                    initialised: true
+                  }
+                },
               },
-            },
-          });
+            });
+          }
         }
       }
     }
@@ -307,15 +313,21 @@
                         img.target-img.clickable(src="{getTargetImage(target)}" alt="{target.name}" on:click!="{openActorSheet(target.actor)}")
                     .flex1
                       .target-name.font-cinzel.smaller {target.name}
-                .flex1.thin-border
+                .flex1.thin-border(class="{FFMessage?.isCritical ? 'py-none' : ''}")
                   .flexcol
                     .col.target-defense.flexrow.justify-vertical.no-wrap
                       .flex1.left.font-cinzel.smallest(data-tooltip-class="FF15-tooltip" data-tooltip="Defense") DEF 
                       .flex1.m1-xs.center {getDefenseValue(target)}
                     .col.flexrow.justify-vertical.no-wrap
                       .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
-                      .flex1
-                        i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                      .flex1.relative
+                        +if("FFMessage?.isCritical")
+                          .critical
+                            Meteor(fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1" size="28")
+                            .overlay(style="margin: 0; font-size: 1rem; color: #fff") 
+                              i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                          +else
+                            i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                 .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
                   +if("item.system?.formula")
                     .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDamageFormula(target)}")
@@ -457,5 +469,26 @@ button:disabled
     flex-direction: column
     gap: 5px
 
+.critical
+  color: #ffd700
+  text-shadow: 0 0 3px rgba(255, 215, 0, 0.5)
+  animation: pulse 1s infinite
+
+.overlay
+  position: absolute
+  top: 54%
+  left: 48%
+  transform: translate(-50%, -50%)
+  font-size: 1.2rem
+  font-weight: bold
+  pointer-events: none
+
+@keyframes pulse
+  0%
+    opacity: 1
+  50%
+    opacity: 0.7
+  100%
+    opacity: 1
 
 </style>

@@ -702,10 +702,22 @@ badge
     color: var(--color-text-light)
     background: rgba(144, 29, 20, 0.7)
     padding: 0 0.3rem
+    
+@keyframes pulse
+  0%
+    opacity: 1
+  50%
+    opacity: 0.7
+  100%
+    opacity: 1
 
 .chat-message.message .FF15.leather, .chat-message.message.leather
   background: var(--color-lowlight)
   color: white
+  &.crit
+    border: 3px ridge var(--color-negative)
+    animation: borderPulse 1s infinite
+
   .content
     .message-header
       margin: 0 0 4px 0
@@ -833,6 +845,14 @@ badge
         border: none
         font-size: 1.5em
         font-weight: bold
+
+@keyframes borderPulse
+  0%
+    border-color: var(--color-negative)
+  50%
+    border-color: transparent
+  100%
+    border-color: var(--color-negative)
 
 
 

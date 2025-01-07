@@ -10,7 +10,7 @@
 svg(
   {...$$props}
   xmlns="http://www.w3.org/2000/svg"
-  viewBox="0 -2 576 578"
+  viewBox="68 33 457 497"
   width="{size}"
   height="{size}"
 )

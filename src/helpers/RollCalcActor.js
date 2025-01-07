@@ -89,7 +89,7 @@ export default class RollCalcActor extends RollCalc {
    * @param {Roll} roll - Optional roll data
    * @returns {Object} Message data object
    */
-  _createActionMessageData(item, hasTargets, targets, roll = null) {
+  _createActionMessageData(item, hasTargets, targets, roll = null, isCritical = false) {
     const messageData = {
       id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
       speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
@@ -115,17 +115,22 @@ export default class RollCalcActor extends RollCalc {
               system: {
                 formula: item.system?.formula,
                 directHitDamage: item.system?.directHitDamage,
-                hasDirectHit: item.system?.hasDirectHit
+                hasDirectHit: item.system?.hasDirectHit,
+                CR: item.system?.CR,
+                isHealerRecovery: item.system?.isHealerRecovery
               }
             },
             hasTargets,
-            targets
+            targets,
+            isSuccess: false,
+            isCritical: false,
+            d20Result: null
           },
           state: {
             damageResults: false,
             initialised: false
           },
-          css: 'leather'
+          css: `leather ${isCritical ? 'crit' : ''}`
         }
       }
     };
@@ -156,22 +161,40 @@ export default class RollCalcActor extends RollCalc {
         await this._handleTargetEffects(item, targets);
       }
 
-      let roll;
       let message;
+      let roll;
+      let isSuccess = false;
+      let isCritical = false;
+      let d20Result = null;
+
       if (item.system.hasCR) {
         // Handle roll with modifiers
-        roll = await this._handleRollWithModifiers(item);
-        const d20Term = roll.terms[0];
-        const rawD20 = d20Term.modifiers.includes('kh1') 
-          ? Math.max(...d20Term.results.map(r => r.result))
-          : d20Term.results[0].result;
+        const rollResult = await this._handleRollWithModifiers(item);
+        roll = rollResult.roll;
+        isSuccess = rollResult.isSuccess;
+        isCritical = rollResult.isCritical;
+        d20Result = rollResult.d20Result;
 
-        game.system.log.d("[PROC] Roll result:", {
+        game.system.log.d("[ACTION] Roll result:", {
+          itemName: item.name,
           total: roll.total,
-          terms: roll.terms,
-          rawD20
+          isSuccess,
+          isCritical,
+          d20Result
         });
-        message = await roll.toMessage(this._createActionMessageData(item, hasTargets, targetIds, roll));
+
+        // Create message data with roll results
+        const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
+        messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
+        messageData.flags[SYSTEM_ID].data.isCritical = true;
+        messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
+
+        message = await roll.toMessage(messageData);
+
+        // If successful, handle effects
+        if (isSuccess) {
+          await this._handleEnablerEffects(item);
+        }
       } else {
         message = item.system.hasBaseEffect && item.system.baseEffectType === 'damage'
           ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
@@ -180,13 +203,6 @@ export default class RollCalcActor extends RollCalc {
 
       // Check for proc trigger
       if (item.system.procTrigger) {
-        game.system.log.d("[PROC] Checking proc trigger:", {
-          itemName: item.name,
-          procTrigger: item.system.procTrigger,
-          hasCR: item.system.hasCR,
-          hasRoll: !!roll
-        });
-        
         Hooks.callAll('FF15.ProcTrigger', { 
           actor: this.params.actor, 
           item,
@@ -195,9 +211,8 @@ export default class RollCalcActor extends RollCalc {
         });
       }
 
-      // Mark action as used and handle effects
+      // Mark action as used
       await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || 'primary', message);
-      await this._handleEnablerEffects(item);
 
       return message;
     } catch (error) {
@@ -206,7 +221,71 @@ export default class RollCalcActor extends RollCalc {
     }
   }
 
-  // New helper method to handle roll calculations
+  /**
+   * Handle critical hit detection and processing
+   * @param {Roll} roll - The roll object
+   * @param {Item} item - The item being used
+   * @returns {Object} Object containing critical hit information
+   */
+  async _handleCriticalHit(roll, item) {
+    // Get the d20 result
+    const d20Term = roll.terms[0];
+    const d20Result = d20Term.modifiers.includes('kh1') 
+      ? Math.max(...d20Term.results.map(r => r.result))
+      : d20Term.results[0].result;
+
+    // Check if it's a critical hit (natural 20)
+    const isCritical = d20Result === 20;
+
+    game.system.log.d("[CRITICAL] Critical hit check:", {
+      d20Result,
+      isCritical,
+      itemName: item.name,
+      isHealerRecovery: item.system.isHealerRecovery
+    });
+
+    // If it's a critical hit, we need to:
+    // 1. Double the damage/healing dice
+    // 2. Auto-succeed the check
+    if (isCritical) {
+      // For healer recovery skills, we only double healing dice
+      const isHealerRecovery = item.system.baseEffectType === 'heal';
+      const hasDirectHit = item.system.hasDirectHit && !isHealerRecovery;
+
+      // Double all damage/healing dice formulas
+      const formulaFields = isHealerRecovery 
+        ? ['formula'] // Only double healing for healer recovery skills
+        : ['directHitDamage', 'formula']; // Double damage for other skills
+
+      for (const field of formulaFields) {
+        const formula = item.system[field];
+        if (formula) {
+          // Double the number of dice in all dice expressions
+          const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
+            return `${parseInt(count) * 2}d${sides}`;
+          });
+          item.system[field] = modifiedFormula;
+
+          game.system.log.d("[CRITICAL] Modified formula:", {
+            field,
+            original: formula,
+            modified: modifiedFormula
+          });
+        }
+      }
+    }
+
+    return {
+      isCritical,
+      d20Result,
+      // Return original roll formula for reference
+      originalFormulas: {
+        directHitDamage: item.system.directHitDamage,
+        formula: item.system.formula
+      }
+    };
+  }
+
   async _handleRollWithModifiers(item) {
     let [diceCount, diceType] = [1, 20];
     let formula = '';
@@ -223,36 +302,131 @@ export default class RollCalcActor extends RollCalc {
     const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
     const roll = await new Roll(rollFormula, rollData).evaluate();
     
-    // For advantage rolls (kh1), we need to get the highest result
-    const d20Term = roll.terms[0];
-    const d20Result = d20Term.modifiers.includes('kh1') 
-      ? Math.max(...d20Term.results.map(r => r.result))
-      : d20Term.results[0].result;
-    
-    game.system.log.d("[PROC] Roll details:", {
+    // Handle critical hit detection
+    const criticalInfo = await this._handleCriticalHit(roll, item);
+    const { isCritical, d20Result } = criticalInfo;
+
+    // If it's a critical hit, we auto-succeed regardless of DC
+    const isSuccess = isCritical || roll.total >= item.system.CR;
+
+    game.system.log.d("[ROLL] Roll details:", {
       formula: roll.formula,
       d20Result,
       total: roll.total,
-      terms: roll.terms
+      terms: roll.terms,
+      isCritical,
+      isSuccess,
+      CR: item.system.CR,
+      isHealerRecovery: item.system.isHealerRecovery
     });
 
-    return roll;
+    // If it's a critical hit and a healer recovery skill, double the healing
+    if (isCritical && item.system.isHealerRecovery && item.system.formula) {
+      // Double the healing dice
+      const healFormula = item.system.formula;
+      const modifiedFormula = healFormula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
+        return `${parseInt(count) * 2}d${sides}`;
+      });
+      item.system.formula = modifiedFormula;
+
+      game.system.log.d("[CRITICAL] Modified healing formula:", {
+        original: healFormula,
+        modified: modifiedFormula
+      });
+    }
+
+    return {
+      roll,
+      isSuccess,
+      isCritical,
+      d20Result
+    };
   }
 
   // New helper method to handle enabler effects
   async _handleEnablerEffects(item) {
-    game.system.log.d("[ENABLE] Starting _handleEnablerEffects for:", {
-      itemName: item.name,
-      enablesList: item.system.enables.list
-    });
+
 
     let allEnabledEffects = [];
     for (const enablesItemRef of item.system.enables.list) {
-      game.system.log.d("[ENABLE] Processing enable ref:", enablesItemRef);
       const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
       allEnabledEffects = allEnabledEffects.concat(effects);
     }
     return allEnabledEffects;
+  }
+
+  /**
+   * Handle transferring effects to target actors
+   * @param {Item} item - The action item being used
+   * @param {Set} targets - The set of targeted tokens
+   */
+  async _handleTargetEffects(item, targets) {
+    if (!item.system.grants?.list?.length) return;
+
+    for (const target of targets) {
+      const targetActor = target.actor;
+      if (!targetActor) continue;
+
+      try {
+        // Get all effects from the grants list
+        const effectPromises = item.system.grants.list.flatMap(async (grantRef) => {
+          const effectItem = await fromUuid(grantRef.uuid);
+          if (!effectItem) {
+            return [];
+          }
+
+          // Get all effects from the effect item
+          return effectItem.effects.map(effect => {
+            // Check if effect already exists on target
+            const existingEffect = targetActor.effects.find(e =>
+              e.name === effect.name &&
+              e.origin === item.uuid
+            );
+
+            // Skip if effect already exists
+            if (existingEffect) {
+              return null;
+            }
+
+            // If the effect has statuses, toggle them instead of creating a new effect
+            if (effect.statuses?.size) {
+              const statuses = Array.from(effect.statuses);
+              // Only toggle statuses that aren't already active
+              const statusesToToggle = statuses.filter(status => !targetActor.statuses.has(status));
+              if (statusesToToggle.length) {
+                targetActor.toggleStatusEffect(statusesToToggle[0]);
+              }
+              return null;
+            }
+
+            // For non-status effects, clean up the data to only include valid ActiveEffect fields
+            const cleanData = {
+              name: effect.name,
+              label: effect.label,
+              icon: effect.icon,
+              changes: foundry.utils.deepClone(effect.changes),
+              duration: effectItem.system.duration,
+              disabled: false,
+              flags: foundry.utils.deepClone(effect.flags),
+              origin: item.uuid,
+            };
+
+            return cleanData;
+          });
+        });
+
+        // Wait for all effect data to be prepared and flatten the array
+        const effectData = (await Promise.all(effectPromises)).flat().filter(Boolean);
+
+        if (effectData.length) {
+          // Create all non-status effects at once
+          await targetActor.createEmbeddedDocuments('ActiveEffect', effectData);
+        }
+      } catch (error) {
+        game.system.log.e("Error applying effects to target", error);
+        ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
+      }
+    }
   }
 
   /******************
@@ -363,7 +537,6 @@ export default class RollCalcActor extends RollCalc {
   }
 
   async _handleSingleItemEffectEnabling(enablesItemRef) {
-    game.system.log.d("[ENABLE] Starting _handleSingleItemEffectEnabling for ref:", enablesItemRef);
     
     // Get the compendium item for reference
     const compendiumItem = await fromUuid(enablesItemRef.uuid);
@@ -372,38 +545,18 @@ export default class RollCalcActor extends RollCalc {
       return [];
     }
 
-    game.system.log.d("[ENABLE] Found compendium item:", {
-      name: compendiumItem.name,
-      type: compendiumItem.type,
-      hasEffects: compendiumItem.hasEffects,
-      effects: compendiumItem.effects?.size || 0
-    });
-
     // Find actor's version of the item by matching name and type
     const actorItem = this.params.actor.items.find(item => 
       item.name === compendiumItem.name && 
       item.type === compendiumItem.type
     );
 
-    game.system.log.d("[ENABLE] Actor item search result:", {
-      found: !!actorItem,
-      name: actorItem?.name,
-      hasEffects: actorItem?.hasEffects,
-      effects: actorItem?.effects?.size || 0
-    });
-
     if (!actorItem) { return [] }
     if (!actorItem.hasEffects) { return [] }
 
     // Check if we've hit the usage limit using the actor's version of the item
     const hasRemainingUses = await this.params.actor.actorItemHasRemainingUses(actorItem);
-    game.system.log.d("[ENABLE] Usage check:", {
-      itemName: actorItem.name,
-      hasRemainingUses,
-      currentUses: actorItem.currentUses,
-      maxUses: actorItem.maxUses,
-      effects: actorItem.effects?.size || 0
-    });
+
 
     if (!hasRemainingUses) {
       game.system.log.w("[ENABLE]", `${actorItem.name} has been used ${actorItem.currentUses} times, reaching its usage limit of ${actorItem.maxUses}`);
@@ -411,18 +564,8 @@ export default class RollCalcActor extends RollCalc {
     }
 
     // Enable any disabled effects and get their UUIDs
-    game.system.log.d("[ENABLE] About to enable effects for:", {
-      itemName: actorItem.name,
-      effects: actorItem.effects?.size || 0,
-      effectsList: Array.from(actorItem.effects || []).map(e => ({ id: e.id, name: e.name, disabled: e.disabled }))
-    });
-    
     const effectsEnabled = await this.params.actor.enableLinkedEffects(actorItem);
-    game.system.log.d("[ENABLE] Effects enabled:", {
-      itemName: actorItem.name,
-      effectsEnabled,
-      effectsCount: effectsEnabled.length
-    });
+
 
     // If we enabled any effects, create chat message
     if (effectsEnabled.length) {
@@ -477,79 +620,5 @@ export default class RollCalcActor extends RollCalc {
       rollFormula += ` + @${item.system.checkAttribute}`;
     }
     return { rollFormula, rollData };
-  }
-
-  /**
-   * Handle transferring effects to target actors
-   * @param {Item} item - The action item being used
-   * @param {Set} targets - The set of targeted tokens
-   */
-  async _handleTargetEffects(item, targets) {
-    if (!item.system.grants?.list?.length) return;
-
-    for (const target of targets) {
-      const targetActor = target.actor;
-      if (!targetActor) continue;
-
-      try {
-        // Get all effects from the grants list
-        const effectPromises = item.system.grants.list.flatMap(async (grantRef) => {
-          const effectItem = await fromUuid(grantRef.uuid);
-          if (!effectItem) {
-            return [];
-          }
-
-          // Get all effects from the effect item
-          return effectItem.effects.map(effect => {
-            // Check if effect already exists on target
-            const existingEffect = targetActor.effects.find(e =>
-              e.name === effect.name &&
-              e.origin === item.uuid
-            );
-
-            // Skip if effect already exists
-            if (existingEffect) {
-              return null;
-            }
-
-            // If the effect has statuses, toggle them instead of creating a new effect
-            if (effect.statuses?.size) {
-              const statuses = Array.from(effect.statuses);
-              // Only toggle statuses that aren't already active
-              const statusesToToggle = statuses.filter(status => !targetActor.statuses.has(status));
-              if (statusesToToggle.length) {
-                targetActor.toggleStatusEffect(statusesToToggle[0]);
-              }
-              return null;
-            }
-
-            // For non-status effects, clean up the data to only include valid ActiveEffect fields
-            const cleanData = {
-              name: effect.name,
-              label: effect.label,
-              icon: effect.icon,
-              changes: foundry.utils.deepClone(effect.changes),
-              duration: effectItem.system.duration,
-              disabled: false,
-              flags: foundry.utils.deepClone(effect.flags),
-              origin: item.uuid,
-            };
-
-            return cleanData;
-          });
-        });
-
-        // Wait for all effect data to be prepared and flatten the array
-        const effectData = (await Promise.all(effectPromises)).flat().filter(Boolean);
-
-        if (effectData.length) {
-          // Create all non-status effects at once
-          await targetActor.createEmbeddedDocuments('ActiveEffect', effectData);
-        }
-      } catch (error) {
-        game.system.log.e("Error applying effects to target", error);
-        ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
-      }
-    }
   }
 }
