@@ -22,10 +22,8 @@ export default class FFActiveEffect extends ActiveEffect {
   }
 
   static async setCombatDuration(effectData) {
-    game.system.log.o("[ENABLE] setCombatDuration effectsData pre", effectData);
     // Get the origin item
     const originItem = await fromUuid(effectData.origin);
-    game.system.log.o("[EFFECT] setCombatDuration originItem", originItem);
     if (!originItem?.system?.duration) return;
     
     // effectData.duration = {
@@ -35,7 +33,6 @@ export default class FFActiveEffect extends ActiveEffect {
     
     effectData.duration = originItem.system.duration;
 
-    game.system.log.o("[ENABLE] setCombatDuration effectsData post", effectData);
   }
 
   async updateCombatDuration() {
@@ -45,7 +42,6 @@ export default class FFActiveEffect extends ActiveEffect {
 
     // Get the item from the origin item uuid
     const originItem = await fromUuid(originUuid);
-    game.system.log.o("[EFFECT] updateCombatDuration originItem", originItem);
 
     if (!originItem) return;
 
