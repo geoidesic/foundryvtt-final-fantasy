@@ -188,7 +188,7 @@ export default class RollCalcActor extends RollCalc {
         // Create message data with roll results
         const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
         messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
-        messageData.flags[SYSTEM_ID].data.isCritical = true;
+        messageData.flags[SYSTEM_ID].data.isCritical = isCritical;
         messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
 
         message = await roll.toMessage(messageData);
