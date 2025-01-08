@@ -1,0 +1,20 @@
+name: Secondary
+sorting: a
+folder: 4CjrluIvjQTnXYJq
+type: Item
+_id: YR3nJkY73cSIDebJ
+description: ''
+sort: 0
+color: '#49a69c'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!folders!YR3nJkY73cSIDebJ'
+

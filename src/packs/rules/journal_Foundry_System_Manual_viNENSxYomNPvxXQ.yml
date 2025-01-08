@@ -1,0 +1,110 @@
+name: Foundry System Manual
+pages:
+  - sort: 100000
+    name: Items
+    type: text
+    _id: GLCKrnFzBBbWOb1P
+    system: {}
+    title:
+      show: true
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: >-
+        <p>There are various types of Items in the FoundryVTT Final Fantasy
+        system implementation, which you can learn how to use
+        here.</p><h1>Effect</h1><p>Effect items are items that contain and
+        define a re-usable ActiveEffect. These are not meant to be dragged onto
+        Actors but rather onto other items. They define the effects of that
+        Item. The reason we have Effect items is because ActiveEffects cannot be
+        directly included in a Compendium but Effect items
+        can.</p><h1>Action</h1><p>These items define <em>primary</em> and
+        <em>secondary</em> actions, and <em>reactions</em> (or
+        <em>instants</em>), for a given <em>Job. </em>An action may be used
+        during combat. Generally this is done by targeting one or more tokens on
+        the canvas and then clicking the image icon of the Action to trigger
+        it.</p><h1>Trait</h1><p>These items define traits that a <em>Job</em>,
+        may impart on an actor. Traits may be active or inactive. Their activity
+        may be triggered by other Actions. </p><h1>Limit Break</h1><p>Limit
+        Break items define a special abilities that can be used in
+        encounters</p><p class="p1">of great importance or when fighting
+        powerful enemies.</p><h1>Job</h1><p>Each <em>Job </em>level is defined
+        by a Job Item. The abilities (i.e. other Items) pertaining to that
+        <em>Job</em>, may be dragged, from other compendiums, onto the
+        <em>Job</em> item. The <em>Job </em>item can then be dropped onto an
+        actor to impart those abilities to the
+        actor.</p><h1>Equipment</h1><p>Equipment
+        items.</p><h1>Telegraphs</h1><p>These items define abilities that are
+        for monsters only, not for PCs</p>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    ownership:
+      default: -1
+      A3f8BsJ7eYm0X14M: 3
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!journal.pages!viNENSxYomNPvxXQ.GLCKrnFzBBbWOb1P'
+  - sort: 200000
+    name: ActiveEffect
+    type: text
+    _id: 54Ya7RllS5ePmnHi
+    system: {}
+    title:
+      show: true
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: >-
+        <p>An ActiveEffect is an effect that can actively effect an actor. If it
+        is in effect, it will be listed on the Effects tab of the Actor sheet.
+        Such effects might include <em>buffs</em>, <em>debuffs</em> and / or
+        <strong>enablers.</strong></p>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    ownership:
+      default: -1
+      A3f8BsJ7eYm0X14M: 3
+    flags: {}
+    _stats:
+      compendiumSource: >-
+        Compendium.foundryvtt-final-fantasy.rules.JournalEntry.sBNu1kyiMa10GPEM.JournalEntryPage.54Ya7RllS5ePmnHi
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!journal.pages!viNENSxYomNPvxXQ.54Ya7RllS5ePmnHi'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736364662701
+  modifiedTime: 1736364662701
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: viNENSxYomNPvxXQ
+sort: 0
+_key: '!journal!viNENSxYomNPvxXQ'
+

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../FoundryVTT-12/resources/app"
+		},
+		{
+			"path": "../dnd5e"
+		},
+		{
+			"path": "../essential-svelte-esm"
+		}
+	],
+	"settings": {}
+}

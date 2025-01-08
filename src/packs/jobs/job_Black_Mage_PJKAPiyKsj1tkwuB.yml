@@ -1,0 +1,36 @@
+name: Black Mage
+type: job
+img: systems/foundryvtt-final-fantasy/assets/icons/jobs/mage.webp
+system:
+  description: >-
+    <p>The Black Mage is a ranged magical DPS class specializing in devastating
+    elemental spells, primarily fire, ice, and lightning. It excels at dealing
+    high burst damage with area-of-effect attacks and long-range spells. Black
+    Mages often require careful resource management (e.g., MP or elemental
+    charges) and positioning to maximize their damage output.</p>
+  favourite: false
+  effectActionsLocked: false
+  level: 30
+  role: DPS
+  grants:
+    list: []
+    value: true
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736007800736
+  modifiedTime: 1736007801714
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: PJKAPiyKsj1tkwuB
+sort: 300000
+_key: '!items!PJKAPiyKsj1tkwuB'
+

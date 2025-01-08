@@ -1,0 +1,20 @@
+name: Warrior
+sorting: a
+folder: null
+type: Item
+_id: lfbrNrtmHdaIabnY
+description: ''
+sort: 200000
+color: '#354977'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733136730
+  modifiedTime: 1735734665462
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!folders!lfbrNrtmHdaIabnY'
+

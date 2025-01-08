@@ -1,0 +1,79 @@
+folder: ZLdn6m4UMKwA7x7D
+name: Raging Strikes
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/raging-shot.webp
+system:
+  description: >-
+    <p><strong>Base Effect</strong>: Your <em>primary</em> abilities deal an
+    additional 2 damage until the end of this turn.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: false
+  rangeType: ''
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: self
+  baseEffect: ''
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: true
+  limitation: 2
+  limitationUnits: phase
+  hasDuration: true
+  duration: 1
+  durationUnits: turn
+  uses: 0
+  formula: ''
+  hasCost: false
+  cost: 0
+  hasProcTrigger: false
+  procTrigger: null
+  grants:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.gKn4x3QxHY0g9pcz
+    value: true
+  enables:
+    list: []
+    value: false
+  combos:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  type: secondary
+  requires:
+    list: []
+    value: false
+  hasBaseEffect: false
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733562747
+  modifiedTime: 1736322550252
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: bj2fFclWqjgWL8Ib
+sort: 0
+_key: '!items!bj2fFclWqjgWL8Ib'
+

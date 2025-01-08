@@ -1,0 +1,20 @@
+name: Reactions
+sorting: a
+folder: JPVTpUKj4KmcQXQL
+type: Item
+_id: 2VkotLqKw9p2KAsq
+description: ''
+sort: 0
+color: '#7387ac'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!folders!2VkotLqKw9p2KAsq'
+

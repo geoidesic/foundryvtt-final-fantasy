@@ -1,0 +1,82 @@
+folder: g7aw8x2ughfS1m93
+name: Head Graze
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/head-graze.webp
+system:
+  description: >-
+    <p><strong>Trigger</strong>: When an enemy within 10 squares of this
+    character uses an invoked ability, or is using an invoked ability to
+    generate a marker</p><p><strong>Target</strong>: The enemy that triggered
+    this ability</p><p><strong>Range</strong>: 10 squares</p><p><strong>Base
+    Effect</strong>: Interrupts the invoked ability that triggered Head Graze,
+    negating it completely.</p><p><strong>Limitation</strong>: Once per
+    phase</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 10sq
+  hasTrigger: true
+  trigger: invoke
+  hasTarget: true
+  target: enemy
+  baseEffect: ''
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: true
+  limitation: 1
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  formula: ''
+  hasCost: false
+  cost: 0
+  hasProcTrigger: false
+  procTrigger: null
+  grants:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  combos:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  requires:
+    list: []
+    value: false
+  type: reaction
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735734264952
+  modifiedTime: 1735760404796
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: gtpCEeyDCf5OkM4B
+sort: 500000
+_key: '!items!gtpCEeyDCf5OkM4B'
+

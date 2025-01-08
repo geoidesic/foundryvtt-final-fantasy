@@ -1,0 +1,91 @@
+name: Mage's Ballad
+type: trait
+_id: 0tX24ufqPUgFVKMc
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song2.webp
+system:
+  description: >-
+    <p>While under the effect of a <strong>Bardsong</strong> enhancement, all
+    allies benefit from its effects. <strong>Bardsong</strong> enhancements are
+    removed at the end of your next turn or when you are granted a new
+    <strong>Bardsong</strong> enhancement.</p><p>While under the effect of
+    <strong>Bardsong: Mage’s Ballad</strong>, all allies may each reroll a
+    single die when determining the amount of damage dealt by an ability. Any
+    die rerolled in this way cannot be rerolled again, and its result must be
+    used.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: Buff
+  hasLimitation: true
+  limitation: 1
+  hasModifier: false
+  modType: All Damage
+  operator: +
+  modAmount: 0
+  hasDamageDiceReroll: true
+  damageDiceReroll: 1
+  limitationUnits: turn
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.traits.Item.0tX24ufqPUgFVKMc
+    disabled: false
+    transfer: false
+    flags:
+      foundryvtt-final-fantasy:
+        source: user
+        trigger: passive
+        overlay: true
+    name: Mage's Ballad
+    img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song2.webp
+    _id: B1IibG1bbUXBhtrC
+    type: base
+    system: {}
+    changes:
+      - key: '@RerollDamageDice'
+        mode: 0
+        value: '1'
+        priority: null
+      - key: '@TransferEffectToAllies'
+        mode: 0
+        value: all
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>The <strong>Mage's Ballad</strong> <em>ActiveEffect</em> is attached to
+      the <strong>Mage's Ballad</strong> <em>trait</em>, which gets enabled by
+      the <strong>Mage's Ballad</strong> <em>secondary action</em>.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1735310720080
+      modifiedTime: 1735975362475
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!0tX24ufqPUgFVKMc.B1IibG1bbUXBhtrC'
+folder: null
+sort: 300000
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1733929986937
+  modifiedTime: 1735464401789
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!0tX24ufqPUgFVKMc'
+

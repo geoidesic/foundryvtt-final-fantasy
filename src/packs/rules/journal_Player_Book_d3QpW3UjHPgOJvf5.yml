@@ -1,0 +1,1226 @@
+name: Player Book
+pages:
+  - sort: 100000
+    name: 'Chapter 1: Getting Started'
+    type: text
+    _id: PoZ4LrhoTYLadmgW
+    system: {}
+    title:
+      show: true
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: >-
+        <h1>Introduction</h1><p>The Final Fantasy XIV Tabletop Roleplaying Game
+        is a gateway into the magical world of Final Fantasy XIV through which
+        you and your friends can embark on exciting and memorable adventures.
+        Whereas Final Fantasy XIV Online tells the tale of the Warrior of Light,
+        this game allows you to assume the role of one of Hydaelyn’s many unsung
+        adventurers and experience the star’s myriad wonders for
+        yourself.</p><p>When you play the Final Fantasy XIV TTRPG, one player
+        will act as your gamemaster—the game’s arbiter and lead storyteller. The
+        rest of your group will play as adventurers, and together, you will
+        weave your very own tales of adventure. Keep in mind that this game is
+        not about winning or losing. If you have a good time collaborating with
+        your friends to create an exciting story, everyone wins.</p><h1>Commonly
+        Used Terms</h1><h2>Gamemaster (GM)</h2><p>The player who accepts the
+        mantle of Gamemaster—or GM— will be your guide to the myriad adventures
+        that await you in the Final Fantasy XIV TTRPG.</p><p>The GM describes
+        the world the player characters inhabit and any situations they
+        encounter. They also assume control of any non-player characters or
+        monsters the adventurers come across.</p><h2>Players</h2><p>Aside from
+        the GM, each player will play as an adventurer—their very own character
+        within the game world. In most games, a given player will control a
+        single adventurer.</p><h2>Scenarios</h2><p>Scenarios are collections of
+        story beats and encounters prepared in advance by the GM. These will
+        make up the bulk of the setting for your adventures.</p><p>While you are
+        more than welcome to use the oﬃcial scenarios that are available for
+        purchase, you can—and are encouraged to—craft your own adventures as
+        well. Building your own story can be a lot of fun!</p><h2>Adventurers
+        (Player Characters)</h2><p>Intrepid inhabitants of Hydaelyn, adventurers
+        seek out challenges to surmount and mysteries to unravel. The
+        adventurers controlled by the players are also known as player
+        characters.</p><p>You can choose to play as a premade adventurer, or
+        create your own adventurer by following the steps outlined in the
+        Standard Rulebook.</p><p></p><h2>NPCs (Non-Player Characters)</h2><p>The
+        diverse beings who live on Hydaelyn but aren’t player characters are
+        called NPCs. NPCs are almost always controlled by the
+        GM.</p><h2>Monsters</h2><p>Hostile NPCs are frequently referred to as
+        monsters in the game’s rules and scenarios. This is a general term that
+        can encompass humanoid and otherworldly foes in addition to beasts of
+        fang and claw.</p><h2>Characters</h2><p>All beings who reside on
+        Hydaelyn and can be affected by the various forces and eﬀects outlined
+        in the game’s rules are collectively referred to as characters. This
+        includes adventurers, NPCs, and monsters.</p><p>Eﬀects that can be
+        applied to a character will impact adventurers, NPCs, and monsters in
+        the same way.</p><h2>Allies</h2><p>Characters who are aligned in cause
+        or purpose with the adventurers are considered to be
+        allies.</p><p>Adventurers are allied with the other members of their
+        party, as well as with any NPCs helping them. Monsters are allied with
+        other monsters that are attacking the adventurers, as well as with any
+        NPCs controlling them through means magical or mundane. Ultimately, the
+        GM has the final say as to whether two characters are
+        allies.</p><h2>Enemies</h2><p>Characters who oppose each other or are
+        otherwise hostile are considered to be enemies. Adventurers consider the
+        monsters that attack them and the NPCs that harbor malicious intent
+        towards the people of Hydaelyn to be enemies. Monsters, on the other
+        hand, generally view the adventurers and any NPCs belonging to a Grand
+        Company as enemies.</p><p>Ultimately, the GM has the final say as to
+        whether two characters are enemies.</p><h2>Dice</h2><p>Dice rolls are
+        used to determine whether certain actions succeed or fail. Dice come in
+        a variety of shapes and sizes. In the game’s rules and scenarios, dice
+        are referred to by using the letter d followed by the number of sides.
+        For example, d20 refers to a twenty-sided die.</p><p>Sometimes, you’ll
+        need to roll multiple dice at once. This is indicated by a number before
+        the letter d. For example, if you see 3d6, you need to roll three
+        six-sided dice.</p><p>Dice rolls can have modifiers, which are indicated
+        by a plus or minus after the dice to be rolled. 2d6 + 4 means you roll
+        two six-sided dice, add them together, then add 4 to the
+        total.</p><p>These modifiers can also refer to a character’s
+        attributes.</p><p>d20 + STR means you roll a twenty-sided die and add
+        your character’s STR.</p><p></p><h1>Playing the Game</h1><p>Player
+        groups will generally play through scenarios by following this basic
+        pattern:</p><p>1. The GM describes the situation in which the
+        adventurers find themselves.</p><p>2. The players tell the GM what
+        actions their adventurers take.</p><p>3. The GM describes what effect
+        the adventurers’ actions have had on the situation. If an adventurer
+        attempts to perform a challenging action, the GM will ask that player to
+        make a check to see if their efforts succeed.</p><p>4. Return to step 1
+        and repeat to continue the adventure.</p><p>Players should have their
+        adventurer sheets on hand at all times during the game. Meanwhile, the
+        GM will frequently need to refer to the scenario to review information
+        for NPCs and items that show up during an adventure.</p><h1>The Golden
+        Rule</h1><p>This game was designed to provide a framework that allows
+        you to embark on exciting and memorable adventures in the magical world
+        of Final Fantasy XIV. The ultimate goal is to have fun with your
+        friends, and for this to work, all participants need to be considerate
+        and respectful of one another while playing.</p><p>The GM is the
+        architect of your adventure, curating the events that occur as you
+        progress through the scenario. At times, they may decide to handle
+        things in a way that diﬀers from these rules or from other tabletop
+        games you’ve played. When this happens, always remember that their main
+        goal is to facilitate an exciting journey for your
+        adventurers.</p><p>Their decision might stem from a special rule that
+        applies to a monster in the scenario, or could simply be that they’re
+        bending the rules in order to enhance the story for everyone involved.
+        Players are not privy to the rationale behind such decisions, and in the
+        end, the GM has the final say in all game-related matters.</p><p>Of
+        course, the GM’s discretionary powers are limited to the game alone. GMs
+        cannot make decisions about matters outside of the game without the
+        consent of their players, nor do they have the right to force players to
+        do anything they aren’t comfortable with.</p><p>Keep in mind that while
+        the GM may control monsters and other foes, you aren’t playing against
+        them. The people at your gaming table are friends with whom you’re
+        collaborating to create a story.</p><p>GMs are not infallible. As the
+        GM, if you are ever uncertain as to how to proceed, don’t hesitate to
+        consult with the other players. Together, you’ll find a way to continue
+        the game that will be fun for everyone involved.</p><p>Players are
+        encouraged to work with their GM and are free to oﬀer suggestions that
+        could make the game more enjoyable. So long as these ideas fit the
+        scenario and don’t derail the story, the GM should make an eﬀort to
+        incorporate player feedback into their game.</p><p>Following this golden
+        rule will help make your adventure more enjoyable. It’s okay to
+        encourage other players to share this mindset, and to respectfully raise
+        issues should something go awry. And above all else, remember the point
+        of the game: to have fun!</p><h1>Making Checks</h1><p>When a character
+        takes an action where the outcome is uncertain or is dependent on the
+        skill with which the action is performed, the player controlling that
+        character rolls a d20 to determine success or failure.</p><p>Follow
+        these three steps when making a check:</p><p>1. Determine the type of
+        check required and assign a challenge rating.</p><p>2. Roll a d20 and
+        apply any relevant modifiers.</p><p>3. Determine the success or failure
+        of the action.</p><h2>1. Determining Check Type and Assigning Challenge
+        Ratings</h2><p>The GM determines the type of check required and assigns
+        it a challenge rating (CR) appropriate to the action the character is
+        attempting. For example, attempting to lift a toppled carriage would
+        require a STR check, whereas trying to decipher an encoded journal would
+        require an INT check.</p><p>Attributes such as STR and INT are explained
+        on page 8. If a check is required to determine success or failure when a
+        character performs an action or uses an ability outside of an encounter,
+        the GM will first determine the appropriate value to use for that
+        check—usually a primary attribute.</p><p>Then, they will assign a CR
+        based on the scenario, the ability in question, or the Challenge Rating
+        Reference Table.</p><p>Ability checks are used to determine how
+        successful a char- acter is when using an ability in an encounter. When
+        making an ability check, the ability being used indicates the value and
+        CR for the check.</p><table><tbody><tr><td
+        colspan="4"><p><strong>Challenge Rating Reference
+        Table</strong></p></td></tr><tr><td><p>Easy</p></td><td><p>5</p></td><td><p>Very
+        Hard</p></td><td><p>20</p></td></tr><tr><td><p>Average</p></td><td><p>10</p></td><td><p>Extremely
+        Hard</p></td><td><p>25</p></td></tr><tr><td><p>Hard</p></td><td><p>15</p></td><td><p>Nearly
+        Impossible</p></td><td><p>30</p></td></tr></tbody></table><blockquote><p>The
+        Challenge Rating Reference Table is intended merely as a point of
+        reference, and may be adjusted to suit the check being made. For
+        example, if an adventurer is attempting something slightly harder than
+        average, you could assign it a CR of 11. If the task is hard but still
+        within their capabilities, you could assign it a CR of
+        18.</p></blockquote><h2>2. Rolling Dice and Applying Modifiers</h2><p>To
+        make a check, roll a d20 and add the appropriate value.</p><p>Then add
+        or subtract any modifiers conferred by traits, abilities, enhancements,
+        or enfeeblements.</p><h3>3. Determining Success or Failure</h3><p>If the
+        total from step 2 equals or exceeds the target CR, your character
+        succeeds. If the total is lower than the target CR, their attempt ends
+        in failure, or succeeds in an unexpected manner that results in an
+        undesirable outcome. The GM will describe what happens as a result of
+        the check according to the scenario or their own judgment.</p><h1>When
+        (Not) to Make Checks</h1><p>Not all actions require a check—a hale
+        adventurer will have little trouble rising from their bed, strapping on
+        their arms and armor, and leaving their inn room. Such tasks come
+        naturally, and are therefore guaranteed to succeed.</p><p>The same
+        applies to actions where a character’s eﬀorts are guaranteed to fail. No
+        matter how skilled they may be, an adventurer hurling a pebble into the
+        mouth of a cave can’t expect their throw to kill a powerful monster deep
+        within. The best they could hope for would be to scare oﬀ a few cave
+        bats.</p><p>As a general rule, you only need to make checks if the
+        outcome of an action is uncertai</p><h2>Example 1</h2><blockquote><p>A
+        paladin is walking down the road towards the Silver Bazaar when they
+        come across an overturned chocobo carriage. The coachman, upon noticing
+        the adventurer’s approach, beseeches them to right the toppled
+        vehicle.</p><p>As an attempt to lift the carriage is a somewhat physi-
+        cally challenging endeavor that could end in failure, the GM calls for a
+        STR check with a CR of 13 to see if the paladin’s muscles are up to the
+        task.</p><p>The player rolls a d20, which lands on 11. Their
+        adventurer’s STR is +4, meaning their total is 15.</p><p>This exceeds
+        the check’s CR, so the paladin successfully lifts the
+        carriage!</p><p><strong>GM:</strong> You take hold of the upended
+        carriage and heave with all your might. Slowly, you raise it from the
+        ground and set it back on the road.</p></blockquote><h2>Example
+        2</h2><blockquote><p>While researching an ancient ruin, a black mage
+        stumbles upon a journal written using a complex cipher. Curious, they
+        try to decode it.</p><p>As an attempt to break this particularly diﬃcult
+        cipher is a mentally challenging task that has a high chance of ending
+        in failure, the GM calls for an INT check with a CR of 17.</p><p>The
+        player rolls a d20, which lands on 9. Their adven- turer’s INT is +5,
+        giving them a total of 14. As this falls short of the check’s CR, the
+        black mage fails to make sense of the
+        journal.</p><p><strong>GM:</strong> You run through every method you can
+        think of to crack the code, but are unable to unravel the journal’s
+        secrets.</p></blockquote><h1>Advantage Dice</h1><p>Some traits,
+        abilities, enhancements, and situations will grant advantage dice.
+        Advantage dice allow you to roll extra d20s when making certain
+        checks.</p><p>For example, if you have two advantage dice when making a
+        check, you would roll a total of three d20s for that check.</p><p>After
+        rolling your d20s, choose one of the results to use for the check. Take
+        care that you do not add the results together by mistake!</p><h2>Example
+        1</h2><blockquote><p>A scholar has a trait that gives them one advantage
+        die on checks related to studying tomes</p><p>and scrolls.</p><p>Hoping
+        to discover information about a lost civilization in an ancient scroll,
+        the player makes an INT check with a CR of 12. Because their trait gives
+        them one advantage die, they roll two d20s, which land on 8 and 12. They
+        choose to use the higher roll of 12, and add their adventurer’s INT (+3)
+        for a total of 15—a success!</p><p><strong>GM:</strong> You swiftly pore
+        over the scroll and locate the information you
+        seek.</p></blockquote><h2>Example 2:</h2><blockquote><p>A ninja has an
+        ability that gives them two advantage dice on ability
+        checks.</p><p>During an encounter, this adventurer uses Throwing Dagger
+        on a villager being controlled by an enemy NPC in an attempt to render
+        them unconscious. This requires them to make an ability check using
+        their DEX, with a CR determined by the target’s Defense. The player
+        rolls three d20s, which land on 1, 17, and 20. Worried that using too
+        high a result could deal too much damage and seriously harm the innocent
+        villager, the player chooses to use the 1. They add their adventurer’s
+        DEX (+5) for a total of 6.</p><p><strong>GM:</strong> The total is less
+        than the villager’s Defense, so Throwing Dagger deals just enough damage
+        to knock them out.</p></blockquote><h1>Penalties</h1><p>Some traits,
+        abilities, enfeeblements, and situations will impose penalties when
+        making certain checks.</p><p>Penalties are applied after you roll a d20
+        and add or subtract all applicable modifiers. If multiple penalties
+        apply to a single check, use the largest of them and ignore the
+        others.</p><h2>Example:</h2><blockquote><p>A warrior is suﬀering from a
+        -3 penalty to STR checks due to the eﬀect of an ability, and a -2
+        penalty to all checks due to the Slow enfeeblement.</p><p>This
+        adventurer attempts to hold up a collapsing wall, which requires a STR
+        check with a CR of 15. The player rolls a d20, which lands on 16. They
+        then add their adventurer’s STR (+4) for a total of 20. Because both
+        penalties mentioned above aﬀect this roll, they apply the larger of the
+        two (-3), reducing their total to 17.</p><p>Even with the penalty, the
+        warrior succeeds and is able to keep the wall from crushing their
+        allies!</p></blockquote><h1>Advantage Dice and Penalties</h1><p>At
+        times, circumstances may require you to make a check involving both
+        advantage dice and penalties. When making such a check, roll your d20s,
+        choose one of the results to use, and apply modifiers and penalties as
+        you would for any other check.</p><h2>Example:</h2><blockquote><p>A monk
+        has a trait that gives them one advantage die on DEX checks to escape
+        from rope bindings. However, they’ve been captured by bandits, tied to a
+        chair, and badly injured during a vicious interrogation. The GM rules
+        that this imposes a -5 penalty on all checks.</p><p>The player makes a
+        DEX check with a CR of 12 to slip free from the ropes. They roll two
+        d20s, which land on 12 and 13. They choose to use the 13, then add their
+        adventurer’s DEX (+3) for a total of 16. This would be a success were it
+        not for the -5 penalty, which reduces their total to 11.</p><p>GM: You
+        manage to undo the bonds, but as you shrug off the ropes, you knock over
+        the chair you were tied to.</p><p>The noise draws attention, and you
+        hear the footfalls of your bandit captors approaching your
+        cell...</p><p>The adventurer isn’t out of danger just
+        yet!</p></blockquote><h1>Opposition Checks</h1><p>Sometimes two or more
+        characters take conflicting actions, each hoping to achieve diﬀerent
+        ends. In such cases, the outcome is determined by making an opposition
+        check.</p><p>In an opposition check, all characters involved make a
+        check appropriate for the action they’re attempting and compare their
+        totals. The character with the highest total succeeds in their
+        attempt.</p><p>When this results in a tie, oftentimes nothing will
+        happen— the situation simply remains as it was before the check was
+        made. However, ties may also lead to complex or unexpected outcomes,
+        such as all characters succeeding in their eﬀorts or collectively
+        failing spectacularly. The GM will use the scenario and their own
+        judgment to determine what happens in such cases.</p><h2>Example
+        1:</h2><blockquote><p>A dragoon and a bard spot gil lying in the middle
+        of the road and race to pick it up. To determine which character reaches
+        the fallen coin first, the GM has them make an opposition check using
+        DEX.</p><p>The dragoon’s player rolls a 3 and adds their adven- turer’s
+        DEX (+3) for a total of 6.</p><p>At the same time, the bard’s player
+        rolls a 2 and adds their adventurer’s DEX (+4) for a total of
+        6.</p><p>As both players ended up with the same total, the check results
+        in a stalemate!</p><p>Thinking it would make for an amusing story, the
+        GM decides that both players reach the gil at the same time.</p><p>In
+        their haste to snatch it up, they inadvertently launch the gil
+        heavensward, and watch, stunned, as it disappears into the
+        distance.</p></blockquote><h2>Example 2:</h2><blockquote><p>The selfsame
+        dragoon and bard search frantically to find the lost gil. To determine
+        which character finds it first, the GM has them make an opposition check
+        using MND.</p><p>The dragoon’s player rolls a 13 and adds their
+        adventurer’s MND (+1) for a total of 14.</p><p>The bard, however, has a
+        trait that gives them one advantage die on MND checks to find objects
+        that gleam or glitter. Their player rolls two d20s, which land on 8 and
+        4. They choose to use the 8, and add their adventurer’s MND (+2) for a
+        total of 10.</p><p>As the dragoon’s total exceeds the bard’s, the
+        dragoon finds the gil first, slips it into their purse, and skips
+        merrily away along the road, humming a jovial ditty. The bard slumps
+        their shoulders in defeat, disappointed to have lost their
+        prize.</p></blockquote><h1>Adventurers</h1><p>Adventurers are the
+        avatars through which players can experience the wondrous adventures
+        that await them on Hydaelyn.</p><p>Before starting the game, you’ll need
+        to prepare an adventurer sheet that summarizes everything you need to
+        know about your adventurer. Three types of information determine who
+        your adventurer is and what they can do: their job, their attributes,
+        and their profile.</p><p>Similar info exists for NPCs and monsters, but
+        is often abbre- viated. NPCs and monsters may also have features that
+        player characters do not.</p><h2>Jobs</h2><p>Every adventurer has a job
+        that determines their attributes, traits, and abilities.</p><p>As your
+        adventurer explores the world and overcomes challenges and mighty foes,
+        their job will level up. Leveling up an adventurer’s job can grant them
+        new traits and abilities, or alter the eﬀects of those they already
+        have. Your GM will let you know in advance what level of adventurer to
+        prepare in order to tackle a given scenario.</p><h2>Roles</h2><p>Jobs
+        are divided into diﬀerent roles which help define their responsibilities
+        during encounters. The three roles are tank, healer, and DPS.</p><p>The
+        most common light party—a party of four adventurers—is composed of one
+        healer, one tank, and two DPS characters.</p><p>Oﬃcial scenarios are
+        often designed with this party size and composition in
+        mind.</p><h3>Tanks</h3><p>Tanks are stalwart defenders who shield the
+        party from danger. By drawing enmity and bearing the brunt of their
+        enemies’ attacks, they allow their allies to maneuver and
+        excel.</p><h3>Healers</h3><p>Whether it be restoring HP or removing
+        enfeeblements, healers are the ones who keep the party fighting fit.
+        Their support is often key to victory.</p><h3>DPS</h3><p>DPS characters
+        are the damage dealers of the party.</p><p>Though they vary in their
+        methodology, they all share the ability to bring their enemies
+        low.</p><h1>Traits</h1><p>Traits are special characteristics and talents
+        your adventurer possesses. Unless otherwise stated, traits are always
+        active, and their eﬀects cannot be lost or
+        removed.</p><h2>Size</h2><p>Characters occupy space within the world of
+        Hydaelyn, and as such, possess a size trait that approximates their
+        physical dimensions. Most adventurers are medium size, which means they
+        take up a 1x1 square of space on an encounter map.</p><p>NPCs and
+        monsters come in all shapes and sizes, and may be much larger or smaller
+        than an adventurer. For more information on the diﬀerent sizes in this
+        game, see page 13.</p><h2>Abilities</h2><p>Abilities are the diﬀerent
+        skills and spells your adventurer can wield during encounters. Unlike
+        traits, abilities must be used to take eﬀect.</p><p>Abilities can also
+        be used outside of an encounter, though doing so requires the GM’s
+        approval. For more information on abilities, see page
+        13.</p><h2>Additional Traits and Abilities</h2><p>Over the course of a
+        scenario, adventurers may learn or discover additional traits and
+        abilities. Unless otherwise stated, these additional traits and
+        abilities can only be used during the scenario in which they’re
+        obtained.</p><p>If you feel that an exception should be made, and that
+        doing so will make the story more enjoyable for everyone involved, don’t
+        hesitate to share your opinion with the GM and the other players. If
+        everyone agrees, you may carry over additional traits and abilities from
+        previous scenarios or add new traits or abilities to your
+        game.</p><h1>Attributes</h1><p>An adventurer’s attributes determine
+        their strengths and weak- nesses. The higher an attribute, the more
+        capable the adventurer is at performing related actions.</p><h2>Primary
+        Attributes</h2><p>Primary attributes are a numerical representation of a
+        character’s physical and mental characteristics. While an average popoto
+        farmer’s primary attributes are unlikely to exceed 0, adventurers are
+        exceptional beings and their primary attributes reflect this.</p><p>Keep
+        in mind that most of the checks you make during the game will rely on
+        your primary attributes.</p><h3>STR</h3><p>STR represents your
+        adventurer’s athleticism, physical fitness, and the raw power they can
+        bring to bear.</p><p>This attribute is used when employing physical
+        force to overcome a situation, such as lifting a boulder, pushing or
+        pulling a laden cart, or kicking down a door.</p><h3>DEX</h3><p>DEX
+        represents your adventurer’s coordination, agility, reflexes, and
+        balance.</p><p>This attribute is used when sneaking, performing preci-
+        sion tasks, or traversing narrow ledges.</p><h3>VIT</h3><p>VIT
+        represents your adventurer’s hardiness, physical health, and
+        endurance.</p><p>This attribute is used when holding one’s breath,
+        perform- ing manual labor for long periods of time, or attempting to
+        survive in a desert without water.</p><h3>INT</h3><p>INT represents your
+        adventurer’s sharpness of mind, ability to recall information, and
+        reasoning skills.</p><p>This attribute is used when attempting to reach
+        a logical conclusion, trying to remember a relevant fact, or searching
+        for hidden objects.</p><h3>MND</h3><p>MND represents your adventurer’s
+        perceptiveness, instincts, and intuition.</p><p>This attribute is used
+        when discerning someone’s intent from their gestures, understanding how
+        another person is feeling, noticing when something is out of place, or
+        treating another character’s wounds.</p><h2>Secondary
+        Attributes</h2><p>Secondary attributes are most frequently used during
+        encounters, although they are occasionally used for checks outside of
+        encounters as well.</p><p>Like primary attributes, an adventurer’s
+        secondary attributes are determined by their job and traits. However, in
+        rare cases, an adventurer’s personal history and background can
+        influence their secondary attributes as
+        well.</p><h3>Defense</h3><p>Defense represents your adventurer’s ability
+        to withstand physical forces.</p><p>This attribute is often used as the
+        CR for the ability checks an enemy makes when attacking your adventurer
+        with a physical ability.</p><h3>Magic Defense</h3><p>Magic Defense
+        represents your adventurer’s ability to with- stand magical
+        forces.</p><p>This attribute is often used as the CR for the ability
+        checks an enemy makes when attacking your adventurer with a magic
+        ability.</p><h3>Speed</h3><p>Speed represents the distance your
+        adventurer can move on their turn when performing a standard movement
+        action.</p><h3>Vigilance</h3><p>Vigilance is a passive attribute that
+        represents how aware your adventurer is of their surroundings at any
+        given time.</p><p>This attribute is typically not used to make checks;
+        rather, the GM will use an adventurer’s Vigilance to determine what they
+        notice about their environment. Be sure to tell the GM your adventurer’s
+        Vigilance when starting a new scenario.</p><h3>Max HP</h3><p>Max HP
+        determines how much HP your adventurer has. If their HP ever falls to
+        zero, they lose consciousness and are unable to continue participating
+        in an encounter.</p><p>As HP is not a measure of wellness or physique,
+        an adventurer’s vitality does not influence their Max HP. For
+        moreinformation on HP, see page 18.</p><h3>Max MP</h3><p>Max MP
+        determines how much MP your adventurer has.</p><p>Some abilities require
+        adventurers to spend MP to use them. In most cases, characters have a
+        Max MP of 5.</p><h1>Adventurer Profile</h1><p>Your adventurer is more
+        than a walking collection of numbers— they’re a living, breathing part
+        of the world. That’s why every adventurer has a profile that describes
+        the kind of person they are.</p><p>Consider the following questions when
+        writing your adventurer’s profile:</p><ul><li><p>What race are
+        they?</p></li><li><p>What do they look like?</p></li><li><p>Where were
+        they born, and how were they raised?</p></li><li><p>Why did they decide
+        to become an adventurer?</p></li><li><p>What are their likes and
+        dislikes?</p></li><li><p>Do they have any friends or
+        family?</p></li></ul><p>Be sure to consult with the GM and the other
+        players to ensure your profile is appropriate to the scenario before you
+        begin playing.</p><p>While your adventurer’s profile will only rarely
+        influence game mechanics such as traits or secondary attributes, the
+        information it contains can have a significant impact on how a
+        scenario’s story unfolds.</p><p>Say your current quest requires you to
+        speak with an Ala Mhigan refugee. If a member of your party is a fellow
+        Ala Mhigan, the refugee might be more receptive to lending you
+        aid.</p><p>Conversely, if you visit a settlement where people hold a
+        grudge against Gridania due to an incident several years prior, they
+        won’t be happy to see an adventurer belonging to the Wood Wailers. In
+        some cases, they may even become hostile and attack!</p><p>As per the
+        golden rule, the GM has the final say about how an adventurer’s profile
+        impacts the story. If the GM is concerned as to how certain information
+        in a profile could aﬀect the game, it’s often best to ignore it. If, for
+        example, an adventurer’s profile mentions that they’re the illegitimate
+        child of Buscarron—proprietor of Buscarron’s</p><p>Druthers—it’s
+        perfectly all right for the GM to have Buscarron address this adventurer
+        as a complete stranger should you visit his alehouse in the Upper
+        Paths.</p><p>It may be that the adventurer is a habitual liar, or
+        Buscarron and his scion could have a reason to pretend they don’t know
+        each other.</p><p>The GM is free to advance the story without exploring
+        this alleged familial relationship.</p><h2>Titles</h2><p>Titles serve as
+        a record of an adventurer’s deeds and accomplishments, and are a
+        rewarding way to track a character’s journey across Eorzea and
+        beyond.</p><p>Titles aren’t just for show—they can also have a tangible
+        eﬀect on the story. An adventurer’s bearing subtly shifts when using a
+        title, allowing NPCs within the game world to intuit what that title is.
+        This may cause them to behave diﬀerently towards that character—for
+        better or for worse.</p><p>In rare cases, a title may even grant eﬀects
+        that influence the mechanics of the game itself. Keep in mind that the
+        GM has final say on whether a title aﬀects the game.</p><p>Adventurers
+        may possess as many titles as they can earn, but can only use one title
+        at any given time. Using a title is optional, but unused titles will not
+        have an eﬀect on the scenario.</p><p>Titles can be swapped while resting
+        or sleeping, but cannot be changed otherwise.</p><h2>Supplementary
+        Profile Fields</h2><p>Character profiles also contain additional fields
+        for supplementary information. More information on supplementary profile
+        fields can be found in the Standard Rulebook.</p>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    ownership:
+      default: -1
+      A3f8BsJ7eYm0X14M: 3
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: 1728462270758
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!journal.pages!d3QpW3UjHPgOJvf5.PoZ4LrhoTYLadmgW'
+  - sort: 200000
+    name: 'Chapter 2: Encounters'
+    type: text
+    _id: 7Qjd9zlHl5zIsJG5
+    system: {}
+    title:
+      show: true
+      level: 1
+    image: {}
+    text:
+      format: 1
+      content: >-
+        <h1>The Basics</h1><p>Encounters are urgent situations in which the
+        specifics of each character’s actions take center stage. These can
+        include clashes with monsters, tense escapes from crumbling ruins, or
+        even desperate struggles for the very fate of the star. Encounters take
+        place on an encounter map, upon which participating characters battle
+        and maneuver. A square grid should be used to represent the encounter
+        map, with miniatures or other markers to keep track of character
+        positions.</p><p>Encounters are divided up into three distinct units of
+        time: phases, rounds, and turns. Most encounters have only one phase,
+        but special or complex encounters may be composed of multiple phases.
+        For more information on phases, see page 18.</p><h2>Starting an
+        Encounter</h2><p>Before starting the first round of an encounter,
+        determine the following:</p><ol><li><p>Surprise: The GM determines
+        whether any of the characters participating in the encounter have been
+        caught by surprise.</p></li><li><p>Positioning: The GM determines the
+        positions of all enemies participating in the encounter and places them
+        in the appropriate squares of the map. Depending on the scenario, the GM
+        will either specify a starting area in which the players may freely
+        place their adventurers, or place the adventurers in specific
+        locations.</p></li><li><p>Turn Order: Players determine the order in
+        which their adventurers and allies take their turns. This is referred to
+        as the turn order. The turn order for enemies is determined by the
+        scenario, or left to the discretion of the GM. The GM may choose to
+        share this information with the other players, but is not required to do
+        so. Once the turn order has been set, it cannot be changed for the
+        duration of the encounter, unless otherwise
+        specified.</p></li></ol><h2>Rounds</h2><p>A round refers to the period
+        of time in which all characters participating in an encounter take a
+        single turn.</p><p>Each round is composed of the following three
+        steps:</p><ol><li><p><strong>Adventurer Step</strong>: Each adventurer
+        and allied character participating in the encounter takes a turn,
+        following the turn order. If the encounter hasn’t ended after they have
+        done so, proceed to the [Enemy Step].</p></li><li><p><strong>Enemy
+        Step</strong>: Each enemy participating in the encounter takes a turn.
+        If the encounter hasn’t ended after they have done so, end the
+        round.</p></li><li><p><strong>End of Round Step</strong>: The current
+        round ends, a new round begins, and the order of play starts over at the
+        <strong>Adventurer Step</strong>.</p></li></ol><p>At the end of each
+        step, the GM determines if the encounter continues. If the adventurers
+        have made it out of danger or have defeated all enemy characters, the
+        encounter ends or proceeds to the next phase.</p><p>Sometimes, a
+        character’s abilities, enhancements, or enfeeblements will have eﬀects
+        that activate or need to be resolved at the end of a given step. Always
+        resolve eﬀects that impact adventurers before resolving those that aﬀect
+        enemies. Should multiple eﬀects need to be resolved simultaneously, the
+        adventurers may decide the order in which to do so.</p><p>When there are
+        multiple hostile factions participating in an encounter, all the
+        characters from one faction will take their turns, followed by those of
+        the next faction. The turn order for factions is determined by the GM,
+        and cannot be changed for the duration of the
+        encounter.</p><h2>Surprise</h2><p>Certain situations may cause an
+        encounter to begin with one faction taking the other by surprise. If,
+        for example, a hidden enemy launches an attack against the adventurers,
+        any characters caught by surprise cannot act on their turn or use
+        instant abilities during the first round of the encounter.</p><p>Be
+        aware that it is possible for some characters belonging to a faction to
+        be taken by surprise while other characters are not. The GM will
+        determine which characters are caught by surprise in any given
+        encounter.</p><h2>Turns</h2><p>When a character is involved in an
+        encounter, they may perform several diﬀerent actions during their turn.
+        Each turn, they can perform one of each of the
+        following:</p><ul><li><p>A primary action</p></li><li><p>A secondary
+        action</p></li><li><p>Standard movement or focus</p></li></ul><p>You may
+        choose the order in which your adventurer performs these actions, or opt
+        to end your turn without performing some or all of them. When there are
+        no further actions you can or wish to take on your turn, declare your
+        turn to be finished and proceed to either the next adventurer’s turn or
+        the next step of the round.</p><p>The GM will also take turns for NPCs
+        and monsters in the manner described above.</p><h3>Primary
+        Actions</h3><p>On a character’s turn, they may perform one of the
+        following primary actions:</p><ul><li><p>Use a primary
+        ability</p></li><li><p>Use a primary item</p></li><li><p>Sprint,
+        doubling the character’s Speed for this turn</p></li><li><p>Perform any
+        other action specified by the scenario or the GM to be a primary
+        action</p></li><li><p>Perform a secondary
+        action</p></li></ul><p></p><h4><strong>Combo
+        Abilities</strong></h4><p>Some abilities have special eﬀects that allow
+        you to use an additional primary ability, exceeding the usual limit of
+        one primary action per turn. These abilities are referred to as combo
+        abilities, and will specify the additional abilities you may choose
+        from. While you are not required to use an additional ability, you
+        cannot use an ability that is not indicated by the combo
+        ability.</p><h3>Secondary Actions</h3><p>On a character’s turn, they may
+        perform one of the following secondary actions:</p><ul><li><p>Use a
+        secondary ability</p></li><li><p>Use a secondary
+        item</p></li><li><p>Perform any other action specified by the scenario
+        or the GM to be a secondary action</p></li></ul><h3>Standard
+        Movement</h3><p>Characters often need to remain mobile during encounters
+        to stay out of harm’s way or position themselves more favorably. By
+        using a standard movement action, a character can move between diﬀerent
+        squares during their turn so long as the number of squares traversed
+        does not exceed their Speed. Moving into an adjacent square costs one
+        square of movement, regardless of whether that square is orthogonally or
+        diagonally adjacent. When counting squares for movement, do not include
+        your starting square.</p><p>Characters cannot pass through squares that
+        contain an enemy, unless that enemy is smaller in size than that
+        character (see page 13). However, they may pass through squares occupied
+        by allied or neutral characters, regardless of size. Additionally, a
+        character cannot end a standard movement action in a square occupied by
+        another character. If a character would run out of movement in a square
+        in which another character is present, they cannot enter that
+        square.</p><p>You may also choose to split up a character’s standard
+        movement and have them pause to perform primary or secondary actions.
+        Afterwards, they are free to continue their move, as long as they have
+        movement left to use.</p><blockquote><p><strong>Example:</strong> An
+        adventurer with a Speed of five squares begins their turn. They move two
+        squares, perform a primary action, move one square, and then perform a
+        secondary action. Finally, they use the last two squares of their
+        standard movement action to move again before ending their
+        turn.</p></blockquote><h3>Focus</h3><p>A character may forgo all
+        standard movement during their turn to focus. This allows them to
+        perform an additional secondary action, for a total of two secondary
+        actions in a single turn. The character stands still to focus on their
+        actions and can’t spare a thought for mobility.</p><p>Free Actions In
+        addition to a primary action, a secondary action, and a standard
+        movement action, a character may also perform one free action during
+        their turn, provided that action is permitted by the rules and the GM.
+        Free actions typically involve doing something simple, like opening a
+        door, picking up an item, or sounding a warning whistle.</p><p>The GM is
+        the final arbiter on whether or not an action can be carried out as a
+        free action, but in general, it’s safe to assume that anything that can
+        be accomplished almost instantaneously and with a negligible chance of
+        failure can be performed as a free action. Any action that takes even a
+        little time—such as unlocking a coﬀer or turning a crank to lower a
+        drawbridge—or that requires the character to make a check must be
+        performed as a primary action.</p><h3>Instant
+        Abilities</h3><p>Characters can react to the ever-changing circumstances
+        of an encounter by using instant abilities. Unlike other abilities,
+        instant abilities may be used during any character’s turn, provided
+        their trigger conditions are met. However, a character cannot use
+        instant abilities when they are surprised, nor can they use multiple
+        instant abilities on a given
+        turn.</p><blockquote><p><strong>Example:</strong> During an enemy’s
+        turn, a warrior uses Interject in response to an ability used by that
+        enemy. They cannot then use Thrill of Battle, another instant ability,
+        in response to that same ability, as it is still the same character’s
+        turn. They may, however, use Thrill of Battle in response to another
+        ability on the next character’s turn.</p></blockquote><p>If an instant
+        ability is used during another character’s turn, that character can
+        continue their turn as soon as the instant ability’s eﬀect is
+        resolved.</p><img
+        src="systems/foundryvtt-final-fantasy/assets/pages/instant-ability.webp"
+        /><h2>Movement Effects</h2><p>Movement that occurs as a result of an
+        ability’s eﬀect, a character trait, or an encounter mechanic is referred
+        to as a movement eﬀect. This is considered distinct from standard
+        movement. For this reason, a character can still move via a movement
+        eﬀect even after using all of their standard movement. Movement eﬀects
+        do not change the distance a character can move when performing a
+        standard movement action on a given turn; they are simply a secondary
+        source of mobility.</p><blockquote><p><strong>Example:</strong> A
+        dragoon uses the Elusive Jump ability as a secondary action, which
+        allows them to move five squares. As they have not used any of their
+        standard movement, they may still travel as far as their Speed allows,
+        or choose to focus and perform an additional secondary
+        action.</p></blockquote><p>Unless otherwise specified, a movement eﬀect
+        cannot cause a character to stop in a square occupied by another
+        character, even temporarily. This applies to abilities and traits that
+        move other characters as well.</p><p>If resolving an eﬀect results in a
+        situation where multiple characters end up in the same square, refer to
+        the following section on size for more information on how to
+        proceed.</p><h2>Character Size</h2><p>Depending on their size,
+        characters take up diﬀerent amounts of space. The table below shows how
+        much space characters of each size take up during an encounter. This
+        table can also be used to determine the size of inanimate objects that
+        take up space on the encounter
+        map.</p><table><tbody><tr><td><p><strong>Size</strong></p></td><td><p><strong>Space
+        Occupied</strong></p></td><td><p><strong>Size</strong></p></td><td><p><strong>Space
+        Occupied</strong></p></td></tr><tr><td><p>Small</p></td><td><p>1x1
+        square</p></td><td><p>Medium</p></td><td><p>1x1
+        square</p></td></tr><tr><td><p>Large</p></td><td><p>2x2
+        square</p></td><td><p>Huge</p></td><td><p>3x3
+        square</p></td></tr><tr><td><p>Colossal</p></td><td><p>4x4
+        squares</p></td><td><p></p></td><td><p></p></td></tr></tbody></table><p>The
+        space occupied by a character represents the number of squares that
+        character controls in an encounter. Most medium- sized characters aren’t
+        so broad as to physically fill an entire square, but their ability to
+        take a swing at or push back any foes who encroach on their space causes
+        them to take up one full square.</p><p>Consider the following: Two
+        medium-sized Sahagin are standing side by side in a passageway two
+        squares wide. Their enemies—a small-sized character and a medium-sized
+        character—cannot pass by the Sahagin without running afoul of their
+        tridents. A large-sized character, however, could shove past them
+        without issue.</p><img
+        src="systems/foundryvtt-final-fantasy/assets/pages/creature-space-occupied.webp"
+        /><p>If resolving an eﬀect results in a situation where multiple
+        characters end up in the same square, the GM will move one or more
+        characters to the closest unoccupied square.</p><p>If a square is
+        occupied by characters of diﬀering sizes, the GM moves the smaller of
+        the characters to a diﬀerent square; if the characters are the same
+        size, but one is an adventurer and the other an NPC, the GM moves the
+        adventurer. Otherwise, the GM chooses which character to
+        move.</p><p>Some scenarios may specify which characters to move and
+        where to move them. However, it is ultimately up to the GM’s discretion
+        to determine how characters should be moved.</p><p>Any characters
+        repositioned by the GM are knocked oﬀ their feet, leaving them Prone
+        (see page 20). Repositioning a character in this manner is not
+        considered movement.</p><h2>Abilities</h2><p>Abilities are a key
+        component of any encounter, and characters can use them to aﬀect the
+        world in a number of diﬀerent ways. Each ability is comprised of the
+        following fields, though some abilities may not include all of the
+        fields described below. If an ability’s description does not contain a
+        certain field, the ability does not possess that field.</p><p>If an
+        ability requires an ability check, the player responsible for the
+        character using the ability must make a check before resolving its
+        eﬀects. Depending on the outcome of the check, the ability’s eﬀects may
+        change.</p><h3>Name</h3><p>The ability’s
+        name.</p><h2>Type</h2><h4><strong>Primary, Secondary,
+        Instant</strong></h4><ul><li><p>Abilities are separated into diﬀerent
+        types, which indicate how and when they can be used.</p></li><li><p>As
+        explained in the section on turns, primary abilities can be used as a
+        primary action, and secondary abilities can be used as a secondary
+        action. Instant abilities can be used whenever their trigger conditions
+        are met—even on another character’s turn.</p></li><li><p>Certain special
+        abilities do not belong to any of the above types. Their descriptions
+        will explain how and when they can be
+        used.</p></li></ul><h4><strong>Physical, Magic,
+        Unique</strong></h4><ul><li><p>Abilities are further classified as
+        physical, magic, or unique. This classification aﬀects the CR of the
+        ability check made when the ability is used. For more information on
+        ability checks, see page 15.</p></li></ul><h4><strong>Other
+        Classifications</strong></h4><ul><li><p>Some abilities have other
+        classifications, indicating whether the ability is invoked,
+        fire-aspected, and so forth. This information may be referenced by
+        character traits or other abilities.</p></li></ul><h3>Cost</h3><p>The
+        cost that must be paid in order to use the ability. An ability cannot be
+        used if a character lacks the resources to pay its cost, or if expending
+        those resources would render them incapable of using
+        it.</p><p>Typically, abilities with a cost require their user to spend a
+        certain amount of MP. However, some abilities draw on resources other
+        than MP.</p><p>Abilities without a cost listed do not have one, unless
+        otherwise detailed in their description.</p><h3>Requirement</h3><p>Some
+        abilities have requirements that must be met before they can be
+        used.</p><h3>Target</h3><p>The character, characters, or objects the
+        ability aﬀects.</p><h4><strong>X:</strong></h4><p>The ability aﬀects X
+        characters chosen by the user within the ability’s range. These targets
+        may be enemies or allies, or even objects such as doors and barricades,
+        provided the GM permits it. For the purposes of targeting, the user is
+        considered to be an ally.</p><h4>Self:</h4><p>The ability aﬀects the
+        user.</p><h4>Enemy/Ally:</h4><p>The ability aﬀects one or more enemies
+        or allies. Potential targets are determined based on whether the user
+        considers them an enemy or ally at the time the ability is used. A
+        character could, for example, use an ability that targets an ally on a
+        monster that was considered an enemy at the start of the encounter, but
+        has since turned out to be an ally. For the purposes of targeting, the
+        user is considered to be an ally.</p><h4>Special:</h4><p>Abilities that
+        do not aﬀect characters—such as those that create or conjure
+        something—may not have specified targets. Refer to the ability’s base
+        eﬀect and direct hit descriptions when resolving these
+        abilities.</p><h3>Range</h3><p>The distance at which the ability can be
+        used and the number of squares it aﬀects. Abilities do not aﬀect targets
+        that move out of range before its eﬀects are resolved. For example, a
+        target could avoid an ability by using a trait or ability of their own
+        to flee to safety. Abilities which target their user do not have a
+        range. The following examples illustrate common ability ranges:</p><h4>5
+        squares:</h4><ul><li><p>The ability aﬀects one or more targets within
+        five squares of the user.</p></li></ul><h4>A 3x3 area centered on this
+        character:</h4><ul><li><p>The ability aﬀects all targets within a 3x3
+        area centered on the user.</p></li></ul><h4>A 3x3 area adjacent to this
+        character:</h4><ul><li><p>The ability aﬀects all targets in a 3x3 area
+        that does not include the user but with at least one square adjacent to
+        them.</p></li></ul><h4>A 5x5 area within 10 squares of this
+        character:</h4><ul><li><p>The ability aﬀects all targets in a 5x5 area
+        whose furthest square is no more than ten squares away from the
+        user.</p></li></ul><h3>Check</h3><p>The values used for ability checks
+        (see page 15) made when using the ability.</p><p>Abilities without this
+        field can be used without making an ability check. When a character uses
+        the ability, simply resolve its base eﬀect.</p><p>If an ability check is
+        listed as “Special,” refer to the ability’s base eﬀect description for
+        more information. These abilities do not have a CR or a direct hit
+        eﬀect, and often require an ability check simply to see if you score a
+        critical or if a proc eﬀect is triggered.</p><h3>CR</h3><p>The challenge
+        rating (CR) for a physical ability’s check will always be the target’s
+        Defense, whereas the CR for a magic ability’s check will always be the
+        target’s Magic Defense, unless otherwise stated.</p><ul><li><p>Physical
+        Ability CR = Target’s Defense</p></li><li><p>Magic Ability CR = Target’s
+        Magic Defense</p></li></ul><p>The CR for a unique ability’s check can be
+        found in the ability’s description, in the scenario, or in the
+        character’s traits.</p><img
+        src="systems/foundryvtt-final-fantasy/assets/pages/area-effects.webp"
+        /><h3>Base Effect</h3><p>The eﬀect that is resolved when the ability is
+        used. An ability’s base eﬀect is always fully resolved, unless something
+        interrupts or otherwise negates the use of the ability
+        itself.</p><h3>Direct Hit</h3><p>An additional eﬀect that is resolved
+        when the character scores a direct hit with the
+        ability.</p><h3>Limitation</h3><p>Indicates how many times the ability
+        can be used in a given period of time. It may also describe other
+        restrictions or condi- tions. Unless otherwise stated, abilities may not
+        be used more times than explicitly indicated here.</p><h2>Ability
+        Checks</h2><p>Many abilities require players to make an ability check
+        when used.</p><p>The check field indicates the value, often a primary
+        attribute, to be used for this check. It will also specify the check’s
+        CR.</p><p>If the ability check’s total equals or exceeds the CR, the
+        ability scores a direct hit, and the eﬀect described in its direct hit
+        field is resolved alongside its base eﬀect.</p><p>Some abilities have
+        “Special” listed in their check or CR fields. In these cases, the result
+        of an ability check or d20 roll may be referenced when resolving the
+        ability’s eﬀect.</p><h2>Rolling for Ability Effects</h2><p>Abilities
+        that deal damage or heal HP often require a dice roll to determine how
+        potent their eﬀects are. After making any required ability checks, roll
+        the dice specified in the ability’s base eﬀect and, when applicable,
+        direct hit descriptions. Use the sum of their results to calculate the
+        amount of damage dealt or HP healed.</p><h2>Criticals</h2><p>If a d20
+        rolled for an ability check lands on a 20, then that ability is a
+        critical. On the d20s included in the Starter Set, 20 is represented by
+        the <span class="icon-icomoon"></span> icon.</p><p>Ability checks that
+        result in a critical always score a direct hit regardless of CR,
+        assuming the ability has a direct hit eﬀect. Furthermore, criticals
+        double the number of dice rolled to determine the amount of damage dealt
+        or HP healed by the ability’s eﬀects, including any additional dice
+        awarded by traits or abilities. All other numbers for the ability remain
+        unchanged.</p><blockquote><p><strong>Example 1</strong>: A warrior uses
+        their Tomahawk ability, which has a base eﬀect that deals 2 points of
+        damage plus an additional 1d6 damage on a direct hit. The player rolls a
+        20 on Tomahawk’s ability check, making it both a critical and a direct
+        hit. Because of the critical, the player doubles the dice and rolls 2d6,
+        then adds 2 to the sum to calculate the total damage
+        dealt.</p><p><strong>Example 2</strong>: A dragoon uses their Jump
+        ability, which deals 2d6 + 3 damage from its base eﬀect plus an
+        additional 2d6 damage on a direct hit—a total of 4d6 + 3. The player
+        rolls a 20 on Jump’s ability check, making it both a critical and a
+        direct hit. Because of the critical, the player doubles the dice and
+        rolls 8d6, then adds 3 to the sum to calculate the total damage
+        dealt.</p></blockquote><h2>Ability Checks for Multiple Targets</h2><p>If
+        a character uses an ability that aﬀects multiple targets, make a single
+        ability check and use the resulting total to determine if the ability
+        scores a direct hit on each target.</p><p>If the character has been
+        granted advantage dice on ability checks against some targets but not
+        others, roll the advantage dice for those targets separately and select
+        which die to use when calculating the total of the check for those
+        specific targets.</p><h2>Damage and Healing for Multiple
+        Targets</h2><p>If an ability that deals damage or heals HP aﬀects
+        multiple targets, roll the dice once and use the resulting total to
+        calculate the amount of damage dealt or HP healed. Each target suﬀers
+        the same amount of damage or recovers the same amount of HP.</p><p>If
+        the ability check resulted in a critical for some targets but not
+        others, roll the additional dice once and add the results to the total
+        from the first roll to calculate the eﬀects for those specific
+        targets.</p><blockquote><p><strong>Example:</strong> A black mage uses
+        Fire II to target three enemies: Star Marmot A, Star Marmot B, and a
+        little ladybug. The player makes a single ability check using their
+        adventurer’s INT, resulting in a total of 11. The ability check’s CR is
+        determined by the target’s Magic Defense, which is 10 for the star
+        marmots and 12 for the little ladybug. As such, the ability scores a
+        direct hit on the star marmots, but not on the little ladybug. Fire II’s
+        base eﬀect deals 3 damage to all three targets, but because the ability
+        scored a direct hit on the two star marmots, they also take an
+        additional 1d6 damage. The player rolls 1d6 to determine direct hit
+        damage, which lands on a 4. The two star marmots suﬀer a total of 7
+        damage each, while the little ladybug only suﬀers 3 damage from Fire
+        II’s base eﬀect.</p></blockquote><h2>Proc Effects</h2><p>Some abilities
+        have additional proc eﬀects that trigger if a d20— either the one rolled
+        for their ability check or another rolled at a time specified in their
+        base eﬀect description—lands on a specific number. Whether or not a proc
+        eﬀect is triggered is determined by the unmodified value of the die
+        rolled.</p><p>When a proc eﬀect is triggered, resolve the eﬀects
+        specified in the ability’s base eﬀect and direct hit
+        descriptions.</p><h1>Ability Resolution</h1><p>Follow these steps when
+        using an ability:</p><ol><li><p><strong>Choose Ability:</strong> Select
+        one of your character’s abilities to use.</p></li><li><p><strong>Select
+        Target:</strong> If the ability requires a target or targets, select
+        them.</p></li><li><p><strong>Confirm Ability Check:</strong> If the
+        ability requires you to make an ability check, confirm the relevant
+        values and the check’s CR, as well as whether any advantage dice or
+        penalties apply.</p></li><li><p><strong>Make Ability Check:</strong>
+        Make the ability check using the information from step
+        3.</p></li><li><p><strong>Determine Results:</strong> Use the total from
+        step 4 to determine if the ability is a direct hit and if any proc
+        eﬀects are triggered. If you rolled a 20, the ability is a
+        critical.</p></li><li><p><strong>Confirm Eﬀects:</strong> Confirm the
+        ability’s base eﬀect, as well as its direct hit eﬀect, if applicable. If
+        the ability check resulted in a critical, the dice used to determine
+        ability eﬀect values are doubled. Lastly, if a proc eﬀect was triggered,
+        confirm its eﬀects.</p></li><li><p><strong>Roll Dice:</strong> If any
+        part of the ability’s eﬀects require you to roll any dice, do so
+        now.</p></li><li><p><strong>Resolve Eﬀects:</strong> Resolve the eﬀects
+        confirmed in step 6 for the ability’s target, targets, or all targets
+        within the ability’s range. Use the results of the dice rolled in step 7
+        when applicable.</p></li></ol><h1>Markers</h1><p>Some abilities have
+        eﬀects that generate markers. Markers serve as visual cues that provide
+        advance notice of what is about to occur on the encounter map. When a
+        marker is generated, an object or token should be placed on the
+        encounter map to represent that marker.</p><p>Each marker is comprised
+        of the following fields. If a field is blank, the marker does not
+        possess that field.</p><h4>Source</h4><p>The ability or eﬀect that
+        generated the marker.</p><h4>Creator</h4><p>The character that used the
+        ability that generated the marker. If the creator is aﬄicted with an
+        enfeeblement that renders them unable to maintain the marker, the marker
+        is removed from the encounter map. Refer to the list of enfeeblements on
+        page 20 to determine if a given enfeeblement would cause the removal of
+        a marker.</p><blockquote><p><strong>Example 1</strong>: The party is
+        fighting Ifrit, who uses the Eruption ability. The GM places a 5x5
+        square marker on the encounter map as specified in the ability’s
+        description. In this instance, Eruption is the source of the marker, and
+        Ifrit is the marker’s creator.</p><img
+        src="systems/foundryvtt-final-fantasy/assets/pages/marker-generated.webp"
+        alt="Ifrit uses Eruption, generating a marker " /><p><strong>Example
+        2</strong>: To represent a collapsing ceiling inside of a crumbling
+        mine, the GM places multiple markers on the encounter map to indicate
+        danger areas where rocks will fall. In this case, the collapsing ceiling
+        is the source of the markers, and there is no creator.</p><img
+        src="systems/foundryvtt-final-fantasy/assets/pages/rocks-generating-marker.webp"
+        alt="Rocks fall from the ceiling generating markers"
+        /></blockquote><h4>Marker Type</h4><p>All markers are classified as
+        mobile or stationary.</p><p>A mobile marker may change location or size
+        before its eﬀects are resolved, as long as the conditions noted in the
+        source ability’s description are met.</p><p>Stationary markers, on the
+        other hand, are immobile and will remain in the square or squares in
+        which they were generated until their eﬀects are
+        resolved.</p><h4>Origin</h4><p>The location in which the marker is
+        placed on the encounter map. A marker’s origin can be one or more
+        characters or squares on the encounter map.</p><h4>Marker
+        Area</h4><p>The total area that the marker will aﬀect. This field also
+        indicates the conditions under which a mobile marker changes
+        location.</p><p>The GM will decide whether or not they convey to the
+        other players how a given mobile marker moves based on instructions in
+        the scenario or by using their own
+        discretion.</p><blockquote><p><strong>Example</strong>: A mobile marker
+        with a 3x3 area centered on the origin and that moves with the origin is
+        placed on the encounter map. If the character that served as the
+        marker’s origin moves using a standard movement action, a movement
+        eﬀect, or is otherwise repositioned due to a special game rule, the
+        marker moves along with the character so that the 3x3 area is always
+        centered on them.</p><img
+        src="systems/foundryvtt-final-fantasy/assets/pages/mobile-marker.webp"
+        alt="mobile marker" width="200" height="200"
+        /></blockquote><h4>Target</h4><p>The character, characters, or objects
+        the marker aﬀects.</p><h4>Marker Trigger</h4><p>The conditions under
+        which the marker’s eﬀect is resolved. When these conditions are met, the
+        marker’s eﬀect is resolved for all valid targets within the marker
+        area.</p><h4>Marker Effect</h4><p>The eﬀect that is resolved when the
+        marker trigger’s conditions are met. This field describes both the eﬀect
+        the marker has on its targets as well as any secondary eﬀects the marker
+        may have.</p><p>Unless otherwise specified, a marker’s eﬀects only apply
+        to enemies of its creator. If a marker has no creator, it will aﬀect all
+        valid targets within the marker area, unless the rules specify
+        otherwise.</p><h2>Marker Resolution</h2><p>Follow these steps when
+        generating and resolving a marker:</p><ol><li><p><strong>Generate
+        Marker</strong>: When an ability or eﬀect that generates a marker is
+        resolved, declare its source and creator.</p></li><li><p><strong>Place
+        Marker</strong>: Place an object or token on the encounter map to
+        represent the marker to the players, and declare whether it is a mobile
+        or stationary marker. If it is a mobile marker and you wish to share
+        this information, declare under what conditions this marker will
+        move.</p></li><li><p><strong>Confirm Marker Trigger</strong>: Confirm
+        the conditions under which the marker’s eﬀect is
+        resolved.</p></li><li><p><strong>Declare Marker Activation</strong>:
+        When the marker is triggered, inform the players that the marker’s eﬀect
+        will be resolved.</p></li><li><p><strong>Confirm Marker Target</strong>:
+        Confirm the target or targets of the marker’s
+        eﬀects.</p></li><li><p><strong>Confirm Marker Eﬀect</strong>: Confirm
+        the marker’s eﬀect. If this requires you to roll any dice, do so
+        now.</p></li><li><p><strong>Resolve Eﬀects</strong>: Resolve the eﬀect
+        confirmed in step 6 for the marker’s target, targets, or all targets
+        within the marker’s area of eﬀect.</p></li></ol><img
+        src="systems/foundryvtt-final-fantasy/assets/pages/sample-abilities.webp"
+        alt="Sample abilities" /><p></p><h2>Phases</h2><p>A phase is a unit of
+        time that helps govern an encounter. The length of a single phase can
+        vary dramatically depending on how the encounter
+        unfolds.</p><p>Typically, a single encounter consists of one phase. Once
+        that phase has ended, the encounter ends along with it. However, certain
+        special encounters—like those involving especially powerful enemies—may
+        have multiple phases.</p><p>In such cases, a new phase will begin once
+        the conditions outlined in the scenario are met. This might occur when
+        all enemies have been defeated, or when a certain character’s HP has
+        been reduced to 0. New phases may see enemy reinforce- ments take the
+        field, or have a unique character adopt a more powerful form. In the
+        end, it’s up to the GM to decide how to handle phases, and they are free
+        to add, subtract, or tweak phases as they see fit.</p><p>Follow these
+        steps when a phase ends and a new one
+        begins:</p><ul><li><p><strong>Remove enhancements</strong> and
+        enfeeblements (see page 20) from all characters, unless otherwise
+        specified.</p></li><li><p>The GM places any <strong>additional
+        enemies</strong> on the encounter map and adjusts enemy character
+        information as necessary.</p></li><li><p>Adventurers and companions with
+        <strong>abilities</strong> that have a <strong>limited</strong> number
+        of uses per phase have those uses <strong>restored</strong>. Turn order,
+        HP, MP, barriers, items consumed, and benefits gained from traits such
+        as Umbral Mastery and The Beast Within are carried over to the new
+        phase.</p></li><li><p>Each adventurer may immediately
+        <strong>use</strong> one of their
+        <strong>items</strong>.</p></li></ul><p>At the start of a new phase, the
+        encounter map may also change. In such cases, the relative position of
+        characters will remain unchanged, so long as it does not specifically
+        say to move them in the scenario or elsewhere.</p><p>When indicated by
+        the scenario, characters aware that the encounter hasn’t ended may be
+        repositioned. Repositioning a character in this manner is not considered
+        movement.</p><h2>HP</h2><p>HP is not a measure of a character’s physical
+        stamina, but rather a numerical representation of their physical and
+        mental resilience and their will to survive. Characters with more HP can
+        withstand greater damage, and those with less HP can be defeated more
+        easily.</p><p>A character’s HP can range from their <strong>Max
+        HP</strong> value to 0, and cannot fall into the negative. When
+        characters suﬀer damage or receive healing eﬀects, their HP value will
+        change. Outside of an encounter, a character’s HP value will always
+        equal their <strong>Max HP</strong>, unless special rules are in
+        eﬀect.</p><p>When a character suﬀers damage during an encounter, their
+        HP value is reduced by the amount of damage taken. Damage that would
+        cause their HP value to fall below 0 instead brings it to 0; any extra
+        damage is ignored.</p><p>When a character receives a healing eﬀect,
+        their HP value is increased by the amount of HP it restores. Recovery
+        that would cause their HP to exceed their <strong>Max HP</strong> value
+        instead brings it to their <strong>Max HP</strong> value; any extra
+        healing is ignored.</p><p>So long as a character’s HP is not reduced to
+        0, losing HP has no eﬀect on a character’s abilities or
+        attributes.</p><h3>Barriers</h3><p>Certain abilities can furnish
+        characters with barriers that provide additional HP. If a character with
+        a barrier takes damage, the damage is first subtracted from the barrier.
+        Any damage remaining after the barrier is lost is subtracted from the
+        character’s HP. Barriers are considered separate from a character’s HP,
+        so it’s possible for a barrier to allow a character to exceed their
+        <strong>Max HP</strong>.</p><p>Barriers cannot be restored with healing
+        eﬀects, nor can two barriers be combined. If a character with a barrier
+        gains another, the barrier with the higher HP value remains active, and
+        the one with the lower HP value is lost. So long as the eﬀect granting
+        the barrier does not list a specific duration, it will last until damage
+        eliminates it or the encounter ends.</p><h3>When HP Falls to
+        0</h3><p>When a character’s HP falls to 0, that character is
+        <strong>Knocked Out</strong>. A character with 0 HP cannot recover HP
+        until the <strong>Knocked Out</strong> enfeeblement is removed via an
+        ability such as <strong>Raise</strong>, by using an item such as a
+        Company-Issue Tonic, or through some other special eﬀect. When an
+        encounter ends, characters who are <strong>Knocked Out</strong> regain
+        all of their HP and are aﬄicted with the <strong>Weakened</strong>
+        enfeeblement.</p><p>To avoid confusion, the GM may decide that when NPCs
+        and monsters reach 0 HP, they <strong>Die</strong> instead of being
+        <strong>Knocked Out</strong>.</p><p>If an adventurer reduces a character
+        or monster’s HP to 0 but does not want to kill them, that player should
+        declare that their adventurer has decided to inflict non-lethal damage
+        and merely knocked their adversary out. That being said, the scenario’s
+        rules and the GM’s discretion take precedence, so <strong>Knocking
+        Out</strong> an enemy may not always be possible. When an enemy is
+        <strong>Knocked Out</strong> or killed in an encounter, remove their
+        token from the encounter map. When an adventurer is <strong>Knocked
+        Out</strong>, however, leave their token where it is.</p><p>Refer to the
+        enfeeblements section on page 21 for further infor- mation on what
+        happens when a character is <strong>Knocked
+        Out</strong>.</p><h3>Describing Damage</h3><p>As explained earlier, HP
+        is not a representation of physical stamina. Because of this, a
+        character with 1 HP remaining might appear whole and unharmed, and yet
+        be just one stiﬀ breeze from death’s door. Alternatively, a character
+        covered with countless horrible wounds may in fact be hale and hearty at
+        <strong>Max HP</strong>.</p><p>But this presents a problem: how do
+        players know whether their adversaries are brimming with life or
+        gurgling on the verge of death? It is the rare party that doesn’t want
+        to keep tabs on their enemies’ HP. Some GMs prefer to keep enemy HP
+        counts to themselves in order to maintain immersion, while others choose
+        to be completely transparent, revealing raw numbers to the other
+        players.</p><p>For the GM who is looking for a creative solution to this
+        particular problem, here are a few helpful suggestions for describing
+        enemy HP. Feel free to use them verbatim, or as a springboard to come up
+        with your own ideas.</p><blockquote><h4><strong>When an Enemy’s HP Falls
+        below 50%</strong></h4><ul><li><p>The enemy’s HP gauge has turned
+        yellow.</p></li><li><p>The enemy appears winded, and their movements
+        have slowed.</p></li><li><p>A number of cracks and dents now cover the
+        warmachina’s chassis.</p></li><li><p>Your foe is left reeling after
+        being struck by the bolt of fire you
+        summoned.</p></li></ul></blockquote><blockquote><h4>When an Enemy’s HP
+        Falls below 10%</h4><ul><li><p>The enemy’s HP gauge is flashing
+        red!</p></li><li><p>Sweat drips from your foe’s brow, their pained
+        breathing clearly audible.</p></li><li><p>Greasy smoke billows from
+        jagged rents in the warmachina’s chassis.</p></li><li><p>It seems your
+        foe is struggling to remain standing.</p></li></ul></blockquote><p>With
+        all of that being said, remember that as a GM, there are countless ways
+        to approach this and the other challenges you’ll face, and there are no
+        wrong answers. Feel free to experiment and find the methods that work
+        best for you and the other players at the table. </p><h2>MP </h2><p>MP
+        represents a character’s reserves of mana and their ability to
+        manipulate aether, and is often consumed as the cost of using certain
+        abilities. An adventurer’s <strong>Max MP</strong> is 5. </p><p>NPCs and
+        monsters do not use MP unless specifically stated. </p><p>An
+        adventurer’s MP can range from their <strong>Max MP</strong> value to 0,
+        and cannot fall into the negative. When adventurers expend or recover
+        MP, their MP value will change accordingly. Outside of an encounter, a
+        character’s MP value will always equal their <strong>Max MP</strong>,
+        unless special rules are in eﬀect. </p><p>When an adventurer uses an
+        ability that costs MP, their MP value is reduced by the amount specified
+        in the ability’s description. A reduction in MP does not aﬀect a
+        character’s abilities or attri- butes, and they can act normally even if
+        their MP drops to 0. They simply will be unable to use abilities that
+        cost MP . </p><h3>Natural MP Recovery </h3><p>While in an encounter, all
+        adventurers will automatically recover 2 MP at the end of a round’s
+        [Adventurer Step], before the [Enemy Step] begins. </p><p>Some abilities
+        and traits have eﬀects that alter the amount of MP a character recovers
+        at the end of the [Adventurer Step]. Be sure to take any such eﬀects
+        into account when recovering MP. </p><h2>Limit Breaks </h2><p>Limit
+        breaks are special abilities that can be used in encounters of great
+        importance or when fighting powerful enemies. </p><p>Whether or not
+        limit breaks are available for use depends on the scenario and the GM’s
+        discretion. The GM will inform players at the start of the turn, round,
+        or phase in which they become available. </p><p>A party of adventurers
+        can use up to three limit breaks per encounter. However, an adventurer
+        who has used a limit break once in an encounter cannot do so again
+        during that same encounter. </p><p>Limit breaks have triggers listed in
+        their descriptions and can be used when those conditions are met, even
+        if it is not the adventurer’s turn. They are not classified as
+        <em>instant</em> abilities, and as such can be used even if the
+        adventurer has already used an <em>instant</em> ability that turn.
+        </p><p>Limit breaks whose trigger is listed as <strong>Any time</strong>
+        can also be used to interrupt the resolution of another ability or a
+        marker’s eﬀect. For example, say a powerful enemy targets a wounded ally
+        with an ability. After the dice roll to determine the amount of damage
+        its eﬀect inflicts but before the ability’s eﬀect is resolved, a white
+        mage uses their limit break, <strong>Pulse of Life</strong>. This limit
+        break heals the targeted ally, giving them enough HP to weather their
+        enemy’s fearsome blow. </p><h2>Enhancements </h2><p>Any condition that
+        has a beneficial eﬀect on a character is considered an enhancement.
+        Enhancements wear oﬀ in the manner specified in their eﬀect description,
+        after a period of time elapses, or at the end of a phase. </p><p>Unless
+        otherwise specified, a given character cannot use the same ability or
+        trait to grant multiple instances of an enhancement to a single target.
+        When a new instance of an enhancement is applied by the same character,
+        it overwrites the original instance. However, multiple characters can
+        apply separate instances of an enhancement to a single target using the
+        same ability or trait. </p><p>At times, the scenario may specify that
+        one or more characters are granted an enhancement. These enhancements
+        will be defined in the descriptions of the eﬀects that granted
+        them.</p><h2>Enfeeblements </h2><p>Any condition that has a detrimental
+        eﬀect on a character is considered an enfeeblement. Enfeeblements wear
+        oﬀ in the manner specified in their eﬀect description, after a period of
+        time elapses, when abilities or items are used to remove them, or at the
+        end of a phase. </p><p>Unless otherwise specified, a given character
+        cannot use the same ability or trait to inflict multiple instances of an
+        enfeeblement to a single target. When a new instance of an enfeeblement
+        is applied by the same character, it overwrites the original instance.
+        However, multiple characters can apply separate instances of an
+        enfeeblement to a single target using the same ability or trait.
+        </p><p>At times, the scenario may specify that one or more characters
+        are aﬄicted with an enfeeblement. These enfeeblements will be defined in
+        the descriptions of the eﬀects that inflicted them. The list below
+        includes the most common enfeeblements:</p><h4>Damage Over Time (DOT)
+        </h4><ul><li><p>Damage over time eﬀects always specify the amount of
+        damage they inflict using a set of parentheses, such as <strong>DOT
+        (3)</strong> or <strong>DOT (User’s INT)</strong>. </p></li><li><p>An
+        adventurer or ally aﬄicted with a damage over time eﬀect takes damage
+        specified by the <strong>DOT</strong> at the end of each round’s
+        [Adventurer Step]. </p></li><li><p>An enemy aﬄicted with a damage over
+        time eﬀect takes damage specified by the <strong>DOT</strong> at the end
+        of each round’s [Enemy Step]. </p></li></ul><h4>Prone </h4><ul><li><p>A
+        <strong>Prone</strong> character cannot take a standard movement action
+        on their turn unless they spend half their Speed (rounded up, typically
+        3 squares) to get back on their feet. Standing up in this fashion
+        removes the <strong>Prone</strong> enfeeblement. </p></li><li><p>A
+        <strong>Prone</strong> character incurs a -2 penalty on all checks.
+        </p></li><li><p>Characters receive one advantage die when making ability
+        checks targeting a <strong>Prone</strong> character. </p></li><li><p>The
+        <strong>Prone</strong> enfeeblement does not stack, even if it is
+        inflicted multiple times. In these cases, only a single instance of the
+        eﬀect remains. </p></li></ul><h4>Slow </h4><ul><li><p>A
+        <strong>Slowed</strong> character has their <strong>Speed</strong>
+        halved (rounded up) and cannot be aﬀected by eﬀects which would add to
+        their <strong>Speed</strong>. </p></li><li><p>A <strong>Slowed</strong>
+        character incurs a -2 penalty on all checks. </p></li></ul><h4>Blind
+        </h4><ul><li><p>A <strong>Blinded</strong> character cannot see and
+        automatically fails checks that rely entirely on vision. Ability checks
+        made when using abilities that target enemies or allies incur the
+        penalty listed below, as <strong>Blinded</strong> characters can still
+        rely on their other senses to get a general idea of the target’s
+        position. </p></li><li><p>Characters receive one advantage die when
+        making ability checks targeting a <strong>Blinded</strong> character.
+        </p></li><li><p>A <strong>Blinded</strong> character incurs a -2 penalty
+        on all checks. </p></li></ul><h4>Stun </h4><ul><li><p>A
+        <strong>Stunned</strong> character cannot act during their turn or use
+        instant abilities. </p></li><li><p>Any and all markers for which a
+        <strong>Stunned</strong> character is the creator are
+        removed.</p></li><li><p>Characters receive one advantage die when making
+        ability checks targeting a <strong>Stunned</strong> character.
+        </p></li><li><p>A <strong>Stunned</strong> character incurs a -5 penalty
+        on all checks. </p></li><li><p>The <strong>Stunned</strong> enfeeblement
+        can only be removed via the means detailed in the description of the
+        eﬀect that inflicted it. It cannot be removed by eﬀects that remove
+        enfeeblements. </p></li></ul><h4>Knocked Out </h4><ul><li><p>A character
+        that has been <strong>Knocked Out</strong> is unconscious and cannot
+        perceive their surroundings. They cannot use abilities or perform other
+        actions during their turn. </p></li><li><p>A character that has been
+        <strong>Knocked Out</strong> is treated as both <strong>Prone</strong>
+        and <strong>Stunned</strong>. </p></li><li><p>A character that has been
+        <strong>Knocked Out</strong> cannot recover <strong>HP</strong> or
+        <strong>MP</strong>. The <strong>Knocked Out</strong> enfeeblement does
+        not wear oﬀ at the end of a phase, and can only be removed by eﬀects
+        that specifically remove it. </p></li><li><p>A <strong>Knocked
+        Out</strong> character has all enhancements and enfeeblements removed
+        and can be aﬄicted with no further enfeeblements except the
+        <strong>Comatose</strong>
+        enfeeblement.</p></li></ul><h4>Weakness</h4><ul><li><p>A
+        <strong>Weakened</strong> character incurs a -2 penalty on all checks.
+        </p></li><li><p>If a character aﬄicted with Weakness is the target of
+        another eﬀect that inflicts this enfeeblement, they are instead aﬄicted
+        with the <strong>Brink of Death</strong> enfeeblement.
+        </p></li><li><p>The <strong>Weakened</strong> enfeeblement does not wear
+        oﬀ at the end of a phase, and can only be removed by completing a rest
+        action (see page 14 of the Gamemaster Book) or by eﬀects that
+        specifically remove it. </p></li></ul><h4>Brink of Death
+        </h4><ul><li><p>A character on the <strong>Brink of Death</strong>
+        incurs a -5 penalty on all checks. </p></li><li><p>If a character on the
+        <strong>Brink of Death</strong> is the target of another eﬀect that
+        inflicts this enfeeblement, they are instead aﬄicted with the Comatose
+        enfeeblement. </p></li><li><p>The <strong>Brink of Death</strong>
+        enfeeblement does not wear oﬀ at the end of a phase, and can only be
+        removed by completing a rest action (see page 14 of the Gamemaster Book)
+        or by eﬀects that specifically remove it. </p></li></ul><h4>Comatose
+        </h4><ul><li><p>A <strong>Comatose</strong> character is treated as if
+        they were <strong>Knocked Out</strong> for gameplay purposes.
+        </p></li><li><p>The <strong>Comatose</strong> enfeeblement can only be
+        removed by spending one sun—a full day in-game—in a location where
+        appropriate medical treatment is available, as determined by the GM.
+        </p></li><li><p>A <strong>Comatose</strong> character has all
+        enhancements and enfeeblements removed and can receive no further
+        enfeeblements except <strong>Death</strong>. </p></li></ul><h4>Death
+        </h4><ul><li><p>As the name implies, a <strong>Dead</strong> character
+        has died and can no longer participate in the game.
+        </p></li><li><p>Unless otherwise specified, <strong>Death</strong>
+        cannot be reversed or removed. </p></li></ul><p>Note that characters who
+        have been <strong>Knocked Out</strong> or are <strong>Comatose</strong>
+        will not <strong>Die</strong>, unless the scenario or the GM rules
+        otherwise.</p>
+    video:
+      controls: true
+      volume: 0.5
+    src: null
+    ownership:
+      default: -1
+      A3f8BsJ7eYm0X14M: 3
+    flags: {}
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1728385745914
+      modifiedTime: 1728466609259
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!journal.pages!d3QpW3UjHPgOJvf5.7Qjd9zlHl5zIsJG5'
+folder: null
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1727803415363
+  modifiedTime: 1727803415363
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: d3QpW3UjHPgOJvf5
+sort: 0
+_key: '!journal!d3QpW3UjHPgOJvf5'
+

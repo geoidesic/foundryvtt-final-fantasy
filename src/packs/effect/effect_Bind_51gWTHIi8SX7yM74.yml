@@ -1,0 +1,63 @@
+name: Bind
+type: effect
+img: icons/svg/net.svg
+system:
+  description: >-
+    <p><strong>Bind (Enfeeblement):</strong></p><p>• While Bound, small and
+    medium characters’ Speed falls to 0, while larger characters’ Speed is
+    reduced by 2.</p><p>• Characters receive one advantage die when making
+    ability checks targeting a Bound character.</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.BDfRAII5Aw5A42Wn
+    flags:
+      foundryvtt-final-fantasy: {}
+    name: Bind
+    img: icons/svg/net.svg
+    _id: ZMxr5ESOUw1Nzsg2
+    type: base
+    system:
+      tags: []
+    changes: []
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - bind
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: 1736322434748
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!51gWTHIi8SX7yM74.ZMxr5ESOUw1Nzsg2'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736322395584
+  modifiedTime: 1736322402974
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: 51gWTHIi8SX7yM74
+sort: 400000
+_key: '!items!51gWTHIi8SX7yM74'
+

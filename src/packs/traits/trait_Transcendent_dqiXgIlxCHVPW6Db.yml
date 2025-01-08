@@ -1,0 +1,38 @@
+folder: null
+name: Transcendent
+type: trait
+_id: dqiXgIlxCHVPW6Db
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/transcendent.webp
+system:
+  description: >-
+    <p>While a character is under the effect of <strong>Transcendent</strong>,
+    they are immune to damage and enfeeblements inflicted by enemy abilities,
+    traits, and encounter mechanics. <strong>Transcendent</strong> is removed at
+    the start of the character’s turn, or when the character uses an
+    ability.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: ''
+  hasModifier: false
+  modType: ''
+  operator: ''
+  modAmount: 0
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1733929986937
+  modifiedTime: 1733929986937
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!dqiXgIlxCHVPW6Db'
+

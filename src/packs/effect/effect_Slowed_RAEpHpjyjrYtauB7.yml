@@ -1,0 +1,96 @@
+name: Slowed
+type: effect
+img: systems/foundryvtt-final-fantasy/assets/icons/status/tortoise.webp
+system:
+  description: >-
+    <ul
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track);margin:0.5em 0px;padding:0px 0px 0px
+    1.5em;color:rgb(25, 24, 19);font-family:Trirong,
+    serif;font-size:14px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-indent:0px;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial"><li
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track);margin-left:1em;list-style-image:url('systems/foundryvtt-final-fantasy/assets/svg/critical.svg')"><p
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track);margin:0.5em 0px"><span
+    style="font-family:Trirong, serif">A <strong
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track)">Slowed</strong> character has their <strong
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track)">Speed</strong> halved (rounded up) and cannot
+    be aﬀected by eﬀects which would add to their <strong
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track)">Speed</strong>.</span></p></li><li
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track);margin-left:1em;list-style-image:url('systems/foundryvtt-final-fantasy/assets/svg/critical.svg')"><p
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track);margin:0.5em 0px"><span
+    style="font-family:Trirong, serif">A <strong
+    style="box-sizing:border-box;user-select:text;scrollbar-width:thin;scrollbar-color:var(--color-scrollbar)
+    var(--color-scrollbar-track)">Slowed</strong> character incurs a -2 penalty
+    on all checks.</span></p></li></ul>
+effects:
+  - origin: Item.XfvI4SWXV3FwLcgi
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: Slowed
+    img: systems/foundryvtt-final-fantasy/assets/icons/status/slowed.svg
+    _id: OhJYVCqC3RjeNIFd
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: system.attributes.secondary.spd.val
+        mode: 1
+        value: '0.5'
+        priority: null
+      - key: system.globalCheckMod
+        mode: 2
+        value: '-2'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>Applies the `Slow` status effect, which includes Changes to halve speed
+      and -2 global modifier on all checks.</p>
+    tint: '#ffffff'
+    statuses:
+      - slow
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!RAEpHpjyjrYtauB7.OhJYVCqC3RjeNIFd'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736322404176
+  modifiedTime: 1736322404176
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: RAEpHpjyjrYtauB7
+sort: 0
+_key: '!items!RAEpHpjyjrYtauB7'
+

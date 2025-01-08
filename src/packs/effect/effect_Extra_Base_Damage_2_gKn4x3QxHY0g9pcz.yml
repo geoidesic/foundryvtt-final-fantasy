@@ -1,0 +1,68 @@
+name: Extra Base Damage 2
+type: effect
+img: icons/svg/explosion.svg
+system:
+  description: <p>This condition buffs all your <em>primary</em> actions' base damage.</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.X8RJde8JMumdBtSy
+    disabled: false
+    transfer: false
+    flags:
+      surge:
+        source: user
+        trigger: passive
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Extra Base Damage 2
+    img: icons/svg/explosion.svg
+    _id: NykToumuINsiYtW6
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: '@PrimaryBaseDamageBuff'
+        mode: 2
+        value: '2'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>This condition buffs all your <em>primary</em> actions' base
+      damage.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: 1736322527785
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!gKn4x3QxHY0g9pcz.NykToumuINsiYtW6'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736322402958
+  modifiedTime: 1736322402974
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: gKn4x3QxHY0g9pcz
+sort: 200000
+_key: '!items!gKn4x3QxHY0g9pcz'
+

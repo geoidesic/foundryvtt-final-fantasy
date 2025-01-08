@@ -1,0 +1,81 @@
+folder: nRAJgRhHFGuGK55u
+name: Venomous Bite + Windbite 1
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/venomous-bite.webp
+system:
+  description: >-
+    <p><strong>Base Effect</strong>: Inflicts a <em>DOT (4)</em> on the target
+    and enables <em>Arrow Volley</em>. </p><p><strong>Direct Hit</strong>: Deals
+    2 damage to the target.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: true
+  aspected: wind
+  hasRanged: false
+  rangeType: ''
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: single
+  baseEffect: ''
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: true
+  directHitType: damage
+  directHitDamage: '2'
+  directHitText: <p>Deals 2 damage to the target.</p>
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  formula: ''
+  hasCost: false
+  cost: 0
+  hasProcTrigger: false
+  procTrigger: null
+  grants:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.xVNKrqgCbMMVbgq2
+    value: true
+  enables:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
+    value: true
+  combos:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - poison
+  isMagic: false
+  type: primary
+  requires:
+    list: []
+    value: false
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733533198
+  modifiedTime: 1736322633185
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: hbK5XMIJmhVM4SZe
+sort: 300000
+_key: '!items!hbK5XMIJmhVM4SZe'
+

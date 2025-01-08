@@ -1,0 +1,40 @@
+name: Warden’s Paean
+type: trait
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song3.webp
+system:
+  description: >-
+    <p>While under the effect of a <strong>Bardsong</strong> enhancement, all
+    allies benefit from its effects. <strong>Bardsong</strong> enhancements are
+    removed at the end of your next turn or when you are granted a new
+    <strong>Bardsong</strong> enhancement.</p><p>When a character is under the
+    effect of <strong>The Warden’s Paean</strong>, remove the next
+    enfeeblement</p><p>inflicted. Some enfeeblements cannot be removed by this
+    effect. The Warden’s Paean is removed when its effect is resolved.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: ''
+  hasModifier: false
+  modType: ''
+  operator: ''
+  modAmount: 0
+effects: []
+folder: null
+sort: 400000
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: Item.0tX24ufqPUgFVKMc
+  duplicateSource: Item.mMSFdDFZc39caho9
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1733929986937
+  modifiedTime: 1735071927378
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: ZjCUj6FERR4231FR
+_key: '!items!ZjCUj6FERR4231FR'
+

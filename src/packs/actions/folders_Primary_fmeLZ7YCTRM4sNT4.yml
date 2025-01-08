@@ -1,0 +1,20 @@
+name: Primary
+sorting: a
+folder: JPVTpUKj4KmcQXQL
+type: Item
+_id: fmeLZ7YCTRM4sNT4
+description: ''
+sort: 0
+color: '#d85974'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!folders!fmeLZ7YCTRM4sNT4'
+

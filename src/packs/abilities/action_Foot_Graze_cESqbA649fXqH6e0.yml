@@ -1,0 +1,79 @@
+folder: g7aw8x2ughfS1m93
+name: Foot Graze
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/foot-graze.webp
+system:
+  description: >-
+    <p><strong>Base Effect</strong>: None.</p><p><strong>Direct Hit</strong>:
+    Inflicts <em>Bind</em> on the target until the end of this
+    turn.</p><p><strong>Limitation</strong>: Once per phase.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 10sq
+  hasTrigger: true
+  trigger: move
+  hasTarget: true
+  target: enemy
+  baseEffect: ''
+  hasCheck: true
+  checkAttribute: dex
+  checkBonus: 0
+  hasCR: true
+  CR: def
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: true
+  limitation: 1
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  formula: ''
+  hasCost: false
+  cost: 0
+  hasProcTrigger: false
+  procTrigger: null
+  grants:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.51gWTHIi8SX7yM74
+    value: true
+  enables:
+    list: []
+    value: false
+  combos:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  requires:
+    list: []
+    value: false
+  type: reaction
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735734263327
+  modifiedTime: 1736322470495
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: cESqbA649fXqH6e0
+sort: 600000
+_key: '!items!cESqbA649fXqH6e0'
+

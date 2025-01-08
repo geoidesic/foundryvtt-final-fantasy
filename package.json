@@ -49,6 +49,6 @@
     "eslint": "eslint .",
     "test:unit": "vitest",
     "pack": "node scripts/db-pack.js",
-    "unpack": "node scripts/unpack-db.js"
+    "unpack": "node scripts/db-unpack.js"
   }
 }

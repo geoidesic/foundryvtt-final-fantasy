@@ -1,0 +1,20 @@
+name: Traits
+sorting: a
+folder: uUAWBKCdH4Abhyty
+type: Item
+_id: z6EVVWDx6gzZnn8p
+description: ''
+sort: 0
+color: '#696b6d'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!folders!z6EVVWDx6gzZnn8p'
+

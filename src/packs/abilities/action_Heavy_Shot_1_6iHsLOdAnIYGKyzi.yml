@@ -1,0 +1,88 @@
+folder: nRAJgRhHFGuGK55u
+name: Heavy Shot 1
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/heavy-blow.webp
+system:
+  description: >-
+    <p><strong>Base Effect</strong>: Deals 2 damage to the target and enables
+    <em>Arrow Volley</em>. If the die rolled for this ability check lands on a
+    15 or higher, the following proc effect triggers.</p><p><strong>Heavier
+    Shot</strong>: Grants <em>Straight Shot Ready</em>.</p><p><strong>Direct
+    Hit</strong>: Deals an additional 1d6 damage.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 10sq
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: single
+  baseEffect: ''
+  hasCheck: true
+  checkAttribute: dex
+  checkBonus: 0
+  hasCR: true
+  CR: def
+  hasDirectHit: true
+  directHitType: damage
+  directHitDamage: 1d6
+  directHitText: <p>Deals an additional 1d6 damage.</p>
+  directHitCondition: ''
+  hasHeavierShot: true
+  heavierShot: straignt
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  formula: '2'
+  hasCost: false
+  cost: 0
+  hasProcTrigger: false
+  procTrigger: null
+  grants:
+    list: []
+    value: false
+  enables:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
+    value: true
+  combos:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - volley
+  isMagic: false
+  type: primary
+  requires:
+    list: []
+    value: false
+  baseEffectType: damage
+  hasBaseEffect: true
+  procs:
+    value: true
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733540431
+  modifiedTime: 1736322584942
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: 6iHsLOdAnIYGKyzi
+sort: 0
+_key: '!items!6iHsLOdAnIYGKyzi'
+

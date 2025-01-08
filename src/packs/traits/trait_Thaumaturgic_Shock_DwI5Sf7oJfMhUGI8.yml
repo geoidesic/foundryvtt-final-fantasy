@@ -1,0 +1,37 @@
+folder: null
+name: Thaumaturgic Shock
+type: trait
+_id: DwI5Sf7oJfMhUGI8
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/thuamaturgic-shock.webp
+system:
+  description: >-
+    <p>You cannot use a thunder spell ability such as <strong>Thunder</strong>
+    or <strong>Thunder II</strong> to inflict a <strong>DOT</strong> on a
+    character already suffering from a <strong>DOT</strong> inflicted by one of
+    your thunder spell abilities.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: ''
+  hasModifier: false
+  modType: ''
+  operator: ''
+  modAmount: 0
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1733929986937
+  modifiedTime: 1733929986937
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!DwI5Sf7oJfMhUGI8'
+

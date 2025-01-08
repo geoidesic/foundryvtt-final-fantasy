@@ -1,0 +1,39 @@
+folder: null
+name: Astral Fire
+type: trait
+_id: vYMqkutjkSmJhnvM
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/astral-fire.webp
+system:
+  description: >-
+    <p>While under the effect of <strong>Astral Fire</strong>, your
+    fire-aspected abilities deal an additional 1d6 damage and you do not recover
+    MP at the end of the [Adventurer Step]. <strong>Astral Fire</strong> is
+    removed when you are <strong>Knocked Out</strong>, or, if the effect is not
+    renewed, at the end of your next turn. Being granted <strong>Umbral
+    Ice</strong> removes this effect as well.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: ''
+  hasModifier: false
+  modType: ''
+  operator: ''
+  modAmount: 0
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1733929986937
+  modifiedTime: 1733929986937
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!vYMqkutjkSmJhnvM'
+

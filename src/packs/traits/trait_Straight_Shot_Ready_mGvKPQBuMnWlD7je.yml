@@ -1,0 +1,35 @@
+name: Straight Shot Ready
+type: trait
+_id: mGvKPQBuMnWlD7je
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/straight-shot.webp
+system:
+  description: ''
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  uses: 0
+  hasModifier: false
+  modType: ''
+  operator: +
+  modAmount: 0
+effects: []
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735044370333
+  modifiedTime: 1735044391237
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!mGvKPQBuMnWlD7je'
+

@@ -1,0 +1,20 @@
+name: Dragoon
+sorting: a
+folder: null
+type: Item
+_id: k1VRLU1oymFQbFs4
+description: ''
+sort: 0
+color: '#ad5d43'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735490414190
+  modifiedTime: 1735490443531
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!folders!k1VRLU1oymFQbFs4'
+

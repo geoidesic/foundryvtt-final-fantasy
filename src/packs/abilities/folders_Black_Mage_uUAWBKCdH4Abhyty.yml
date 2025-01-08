@@ -1,0 +1,20 @@
+name: Black Mage
+sorting: a
+folder: null
+type: Item
+_id: uUAWBKCdH4Abhyty
+description: ''
+sort: 500000
+color: '#40226d'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733150894
+  modifiedTime: 1735734665462
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!folders!uUAWBKCdH4Abhyty'
+

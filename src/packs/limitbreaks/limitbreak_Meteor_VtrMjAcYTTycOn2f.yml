@@ -1,0 +1,40 @@
+name: Meteor
+type: limitbreak
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/limit-break.webp
+system:
+  trigger: null
+  hasRanged: true
+  hasTarget: true
+  hasTrigger: true
+  baseEffect: <p>Test</p>
+  rangeType: 1sq
+  description: >-
+    <p>Something amazing I guess. Something amazing I guess. Something amazing I
+    guess. Something amazing I guess. Something amazing I guess. Something
+    amazing I guess. </p><p>Something amazing I guess. Something amazing I
+    guess. Something amazing I guess. Something amazing I guess. Something
+    amazing I guess. Something amazing I guess. </p><p>Something amazing I
+    guess. Something amazing I guess. Something amazing I guess. Something
+    amazing I guess. Something amazing I guess. </p>
+  hasModifier: true
+  hasLimitation: true
+  modType: All Damage
+effects: []
+folder: null
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1734205384227
+  modifiedTime: 1734205384227
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: VtrMjAcYTTycOn2f
+sort: 0
+_key: '!items!VtrMjAcYTTycOn2f'
+

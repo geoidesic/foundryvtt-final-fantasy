@@ -1,0 +1,286 @@
+name: Army’s Paeon
+type: trait
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song.webp
+system:
+  description: >-
+    <p>While under the effect of a <strong>Bardsong</strong> enhancement, all
+    allies benefit from its effects. <strong>Bardsong</strong> enhancements are
+    removed at the end of your next turn or when you are granted a new
+    <strong>Bardsong</strong> enhancement.</p><p>While under the effect of
+    <strong>Bardsong: Army’s Paeon</strong>, all allies may each reroll a single
+    d20 that landed on a 3 or lower when making an ability check. You may do so
+    after learning whether the ability scored a direct hit. Any die rerolled in
+    this way cannot be rerolled again, and its result must be used.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: Buff
+  hasLimitation: true
+  hasModifier: true
+  limitation: once
+  modType: All Damage
+  operator: +
+  modAmount: 5
+effects:
+  - origin: Item.mMSFdDFZc39caho9
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: 'Bard Song: Army’s Paeon'
+    img: icons/tools/instruments/harp-gold-glowing.webp
+    _id: MRPei4Y6dEurKIMp
+    type: base
+    system: {}
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!mMSFdDFZc39caho9.MRPei4Y6dEurKIMp'
+  - origin: Item.mMSFdDFZc39caho9
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: 'Bard Song: Army’s Paeon'
+    img: icons/tools/instruments/harp-gold-glowing.webp
+    _id: ZFW8XT0mPGDJzLtF
+    type: base
+    system: {}
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!mMSFdDFZc39caho9.ZFW8XT0mPGDJzLtF'
+  - origin: Item.mMSFdDFZc39caho9
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: 'Bard Song: Army’s Paeon'
+    img: icons/tools/instruments/harp-gold-glowing.webp
+    _id: z2XNetxuu3F451IC
+    type: base
+    system: {}
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!mMSFdDFZc39caho9.z2XNetxuu3F451IC'
+  - origin: Item.mMSFdDFZc39caho9
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: 'Bard Song: Army’s Paeon'
+    img: icons/tools/instruments/harp-gold-glowing.webp
+    _id: 05CYENe3mq1u2HoB
+    type: base
+    system: {}
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!mMSFdDFZc39caho9.05CYENe3mq1u2HoB'
+  - origin: Item.mMSFdDFZc39caho9
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: 'Bard Song: Army’s Paeon'
+    img: icons/tools/instruments/harp-gold-glowing.webp
+    _id: e33Vtcco3znHDEp4
+    type: base
+    system: {}
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!mMSFdDFZc39caho9.e33Vtcco3znHDEp4'
+  - origin: Item.mMSFdDFZc39caho9
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: 'Bard Song: Army’s Paeon'
+    img: icons/tools/instruments/harp-gold-glowing.webp
+    _id: m3W15vq4KQLh0cj0
+    type: base
+    system: {}
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!mMSFdDFZc39caho9.m3W15vq4KQLh0cj0'
+  - origin: Item.mMSFdDFZc39caho9
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: 'Bard Song: Army’s Paeon'
+    img: icons/tools/instruments/harp-gold-glowing.webp
+    _id: foLBWuEDpltX0fBy
+    type: base
+    system: {}
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!mMSFdDFZc39caho9.foLBWuEDpltX0fBy'
+folder: null
+sort: 200000
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: Item.0tX24ufqPUgFVKMc
+  duplicateSource: Item.0tX24ufqPUgFVKMc
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1733929986937
+  modifiedTime: 1735071902466
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: mMSFdDFZc39caho9
+_key: '!items!mMSFdDFZc39caho9'
+

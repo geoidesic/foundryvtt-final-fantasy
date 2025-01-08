@@ -1,0 +1,36 @@
+name: White Mage
+type: job
+img: systems/foundryvtt-final-fantasy/assets/icons/jobs/healer.webp
+system:
+  description: >-
+    <p>The White Mage is a healer class specializing in restorative magic to
+    recover HP and remove negative status effects. It excels in powerful AoE
+    healing, single-target heals, and defensive buffs like Protect and Shell.
+    White Mages also wield limited offensive spells like Holy, making them
+    versatile in support and light damage dealing.</p>
+  favourite: false
+  effectActionsLocked: false
+  level: 30
+  role: Healer
+  grants:
+    list: []
+    value: true
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736007803709
+  modifiedTime: 1736007803709
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: jt25vCKmACHMNztT
+sort: 0
+_key: '!items!jt25vCKmACHMNztT'
+

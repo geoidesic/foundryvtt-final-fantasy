@@ -1,0 +1,90 @@
+folder: ZLdn6m4UMKwA7x7D
+name: Mage's Ballad
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/mages-ballad.webp
+system:
+  description: >-
+    <p><strong>Base Effect</strong>: Deals 2 damage to the target and grants
+    <em>Bardsong: Mage’s Ballad</em>. Restores one use of <em>Bloodletter</em>. 
+    </p><p><strong>Limitation</strong>: Once per phase</p><p>While under the
+    effect of a <em>Bardsong</em> enhancement, all allies benefit from its
+    effects. <em>Bardsong</em> enhancements are removed at the end of your next
+    turn or when you are granted a new <em>Bardsong</em>
+    enhancement.</p><p>While under the effect of <em>Bardsong: Mage’s
+    Ballad,</em> all allies may each reroll a single die when determining the
+    amount of damage dealt by an ability. Any die rerolled in this way cannot be
+    rerolled again, and its result must be used.</p><p></p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 10sq
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: single
+  baseEffect: ''
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: true
+  limitation: 1
+  limitationUnits: phase
+  hasDuration: false
+  duration: 2
+  durationUnits: turn
+  uses: 0
+  formula: '2'
+  hasCost: false
+  cost: 0
+  hasProcTrigger: false
+  procTrigger: null
+  grants:
+    list: []
+    value: false
+  enables:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.JzV3ZcAj2KIl6ClN
+    value: true
+  combos:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - magic
+    - song
+  isMagic: false
+  type: secondary
+  requires:
+    list: []
+    value: false
+  hasBaseEffect: true
+  baseEffectType: damage
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733554050
+  modifiedTime: 1735990647836
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: m4wMEsgPq8s3vrHG
+sort: 0
+_key: '!items!m4wMEsgPq8s3vrHG'
+

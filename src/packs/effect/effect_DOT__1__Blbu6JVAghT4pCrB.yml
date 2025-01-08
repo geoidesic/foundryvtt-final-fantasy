@@ -1,0 +1,74 @@
+name: DOT (1)
+type: effect
+img: systems/foundryvtt-final-fantasy/assets/icons/status/DOT1.webp
+system:
+  description: >-
+    <h2>Damage Over Time (DOT)</h2><p class="p2">Damage over time eﬀects always
+    specify the amount of damage they inflict using a set of parentheses, such
+    as <span class="s1">DOT </span>(3)<span class="s2"> or </span>DOT (User’s
+    <span class="s3">INT</span>)<span class="s2">.</span></p><p class="p2">An
+    adventurer or ally aﬄicted with a damage over time eﬀect takes damage
+    specified by the <span class="s1">DOT</span> at the end of each round’s
+    [Adventurer Step].</p><p class="p2">An enemy aﬄicted with a damage over time
+    eﬀect takes damage specified by the <span class="s1">DOT</span> at the end
+    of each round’s [Enemy Step].</p>
+effects:
+  - origin: Item.xUl2x5Rh7BgZdHFL
+    disabled: false
+    transfer: true
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: DOT (1)
+    img: systems/foundryvtt-final-fantasy/assets/icons/status/DOT1.webp
+    _id: eyMHWDQSzkCbPMvW
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: DOT
+        mode: 0
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses:
+      - slow
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!Blbu6JVAghT4pCrB.eyMHWDQSzkCbPMvW'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736322396664
+  modifiedTime: 1736322402974
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: Blbu6JVAghT4pCrB
+sort: 600000
+_key: '!items!Blbu6JVAghT4pCrB'
+

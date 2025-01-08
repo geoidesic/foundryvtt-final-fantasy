@@ -1,0 +1,20 @@
+name: Secondary Actions
+sorting: a
+folder: uUAWBKCdH4Abhyty
+type: Item
+_id: 2vXjsO2RHttdE0jq
+description: ''
+sort: 0
+color: '#47a69e'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: null
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!folders!2vXjsO2RHttdE0jq'
+

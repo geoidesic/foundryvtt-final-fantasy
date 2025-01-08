@@ -1,0 +1,84 @@
+folder: nRAJgRhHFGuGK55u
+name: Straight Shot 1
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/straight-shot.webp
+system:
+  description: >-
+    <p><strong>Requirement: </strong>Under the effect of <em>Straight Shot
+    Ready</em> </p><p><strong>Base Effect</strong>: Deals 3 damage to the target
+    and enables Arrow Volley.</p><p><strong>Direct Hit</strong>: Deals an
+    additional 2d6 damage.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 10sq
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: single
+  baseEffect: ''
+  hasCheck: true
+  checkAttribute: dex
+  checkBonus: 0
+  hasCR: true
+  CR: def
+  hasDirectHit: true
+  directHitType: damage
+  directHitDamage: 2d6
+  directHitText: <p> Deals an additional 2d6 damage.</p>
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  formula: '3'
+  hasCost: false
+  cost: 0
+  hasProcTrigger: false
+  procTrigger: null
+  grants:
+    list: []
+    value: false
+  enables:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
+    value: true
+  combos:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - volley
+  isMagic: false
+  type: primary
+  requires:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
+    value: true
+  baseEffectType: damage
+  hasBaseEffect: true
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733528826
+  modifiedTime: 1735802934322
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: ujNEoE8uWxTPYoWl
+sort: 100000
+_key: '!items!ujNEoE8uWxTPYoWl'
+

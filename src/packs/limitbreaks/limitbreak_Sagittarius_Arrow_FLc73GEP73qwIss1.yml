@@ -1,0 +1,32 @@
+folder: null
+name: Sagittarius Arrow
+type: limitbreak
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/limit-break.webp
+system:
+  trigger: invoke
+  hasTrigger: true
+  hasTarget: true
+  target: enemy
+  hasRanged: true
+  rangeType: 5x5i
+  baseEffect: >-
+    <p>Deals 6d6 damage divided evenly (rounded up) amongst all targets and
+    inflicts a <strong>DOT (4)</strong> on all targets.</p>
+effects: []
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1734205380610
+  modifiedTime: 1734205380610
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: FLc73GEP73qwIss1
+sort: 0
+_key: '!items!FLc73GEP73qwIss1'
+

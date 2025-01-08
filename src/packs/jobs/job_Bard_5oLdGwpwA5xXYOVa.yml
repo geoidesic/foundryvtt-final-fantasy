@@ -1,0 +1,54 @@
+name: Bard
+type: job
+img: systems/foundryvtt-final-fantasy/assets/icons/jobs/bard.webp
+system:
+  description: >-
+    <p>Bard is a support-oriented job specializing in musical abilities that
+    enhance allies and weaken enemies. Bards use their songs to heal, boost
+    stats, or inflict status effects on foes. They are versatile in battle, with
+    abilities like "Sing" that can raise the party's agility, strength, or other
+    attributes, while also being capable of wielding harps for ranged attacks.
+    Though physically weak, Bards excel in bolstering their party's
+    effectiveness and turning the tide of battle through strategic use of their
+    musical talents.</p>
+  grants:
+    value: true
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.6iHsLOdAnIYGKyzi
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.9LfoH8u8M9PkXIeD
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.ujNEoE8uWxTPYoWl
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.hbK5XMIJmhVM4SZe
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.Yy0UvDyFW9yVkMrD
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.cESqbA649fXqH6e0
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.gtpCEeyDCf5OkM4B
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.tBP2tgF43pjzM2lp
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.AMXxXWzHBUNo5j07
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.BKtlapgxyEIPh4kr
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.m4wMEsgPq8s3vrHG
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.JzV3ZcAj2KIl6ClN
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.bj2fFclWqjgWL8Ib
+  level: 30
+  role: DPS
+  favourite: false
+  effectActionsLocked: false
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736007797746
+  modifiedTime: 1736069351997
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: 5oLdGwpwA5xXYOVa
+sort: 250000
+_key: '!items!5oLdGwpwA5xXYOVa'
+

@@ -1,0 +1,88 @@
+folder: Ma4fkb8prmmWpTLI
+name: Straight Shot Ready
+type: trait
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/straight-shot.webp
+system:
+  description: >-
+    <p><strong>Straight Shot Ready</strong> (Enhancement): While a character is
+    under this effect, they may use an ability that requires them to be under
+    the effect of this enhancement. The effect is removed after the ability is
+    used.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  uses: 0
+  hasModifier: false
+  modType: ''
+  operator: +
+  modAmount: 0
+  hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: false
+  tags: []
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.abilities.Item.iOSCyOSh635528xZ
+    disabled: true
+    transfer: false
+    flags:
+      foundryvtt-final-fantasy:
+        source: user
+        trigger: passive
+        overlay: true
+    name: Straight Shot Ready
+    img: systems/foundryvtt-final-fantasy/assets/icons/actions/straight-shot.webp
+    _id: TzJ0JqOeZKaxlp95
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: '@enables'
+        mode: 0
+        value: straightshot
+        priority: 1
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p><strong>Straight Shot Ready</strong> (Enhancement): While a character
+      is under this effect, they may use an ability that requires them to be
+      under the effect of this enhancement. The effect is removed after the
+      ability is used.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: 1735897211348
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!G9iqmYpF1SPAZvuC.TzJ0JqOeZKaxlp95'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733568611
+  modifiedTime: 1735733575608
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: G9iqmYpF1SPAZvuC
+sort: 300000
+_key: '!items!G9iqmYpF1SPAZvuC'
+

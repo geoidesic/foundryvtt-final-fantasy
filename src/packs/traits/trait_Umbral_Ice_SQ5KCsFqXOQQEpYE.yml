@@ -1,0 +1,38 @@
+folder: null
+name: Umbral Ice
+type: trait
+_id: SQ5KCsFqXOQQEpYE
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/umbral-ice.webp
+system:
+  description: >-
+    <p>While under the effect of <strong>Umbral Ice</strong>, recover an
+    additional 2 MP at the end of the [Adventurer Step]. <strong>Umbral
+    Ice</strong> is removed when you are Knocked Out, or, if the effect is not
+    renewed, at the end of your next turn. Being granted <strong>Astral
+    Fire</strong> removes this effect as well.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: ''
+  hasModifier: false
+  modType: ''
+  operator: ''
+  modAmount: 0
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1733929986937
+  modifiedTime: 1733929986937
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!SQ5KCsFqXOQQEpYE'
+

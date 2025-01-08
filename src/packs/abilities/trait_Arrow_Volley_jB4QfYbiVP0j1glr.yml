@@ -1,0 +1,89 @@
+name: Arrow Volley
+type: trait
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/arrow-volley.webp
+system:
+  description: >-
+    <p>On your turn, after resolving the effects of an ability that enables this
+    trait, you may use an additional <em><strong>volley</strong></em> ability.
+    You may choose a new target when using this additional ability.
+    <strong>Arrow Volley</strong> can only be used once per turn.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: Trait
+  hasLimitation: true
+  limitation: 1
+  limitationUnits: turn
+  uses: 0
+  hasModifier: false
+  modType: ''
+  operator: +
+  modAmount: 0
+  hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: true
+  tags:
+    - volley
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.traits.Item.D6cCmn3uB1zFwBT6
+    disabled: true
+    transfer: false
+    flags:
+      foundryvtt-final-fantasy:
+        source: user
+        trigger: passive
+        overlay: true
+    name: Arrow Volley
+    img: systems/foundryvtt-final-fantasy/assets/icons/traits/arrow-volley.webp
+    _id: 9chOYyyVsSuQ8vKb
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: EnableCombatTurnSlot
+        value: volley
+        mode: 0
+        priority: 1
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: >-
+      <p>On your turn, after resolving the effects of an ability that enables
+      this trait, you may use an additional <em><strong>volley</strong></em>
+      ability. You may choose a new target when using this additional ability.
+      <strong>Arrow Volley</strong> can only be used once per turn.</p>
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: 1735897187320
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!jB4QfYbiVP0j1glr.9chOYyyVsSuQ8vKb'
+folder: Ma4fkb8prmmWpTLI
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733575575
+  modifiedTime: 1735814690695
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: jB4QfYbiVP0j1glr
+sort: 200000
+_key: '!items!jB4QfYbiVP0j1glr'
+

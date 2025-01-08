@@ -1,0 +1,20 @@
+name: Healer / White Mage
+sorting: a
+folder: null
+type: Item
+_id: JPVTpUKj4KmcQXQL
+description: ''
+sort: 0
+color: '#386632'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735490390444
+  modifiedTime: 1735490390444
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!folders!JPVTpUKj4KmcQXQL'
+

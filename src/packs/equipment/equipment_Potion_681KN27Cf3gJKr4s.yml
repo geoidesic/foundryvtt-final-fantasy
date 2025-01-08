@@ -1,0 +1,69 @@
+name: Potion
+type: equipment
+img: icons/consumables/potions/bottle-corked-red.webp
+system:
+  description: <p>Restores 5 Hit Points (HP)</p>
+  effectActionsLocked: true
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.equipment.Item.681KN27Cf3gJKr4s
+    disabled: false
+    transfer: false
+    flags:
+      surge:
+        source: user
+        trigger: passive
+    name: Potion
+    img: icons/consumables/potions/bottle-corked-red.webp
+    _id: UgLTKO4vTZZ5H2Tb
+    type: base
+    system: {}
+    changes:
+      - key: system.points.HP.val
+        mode: 0
+        value: '5'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.330'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1724668747622
+      modifiedTime: 1724668764030
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!681KN27Cf3gJKr4s.UgLTKO4vTZZ5H2Tb'
+folder: null
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags:
+  exportSource:
+    world: ff15
+    system: foundryvtt-final-fantasy
+    coreVersion: '12.330'
+    systemVersion: 0.0.1
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1724440754008
+  modifiedTime: 1727809579283
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: 681KN27Cf3gJKr4s
+sort: 0
+_key: '!items!681KN27Cf3gJKr4s'
+
