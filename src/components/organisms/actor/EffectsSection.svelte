@@ -128,20 +128,4 @@
   margin-top: 1em
   padding: 1em
   width: 100%
-
-.buttons
-  position: relative
-  display: flex
-  flex-direction: row
-  flex-wrap: nowrap
-  justify-content: flex-start
-  align-items: center
-  gap: 4px
-  margin: 0
-  padding: 0
-  list-style: none
-
-.button
-  width: 30px
-  height: 30px
 </style>

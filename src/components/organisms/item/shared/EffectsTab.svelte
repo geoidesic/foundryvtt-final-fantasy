@@ -237,16 +237,6 @@
 <style lang="sass">
   @use '../../../../styles/_mixins' as mixins
 
-  .details
-    height: calc(100% - 0px)
-
-    +mixins.inset
-  .actions
-    display: flex
-    flex-wrap: nowrap
-    justify-content: flex-end
-
   .disabled
     opacity: 0.5
-    filter: grayscale(100%)
 </style>

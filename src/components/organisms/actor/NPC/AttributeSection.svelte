@@ -55,9 +55,6 @@
 
 <style lang="sass">
   @use '../../../../styles/_mixins' as mixins
-  .portrait-frame
-    margin-right: -2px
-    z-index: 2
 
   +mixins.background(rgb(93 47 47), 0.05 )
 </style>
