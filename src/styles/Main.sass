@@ -319,7 +319,7 @@ badge
       font-family: "Inter", sans-serif !important
       font-size: smaller
   select
-    @include input
+    +mixins.input
     // max-width: 200pz // Set a maximum width
     
     overflow: hidden // Prevent overflow
@@ -331,7 +331,7 @@ badge
     width: auto // Set width to auto for better responsiveness
     max-width: 100%
     &:disabled
-      @include input-disabled
+      +mixins.input-disabled
 
     &.short
       height: inherit
