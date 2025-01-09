@@ -1,4 +1,5 @@
-import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
+import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
+
 import { SYSTEM_CODE } from "~/src/helpers/constants"
 
 

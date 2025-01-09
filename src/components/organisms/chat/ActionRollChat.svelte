@@ -3,7 +3,8 @@
   import { onMount, getContext, setContext, tick } from "svelte";
   import { writable, derived } from "svelte/store";
   import { SYSTEM_ID } from "~/src/helpers/constants";
-  import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
+  import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
+
 
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";

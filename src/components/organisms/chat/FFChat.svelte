@@ -1,6 +1,7 @@
 <script>
   import { getContext, setContext, onDestroy, onMount } from "svelte";
-  import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
+  import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
+
   import { getActorOwner } from "~/src/helpers/util";
   import * as ChatComponents from "~/src/components/organisms/chat";
   import ColourContrast from "~/src/helpers/ColourContrast";

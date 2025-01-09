@@ -1,6 +1,6 @@
 <script>
   import { getContext } from "svelte";
-  import { Timing } from "@typhonjs-fvtt/runtime/util";
+  import { Timing } from "#runtime/util";
   import { createEventDispatcher } from "svelte";
   import { generateRandomElementId } from "~/src/helpers/util";
 

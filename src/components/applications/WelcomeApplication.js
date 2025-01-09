@@ -1,7 +1,7 @@
 
 
 import WelcomeAppShell from './WelcomeAppShell.svelte';
-import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
+import { SvelteApplication } from "#runtime/svelte/application";
 import { version } from "~/system.json";
 import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants"
 

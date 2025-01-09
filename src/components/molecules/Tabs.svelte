@@ -1,6 +1,6 @@
 <script>
   import preventDefault from "~/src/helpers/svelte-actions/PreventDefault.js";
-  import { ripple } from "@typhonjs-fvtt/runtime/svelte/action/animate";
+  import { ripple } from "#runtime/svelte/action/animate";
   import { onMount } from 'svelte';
 
   export let tabs = [];

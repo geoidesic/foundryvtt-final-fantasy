@@ -1,6 +1,6 @@
 <script>
   import { getContext, onMount, tick, createEventDispatcher } from "svelte";
-  import { Timing } from "@typhonjs-fvtt/runtime/util";
+  import { Timing } from "#runtime/util";
   import { resolveDotpath } from "~/src/helpers/paths";
 
   const dispatch = createEventDispatcher();
