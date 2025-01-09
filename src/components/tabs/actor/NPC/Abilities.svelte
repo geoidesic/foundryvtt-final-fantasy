@@ -101,7 +101,7 @@
       title: localize("FF15.Types.Actor.Abilities.confirmDeleteAllTitle"),
       content: localize("FF15.Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {  
-        await $Actor.deleteAllItems(["trait", "action", "telegraph"]);
+        await $Actor.deleteAllItems(["trait", "action"]);
       },
       no: () => {},
     });

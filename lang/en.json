@@ -11,8 +11,7 @@
       "job": "Job",
       "trait": "Trait",
       "effect": "Effect",
-      "limitbreak": "Limit Break",
-      "telegraph": "Telegraph"
+      "limitbreak": "Limit Break"
     }
   },
   "FF15": {
@@ -164,14 +163,6 @@
             "Label": "Limit Break",
             "Description": "Each Job has a single definitive limit Break ability."
           },
-          "telegraph": {
-            "Label": "Telegraph",
-            "Description": "A telegraph is a passive ability that can be used to trigger other abilities.",
-            "Source": "Source",
-            "Controller": "Controller",
-            "Classification": "Classification",
-            "Origin": "Origin"
-          },
           "Options": {
             "BaseEffectType": {
               "damage": "Damage",
@@ -266,17 +257,6 @@
               "turn": "Turn",
               "phase": "Phase",
               "round": "Round"
-            },
-            "Telegraph": {
-              "fixed": "Fixed Telegraph",
-              "movable": "Movable Telegraph",
-              "Size": {
-                "small": "Small [1x1]",
-                "medium": "Medium [1x1]",
-                "large": "Large [2x2]",
-                "huge": "Huge [3x3]",
-                "gargantuan": "Gargantuan [4x4 or larger]"
-              }
             }
           }
         }

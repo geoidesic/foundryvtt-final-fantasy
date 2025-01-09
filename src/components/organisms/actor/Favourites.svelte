@@ -125,10 +125,6 @@
         new RollCalcActor({ actor: $Actor}).ability(item.type, item);
         break;
 
-      case 'telegraph':
-        new RollCalcActor({ actor: $Actor}).ability(item.type, item);
-        break;
-
       default:
         console.warn(`Unhandled item type: ${item.type}`);
         new RollCalcActor({ actor: $Actor }).send();

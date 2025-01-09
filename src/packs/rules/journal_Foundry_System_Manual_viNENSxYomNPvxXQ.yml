@@ -35,8 +35,7 @@ pages:
         <em>Job</em> item. The <em>Job </em>item can then be dropped onto an
         actor to impart those abilities to the
         actor.</p><h1>Equipment</h1><p>Equipment
-        items.</p><h1>Telegraphs</h1><p>These items define abilities that are
-        for monsters only, not for PCs</p>
+        items.</p>
     video:
       controls: true
       volume: 0.5
