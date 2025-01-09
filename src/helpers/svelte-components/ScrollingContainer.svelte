@@ -49,14 +49,14 @@
   @use "../../styles/_mixins" as mixins
 
   .container
-    @include mixins.flex-column
+    +mixins.flex-column
     position: relative
     width: 100%
     height: 100%
     z-index: var(--z-index-app)
 
     .content
-      @include mixins.flex-column
+      +mixins.flex-column
       width: 100%
       height: 100%
       position: absolute
