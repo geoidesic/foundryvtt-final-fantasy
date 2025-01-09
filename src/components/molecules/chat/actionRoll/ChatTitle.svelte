@@ -43,14 +43,18 @@
 <template lang="pug">
 .chat-title
   +if("FFMessage")
-    .flexrow.title(on:click="{handleTitleClick}" role="button")
+    .flexrow.title(on:click="{handleTitleClick}" on:keydown="{handleTitleClick}" role="button" tabindex="0")
       +if("showProfileImage")   
-        img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}" on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}")
+        button.icon.avatar(on:click!="{openActorSheet}" on:keydown!="{openActorSheet}" aria-label="{FFMessage.actor.name}")
+          img(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
       .flex3.flexcol.nooverflow(class="{showProfileImage ? 'text' : ''}")
         .col 
           .flexrow
-            .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
-        .col.font-cinzel.smaller.pointer.item-name.nooverflow(on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}") {FFMessage.item.name}
+            button.flex4.link.pointer(on:click!="{openActorSheet}" on:keydown!="{openActorSheet}" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
+        button.col.font-cinzel.smaller.pointer.item-name.nooverflow(
+          on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}" 
+          on:keydown!="{(e) => openItemSheet(e, FFMessage.item.uuid)}"
+        ) {FFMessage.item.name}
       .flex3
         .flexcol
           .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
@@ -64,7 +68,7 @@
 </template>
 
 <style lang="sass">
-  @import '../../../../styles/Mixins.sass'
+  @use '../../../../styles/_mixins' as mixins
   .chat-title
     .item-name
       overflow: hidden
@@ -80,7 +84,7 @@
       &.icon
         flex: 0
         min-width: 30px
-    +buttons
+    +mixins.buttons
     .title
       border-radius: var(--border-radius)
       color: var(--message-contrast)
@@ -91,7 +95,7 @@
       .text
         margin-left: 40px
       
-      +texture-background(var(--message-color), 0.1, 45%)
+      +mixins.texture-background(var(--message-color), 0.1, 45%)
       
       .texture
         position: absolute

@@ -30,15 +30,15 @@
   </template>
 
   <style lang='sass'>
-    @import '../../../styles/Mixins.sass'
+    @use '../../../styles/_mixins' as mixins
     .hp
       position: relative
       width: 100%
       z-index: 100
     .header
-      @include white-shadow-header(var(--size-md-h))
+      +mixins.white-shadow-header(var(--size-md-h))
       &.val
-        @include white-shadow-header(var(--size-lg-h))
+        +mixins.white-shadow-header(var(--size-lg-h))
     .sub-header
-      @include white-shadow-header(var(--size-sm-h))
+      +mixins.white-shadow-header(var(--size-sm-h))
   </style>

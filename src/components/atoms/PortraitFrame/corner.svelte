@@ -21,8 +21,8 @@
 </template>
 
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
-  +cornice
+  @use '../../../styles/_mixins' as mixins
+  +mixins.cornice
   svg
     // border: 10px solid black
 

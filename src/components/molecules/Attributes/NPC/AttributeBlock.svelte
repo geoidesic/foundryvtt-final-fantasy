@@ -86,7 +86,7 @@
 </template>
 
 <style lang="sass">
-  @import '../../../../styles/Mixins.sass'
+  @use '../../../../styles/_mixins' as mixins
 
   .molecule
     height: 100%

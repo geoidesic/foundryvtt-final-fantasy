@@ -197,9 +197,9 @@
 </template>
 
 <style lang="sass">
-@import '../../../styles/Mixins.sass'
+@use '../../../styles/_mixins' as mixins
 .favourites
-  +inset(0.5rem, 0 0 5px rgba(165,0,0,1) inset)
+  +mixins.inset(0.5rem, 0 0 5px rgba(165,0,0,1) inset)
   width: 100%
 .fa-bookmark
   color: var(--color-highlight) !important
@@ -207,10 +207,10 @@
   margin-right: -2px
   z-index: 2
 .pulse
-  @include pulse
+  +mixins.pulse
 
   .buttons
-  @include buttons
+  +mixins.buttons
 
 .actions
   margin-left: 0.5rem

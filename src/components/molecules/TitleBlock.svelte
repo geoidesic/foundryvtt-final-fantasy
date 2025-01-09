@@ -57,7 +57,7 @@
 </template>
 
 <style lang="sass">
-  @import '../../styles/Mixins.sass'
+  @use '../../styles/_mixins' as mixins
   .containerx
     container-type: inline-size
     font-size: 2rem

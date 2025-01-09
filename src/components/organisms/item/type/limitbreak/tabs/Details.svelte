@@ -102,10 +102,10 @@
 </template>
 
 <style lang="sass">
-    @import '../../../../../../styles/Mixins.sass'
+    @use '../../../../../../styles/_mixins' as mixins
   
 
     .details
       height: calc(100%)
-      +inset(1rem)
+      +mixins.inset(1rem)
 </style>

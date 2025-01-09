@@ -46,7 +46,7 @@
 </template>
 
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
   .img, img
     max-width: 35px
     max-height: 35px

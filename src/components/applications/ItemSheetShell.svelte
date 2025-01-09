@@ -18,8 +18,7 @@
     job: components.JobHeader,
     trait: components.TraitHeader,
     limitbreak: components.LimitbreakHeader,
-    effect: components.EffectHeader,
-    telegraph: components.TelegraphHeader
+    effect: components.EffectHeader
   }
   const tabMap = {
     action: components.ActionTabs,
@@ -27,8 +26,7 @@
     job: components.JobTabs,
     trait: components.TraitTabs,
     limitbreak: components.LimitbreakTabs,
-    effect: components.EffectTabs,
-    telegraph: components.TelegraphTabs
+    effect: components.EffectTabs
   }
 
   const application = getContext("#external").application;
@@ -129,7 +127,7 @@
 </template>
 
 <style lang='sass'>
-  @import '../../styles/Mixins.sass'
+  @use '../../styles/_mixins' as mixins
 
   :global(.FF15.window-app .window-content)
     display: block

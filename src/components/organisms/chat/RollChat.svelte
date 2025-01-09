@@ -111,9 +111,10 @@
 </template>
 
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
+  
   .description-wrapper
-    +description-wrapper
+    +mixins.description-wrapper
   :global(.FF15 #chat-description)
     background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
     color: var(--color-text-dark)

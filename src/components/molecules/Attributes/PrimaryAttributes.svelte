@@ -18,12 +18,12 @@ let data = [
     AttributeCol( key="primary" showSign="{true}" abbreviateLabel="{true}" data="{data}" onclick="{onclick}")
 </template>
 <style lang='sass'>
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
 
   .molecule
     padding: 1em
     width: 100%
-    @include white-shadow-header
-    @include white-shadow-underscore
+    +mixins.white-shadow-header
+    +mixins.white-shadow-underscore
     
 </style>

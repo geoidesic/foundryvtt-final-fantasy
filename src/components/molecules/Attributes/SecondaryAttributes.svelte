@@ -19,12 +19,12 @@
   </template>
 
   <style lang='sass'>
-    @import '../../../styles/Mixins.sass'
+    @use '../../../styles/_mixins' as mixins
   
     .molecule
       width: 100%
       padding: 1em
-      @include white-shadow-header
-      @include white-shadow-underscore
+      +mixins.white-shadow-header
+      +mixins.white-shadow-underscore
 
   </style>

@@ -60,16 +60,16 @@
         a(href="https://www.round-table.games") Round Table Games ©2024
 </template>
 <style lang="sass">
-  @import "../../styles/Mixins.sass"
+  @use '../../styles/_mixins' as mixins
  
   main
-    @include inset
+    +mixins.inset
     overflow-y: auto
     margin-bottom: 5em
     z-index: 1
 
     .logo-background
-      +texture-background
+      +mixins.texture-background
         
 
 

@@ -34,10 +34,10 @@
 
 
 <style lang="sass">
-  @import '../../styles/Mixins.sass'
+  @use '../../styles/_mixins' as mixins
 
   .navy
-    +background(rgb(20 45 76), 0.05 )
+    +mixins.background(rgb(20 45 76), 0.05 )
   
   .portrait-frame
     margin-right: -2px

@@ -36,7 +36,7 @@
 </template>
 
 <style lang="sass">
-  @import "../../styles/Mixins.sass"
+  @use '../../styles/_mixins' as mixins
   .tab-icon
     border: none
     text-align: middle
@@ -44,18 +44,18 @@
 
 
   .tabs 
-    @include flex-column
-    @include flex-group-top
-    @include border
+    +mixins.flex-column
+    +mixins.flex-group-top
+    +mixins.border
     height: 100%
     width: 100%
     background: url(/systems/foundryvtt-final-fantasy/assets/parchment4.webp) repeat
     overflow: hidden
     .tabs-list 
-      @include flex-row
-      @include flex-space-evenly
-      @include border-bottom
-      @include panel-1
+      +mixins.flex-row
+      +mixins.flex-space-evenly
+      +mixins.border-bottom
+      +mixins.panel-1
       list-style: none
       width: 100%
       margin: 0
@@ -117,7 +117,7 @@
       flex: 2
       width: 100%
 
-      +flex-column
+      +mixins.flex-column
       &.tab-content--tall
         height: calc(100% - 60px)
       &.tab-content--small

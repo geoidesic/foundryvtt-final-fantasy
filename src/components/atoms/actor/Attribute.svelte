@@ -57,11 +57,11 @@ onMount(() => {
     
 </template>
 <style lang='sass'>
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
   .attribute
     width: 100%
-    @include white-shadow-header(var(--size-md))
-    @include white-shadow-underscore(3.5px, rgba(255, 255, 255, 0.4), rgba(0,0,0,0.3), 0px, 0.1em, -3px, 103%, 0px)
+    +mixins.white-shadow-header(var(--size-md))
+    +mixins.white-shadow-underscore(3.5px, rgba(255, 255, 255, 0.4), rgba(0,0,0,0.3), 0px, 0.1em, -3px, 103%, 0px)
     
     & 
       margin-bottom: 1em

@@ -101,119 +101,58 @@
 </script>
 
 <template lang="pug">
-.effects({...$$restProps})
+.effects&attributes($$restProps)
   +if("ActiveEffects.length > 0")
     h2.font-cinzel {localize('FF15.Effects')}
-    div.px-xs
-      +if("ActiveEffects.length > 0")
-
-        table.borderless.low-contrast
-              
-          +each("ActiveEffects as item, index")
-            tr
-              td.img.shrink(scope="col")
-                img.icon(src="{item.img}" alt="{item.name}")
-              td.left
-                a.ml-sm.stealth.link.no-wrap(on:click="{openItem(index, item)}") {localize(item.name)}
-
-    +else
-      p(style="margin-top: -2px; margin-bottom: 0px;") {localize("FF15.NoEffects")}
+    .px-xs
+      table.borderless.low-contrast
+        +each("ActiveEffects as item, index")
+          tr
+            th.img.shrink(scope="col")
+              img.icon(src="{item.img}" alt="{item.name}")
+            td.left
+              a.ml-sm.stealth.link.no-wrap(
+                role="button"
+                on:click!="{() => openItem(index, item)}"
+                on:keydown!="{(e) => e.key === 'Enter' && openItem(index, item)}"
+                tabindex="0"
+              ) {localize(item.name)}
+  +if("!ActiveEffects.length")
+    p(style="margin-top: -2px; margin-bottom: 0px;") {localize("FF15.NoEffects")}
 </template>
 
 <style lang="sass">
-@import '../../../styles/Mixins.sass'
-.favourites
-  +inset(0.5rem, 0 0 5px rgba(165,0,0,1) inset)
+@use '../../../styles/_mixins' as mixins
+
+.effects
+  margin-top: 1em
+  padding: 1em
   width: 100%
-.fa-bookmark
-  color: var(--color-highlight) !important
-.portrait-frame
-  margin-right: -2px
-  z-index: 2
+
 .pulse
-  @include pulse
+  animation: pulse 2s infinite
 
-  .buttons
-    @include buttons
+@keyframes pulse
+  0%
+    transform: scale(0.95)
+  70%
+    transform: scale(1)
+  100%
+    transform: scale(0.95)
 
-.actions
-  margin-left: 0.5rem
-  margin-right: 0
-  justify-content: right
-  :not(:last-child)
-    margin-right: 2px
-
-.clickable
-  max-height: 1.3rem
-  line-height: 1.3rem
-  background: rgba(255, 255, 255, 0.2)
-
-i.disable
-  color: grey
-  cursor: not-allowed
-
-.fa-bookmark
-  cursor: pointer
-  &.row
-    color: rgba(100, 0, 100, 1)
-
-ol
-  height: 100%
+.buttons
+  position: relative
+  display: flex
+  flex-direction: row
+  flex-wrap: nowrap
+  justify-content: flex-start
+  align-items: center
+  gap: 4px
   margin: 0
-  padding: 0.1rem
-  border: 1px solid grey
-  li
-    padding: 3px
-    margin: 0 2px 2px 2px
-    align-items: center
-    &:not(.header):not(.footer)
-      background-color: #cdc8c7
-    &.header
-      padding: 0 3px
-      line-height: 1rem
-      text-align: top
-      justify-content: top
-      border-bottom-left-radius: 0
-      border-bottom-right-radius: 0
-      margin-bottom: 0
-      border-bottom: none
+  padding: 0
+  list-style: none
 
-.itemrow
-  height: 1.9rem
-
-.rowimgbezelbutton
-  border-style: solid
-  border-width: 1px
-  border-color: #bbb #aaa #999
-  text-shadow: 0 1px 0 #eee
-  background: #ccc
-  color: #333
-  font-family: "Lucida Grande"
-  font-size: 12px
-  font-weight: bold
-  text-decoration: none
-  -webkit-border-radius: 3px
-  -webkit-box-shadow: inset 0 1px 1px #fff, inset 0 -1px 1px #aaa, 0 2px 4px -3px #666
-  &.lock-open
-    background-color: #19762d
-    color: white
-  &.lock
-    background-color: #9c0f0f
-    color: white
-
-.rowimgbezelbutton:active
-  -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
-  border-color: #888 #aaa #eee
-
-input
-  background-color: white
-  height: 1.2rem
-       
-td
-  &.clip
-    text-overflow: ellipsis
-    overflow: hidden
-    height: 2rem
-    max-height: 2rem
-    display: block
+.button
+  width: 30px
+  height: 30px
 </style>

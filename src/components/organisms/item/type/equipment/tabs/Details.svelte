@@ -40,7 +40,7 @@
 </template>
 
 <style lang="sass">
-    @import '../../../../../../styles/Mixins.sass'
+    @use '../../../../../../styles/_mixins' as mixins
     .details
-      @include inset
+      +mixins.inset
 </style>

@@ -181,7 +181,7 @@
 </template>
 
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
   /* CSS for the pulse effect */
   .pulse 
     transition: scale 0.5s ease-in-out

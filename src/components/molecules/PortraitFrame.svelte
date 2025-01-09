@@ -26,7 +26,7 @@ onMount(() => {
 </template>
 
 <style lang='sass'>
-  @import '../../styles/Mixins.sass'
+  @use '../../styles/_mixins' as mixins
 
   .frame
     position: relative

@@ -137,17 +137,17 @@
 </template>
 
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
   
   .chat
-    +buttons
+    +mixins.buttons
     .title
       border-radius: var(--border-radius)
       color: var(--message-contrast)
       position: relative
       padding: 0.2rem
       
-      +texture-background(var(--message-color), 0.05, 48%)
+      +mixins.texture-background($color: var(--message-color), $intensity: 0.05, $bgSize: 48%)
       
       .texture
         position: absolute

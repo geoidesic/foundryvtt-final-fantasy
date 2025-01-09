@@ -350,13 +350,13 @@
 </template>
 
 <style lang="sass">
-@import '../../../styles/Mixins.sass'
+@use '../../../styles/_mixins' as mixins
 
 .description-wrapper
-  +description-wrapper
+  +mixins.description-wrapper
 
 .inset
-  +inset
+  +mixins.inset
 :global(.FF15 #chat-description)
   background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
   color: var(--color-text-dark)
@@ -462,7 +462,7 @@ button:disabled
   cursor: not-allowed
 
 .leatherbook
-  +background(rgb(98 49 50), 0.05, none )
+  +mixins.background(rgb(98 49 50), 0.05, none)
 
 .portrait-frame
   // margin-right: 5px

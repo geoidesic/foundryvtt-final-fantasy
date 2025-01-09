@@ -16,8 +16,8 @@ const item = getContext("#doc");
     
 </template>
 <style lang='sass'>
-  @import '../../../../../styles/Mixins.sass'
+  @use '../../../../../styles/_mixins' as mixins
 
   .description-tab
-    +itemSheetDescriptionTab
+    +mixins.itemSheetDescriptionTab
 </style>

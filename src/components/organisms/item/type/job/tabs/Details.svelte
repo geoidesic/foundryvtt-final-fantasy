@@ -40,9 +40,9 @@
 </template>
 
 <style lang="sass">
-  @import '../../../../../../styles/Mixins.sass'
+  @use '../../../../../../styles/_mixins' as mixins
 
   .details
     max-height: calc(100% - 0px) //- prevents the scrolling area's content from being hidden below the fold
-    +inset
+    +mixins.inset
 </style>

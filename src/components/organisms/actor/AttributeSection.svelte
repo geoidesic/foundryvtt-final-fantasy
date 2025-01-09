@@ -57,10 +57,10 @@ function _launchStandardProfileEditor(event) {
       
 </template>
 <style lang='sass'>
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
   .portrait-frame
     margin-right: -2px
     z-index: 2
 
-  +background
+  +mixins.background
 </style>

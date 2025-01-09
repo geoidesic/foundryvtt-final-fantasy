@@ -9,11 +9,11 @@ import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
       ProseMirror( attr="system.description" )
 </template>
 <style lang='sass'>
-  @import '../../../../styles/Mixins.sass'
+  @use '../../../../styles/_mixins' as mixins
 
   .details
     height: calc(100% - 0px)
 
-    +inset
+    +mixins.inset
 
 </style>

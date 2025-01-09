@@ -57,13 +57,13 @@
 </select>
 
 <style lang="sass">
-  @import "../../../styles/Mixins.sass"
+  @use '../../../styles/_mixins' as mixins
 
   select 
-    @include input
+    +mixins.input
 
     &:disabled 
-      @include input-disabled
+      +mixins.input-disabled
 
     &.short
       height: inherit

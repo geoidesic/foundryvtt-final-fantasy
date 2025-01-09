@@ -283,7 +283,7 @@ $: hasItems = localList.length > 0;
 </template>
 
 <style lang="sass">
-@import '../../styles/Mixins.sass'
+@use '../../styles/_mixins' as mixins
 
 .item-bucket
   padding: 0.5em
