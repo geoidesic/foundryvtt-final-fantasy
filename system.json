@@ -19,18 +19,6 @@
     "verified": "12",
     "maximum": "12"
   },
-  "relationships": {
-    "requires": [
-      {
-        "id": "typhonjs",
-        "type": "module",
-        "manifest": "https://github.com/typhonjs-fvtt-lib/typhonjs/releases/latest/download/module.json",
-        "compatibility": {
-          "verified": "0.2.0"
-        }
-      }
-    ]
-  },
   "esmodules": [
     "index.js"
   ],
@@ -118,10 +106,6 @@
   ],
   "manifest": "https://github.com/geoidesic/geoidesic/foundryvtt-final-fantasy/releases/download/latest/system.json",
   "download": "https://github.com/geoidesic/geoidesic/foundryvtt-final-fantasy/releases/download/latest/titan.zip",
-  "gridSize": {
-    "units": "ft",
-    "distance": 5
-  },
   "license": "LICENSE.txt",
   "socket": true
 }
