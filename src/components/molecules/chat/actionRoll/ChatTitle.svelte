@@ -43,18 +43,14 @@
 <template lang="pug">
 .chat-title
   +if("FFMessage")
-    .flexrow.title(on:click="{handleTitleClick}" on:keydown="{handleTitleClick}" role="button" tabindex="0")
+    .flexrow.title(on:click="{handleTitleClick}" role="button")
       +if("showProfileImage")   
-        button.icon.avatar(on:click!="{openActorSheet}" on:keydown!="{openActorSheet}" aria-label="{FFMessage.actor.name}")
-          img(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}")
+        img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}" on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}")
       .flex3.flexcol.nooverflow(class="{showProfileImage ? 'text' : ''}")
         .col 
           .flexrow
-            button.flex4.link.pointer(on:click!="{openActorSheet}" on:keydown!="{openActorSheet}" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
-        button.col.font-cinzel.smaller.pointer.item-name.nooverflow(
-          on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}" 
-          on:keydown!="{(e) => openItemSheet(e, FFMessage.item.uuid)}"
-        ) {FFMessage.item.name}
+            .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
+        .col.font-cinzel.smaller.pointer.item-name.nooverflow(on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}") {FFMessage.item.name}
       .flex3
         .flexcol
           .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
