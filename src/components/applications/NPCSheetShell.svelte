@@ -1,7 +1,7 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { ApplicationShell } from "#runtime/svelte/application";
+  import { ApplicationShell } from "#runtime/svelte/component/application";
 
   import { setContext, getContext, onMount, tick } from "svelte";
   import { getActorOwner, ucfirst } from "~/src/helpers/util";

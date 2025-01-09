@@ -1,8 +1,8 @@
 import { get, writable } from 'svelte/store';
-import { isWritableStore } from "@typhonjs-fvtt/runtime/util/store";
-import { Strings } from "@typhonjs-fvtt/runtime/util";
-import { isIterable } from "@typhonjs-fvtt/runtime/util/object";
-import { stepwiseResolveDotpath } from '../helpers/paths';
+import { isWritableStore } from "#runtime/svelte/store/util";
+import { Strings } from "#runtime/util";
+import { isIterable } from "#runtime/util/object";
+import { stepwiseResolveDotpath } from '~/src/helpers/paths';
 
 
 /**

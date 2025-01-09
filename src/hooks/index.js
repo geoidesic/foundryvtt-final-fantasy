@@ -11,11 +11,11 @@ import applyActiveEffect from './applyActiveEffect.js';
 import combatStart from './combatStart.js';
 import preUpdateToken from './preUpdateToken.js';
 import createActiveEffect from './createActiveEffect.js';
-import init from './init.js';
 import canvasReady from './canvasReady.js';
-import ready from './ready.js';
 import preCreateCombatant from './preCreateCombatant.js';
-import { registerUpdateActiveEffectHook } from './updateActiveEffect.js';
+import updateActiveEffect from './updateActiveEffect.js';
+import ready from './ready.js';
+import init from './init.js';
 
 // Export effects as an object
 export default {
@@ -26,16 +26,16 @@ export default {
   targetToken,
   deleteCombat,
   updateCombatant,
+  updateCombat,
   applyActiveEffect,
   combatStart,
   preUpdateToken,
-  updateCombat,
   createActiveEffect,
-  init,
   canvasReady,
-  ready,
   preCreateCombatant,
-  updateActiveEffect: registerUpdateActiveEffectHook,
+  updateActiveEffect,
+  ready,
+  init,
 };
 
 export { 
@@ -46,14 +46,14 @@ export {
   targetToken,
   deleteCombat,
   updateCombatant,
+  updateCombat,
   applyActiveEffect,
   combatStart,
   preUpdateToken,
-  updateCombat,
   createActiveEffect,
-  init,
   canvasReady,
-  ready,
   preCreateCombatant,
-  registerUpdateActiveEffectHook as updateActiveEffect,
+  updateActiveEffect,
+  ready,
+  init,
 };

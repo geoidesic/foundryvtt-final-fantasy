@@ -1,17 +1,17 @@
 <script>
   import { onMount, getContext, setContext } from "svelte";
-  import { ApplicationShell } from '#runtime/svelte/component/core';
+  import { ApplicationShell } from "#runtime/svelte/component/application";
   import { localize } from "#runtime/util/i18n";
   import { SYSTEM_ID } from "~/src/helpers/constants";
-  import Tabs from "~/src/components/molecules/Tabs.svelte";
   import Changes from "~/src/components/tabs/activeEffect/Changes.svelte";
-  import Config from "~/src/components/tabs/activeEffect/Config.svelte";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
+  import Tabs from "~/src/components/molecules/Tabs.svelte";
+  import Config from "~/src/components/tabs/activeEffect/Config.svelte";
   
   export let elementRoot = void 0;
   export let doc;
 
-   const application = getContext('#external').application;
+  const application = getContext('#external').application;
   // setContext("#doc", application.reactive.document);
   setContext("#doc", doc);
   

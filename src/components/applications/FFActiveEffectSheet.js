@@ -1,5 +1,5 @@
 import { SvelteApplication } from "#runtime/svelte/application";
-import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
+import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
 import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import FFActiveEffectShell from './FFActiveEffectShell.svelte';

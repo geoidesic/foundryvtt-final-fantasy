@@ -2,7 +2,7 @@
 
 <script>
   import { getContext, setContext, onMount, onDestroy } from "svelte";
-  import { rippleFocus } from "@typhonjs-fvtt/runtime/svelte/action/animate";
+  import { rippleFocus } from "#standard/action/animate/composable";
   import { TJSInput } from "#standard/component/form";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { TJSDocument } from "#runtime/svelte/store/fvtt/document";

@@ -1,6 +1,6 @@
 <script>
   import { getContext, onMount } from "svelte";
-  import { rippleFocus } from "@typhonjs-fvtt/runtime/svelte/action/animate";
+  import { rippleFocus } from "#standard/action/animate/composable";
   import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
 
   import { TJSInput } from "#standard/component/form";

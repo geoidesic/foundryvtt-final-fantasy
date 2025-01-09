@@ -1,7 +1,7 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 import { log } from "~/src/helpers/util"
 
-import { registerSettings } from "~/src/settings"
+// import { registerSettings } from "~/src/settings"
 import { setupModels } from '~/src/config/models';
 import { setupEffectsProcessors } from '~/src/config/effectsProcessors';
 
@@ -10,7 +10,6 @@ import FF15PCSheet from "~/src/components/applications/PCSheet";
 import FF15NPCSheet from "~/src/components/applications/NPCSheet";
 import FF15ItemSheet from "~/src/components/applications/ItemSheet";
 import FFCombatTracker from '~/src//extensions/combat-tracker.js'
-import ItemSheetStandard from "~/src/components/applications/ItemSheetStandard";
 import hooks from "~/src/hooks";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 

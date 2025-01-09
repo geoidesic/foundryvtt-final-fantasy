@@ -1,8 +1,7 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { ApplicationShell } from "#runtime/svelte/application";
-
+  import { ApplicationShell } from "#runtime/svelte/component/application";
   import { setContext, getContext, onMount } from "svelte";
   import { ucfirst } from "~/src/helpers/util.js";
   import ItemInput from "~/src/components/atoms/item/ItemInput.svelte";
@@ -111,15 +110,14 @@
       .flex1.profile-wrap
         .flex0
           button.stealth.profile(on:click="{_launchStandardProfileEditor}")
-            img.profile(src="{$documentStore?.img}" data-tooltip="{$documentStore?.name}" alt="{$documentStore?.name}" )
-          
+            img.profile(src="{$documentStore?.img}" data-tooltip="{$documentStore?.name}" alt="{$documentStore?.name}")
         .flexcol
           table(style="text-align: center")
-            tr
-              td
-                div {game.i18n.localize(`TYPES.Item.${item.type}`)} 
+            tbody
+              tr
+                td
+                  div {game.i18n.localize(`TYPES.Item.${item.type}`)}
           svelte:component(this="{headerMap[item.type]}")
-        
       .flex4.wide.mr-sm.high
         header.wide
           .left.wide

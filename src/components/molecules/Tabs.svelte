@@ -1,6 +1,5 @@
 <script>
   import preventDefault from "~/src/helpers/svelte-actions/PreventDefault.js";
-  import { ripple } from "#runtime/svelte/action/animate";
   import { onMount } from 'svelte';
 
   export let tabs = [];
@@ -8,7 +7,6 @@
   // type of sheet
   export let sheet;
   export let activeTab = void 0;
-  export let efx = ripple();
 
   onMount(() => {
     activeTab = tabs[0].id;
@@ -24,7 +22,6 @@
       button.short.gold(
         class="{tab.id === activeTab ? 'active' : ''}"
         on:click|preventDefault!="{() => activeTab = tab.id}"
-        transition:efx
       ) 
         +if("!tab.img && !tab.icon")
           span {tab.label}

@@ -2,9 +2,9 @@
 
 <script>
 
-  import TJSProseMirror from "~/src/components/TJSProseMirror.svelte";
-  import { TJSContentEdit, TJSTinyMCE } from "#standard/component/fvtt-editor";
+  import { TJSProseMirror }     from "#standard/component/fvtt/editor";
   import { getContext } from "svelte";
+  // import { TJSContentEdit, TJSTinyMCE } from "#standard/component/fvtt-internal";
 
   // If you are developing ProseMirror plugins import from this path to enable PM debugging tooling.
   // import { TJSProseMirror }     from '@typhonjs-fvtt/svelte-standard/component/dev';
@@ -18,7 +18,7 @@
   export let editable = "";
 
   const doc = getContext("#doc");
-  // console.log("$doc", $doc);
+  // // console.log("$doc", $doc);
 
   function doSomethingWithEnrichedContent(event) {
     // console.log(`! event - editor:enrichedContent - ${event.detail.enrichedContent}`)
@@ -61,7 +61,6 @@
   //   console.log(`! bound enrichedContent changed: ${enrichedContent}`);
   // }
 </script>
-
 <TJSProseMirror
   {options}
   {...$$restProps}

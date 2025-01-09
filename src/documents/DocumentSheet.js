@@ -1,4 +1,4 @@
-import { SvelteApplication } from "@typhonjs-fvtt/runtime/svelte/application";
+import { SvelteApplication } from "#runtime/svelte/application";
 import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
 
 import DocumentShell from "./DocumentShell.svelte";
