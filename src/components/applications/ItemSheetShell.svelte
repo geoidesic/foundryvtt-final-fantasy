@@ -1,7 +1,8 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+  import { ApplicationShell } from "#runtime/svelte/application";
+
   import { setContext, getContext, onMount } from "svelte";
   import { ucfirst } from "~/src/helpers/util.js";
   import ItemInput from "~/src/components/atoms/item/ItemInput.svelte";

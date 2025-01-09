@@ -1,7 +1,7 @@
 import NPCSheetShell from "./NPCSheetShell.svelte";
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
-import { localize } from "#runtime/svelte/helper";
+import { localize } from "#runtime/util/i18n";
 import { generateRandomElementId } from "~/src/helpers/util";
 
 export default class FF15ActorSheet extends SvelteDocumentSheet {

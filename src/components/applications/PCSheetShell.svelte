@@ -1,11 +1,12 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+  import { ApplicationShell } from "#runtime/svelte/application";
+
   import { setContext, getContext, onMount, tick } from "svelte";
   import { getActorOwner, ucfirst } from "~/src/helpers/util";
   import { SYSTEM_ID } from "~/src/helpers/constants";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { gameSettings } from '~/src/config/gameSettings';
 
   import Tabs from "~/src/components/molecules/Tabs.svelte";

@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext, setContext } from "svelte";
   import { ApplicationShell } from '#runtime/svelte/component/core';
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import Changes from "~/src/components/tabs/activeEffect/Changes.svelte";

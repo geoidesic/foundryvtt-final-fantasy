@@ -2,7 +2,7 @@
   import { onMount, getContext } from "svelte";
   import { isParentActor} from "~/src/helpers/util";
   import { SYSTEM_CODE } from "~/src/helpers/constants.js";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";

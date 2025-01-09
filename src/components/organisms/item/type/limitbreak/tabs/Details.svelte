@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { isParentActor} from "~/src/helpers/util";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { PCModel } from "~/src/models/actors/PC.js";
   import { getRangeOptions } from "~/src/helpers/constants.js";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";

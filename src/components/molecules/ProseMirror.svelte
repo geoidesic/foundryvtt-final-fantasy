@@ -3,8 +3,7 @@
 <script>
 
   import TJSProseMirror from "~/src/components/TJSProseMirror.svelte";
-  import {  TJSContentEdit, TJSTinyMCE } from "@typhonjs-fvtt/svelte-standard/component";
-  // import { TJSProseMirror, TJSContentEdit, TJSTinyMCE } from "@typhonjs-fvtt/svelte-standard/component";
+  import { TJSContentEdit, TJSTinyMCE } from "#standard/component/fvtt-editor";
   import { getContext } from "svelte";
 
   // If you are developing ProseMirror plugins import from this path to enable PM debugging tooling.

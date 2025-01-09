@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { 
     getRangeOptions, getDurationOptions, getDurationUnits, 
     getLimitationOptions, getLimitationUnits, getAspectedOptions, 

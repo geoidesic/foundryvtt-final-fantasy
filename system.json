@@ -19,6 +19,18 @@
     "verified": "12",
     "maximum": "12"
   },
+  "relationships": {
+    "requires": [
+      {
+        "id": "typhonjs",
+        "type": "module",
+        "manifest": "https://github.com/typhonjs-fvtt-lib/typhonjs/releases/latest/download/module.json",
+        "compatibility": {
+          "verified": "0.2.0"
+        }
+      }
+    ]
+  },
   "esmodules": [
     "index.js"
   ],

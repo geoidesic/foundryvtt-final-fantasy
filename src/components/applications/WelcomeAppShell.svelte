@@ -2,7 +2,7 @@
   import { onMount, getContext } from "svelte";
   import { fade, scale }        from 'svelte/transition';
   import { ApplicationShell }   from '#runtime/svelte/component/core';
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import { gameSettings } from '~/src/config/gameSettings';
 

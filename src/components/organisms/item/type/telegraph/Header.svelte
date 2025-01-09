@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
 
   const item = getContext("#doc");
 </script>

@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { SYSTEM_CODE } from "~/src/helpers/constants";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";

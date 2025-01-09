@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
-  import { localize } from "#runtime/svelte/helper"; // Import the localize function
+  import { localize } from "#runtime/util/i18n"; // Import the localize function
 
   let levelEnabled = false;
 

@@ -1,6 +1,6 @@
 <script>
   import { getContext } from "svelte";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { getCROptions, getRangeOptions, getLimitationOptions, getAspectedOptions, getTargetOptions, getHeavyshotOptions, getTriggerOptions, getDirectHitOptions, getTypeOptions } from "~/src/helpers/constants.js";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";

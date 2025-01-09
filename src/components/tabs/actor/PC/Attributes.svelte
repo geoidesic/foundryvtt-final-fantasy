@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { SYSTEM_CODE } from "~/src/helpers/constants";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import AttributeSection from "~/src/components/organisms/actor/AttributeSection.svelte";
   import PointsSection from "~/src/components/organisms/actor/PointsSection.svelte";
   import EffectsSection from "~/src/components/organisms/actor/EffectsSection.svelte";

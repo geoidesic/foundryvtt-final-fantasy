@@ -1,5 +1,5 @@
 import { FFActorDataModel } from './baseActor';
-import { localize } from "#runtime/svelte/helper";
+import { localize } from "#runtime/util/i18n";
 
 const {
   HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField

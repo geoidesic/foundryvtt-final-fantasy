@@ -1,7 +1,7 @@
 <script>
   import { getContext, onDestroy, onMount } from "svelte";
   import { Timing } from "@typhonjs-fvtt/runtime/util";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { SYSTEM_CODE } from "~/src/helpers/constants";
   import Tag from "../atoms/Tag.svelte";
   const doc = getContext("#doc");

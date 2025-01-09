@@ -2,10 +2,10 @@
   import { getContext, onMount } from "svelte";
   import { rippleFocus } from "@typhonjs-fvtt/runtime/svelte/action/animate";
   import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store/fvtt/document";
-  import { TJSInput } from "@typhonjs-fvtt/svelte-standard/component";
+  import { TJSInput } from "#standard/component/form";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { toggleBookmark } from "~/src/helpers/util";
-  import { localize } from "#runtime/svelte/helper";
+  import { localize } from "#runtime/util/i18n";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
