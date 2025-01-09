@@ -1,9 +1,9 @@
-import { localize } from "#runtime/svelte/helper";
-import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
+import { SYSTEM_ID } from "~/src/helpers/constants";
+import { localize } from '~/src/helpers/util'
 import { gameSettings } from '~/src/config/gameSettings';
 
 export function registerSettings() {
-  /** User settings */
+//   /** User settings */
   dontShowWelcome();
   applicationWindowHeaderIconsOnly()
   confirmBeforeDeletingActorItem()
@@ -27,8 +27,8 @@ function automaticUses() {
     namespace: SYSTEM_ID,
     key: 'automaticUses',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.automaticUses.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.automaticUses.Hint`),
+      name: localize('Setting.automaticUses.Name'),
+      hint: localize('Setting.automaticUses.Hint'),
       scope: 'user',
       config: true,
       default: true,
@@ -42,8 +42,8 @@ function chatMessageSenderIsActorOwner() {
     namespace: SYSTEM_ID,
     key: 'chatMessageSenderIsActorOwner',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.chatMessageSenderIsActorOwner.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.chatMessageSenderIsActorOwner.Hint`),
+      name: localize('Setting.chatMessageSenderIsActorOwner.Name'),
+      hint: localize('Setting.chatMessageSenderIsActorOwner.Hint'),
       scope: 'user',
       config: true,
       default: true,
@@ -58,8 +58,8 @@ function manualInitiative() {
     namespace: SYSTEM_ID,
     key: 'manual-initiative',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.ManualInitiative.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.ManualInitiative.Hint`),
+      name: localize('Setting.ManualInitiative.Name'),
+      hint: localize('Setting.ManualInitiative.Hint'),
       scope: 'world',
       config: true,
       default: true,
@@ -73,8 +73,8 @@ function showStatusEffectNames() {
     namespace: SYSTEM_ID,
     key: 'show-status-effect-names',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.ShowStatusEffects.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.ShowStatusEffects.Hint`),
+      name: localize('Setting.ShowStatusEffects.Name'),
+      hint: localize('Setting.ShowStatusEffects.Hint'),
       scope: 'world',
       config: true,
       default: true,
@@ -88,8 +88,8 @@ function dontShowWelcome() {
     namespace: SYSTEM_ID,
     key: 'dontShowWelcome',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.DontShowWelcome.Hint`),
+      name: localize('Setting.DontShowWelcome.Name'),
+      hint: localize('Setting.DontShowWelcome.Hint'),
       scope: 'user',
       config: true,
       default: false,
@@ -102,8 +102,8 @@ function applicationWindowHeaderIconsOnly() {
     namespace: SYSTEM_ID,
     key: 'applicationWindowHeaderIconsOnly',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.applicationWindowHeaderIconsOnly.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.applicationWindowHeaderIconsOnly.Hint`),
+      name: localize('Setting.applicationWindowHeaderIconsOnly.Name'),
+      hint: localize('Setting.applicationWindowHeaderIconsOnly.Hint'),
       scope: 'user',
       config: true,
       default: false,
@@ -116,8 +116,8 @@ function confirmBeforeDeletingActorItem() {
     namespace: SYSTEM_ID,
     key: 'confirmBeforeDeletingActorItem',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.confirmBeforeDeletingActorItem.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.confirmBeforeDeletingActorItem.Hint`),
+      name: localize('Setting.confirmBeforeDeletingActorItem.Name'),
+      hint: localize('Setting.confirmBeforeDeletingActorItem.Hint'),
       scope: 'user',
       config: true,
       default: true,
@@ -130,8 +130,8 @@ function combatStartSound() {
     namespace: SYSTEM_ID,
     key: 'combatStartSound',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.combatStartSound.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.combatStartSound.Hint`),
+      name: localize('Setting.combatStartSound.Name'),
+      hint: localize('Setting.combatStartSound.Hint'),
       scope: 'user',
       config: true,
       default: 'sounds/drums.wav',
@@ -145,11 +145,11 @@ function chatMessageSound() {
     namespace: SYSTEM_ID,
     key: 'chatMessageSound',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.chatMessageSound.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.chatMessageSound.Hint`),
+      name: localize('Setting.chatMessageSound.Name'),
+      hint: localize('Setting.chatMessageSound.Hint'),
       scope: 'user',
       config: true,
-      default: `sounds/notify.wav`,
+      default: 'sounds/notify.wav',
       type: String,
       filePicker: "any",
     }
@@ -160,8 +160,8 @@ function showChatProfileImages() {
     namespace: SYSTEM_ID,
     key: 'showChatProfileImages',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.showChatProfileImages.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.showChatProfileImages.Hint`),
+      name: localize('Setting.showChatProfileImages.Name'),
+      hint: localize('Setting.showChatProfileImages.Hint'),
       scope: 'user',
       config: true,
       default: true,
@@ -175,8 +175,8 @@ function defaultChatDescriptionVisible() {
     namespace: SYSTEM_ID,
     key: 'defaultChatDescriptionVisible',
     options: {
-      name: localize(`${SYSTEM_CODE}.Setting.DefaultChatDescriptionVisible.Name`),
-      hint: localize(`${SYSTEM_CODE}.Setting.DefaultChatDescriptionVisible.Hint`),
+      name: localize('Setting.DefaultChatDescriptionVisible.Name'),
+      hint: localize('Setting.DefaultChatDescriptionVisible.Hint'),
       scope: 'world',
       config: true,
       default: false,

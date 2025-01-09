@@ -1,7 +1,7 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 import { log } from "~/src/helpers/util"
 
-// import { registerSettings } from "~/src/settings"
+import { registerSettings } from "~/src/settings"
 import { setupModels } from '~/src/config/models';
 import { setupEffectsProcessors } from '~/src/config/effectsProcessors';
 
