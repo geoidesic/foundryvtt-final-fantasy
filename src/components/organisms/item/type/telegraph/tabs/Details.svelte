@@ -121,8 +121,8 @@
 </template>
 
 <style lang="sass">
-  @import '../../../../../../styles/Mixins.sass'
+  @use '../../../../../../styles/_mixins' as mixins
   .details
     max-height: calc(100% - 15px)
-    +inset(1rem)
+    +mixins.inset(1rem)
 </style> 

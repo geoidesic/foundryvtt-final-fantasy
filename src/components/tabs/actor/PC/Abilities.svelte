@@ -264,7 +264,7 @@
 </template>
 
 <style lang="sass">
-@import '../../../../styles/Mixins.sass'
+@use '../../../../styles/_mixins' as mixins
 
 .containerx
   container-type: inline-size
@@ -274,10 +274,10 @@
   @container (min-width: 350px)
     padding: 1rem
 .pulse
-  @include pulse
+  @include mixins.mixins.pulse
 
   .buttons
-  @include buttons
+  @include mixins.mixins.buttons
 
 .actions
   margin-left: 0.5rem

@@ -73,9 +73,9 @@ onMount(async () => {
     
 </template>
 <style lang="sass">
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
   .inset
-    +inset(1rem)
+    +mixins.inset(1rem)
   label
     font-size: var(--size-md-h)
 </style>

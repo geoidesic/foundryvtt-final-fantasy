@@ -126,9 +126,9 @@ onMount(async () => {
 </template>
 <style lang="sass">
 
-  @import '../../../styles/Mixins.sass'
+  @use '../../../styles/_mixins' as mixins
   .inset
-    +inset(1rem, 0 -3px 20px rgba(165, 131, 99, 1) inset, 0 0 20px 0 )
+    +mixins.inset(1rem, 0 -3px 20px rgba(165, 131, 99, 1) inset, 0 0 20px 0 )
   table
     thead
       tr
