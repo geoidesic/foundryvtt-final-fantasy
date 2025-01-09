@@ -1,10 +1,14 @@
+/**
+ * @why The purpose of this listener is to use Action durations
+ * to set the duration of the associated target or enabled ActiveEffect.
+ */
 export default function createActiveEffect() {
   Hooks.on("createActiveEffect", async (activeEffect, data) => {
     const origin = fromUuidSync(activeEffect.origin);
     game.system.log.o('createActiveEffect', { origin });
     
     // Only process effects that have duration
-    if (!origin?.system.hasDuration) return;
+    if (!origin?.system?.hasDuration) return;
 
     const duration = origin.system.duration;
     const durationUnits = origin.system.durationUnits;
