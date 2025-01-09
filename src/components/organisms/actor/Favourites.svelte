@@ -208,8 +208,6 @@
   z-index: 2
 .pulse
   +mixins.pulse
-
-  .buttons
   +mixins.buttons
 
 .actions

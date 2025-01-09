@@ -136,7 +136,7 @@
             th.fixed(scope="col") {localize('FF15.Quantity')}
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
-            th.buttons(scope="col" class="{lockCSS}")
+            th(scope="col" class="{lockCSS}")
               button.stealth(class="{lockCSS}")
                 i.fa(class="{faLockCSS}" on:click="{toggleLock}")
           +each("items as item, index")
@@ -176,9 +176,6 @@
     padding: 1rem
 .pulse
   +mixins.pulse
-
-  .buttons
-  +mixins.buttons
 
 .actions
   margin-left: 0.5rem

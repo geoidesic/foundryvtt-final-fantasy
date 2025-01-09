@@ -177,8 +177,6 @@
     padding: 1rem
 .pulse
   +mixins.pulse
-
-  .buttons
   +mixins.buttons
 
 .actions
