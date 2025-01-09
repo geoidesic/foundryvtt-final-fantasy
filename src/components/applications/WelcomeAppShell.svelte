@@ -44,7 +44,7 @@
         a(href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html") {localize(`${SYSTEM_CODE}.Title`)}
         | &nbsp;{localize(`${SYSTEM_CODE}.Welcome.Released`) }
       h1 Help
-      p 
+      p
         span {localize('FF15.Welcome.Issues')}
         a(href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues") {localize('FF15.Welcome.Github')}
       .flexrow.inset.justify-vertical(data-tooltip="{localize('FF15.Setting.DontShowWelcome.Hint')}")
@@ -58,6 +58,7 @@
       .flex2.left.pt-sm
         h4 {localize(`${SYSTEM_CODE}.Title`)} {localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} 
         a(href="https://www.round-table.games") Round Table Games ©2024
+    
 </template>
 <style lang="sass">
   @use '../../styles/_mixins' as mixins

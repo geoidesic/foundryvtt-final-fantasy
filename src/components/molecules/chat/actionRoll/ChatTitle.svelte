@@ -64,40 +64,40 @@
 </template>
 
 <style lang="sass">
-  @use '../../../../styles/_mixins' as mixins
-  .chat-title
-    .item-name
-      overflow: hidden
-      text-overflow: ellipsis
-      line-height: 1rem
-      max-height: 1rem
-      white-space: nowrap
-    .type-label
-      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1)
-      font-weight: 600
-      font-family: "Cinzel", serif
-    img
-      &.icon
-        flex: 0
-        min-width: 30px
-    +mixins.buttons
-    .title
-      border-radius: var(--border-radius)
-      color: var(--message-contrast)
-      position: relative
-      padding: 0.2rem
-      overflow: hidden
-      cursor: pointer
-      .text
-        margin-left: 40px
-      
-      +mixins.texture-background(var(--message-color), 0.1, 45%)
-      
-      .texture
-        position: absolute
-        top: 0
-        left: 0
-        width: 100%
-        height: 100%
-        z-index: 1
+@use '../../../../styles/_mixins' as mixins
+.chat-title
+  .item-name
+    overflow: hidden
+    text-overflow: ellipsis
+    line-height: 1rem
+    max-height: 1rem
+    white-space: nowrap
+  .type-label
+    text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1)
+    font-weight: 600
+    font-family: "Cinzel", serif
+  img
+    &.icon
+      flex: 0
+      min-width: 30px
+  +mixins.buttons
+  .title
+    border-radius: var(--border-radius)
+    color: var(--message-contrast)
+    position: relative
+    padding: 0.2rem
+    overflow: hidden
+    cursor: pointer
+    .text
+      margin-left: 40px
+    
+    +mixins.texture-background(var(--message-color), 0.1, 45%)
+    
+    .texture
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      z-index: 1
 </style>

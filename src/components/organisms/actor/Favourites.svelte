@@ -198,14 +198,17 @@
 
 <style lang="sass">
 @use '../../../styles/_mixins' as mixins
+
 .favourites
   +mixins.inset(0.5rem, 0 0 5px rgba(165,0,0,1) inset)
   width: 100%
+
 .fa-bookmark
   color: var(--color-highlight) !important
-.portrait-frame
-  margin-right: -2px
-  z-index: 2
+  cursor: pointer
+  &.row
+    color: rgba(100, 0, 100, 1)
+
 .pulse
   +mixins.pulse
   +mixins.buttons
@@ -222,72 +225,10 @@
   line-height: 1.3rem
   background: rgba(255, 255, 255, 0.2)
 
-i.disable
-  color: grey
-  cursor: not-allowed
-
-.fa-bookmark
-  cursor: pointer
-  &.row
-    color: rgba(100, 0, 100, 1)
-
-ol
-  height: 100%
-  margin: 0
-  padding: 0.1rem
-  border: 1px solid grey
-  li
-    padding: 3px
-    margin: 0 2px 2px 2px
-    align-items: center
-    &:not(.header):not(.footer)
-      background-color: #cdc8c7
-    &.header
-      padding: 0 3px
-      line-height: 1rem
-      text-align: top
-      justify-content: top
-      border-bottom-left-radius: 0
-      border-bottom-right-radius: 0
-      margin-bottom: 0
-      border-bottom: none
-
-.itemrow
-  height: 1.9rem
-
-.rowimgbezelbutton
-  border-style: solid
-  border-width: 1px
-  border-color: #bbb #aaa #999
-  text-shadow: 0 1px 0 #eee
-  background: #ccc
-  color: #333
-  font-family: "Lucida Grande"
-  font-size: 12px
-  font-weight: bold
-  text-decoration: none
-  -webkit-border-radius: 3px
-  -webkit-box-shadow: inset 0 1px 1px #fff, inset 0 -1px 1px #aaa, 0 2px 4px -3px #666
-  &.lock-open
-    background-color: #19762d
-    color: white
-  &.lock
-    background-color: #9c0f0f
-    color: white
-
-.rowimgbezelbutton:active
-  -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
-  border-color: #888 #aaa #eee
-
-input
-  background-color: white
-  height: 1.2rem
-       
-td
-  &.clip
-    text-overflow: ellipsis
-    overflow: hidden
-    height: 2rem
-    max-height: 2rem
-    display: block
+.clip
+  text-overflow: ellipsis
+  overflow: hidden
+  height: 2rem
+  max-height: 2rem
+  display: block
 </style>

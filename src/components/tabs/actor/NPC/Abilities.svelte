@@ -253,6 +253,7 @@
   transition: padding 0.2s ease-in-out
   @container (min-width: 350px)
     padding: 1rem
+
 .pulse
   +mixins.pulse
   +mixins.buttons
@@ -277,27 +278,6 @@ i.disable
   cursor: pointer
   &.row
     color: rgba(100, 0, 100, 1)
-
-ol
-  height: 100%
-  margin: 0
-  padding: 0.1rem
-  border: 1px solid grey
-  li
-    padding: 3px
-    margin: 0 2px 2px 2px
-    align-items: center
-    &:not(.header):not(.footer)
-      background-color: #cdc8c7
-    &.header
-      padding: 0 3px
-      line-height: 1rem
-      text-align: top
-      justify-content: top
-      border-bottom-left-radius: 0
-      border-bottom-right-radius: 0
-      margin-bottom: 0
-      border-bottom: none
 
 .itemrow
   height: 1.9rem

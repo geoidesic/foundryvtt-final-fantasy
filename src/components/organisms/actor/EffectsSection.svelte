@@ -129,17 +129,6 @@
   padding: 1em
   width: 100%
 
-.pulse
-  animation: pulse 2s infinite
-
-@keyframes pulse
-  0%
-    transform: scale(0.95)
-  70%
-    transform: scale(1)
-  100%
-    transform: scale(0.95)
-
 .buttons
   position: relative
   display: flex
