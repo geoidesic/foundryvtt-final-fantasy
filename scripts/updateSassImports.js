@@ -14,17 +14,74 @@ const MIXIN_NAMES = [
   'inset',
   'flex-column',
   'flex-row',
+  'badge',
+  'input',
+  'input-disabled',
+  'pulse',
+  'buttons',
   // Add other mixin names here
 ];
 
 const MIXIN_PATTERN = MIXIN_NAMES.join('|');
 
-// Helper function to check if a line contains a URL or font-family declaration
-function isUrlOrFontLine(line) {
-  return line.includes('@import url(') || 
-         line.includes('font-family:') || 
+// Helper function to check if a line should be skipped
+function shouldSkipLine(line) {
+  return line.includes('font-family:') || 
          line.includes('url(') ||
-         line.includes('format(');
+         line.includes('format(') ||
+         line.includes('data:image/svg') ||
+         line.includes('.svg') ||
+         line.includes('xmlns=');
+}
+
+// Helper function to normalize mixins prefix
+function normalizeMixinsPrefix(line) {
+  // Handle @import url() statements with font names
+  if (line.includes('@import url(')) {
+    // Remove any mixins. prefixes from font names
+    return line.replace(/\+mixins\./g, '+').replace(/mixins\./g, '');
+  }
+
+  // Skip certain lines entirely
+  if (shouldSkipLine(line)) {
+    return line;
+  }
+
+  // Handle @use statements
+  if (line.includes('@use') && (line.includes('_mixins') || line.includes('mixins'))) {
+    // First normalize any double underscores
+    line = line.replace('__mixins', '_mixins');
+    // Then ensure the path format is correct
+    line = line.replace(/(@use\s+['"].*?)[Mm]ixins(\.sass)?(['"].*?as).*$/, '$1_mixins$2$3 mixins');
+    // Finally ensure there's exactly one underscore before mixins
+    line = line.replace(/([^_])_mixins/, '$1_mixins').replace(/__mixins/, '_mixins');
+    return line;
+  }
+
+  // First remove any triple or double mixins. prefixes
+  while (line.includes('mixins.mixins.mixins.')) {
+    line = line.replace('mixins.mixins.mixins.', '');
+  }
+  while (line.includes('mixins.mixins.')) {
+    line = line.replace('mixins.mixins.', '');
+  }
+  
+  // Then ensure there's exactly one mixins. prefix where needed
+  if ((/@include\s+[^mixins\.]/.test(line) || /\+[^mixins\.]/.test(line)) && !line.includes('//')) {
+    const parts = line.split(/(@include\s+|\+)([a-zA-Z-]+)/);
+    if (parts.length > 1) {
+      for (let i = 1; i < parts.length; i += 3) {
+        const prefix = parts[i];
+        const name = parts[i + 1];
+        if (name && !name.startsWith('mixins.') && MIXIN_NAMES.some(pattern => new RegExp(`^${pattern}$`).test(name))) {
+          parts[i + 1] = `mixins.${name}`;
+        }
+      }
+      line = parts.join('');
+    }
+  }
+  
+  return line;
 }
 
 async function updateSvelteFile(filePath) {
@@ -38,42 +95,13 @@ async function updateSvelteFile(filePath) {
       (match, openTag, styleContent, closeTag) => {
         let updatedStyle = styleContent;
         
-        // First replace @import with @use
-        const importRegex = /@import\s+(['"])([^'"]+)[Mm]ixins\.sass\1/g;
-        if (importRegex.test(updatedStyle)) {
-          updatedStyle = updatedStyle.replace(importRegex, (_, quote, p1) => {
-            const dirPath = p1.replace(/[Ss]tyles\/?$/, 'styles');
-            wasUpdated = true;
-            return `@use ${quote}${dirPath}/_mixins${quote} as mixins`;
-          });
-        }
-        
         // Process the style content line by line
         updatedStyle = updatedStyle.split('\n').map(line => {
-          // Skip URL and font-family lines
-          if (isUrlOrFontLine(line)) {
-            return line;
-          }
-          
-          // Replace @include with mixins prefix
-          if (/@include\s+([a-zA-Z-]+)/.test(line)) {
+          const normalizedLine = normalizeMixinsPrefix(line);
+          if (normalizedLine !== line) {
             wasUpdated = true;
-            return line.replace(/@include\s+([a-zA-Z-]+)/g, '@include mixins.$1');
           }
-          
-          // Add mixins. prefix to mixin calls that aren't already prefixed
-          if (new RegExp(`\\+(?!mixins\\.)(${MIXIN_PATTERN})\\b`).test(line)) {
-            wasUpdated = true;
-            return line.replace(new RegExp(`\\+(?!mixins\\.)(${MIXIN_PATTERN})\\b`, 'g'), '+mixins.$1');
-          }
-          
-          // Handle commented out mixin calls
-          if (new RegExp(`(\\s*//\\s*)\\+(?!mixins\\.)(${MIXIN_PATTERN})\\b`).test(line)) {
-            wasUpdated = true;
-            return line.replace(new RegExp(`(\\s*//\\s*)\\+(?!mixins\\.)(${MIXIN_PATTERN})\\b`, 'g'), '$1+mixins.$2');
-          }
-          
-          return line;
+          return normalizedLine;
         }).join('\n');
         
         return `${openTag}${updatedStyle}${closeTag}`;
@@ -99,39 +127,11 @@ async function updateSassFile(filePath) {
     
     // Process the file line by line
     content = content.split('\n').map(line => {
-      // Skip URL and font-family lines
-      if (isUrlOrFontLine(line)) {
-        return line;
-      }
-      
-      // Replace @import with @use
-      if (/@import\s+(['"])([^'"]+)[Mm]ixins\.sass\1/.test(line)) {
+      const normalizedLine = normalizeMixinsPrefix(line);
+      if (normalizedLine !== line) {
         wasUpdated = true;
-        return line.replace(/@import\s+(['"])([^'"]+)[Mm]ixins\.sass\1/g, (_, quote, p1) => {
-          const dirPath = p1.replace(/[Ss]tyles\/?$/, 'styles');
-          return `@use ${quote}${dirPath}/_mixins${quote} as mixins`;
-        });
       }
-      
-      // Replace @include with mixins prefix
-      if (/@include\s+([a-zA-Z-]+)/.test(line)) {
-        wasUpdated = true;
-        return line.replace(/@include\s+([a-zA-Z-]+)/g, '@include mixins.$1');
-      }
-      
-      // Add mixins. prefix to mixin calls that aren't already prefixed
-      if (new RegExp(`\\+(?!mixins\\.)(${MIXIN_PATTERN})\\b`).test(line)) {
-        wasUpdated = true;
-        return line.replace(new RegExp(`\\+(?!mixins\\.)(${MIXIN_PATTERN})\\b`, 'g'), '+mixins.$1');
-      }
-      
-      // Handle commented out mixin calls
-      if (new RegExp(`(\\s*//\\s*)\\+(?!mixins\\.)(${MIXIN_PATTERN})\\b`).test(line)) {
-        wasUpdated = true;
-        return line.replace(new RegExp(`(\\s*//\\s*)\\+(?!mixins\\.)(${MIXIN_PATTERN})\\b`, 'g'), '$1+mixins.$2');
-      }
-      
-      return line;
+      return normalizedLine;
     }).join('\n');
     
     if (wasUpdated) {

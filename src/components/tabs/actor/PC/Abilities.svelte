@@ -274,10 +274,10 @@
   @container (min-width: 350px)
     padding: 1rem
 .pulse
-  @include mixins.mixins.pulse
+  @include mixins.pulse
 
   .buttons
-  @include mixins.mixins.buttons
+  @include mixins.buttons
 
 .actions
   margin-left: 0.5rem
