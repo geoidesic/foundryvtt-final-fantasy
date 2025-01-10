@@ -1,4 +1,4 @@
-import { writable, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 import { SYSTEM_ID } from '~/src/helpers/constants';
 
 /**
@@ -34,7 +34,7 @@ export default class RollCalc {
 
   /**
    * Send the roll to chat
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the message is sent
    */
   async send() {
     if (this.params.rollType) {
@@ -54,10 +54,10 @@ export default class RollCalc {
    * @param {number} noOfDice - Number of dice to roll
    * @param {number} modifier - Roll modifier
    * @param {string} keep - Keep modifier
-   * @return {Promise<object>} The roll result
+   * @return {Promise<object>} Returns a promise that resolves with the roll result
    */
   async roll(die=4, noOfDice = 1, modifier = 0, keep = '') {
-    let rollString = `max(${noOfDice}d${die}${keep}${modifier === 0 ? '' : modifier > 0 ? '+' + modifier : modifier},1)`;
+    const rollString = `max(${noOfDice}d${die}${keep}${modifier === 0 ? '' : modifier > 0 ? '+' + modifier : modifier},1)`;
     const roll = new Roll(rollString);
 
     if (game.version < 12) {
@@ -89,25 +89,21 @@ export default class RollCalc {
   /**
    * Create a chat message for the roll
    * @param {object} props - The message properties
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the message is created
    */
   async createChatMessage(props) {
     const data = { ...props };
-    let item, actor;
+    const item = props.Item ? props.Item : fromUuidSync(props.itemUuid);
+    const actor = fromUuidSync(props.actorUuid);
     
-    try {
-      item = props.Item ? props.Item : fromUuidSync(props.itemUuid);
-    } catch (error) {
+    if (!item) {
       ui.notifications.error('Item cannot be used from a compendium Actor.');
-      console.error(error);
       return;
     }
     
-    try {
-      actor = fromUuidSync(props.actorUuid);
-    } catch (error) {
-      ui.notifications.error(error);
-      throw error;
+    if (!actor) {
+      ui.notifications.error('Actor not found');
+      return;
     }
 
     await ChatMessage.create({

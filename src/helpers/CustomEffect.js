@@ -15,7 +15,7 @@ export default class CustomEffect {
   /**
    * Parse a data path into its components
    * @param {string} path - The data path (e.g. "@array.push:system.actionState.available")
-   * @return {Object} The parsed components { method, target }
+   * @return {Object} Returns an object containing the parsed method and target path
    */
   static _parsePath(path) {
     const [method, target] = path.split(':');
@@ -29,7 +29,7 @@ export default class CustomEffect {
    * Handle array push operations
    * @param {string} target - The target data path
    * @param {*} value - The value to push
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the array is updated
    */
   async arrayPush(target, value) {
     game.system.log.d('EFFECTS | arrayPush', { target, value });
@@ -58,7 +58,7 @@ export default class CustomEffect {
   /**
    * Enable a slot in the action state
    * @param {object} change - The change data containing the slot value
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the slot is enabled
    */
   async enableSlot(change) {
     this.arrayPush('system.actionState.available', change.value);

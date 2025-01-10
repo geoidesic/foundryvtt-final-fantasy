@@ -59,7 +59,7 @@ export default class RollCalcActor extends RollCalc {
    * Roll an attribute check
    * @param {string} key - The attribute key
    * @param {string} code - The attribute code
-   * @return {Promise<void>} 
+   * @return {Promise<void>} Returns a promise that resolves when the attribute check is complete
    */
   async attribute(key, code) {
     const attributeValue = this.params.actor.system.attributes[key][code].val;
@@ -98,7 +98,7 @@ export default class RollCalcActor extends RollCalc {
    * Handle an ability roll
    * @param {string} type - The type of ability
    * @param {Item} item - The ability item
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the ability roll is complete
    */
   async ability(type, item) {
     await this._routeAbility(item);
@@ -120,7 +120,7 @@ export default class RollCalcActor extends RollCalc {
    * @param {Array} targets - Array of target ids
    * @param {Roll} [roll=null] - Optional roll data
    * @param {boolean} [isCritical=false] - Whether the roll was critical
-   * @return {Object} Message data object
+   * @return {Object} Returns the message data object for chat display
    */
   _createActionMessageData(item, hasTargets, targets, roll = null, isCritical = false) {
     const messageData = {
@@ -168,7 +168,6 @@ export default class RollCalcActor extends RollCalc {
       }
     };
 
-    // Add roll total to flags if provided
     if (roll) {
       messageData.flags[SYSTEM_ID].data.roll = roll.total;
     }
@@ -180,7 +179,7 @@ export default class RollCalcActor extends RollCalc {
    * Handle an action ability
    * @param {Item} item - The action item
    * @param {Object} [options={}] - Additional options
-   * @return {Promise<ChatMessage|void>} The created chat message if successful
+   * @return {Promise<ChatMessage|void>} Returns a promise that resolves with the created chat message if successful
    */
   async abilityAction(item, options = {}) {
     try {
@@ -326,9 +325,9 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Handle roll modifiers for an action
+   * Handle roll with modifiers
    * @param {Item} item - The item being used
-   * @return {Promise<Object>} Object containing roll results
+   * @return {Promise<object>} Returns an object containing roll results including total, success, critical, and d20 result
    */
   async _handleRollWithModifiers(item) {
     let [diceCount, diceType] = [1, 20];
@@ -402,10 +401,10 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Handle target effects for an action
+   * Handle target effects
    * @param {Item} item - The item being used
-   * @param {Set<Token>} targets - The targets to apply effects to
-   * @return {Promise<void>}
+   * @param {Set} targets - The targets to apply effects to
+   * @return {Promise<void>} Returns a promise that resolves when all target effects have been applied
    */
   async _handleTargetEffects(item, targets) {
     if (!item.system.grants?.list?.length) return;
@@ -477,11 +476,11 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Mark a combat tracker action slot as used
-   * @param {Item} item - The item that was used
+   * Mark combat tracker action slot as used
+   * @param {Item} item - The item being used
    * @param {string} actionType - The type of action
-   * @param {ChatMessage} message - The associated chat message
-   * @return {Promise<void>}
+   * @param {ChatMessage} message - The chat message
+   * @return {Promise<void>} Returns a promise that resolves when the combat tracker is updated
    */
   async _markCombatTrackerActionSlotAsUsed(item, actionType, message) {
     if (!(await this._handleGuards(item, [
@@ -563,10 +562,10 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Check if an item should be disabled based on tags
+   * Check if item should be disabled by tags
    * @param {Item} item - The item to check
    * @param {Item} origin - The origin item
-   * @return {Promise<boolean>} Whether the item should be disabled
+   * @return {Promise<boolean>} Returns true if the item should be disabled based on tags
    */
   async _shouldDisableByTags(item, origin) {
     const itemTags = item?.system?.tags || [];
@@ -575,11 +574,11 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Check if an item should be disabled based on requirements
+   * Check if item should be disabled by requirements
    * @param {Item} item - The item to check
    * @param {Item} origin - The origin item
-   * @param {ActiveEffect} effect - The effect to check
-   * @return {Promise<boolean>} Whether the item should be disabled
+   * @param {Effect} effect - The effect to check
+   * @return {Promise<boolean>} Returns true if the item should be disabled based on requirements
    */
   async _shouldDisableByRequirements(item, origin, effect) {
     if (!item.hasRequires) return false;
@@ -594,9 +593,9 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Handle enabling a single item's effects
-   * @param {Object} enablesItemRef - Reference to the item to enable
-   * @return {Promise<void>}
+   * Handle single item effect enabling
+   * @param {string} enablesItemRef - The item reference to enable
+   * @return {Promise<void>} Returns a promise that resolves when the item effect has been enabled
    */
   async _handleSingleItemEffectEnabling(enablesItemRef) {
     // Get the compendium item for reference
@@ -636,10 +635,10 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Handle guard checks for an action
+   * Handle guards for an item
    * @param {Item} item - The item to check guards for
-   * @param {Array<Function>} guardMethodsArray - Array of guard methods to check
-   * @return {Promise<boolean>} Whether all guards passed
+   * @param {Array} guardMethodsArray - Array of guard methods to check
+   * @return {Promise<boolean>} Returns true if all guards pass, false otherwise
    */
   async _handleGuards(item, guardMethodsArray) {
     // Run guards sequentially, stop on first failure
@@ -653,9 +652,9 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Route an ability to its appropriate handler
+   * Route ability to appropriate handler
    * @param {Item} item - The item to route
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the ability has been routed and handled
    */
   async _routeAbility(item) {
     if (item.type === "action") {
@@ -666,11 +665,11 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Handle an attribute check roll
-   * @param {Item} item - The item being used
+   * Handle attribute check
+   * @param {Item} item - The item for the check
    * @param {string} rollFormula - The formula to roll
-   * @param {Object} [rollData={}] - Additional roll data
-   * @return {Promise<Roll>} The resulting roll
+   * @param {object} rollData - Additional roll data
+   * @return {Promise<void>} Returns a promise that resolves when the attribute check has been processed
    */
   async _handleAttributeCheck(item, rollFormula, rollData = {}) {
     // Add attribute check if specified

@@ -26,6 +26,11 @@ export default class ColourContrastCalculator {
     this.outputFormat = outputFormat;
   }
 
+  /**
+   * Converts a hex color string or Color object to RGB values
+   * @param {string|Color} hex - The hex color string or Color object to convert
+   * @return {number[]} Array of RGB values [r, g, b]
+   */
   hexToRgb(hex) {
     // Handle Color object from Foundry
     if (hex instanceof Color) {
@@ -56,16 +61,32 @@ export default class ColourContrastCalculator {
     return [0, 0, 0];
   }
 
+  /**
+   * Converts RGB values to a hex color string
+   * @param {number[]} rgb - Array of RGB values
+   * @return {string} Hex color string
+   */
   rgbToHex(rgb) {
     // Convert RGB values to a hex string
     return `#${rgb.map(val => (val < 16 ? '0' : '') + val.toString(16)).join('')}`;
   }
 
+  /**
+   * Calculates brightness contrast value for RGB color
+   * @param {number[]} rgb - Array of RGB values
+   * @return {number} Brightness contrast value between 0 and 1
+   */
   brightnessContrast(rgb) {
     // Calculate brightness as per W3C recommendation
     return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
   }
 
+  /**
+   * Calculates color difference between two RGB colors
+   * @param {number[]} rgb1 - First RGB color array
+   * @param {number[]} rgb2 - Second RGB color array
+   * @return {number} Color difference value
+   */
   differenceContrast(rgb1, rgb2) {
     // Calculate color difference using Euclidean distance in RGB space
     return Math.sqrt(
@@ -75,6 +96,10 @@ export default class ColourContrastCalculator {
     );
   }
 
+  /**
+   * Calculates the highest contrast color based on calculation type
+   * @return {number[]} RGB values of the highest contrast color
+   */
   calculateHighestContrastColour() {
     const inputRgb = this.hexToRgb(this.colour);
     let highestContrastRgb;
@@ -95,6 +120,11 @@ export default class ColourContrastCalculator {
     return highestContrastRgb;
   }
 
+  /**
+   * Calculates the contrast color with optional alpha
+   * @param {number} [alpha=1.0] - Alpha value for RGBA output
+   * @return {string} Contrast color in specified output format
+   */
   calculateContrast(alpha = 1.0) {
     const highestContrastRgb = this.calculateHighestContrastColour();
 
@@ -111,7 +141,7 @@ export default class ColourContrastCalculator {
 
   /**
    * Get CSS variables for a color including contrast and RGB values
-   * @returns {{color: string, contrast: string, rgb: string}} Object containing CSS-ready color values
+   * @return {object} Object containing CSS-ready color values
    */
   getCSSVariables() {
     const rgbValues = this.hexToRgb(this.colour);
