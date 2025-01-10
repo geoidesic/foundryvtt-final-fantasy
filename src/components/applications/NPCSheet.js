@@ -4,12 +4,15 @@ import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import { localize } from "#runtime/util/i18n";
 import { generateRandomElementId } from "~/src/helpers/util";
 
+/**
+ * Actor sheet implementation for Non-Player Characters
+ * @extends {SvelteDocumentSheet}
+ */
 export default class FF15ActorSheet extends SvelteDocumentSheet {
 
   /**
    * Default Application options
-   *
-   * @returns {object} options - Application options.
+   * @return {object} options - Application options.
    * @see https://foundryvtt.com/api/Application.html#options
    */
   static get defaultOptions() {
@@ -32,14 +35,22 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
 
+  /**
+   * Closes the actor sheet and updates editing state
+   * @param {object} options - Options which affect how the window is closed
+   * @return {Promise<void>}
+   */
   async close(options = {}) {
     this.reactive.document?.update({system: {isEditing: false}});
     await super.close(options);
   }
 
+  /**
+   * Gets the header buttons configuration for the sheet
+   * @return {Array<object>} The list of header button data
+   */
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
-    const storage = this.reactive.sessionStorage;
     const canConfigure = game.user.isGM || (this.reactive.document.isOwner && game.user.can("TOKEN_CONFIGURE"));
     if (this.reactive.document.documentName === "Actor") {
       if (canConfigure) {
@@ -66,6 +77,11 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     return buttons;
   }
 
+  /**
+   * Handles toggling the edit mode of the sheet
+   * @param {Event} event - The triggering event
+   * @return {Promise<void>}
+   */
   async _onToggleEdit(event) {
     if (event) {
       event.preventDefault();
@@ -74,6 +90,11 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     this.render();
   }
 
+  /**
+   * Opens the token configuration application
+   * @param {Event} event - The triggering event
+   * @return {void}
+   */
   _onConfigureToken(event) {
     if (event) {
       event.preventDefault();
@@ -87,16 +108,33 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   }
 
   /**
-   * Drag&Drop handling
+   * Determines if dragging can start from the given selector
+   * @param {string} selector - The selector to check
+   * @return {boolean} Whether dragging can start
    */
   _canDragStart(selector) {
     return true;
   }
+  /**
+   * Determines if drag and drop is allowed
+   * @param {string} selector - The selector to check
+   * @return {boolean} Whether drag and drop is allowed
+   */
   _canDragDrop(selector) {
     return this.reactive.document.isOwner || game.user.isGM;
   }
+  /**
+   * Handles drag over events
+   * @param {DragEvent} event - The drag event
+   * @return {void}
+   */
   _onDragOver(event) { }
 
+  /**
+   * Handles the start of a drag operation
+   * @param {DragEvent} event - The drag event
+   * @return {void}
+   */
   _onDragStart(event) {
     {
       const li = event.currentTarget;
@@ -128,6 +166,11 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     }
   }
 
+  /**
+   * Handles dropping content onto the sheet
+   * @param {DragEvent} event - The drop event
+   * @return {Promise<void>}
+   */
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);
     const actor = this.reactive.document;
@@ -169,6 +212,12 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     }
   }
 
+  /**
+   * Handles dropping an active effect onto the sheet
+   * @param {DragEvent} event - The drop event
+   * @param {object} data - The dropped data
+   * @return {Promise<boolean|ActiveEffect>} The created effect or false if failed
+   */
   async _onDropActiveEffect(event, data) {
     const actor = this.reactive.document;
     const effect = await ActiveEffect.implementation.fromDropData(data);
@@ -182,6 +231,12 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     return ActiveEffect.create(effect.toObject(), { parent: actor });
   }
 
+  /**
+   * Handles dropping an actor onto the sheet
+   * @param {DragEvent} event - The drop event
+   * @param {object} data - The dropped data
+   * @return {Promise<boolean>} Whether the drop was successful
+   */
   async _onDropActor(event, data) {
     const actor = this.reactive.document;
 
@@ -190,6 +245,13 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     }
   }
 
+  /**
+   * Handles dropping an item onto the sheet
+   * @param {DragEvent} event - The drop event
+   * @param {object} data - The dropped data
+   * @param {boolean} ignoreValidation - Whether to ignore validation
+   * @return {Promise<boolean|Item>} The created item or false if failed
+   */
   async _onDropItem(event, data, ignoreValidation = false) {
     // console.log('_onDropItem', data);
     const actor = this.reactive.document;
@@ -233,6 +295,12 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     return this._onDropItemCreate(itemData);
   }
 
+  /**
+   * Handles dropping a folder onto the sheet
+   * @param {DragEvent} event - The drop event
+   * @param {object} data - The dropped data
+   * @return {Promise<Array>} Array of created items
+   */
   async _onDropFolder(event, data) {
     const actor = this.reactive.document;
 
@@ -248,6 +316,12 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     }
   }
 
+  /**
+   * Handles dropping a job onto the sheet
+   * @param {DragEvent} event - The drop event
+   * @param {object} data - The dropped data
+   * @return {Promise<boolean|void>} Whether the drop was successful
+   */
   async _onDropJob(event, data) {
     // console.log('_onDropJob', data);
     const actor = this.reactive.document;
@@ -275,16 +349,25 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     await actor.update({system: {job: {uuid: job.uuid, name: job.name, grants: grants.list, level: job.system.level, role: job.system.role, img: job.img}}});
   }
 
+  /**
+   * Creates new items from dropped data
+   * @param {object|Array} itemData - The item data to create
+   * @return {Promise<void>}
+   */
   async _onDropItemCreate(itemData) {
-
     itemData = itemData instanceof Array ? itemData : [itemData];
     const actor = this.reactive.document;
-    for(let v of itemData) {
-      const item = v
-      await actor.createEmbeddedDocuments("Item", [item]);
+    for (const v of itemData) {
+      await actor.createEmbeddedDocuments("Item", [v]);
     }
   }
 
+  /**
+   * Handles sorting items within the actor's inventory
+   * @param {Event} event - The triggering event
+   * @param {object} itemData - The item data being sorted
+   * @return {Promise<Item[]>} The updated items
+   */
   _onSortItem(event, itemData) {
     const actor = this.reactive.document;
 
@@ -301,7 +384,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
     // Identify sibling items based on adjacent HTML elements
     const siblings = [];
-    for (let el of dropTarget.parentElement.children) {
+    for (const el of dropTarget.parentElement.children) {
       const siblingId = el.dataset.itemId;
       if (siblingId && siblingId !== source.id) {
         siblings.push(items.get(el.dataset.itemId));
