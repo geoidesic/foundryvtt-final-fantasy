@@ -105,6 +105,7 @@ export default class FFActiveEffectSheet extends SvelteApplication {
     * Handles document updates
     * @param {object} doc - The updated document
     * @private
+    * @return {void}
     */
    #handleDocUpdate(doc) {
       if (doc) {
