@@ -1,4 +1,3 @@
-import FF15Item from "./item";
 import FFActiveEffect from "./active-effect";
 import { activeEffectModes, SYSTEM_ID, ACTIVE_EFFECT_MODES } from "~/src/helpers/constants"
 
@@ -8,10 +7,19 @@ import { activeEffectModes, SYSTEM_ID, ACTIVE_EFFECT_MODES } from "~/src/helpers
  */
 export default class FF15Actor extends Actor {
 
+  /**
+   * Creates a new FF15 actor
+   * @param {object} data - The actor data
+   * @param {object} context - The initialization context
+   */
   constructor(data = {}, context) {
     super(data, context);
   }
 
+  /**
+   * Gets the active token for this actor
+   * @return {Token|null} The active token or null if none found
+   */
   get activeToken() {
     for (const token of canvas.tokens.placeables) {
       if (token.actor === this) {
@@ -21,6 +29,10 @@ export default class FF15Actor extends Actor {
     return null;
   }
 
+  /**
+   * Gets all ally tokens for this actor
+   * @return {Token[]} Array of ally tokens
+   */
   get allyTokens() {
     // Get all tokens on the canvas
     const tokens = canvas.tokens.placeables;
@@ -42,9 +54,9 @@ export default class FF15Actor extends Actor {
     );
   }
 
-
   /**
-   * @returns {Array<ActiveEffect>} effects on the actor that have a change with key = EnableCombatTurnSlot mode = custom
+   * Gets effects that enable combat turn slots
+   * @return {Array<ActiveEffect>} effects on the actor that have a change with key = EnableCombatTurnSlot mode = custom
    */
   get enablerEffects() {
     return this.effects.filter(effect =>
@@ -54,16 +66,20 @@ export default class FF15Actor extends Actor {
     );
   }
 
-
-
+  /**
+   * Checks for specific duplicates in an array
+   * @param {Array} arr - The array to check
+   * @param {string} str - The string to look for duplicates
+   * @return {boolean} Whether duplicates were found
+   */
   hasSpecificDuplicate(arr, str) {
     return arr.filter(item => item === str).length > 1;
   }
 
   /**
    * Check if an item has remaining uses
-   * @param {FF15Item} item 
-   * @returns {boolean}
+   * @param {Item} item - The item to check for remaining uses
+   * @return {boolean} Whether the item has remaining uses
    */
   async actorItemHasRemainingUses(item) {
     game.system.log.p("[USES] Checking remaining uses for:", item);
@@ -76,7 +92,11 @@ export default class FF15Actor extends Actor {
     return item.usesRemaining > 0;
   }
 
-
+  /**
+   * Checks if item tags match enabler effect tags
+   * @param {Item} item - The item to check
+   * @return {boolean} Whether tags match
+   */
   itemTagsMatchEnablerEffectTags(item) {
     const itemTags = item.system.tags;
     for (const effect of this.effects) {
@@ -91,7 +111,7 @@ export default class FF15Actor extends Actor {
    * Find a matching effect based on provided criteria
    * @param {ActiveEffect} effect - The effect to match against
    * @param {Object} criteria - Object with keys matching effect properties and values to match against
-   * @returns {ActiveEffect|undefined} The matching effect or undefined if none found
+   * @return {ActiveEffect|undefined} The matching effect or undefined if none found
    */
   matchingEffect(effect, criteria = {}) {
     return this.effects.find(ae => {
@@ -120,7 +140,7 @@ export default class FF15Actor extends Actor {
   /**
    * Add effects from an item to this actor
    * @param {Item} item - The item to add effects from
-   * @returns {Array} Array of effect UUIDs that were enabled
+   * @return {Array} Array of effect UUIDs that were enabled
    */
   async addLinkedEffects(item) {
     if (!item.hasEffects) return [];
@@ -170,7 +190,7 @@ export default class FF15Actor extends Actor {
   /**
    * Enable effects from an item on this actor
    * @param {Item} item - The item to enable effects from
-   * @returns {Array} Array of effect UUIDs that were enabled
+   * @return {Array} Array of effect UUIDs that were enabled
    */
   async enableLinkedEffects(item) {
     let effectsEnabled = [];
@@ -207,6 +227,10 @@ export default class FF15Actor extends Actor {
     return effectsEnabled;
   }
 
+  /**
+   * Process effect hooks for an effect
+   * @param {ActiveEffect} effect - The effect to process hooks for
+   */
   async _processEffectHooks(effect) {
     for (const change of effect.changes) {
       if (activeEffectModes.find(e => e.value === change.mode)) {
@@ -215,6 +239,12 @@ export default class FF15Actor extends Actor {
     }
   }
 
+  /**
+   * Remove the first duplicate from an array
+   * @param {Array} arr - The array to process
+   * @param {string} name - The name to check for duplicates
+   * @return {Array} The processed array
+   */
   removeFirstDuplicate(arr, name) {
     const index = arr.indexOf(name); // Find the first occurrence
     if (index !== -1 && arr.slice(index + 1).includes(name)) {
@@ -225,9 +255,9 @@ export default class FF15Actor extends Actor {
 
   /**
    * Only applies via the token HUD
-   * @param {*} statusId 
-   * @param {*} options 
-   * @returns {Promise<ActiveEffect|boolean|undefined>}  A promise which resolves to one of the following values:
+   * @param {string} statusId - The ID of the status effect to toggle
+   * @param {object} options - Options for toggling the status effect
+   * @return {Promise<ActiveEffect|boolean|undefined>} A promise which resolves to one of the following values:
    *                                 - ActiveEffect if a new effect need to be created
    *                                 - true if was already an existing effect
    *                                 - false if an existing effect needed to be removed
@@ -267,13 +297,11 @@ export default class FF15Actor extends Actor {
     super.prepareData();
   }
 
-
   /** @override */
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
     super.prepareBaseData();
-
 
     // console.log('prepareBaseData');
   }
@@ -309,8 +337,6 @@ export default class FF15Actor extends Actor {
     // }
   }
 
-
-
   async deleteAllItems(type) {
     game.system.log.d(type)
     game.system.log.d(typeof type)
@@ -332,6 +358,5 @@ export default class FF15Actor extends Actor {
   async _onDrop(event) {
     console.log('_onDrop in the actor.js', event);
   }
-
 
 }
