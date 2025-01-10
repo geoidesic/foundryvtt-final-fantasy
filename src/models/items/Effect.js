@@ -7,7 +7,7 @@ import { FFItemDataModel } from './baseItem';
 export class EffectModel extends FFItemDataModel {
   /**
    * Defines the schema for Effect items
-   * @returns {object} The schema definition object
+   * @return {object} The schema definition object
    */
   static defineSchema() {
     return {

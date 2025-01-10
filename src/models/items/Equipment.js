@@ -9,7 +9,7 @@ const { NumberField, StringField } = foundry.data.fields;
 export class EquipmentModel extends FFItemDataModel {
   /**
    * Defines the schema for Equipment items
-   * @returns {object} The schema definition object
+   * @return {object} The schema definition object
    */
   static defineSchema() {
     return {

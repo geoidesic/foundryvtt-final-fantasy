@@ -11,7 +11,7 @@ const {
 export class JobModel extends FFItemDataModel {
   /**
    * Defines the schema for Job items
-   * @returns {object} The schema definition object
+   * @return {object} The schema definition object
    */
   static defineSchema() {
     return {

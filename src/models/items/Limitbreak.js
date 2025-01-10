@@ -11,7 +11,7 @@ const {
 export class EffectModel extends FFItemDataModel {
   /**
    * Defines the schema for Limitbreak items
-   * @returns {object} The schema definition object
+   * @return {object} The schema definition object
    */
   static defineSchema() {
     return {

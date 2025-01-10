@@ -6,7 +6,7 @@ import { gameSettings } from '~/src/config/gameSettings';
  * Registers all game settings for the system.
  * This function initializes various user and world settings that control
  * system behavior and preferences.
- * @returns {void}
+ * @return {void}
  */
 export function registerSettings() {
   /** User settings */
@@ -27,7 +27,7 @@ export function registerSettings() {
  * Some abilities have limitations on how many times they can be used.
  * This setting controls whether the system should automatically deduct uses from the actor's pool when an ability is used.
  * If disabled, the user will be prompted to deduct uses from the actor's pool when an ability is used.
- * @returns {void}
+ * @return {void}
  */
 function automaticUses() {
   gameSettings.register({
@@ -48,7 +48,7 @@ function automaticUses() {
  * Controls whether chat messages should display the actor owner as the sender.
  * When enabled, chat messages will show the owner of the associated actor
  * rather than the current user.
- * @returns {void}
+ * @return {void}
  */
 function chatMessageSenderIsActorOwner() {
   gameSettings.register({
@@ -69,7 +69,7 @@ function chatMessageSenderIsActorOwner() {
  * Configures whether initiative should be manually entered.
  * When enabled, allows users to manually input initiative values instead
  * of using automatic calculations.
- * @returns {void}
+ * @return {void}
  */
 function manualInitiative() {
 
@@ -91,7 +91,7 @@ function manualInitiative() {
  * Controls the visibility of status effect names.
  * When enabled, displays the names of status effects alongside their icons
  * in the interface.
- * @returns {void}
+ * @return {void}
  */
 function showStatusEffectNames() {
 
@@ -113,7 +113,7 @@ function showStatusEffectNames() {
  * Controls whether to show the welcome message on startup.
  * Users can disable the welcome message to prevent it from appearing
  * each time they start the system.
- * @returns {void}
+ * @return {void}
  */
 function dontShowWelcome() {
   gameSettings.register({
@@ -134,7 +134,7 @@ function dontShowWelcome() {
  * Controls the display of application window headers.
  * When enabled, shows only icons in application window headers
  * instead of both icons and text.
- * @returns {void}
+ * @return {void}
  */
 function applicationWindowHeaderIconsOnly() {
   gameSettings.register({
@@ -154,7 +154,7 @@ function applicationWindowHeaderIconsOnly() {
 /**
  * Sets whether to show a confirmation dialog before deleting actor items.
  * Helps prevent accidental deletion of items from actor sheets.
- * @returns {void}
+ * @return {void}
  */
 function confirmBeforeDeletingActorItem() {
   gameSettings.register({
@@ -175,7 +175,7 @@ function confirmBeforeDeletingActorItem() {
  * Configures the sound played when combat starts.
  * Allows users to set a custom sound effect that plays when
  * a new combat encounter begins.
- * @returns {void}
+ * @return {void}
  */
 function combatStartSound() {
   gameSettings.register({
@@ -197,7 +197,7 @@ function combatStartSound() {
  * Configures the sound played for chat messages.
  * Allows users to set a custom notification sound for
  * when new chat messages are received.
- * @returns {void}
+ * @return {void}
  */
 function chatMessageSound() {
   gameSettings.register({
@@ -219,7 +219,7 @@ function chatMessageSound() {
  * Controls the visibility of profile images in chat messages.
  * When enabled, shows user/actor profile images alongside
  * their chat messages.
- * @returns {void}
+ * @return {void}
  */
 function showChatProfileImages() {
   gameSettings.register({
@@ -240,7 +240,7 @@ function showChatProfileImages() {
  * Controls whether chat descriptions are visible by default.
  * When enabled, automatically expands description sections in
  * chat messages instead of requiring manual expansion.
- * @returns {void}
+ * @return {void}
  */
 function defaultChatDescriptionVisible() {
   gameSettings.register({

@@ -9,7 +9,7 @@ const { HTMLField, BooleanField } = foundry.data.fields;
 export class FFItemDataModel extends FFTypeDataModel {
   /**
    * Defines the base schema for item data models
-   * @returns {object} The schema definition object
+   * @return {object} The schema definition object
    */
   static defineSchema() {
     return {

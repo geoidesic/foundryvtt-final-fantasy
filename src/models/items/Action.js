@@ -12,7 +12,7 @@ export class ActionModel extends FFItemDataModel {
 
   /**
    * Defines the schema for Action items
-   * @returns {object} The schema definition object
+   * @return {object} The schema definition object
    */
   static defineSchema() {
     return {
