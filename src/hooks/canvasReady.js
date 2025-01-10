@@ -1,6 +1,10 @@
 import FFTokenHUD from '~/src/extensions/token-hud.js'
 import { getDefaultStatusEffects } from "~/src/helpers/Conditions";
 
+/**
+ * Hook that runs when the canvas is ready
+ * @return {void}
+ */
 export default function canvasReady() {
 
   Hooks.on('canvasReady', () => {

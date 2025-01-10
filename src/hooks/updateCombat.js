@@ -1,6 +1,10 @@
 import { resetUses, resetActionState } from '~/src/helpers/util.js';
 import { ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
 
+/**
+ * Hook that runs when combat is updated
+ * @return {void}
+ */
 export default function updateCombat() {
   // Reset uses at end of turn for abilities with 'turn' limitation units
   Hooks.on("updateCombat", async (combat, changed, options, userId) => {

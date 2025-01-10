@@ -1,3 +1,7 @@
+/**
+ * Hook that runs before a token is updated
+ * @return {void}
+ */
 export default function preUpdateToken() {
   Hooks.on('preUpdateToken', async (tokenDocument, update) => {
     // prevent movement while focused

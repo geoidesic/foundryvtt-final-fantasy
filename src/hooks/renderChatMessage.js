@@ -9,6 +9,7 @@ import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
  * Note: You must manually destroy this Svelte component in an associated `preDeleteChatMessage` like the one provided
  * below. The reason being is that you are manually / conditionally creating a Svelte component that is not monitored /
  * controlled by TRL itself, so you must also manually destroy this component when the chat message is deleted.
+ * @return {void}
  */
 export default function renderChatMessage() {
 

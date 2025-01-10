@@ -1,5 +1,9 @@
 import { SYSTEM_ID } from "~/src/helpers/constants"
 
+/**
+ * Hook that runs when the active effect config is rendered
+ * @return {void}
+ */
 export default function renderActiveEffectConfig() {
   Hooks.on("renderActiveEffectConfig", (app, jq) => {
     const ae = app.document;

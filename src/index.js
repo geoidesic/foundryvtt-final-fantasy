@@ -10,6 +10,10 @@ import FFCombatant from './extensions/combatant.js'
 import RollGuards from "~/src/helpers/RollGuards";
 import hooks from "~/src/hooks";
 //- helpers
+/**
+ * Sets up Dice So Nice module configuration
+ * @return {void}
+ */
 function setupDSN() {
   // Set up Dice So Nice to icrementally show attacks then damge rolls
   if (game.modules.get("dice-so-nice")?.active && !game.settings.get(game.system.id, ICON.settings.dsn_setup)) {

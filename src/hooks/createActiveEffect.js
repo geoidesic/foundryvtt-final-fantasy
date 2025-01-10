@@ -2,6 +2,10 @@
  * @why The purpose of this listener is to use Action durations
  * to set the duration of the associated target or enabled ActiveEffect.
  */
+/**
+ * Hook that runs when an active effect is created
+ * @return {void}
+ */
 export default function createActiveEffect() {
   Hooks.on("createActiveEffect", async (activeEffect, data) => {
     const origin = fromUuidSync(activeEffect.origin);

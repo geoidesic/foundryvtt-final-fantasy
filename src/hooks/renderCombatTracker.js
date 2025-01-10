@@ -1,5 +1,9 @@
 import { Timing } from "@typhonjs-fvtt/runtime/util";
 
+/**
+ * Hook that runs when the combat tracker is rendered
+ * @return {void}
+ */
 export default function renderCombatTracker() {
   Hooks.on("renderCombatTracker", (app, html, data) => {
     const isCombatActive = !!game.combat?.started;

@@ -1,3 +1,7 @@
+/**
+ * Hook that runs when a combatant is updated
+ * @return {void}
+ */
 export default function updateCombatant() {
 
 /**

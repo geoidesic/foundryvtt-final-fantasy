@@ -1,5 +1,9 @@
 import { SYSTEM_ID } from "~/src/helpers/constants"
 
+/**
+ * Hook that runs before a chat message is deleted
+ * @return {void}
+ */
 export default function preDeleteChatMessage() {
   // Add this new hook
   Hooks.on("preDeleteChatMessage", async (message) => {

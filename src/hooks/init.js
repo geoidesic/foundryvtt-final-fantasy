@@ -13,6 +13,10 @@ import FFCombatTracker from '~/src//extensions/combat-tracker.js'
 import hooks from "~/src/hooks";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 
+/**
+ * Hook that runs during system initialization
+ * @return {void}
+ */
 export default function init() {
 
   Hooks.once("init", async (a, b, c) => {

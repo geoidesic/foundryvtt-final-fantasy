@@ -1,5 +1,9 @@
 import { mappedGameTargets } from '~/src/stores';
 
+/**
+ * Hook that runs when a token is targeted
+ * @return {void}
+ */
 export default function targetToken() {
 
   /**
