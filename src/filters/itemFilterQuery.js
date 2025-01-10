@@ -6,21 +6,15 @@ import { stepwiseResolveDotpath } from '~/src/helpers/paths';
 
 
 /**
- * Creates a filter function to compare objects by a give property key against a regex test. The returned function
- * is also a writable Svelte store that builds a regex from the stores value.
+ * Creates a filter function to compare objects by a given property key against a regex test.
+ * The returned function is also a writable Svelte store that builds a regex from the store's value.
+ * This filter function can be used with DynArrayReducer and bound as a store to input elements.
  *
- * This filter function can be used w/ DynArrayReducer and bound as a store to input elements.
- *
- * @param {string|Iterable<string>}   properties - Property key to compare.
- *
- * @param {object}   [opts] - Optional parameters.
- *
- * @param {boolean}  [opts.caseSensitive=false] - When true regex test is case-sensitive.
- *
- * @param {import('svelte/store').Writable<string>}  [opts.store=void] - Use the provided store to instead of creating
- *                                                                       a default writable store.
- *
- * @returns {(data: object) => boolean} The query string filter.
+ * @param {string|Iterable<string>} properties - Property key to compare
+ * @param {object} [opts] - Optional parameters
+ * @param {boolean} [opts.caseSensitive=false] - When true regex test is case-sensitive
+ * @param {import('svelte/store').Writable<string>} [opts.store] - Use the provided store instead of creating a default writable store
+ * @return {function} The query string filter function with store capabilities
  */
 export function createFilterQuery(properties, { caseSensitive = false, store } = {}) {
   let keyword = '';
@@ -48,12 +42,9 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
   }
 
   /**
-   * If there is no filter keyword / regex then do not filter otherwise filter based on the regex
-   * created from the search input element.
-   *
-   * @param {object} data - Data object to test against regex.
-   *
-   * @returns {boolean} AnimationStore filter state.
+   * Filter function that tests data against the current regex
+   * @param {object} data - Data object to test against regex
+   * @return {boolean} Whether the data matches the filter
    */
   function filterQuery(data) {
     if (keyword === '' || !regex) { 
@@ -117,20 +108,18 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
   }
 
   /**
-   * Create a custom store that changes when the search keyword changes.
-   *
-   * @param {(string) => void} handler - A callback function that accepts strings.
-   *
-   * @returns {import('svelte/store').Unsubscriber}
+   * Subscribe to changes in the filter value
+   * @param {function} handler - A callback function that accepts strings
+   * @return {import('svelte/store').Unsubscriber} Unsubscribe function
    */
   filterQuery.subscribe = (handler) => {
     return storeKeyword.subscribe(handler);
   };
 
   /**
-   * Set
-   *
-   * @param {string}   value - A new value for the keyword / regex test.
+   * Set a new value for the filter
+   * @param {string|boolean|Array<string>} value - A new value for the keyword/regex test
+   * @return {void}
    */
   filterQuery.set = (value) => {
     game.system.log.d('value', value)
