@@ -22,11 +22,23 @@ export const log = {
   get level() { return this.loggingLevel; }
 };
 
+/**
+ * Toggles the bookmark/favorite status of an item
+ * @param {Item} item - The item to toggle
+ * @param {Function} callback - Callback function to run after toggle
+ * @return {Promise<void>} A promise that resolves when the item is updated
+ */
 export async function toggleBookmark(item, callback = () => { }) {
   await item.update({ system: { favourite: !item.system.favourite } });
   callback();
 }
 
+/**
+ * Gets the origin of an effect
+ * @param {ActiveEffect} effect - The effect to get the origin for
+ * @param {boolean} tryFromUuidSync - Whether to try getting from UUID synchronously
+ * @return {Item|null} The origin item or null
+ */
 export function getEffectOrigin(effect, tryFromUuidSync = false) {
   if (!game.actors) return null;
   const origin = effect._source.origin;
@@ -53,19 +65,39 @@ export function getEffectOrigin(effect, tryFromUuidSync = false) {
   return item;
 }
 
+/**
+ * Gets a localized string
+ * @param {string} string - The string to localize
+ * @return {string} The localized string
+ */
 export function localize(string) {
   return game.i18n.localize(`${SYSTEM_CODE}.${string}`);
 }
 
+/**
+ * Checks if a value is a number
+ * @param {*} value - The value to check
+ * @return {boolean} Whether the value is a number
+ */
 export function isNumber(value) {
   return typeof value === 'number' && isFinite(value);
 }
 
+/**
+ * Checks if a value is an attribute
+ * @param {string} val - The value to check
+ * @return {boolean} Whether the value is an attribute
+ */
 export function isAttribute(val) {
   if (Object.keys(attributes).includes(val)) return true;
   return false;
 }
 
+/**
+ * Checks if an item is a passive effect
+ * @param {Item} item - The item to check
+ * @return {boolean} Whether the item is a passive effect
+ */
 export function isPassiveEffectFromItem(item) {
   game.system.log.d("isPassiveEffectFromItem item", item);
   if (item instanceof ActiveEffect) {
@@ -79,21 +111,46 @@ export function isPassiveEffectFromItem(item) {
   return false;
 }
 
+/**
+ * Converts a string to slug format
+ * @param {string} str - The string to slugify
+ * @return {string} The slugified string
+ */
 export function slugify(str) {
   return str.toLowerCase().replace(/ /g, '-');
 }
 
+/**
+ * Checks if an item's parent is an actor
+ * @param {Item} item - The item to check
+ * @return {boolean} Whether the item's parent is an actor
+ */
 export function isParentActor(item) {
   return item?.parent?.constructor?.name === 'FF15Actor';
 }
 
+/**
+ * Capitalizes the first letter of a string
+ * @param {string} str - The string to capitalize
+ * @return {string} The capitalized string
+ */
 export function ucfirst(str) {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
+/**
+ * Checks if an object is empty
+ * @param {object} obj - The object to check
+ * @return {boolean} Whether the object is empty
+ */
 export const isEmptyObj = (obj) => Object.keys(obj).length === 0
 
+/**
+ * Gets a compendium pack from a UUID
+ * @param {string} uuid - The UUID to get the pack from
+ * @return {Promise<CompendiumCollection|boolean>} The pack or false if not found
+ */
 export const getPackFromUuid = async (uuid) => {
   const split = uuid.split(".");
   if (split[0] !== 'Compendium') {
@@ -105,6 +162,11 @@ export const getPackFromUuid = async (uuid) => {
   return pack;
 }
 
+/**
+ * Generates a random element ID
+ * @param {number} length - The length of the ID
+ * @return {string} The generated ID
+ */
 export function generateRandomElementId(length = 8) {
   const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   let result = '';
@@ -144,10 +206,19 @@ export function getActorOwner(actor) {
 }
 
 
+/**
+ * Gets the owners of an actor
+ * @param {Actor} actor - The actor to get owners for
+ * @return {User[]} Array of users who own the actor
+ */
 export function getOwners(actor) {
   return game.users.filter(u => actor.testUserPermission(u, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER))
 }
 
+/**
+ * Gets all GM users
+ * @return {string[]} Array of GM user IDs
+ */
 export function getGMs() {
   return game.users.filter(u => u.isGM).map(u => u.id)
 }

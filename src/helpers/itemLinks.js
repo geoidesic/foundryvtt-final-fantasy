@@ -5,9 +5,10 @@ import { SYSTEM_CODE } from "~/src/helpers/constants"
 
 /**
  * Use this to remove an item from a linked list of items.
- * @param {TJSDocument} $doc 
- * @param {Number} index of the item to delete
- * @returns {Array} updated list
+ * @param {TJSDocument} $doc - The document containing the items
+ * @param {string} key - The key in the document's system data
+ * @param {Number} index - The index of the item to delete
+ * @return {Array} updated list
  */
 export async function deleteItemLink($doc, key, index) {
   game.system.log.d('key', key)
@@ -25,10 +26,10 @@ export async function deleteItemLink($doc, key, index) {
 /**
  * This function can be used within a drop listener to store the dropped item.
  * Ensure that the model of the item with the drop listener has a system node with a list array
- * @param {object} event 
- * @param {object} $doc 
- * @param {string} key the system data node to store the list to
- * @returns {object} saved droppedItemData
+ * @param {object} event - The drop event
+ * @param {object} $doc - The document to update
+ * @param {string} key - The system data node to store the list to
+ * @return {object} saved droppedItemData
  */
 export async function onDropItemOnItem(event, $doc, key) {
 
@@ -102,10 +103,10 @@ export async function onDropItemOnItem(event, $doc, key) {
  * 1. If we overwrite it, we lose the reference to the original array
  * 2. If we simply edit it, the caller component's reactivity won't be triggered (because reactivity for arrays in Svelte is triggered by assignment, not editing)
  * So you have to do the assignment in the component from the return value here
- * @param {array} list the array you wish to update
- * @param {array} uuids the list of uuids to fetch objects from
- * @param {string} uuid a single uuid to fetch, i.e. won't process the whole batch, just a single item
- * @returns a new array of fetched items
+ * @param {array} list - The array you wish to update
+ * @param {array} uuids - The list of uuids to fetch objects from
+ * @param {string} uuid - A single uuid to fetch, i.e. won't process the whole batch, just a single item
+ * @return {array} A new array of fetched items
  */
 export async function updateList(list, uuids, uuid = false) {
   // game.system.log.d('updateList', list, uuids, uuid)
@@ -119,9 +120,10 @@ export async function updateList(list, uuids, uuid = false) {
 }
 
 /**
- * @param {array} list of item objects
- * @param {boolean} byUuid
- * @returns object uuid key/value pairs
+ * Gets items from a list of UUIDs
+ * @param {array} list - List of item objects
+ * @param {boolean} byUuid - Whether to fetch by UUID
+ * @return {object} UUID key/value pairs
  */
 export async function uuidsFromList(list, byUuid = false) {
   const items = {}

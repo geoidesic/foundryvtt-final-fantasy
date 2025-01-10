@@ -63,25 +63,23 @@ export function stepwiseResolveDotpath(obj, path) {
 /**
  * A variant of resolve_dotpath that provides more context about documents we encounter along the way.
  *
- * @param {IconActor | IconItem} root_doc The document we are starting at
- *
+ * @param {IconActor | IconItem} rootDoc The document we are starting at
  * @param {string} path The path to resolve
- *
- * @returns {DrilldownDocumentResult} Result
+ * @return {DrilldownDocumentResult} Result
  */
-export function drilldownDocument(root_doc, path) {
-  const steps = stepwiseResolveDotpath(root_doc, path);
+export function drilldownDocument(rootDoc, path) {
+  const steps = stepwiseResolveDotpath(rootDoc, path);
   for (let i = steps.length - 1; i >= 0; i--) {
     // Walk it back till first document
     const step = steps[i];
     if (step.val instanceof foundry.abstract.Document) {
       // Recombine rest of path
-      const sub_path = steps
+      const subPath = steps
         .slice(i + 1)
         .map((v) => v.pathlet)
         .join(".");
-      const sub_doc = step.val;
-      return { sub_doc, sub_path, terminus: steps[steps.length - 1].val };
+      const subDoc = step.val;
+      return { subDoc, subPath, terminus: steps[steps.length - 1].val };
     }
   }
   throw new Error("Drilldown document must have at least one document in its path");
