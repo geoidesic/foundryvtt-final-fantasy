@@ -1,9 +1,25 @@
+/**
+ * Adjusts the alpha value of an RGBA color string
+ * @param {string} rgba - The RGBA color string to adjust
+ * @param {number} alpha - The new alpha value
+ * @return {string} The adjusted RGBA color string
+ */
 export function adjustAlpha(rgba, alpha) {
-  const [r, g, b, _] = rgba.match(/\d+/g);
+  const [r, g, b] = rgba.match(/\d+/g);
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
+/**
+ * Calculator for determining contrasting colors and color adjustments
+ */
 export default class ColourContrastCalculator {
+  /**
+   * Creates a new color contrast calculator
+   * @param {string|Color} colour - The color to calculate contrast for
+   * @param {object} options - Configuration options
+   * @param {string} [options.calculationType="contrast"] - Type of calculation to perform
+   * @param {string} [options.outputFormat="hex"] - Format for the output color
+   */
   constructor(colour, { calculationType = "contrast", outputFormat = "hex" } = {}) {
     this.colour = colour;
     this.calculationType = calculationType;
