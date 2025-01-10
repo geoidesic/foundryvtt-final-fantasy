@@ -75,6 +75,7 @@ export default class RollCalc {
   /**
    * Play a sound for the message
    * @param {string} soundPath - Path to the sound file
+   * @return {void} Nothing
    */
   playMessageSound(soundPath) {
     const customSound = game.settings.get(SYSTEM_ID, 'chatMessageSound').trim();

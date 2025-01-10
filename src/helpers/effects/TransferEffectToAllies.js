@@ -14,9 +14,10 @@ export default class TransferEffectToAllies {
   /**
    * Delete transferred effects from allies
    * @param {object} event - The event containing effect data
+   * @return {Promise<void>} Returns a promise that resolves when the effects have been deleted
    */
   async delete(event) {
-    const { change, effect } = event;
+    const { effect } = event;
 
     const transferredEffects = game.actors.reduce((acc, actor) => {
       return acc.concat(actor.effects.filter(e => 
@@ -40,7 +41,7 @@ export default class TransferEffectToAllies {
    */
   async process(event) {
     game.system.log.p("[TRANSFER] Starting effect transfer process", event);
-    const { change, effect } = event;
+    const { effect } = event;
     game.system.log.p("[TRANSFER] Source actor:", this.actor.name);
     game.system.log.p("[TRANSFER] Effect:", effect);
 
@@ -79,11 +80,6 @@ export default class TransferEffectToAllies {
           img: this.actor.img
         }
       }
-
-      game.system.log.p("[TRANSFER] Created effect data:", effectData);
-
-      // Add a flag to mark this as a transferred effect
-      // effectData.flags[SYSTEM_ID].transferredFrom = this.actor.uuid;
 
       try {
         await token.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);

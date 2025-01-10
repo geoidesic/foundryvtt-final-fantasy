@@ -26,7 +26,7 @@ export default class DamageDiceReroll {
       const origin = fromUuidSync(effect.origin);
       for (const change of effect.changes) {
         if (change.key === 'DamageDiceReroll' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          for (const [_, targetData] of DamageResults) {
+          for (const [targetData] of DamageResults) {
             const [numDice, dieType] = targetData.directHit.split('d').map(Number);
             if (!numDice || !dieType) continue;
 

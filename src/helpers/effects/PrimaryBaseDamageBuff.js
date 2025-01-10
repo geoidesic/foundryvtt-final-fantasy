@@ -24,11 +24,9 @@ export default class PrimaryBaseDamageBuff {
       for (const change of effect.changes) {
         
         if(change.key === '@PrimaryBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.ADD) {
-          for (const [targetId, targetData] of DamageResults) {
-            const oldDamage = targetData.damage;
+          for (const [targetData] of DamageResults) {
             targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
             targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
-           
           }
         }
       }

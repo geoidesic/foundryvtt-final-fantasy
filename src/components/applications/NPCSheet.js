@@ -220,6 +220,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
    */
   async _onDropActiveEffect(event, data) {
     const actor = this.reactive.document;
+    /* eslint-disable-next-line new-cap */
     const effect = await ActiveEffect.implementation.fromDropData(data);
 
     if (!actor.isOwner || !effect) {
@@ -308,7 +309,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     }
 
     if (folder.contents.length) {
-      for (let item of folder.contents) {
+      for (const item of folder.contents) {
         await this._onDropItem(event, item, true);
       }
     }
@@ -354,7 +355,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   /**
    * Creates new items from dropped data
    * @param {object|Array} itemData - The item data to create
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the items have been created
    */
   async _onDropItemCreate(itemData) {
     itemData = itemData instanceof Array ? itemData : [itemData];

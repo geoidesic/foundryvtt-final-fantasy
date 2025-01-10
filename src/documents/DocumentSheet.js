@@ -112,6 +112,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
    * Handles document updates
    * @param {foundry.abstract.Document} doc - The document being updated
    * @param {object} options - Update options
+   * @return {Promise<void>} Returns a promise that resolves when the document is updated
    */
   async #handleDocUpdate(doc, options) {
     const { action } = options;

@@ -304,6 +304,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   async _onDropFolder(event, data) {
     const actor = this.reactive.document;
 
+    /* eslint-disable-next-line new-cap */
     const folder = await Folder.implementation.fromDropData(data);
     if (!folder && data.documentName !== "Item" && !actor.isOwner) {
       return [];

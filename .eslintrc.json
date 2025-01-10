@@ -12,6 +12,7 @@
   },
   "rules": {
     "spaced-comment": "off",
+    "new-cap": "off",
     "require-jsdoc": ["error", {
       "require": {
         "FunctionDeclaration": true,

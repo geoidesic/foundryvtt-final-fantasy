@@ -53,7 +53,7 @@ export async function onDropItemOnItem(event, $doc, key) {
       return false;
     }
     game.system.log.d('droppedItemData.type', droppedItemData.type)
-    
+
     //- if item is of type `limitebreak` only allow one. I.e. must delete before adding new
     if (droppedItemData.type === 'limitbreak' && $doc.type === 'job') {
       const existingLimitbreak = await Promise.all($doc.system?.[key]?.list.map(async r => {

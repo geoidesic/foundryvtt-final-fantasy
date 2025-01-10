@@ -29,14 +29,7 @@ export default class FFCombatTracker extends CombatTracker {
      // in this context, but be wary of doing this adhoc.
      this.#combat.subscribe(() => void 0);
 
-     this.#combatants.subscribe((values) =>
-     {
-        // console.log(`Combatants ------`);
-        for (const value of values)
-        {
-          // Placeholder for future use
-        }
-     });
+     this.#combatants.subscribe((values) =>{});
   }
 
   /** @inheritdoc */

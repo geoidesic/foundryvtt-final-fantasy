@@ -1,7 +1,6 @@
 import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "./constants.js"
 import RollCalc from "./RollCalc.js"
-import FFActiveEffect from "~/src/extensions/active-effect.js"
 
 /**
  * Extends RollCalc to handle actor-specific roll calculations
@@ -288,7 +287,6 @@ export default class RollCalcActor extends RollCalc {
     if (isCritical) {
       // For healer recovery skills, we only double healing dice
       const isHealerRecovery = item.system.baseEffectType === 'heal';
-      const hasDirectHit = item.system.hasDirectHit && !isHealerRecovery;
 
       // Double all damage/healing dice formulas
       const formulaFields = isHealerRecovery 
@@ -389,7 +387,7 @@ export default class RollCalcActor extends RollCalc {
   /**
    * Handle enabler effects for an action
    * @param {Item} item - The item being used
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the enabler effects have been handled
    */
   async _handleEnablerEffects(item) {
     let allEnabledEffects = [];
