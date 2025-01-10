@@ -2,21 +2,28 @@ import { SvelteApplication } from "#runtime/svelte/application";
 import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
 
 import DocumentShell from "./DocumentShell.svelte";
+
+/**
+ * Base class for Svelte-powered document sheets
+ * @extends {SvelteApplication}
+ */
 export default class SvelteDocumentSheet extends SvelteApplication {
   /**
    * Document store that monitors updates to any assigned document.
-   *
    * @type {TJSDocument<foundry.abstract.Document>}
    */
   #documentStore = new TJSDocument(void 0, { delete: this.close.bind(this) });
 
   /**
    * Holds the document unsubscription function.
-   *
    * @type {Function}
    */
   #storeUnsubscribe;
 
+  /**
+   * Creates a new instance of the document sheet
+   * @param {object} object - The object to initialize with
+   */
   constructor(object) {
     super(object);
 
@@ -34,8 +41,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
 
   /**
    * Default Application options
-   *
-   * @returns {object} options - Application options.
+   * @return {object} options - Application options.
    * @see https://foundryvtt.com/api/Application.html#options
    */
   static get defaultOptions() {
@@ -56,6 +62,11 @@ export default class SvelteDocumentSheet extends SvelteApplication {
       },
     });
   }
+
+  /**
+   * Gets the header buttons for the sheet
+   * @return {Array<object>} The list of header buttons
+   */
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
     buttons.unshift({
@@ -67,7 +78,10 @@ export default class SvelteDocumentSheet extends SvelteApplication {
     return buttons;
   }
 
-
+  /**
+   * Handles sheet configuration
+   * @param {Event} event - The triggering event
+   */
   _onConfigureSheet(event) {
     if (event) {
       event.preventDefault();
@@ -79,6 +93,11 @@ export default class SvelteDocumentSheet extends SvelteApplication {
     }).render(true);
   }
 
+  /**
+   * Closes the sheet
+   * @param {object} options - Options for closing
+   * @return {Promise<void>}
+   */
   async close(options = {}) {
     await super.close(options);
 
@@ -89,14 +108,12 @@ export default class SvelteDocumentSheet extends SvelteApplication {
   }
 
   /**
-   * Handles any changes to document.
-   *
-   * @param {foundry.abstract.Document}  doc -
-   *
-   * @param {object}                     options -
+   * Handles document updates
+   * @param {foundry.abstract.Document} doc - The document being updated
+   * @param {object} options - Update options
    */
   async #handleDocUpdate(doc, options) {
-    const { action, data, documentType } = options;
+    const { action } = options;
 
     // I need to add a 'subscribe' action to TJSDocument so must check void.
     if ((action === void 0 || action === "update" || action === "subscribe") && doc) {
@@ -104,10 +121,20 @@ export default class SvelteDocumentSheet extends SvelteApplication {
     }
   }
 
+  /**
+   * Prepares base data for the sheet
+   * @return {Promise<void>}
+   */
   async prepareBaseData() {
 
   }
 
+  /**
+   * Renders the sheet
+   * @param {boolean} force - Whether to force render
+   * @param {object} options - Render options
+   * @return {this} The sheet instance
+   */
   render(force = false, options = {}) {
     if (!this.#storeUnsubscribe) {
       this.#storeUnsubscribe = this.#documentStore.subscribe(this.#handleDocUpdate.bind(this));
