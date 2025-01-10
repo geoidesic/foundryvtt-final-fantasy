@@ -1,16 +1,17 @@
-
-
 import WelcomeAppShell from './WelcomeAppShell.svelte';
 import { SvelteApplication } from "#runtime/svelte/application";
 import { version } from "~/system.json";
 import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants"
 
+/**
+ * Welcome application that displays system information and welcome message
+ * @extends {SvelteApplication}
+ */
 export default class WelcomeApplication extends SvelteApplication
 {
    /**
     * Default Application options
-    *
-    * @returns {object} options - Application options.
+    * @return {object} options - Application options.
     * @see https://foundryvtt.com/api/interfaces/client.ApplicationOptions.html
     */
    static get defaultOptions()

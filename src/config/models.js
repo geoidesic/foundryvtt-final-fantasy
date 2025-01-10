@@ -7,6 +7,7 @@ import { TraitModel } from "../models/items/Trait";
 
 /**
  * Configure all of our system documents
+ * @return {void}
  */
 export function setupModels() {
     // Setup models

@@ -1,5 +1,9 @@
 import effects from '~/src/helpers/effects';
 
+/**
+ * Sets up all effect processors by registering their respective hook listeners
+ * Each processor handles a specific type of effect in the system
+ */
 export function setupEffectsProcessors() {
   Hooks.on('FF15.processAdditionalBaseDamageFromItem', (event) => {
     const processor = new effects.PrimaryBaseDamageBuff(event.actor);
