@@ -190,9 +190,9 @@ export function getActorOwner(actor) {
     return owners[0];
   }
 
-  let owner = owners.reduce((owner, currentOwner) => {
+  const owner = owners.reduce((owner, currentOwner) => {
     if (!currentOwner.isGM) {
-      owner = currentOwner;
+      return currentOwner;
     }
     return owner;
   }, null);
@@ -227,21 +227,29 @@ export function getGMs() {
 }
 
 /**
- * This is necessary because of a wierd context difference between foundry and svelte
- * Foundry's update method interprets dot notation as data nodes and so creates a nested data structure from it if you use it as a key
- * Svelte's stores do not, they use it as a string literal.
- * If you're trying to use actor uuid as a storage key then this conversion becomes necessary
- * @param {string} uuid 
- * @returns {string} replaces dots with underscores
+ * Converts a UUID string to a storage-safe format by replacing dots with underscores
+ * @param {string} uuid - The UUID string to encode
+ * @return {string} The encoded UUID string with dots replaced by underscores
  */
 export function encodeUuidString(uuid) {
   return uuid.replace(/\./g, "_");
 }
 
+/**
+ * Converts a storage-safe UUID string back to standard format by replacing underscores with dots
+ * @param {string} uuid - The encoded UUID string to decode
+ * @return {string} The decoded UUID string with underscores replaced by dots
+ */
 export function decodeUuidString(uuid) {
   return uuid.replace(/_/g, "\.");
 }
 
+/**
+ * Finds all keys in an object that have a specific value
+ * @param {object} obj - The object to search
+ * @param {*} value - The value to search for
+ * @return {Array<string>} Array of keys that have the specified value
+ */
 export function findKeysByValue(obj, value) {
   return Object.entries(obj)
     .filter(([key, val]) => val === value)
