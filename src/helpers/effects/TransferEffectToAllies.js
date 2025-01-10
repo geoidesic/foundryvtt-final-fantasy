@@ -1,12 +1,20 @@
-import { activeEffectModes, ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
 import { SYSTEM_ID } from "../constants";
 
+/**
+ * Handles transferring effects to allied actors
+ */
 export default class TransferEffectToAllies {
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
   constructor(actor) {
     this.actor = actor;
   }
 
-
+  /**
+   * Delete transferred effects from allies
+   * @param {object} event - The event containing effect data
+   */
   async delete(event) {
     const { change, effect } = event;
 
@@ -25,6 +33,10 @@ export default class TransferEffectToAllies {
     }
   }
 
+  /**
+   * Process the transfer effect to allies
+   * @param {object} event - The event containing effect data
+   */
   async process(event) {
     game.system.log.p("[TRANSFER] Starting effect transfer process", event);
     const { change, effect } = event;

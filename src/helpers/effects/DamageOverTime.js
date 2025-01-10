@@ -1,10 +1,20 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 
+/**
+ * Handles damage over time effects
+ */
 export default class DamageOverTime {
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
   constructor(actor) {
     this.actor = actor;
   }
 
+  /**
+   * Process the damage over time effect
+   * @param {object} event - The event containing effect data
+   */
   async process(event) {
     game.system.log.o("[DOT] Processing event:", event);
     const { change, effect } = event;

@@ -1,10 +1,20 @@
-import { activeEffectModes, ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
+import { ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
 
+/**
+ * Handles damage dice reroll effects
+ */
 export default class DamageDiceReroll {
-
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
   constructor(actor) {
     this.actor = actor;
   }
+
+  /**
+   * Process the damage dice reroll effect
+   * @param {object} event - The event containing damage results
+   */
   async process(event) {
     const { DamageResults } = event;
     if(!DamageResults || !DamageResults.size) return;

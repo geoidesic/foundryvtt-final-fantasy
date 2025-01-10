@@ -1,11 +1,20 @@
-import { activeEffectModes, ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
+import { ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
 
+/**
+ * Handles enabling additional combat turn slots
+ */
 export default class EnableCombatTurnSlot {
-
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
   constructor(actor) {
     this.actor = actor;
   }
 
+  /**
+   * Process the enable combat turn slot effect
+   * @param {object} event - The event containing effect data
+   */
   async process(event) {
     const { change } = event;
     const target = 'system.actionState.available';

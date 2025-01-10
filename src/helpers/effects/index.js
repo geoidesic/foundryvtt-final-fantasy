@@ -1,11 +1,15 @@
 // Import effects directly
-import PrimaryBaseDamageBuff from './primaryBaseDamageBuff.js';
+import PrimaryBaseDamageBuff from './PrimaryBaseDamageBuff.js';
 import DamageDiceReroll from './DamageDiceReroll.js';
 import TransferEffectToAllies from './TransferEffectToAllies.js';
 import EnableCombatTurnSlot from './EnableCombatTurnSlot.js';
 import DamageOverTime from './DamageOverTime.js';
 import ProcTrigger from './ProcTrigger.js';
-// Export effects as an object
+
+/**
+ * Collection of custom effect processors
+ * @type {Object.<string, any>}
+ */
 export default {
   PrimaryBaseDamageBuff,
   DamageDiceReroll,
@@ -15,6 +19,9 @@ export default {
   ProcTrigger
 };
 
+/**
+ * Register effect processors with the system
+ */
 export function registerEffectProcessors() {
   // ... other registrations ...
 
