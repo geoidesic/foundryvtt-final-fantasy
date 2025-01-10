@@ -59,7 +59,7 @@ export default class FFActiveEffectSheet extends SvelteApplication {
 
    /**
     * Gets the document associated with this sheet
-    * @return {TJSDocument} The document instance
+    * @return {TJSDocument} Returns the document instance associated with this sheet
     */
    get document() {
       return this.#doc;
@@ -68,7 +68,7 @@ export default class FFActiveEffectSheet extends SvelteApplication {
    /**
     * Injects HTML content into the application
     * @param {HTMLElement} html - The HTML content to inject
-    * @return {Promise<void>}
+    * @return {Promise<void>} Returns a promise that resolves when the HTML has been injected
     */
    async _injectHTML(html) {
       this.options.svelte.props.doc = this.document;
@@ -79,7 +79,7 @@ export default class FFActiveEffectSheet extends SvelteApplication {
     * Renders the application
     * @param {boolean} force - Whether to force a re-render
     * @param {object} options - Additional rendering options
-    * @return {Promise<void>}
+    * @return {Promise<void>} Returns a promise that resolves when the application has been rendered
     */
    render(force = false, options = {}) {
       if (!this.#storeUnsubscribe) {
@@ -88,6 +88,11 @@ export default class FFActiveEffectSheet extends SvelteApplication {
       return super.render(force, options);
    }
 
+   /**
+    * Closes the application and performs cleanup
+    * @param {object} [options={}] - Options which configure the closing behavior
+    * @return {Promise<void>} Returns a promise that resolves when the application has closed
+    */
    async close(options = {}) {
       if (this.#storeUnsubscribe) {
          this.#storeUnsubscribe();

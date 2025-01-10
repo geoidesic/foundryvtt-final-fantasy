@@ -54,6 +54,7 @@ export default class FF15ItemSheetStandard extends FF15ItemSheet {
   /**
    * Activates event listeners for the sheet
    * @param {JQuery} html - The rendered HTML of the sheet
+   * @return {void} Nothing
    */
   activateListeners(html) {
     super.activateListeners(html);
@@ -66,6 +67,7 @@ export default class FF15ItemSheetStandard extends FF15ItemSheet {
   /**
    * Handles test button click events
    * @param {Event} event - The click event
+   * @return {void} Nothing
    * @private
    */
   _onTestButtonClick(event) {
@@ -76,6 +78,7 @@ export default class FF15ItemSheetStandard extends FF15ItemSheet {
   /**
    * Handles dragover events
    * @param {DragEvent} event - The dragover event
+   * @return {void} Nothing
    * @private
    */
   _onDragOver(event) {
@@ -91,7 +94,7 @@ export default class FF15ItemSheetStandard extends FF15ItemSheet {
   /**
    * Handles drop events
    * @param {DragEvent} event - The drop event
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the drop operation is complete
    * @private
    */
   async _onDrop(event) {

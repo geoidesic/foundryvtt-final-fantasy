@@ -38,7 +38,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   /**
    * Closes the actor sheet and updates editing state
    * @param {object} options - Options which affect how the window is closed
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the sheet is closed
    */
   async close(options = {}) {
     this.reactive.document?.update({system: {isEditing: false}});
@@ -47,7 +47,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
   /**
    * Gets the header buttons configuration for the sheet
-   * @return {Array<object>} An array of button configurations for the sheet header
+   * @return {Array<object>} Returns an array of button configurations for the sheet header
    */
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
@@ -80,7 +80,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   /**
    * Handles toggling the edit mode of the sheet
    * @param {Event} event - The triggering event
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the edit mode is toggled
    */
   async _onToggleEdit(event) {
     if (event) {
