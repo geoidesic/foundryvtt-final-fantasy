@@ -1,6 +1,10 @@
 import CustomEffect from "~/src/helpers/CustomEffect";
 import { activeEffectModes } from "~/src/helpers/constants"
 
+/**
+ * Hook that runs when an active effect is applied
+ * @return {void}
+ */
 export default function applyActiveEffect() {
   Hooks.on("applyActiveEffect", async (actor, data, id, state, obj) => {
     // game.system.log.o("applyActiveEffect", { actor, data, id, state, obj });

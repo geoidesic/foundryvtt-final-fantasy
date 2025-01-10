@@ -1,3 +1,8 @@
+/**
+ * Svelte action to automatically scroll an element to the bottom
+ * @param {HTMLElement} node - The DOM node to apply the action to
+ * @return {void}
+ */
 export default function autoScroll(node) {
   setTimeout(() => {
     const chatMessage = node.parentNode;
