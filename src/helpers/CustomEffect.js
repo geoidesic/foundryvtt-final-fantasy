@@ -4,6 +4,10 @@
  * Then add a matching effect helper in src/helpers/effects/
  */
 export default class CustomEffect {
+  /**
+   * Creates a new CustomEffect instance
+   * @param {object} actor - The actor this effect belongs to
+   */
   constructor(actor) {
     this.actor = actor;
   }
@@ -11,7 +15,7 @@ export default class CustomEffect {
   /**
    * Parse a data path into its components
    * @param {string} path - The data path (e.g. "@array.push:system.actionState.available")
-   * @returns {Object} The parsed components { method, target }
+   * @return {Object} The parsed components { method, target }
    */
   static _parsePath(path) {
     const [method, target] = path.split(':');
@@ -25,6 +29,7 @@ export default class CustomEffect {
    * Handle array push operations
    * @param {string} target - The target data path
    * @param {*} value - The value to push
+   * @return {Promise<void>}
    */
   async arrayPush(target, value) {
     game.system.log.d('EFFECTS | arrayPush', { target, value });
@@ -50,6 +55,11 @@ export default class CustomEffect {
     });
   }
 
+  /**
+   * Enable a slot in the action state
+   * @param {object} change - The change data containing the slot value
+   * @return {Promise<void>}
+   */
   async enableSlot(change) {
     this.arrayPush('system.actionState.available', change.value);
     game.system.log.d('EFFECTS | enables', { change });
@@ -58,6 +68,7 @@ export default class CustomEffect {
   /**
    * Handle a custom effect change
    * @param {Object} change - The effect change data
+   * @return {Promise<void>}
    */
   async handleChange(change) {
     game.system.log.d('EFFECTS | handleChange', { change });

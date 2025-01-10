@@ -1,6 +1,10 @@
 import { SYSTEM_ID, activeEffectModes } from "./constants";
 import { localize } from "~/src/helpers/util";
 
+/**
+ * Returns an array of default status effects for the system
+ * @return {Array<object>} Array of status effect configurations
+ */
 export function getDefaultStatusEffects() {
   return [
     {

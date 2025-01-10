@@ -15,11 +15,15 @@ import { SYSTEM_ID } from '~/src/helpers/constants';
  * Deprecated in later versions of Foundry VTT, this mode used to represent a private roll visible only to the GM.
  */
 
+/**
+ * Class to handle roll calculations and modifiers
+ */
 export default class RollCalc {
-
-  message = {};
+  /**
+   * Creates a new RollCalc instance
+   * @param {object} params - The parameters for the roll calculation
+   */
   constructor(params) {
-    // game.system.log.d(params);
     this.params = params;
     this.store = writable({});
     this.subscribe = this.store.subscribe;
@@ -28,15 +32,13 @@ export default class RollCalc {
     this.RG = new CONFIG.FF15.RollGuards(this.params.actor);
   }
 
+  /**
+   * Send the roll to chat
+   * @return {Promise<void>}
+   */
   async send() {
-    game.system.log.d('this.params', this.params)
-
     if (this.params.rollType) {
-      game.system.log.d('this', this);
-      game.system.log.d('this.params.rollType', this.params.rollType);
-
       let message = await this[this.params.rollType](this.params);
-      // game.system.log.d('send message', message);
       if (message === false) return;
       message.sound = 'sounds/dice.wav';
       message.rollType = this.params.rollType;
@@ -46,11 +48,16 @@ export default class RollCalc {
     }
   }
 
+  /**
+   * Perform a dice roll
+   * @param {number} die - The die size
+   * @param {number} noOfDice - Number of dice to roll
+   * @param {number} modifier - Roll modifier
+   * @param {string} keep - Keep modifier
+   * @return {Promise<object>} The roll result
+   */
   async roll(die=4, noOfDice = 1, modifier = 0, keep = '') {
-    let rollString = '';
-    rollString = `max(${noOfDice}d${die}${keep}${modifier === 0 ? '' : modifier > 0 ? '+' + modifier : modifier},1)`;
-
-    // roll the dice!
+    let rollString = `max(${noOfDice}d${die}${keep}${modifier === 0 ? '' : modifier > 0 ? '+' + modifier : modifier},1)`;
     const roll = new Roll(rollString);
 
     if (game.version < 12) {
@@ -65,24 +72,29 @@ export default class RollCalc {
     return { roll, die, noOfDice, error: false };
   }
 
+  /**
+   * Play a sound for the message
+   * @param {string} soundPath - Path to the sound file
+   */
   playMessageSound(soundPath) {
     const customSound = game.settings.get(SYSTEM_ID, 'chatMessageSound').trim();
     if(!soundPath && customSound !== '') {
       soundPath = customSound;
     }
-    game.system.log.d('playMessageSound', soundPath);
     if(soundPath) {
       foundry.audio.AudioHelper.play({ src: soundPath, volume: 1, autoplay: true, loop: false });
     }
   }
 
+  /**
+   * Create a chat message for the roll
+   * @param {object} props - The message properties
+   * @return {Promise<void>}
+   */
   async createChatMessage(props) {
-    game.system.log.d('createChatMessage props', props);
-
     const data = { ...props };
-
-    // get item from props
     let item, actor;
+    
     try {
       item = props.Item ? props.Item : fromUuidSync(props.itemUuid);
     } catch (error) {
@@ -90,6 +102,7 @@ export default class RollCalc {
       console.error(error);
       return;
     }
+    
     try {
       actor = fromUuidSync(props.actorUuid);
     } catch (error) {
@@ -97,20 +110,12 @@ export default class RollCalc {
       throw error;
     }
 
-    game.system.log.d('ChatMessage data', data);
-
-    const message = await ChatMessage.create({
+    await ChatMessage.create({
       user: game.user.id,
       flags: { [SYSTEM_ID]: { data } },
       speaker: game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: actor }) : null,
-      // content: `Rolling 1d20+5: ${data.roll.result}`, // Customize the standard message content (text only)
-      // rolls: [data.roll], //- makes it a standard roll chat
-      // rollMode: "roll" //- makes it a public roll
     });
-    // AudioHelper.play({ src: "sounds/dice.wav", volume: 0.8, autoplay: true, loop: false });
+    
     this.playMessageSound();
-    // AudioHelper.play({ src: "sounds/lock.wav", volume: 0.8, autoplay: true, loop: false });
-    // AudioHelper.play({ src: "sounds/error.wav", volume: 0.8, autoplay: true, loop: false });
-
   }
 }
