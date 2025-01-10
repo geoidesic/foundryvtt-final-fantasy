@@ -1,5 +1,6 @@
 import { localize } from "~/src/helpers/util";
 import { SYSTEM_ID } from "~/src/helpers/constants";
+import ModifierDialog from '~/src/components/organisms/dialogs/ModifierDialog.svelte';
 
 /**
  * Class to handle various checks and guards for rolling actions
@@ -33,8 +34,6 @@ export default class RollGuards {
    * @private
    */
   async _showModifierDialog(item) {
-    const ModifierDialog = (await import('~/src/components/organisms/dialogs/ModifierDialog.svelte')).default;
-    
     return new Promise((resolve, reject) => {
       new Dialog({
         title: "Extra Modifiers",
