@@ -86,10 +86,12 @@ export default () => {
       minify: s_COMPRESS ? "terser" : false,
       target: ["es2022", "chrome100"],
       terserOptions: s_COMPRESS ? { ...terserConfig(), ecma: 2022 } : void 0,
-      lib: {
-        entry: "./index.js",
-        formats: ["es"],
-        fileName: "index",
+      rollupOptions: {
+        input: "./src/index.js",
+        output: {
+          entryFileNames: "index.js",
+          format: "es"
+        }
       }
     },
     
