@@ -176,7 +176,11 @@ export function generateRandomElementId(length = 8) {
   return result;
 }
 
-
+/**
+ * Gets the actor owner
+ * @param {Actor} actor The actor to get the owner for
+ * @return {User} The owner user
+ */
 export function getActorOwner(actor) {
   const owners = getOwners(actor);
   if (owners.length === 0) {
@@ -204,7 +208,6 @@ export function getActorOwner(actor) {
   }
   return owner;
 }
-
 
 /**
  * Gets the owners of an actor
@@ -245,11 +248,22 @@ export function findKeysByValue(obj, value) {
     .map(([key]) => key);
 }
 
-
+/**
+ * Truncates a string to a specified length
+ * @param {string} str The string to truncate
+ * @param {number} n The maximum length
+ * @return {string} The truncated string
+ */
 export function truncate(str, n) {
   return str.length > n ? str.substr(0, n - 1) + "..." : str;
 }
 
+/**
+ * Updates a chat message
+ * @param {string} messageId The ID of the message to update
+ * @param {object} data The update data
+ * @return {Promise<void>} A promise that resolves when the message is updated
+ */
 export async function updateMessage(messageId, data) {
   // check if chat message owner is this user
   const message = game.messages.get(messageId);
@@ -268,12 +282,22 @@ export async function updateMessage(messageId, data) {
   }
 }
 
+/**
+ * Resets uses for a collection of items
+ * @param {Item[]} items The items to reset
+ * @return {Promise<void>} A promise that resolves when all items are updated
+ */
 export const resetUses = async (items) => {
   for (const item of items) {
     await item.update({ system: { uses: 0 } });
   }
 }
 
+/**
+ * Resets the action state for an actor
+ * @param {Actor} actor The actor to reset
+ * @return {Promise<void>} A promise that resolves when the actor is updated
+ */
 export const resetActionState = async (actor) => {
   // Reset action state
   const baseActions = ['primary', 'secondary'];

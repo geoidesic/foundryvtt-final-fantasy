@@ -5,7 +5,7 @@
  *
  * @param {string} path The path to format
  *
- * @returns {string} The same path, but with all square brackets replaced with dots
+ * @return {string} The same path, but with all square brackets replaced with dots
  */
 export function formatDotpath(path) {
   return path.replace(/\[/g, ".").replace(/]/g, "");
@@ -13,7 +13,6 @@ export function formatDotpath(path) {
 
 
 /**
- * 
  * Helper function to get arbitrarily deep array references
  * Returns every item along the path, starting with the object itself
  * Any failed pathlet resolutions will still be emitted, but as an undefined
@@ -23,7 +22,7 @@ export function formatDotpath(path) {
  *
  * @param {string} path The dotpath to use
  *
- * @returns {Array<PathResolutionStep>} An array of the steps we took resolving the path
+ * @return {Array<PathResolutionStep>} An array of the steps we took resolving the path
  */
 export function stepwiseResolveDotpath(obj, path) {
   const pathlets = formatDotpath(path).split(".");
@@ -103,7 +102,7 @@ export function drilldownDocument(rootDoc, path) {
  *
  * @param {ResolveDotpathOptions} [opts] Additional arguments
  *
- * @returns {any} Value at end of path, or default value
+ * @return {any} Value at end of path, or default value
  */
 export function resolveDotpath(obj, path, default_ = undefined, opts = null) {
   const evaluated = stepwiseResolveDotpath(obj, path);
