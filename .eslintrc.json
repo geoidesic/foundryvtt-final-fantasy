@@ -11,6 +11,16 @@
     "sourceType": "module"
   },
   "rules": {},
-  "ignorePatterns": ["node_modules", "/packs/**"]
+  "ignorePatterns": ["node_modules", "/packs/**"],
+  "globals": {
+    "game": "readonly",
+    "CONFIG": "readonly",
+    "Hooks": "readonly",
+    "Actors": "readonly",
+    "Items": "readonly",
+    "Dialog": "readonly",
+    "Roll": "readonly",
+    "foundry": "readonly"
+  }
 }
 

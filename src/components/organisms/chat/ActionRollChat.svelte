@@ -13,7 +13,6 @@
 
   export let FFMessage
   export let FFMessageState
-  export let messageId
   export let content
 
   const item = fromUuidSync(FFMessage.item.uuid);
@@ -289,7 +288,7 @@
 <template lang="pug">
 
 .chat
-  div.pointer(on:click!="{log}") 
+  div.pointer(role="button" on:click!="{log}") 
     i.fa-solid.fa-bug
   ChatTitle(on:toggleDescription="{handleToggleDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")
@@ -357,31 +356,24 @@
 
 .inset
   +mixins.inset
+
 :global(.FF15 #chat-description)
   background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
   color: var(--color-text-dark)
   padding: 0.2rem 0.5rem
   margin-top: 0.2rem
+
 :global(.FF15 #chat-description p)
   font-size: 0.7rem
   line-height: 1.2rem
   font-family: "Trirong", serif
 
-.portrait-frame
-  margin-right: -2px
-  z-index: 2
-.img, img
-  max-width: 35px
-  max-height: 35px
+
 
 .action-result
   margin-top: 0.2em
   background: rgba(0, 0, 0, 0.05)
   border-radius: 3px
-
-.no-targets
-  color: #666
-  font-style: italic
 
 .target-list
   display: flex
@@ -406,56 +398,14 @@
   display: flex
   align-items: center
   gap: 0.5em
+  position: relative
   
   .target-img
     width: 36px
     height: 36px
     border: none
     position: relative
-    
-    // Add corner elements for tooltips
-    &[data-tooltip]::after
-      content: ''
-      position: absolute
-      
-    &[data-tooltip]::before,
-    &[data-tooltip] .corner-tl,
-    &[data-tooltip] .corner-tr,
-    &[data-tooltip] .corner-bl,
-    &[data-tooltip] .corner-br
-      content: ''
-      position: absolute
-      width: 10px
-      height: 10px
-      pointer-events: none
-      z-index: 1
-  
-  .target-name
-    font-weight: bold
-  
-  .target-defense
-    color: #666
-    font-size: 0.9em
 
-.target-outcome
-  display: flex
-  align-items: center
-  gap: 0.5em
-  
-  .hit
-    color: #19762d
-    font-weight: bold
-  
-  .miss
-    color: #9c0f0f
-    font-weight: bold
-  
-  .formula
-    color: #666
-    font-size: 0.9em
-    &:before
-      content: "•"
-      margin: 0 0.3em
 
 button:disabled
   opacity: 0.3
@@ -463,13 +413,6 @@ button:disabled
 
 .leatherbook
   +mixins.background(rgb(98 49 50), 0.05, none)
-
-.portrait-frame
-  // margin-right: 5px
-  & + .content
-    display: flex
-    flex-direction: column
-    gap: 5px
 
 .critical
   color: #ffd700
@@ -492,5 +435,4 @@ button:disabled
     opacity: 0.7
   100%
     opacity: 1
-
 </style>

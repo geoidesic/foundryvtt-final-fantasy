@@ -40,7 +40,14 @@ export default () => {
       conditions: ["import", "browser"],
       alias: {
         "~": path.resolve(__dirname),
+        '/systems/foundryvtt-final-fantasy/assets': path.resolve(__dirname, 'assets'),
       },
+    },
+
+    // Add Foundry globals
+    define: {
+      'global': {},
+      'process.env': {}
     },
 
     esbuild: {
@@ -83,23 +90,51 @@ export default () => {
         entry: "./index.js",
         formats: ["es"],
         fileName: "index",
-      },
+      }
     },
     
     plugins: [
       svelte({
         compilerOptions: {
-          // Provides a custom hash adding the string defined in `s_SVELTE_HASH_ID` to scoped Svelte styles;
-          // This is reasonable to do as the framework styles in TRL compiled across `n` different packages will
-          // be the same. Slightly modifying the hash ensures that your package has uniquely scoped styles for all
-          // TRL components and makes it easier to review styles in the browser debugger.
           cssHash: ({ hash, css }) => `svelte-${SYSTEM_CODE}-${hash(css)}`
-       },
-        preprocess: preprocess(),
+        },
+        preprocess: preprocess({
+          pug: true
+        }),
         onwarn: (warning, handler) => {
           // Suppress `a11y-missing-attribute` for missing href in <a> links.
           // Foundry doesn't follow accessibility rules.
           if (warning.message.includes(`<a> element should have an href attribute`)) {
+            return;
+          }
+
+          // Suppress keyboard event handler warnings since Foundry uses tab for targeting
+          if (warning.message.includes(`visible, non-interactive elements with an on:click event must be accompanied by a keyboard event handler`)) {
+            return;
+          }
+
+          // Suppress tabindex warnings since Foundry uses tab for targeting
+          if (warning.message.includes(`Elements with the 'button' interactive role must have a tabindex value`)) {
+            return;
+          }
+
+          // Suppress warnings about non-interactive img elements with click handlers
+          if (warning.message.includes(`Non-interactive element <img> should not be assigned mouse or keyboard event listeners`)) {
+            return;
+          }
+
+          // Suppress asset resolution warnings
+          if (warning.message && warning.message.includes("didn't resolve at build time")) {
+            return;
+          }
+
+          // Suppress warnings about Foundry global variables
+          if (warning.code === 'undefined-variable' && ['game', 'foundry', 'CONFIG', 'Hooks', 'Actors', 'Items', 'Dialog', 'Roll', 'fromUuid'].includes(warning.message.split("'")[1])) {
+            return;
+          }
+
+          // Suppress warnings about Foundry global variables in template expressions
+          if (warning.code === 'missing-declaration' && ['game', 'foundry', 'CONFIG', 'Hooks', 'Actors', 'Items', 'Dialog', 'Roll', 'fromUuid'].includes(warning.message.split("'")[1])) {
             return;
           }
 
@@ -112,7 +147,7 @@ export default () => {
 
       // When s_TYPHONJS_MODULE_LIB is true transpile against the Foundry module version of TRL.
       s_TYPHONJS_MODULE_LIB && typhonjsRuntime(),
-    ],
+    ]
   };
 };
 

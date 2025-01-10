@@ -208,11 +208,11 @@
           h1.left.gold {localize('FF15.Job')}
           table.borderless
             tr
-              td.img.shrink(scope="col")
+              th.img.shrink(scope="col")
                 img.icon(src="{$Actor.system.job?.img}" alt="{$Actor.system.job?.img}")
-              td.left.expand.gold.larger(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
-              td.expand.scaleup.kerned.glow.gold.largerer(scope="col") {$Actor.system.job?.level}
-              td.buttons(scope="col")
+              th.left.expand.gold.larger(scope="col" on:click="{showItemSheet($Actor.system.job)}" role="button") {ucfirst($Actor.system.job?.name)}
+              th.expand.scaleup.kerned.glow.gold.largerer(scope="col") {$Actor.system.job?.level}
+              th.buttons(scope="col")
                 button.stealth(on:click="{deleteJob}")
                   i.fa-solid.fa-trash
 
@@ -222,20 +222,19 @@
           tr.gold
             th.img.shrink(scope="col")
             th.left.expand.ml-sm(scope="col") {localize('FF15.Name')}
-            //- th.left(scope="col" colspan="1") {localize('FF15.Type')}
             th(scope="col" colspan="1") Tags
             th.buttons(scope="col" class="{lockCSS}" colspan="2")
-              button.stealth(class="{lockCSS}")
-                i.fa(class="{faLockCSS}" on:click="{toggleLock}")
+              button.stealth(class="{lockCSS}" on:click="{toggleLock}")
+                i.fa(class="{faLockCSS}")
           +each("items as item, index")
             //- pre item.type {item.type}
             tr(class="{actionTypeClass(item)}")
-              td.img(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Use')}")
-                img.icon(src="{item.img}" alt="{item.name}" on:click!="{RollCalc.ability(item.type, item)}")
+              td.img(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Use')}" on:click!="{RollCalc.ability(item.type, item)}" role="button")
+                img.icon(src="{item.img}" alt="{item.name}")
               td.left
                 .flexrow
                   .flex3.left(data-tooltip-class="FF15-tooltip wordy" data-tooltip="{item.system.description}")
-                    a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+                    a.stealth.link(class="{item.system.isMagic ? 'pulse' : ''}" role="button" on:click="{showItemSheet(item)}") {item.name}
                   +if("item.system.hasLimitation && game.combat")
                     .flex0.right.ml-sm(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Item.Types.action.UsesRemaining')}")
                       Badge(type!="{badgeType(item)}") {item.usesRemaining}
@@ -247,15 +246,15 @@
                     Tag.badge.small({tag}, remover="{false}" style="margin-top: -2px;")
               td(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
-                  i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
+                  i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" role="button")
               td.min.buttons.right
                 +if("!$doc.system.inventoryLocked")
-                  button.stealth( data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
-                    i.left.fa.fa-edit
-                  button.stealth( data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
-                    i.left.fa.fa-copy
-                  button.stealth( data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
-                    i.left.fa.fa-trash
+                  button.stealth(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                    i.left.fa.fa-edit(role="button")
+                  button.stealth(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                    i.left.fa.fa-copy(role="button")
+                  button.stealth(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                    i.left.fa.fa-trash(role="button")
             
       +if("hasItems")
         button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
@@ -355,10 +354,6 @@ table tr
   -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
   border-color: #888 #aaa #eee
 
-input
-  background-color: white
-  height: 1.2rem
-       
 .icon
   cursor: pointer
   &:hover

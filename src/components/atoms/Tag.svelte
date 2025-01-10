@@ -46,51 +46,42 @@
 </script>
 
 <template lang="pug">
-  .badge({...$$restProps})
+  .badge.center({...$$restProps})
     .label {tag}
-    +if("remover")
-      .remove.right(on:click!="{() => removeTag(tag)}")
+    if remover
+      button.remove.right.stealth(
+        on:click="{() => removeTag(tag)}"
+        on:keydown="{(e) => e.key === 'Enter' && removeTag(tag)}"
+        aria-label="Remove tag"
+        tabindex="0"
+      )
         i.fas.fa-xmark
 </template>
 
 <style lang="sass">
-  .badge
-    display: inline
-    border: 2px outset var(--color-highlight-light)
-    border-radius: 50px
-    background-color: var(--ff-border-color)
-    max-height: 1.8rem
-    vertical-align: middle
-    white-space: nowrap
-    &:not(.small)
-      padding: 3px 0px 2px 0.4rem
-      margin-right: 2px
-    &.small
-      padding: 0 2px
-      margin-right: 2px
-      font-size: 0.6rem
-      vertical-align: 0%
-    &.low
-      vertical-align: -10%
-    
-      .label
-        vertical-align: 0%
+  @use '../../styles/_mixins' as mixins
 
-    .label
-      font-size: 0.8rem
-      color: white
-      display: inline-block
-    .remove
-      display: inline-block
-      margin-left: 4px
-      padding: 2px 4px 0 4px
-      background-color: rgba(255, 255, 255, 0.3)
-      border-radius: 10px
-      border: 1px solid transparent
-      color: white
-      cursor: pointer
-      transition: background-color 0.3s ease, color 0.3s ease
-      &:hover
-        color: var(--color-shadow-primary)
-        background-color: rgba(255, 255, 255, 1)
+  .badge
+    +mixins.badge
+
+
+  .label
+    margin-right: 0.5rem
+
+  .remove
+    cursor: pointer
+    padding: 0
+    margin: 0
+    background: none
+    border: none
+    color: inherit
+
+    &:hover
+      color: #ff4444
+
+  .stealth
+    background: none
+    border: none
+    padding: 0
+    margin: 0
 </style>

@@ -5,8 +5,7 @@
 
   import { TJSInput } from "#standard/component/form";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
-  import { toggleBookmark } from "~/src/helpers/util";
-  import { localize } from "#runtime/util/i18n";
+  import { toggleBookmark, localize } from "~/src/helpers/util";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
@@ -88,7 +87,7 @@
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteItem`));
+      okToDelete = confirm(game.i18n.localize("Types.Actor.Inventory.confirmDeleteItem"));
     }
     if (okToDelete) {
       item.delete();
@@ -167,22 +166,22 @@
 <template lang="pug">
 .favourites({...$$restProps})
   +if("$doc.system.hasFavouriteItems()")
-    h2.font-cinzel {localize("Favourites.Title")}
+    h2.font-cinzel {localize("Tabs.Favourites")}
     div.pa-xs
       table.borderless.low-contrast
         tr
           th.img.shrink(scope="col")
-          th.left.expand(scope="col") {localize(`${SYSTEM_CODE}.Name`)}
+          th.left.expand(scope="col") {localize("Name")}
           +if("combat")
             th
           th.shrink(scope="col")
             
         +each("items as item, index")
           tr
-            td.img
-              img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
+            td.img(on:click="{useItem(item)}" role="button")
+              img.icon(src="{item.img}" alt="{item.name}"  )
             td.left.clip
-              a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+              a.ml-sm.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}" role="button") {item.name}
             +if("combat")
               td.left
                 +if("item.system.hasLimitation")
@@ -207,7 +206,6 @@
 
 .pulse
   +mixins.pulse
-  +mixins.buttons
 
 .actions
   margin-left: 0.5rem

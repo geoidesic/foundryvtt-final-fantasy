@@ -24,7 +24,5 @@
     .molecule
       width: 100%
       padding: 1em
-      +mixins.white-shadow-header
-      +mixins.white-shadow-underscore
 
   </style>

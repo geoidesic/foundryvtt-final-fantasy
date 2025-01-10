@@ -5,10 +5,7 @@
   import Meteor from "~/src/components/atoms/meteor.svelte";
 
   export let FFMessage;
-  export let messageId;
   export let content;
-  export let classes;
-  export let FFMessageState;
   export let enableToggle = true;
 
   let isContentVisible = false;
@@ -33,7 +30,7 @@
 
 <template lang="pug">
 .flexcol.pointer
-  .col(on:click="{toggleContent}")
+  .col(on:click="{toggleContent}" role="button")
     +if("FFMessage?.isCritical")
       ChatTitle(title="{title}" data="{FFMessage}" overlayValue="{$message?.rolls[0]?.total}" overlayColor="var(--off-white)" overlaySize="0.8rem")
         svelte:fragment(slot="rightImage")
@@ -47,7 +44,4 @@
 
 <style lang="sass">
   @use '../../../styles/_mixins' as mixins
-  .img, img
-    max-width: 35px
-    max-height: 35px
 </style> 

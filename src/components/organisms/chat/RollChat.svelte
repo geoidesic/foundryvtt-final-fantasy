@@ -7,7 +7,6 @@
 
   // export let messageId;
   export let FFMessage;
-  export let messageId;
 
   let showDescription = game.settings.get(SYSTEM_ID, 'defaultChatDescriptionVisible');
 
@@ -80,8 +79,6 @@
 
     // Update the item's quantity in the actor's inventory
     await itemToUpdate.update({ "system.quantity": itemToUpdate.system.quantity - 1 });
-    
-    // await game.messages.get(messageId).update({ flags: { [SYSTEM_ID]: { data: {applied: true}  } } });
     await $message.update({ flags: { [SYSTEM_ID]: { data: {applied: true}  } } });
 
   }
@@ -124,7 +121,6 @@
     font-size: 0.7rem
     line-height: 1.2rem
     font-family: "Trirong", serif
-  .chat
     
       
 </style>

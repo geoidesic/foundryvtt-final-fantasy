@@ -23,7 +23,7 @@
               .flex1
                 .flexrow.justify-vertical
                   .flex2.left.pl-md
-                    label.gold {localize(`${SYSTEM_CODE}.Name`)}
+                    label.gold(for="name") {localize(`${SYSTEM_CODE}.Name`)}
                   .flex2.wide
                     DocInput.wide(id="name" name="name" valuePath="name")
               hr

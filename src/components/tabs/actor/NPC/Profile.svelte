@@ -12,7 +12,7 @@ const proseMirrorClasses2 = ['left']
 h1.gold Details
 .flexrow.justify-vertical
   .flex2 
-    label.gold Character Name:
+    label.gold(for="name") Character Name:
   .flex2.wide
     DocInput.wide(id="name" name="name" valuePath="name")
 

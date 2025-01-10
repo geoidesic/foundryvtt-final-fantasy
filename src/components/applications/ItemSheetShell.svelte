@@ -145,8 +145,7 @@
   //   object-fit: cover
   //   -o-object-position: top
   //   object-position: top
-  .tabs
-    height: 100%
+
   img
     border: none
     min-width: 50px

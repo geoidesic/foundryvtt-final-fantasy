@@ -196,10 +196,10 @@
           h1.left.gold {localize('FF15.Job')}
           table.borderless
             tr
-              td.img.shrink(scope="col")
+              th.img.shrink(scope="col")
                 img.icon(src="{$Actor.system.job?.img}" alt="{$Actor.system.job?.img}")
-              td.left.expand(scope="col" on:click="{showItemSheet($Actor.system.job)}") {ucfirst($Actor.system.job?.name)}
-              td.buttons(scope="col")
+              th.left.expand(scope="col" on:click="{showItemSheet($Actor.system.job)}" role="button") {ucfirst($Actor.system.job?.name)}
+              th.buttons(scope="col")
                 button.stealth(on:click="{deleteJob}")
                   i.fa-solid.fa-trash
 
@@ -213,15 +213,15 @@
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
-              button.stealth(class="{lockCSS}")
-                i.fa(class="{faLockCSS}" on:click="{toggleLock}")
+              button.stealth(class="{lockCSS}" on:click="{toggleLock}")
+                i.fa(class="{faLockCSS}")
           +each("items as item, index")
             //- pre item.type {item.type}
             tr
               td.img
                 img.icon(src="{item.img}" alt="{item.name}")
               td.left
-                a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+                a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}" role="button") {item.name}
                 +if("item.system.hasLimitation && combat")
                   span.ml-sm
                     Badge(type!="{badgeType(item)}") {remaining(item)}
@@ -306,9 +306,5 @@ i.disable
   -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
   border-color: #888 #aaa #eee
 
-input
-  background-color: white
-  height: 1.2rem
-       
 
 </style>

@@ -67,16 +67,16 @@
 <style lang="sass">
   @use '../../../../styles/_mixins' as mixins
 
-  .fuscia
-    +mixins.background(rgb(76 20 32), 0.05 )
+  // .fuscia
+  //   +mixins.background(rgb(76 20 32), 0.05 )
   .purple
     +mixins.background(rgb(42 20 76), 0.05 )
-  .navy
-    +mixins.background(rgb(20 45 76), 0.05 )
+  // .navy
+  //   +mixins.background(rgb(20 45 76), 0.05 )
   .teal
     +mixins.background(rgb(20 68 76), 0.05 )
-  .burgundy
-    +mixins.background(rgb(76 35 20), 0.05 )
+  // .burgundy
+  //   +mixins.background(rgb(76 35 20), 0.05 )
 
   .portrait-frame
     margin-right: -2px
@@ -90,9 +90,7 @@
   // +mixins.background3(rgb(42 20 76), 0.05 )
   // +mixins.background2(rgb(74 20 76), 0.05 )
   // +mixins.background(rgb(76 20 32), 0.05 )
-  .inset
-    +mixins.inset(0.5rem, 0 0 5px rgba(165,0,0,1) inset)
-    width: 100%
+ 
   .background
     overflow-y: auto
   // +mixins.background(rgb(66 76 20), 0.05)

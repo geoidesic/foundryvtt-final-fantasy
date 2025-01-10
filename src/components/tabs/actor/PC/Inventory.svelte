@@ -137,15 +137,15 @@
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th(scope="col" class="{lockCSS}")
-              button.stealth(class="{lockCSS}")
-                i.fa(class="{faLockCSS}" on:click="{toggleLock}")
+              button.stealth(class="{lockCSS}" on:click="{toggleLock}")
+                i.fa(class="{faLockCSS}" )
           +each("items as item, index")
             //- pre item.type {item.type}
             tr
-              td.img(data-tooltip="{localize('FF15.Use')}")
-                img.icon(src="{item.img}" alt="{item.name}"  on:click="{useItem(item)}")
+              td.img(data-tooltip="{localize('FF15.Use')}" on:click="{useItem(item)}" role="button")
+                img.icon(src="{item.img}" alt="{item.name}" )
               td.left(data-tooltip="{localize('FF15.View')}")
-                a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+                a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}" role="button") {item.name}
               td 
                 button.stealth.clickable.wide(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
               td( data-tooltip="{localize('FF15.Bookmark')}")
@@ -198,27 +198,6 @@ i.disable
   &.row
     color: rgba(100, 0, 100, 1)
 
-ol
-  height: 100%
-  margin: 0
-  padding: 0.1rem
-  border: 1px solid grey
-  li
-    padding: 3px
-    margin: 0 2px 2px 2px
-    align-items: center
-    &:not(.header):not(.footer)
-      background-color: #cdc8c7
-    &.header
-      padding: 0 3px
-      line-height: 1rem
-      text-align: top
-      justify-content: top
-      border-bottom-left-radius: 0
-      border-bottom-right-radius: 0
-      margin-bottom: 0
-      border-bottom: none
-
 .itemrow
   height: 1.9rem
 
@@ -246,9 +225,5 @@ ol
   -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
   border-color: #888 #aaa #eee
 
-input
-  background-color: white
-  height: 1.2rem
-       
 
 </style>

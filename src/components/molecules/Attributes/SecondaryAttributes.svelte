@@ -14,7 +14,7 @@
   <template lang='pug'>
     .molecule
       .flexrow.header.underscore.mb-md Secondary Attributes
-      AttributeCol(data="{data}" key="secondary" onclick="{onclick}")
+      AttributeCol(key="secondary" data="{data}" onclick="{onclick}")
       
   </template>
 

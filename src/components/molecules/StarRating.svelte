@@ -28,19 +28,22 @@
   }));
 </script>
 
-<div class="star-rating" on:mouseleave={handleMouseLeave}>
+<div class="star-rating" on:mouseleave={handleMouseLeave} role="group" aria-label={label || 'Rating'}>
   {#if label}
-    <label>{label}</label>
+    <label for="star-rating-group">{label}</label>
   {/if}
-  <div class="stars">
+  <div class="stars" id="star-rating-group">
     {#each stars as star, i}
       <i
         class="{icon} {star.active ? 'active' : ''}"
         on:mouseover={() => handleMouseOver(i)}
+        on:focus={() => handleMouseOver(i)}
         on:click={() => handleClick(i)}
+        on:keydown={e => e.key === 'Enter' && handleClick(i)}
         role="button"
         tabindex="0"
         style="--active-color: {activeColor}"
+        aria-label="{i + 1} of {maxStars} stars"
       ></i>
     {/each}
   </div>

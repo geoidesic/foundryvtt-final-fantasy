@@ -160,7 +160,7 @@
 
 <template lang="pug">
 +if("alwaysEditable")
-  .flexrow.gap-15(class=fullWidth ? 'wide' : '')
+  .flexrow.gap-15(class="{fullWidth ? 'wide' : ''}")
     +if("LABEL")
       .flex1.wide
         label.bold.gold(for="{inputElement?.id}") {label} 

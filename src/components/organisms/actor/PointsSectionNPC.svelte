@@ -26,15 +26,5 @@
       background: linear-gradient(to right, rgb(171, 67, 125), rgb(205, 139, 171))
       clip-path: polygon(0 0, 100% 0, 100% 50%, 80% 100%, 0 100%)
   
-    .mp
-      position: relative
-      background: linear-gradient(to right, rgb(58 158 68), rgb(174 206 106))
-      clip-path: polygon(0 0, 100% 0, 100% 50%, 80% 100%, 0 100%)
-  
-    .bp
-      position: relative
-      background: linear-gradient(to right, rgb(177 144 113), rgb(255 212 171))
-      clip-path: polygon(0 0, 100% 0, 100% 50%, 80% 100%, 0 100%)
-  
   </style>
   

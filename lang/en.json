@@ -173,6 +173,13 @@
               "markers": "Remove Markers",
               "condition": "Condition"
             },
+            "Size": {
+              "small": "Small",
+              "medium": "Medium",
+              "large": "Large",
+              "huge": "Huge",
+              "gargantuan": "Gargantuan"
+            },
             "TraitType": {
               "Buff": "Buff",
               "Debuff": "Debuff",

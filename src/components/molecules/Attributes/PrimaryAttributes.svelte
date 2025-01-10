@@ -17,9 +17,11 @@ let data = [
     .flexrow.header.underscore.mb-md Primary Attributes
     AttributeCol( key="primary" showSign="{true}" abbreviateLabel="{true}" data="{data}" onclick="{onclick}")
 </template>
+
 <style lang='sass'>
   @use '../../../styles/_mixins' as mixins
-
+  
+  /* @vite-ignore */
   .molecule
     padding: 1em
     width: 100%

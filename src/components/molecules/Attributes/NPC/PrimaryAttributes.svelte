@@ -23,7 +23,5 @@ let data = [
   .molecule
     padding: 1em
     width: 100%
-    +mixins.white-shadow-header
-    +mixins.white-shadow-underscore
     
 </style>

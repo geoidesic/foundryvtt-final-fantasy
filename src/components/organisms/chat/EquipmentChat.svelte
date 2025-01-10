@@ -141,46 +141,9 @@
   
   .chat
     +mixins.buttons
-    .title
-      border-radius: var(--border-radius)
-      color: var(--message-contrast)
-      position: relative
-      padding: 0.2rem
-      
-      +mixins.texture-background($color: var(--message-color), $intensity: 0.05, $bgSize: 48%)
-      
-      .texture
-        position: absolute
-        top: 0
-        left: 0
-        width: 100%
-        height: 100%
-        z-index: 1
-      
-      img, .flex4, .flex3
-        position: relative
-        z-index: 2
 
-      img.icon.avatar
-        min-height: 35px
-        top: 0px
-        left: -4px
-        padding: 0
-        margin-bottom: -3px
-      img.icon.item
-        min-height: 35px
-        top: -1px
-        padding: 0
-        margin-bottom: -3px
-        right: -4px
-        margin-right: 0px
-        &.push
-          margin-right: -7px
+      
         
-  @supports (-webkit-appearance: none) and (not (aspect-ratio: 1 / 1)) 
-    .chat
-      .title  
-        .img.icon.item.push
-          margin-right: -15px
+
   
 </style>

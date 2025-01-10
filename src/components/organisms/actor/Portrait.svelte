@@ -55,5 +55,4 @@
     margin-right: -2px
     z-index: 2
   
-    +mixins.background
 </style>

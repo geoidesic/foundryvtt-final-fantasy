@@ -37,7 +37,7 @@
     main
       .logo-background
         .texture
-        img(src="systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
+        img(src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
       p {localize('FF15.Welcome.To')} {localize(`${SYSTEM_CODE}.Title`)}!
       h1 {localize('FF15.Welcome.Introduction')}
       p  
@@ -47,14 +47,14 @@
       p
         span {localize('FF15.Welcome.Issues')}
         a(href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues") {localize('FF15.Welcome.Github')}
-      .flexrow.inset.justify-vertical(data-tooltip="{localize('FF15.Setting.DontShowWelcome.Hint')}")
+      .flexrow.inset.justify-vertical.mb-sm(data-tooltip="{localize('FF15.Setting.DontShowWelcome.Hint')}")
         .flex0
           input(type="checkbox" on:change="{handleChange}" label="{localize('FF15.Setting.DontShowWelcome.Name')}" bind:checked="{dontShowWelcome}") 
         .flex
           span {localize('FF15.Setting.DontShowWelcome.Name')}
     footer
       .flex2.right
-        img.pt-sm.white(src="systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;")
+        img.pt-sm.white(src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;")
       .flex2.left.pt-sm
         h4 {localize(`${SYSTEM_CODE}.Title`)} {localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} 
         a(href="https://www.round-table.games") Round Table Games ©2024
@@ -71,6 +71,7 @@
 
     .logo-background
       +mixins.texture-background
+      +mixins.texture-texture
         
 
 

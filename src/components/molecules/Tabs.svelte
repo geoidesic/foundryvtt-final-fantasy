@@ -27,7 +27,7 @@
           span {tab.label}
           +else
             +if("tab.img")
-              img.tab-icon(src="{tab.img}")
+              img.tab-icon(src="{tab.img}" alt="{tab.label} tab icon")
 
   div(class="{`tab-content ${$$props?.class?.includes('small') ? 'tab-content--small' : ''} ${$$props?.class?.includes('tall') ? 'tab-content--tall' : ''}`}")
     +each("tabs as tab")

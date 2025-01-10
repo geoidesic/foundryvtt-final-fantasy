@@ -7,7 +7,6 @@
   import ColourContrast from "~/src/helpers/ColourContrast";
 
   export let FFMessage;
-  export let FFMessageState;
   export let messageId;
   
   let isReady = false;

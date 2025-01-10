@@ -53,11 +53,11 @@ export const getTypeOptions = () => [
 ];
 
 export const getSizeOptions = () => [
-  { value: "small", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.small") },
-  { value: "medium", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.medium") },
-  { value: "large", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.large") },
-  { value: "huge", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.huge") },
-  { value: "gargantuan", label: game.i18n.localize("FF15.Types.Item.Types.Options.Telegraph.Size.gargantuan") }
+  { value: "small", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.small") },
+  { value: "medium", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.medium") },
+  { value: "large", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.large") },
+  { value: "huge", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.huge") },
+  { value: "gargantuan", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.gargantuan") }
 ];
 
 export const getRangeOptions = () => [

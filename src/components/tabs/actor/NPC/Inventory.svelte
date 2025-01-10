@@ -138,15 +138,15 @@
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
-              button.stealth(class="{lockCSS}")
-                i.fa(class="{faLockCSS}" on:click="{toggleLock}")
+              button.stealth(class="{lockCSS}" on:click="{toggleLock}")
+                i.fa(class="{faLockCSS}")
           +each("items as item, index")
             //- pre item.type {item.type}
             tr
               td.img
                 img.icon(src="{item.img}" alt="{item.name}")
               td.left
-                a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}") {item.name}
+                a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}" role="button") {item.name}
               td 
                 button.stealth.clickable.wide(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
               td
@@ -228,9 +228,6 @@ i.disable
   -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
   border-color: #888 #aaa #eee
 
-input
-  background-color: white
-  height: 1.2rem
-       
+
 
 </style>

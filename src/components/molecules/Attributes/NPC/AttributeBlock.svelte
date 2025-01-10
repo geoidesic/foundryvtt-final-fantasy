@@ -68,7 +68,7 @@
 .molecule
   .flexrow.sheet-row.justify-vertical
     .flex1.ml-md.mt-md.left.white
-      label Size
+      label(for="size") Size
     .flex1.mt-md.mr-md.right
       DocSelect.right.white(
         name="size" 

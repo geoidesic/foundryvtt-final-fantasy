@@ -2,7 +2,7 @@
   import { getContext, onMount, createEventDispatcher } from "svelte";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import Tag from "~/src/components/atoms/Tag.svelte";
-  
+
   const dispatch = createEventDispatcher();
   const message = getContext("message");
   let FFMessage;
@@ -10,7 +10,7 @@
   let item = {};
 
   $: if ($message) {
-    FFMessage = $message.getFlag(SYSTEM_ID, 'data');
+    FFMessage = $message.getFlag(SYSTEM_ID, "data");
     if (FFMessage?.actor?._id) {
       actor = game.actors.get(FFMessage.actor._id);
     }
@@ -19,38 +19,60 @@
   const openItemSheet = async (e, uuid) => {
     e.stopPropagation();
     item.sheet.render(true);
-  }
+  };
 
   const openActorSheet = (e) => {
     e.stopPropagation();
     actor.sheet.render(true);
-  }
+  };
+
+  const enterKey = (e) => {
+    if (e.key === 'Enter') {
+      openActorSheet(e);
+    }
+  };
 
   const handleTitleClick = () => {
-    dispatch('toggleDescription');
-  }
+    dispatch("toggleDescription");
+  };
 
   onMount(async () => {
     if (FFMessage?.item?.uuid) {
       item = await fromUuid(FFMessage.item.uuid);
     }
-  })
+  });
 
-  $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
-
+  $: showProfileImage = game.settings.get(SYSTEM_ID, "showChatProfileImages");
 </script>
 
 <template lang="pug">
 .chat-title
   +if("FFMessage")
-    .flexrow.title(on:click="{handleTitleClick}" role="button")
+    .flexrow.title(on:click="{handleTitleClick}" role="button" aria-label="Toggle description")
+      .texture
       +if("showProfileImage")   
-        img.icon.avatar(src="{FFMessage.actor.img}" alt="{FFMessage.actor.name}" on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}")
+        div(
+          role="button" 
+          on:click="{openActorSheet}" 
+          aria-label="Open {FFMessage.actor.name}'s character sheet"
+        )
+          img.icon.avatar(
+            src="{FFMessage.actor.img}" 
+            alt="{FFMessage.actor.name}"
+          )
       .flex3.flexcol.nooverflow(class="{showProfileImage ? 'text' : ''}")
         .col 
           .flexrow
-            .flex4.link.pointer(on:click!="{openActorSheet}" role="button" aria-label="{FFMessage.actor.name}") {FFMessage.actor.name}
-        .col.font-cinzel.smaller.pointer.item-name.nooverflow(on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}") {FFMessage.item.name}
+            .flex4.link.pointer(
+              on:click!="{openActorSheet}" 
+              role="button"
+              aria-label="Open {FFMessage.actor.name}'s character sheet"
+            ) {FFMessage.actor.name}
+        .col.font-cinzel.smaller.pointer.item-name.nooverflow(
+          on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}" 
+          role="button"
+          aria-label="Open {FFMessage.item.name} item sheet"
+        ) {FFMessage.item.name}
       .flex3
         .flexcol
           .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
@@ -76,11 +98,12 @@
     text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1)
     font-weight: 600
     font-family: "Cinzel", serif
+  
   img
     &.icon
       flex: 0
       min-width: 30px
-  +mixins.buttons
+
   .title
     border-radius: var(--border-radius)
     color: var(--message-contrast)
@@ -91,13 +114,6 @@
     .text
       margin-left: 40px
     
-    +mixins.texture-background(var(--message-color), 0.1, 45%)
-    
-    .texture
-      position: absolute
-      top: 0
-      left: 0
-      width: 100%
-      height: 100%
-      z-index: 1
+    +mixins.texture-background(var(--message-color))
+    +mixins.texture-texture($intensity: 0.05, $bgSize: 53%)
 </style>

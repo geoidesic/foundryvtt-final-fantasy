@@ -55,9 +55,6 @@
 <style lang="sass">
   @use '../../styles/_mixins' as mixins
 
-  .profile-wrap
-    min-width: 50px
-    max-width: 150px
   .portrait-frame 
     margin-right: -2px
     z-index: 2
