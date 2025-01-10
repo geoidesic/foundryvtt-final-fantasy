@@ -87,6 +87,12 @@
 
       .flexrow.justify-vertical
         .flex4
+          h3.left Split Damage
+        .flex0.right
+          DocCheckbox(name="hasSplitDamage" valuePath="system.hasSplitDamage")
+
+      .flexrow.justify-vertical
+        .flex4
           h3.left {localize("FF15.CR")}
         .flex0.right
           DocCheckbox( name="hasCR" valuePath="system.hasCR")

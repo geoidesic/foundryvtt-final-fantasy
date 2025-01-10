@@ -67,12 +67,19 @@
     const DamageResults = new Map();
     for (const id of passedTargets) {
       let token = canvas.tokens.get(id);
+      const baseDamageFormula = item.system?.hasSplitDamage 
+        ? `Split BaseDamage (${item.system?.formula} ÷ ${passedTargets.length})`
+        : `Base Damage (${item.system?.formula})`;
+      const directHitDisplayFormula = item.system?.hasSplitDamage
+        ? `Split Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item.system?.directHitDamage} ÷ ${passedTargets.length}) `
+        : `Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item.system?.directHitDamage})`;
+
       DamageResults.set(id, {
         damage: item.system?.formula,
-        baseDamageFormula: `Base Damage (${item.system?.formula})`,
+        baseDamageFormula,
         directHit: item.system?.directHitDamage,
         directHitFormula: item.system?.directHitDamage,
-        directHitDisplayFormula: `Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item.system?.directHitDamage}) `,
+        directHitDisplayFormula,
         directHitResult: false,
         applied: false,
         originalHP: token.actor.system.points.HP.val,
@@ -154,6 +161,10 @@
     // Calculate base damage
     if (item?.system?.formula) {
       results.damage = parseInt(item?.system.formula) || 0;
+      // If split damage is enabled, divide the damage by the number of targets (rounding up)
+      if (item?.system?.hasSplitDamage && FFMessage.targets.length > 0) {
+        results.damage = Math.ceil(results.damage / FFMessage.targets.length);
+      }
       totalDamage = results.damage;
     }
 
@@ -164,6 +175,10 @@
         await game.dice3d.showForRoll(directHitRoll);
       }
       results.directHitResult = directHitRoll.total;
+      // If split damage is enabled, divide the direct hit damage by the number of targets (rounding up)
+      if (item?.system?.hasSplitDamage && FFMessage.targets.length > 0) {
+        results.directHitResult = Math.ceil(results.directHitResult / FFMessage.targets.length);
+      }
       totalDamage += results.directHitResult;
     } 
 
