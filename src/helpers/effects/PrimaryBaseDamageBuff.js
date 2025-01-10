@@ -14,6 +14,7 @@ export default class PrimaryBaseDamageBuff {
   /**
    * Process the primary base damage buff effect
    * @param {object} event - The event containing damage results
+   * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
     const { DamageResults } = event;

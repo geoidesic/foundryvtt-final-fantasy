@@ -1,4 +1,4 @@
-import { ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
+import { SYSTEM_ID } from "~/src/helpers/constants";
 
 /**
  * Handles enabling additional combat turn slots
@@ -14,6 +14,7 @@ export default class EnableCombatTurnSlot {
   /**
    * Process the enable combat turn slot effect
    * @param {object} event - The event containing effect data
+   * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
     const { change } = event;

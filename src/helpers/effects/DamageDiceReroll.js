@@ -14,6 +14,7 @@ export default class DamageDiceReroll {
   /**
    * Process the damage dice reroll effect
    * @param {object} event - The event containing damage results
+   * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
     const { DamageResults } = event;
@@ -25,7 +26,7 @@ export default class DamageDiceReroll {
       const origin = fromUuidSync(effect.origin);
       for (const change of effect.changes) {
         if (change.key === 'DamageDiceReroll' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          for (const [targetId, targetData] of DamageResults) {
+          for (const [_, targetData] of DamageResults) {
             const [numDice, dieType] = targetData.directHit.split('d').map(Number);
             if (!numDice || !dieType) continue;
 

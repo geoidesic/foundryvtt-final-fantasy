@@ -51,6 +51,7 @@ Hooks.on("updateCombatant", async (combatant, updateData) => {
 
     combatants.each((index, element) => {
       const $element = $(element);
+      const currentClasses = $element.attr('class');
 
 
       // Remove existing border classes

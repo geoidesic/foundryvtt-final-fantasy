@@ -30,3 +30,10 @@ export function registerEffectProcessors() {
     processor.process(event);
   });
 }
+
+/**
+ * Process all effects for an actor
+ * @param {Actor} actor - The actor to process effects for
+ * @param {object} event - The event data
+ * @return {Promise<void>} A promise that resolves when all effects are processed
+ */

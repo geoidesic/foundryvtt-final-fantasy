@@ -13,7 +13,8 @@ export default class DamageOverTime {
 
   /**
    * Process the damage over time effect
-   * @param {object} event - The event containing effect data
+   * @param {object} event - The event containing damage results
+   * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
     game.system.log.o("[DOT] Processing event:", event);
