@@ -1,11 +1,18 @@
 import { FFItemDataModel } from './baseItem';
 
-
 const {
-  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField
+  StringField, BooleanField
 } = foundry.data.fields;
 
+/**
+ * Data model for Limitbreak items
+ * @extends {FFItemDataModel}
+ */
 export class EffectModel extends FFItemDataModel {
+  /**
+   * Defines the schema for Limitbreak items
+   * @returns {object} The schema definition object
+   */
   static defineSchema() {
     return {
       ...super.defineSchema(),  // Merge with the base model schema

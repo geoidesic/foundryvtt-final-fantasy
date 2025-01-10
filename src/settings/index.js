@@ -2,8 +2,14 @@ import { SYSTEM_ID } from "~/src/helpers/constants";
 import { localize } from '~/src/helpers/util'
 import { gameSettings } from '~/src/config/gameSettings';
 
+/**
+ * Registers all game settings for the system.
+ * This function initializes various user and world settings that control
+ * system behavior and preferences.
+ * @returns {void}
+ */
 export function registerSettings() {
-//   /** User settings */
+  /** User settings */
   dontShowWelcome();
   applicationWindowHeaderIconsOnly()
   confirmBeforeDeletingActorItem()
@@ -21,6 +27,7 @@ export function registerSettings() {
  * Some abilities have limitations on how many times they can be used.
  * This setting controls whether the system should automatically deduct uses from the actor's pool when an ability is used.
  * If disabled, the user will be prompted to deduct uses from the actor's pool when an ability is used.
+ * @returns {void}
  */
 function automaticUses() {
   gameSettings.register({
@@ -37,6 +44,12 @@ function automaticUses() {
   });
 }
 
+/**
+ * Controls whether chat messages should display the actor owner as the sender.
+ * When enabled, chat messages will show the owner of the associated actor
+ * rather than the current user.
+ * @returns {void}
+ */
 function chatMessageSenderIsActorOwner() {
   gameSettings.register({
     namespace: SYSTEM_ID,
@@ -52,6 +65,12 @@ function chatMessageSenderIsActorOwner() {
   });
 }
 
+/**
+ * Configures whether initiative should be manually entered.
+ * When enabled, allows users to manually input initiative values instead
+ * of using automatic calculations.
+ * @returns {void}
+ */
 function manualInitiative() {
 
   gameSettings.register({
@@ -67,6 +86,13 @@ function manualInitiative() {
     }
   });
 }
+
+/**
+ * Controls the visibility of status effect names.
+ * When enabled, displays the names of status effects alongside their icons
+ * in the interface.
+ * @returns {void}
+ */
 function showStatusEffectNames() {
 
   gameSettings.register({
@@ -83,6 +109,12 @@ function showStatusEffectNames() {
   });
 }
 
+/**
+ * Controls whether to show the welcome message on startup.
+ * Users can disable the welcome message to prevent it from appearing
+ * each time they start the system.
+ * @returns {void}
+ */
 function dontShowWelcome() {
   gameSettings.register({
     namespace: SYSTEM_ID,
@@ -97,6 +129,13 @@ function dontShowWelcome() {
     }
   });
 }
+
+/**
+ * Controls the display of application window headers.
+ * When enabled, shows only icons in application window headers
+ * instead of both icons and text.
+ * @returns {void}
+ */
 function applicationWindowHeaderIconsOnly() {
   gameSettings.register({
     namespace: SYSTEM_ID,
@@ -111,6 +150,12 @@ function applicationWindowHeaderIconsOnly() {
     }
   });
 }
+
+/**
+ * Sets whether to show a confirmation dialog before deleting actor items.
+ * Helps prevent accidental deletion of items from actor sheets.
+ * @returns {void}
+ */
 function confirmBeforeDeletingActorItem() {
   gameSettings.register({
     namespace: SYSTEM_ID,
@@ -125,6 +170,13 @@ function confirmBeforeDeletingActorItem() {
     }
   });
 }
+
+/**
+ * Configures the sound played when combat starts.
+ * Allows users to set a custom sound effect that plays when
+ * a new combat encounter begins.
+ * @returns {void}
+ */
 function combatStartSound() {
   gameSettings.register({
     namespace: SYSTEM_ID,
@@ -140,6 +192,13 @@ function combatStartSound() {
     }
   });
 }
+
+/**
+ * Configures the sound played for chat messages.
+ * Allows users to set a custom notification sound for
+ * when new chat messages are received.
+ * @returns {void}
+ */
 function chatMessageSound() {
   gameSettings.register({
     namespace: SYSTEM_ID,
@@ -155,6 +214,13 @@ function chatMessageSound() {
     }
   });
 }
+
+/**
+ * Controls the visibility of profile images in chat messages.
+ * When enabled, shows user/actor profile images alongside
+ * their chat messages.
+ * @returns {void}
+ */
 function showChatProfileImages() {
   gameSettings.register({
     namespace: SYSTEM_ID,
@@ -170,6 +236,12 @@ function showChatProfileImages() {
   });
 }
 
+/**
+ * Controls whether chat descriptions are visible by default.
+ * When enabled, automatically expands description sections in
+ * chat messages instead of requiring manual expansion.
+ * @returns {void}
+ */
 function defaultChatDescriptionVisible() {
   gameSettings.register({
     namespace: SYSTEM_ID,

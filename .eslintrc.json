@@ -10,7 +10,24 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "rules": {},
+  "rules": {
+    "spaced-comment": "off",
+    "require-jsdoc": ["error", {
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": true,
+        "ArrowFunctionExpression": false,
+        "FunctionExpression": false
+      }
+    }],
+    "valid-jsdoc": ["error", {
+      "prefer": {
+        "returns": "return"
+      },
+      "requireReturn": true
+    }]
+  },
   "ignorePatterns": ["node_modules", "/packs/**"],
   "globals": {
     "game": "readonly",

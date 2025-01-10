@@ -1,8 +1,16 @@
 import { FFItemDataModel } from './baseItem';
-import { localize } from "~/src/helpers/util";
+
 const { NumberField, StringField } = foundry.data.fields;
 
+/**
+ * Data model for Equipment items
+ * @extends {FFItemDataModel}
+ */
 export class EquipmentModel extends FFItemDataModel {
+  /**
+   * Defines the schema for Equipment items
+   * @returns {object} The schema definition object
+   */
   static defineSchema() {
     return {
       ...super.defineSchema(),  // Merge with the base model schema

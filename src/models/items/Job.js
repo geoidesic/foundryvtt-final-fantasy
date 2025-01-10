@@ -1,10 +1,18 @@
 import { FFItemDataModel } from './baseItem';
 
 const {
-  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField, ObjectField
+  SchemaField, NumberField, StringField, BooleanField, ObjectField, ArrayField
 } = foundry.data.fields;
 
+/**
+ * Data model for Job items
+ * @extends {FFItemDataModel}
+ */
 export class JobModel extends FFItemDataModel {
+  /**
+   * Defines the schema for Job items
+   * @returns {object} The schema definition object
+   */
   static defineSchema() {
     return {
       ...super.defineSchema(),  // Merge with the base model schema

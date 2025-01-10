@@ -1,9 +1,18 @@
 import { FFTypeDataModel } from '~/src/models/baseModel';
+
 const {
-  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField
+  HTMLField, SchemaField, NumberField, StringField, BooleanField
 } = foundry.data.fields;
 
+/**
+ * Base actor data model that provides common functionality for all actor types
+ * @extends {FFTypeDataModel}
+ */
 export class FFActorDataModel extends FFTypeDataModel {
+  /**
+   * Defines the base schema for actor data models
+   * @returns {object} The schema definition object
+   */
   static defineSchema() {
     return {
       ...super.defineSchema(),
@@ -83,7 +92,10 @@ export class FFActorDataModel extends FFTypeDataModel {
     }
   }
 
-  /** Check if the actor has any favourited items */
+  /** 
+   * Check if the actor has any favourited items
+   * @returns {boolean} True if the actor has any favourited items
+   */
   hasFavouriteItems() {
     return this.parent.items.some(item => item.system.favourite === true);
   }
