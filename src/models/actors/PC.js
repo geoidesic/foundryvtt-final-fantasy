@@ -1,11 +1,18 @@
 import { FFActorDataModel } from './baseActor';
-import { localize } from "#runtime/util/i18n";
 
 const {
-  HTMLField, SchemaField, NumberField, StringField, FilePathField, ArrayField, BooleanField
+  HTMLField, SchemaField, NumberField, StringField, ArrayField, BooleanField
 } = foundry.data.fields;
 
+/**
+ * Data model for Player Character actors
+ * @extends {FFActorDataModel}
+ */
 export class PCModel extends FFActorDataModel {
+  /**
+   * Defines the schema for PC data
+   * @return {object} The schema definition object
+   */
   static defineSchema() {
     return {
       ...super.defineSchema(),
