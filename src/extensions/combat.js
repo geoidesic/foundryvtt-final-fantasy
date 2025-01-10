@@ -1,9 +1,17 @@
 import { resetActionState, resetUses } from '~/src/helpers/util.js';
 
+/**
+ * Extended Combat class for Final Fantasy system
+ * @extends {Combat}
+ */
 export default class FFCombat extends Combat {
+  /**
+   * Initialize the combat instance
+   * @param {object} data - The combat data
+   * @param {object} context - The initialization context
+   */
   constructor(data, context) {
     super(data, context);
-    game.system.log.d('>>>>>>>>>> FFCombat constructor')
   }
 
   /**
@@ -30,6 +38,10 @@ export default class FFCombat extends Combat {
     return currentCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
   }
 
+  /**
+   * Reset abilities and states for all combatants
+   * @return {Promise<void>}
+   */
   async resetCombatantAbilities() {
     const combatants = this.combatants.contents;
     // For each combatant
@@ -54,33 +66,32 @@ export default class FFCombat extends Combat {
   }
 
   /**
-   * Return the Array of combatants sorted into initiative order, breaking ties alphabetically by name.
-   * @returns {Combatant[]}
+   * Return the Array of combatants sorted into initiative order
+   * @return {Combatant[]} Array of sorted combatants
    */
   setupTurns() {
     this.turns ||= [];
 
     // Determine the turn order and the current turn
     const turns = this.combatants.contents.sort(this._sortCombatants);
-    if ( this.turn !== null) this.turn = Math.clamp(this.turn, 0, turns.length-1);
+    if (this.turn !== null) this.turn = Math.clamp(this.turn, 0, turns.length-1);
 
     // Update state tracking
-    let c = turns[this.turn];
-    this.current = this._getCurrentState(c);
+    const currentTurn = turns[this.turn];
+    this.current = this._getCurrentState(currentTurn);
 
     // One-time initialization of the previous state
-    if ( !this.previous ) this.previous = this.current;
+    if (!this.previous) this.previous = this.current;
 
     // Return the array of prepared turns
     return this.turns = turns;
   }
 
   /**
-   * Define how the array of Combatants is sorted in the displayed list of the tracker.
-   * This method can be overridden by a system or module which needs to display combatants in an alternative order.
-   * The default sorting rules sort in descending order of initiative using combatant IDs for tiebreakers.
-   * @param {Combatant} a     Some combatant
-   * @param {Combatant} b     Some other combatant
+   * Define how the array of Combatants is sorted in the displayed list
+   * @param {Combatant} a - First combatant to compare
+   * @param {Combatant} b - Second combatant to compare
+   * @return {number} Sort order modifier
    * @protected
    */
   _sortCombatants(a, b) {

@@ -1,11 +1,19 @@
 import { SYSTEM_ID, getTypeOptions } from "~/src/helpers/constants"
 import { TJSDocument }   from '@typhonjs-fvtt/runtime/svelte/store/fvtt/document';
 
+/**
+ * Extended Combat Tracker class for Final Fantasy system
+ * @extends {CombatTracker}
+ */
 export default class FFCombatTracker extends CombatTracker {
 
   #combat;
   #combatants;
 
+  /**
+   * Initialize the combat tracker
+   * @param {object} options - Configuration options
+   */
   constructor(options)
   {
      super(options);
@@ -24,9 +32,9 @@ export default class FFCombatTracker extends CombatTracker {
      this.#combatants.subscribe((values) =>
      {
         // console.log(`Combatants ------`);
-        for (const combatant of values)
+        for (const _value of values)
         {
-          //  console.log(combatant.name);
+          // Placeholder for future use
         }
      });
   }
@@ -41,15 +49,19 @@ export default class FFCombatTracker extends CombatTracker {
     });
   }
 
+  /**
+   * Get additional data for the combat tracker
+   * @return {Promise<object>} The prepared data
+   */
   async getData() {
     const data = await super.getData();
     for (const turn of data.turns) {
-      const combatant = game.combat.combatants.get(turn.id);
-      const actor = combatant.actor
-      turn.actorId = actor.id
+      const currentCombatant = game.combat.combatants.get(turn.id);
+      const actor = currentCombatant.actor;
+      turn.actorId = actor.id;
       if(turn.active) {
-        turn.hasActions = true
-        turn.actions = ''
+        turn.hasActions = true;
+        turn.actions = '';
         if (actor.system.actionState?.available) {
           for (const action of actor.system.actionState.available.sort()) {
             //- if action is custom, i.e. not in getTypeOptions, then use the class name: custom-action
@@ -71,6 +83,11 @@ export default class FFCombatTracker extends CombatTracker {
     return data;
   }
 
+  /**
+   * Handle mouse down events on combatants
+   * @param {Event} event - The triggering mouse event
+   * @return {Promise<void>}
+   */
   async _onCombatantMouseDown(event) {
     event.preventDefault();
     // event.stopPropagation(); //- this breaks the context menu, so removing it and the input click still works as expected
@@ -98,7 +115,10 @@ export default class FFCombatTracker extends CombatTracker {
     }
   }
 
-
+  /**
+   * Get the class hierarchy names
+   * @return {Array<string>} Array of class names in the inheritance chain
+   */
   getClassNames() {
     const classNames = [];
     let currentClass = this.constructor;

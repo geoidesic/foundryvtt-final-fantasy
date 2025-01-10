@@ -1,10 +1,18 @@
-
 import { getDefaultStatusEffects } from "~/src/helpers/Conditions";
-import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
+import { SYSTEM_ID } from "~/src/helpers/constants";
 
+/**
+ * Extends the TokenHUD class to implement system-specific token HUD functionality
+ * @extends {TokenHUD}
+ */
 export default class FFTokenHUD extends TokenHUD {
+  /** @type {Array} The default status effects for tokens */
   defaultStatusEffects;
 
+  /**
+   * Initialize the token HUD
+   * @param {...any} args - Arguments passed to the constructor
+   */
   constructor(...args) {
     super(...args);
 
@@ -32,6 +40,10 @@ export default class FFTokenHUD extends TokenHUD {
     });
   }
 
+  /**
+   * Get the default options for the token HUD
+   * @return {object} The default options
+   */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       template: `systems/${SYSTEM_ID}/src/extensions/templates/token-hud.html`
