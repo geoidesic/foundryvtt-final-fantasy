@@ -4,10 +4,17 @@ import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import FFActiveEffectShell from './FFActiveEffectShell.svelte';
 
+/**
+ * Sheet class for handling Active Effects in the FF15 system
+ * @extends {ActiveEffectConfig}
+ */
 export default class FFActiveEffectSheet extends SvelteApplication {
    #doc = new TJSDocument(void 0, { delete: this.close.bind(this) });
    #storeUnsubscribe;
 
+   /**
+    * Initializes the sheet with default options
+    */
    constructor(object) {
       super(object);
   
@@ -26,9 +33,8 @@ export default class FFActiveEffectSheet extends SvelteApplication {
 
    /**
     * Default Application options
-    *
-    * @returns {object} options - Application options.
-    * @see https://foundryvtt.com/api/interfaces/client.ApplicationOptions.html
+    * @return {object} options - Application options.
+    * @see https://foundryvtt.com/api/Application.html#options
     */
    static get defaultOptions() {
       return foundry.utils.mergeObject(super.defaultOptions, {

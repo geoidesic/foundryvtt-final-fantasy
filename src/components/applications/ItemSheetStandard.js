@@ -1,9 +1,17 @@
-export default class ItemSheetStandard extends ItemSheet {
+/**
+ * Standard item sheet implementation for FF15
+ * @extends {FF15ItemSheet}
+ */
+export default class FF15ItemSheetStandard extends FF15ItemSheet {
   constructor(...args) {
     super(...args);
   }
 
-  /** @inheritDoc */
+  /**
+   * Default Application options
+   * @return {object} options - Application options.
+   * @see https://foundryvtt.com/api/Application.html#options
+   */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       width: 560,
@@ -36,7 +44,10 @@ export default class ItemSheetStandard extends ItemSheet {
     return `systems/foundryvtt-final-fantasy/assets/templates/${this.item.type}.hbs`;
   }
 
-  /** @inheritDoc */
+  /**
+   * Activates event listeners for the sheet
+   * @param {JQuery} html - The rendered HTML of the sheet
+   */
   activateListeners(html) {
     super.activateListeners(html);
     html.find('[data-action="testButtonClick"]').click(this._onTestButtonClick.bind(this));

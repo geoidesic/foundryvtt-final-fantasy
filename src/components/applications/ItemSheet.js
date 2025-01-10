@@ -3,6 +3,10 @@ import ItemSheetShell from "./ItemSheetShell.svelte";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import { generateRandomElementId } from "~/src/helpers/util";
 
+/**
+ * Base class for FF15 item sheets
+ * @extends {SvelteDocumentSheet}
+ */
 export default class FF15ItemSheet extends SvelteDocumentSheet {
 
   static get defaultOptions() {
