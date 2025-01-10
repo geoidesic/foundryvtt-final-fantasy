@@ -3,6 +3,10 @@
  * @extends {FF15ItemSheet}
  */
 export default class FF15ItemSheetStandard extends FF15ItemSheet {
+  /**
+   * Creates a new instance of the item sheet
+   * @param {...any} args - Constructor arguments
+   */
   constructor(...args) {
     super(...args);
   }
@@ -39,7 +43,10 @@ export default class FF15ItemSheetStandard extends FF15ItemSheet {
     });
   }
 
-  /** @inheritDoc */
+  /**
+   * Gets the template path for this sheet
+   * @return {string} The path to the template file
+   */
   get template() {
     return `systems/foundryvtt-final-fantasy/assets/templates/${this.item.type}.hbs`;
   }
@@ -55,23 +62,38 @@ export default class FF15ItemSheetStandard extends FF15ItemSheet {
     dropZone.on('dragover', this._onDragOver.bind(this));
     dropZone.on('drop', this._onDrop.bind(this));
   }
-  // Method to handle the button click
+
+  /**
+   * Handles test button click events
+   * @param {Event} event - The click event
+   * @private
+   */
   _onTestButtonClick(event) {
     event.preventDefault();
     console.log("Test button clicked");
   }
-  // Handle dragover event
+
+  /**
+   * Handles dragover events
+   * @param {DragEvent} event - The dragover event
+   * @private
+   */
   _onDragOver(event) {
-    event.preventDefault(); // Ensure the drop is allowed
+    event.preventDefault();
     const dropZone = event.currentTarget;
-    dropZone.classList.add('drag-over'); // Add visual feedback
+    dropZone.classList.add('drag-over');
   
-    // Optional: remove the feedback when the drag leaves the area
     dropZone.addEventListener('dragleave', () => {
       dropZone.classList.remove('drag-over');
     });
   }
-  // Handle drop event
+
+  /**
+   * Handles drop events
+   * @param {DragEvent} event - The drop event
+   * @return {Promise<void>}
+   * @private
+   */
   async _onDrop(event) {
     event.preventDefault();
     const originalEvent = event.originalEvent || event; // Ensure we're accessing the original event

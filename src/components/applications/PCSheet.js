@@ -12,7 +12,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
   /**
    * Default Application options
-   * @return {object} options - Application options.
+   * @return {object} The default options for configuring the application window - Application options.
    * @see https://foundryvtt.com/api/Application.html#options
    */
   static get defaultOptions() {
@@ -46,7 +46,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
   /**
    * Gets the header buttons configuration for the sheet
-   * @return {Array<object>} The list of header button data
+   * @return {Array<object>} An array of button configurations for the sheet header
    */
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
@@ -170,7 +170,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   /**
    * Handles dropping content onto the sheet
    * @param {DragEvent} event - The drop event
-   * @return {Promise<void>}
+   * @return {Promise<void|boolean|ActiveEffect|Item>} The result of the drop operation
    */
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);
@@ -251,7 +251,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
    * @param {DragEvent} event - The drop event
    * @param {object} data - The dropped data
    * @param {boolean} ignoreValidation - Whether to ignore validation
-   * @return {Promise<boolean|Item>} The created item or false if failed
+   * @return {Promise<boolean|Item>} The created item or false if the operation failed
    */
   async _onDropItem(event, data, ignoreValidation = false) {
     // console.log('_onDropItem', data);
@@ -433,7 +433,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
    * Handles sorting items within the actor's inventory
    * @param {Event} event - The triggering event
    * @param {object} itemData - The item data being sorted
-   * @return {Promise<Item[]>} The updated items
+   * @return {Promise<Item[]>} The updated array of sorted items
    */
   _onSortItem(event, itemData) {
     const actor = this.reactive.document;

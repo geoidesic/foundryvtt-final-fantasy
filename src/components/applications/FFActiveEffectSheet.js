@@ -14,6 +14,7 @@ export default class FFActiveEffectSheet extends SvelteApplication {
 
    /**
     * Initializes the sheet with default options
+    * @param {object} object - The object to initialize with
     */
    constructor(object) {
       super(object);
@@ -56,17 +57,30 @@ export default class FFActiveEffectSheet extends SvelteApplication {
       });
    }
 
-   /** @override */
+   /**
+    * Gets the document associated with this sheet
+    * @return {TJSDocument} The document instance
+    */
    get document() {
       return this.#doc;
    }
 
-   /** @override */
+   /**
+    * Injects HTML content into the application
+    * @param {HTMLElement} html - The HTML content to inject
+    * @return {Promise<void>}
+    */
    async _injectHTML(html) {
       this.options.svelte.props.doc = this.document;
       return super._injectHTML(html);
    }
 
+   /**
+    * Renders the application
+    * @param {boolean} force - Whether to force a re-render
+    * @param {object} options - Additional rendering options
+    * @return {Promise<void>}
+    */
    render(force = false, options = {}) {
       if (!this.#storeUnsubscribe) {
          this.#storeUnsubscribe = this.#doc.subscribe(this.#handleDocUpdate.bind(this));
@@ -82,6 +96,11 @@ export default class FFActiveEffectSheet extends SvelteApplication {
       return super.close(options);
    }
 
+   /**
+    * Handles document updates
+    * @param {object} doc - The updated document
+    * @private
+    */
    #handleDocUpdate(doc) {
       if (doc) {
          this.reactive.title = `${game.i18n.localize("FF15.EFFECT.ConfigTitle")}: ${doc.name || ''}`;

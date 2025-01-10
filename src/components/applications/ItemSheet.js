@@ -9,6 +9,10 @@ import { generateRandomElementId } from "~/src/helpers/util";
  */
 export default class FF15ItemSheet extends SvelteDocumentSheet {
 
+  /**
+   * Default Application options
+   * @return {object} The default options for this application
+   */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
       id: `${SYSTEM_ID}--item-sheet-${generateRandomElementId()}`,

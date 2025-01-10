@@ -12,7 +12,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
   /**
    * Default Application options
-   * @return {object} options - Application options.
+   * @return {object} The default options for configuring the application window - Application options.
    * @see https://foundryvtt.com/api/Application.html#options
    */
   static get defaultOptions() {
@@ -47,7 +47,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
   /**
    * Gets the header buttons configuration for the sheet
-   * @return {Array<object>} The list of header button data
+   * @return {Array<object>} An array of button configurations for the sheet header
    */
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
@@ -169,7 +169,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
   /**
    * Handles dropping content onto the sheet
    * @param {DragEvent} event - The drop event
-   * @return {Promise<void>}
+   * @return {Promise<void|boolean|ActiveEffect|Item>} The result of the drop operation
    */
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);
@@ -250,10 +250,9 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
    * @param {DragEvent} event - The drop event
    * @param {object} data - The dropped data
    * @param {boolean} ignoreValidation - Whether to ignore validation
-   * @return {Promise<boolean|Item>} The created item or false if failed
+   * @return {Promise<boolean|Item>} The created item or false if the operation failed
    */
   async _onDropItem(event, data, ignoreValidation = false) {
-    // console.log('_onDropItem', data);
     const actor = this.reactive.document;
 
     if (!actor.isOwner) {
@@ -284,7 +283,6 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
 
     const item = await Item.implementation.fromDropData(data);
     const itemData = item.toObject();
-    const itemEffects = Array.from(itemData.effects);
 
     // Handle item sorting within the same Actor
     if (actor.uuid === item.parent?.uuid) {
@@ -323,30 +321,34 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
    * @return {Promise<boolean|void>} Whether the drop was successful
    */
   async _onDropJob(event, data) {
-    // console.log('_onDropJob', data);
     const actor = this.reactive.document;
 
     if (!actor.isOwner) {
       return false;
     }
-    //- get the grants from the job item and apply them to the actor
+    
     const job = await fromUuid(data.uuid);
     const grants = job.system.grants;
-    //- apply the grants to the actor,
-    //- iterate over the grants collection as an array and await the fromUuid call, collate these items into an array  
     const grantItems = [];
-    for(let grantObject of grants.list) {
-      //- grants in the job are stored as uuids,
+    for (const grantObject of grants.list) {
       const grantItem = await fromUuid(grantObject.uuid);
-      //- filter out any grants that are already owned by the actor by name
       if(!actor.items.some(x => x.name === grantItem.name)) {
         grantItems.push(grantItem);
       }
     }
-    //- apply the grants to the actor
     await actor.createEmbeddedDocuments("Item", grantItems);
-    //- also add the job uuid to the actor
-    await actor.update({system: {job: {uuid: job.uuid, name: job.name, grants: grants.list, level: job.system.level, role: job.system.role, img: job.img}}});
+    await actor.update({
+      system: {
+        job: {
+          uuid: job.uuid,
+          name: job.name,
+          grants: grants.list,
+          level: job.system.level,
+          role: job.system.role,
+          img: job.img
+        }
+      }
+    });
   }
 
   /**
