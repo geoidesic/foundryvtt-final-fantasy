@@ -68,7 +68,7 @@ export default class CustomEffect {
   /**
    * Handle a custom effect change
    * @param {Object} change - The effect change data
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the effect change is handled
    */
   async handleChange(change) {
     game.system.log.d('EFFECTS | handleChange', { change });
