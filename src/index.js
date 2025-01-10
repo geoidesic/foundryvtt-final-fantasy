@@ -9,24 +9,12 @@ import FFCombat from './extensions/combat.js'
 import FFCombatant from './extensions/combatant.js'
 import RollGuards from "~/src/helpers/RollGuards";
 import hooks from "~/src/hooks";
-//- helpers
-/**
- * Sets up Dice So Nice module configuration
- * @return {void}
- */
-function setupDSN() {
-  // Set up Dice So Nice to icrementally show attacks then damge rolls
-  if (game.modules.get("dice-so-nice")?.active && !game.settings.get(game.system.id, ICON.settings.dsn_setup)) {
-    game.settings.set("dice-so-nice", "enabledSimultaneousRolls", true);
-    game.settings.set("dice-so-nice", "enabledSimultaneousRollForMessage", true);
-    game.settings.set("dice-so-nice", "immediatelyDisplayChatMessages", true);
-    game.settings.set(game.system.id, ICON.settings.dsn_setup, true);
-  }
-}
+
+/* eslint-disable-next-line no-unused-vars */
+import { setupDSN } from "~/src/helpers/dsnSetup.js";
 
 //- debug hooks
 // CONFIG.debug.hooks = true;
-
 
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FF15Actor

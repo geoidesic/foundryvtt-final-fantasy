@@ -88,7 +88,7 @@ export async function onDropItemOnItem(event, $doc, key) {
     //- this works but causes a sort validation error. Don't know why. It shouldn't
     await $doc.update({ [`system.${key}`]: { value: true, list: itemList } });
 
-    // this doesn't work – don't know why. It should
+    //- this doesn't work. Don't know why. It should
     // await $doc.update({system: { [key]: { value: 1, list: itemList } }});
 
     result[key] = droppedItemData
