@@ -15,7 +15,7 @@ export async function deleteItemLink($doc, key, index) {
   game.system.log.d('index', index)
 
   const itemList = $doc.system?.[key]?.list;
-  const spliced = itemList.splice(index, 1);
+  itemList.splice(index, 1);
 
   game.system.log.d('itemList', itemList)
   game.system.log.d('itemList', $doc.system?.[key]?.list)
@@ -127,7 +127,7 @@ export async function updateList(list, uuids, uuid = false) {
  */
 export async function uuidsFromList(list, byUuid = false) {
   const items = {}
-  for (let item of list) {
+  for (const item of list) {
     if (!byUuid) {
       items[item.uuid] = await fromUuid(item.uuid);
     } else {

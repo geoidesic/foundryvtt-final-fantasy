@@ -36,6 +36,7 @@ export default class TransferEffectToAllies {
   /**
    * Process the transfer effect to allies
    * @param {object} event - The event containing effect data
+   * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
     game.system.log.p("[TRANSFER] Starting effect transfer process", event);

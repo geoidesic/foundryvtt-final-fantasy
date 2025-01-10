@@ -14,6 +14,7 @@ export default class ProcTrigger {
   /**
    * Process the proc trigger effect
    * @param {object} event - The event containing item and roll data
+   * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
     
@@ -60,7 +61,7 @@ export default class ProcTrigger {
       }
 
       // Enable the effects
-      const enabled = await this.actor.enableLinkedEffects(actorItem);
+      await this.actor.enableLinkedEffects(actorItem);
 
       // Send a chat message for the proc trigger
       await ChatMessage.create({
