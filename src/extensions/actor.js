@@ -230,6 +230,7 @@ export default class FF15Actor extends Actor {
   /**
    * Process effect hooks for an effect
    * @param {ActiveEffect} effect - The effect to process hooks for
+   * @return {Promise<void>} Returns a promise that resolves when hooks are processed
    */
   async _processEffectHooks(effect) {
     for (const change of effect.changes) {
@@ -337,16 +338,25 @@ export default class FF15Actor extends Actor {
     // }
   }
 
+  /**
+   * Deletes all items of a specific type from the actor
+   * @param {string} type - The type of items to delete
+   * @return {Promise<void>} Returns a promise that resolves when items are deleted
+   */
   async deleteAllItems(type) {
     game.system.log.d(type)
     game.system.log.d(typeof type)
-    for (let item of this.items) {
+    for (const item of this.items) {
       if (Array.isArray(type) && type.includes(item.type) || !type || type === 'all' || item.type === type) {
         await item.delete();
       }
     }
   }
 
+  /**
+   * Handles pre-creation setup
+   * @return {Promise<void>} Returns a promise that resolves when setup is complete
+   */
   async _preCreate() {
     game.system.log.d('preCreate', this);
     if (this.type === 'PC') {
@@ -355,6 +365,11 @@ export default class FF15Actor extends Actor {
     }
   }
 
+  /**
+   * Handles dropping content onto the actor
+   * @param {DragEvent} event - The drop event
+   * @return {Promise<void>} Returns a promise that resolves when the drop is handled
+   */
   async _onDrop(event) {
     console.log('_onDrop in the actor.js', event);
   }

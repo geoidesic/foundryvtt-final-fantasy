@@ -15,6 +15,10 @@ export default class FFActiveEffect extends ActiveEffect {
     super(data, context);
   }
 
+  /**
+   * Gets whether the effect is temporary
+   * @return {boolean} Returns true if the effect is temporary
+   */
   get isTemporary() {
     if (this.getFlag(SYSTEM_ID, "overlay")) return true;
     return super.isTemporary;
@@ -37,6 +41,7 @@ export default class FFActiveEffect extends ActiveEffect {
   /**
    * Sets the combat duration for the effect
    * @param {object} effectData - The effect data
+   * @return {Promise<void>} Returns a promise that resolves when the duration is set
    */
   static async setCombatDuration(effectData) {
     // Get the origin item
@@ -54,6 +59,7 @@ export default class FFActiveEffect extends ActiveEffect {
 
   /**
    * Updates the combat duration
+   * @return {Promise<void>} Returns a promise that resolves when the duration is updated
    */
   async updateCombatDuration() {
     // Get the origin item uuid of the effect from this.origin

@@ -14,7 +14,7 @@ import { stepwiseResolveDotpath } from '~/src/helpers/paths';
  * @param {object} [opts] - Optional parameters
  * @param {boolean} [opts.caseSensitive=false] - When true regex test is case-sensitive
  * @param {import('svelte/store').Writable<string>} [opts.store] - Use the provided store instead of creating a default writable store
- * @return {function} The query string filter function with store capabilities
+ * @returns {function} The query string filter function with store capabilities
  */
 export function createFilterQuery(properties, { caseSensitive = false, store } = {}) {
   let keyword = '';
@@ -44,7 +44,7 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
   /**
    * Filter function that tests data against the current regex
    * @param {object} data - Data object to test against regex
-   * @return {boolean} Whether the data matches the filter
+   * @returns {boolean} Whether the data matches the filter
    */
   function filterQuery(data) {
     if (keyword === '' || !regex) { 
@@ -110,7 +110,7 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
   /**
    * Subscribe to changes in the filter value
    * @param {function} handler - A callback function that accepts strings
-   * @return {import('svelte/store').Unsubscriber} Unsubscribe function
+   * @returns {import('svelte/store').Unsubscriber} Unsubscribe function
    */
   filterQuery.subscribe = (handler) => {
     return storeKeyword.subscribe(handler);
@@ -119,7 +119,7 @@ export function createFilterQuery(properties, { caseSensitive = false, store } =
   /**
    * Set a new value for the filter
    * @param {string|boolean|Array<string>} value - A new value for the keyword/regex test
-   * @return {void}
+   * @returns {void} Nothing
    */
   filterQuery.set = (value) => {
     game.system.log.d('value', value)

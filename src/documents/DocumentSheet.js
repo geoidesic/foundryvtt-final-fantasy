@@ -65,7 +65,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
 
   /**
    * Gets the header buttons for the sheet
-   * @return {Array<object>} The list of header buttons
+   * @return {Array<object>} Returns an array of button configurations for the sheet header
    */
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
@@ -81,6 +81,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
   /**
    * Handles sheet configuration
    * @param {Event} event - The triggering event
+   * @return {void} Nothing
    */
   _onConfigureSheet(event) {
     if (event) {
@@ -96,7 +97,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
   /**
    * Closes the sheet
    * @param {object} options - Options for closing
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the sheet is closed
    */
   async close(options = {}) {
     await super.close(options);
@@ -123,7 +124,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
 
   /**
    * Prepares base data for the sheet
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the base data is prepared
    */
   async prepareBaseData() {
 
@@ -133,7 +134,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
    * Renders the sheet
    * @param {boolean} force - Whether to force render
    * @param {object} options - Render options
-   * @return {this} The sheet instance
+   * @return {this} Returns the sheet instance for method chaining
    */
   render(force = false, options = {}) {
     if (!this.#storeUnsubscribe) {

@@ -32,7 +32,7 @@ export default class FFCombatTracker extends CombatTracker {
      this.#combatants.subscribe((values) =>
      {
         // console.log(`Combatants ------`);
-        for (const _value of values)
+        for (const value of values)
         {
           // Placeholder for future use
         }
@@ -86,7 +86,7 @@ export default class FFCombatTracker extends CombatTracker {
   /**
    * Handle mouse down events on combatants
    * @param {Event} event - The triggering mouse event
-   * @return {Promise<void>}
+   * @return {Promise<void>} Returns a promise that resolves when the mouse down event is handled
    */
   async _onCombatantMouseDown(event) {
     event.preventDefault();
