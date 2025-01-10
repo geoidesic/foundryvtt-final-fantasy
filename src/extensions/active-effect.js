@@ -1,6 +1,19 @@
 import { SYSTEM_ID } from "~/src/helpers/constants.js";
 
+/**
+ * Extension of the ActiveEffect class for FF15
+ * @extends {ActiveEffect}
+ */
 export default class FFActiveEffect extends ActiveEffect {
+
+  /**
+   * Creates a new FF15 active effect
+   * @param {object} data - The effect data
+   * @param {object} context - The initialization context
+   */
+  constructor(data, context) {
+    super(data, context);
+  }
 
   get isTemporary() {
     if (this.getFlag(SYSTEM_ID, "overlay")) return true;
@@ -12,7 +25,7 @@ export default class FFActiveEffect extends ActiveEffect {
    * (i.e. a passive effect from an item owned by that actor, 
    * rather than an active effect transferred as a result of an action 
    * by another actor)
-   * @returns {boolean}
+   * @return {boolean} Whether the effect is transferred from an item
    */
   get isTransferred() {
     const origin = fromUuidSync(this.origin);
@@ -21,6 +34,10 @@ export default class FFActiveEffect extends ActiveEffect {
             origin.transferredEffects.length > 0;
   }
 
+  /**
+   * Sets the combat duration for the effect
+   * @param {object} effectData - The effect data
+   */
   static async setCombatDuration(effectData) {
     // Get the origin item
     const originItem = await fromUuid(effectData.origin);
@@ -35,6 +52,9 @@ export default class FFActiveEffect extends ActiveEffect {
 
   }
 
+  /**
+   * Updates the combat duration
+   */
   async updateCombatDuration() {
     // Get the origin item uuid of the effect from this.origin
     const originUuid = this.origin;
