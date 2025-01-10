@@ -1,28 +1,36 @@
 import { localize } from "~/src/helpers/util";
 import { SYSTEM_ID } from "~/src/helpers/constants";
 
+/**
+ * Class to handle various checks and guards for rolling actions
+ */
 export default class RollGuards {
-
+  /** @type {Actor} The actor associated with these roll guards */
   actor;
 
-  //- shuttle is used to pass data from the guards to the roll calculator
+  /** 
+   * Shuttle object used to pass data from guards to roll calculator
+   * @type {Object} 
+   */
   shuttle = {
     hasModifiers: {
       extraModifiers: null
     }
   }
 
+  /**
+   * Create a new RollGuards instance
+   * @param {Actor} actor - The actor to check guards for
+   */
   constructor(actor) {
     this.actor = actor;
   }
 
-  /******************
-   * Private Methods
-   ******************/
   /**
    * Dialog to allow extra modifiers to be added to the roll
-   * @param {*} item 
-   * @returns 
+   * @param {Item} item - The item being rolled
+   * @return {Promise<Object>} The modifier data from the dialog
+   * @private
    */
   async _showModifierDialog(item) {
     const ModifierDialog = (await import('~/src/components/organisms/dialogs/ModifierDialog.svelte')).default;
@@ -44,7 +52,7 @@ export default class RollGuards {
           },
           cancel: {
             label: "Cancel",
-            callback: () => reject()
+            callback: () => reject(new Error('Dialog cancelled'))
           }
         },
         render: (html) => {
@@ -60,23 +68,34 @@ export default class RollGuards {
         close: () => {
           window._modifierDialogComponent?.$destroy();
           delete window._modifierDialogComponent;
-          reject();
+          reject(new Error('Dialog closed'));
         }
       }).render(true);
     });
   }
 
-  /******************
-   * Public Methods
-   ******************/
+  /**
+   * Check if the item is an action
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item is an action
+   */
   async isAction(item) {
     return item.type === 'action';
   }
 
+  /**
+   * Check if there is an active combat
+   * @return {Promise<boolean>} Whether there is an active combat
+   */
   async isCombat() {
     return game.combat;
   }
 
+  /**
+   * Check if there are valid targets selected
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether there are valid targets
+   */
   async hasTargets(item) {
     // Check if we have targeted entities
     const targets = game.user.targets;
@@ -90,6 +109,11 @@ export default class RollGuards {
     return true;
   }
 
+  /**
+   * Check if the selected targets match the action's targeting requirements
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether the targets match the requirements
+   */
   async targetsMatchActionIntent(item) {
 
     const target = item.system.target;
@@ -165,11 +189,10 @@ export default class RollGuards {
     }
   }
 
-
   /**
-   * Tracks action usage for limited actions.
-   * Check for limitations only if in combat 
-   * and if the item has limitations but fewer uses, then add uses
+   * Check if the item has remaining uses available
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item has uses remaining
    */
   async hasRemainingUses(item) {
     // Check for limitations only if in combat
@@ -202,6 +225,11 @@ export default class RollGuards {
     return true;
   }
 
+  /**
+   * Check and handle any modifiers for the roll
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether modifiers were successfully handled
+   */
   async hasModifiers(item) {
     if (!item.system.hasCR) {
       return true;
@@ -232,6 +260,11 @@ export default class RollGuards {
     return true;
   }
 
+  /**
+   * Check if the item has any enablers
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item has enablers
+   */
   async hasEnablers(item) {
     if (!game.combat || !item.system.enables?.value) { return false }
     const enablesList = item.system.enables.list;
@@ -239,6 +272,11 @@ export default class RollGuards {
     return true;
   }
 
+  /**
+   * Check if there is an active enabler slot available
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether an enabler slot is available
+   */
   async hasActiveEnablerSlot(item) {
     // Skip this check for reactions
     if (item.system.type === 'reaction') return true;
@@ -287,10 +325,20 @@ export default class RollGuards {
     return false;
   }
 
+  /**
+   * Check if the item matches any enabler effects
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item matches enabler effects
+   */
   async matchesEnablerEffect(item) {
     return this.actor.itemTagsMatchEnablerEffectTags(item);
   }
 
+  /**
+   * Check if the actor has all required effects for the item
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether all required effects are present
+   */
   async hasRequiredEffects(item) {
     if (!item.system.requires?.value) { return true }
 
@@ -317,6 +365,11 @@ export default class RollGuards {
     return true;
   }
 
+  /**
+   * Check if it is currently the actor's turn
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether it is the actor's turn
+   */
   async isActorsTurn(item) {
     // Skip this check if not in combat
     if (!game.combat) return true;
@@ -336,6 +389,11 @@ export default class RollGuards {
     return isCurrentTurn;
   }
 
+  /**
+   * Check if the item is a reaction
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item is a reaction
+   */
   async isReaction(item) {
     // Only check reactions
     if (item.system.type !== 'reaction') return true;
@@ -351,6 +409,11 @@ export default class RollGuards {
     return true;
   }
 
+  /**
+   * Check if there is an available action slot for the item
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether an action slot is available
+   */
   async hasAvailableSlot(item) {
     // Skip this check for reactions
     if (item.system.type === 'reaction') return true;
