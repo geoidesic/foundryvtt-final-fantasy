@@ -131,11 +131,7 @@
             "SingleTarget": "%s requires a single target. Please select just one target and roll again.",
             "SingleTargetNotSelf": "%s requires a single target. Please select just one target that is not yourself and roll again.",
             "TargetSelf": "%s requires you to target yourself. Please target your own actor's token and roll again.",
-            "UsesRemaining": "Uses Remaining",
-            "IsHealerRecovery": {
-              "Label": "Healer Recovery",
-              "Description": "A healer recovery is an action that heals the user."
-            }
+            "UsesRemaining": "Uses Remaining"
           },
           "equipment": {
             "Label": "Equipment",
@@ -233,9 +229,13 @@
             "Trigger": {
               "any": "Any time",
               "ability": "Immediately after an enemy makes an ability check",
+              "nearby": "Immediately before an ability used by an enemy within 2 squares is resolved",
               "move": "Immediately before an enemy moves",
-              "turn": "When any character finishes their turn",
-              "invoke": "When an enemy within 10 squares of this character uses an invoked ability, or is using an invoked ability to generate a marker"
+              "endturn": "When any character finishes their turn",
+              "startturn": "When an enemy begins their turn",
+              "invoke": "When an enemy within 10 squares of this character uses an invoked ability, or is using an invoked ability to generate a marker",
+              "adjacentinvoke": "When an adjacent enemy uses an invoked ability, or is using an invoked ability to generate a marker",
+              "beforedamage": "Immediately before you take damage"
             },
             "Range": {
               "1sq": "1 Square",

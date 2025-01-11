@@ -103,9 +103,13 @@ export const getUsesUnitOptions = () => [
 export const getTriggerOptions = () =>  [
   { value: "any", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.any") },
   { value: "ability", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.ability") },
+  { value: "nearby", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.nearby") },
   { value: "move", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.move") },
-  { value: "turn", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.turn") },
+  { value: "beforedamage", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.beforedamage") },
+  { value: "endturn", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.endturn") },
+  { value: "startturn", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.startturn") },
   { value: "invoke", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
+  { value: "adjacentinvoke", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.adjacentinvoke") },
 ];
 
 export const getHeavyshotOptions = () => [
