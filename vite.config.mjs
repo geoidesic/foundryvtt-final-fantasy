@@ -39,8 +39,7 @@ export default () => {
     resolve: {
       conditions: ["import", "browser"],
       alias: {
-        "~": path.resolve(__dirname),
-        '/systems/foundryvtt-final-fantasy/assets': path.resolve(__dirname, 'assets'),
+        "~": path.resolve(__dirname)
       },
     },
 
@@ -58,6 +57,7 @@ export default () => {
     css: {
       // Creates a standard configuration for PostCSS with autoprefixer & postcss-preset-env.
       postcss: postcssConfig({ compress: s_COMPRESS, sourceMap: s_SOURCEMAPS }),
+      url: false
     },
 
     // About server options:
@@ -90,8 +90,11 @@ export default () => {
         input: "./src/index.js",
         output: {
           entryFileNames: "index.js",
-          format: "es"
-        }
+          format: "es",
+          assetFileNames: '[name].[ext]'
+        },
+        external: (id) => id.startsWith("/systems/foundryvtt-final-fantasy/assets/"), // Correctly return `true/false`.
+
       }
     },
     
