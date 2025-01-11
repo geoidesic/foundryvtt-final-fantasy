@@ -252,7 +252,7 @@ $: hasItems = localList.length > 0;
         valuePath="{valuePath}"
       )
     slot
-    +if("checkboxValue && localList.length > 0")
+    +if("checkboxValue")
       table.standard-list.small-text.borderless
         tr
           th.img.expand(scope="col")
