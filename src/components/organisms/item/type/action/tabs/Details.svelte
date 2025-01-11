@@ -78,12 +78,16 @@
         .flex0.right
           DocCheckbox( name="hasBaseEffect" valuePath="system.hasBaseEffect")
       +if("$item.system.hasBaseEffect")
-      
-        .flexrow.sheet-row.justify-vertical
+        .flexrow.sheet-row.justify-vertical.px-sm
           .flex3
-            DocSelect.wide.left(id="baseEffectType" name="baseEffectType" type="number" options="{baseEffectTypeOptions}" valuePath="system.baseEffectType")
+            label(for="baseEffectDamage") Damage
           .flex2.right
-            DocInput(id="formula" name="formula" valuePath="system.formula")
+            DocInput(id="baseEffectDamage" name="baseEffectDamage" valuePath="system.baseEffectDamage")
+        .flexrow.sheet-row.justify-vertical.px-sm
+          .flex3
+            label(for="baseEffectHealing") Healing
+          .flex2.right
+            DocInput(id="baseEffectHealing" name="baseEffectHealing" valuePath="system.baseEffectHealing")
 
       .flexrow.justify-vertical
         .flex4

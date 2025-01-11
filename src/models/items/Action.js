@@ -25,8 +25,8 @@ export class ActionModel extends FFItemDataModel {
       trigger: new StringField({ required: false, initial: '' }),
       hasTarget: new BooleanField({ required: false, initial: false }),
       target: new StringField({ required: false, initial: '' }),
-      baseEffectType: new StringField({ required: false, initial: '' }),
-      baseEffect: new StringField({ required: false, initial: '' }),
+      baseEffectHealing: new StringField({ required: false, initial: '' }),
+      baseEffectDamage: new StringField({ required: false, initial: '' }),
       hasBaseEffect: new BooleanField({ required: false, initial: false }),
       hasCheck: new BooleanField({ required: false, initial: false }),
       checkAttribute: new StringField({ required: false, initial: '' }),
@@ -51,7 +51,6 @@ export class ActionModel extends FFItemDataModel {
         required: false, 
         choices: ['primary', 'secondary', 'reaction', 'limit', 'combo']
       }),
-      formula: new StringField({ required: false, initial: '' }),
       hasSplitDamage: new BooleanField({ required: false, initial: false }),
       hasCost: new BooleanField({ required: false, initial: false }),
       cost: new NumberField({ required: false, initial: 0 }),
@@ -103,5 +102,4 @@ export class ActionModel extends FFItemDataModel {
       isMagic: new BooleanField({ required: false, initial: false }),
     };
   }
-
 }

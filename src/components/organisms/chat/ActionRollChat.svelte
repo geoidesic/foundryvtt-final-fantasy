@@ -68,14 +68,15 @@
     for (const id of passedTargets) {
       let token = canvas.tokens.get(id);
       const baseDamageFormula = item.system?.hasSplitDamage 
-        ? `Split BaseDamage (${item.system?.formula} ÷ ${passedTargets.length})`
-        : `Base Damage (${item.system?.formula})`;
+        ? `Split BaseDamage (${item.system?.baseEffectDamage} ÷ ${passedTargets.length})`
+        : `Base Damage (${item.system?.baseEffectDamage})`;
       const directHitDisplayFormula = item.system?.hasSplitDamage
         ? `Split Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item.system?.directHitDamage} ÷ ${passedTargets.length}) `
         : `Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item.system?.directHitDamage})`;
 
       DamageResults.set(id, {
-        damage: item.system?.formula,
+        damage: item.system?.baseEffectDamage,
+        healing: item.system?.baseEffectHealing,
         baseDamageFormula,
         directHit: item.system?.directHitDamage,
         directHitFormula: item.system?.directHitDamage,
@@ -159,8 +160,8 @@
     const results = { damage: 0, directHit: 0 };
 
     // Calculate base damage
-    if (item?.system?.formula) {
-      results.damage = parseInt(item?.system.formula) || 0;
+    if (item?.system?.baseEffectDamage) {
+      results.damage = parseInt(item?.system.baseEffectDamage) || 0;
       // If split damage is enabled, divide the damage by the number of targets (rounding up)
       if (item?.system?.hasSplitDamage && FFMessage.targets.length > 0) {
         results.damage = Math.ceil(results.damage / FFMessage.targets.length);
@@ -345,7 +346,7 @@
                           +else
                             i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                 .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
-                  +if("item.system?.formula")
+                  +if("item.system?.baseEffectDamage")
                     .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDamageFormula(target)}")
                       .flex3.left.font-cinzel.smaller Damage 
                       .flex1.right.no-wrap {displayDamage(target)}

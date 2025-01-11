@@ -145,11 +145,12 @@ export default class RollCalcActor extends RollCalc {
               img: item.img,
               type: item.type,
               system: {
-                formula: item.system?.formula,
+                baseEffectHealing: item.system?.baseEffectHealing,
+                baseEffectDamage: item.system?.baseEffectDamage,
                 directHitDamage: item.system?.directHitDamage,
                 hasDirectHit: item.system?.hasDirectHit,
                 CR: item.system?.CR,
-                isHealerRecovery: item.system?.isHealerRecovery
+                isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
               }
             },
             hasTargets,
@@ -278,20 +279,18 @@ export default class RollCalcActor extends RollCalc {
       d20Result,
       isCritical,
       itemName: item.name,
-      isHealerRecovery: item.system.isHealerRecovery
+      isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
     });
 
     // If it's a critical hit, we need to:
     // 1. Double the damage/healing dice
     // 2. Auto-succeed the check
     if (isCritical) {
-      // For healer recovery skills, we only double healing dice
-      const isHealerRecovery = item.system.baseEffectType === 'heal';
 
       // Double all damage/healing dice formulas
-      const formulaFields = isHealerRecovery 
-        ? ['formula'] // Only double healing for healer recovery skills
-        : ['directHitDamage', 'formula']; // Double damage for other skills
+      const formulaFields = Boolean(item?.system?.baseEffectHealing) 
+        ? ['baseEffectHealing'] // Only double healing for healer recovery skills
+        : ['directHitDamage', 'baseEffectDamage']; // Double damage for other skills
 
       for (const field of formulaFields) {
         const formula = item.system[field];
@@ -317,7 +316,7 @@ export default class RollCalcActor extends RollCalc {
       // Return original roll formula for reference
       originalFormulas: {
         directHitDamage: item.system.directHitDamage,
-        formula: item.system.formula
+        baseEffectDamage: item.system.baseEffectDamage
       }
     };
   }
@@ -350,25 +349,14 @@ export default class RollCalcActor extends RollCalc {
     // If it's a critical hit, we auto-succeed regardless of DC
     const isSuccess = isCritical || roll.total >= item.system.CR;
 
-    game.system.log.d("[ROLL] Roll details:", {
-      formula: roll.formula,
-      d20Result,
-      total: roll.total,
-      terms: roll.terms,
-      isCritical,
-      isSuccess,
-      CR: item.system.CR,
-      isHealerRecovery: item.system.isHealerRecovery
-    });
-
     // If it's a critical hit and a healer recovery skill, double the healing
-    if (isCritical && item.system.isHealerRecovery && item.system.formula) {
+    if (isCritical && Boolean(item?.system?.baseEffectHealing)) {
       // Double the healing dice
-      const healFormula = item.system.formula;
+      const healFormula = item?.system?.baseEffectHealing;
       const modifiedFormula = healFormula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
         return `${parseInt(count) * 2}d${sides}`;
       });
-      item.system.formula = modifiedFormula;
+      item.system.baseEffectHealing = modifiedFormula;
 
       game.system.log.d("[CRITICAL] Modified healing formula:", {
         original: healFormula,
