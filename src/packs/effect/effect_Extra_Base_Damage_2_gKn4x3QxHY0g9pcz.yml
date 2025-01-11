@@ -20,10 +20,10 @@ effects:
     system:
       tags: []
     changes:
-      - key: '@PrimaryBaseDamageBuff'
-        mode: 2
+      - key: PrimaryBaseDamageBuff
         value: '2'
-        priority: null
+        mode: 0
+        priority: 1
     duration:
       startTime: null
       seconds: null
@@ -45,7 +45,7 @@ effects:
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
       createdTime: null
-      modifiedTime: 1736322527785
+      modifiedTime: 1736609321936
       lastModifiedBy: A3f8BsJ7eYm0X14M
     _key: '!items.effects!gKn4x3QxHY0g9pcz.NykToumuINsiYtW6'
 flags: {}

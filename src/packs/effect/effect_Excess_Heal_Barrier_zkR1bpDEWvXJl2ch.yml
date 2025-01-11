@@ -1,0 +1,65 @@
+name: Excess Heal Barrier
+type: effect
+img: icons/svg/holy-shield.svg
+system:
+  description: >-
+    <p>Grants a barrier equaling the amount of <strong>HP</strong> restored that
+    exceeds your <strong>Max HP</strong>.</p>
+effects:
+  - origin: Item.qlN8ZLU3jfZeJeKi
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Excess Heal Barrier
+    img: icons/svg/holy-shield.svg
+    _id: 7ybUA7MIxHeIYmRY
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: ExcessHealBarrier
+        mode: 0
+        value: (heal-maxHP)
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!zkR1bpDEWvXJl2ch.7ybUA7MIxHeIYmRY'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736611501031
+  modifiedTime: 1736611501031
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: zkR1bpDEWvXJl2ch
+sort: 0
+_key: '!items!zkR1bpDEWvXJl2ch'
+

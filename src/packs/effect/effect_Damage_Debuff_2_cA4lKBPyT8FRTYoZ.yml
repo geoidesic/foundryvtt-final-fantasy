@@ -1,0 +1,63 @@
+name: Damage Debuff 2
+type: effect
+img: icons/svg/downgrade.svg
+system:
+  description: <p>Reduces the damage dealt by the abilities of all targets.</p>
+effects:
+  - origin: Item.mcOAr8LjAl9ZKMy0
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Damage Debuff 2
+    img: icons/svg/downgrade.svg
+    _id: 9dXKAQrS3BkgqHrZ
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: DamageDebuff
+        mode: 0
+        value: '2'
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!cA4lKBPyT8FRTYoZ.9dXKAQrS3BkgqHrZ'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736610397497
+  modifiedTime: 1736610397497
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: cA4lKBPyT8FRTYoZ
+sort: 0
+_key: '!items!cA4lKBPyT8FRTYoZ'
+

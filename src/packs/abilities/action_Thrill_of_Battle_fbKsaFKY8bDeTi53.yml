@@ -1,0 +1,80 @@
+folder: TRXQWxXUqcdLTPkv
+name: Thrill of Battle
+type: action
+_id: fbKsaFKY8bDeTi53
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/thrill-of-battle.webp
+system:
+  description: >-
+    <p><strong>Trigger</strong>: Immediately before you take
+    damage</p><p><strong>Base Effect</strong>: Restores 1d6 + 2 HP and grants a
+    barrier equaling the amount of HP restored that exceeds your Max
+    HP.</p><p><strong>Limitation</strong>: Once per phase</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: false
+  rangeType: ''
+  hasTrigger: true
+  trigger: beforedamage
+  hasTarget: false
+  target: ''
+  baseEffectHealing: 1d6+2
+  baseEffectDamage: ''
+  hasBaseEffect: true
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: true
+  limitation: 1
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: false
+  cost: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  type: reaction
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736611071174
+  modifiedTime: 1736611553445
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!fbKsaFKY8bDeTi53'
+

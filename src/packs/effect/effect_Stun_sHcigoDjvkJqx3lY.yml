@@ -1,0 +1,59 @@
+name: Stun
+type: effect
+_id: sHcigoDjvkJqx3lY
+img: icons/svg/daze.svg
+system:
+  description: <p>A stunned character cannot act during their turn.</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.sHcigoDjvkJqx3lY
+    flags:
+      foundryvtt-final-fantasy: {}
+    name: Stun
+    img: icons/svg/daze.svg
+    _id: 6vrMZGnDbdTIbYxw
+    type: base
+    system:
+      tags: []
+    changes: []
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - stun
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1736608036026
+      modifiedTime: 1736608043175
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!sHcigoDjvkJqx3lY.6vrMZGnDbdTIbYxw'
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736607986203
+  modifiedTime: 1736608033183
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!sHcigoDjvkJqx3lY'
+

@@ -1,0 +1,61 @@
+name: Enmity
+type: effect
+_id: cCRzPvhCVoL5EMSh
+img: systems/foundryvtt-final-fantasy/assets/icons/status/enrage.svg
+system:
+  description: >-
+    <p>A character with <em>enmity</em> suffers penalties against the
+    target.</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.cCRzPvhCVoL5EMSh
+    flags:
+      foundryvtt-final-fantasy: {}
+    name: Enmity
+    img: systems/foundryvtt-final-fantasy/assets/icons/status/enrage.svg
+    _id: Tvdqxyqm1NQl6aCy
+    type: base
+    system:
+      tags: []
+    changes: []
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - enmity
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1736592479196
+      modifiedTime: 1736592489589
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!cCRzPvhCVoL5EMSh.Tvdqxyqm1NQl6aCy'
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736592382797
+  modifiedTime: 1736592452395
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!cCRzPvhCVoL5EMSh'
+

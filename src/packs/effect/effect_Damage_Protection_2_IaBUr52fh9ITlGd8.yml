@@ -1,29 +1,25 @@
-name: Extra Base Damage 1
+name: Damage Protection 2
 type: effect
-img: icons/svg/explosion.svg
+img: icons/svg/shield.svg
 system:
-  description: <p>This condition buffs all your <em>primary</em> actions' base damage.</p>
+  description: <p>Reduces the damage you take from all abilities by 2</p>
 effects:
-  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.X8RJde8JMumdBtSy
-    disabled: false
-    transfer: false
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.IaBUr52fh9ITlGd8
     flags:
-      surge:
-        source: user
-        trigger: passive
       foundryvtt-final-fantasy:
         overlay: true
-    name: Extra Base Damage 2
-    img: icons/svg/explosion.svg
-    _id: NykToumuINsiYtW6
+    name: Damage Protection 2
+    img: icons/svg/shield.svg
+    _id: zgYP1BWlzvwUgVNC
     type: base
     system:
       tags: []
     changes:
-      - key: PrimaryBaseDamageBuff
-        value: '1'
+      - key: DamageProtection
         mode: 0
+        value: '2'
         priority: 1
+    disabled: false
     duration:
       startTime: null
       seconds: null
@@ -32,10 +28,9 @@ effects:
       turns: null
       startRound: null
       startTurn: null
-    description: >-
-      <p>This condition buffs all your <em>primary</em> actions' base
-      damage.</p>
+    description: ''
     tint: '#ffffff'
+    transfer: false
     statuses: []
     sort: 0
     _stats:
@@ -44,10 +39,10 @@ effects:
       coreVersion: '12.331'
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
-      createdTime: null
-      modifiedTime: 1736609303820
+      createdTime: 1736611516618
+      modifiedTime: 1736611531461
       lastModifiedBy: A3f8BsJ7eYm0X14M
-    _key: '!items.effects!rBeeXb5aL2TlEBUa.NykToumuINsiYtW6'
+    _key: '!items.effects!IaBUr52fh9ITlGd8.zgYP1BWlzvwUgVNC'
 flags: {}
 _stats:
   compendiumSource: null
@@ -55,14 +50,14 @@ _stats:
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1736322401501
-  modifiedTime: 1736322402974
+  createdTime: 1736609245991
+  modifiedTime: 1736611508000
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
 folder: null
-_id: rBeeXb5aL2TlEBUa
-sort: 300000
-_key: '!items!rBeeXb5aL2TlEBUa'
+_id: IaBUr52fh9ITlGd8
+sort: 0
+_key: '!items!IaBUr52fh9ITlGd8'
 
