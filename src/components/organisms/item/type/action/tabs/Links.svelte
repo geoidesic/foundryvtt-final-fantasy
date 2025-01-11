@@ -30,10 +30,6 @@
         key="enables",
       )
       ItemBucket(
-        title="{localize('FF15.Combos')}",
-        key="combos",
-      )
-      ItemBucket(
         title="{localize('FF15.ProcTriggers')}",
         key="procs",
       )
