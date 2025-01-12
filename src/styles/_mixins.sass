@@ -1,16 +1,20 @@
 @use "sass:string"
 
+
+=action-slot
+
+
+
 =badge($background: var(--color-highlight), $color: var(--color-highligh-light), $size: 0.75rem) 
-  padding: 0px 0 0px 0.4rem
   background: $background
   color: #fff
   font-size: $size
-  border-radius: 1000px
   background-color: $background
   color: $color
   margin-right: 0.2em
   text-align: center
   border: 1px solid var(--ff-border-color)
+
 
 =inset($padding: 0.5rem 0.5rem 0 0.5rem, $shadow: 0 -3px 20px rgba(165, 131, 99, 1) inset, $margin: 0 0 0 0)
   padding: $padding

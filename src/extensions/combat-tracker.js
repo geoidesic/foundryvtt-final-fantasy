@@ -59,16 +59,16 @@ export default class FFCombatTracker extends CombatTracker {
           for (const action of actor.system.actionState.available.sort()) {
             //- if action is custom, i.e. not in getTypeOptions, then use the class name: custom-action
             if (!getTypeOptions().some(e => e.value === action)) {  
-              turn.actions += `<badge data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="custom-action">${action[0]?.capitalize()}</badge>`
+              turn.actions += `<div data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge custom-action">${action[0]?.capitalize()}</div>`
             } else {
-              turn.actions += `<badge data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="${action}">${action[0]?.capitalize()}</badge>`
+              turn.actions += `<div data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge ${action}">${action[0]?.capitalize()}</div>`
             }
           }
         }
         if (actor.system.actionState?.used) {
           // game.system.log.d("FFCombatTracker getData actor.system.actionState.used", actor.system.actionState.used)
           for (const action of actor.system.actionState.used.sort()) {
-            turn.actions += `<badge class="used">${action.type[0].capitalize()}</badge>`
+            turn.actions += `<div class="action-slot-badge used">${action.type[0].capitalize()}</div>`
           }
         }
       }

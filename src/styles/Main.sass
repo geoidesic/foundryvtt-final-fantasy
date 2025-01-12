@@ -24,7 +24,7 @@
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
 
-badge
+.action-slot-badge
   &.primary
     +mixins.badge(var(--color-primary-action), white)
   &.secondary
@@ -35,6 +35,7 @@ badge
     +mixins.badge(var(--color-custom-action), white)
   &.used
     +mixins.badge(var(--color-used-bg), var(--color-used))
+    
 .icon-critical:before
   content: "\e900"
 
@@ -651,12 +652,26 @@ badge
 //- Changes to Foundry Core
 #combat-tracker
   .combatant
-    padding-right: 0.5rem
     position: relative
+    &:has(input)
+      padding-right: 0.5rem
     .token-actions
       position: absolute
       top: -8px
-      right: 56px
+      right: 36px
+      .action-slot-badge
+        padding: 0
+        border-radius: 50%
+        display: inline-flex
+        align-items: center
+        justify-content: center
+        width: 1.2rem
+        height: 1.2rem
+        border-radius: 50%
+        font-size: 0.8rem
+        font-weight: bold
+        color: white
+
     input
       color: white
     &.active
@@ -664,17 +679,7 @@ badge
       &::after
         border: 2px ridge var(--color-highlight)
     
-    .action-badges
-      display: flex
-      gap: 0.25rem
-      margin-left: 0.5rem
-      align-items: center
-      
-      .badge
-        font-size: 0.7rem
-        min-width: 1.2rem
-        min-height: 1.2rem
-        padding: 0.2rem
+        
 
 .drag-over
   border: 2px dashed #007bff
@@ -800,24 +805,7 @@ badge
     --color-primary-action: rgb(205, 83, 110)
     --color-secondary-action: rgb(205, 83, 110)
 
-  .action-badge
-    display: inline-flex
-    align-items: center
-    justify-content: center
-    width: 1.2rem
-    height: 1.2rem
-    border-radius: 50%
-    font-size: 0.8rem
-    font-weight: bold
-    margin: 0 0.2rem
-    color: white
-    &.primary
-      background-color: var(--color-primary-action)
-    &.secondary
-      background-color: var(--color-secondary-action)
-    &.disabled
-      opacity: 0.5
-      filter: grayscale(100%)
+
   
 
 :is(#tooltip, .locked-tooltip)

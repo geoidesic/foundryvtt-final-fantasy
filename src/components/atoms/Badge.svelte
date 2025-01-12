@@ -10,8 +10,10 @@
 </template>
 
 <style lang="sass">
+@use '../../styles/_mixins' as mixins
+
+
 .badge
-  display: inline-flex
   align-items: center
   justify-content: center
   padding: 0.25rem 0.5rem
@@ -23,7 +25,7 @@
   white-space: nowrap
   background-color: var(--color-text-dark-inactive)
   &.round
-    border-radius: 50%
+    display: none
     padding: 0.25rem
     min-width: 1.5rem
     min-height: 1.5rem
