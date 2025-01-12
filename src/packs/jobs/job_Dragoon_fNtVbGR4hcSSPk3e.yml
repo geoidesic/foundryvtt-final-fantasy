@@ -13,7 +13,21 @@ system:
   level: 30
   role: DPS
   grants:
-    list: []
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.VY0mEM4Hmp0zgxu2
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.TedM91XlveMB05uv
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.Ry97bi5ROpx1kqTB
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.KwmKh1e3ERPqZN0o
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.wyM4OmJk0zEeV62l
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.H0H5RbaEcKMhsVFJ
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.p5nyNkwQwgpTyIIG
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.YnasgerOkZq6OwUM
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.GISlxMop9b6qZwxH
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.O6wuzkjWoF0UOC8O
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.7K2eyGb5Hae8JrV0
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.SjWqtU5IzfjbIE4R
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.XGiH1ZBsPC5dH4Aa
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.u2lZzMVTtFuaMKDE
     value: true
 effects: []
 flags: {}
@@ -24,7 +38,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736007801703
-  modifiedTime: 1736007801714
+  modifiedTime: 1736687807704
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0

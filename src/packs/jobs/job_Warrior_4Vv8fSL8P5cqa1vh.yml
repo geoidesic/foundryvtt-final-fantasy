@@ -11,7 +11,19 @@ system:
   level: 30
   role: Tank
   grants:
-    list: []
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.xtvAEVOUwOSQiBCX
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.6MXpuNE14pvtYZyf
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.7OXdI6HnneCtypSv
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.1YqPn1dApzgFxTGi
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.pyD8CIP3BMmgHU92
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.yBo6zPzYbsRfZrbM
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.ajgRCiIKvxYzOS4m
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.tbTykgxDlXosNlU6
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.fbKsaFKY8bDeTi53
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.UWFtd28onJ30zMPR
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.UaFBsmpoJjrh1sBI
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.Xlxv7wQR2qQD7ol8
     value: true
 effects: []
 flags: {}
@@ -22,7 +34,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736007802758
-  modifiedTime: 1736007802758
+  modifiedTime: 1736687814248
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0

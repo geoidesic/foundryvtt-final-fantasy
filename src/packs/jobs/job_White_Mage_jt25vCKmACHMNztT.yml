@@ -13,7 +13,19 @@ system:
   level: 30
   role: Healer
   grants:
-    list: []
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.r20omFAyHKfJ3E6d
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.WvJufPHglzMiQwRx
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.uI2ZJqZWR4bWsLhs
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.h1r4qfcw3HVkDbfC
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.UqXsZcNsCyaVqPBu
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.51NZCK0juFVjD9se
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.lT0flC6EOvRPENB2
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.Ld6zy1DoHBtXO8oZ
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sj28gji4MqE2uJpO
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.duvRBOpwWigYWnji
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.42yYsYvYBipnNWtn
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.g48GLdiRyrw4d1hm
     value: true
 effects: []
 flags: {}
@@ -24,7 +36,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736007803709
-  modifiedTime: 1736007803709
+  modifiedTime: 1736687822430
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0
