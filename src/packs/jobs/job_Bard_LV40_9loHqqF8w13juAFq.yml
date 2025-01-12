@@ -1,0 +1,51 @@
+name: Bard LV40
+type: job
+img: systems/foundryvtt-final-fantasy/assets/icons/jobs/bard.webp
+system:
+  description: >-
+    <p><strong>Army’s Paeon (Secondary)</strong></p><p>A new “song” that lets
+    allies re‐roll one damage die once, as long as it landed a 20 or lower
+    (depending on the GM’s rules).</p><p>Also deals a little direct damage when
+    cast.</p><p><strong>The Warden’s Paean (Secondary)</strong></p><p>Removes a
+    single enfeeblement from the target OR, if they have no enfeeblement, grants
+    a “Warden’s” buff effect.</p><p><strong>New Primary
+    Ability: Barrage</strong></p><p>Lets you immediately fire off another
+    volley/primary shot after using it.</p><p>Pairs especially well with
+    <em>Heavy Shot</em> or <em>Venomous/Windbite</em> for extra
+    hits.</p><p>Grants <em>Straight Shot Ready</em> too.</p><p><strong>Arrow
+    Volley Trait Usage Expands</strong></p><p>By Lv 40 you have more ways to
+    trigger “Arrow Volley” (via Venomous Bite + Windbite, Heavy Shot, or
+    Barrage).</p><p>Essentially you can chain multiple attacks in a turn, but
+    the extra hits lose some of their added effects and just do damage.</p>
+  grants:
+    value: true
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.oQsOHfIQ0MjtsXQc
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.0PyBz2JbLmaHgXTk
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.GnC0gNeJNZ4k4xkf
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.WijSfA8sktXfrbML
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.8Vzw6HsA1CB6iS4X
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.oV2DeA8pgJMJwF93
+  level: 40
+  role: DPS
+  favourite: false
+  effectActionsLocked: false
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736694935892
+  modifiedTime: 1736694935892
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: 9loHqqF8w13juAFq
+sort: 0
+_key: '!items!9loHqqF8w13juAFq'
+

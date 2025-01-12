@@ -1,0 +1,55 @@
+name: Bard LV50
+type: job
+img: systems/foundryvtt-final-fantasy/assets/icons/jobs/bard.webp
+system:
+  description: >-
+    <h3>Damage Upgrades on Existing Attacks</h3><p><strong>Heavy Shot</strong>:
+    Base damage typically goes up from 2 to 3.</p><p><strong>Quick
+    Nock</strong>: Its AoE damage improves (e.g. from 2 to
+    3).</p><p><strong>Venomous Bite + Windbite</strong>: The DOT portion
+    increases (e.g. from 4 up to 6).</p><p><strong>Straight Shot</strong>:
+    Higher base damage.</p><h3>New Instant Abilities</h3><p><strong>Rain of
+    Death</strong></p><p>A ranged AoE instant that deals damage to multiple
+    enemies in an area.</p><p>Often shares usage limits with Bloodletter (so you
+    can’t spam both in the same turn).</p><p><strong>Battle
+    Voice</strong></p><p>A party buff that grants your allies an “advantage” or
+    bonus die on their next check this phase.</p><p>Great for coordinating big
+    hits or crucial skill checks.</p><h3>Summary</h3><p>In short, at 50 you gain
+    potent new tools for AoE damage (Rain of Death) and party support (Battle
+    Voice), while your core single‐target shots (Heavy/Straight Shot,
+    Venomous/Windbite) also hit harder. The Bard effectively rounds out its kit
+    with stronger damage, bigger utility buffs, and a stronger overall “song
+    cycle” than it had at 30–40.</p>
+  grants:
+    value: true
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.e8FuBnJ6MO0HKZky
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.LrvNQjxf9DkgEaHI
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.BzzIBEXMesuunMxl
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.mCHSbmRt2PipoEHk
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.NmSQQOnQNMOoNLO5
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.Da6j5bCBvAcP8nwj
+  level: 50
+  role: DPS
+  favourite: false
+  effectActionsLocked: false
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736695056122
+  modifiedTime: 1736695056122
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+folder: null
+_id: KZOWeJ5wvtmP75JR
+sort: 0
+_key: '!items!KZOWeJ5wvtmP75JR'
+

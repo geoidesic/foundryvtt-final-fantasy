@@ -1,4 +1,4 @@
-name: Bard
+name: Bard LV30
 type: job
 img: systems/foundryvtt-final-fantasy/assets/icons/jobs/bard.webp
 system:
@@ -42,7 +42,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736007797746
-  modifiedTime: 1736069351997
+  modifiedTime: 1736694513386
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0
