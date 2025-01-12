@@ -42,6 +42,6 @@
 .flexrow.gap-4.mt-sm.justify-vertical
   +each("$doc.system.tags as tag")
     .flex0
-      Tag({tag})
+      Tag.badge.round({tag})
 </template>
 

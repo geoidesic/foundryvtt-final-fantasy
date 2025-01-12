@@ -49,9 +49,10 @@
 .badge.center({...$$restProps})
   .label {tag}
   +if("remover")
-    button.remove.right.stealth(
+    div.remove.right(
       on:click!="{() => removeTag(tag)}"
       aria-label="Remove tag"
+      role="button"
     )
       i.fas.fa-xmark
 </template>
@@ -60,8 +61,11 @@
   @use '../../styles/_mixins' as mixins
 
   .badge
-    +mixins.badge(var(--ff-border-color),#ffffff,  0.7rem, 0, transparent)
-    padding: 0
+    display: inline-flex
+    line-height: 1.5rem
+    padding: 2px 0px 0 5px
+    +mixins.badge(var(--ff-border-color),#ffffff,  0.9rem, 0, transparent)
+    
 
   .round
     border-radius: 1000px
@@ -72,15 +76,18 @@
 
   .remove
     cursor: pointer
-    padding: 0
-    margin: 0
+    padding: 4px 5px 0 5px
+    margin: -1px 0 0 3px
     background: none
-    border: none
     color: inherit
+    border: 1px solid transparent
+    border-radius: 50%
+    line-height: 1rem
+    vertical-align: middle
 
     &:hover
-      color: #ff4444
-
+      background: #ffffff
+      color: var(--ff-border-color)
   .stealth
     background: none
     border: none
