@@ -231,20 +231,20 @@
             tr(class="{actionTypeClass(item)}")
               td.img(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Use')}" on:click!="{RollCalc.ability(item.type, item)}" role="button")
                 img.icon(src="{item.img}" alt="{item.name}")
-              td.left
+              td.left.text.ellipsis
                 .flexrow
                   .flex3.left(data-tooltip-class="FF15-tooltip wordy" data-tooltip="{item.system.description}")
                     a.stealth.link(class="{item.system.isMagic ? 'pulse' : ''}" role="button" on:click="{showItemSheet(item)}") {item.name}
                   +if("item.system.hasLimitation && game.combat")
-                    .flex0.right.ml-sm(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Item.Types.action.UsesRemaining')}")
+                    .flex0.right.ml-sm.pt-s(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Types.Item.Types.action.UsesRemaining')}")
                       Badge(type!="{badgeType(item)}") {item.usesRemaining}
               //- td.left {ucfirst(item.type)}
               //- td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
-              td.right
+              td.right.no-wrap
                 +if("item.system.tags") 
                   +each("item.system.tags as tag")
                     Tag.badge.small.square({tag}, remover="{false}")
-              td(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Bookmark')}")
+              td.shrink(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" role="button")
               td.min.buttons.right
@@ -357,6 +357,7 @@ table tr
 
 .icon
   cursor: pointer
+  margin-left: -1px
   &:hover
     transform: scale(1.1)
     transition: transform 0.2s ease-in-out

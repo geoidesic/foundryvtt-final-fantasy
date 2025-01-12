@@ -372,6 +372,12 @@
   .right-border-gradient-mask
     mask-image: linear-gradient(0deg, transparent 0%, black 100%)
 
+  .ellipsis
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
+    flex-wrap: nowrap
+    -webkit-line-clamp
   // alignment, accent and visibility
   .bold
     font-weight: 700
@@ -541,7 +547,9 @@
       color: var(--ff-border-color)
     th
       font-family: "Cinzel", serif
-      
+    td.text
+      .flexrow
+        line-height: 30px
     th, td
       padding: 0 0.2rem
       line-height: 2rem

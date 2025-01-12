@@ -70,6 +70,10 @@
   .round
     border-radius: 1000px
 
+  .low
+    padding-top: 0 !important
+    padding-bottom: 0 !important
+
   .square
     border-radius: var(--border-radius)
 

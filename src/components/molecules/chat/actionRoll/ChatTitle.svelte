@@ -81,7 +81,7 @@
               .flexrow.right(style="justify-content: flex-end; gap: 2px")
                 +each("item?.system?.tags as tag")
                   .flex0.right
-                    Tag.badge.small.low({tag} remover="{false}")
+                    Tag.badge.small.round.low({tag} remover="{false}")
       img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
 </template>
 
