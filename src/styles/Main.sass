@@ -23,18 +23,6 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
-
-.action-slot-badge
-  &.primary
-    +mixins.badge(var(--color-primary-action), white)
-  &.secondary
-    +mixins.badge(var(--color-secondary-action), white)
-  &.reaction
-    +mixins.badge(var(--color-reaction), white)
-  &.custom-action
-    +mixins.badge(var(--color-custom-action), white)
-  &.used
-    +mixins.badge(var(--color-used-bg), var(--color-used))
     
 .icon-critical:before
   content: "\e900"
@@ -286,7 +274,7 @@
   .wheat
     color: wheat
   .offwhite
-    color: #fffad8
+    color: var(--color-off-white)
   input[type="text"]
     all: unset
     width: 100%
@@ -671,6 +659,17 @@
         font-size: 0.8rem
         font-weight: bold
         color: white
+
+        &.primary
+          +mixins.badge(var(--color-primary-action), white)
+        &.secondary
+          +mixins.badge(var(--color-secondary-action), white)
+        &.reaction
+          +mixins.badge(var(--color-reaction), white)
+        &.custom-action
+          +mixins.badge(var(--color-custom-action), white)
+        &.used
+          +mixins.badge(var(--color-used-bg), var(--color-used))
 
     input
       color: white

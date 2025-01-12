@@ -46,27 +46,29 @@
 </script>
 
 <template lang="pug">
-  .badge.center({...$$restProps})
-    .label {tag}
-    if remover
-      button.remove.right.stealth(
-        on:click="{() => removeTag(tag)}"
-        on:keydown="{(e) => e.key === 'Enter' && removeTag(tag)}"
-        aria-label="Remove tag"
-        tabindex="0"
-      )
-        i.fas.fa-xmark
+.badge.center({...$$restProps})
+  .label {tag}
+  +if("remover")
+    button.remove.right.stealth(
+      on:click!="{() => removeTag(tag)}"
+      aria-label="Remove tag"
+    )
+      i.fas.fa-xmark
 </template>
 
 <style lang="sass">
   @use '../../styles/_mixins' as mixins
 
   .badge
-    +mixins.badge
+    +mixins.badge(var(--ff-border-color),#ffffff,  0.7rem, 0, transparent)
+    padding: 0
 
+  .round
+    border-radius: 1000px
 
-  .label
-    margin-right: 0.5rem
+  .square
+    border-radius: var(--border-radius)
+
 
   .remove
     cursor: pointer

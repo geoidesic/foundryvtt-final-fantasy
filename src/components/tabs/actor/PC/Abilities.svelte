@@ -243,7 +243,7 @@
               td.right
                 +if("item.system.tags") 
                   +each("item.system.tags as tag")
-                    Tag.badge.small({tag}, remover="{false}" style="margin-top: -2px;")
+                    Tag.badge.small.square({tag}, remover="{false}")
               td(data-tooltip-class="FF15-tooltip" data-tooltip="{localize('FF15.Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" role="button")
@@ -272,6 +272,7 @@
   transition: padding 0.2s ease-in-out
   @container (min-width: 350px)
     padding: 1rem
+
 .pulse
   +mixins.pulse
   +mixins.buttons

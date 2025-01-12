@@ -1,11 +1,8 @@
 @use "sass:string"
 
-
-=action-slot
-
-
-
-=badge($background: var(--color-highlight), $color: var(--color-highligh-light), $size: 0.75rem) 
+  
+//- used in Main.sass
+=badge($background: var(--color-highlight), $color: var(--color-highlight-light), $size: 0.75rem, $borderRadius: 1000px, $borderColor: var(--ff-border-color)) 
   background: $background
   color: #fff
   font-size: $size
@@ -13,8 +10,12 @@
   color: $color
   margin-right: 0.2em
   text-align: center
-  border: 1px solid var(--ff-border-color)
-
+  border: 1px solid $borderColor
+  border-radius: $borderRadius
+  &.small
+    padding: 1px 4px
+    line-height: 1rem
+    display: inline-flex
 
 =inset($padding: 0.5rem 0.5rem 0 0.5rem, $shadow: 0 -3px 20px rgba(165, 131, 99, 1) inset, $margin: 0 0 0 0)
   padding: $padding
