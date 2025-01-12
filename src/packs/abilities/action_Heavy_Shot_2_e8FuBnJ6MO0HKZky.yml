@@ -1,10 +1,10 @@
-folder: nRAJgRhHFGuGK55u
-name: Heavy Shot 1
+folder: A7mqVVazWAueGJPN
+name: Heavy Shot 2
 type: action
 img: systems/foundryvtt-final-fantasy/assets/icons/actions/heavy-blow.webp
 system:
   description: >-
-    <p><strong>Base Effect</strong>: Deals 2 damage to the target and enables
+    <p><strong>Base Effect</strong>: Deals 3 damage to the target and enables
     <em>Arrow Volley</em>. If the die rolled for this ability check lands on a
     15 or higher, the following proc effect triggers.</p><p><strong>Heavier
     Shot</strong>: Grants <em>Straight Shot Ready</em>.</p><p><strong>Direct
@@ -19,7 +19,6 @@ system:
   trigger: ''
   hasTarget: true
   target: single
-  baseEffect: ''
   hasCheck: true
   checkAttribute: dex
   checkBonus: 0
@@ -39,10 +38,8 @@ system:
   duration: 0
   durationUnits: phase
   uses: 0
-  formula: '2'
   hasCost: false
   cost: 0
-  hasProcTrigger: false
   procTrigger: null
   grants:
     list: []
@@ -51,9 +48,6 @@ system:
     list:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
     value: true
-  combos:
-    list: []
-    value: false
   hasTags: true
   tags:
     - volley
@@ -62,13 +56,17 @@ system:
   requires:
     list: []
     value: false
-  baseEffectType: damage
   hasBaseEffect: true
   procs:
     value: true
     list:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
-  baseEffectDamage: '2'
+  baseEffectHealing: ''
+  baseEffectDamage: '3'
+  hasSplitDamage: false
+  removes:
+    list: []
+    value: false
 effects: []
 flags: {}
 _stats:
@@ -77,13 +75,13 @@ _stats:
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1735733540431
-  modifiedTime: 1736692871949
+  createdTime: 1736692966698
+  modifiedTime: 1736692966698
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
-_id: 6iHsLOdAnIYGKyzi
+_id: e8FuBnJ6MO0HKZky
 sort: 0
-_key: '!items!6iHsLOdAnIYGKyzi'
+_key: '!items!e8FuBnJ6MO0HKZky'
 

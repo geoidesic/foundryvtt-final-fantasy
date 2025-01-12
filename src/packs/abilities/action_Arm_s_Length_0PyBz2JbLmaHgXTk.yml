@@ -1,25 +1,27 @@
-folder: g7aw8x2ughfS1m93
-name: Repelling Shot
+folder: QyFiMaexAQfq7bY6
+name: Arm's Length
 type: action
-img: systems/foundryvtt-final-fantasy/assets/icons/actions/repelling-shot.webp
+_id: 0PyBz2JbLmaHgXTk
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/arms-length.webp
 system:
   description: >-
-    <p><strong>Trigger</strong>: When any character finishes their turn
-    </p><p><strong>Target</strong>: Single Range: 10 squares</p><p><strong>Base
-    Effect</strong>: Move up to 3 squares. You cannot end this movement in a
-    square that is closer to the target than where you
-    began.</p><p><strong>Limitation</strong>: Once per phase</p>
+    <p><strong>Trigger</strong>: Immediately before an ability is resolved
+    </p><p><strong>Base Effect</strong>: You are immune to all movement effects
+    until the end of this turn. </p><p><strong>Limitation</strong>: Once per
+    phase</p>
   favourite: false
   effectActionsLocked: false
   hasAspected: false
   aspected: ''
-  hasRanged: true
-  rangeType: 10sq
+  hasRanged: false
+  rangeType: ''
   hasTrigger: true
-  trigger: turn
-  hasTarget: true
-  target: single
-  baseEffect: ''
+  trigger: beforeresolve
+  hasTarget: false
+  target: ''
+  baseEffectHealing: ''
+  baseEffectDamage: ''
+  hasBaseEffect: false
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0
@@ -39,28 +41,34 @@ system:
   duration: 0
   durationUnits: phase
   uses: 0
-  formula: ''
+  hasSplitDamage: false
   hasCost: false
   cost: 0
-  hasProcTrigger: false
   procTrigger: null
+  procs:
+    list: []
+    value: false
   grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  removes:
     list: []
     value: false
   enables:
     list: []
     value: false
-  combos:
-    list: []
-    value: false
   hasTags: false
   tags: []
   isMagic: false
-  requires:
-    list: []
-    value: false
   type: reaction
 effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
 flags: {}
 _stats:
   compendiumSource: null
@@ -68,13 +76,8 @@ _stats:
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1735734272926
-  modifiedTime: 1736692932765
+  createdTime: 1736693142916
+  modifiedTime: 1736693202467
   lastModifiedBy: A3f8BsJ7eYm0X14M
-ownership:
-  default: 0
-  A3f8BsJ7eYm0X14M: 3
-_id: AMXxXWzHBUNo5j07
-sort: 300000
-_key: '!items!AMXxXWzHBUNo5j07'
+_key: '!items!0PyBz2JbLmaHgXTk'
 

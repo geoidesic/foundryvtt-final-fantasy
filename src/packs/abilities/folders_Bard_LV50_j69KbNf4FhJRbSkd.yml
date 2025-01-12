@@ -1,0 +1,20 @@
+name: Bard LV50
+sorting: a
+folder: null
+type: Item
+_id: j69KbNf4FhJRbSkd
+description: ''
+sort: 0
+color: '#a43438'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736688426662
+  modifiedTime: 1736688426662
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!folders!j69KbNf4FhJRbSkd'
+

@@ -1,11 +1,11 @@
-name: Bard
+name: Primary Actions
 sorting: a
-folder: null
+folder: j69KbNf4FhJRbSkd
 type: Item
-_id: dpJYhaE1TJhP4NlC
+_id: A7mqVVazWAueGJPN
 description: ''
-sort: 400000
-color: '#a43438'
+sort: 0
+color: '#de5a78'
 flags: {}
 _stats:
   compendiumSource: null
@@ -13,8 +13,8 @@ _stats:
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1735733125998
-  modifiedTime: 1735734665462
+  createdTime: null
+  modifiedTime: 1736692836371
   lastModifiedBy: A3f8BsJ7eYm0X14M
-_key: '!folders!dpJYhaE1TJhP4NlC'
+_key: '!folders!A7mqVVazWAueGJPN'
 

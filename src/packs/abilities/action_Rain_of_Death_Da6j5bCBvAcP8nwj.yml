@@ -1,25 +1,29 @@
-folder: g7aw8x2ughfS1m93
-name: Repelling Shot
+folder: 8lL4n7H2b3AxuG58
+name: Rain of Death
 type: action
-img: systems/foundryvtt-final-fantasy/assets/icons/actions/repelling-shot.webp
+_id: Da6j5bCBvAcP8nwj
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/rain-of-death.webp
 system:
   description: >-
     <p><strong>Trigger</strong>: When any character finishes their turn
-    </p><p><strong>Target</strong>: Single Range: 10 squares</p><p><strong>Base
-    Effect</strong>: Move up to 3 squares. You cannot end this movement in a
-    square that is closer to the target than where you
-    began.</p><p><strong>Limitation</strong>: Once per phase</p>
+    </p><p><strong>Target</strong>: All enemies within range
+    </p><p><strong>Range</strong>: A 5x5 area within 10 squares of this
+    character </p><p><strong>Base Effect</strong>: Deals 3 damage to all
+    targets. </p><p><strong>Limitation</strong>: Twice per phase, shared with
+    <em>Bloodletter</em></p>
   favourite: false
   effectActionsLocked: false
   hasAspected: false
   aspected: ''
   hasRanged: true
-  rangeType: 10sq
+  rangeType: 5x5e
   hasTrigger: true
-  trigger: turn
+  trigger: endturn
   hasTarget: true
-  target: single
-  baseEffect: ''
+  target: all
+  baseEffectHealing: ''
+  baseEffectDamage: '3'
+  hasBaseEffect: true
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0
@@ -33,34 +37,40 @@ system:
   hasHeavierShot: false
   heavierShot: ''
   hasLimitation: true
-  limitation: 1
+  limitation: 2
   limitationUnits: phase
   hasDuration: false
   duration: 0
   durationUnits: phase
   uses: 0
-  formula: ''
+  hasSplitDamage: false
   hasCost: false
   cost: 0
-  hasProcTrigger: false
   procTrigger: null
+  procs:
+    list: []
+    value: false
   grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  removes:
     list: []
     value: false
   enables:
     list: []
     value: false
-  combos:
-    list: []
-    value: false
   hasTags: false
   tags: []
   isMagic: false
-  requires:
-    list: []
-    value: false
   type: reaction
 effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
 flags: {}
 _stats:
   compendiumSource: null
@@ -68,13 +78,8 @@ _stats:
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1735734272926
-  modifiedTime: 1736692932765
+  createdTime: 1736693270865
+  modifiedTime: 1736693422197
   lastModifiedBy: A3f8BsJ7eYm0X14M
-ownership:
-  default: 0
-  A3f8BsJ7eYm0X14M: 3
-_id: AMXxXWzHBUNo5j07
-sort: 300000
-_key: '!items!AMXxXWzHBUNo5j07'
+_key: '!items!Da6j5bCBvAcP8nwj'
 

@@ -1,16 +1,15 @@
-name: Army’s Paeon
+name: Warden’s Paeon
 type: trait
-img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song.webp
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song2.webp
 system:
   description: >-
     <p>While under the effect of a <strong>Bardsong</strong> enhancement, all
     allies benefit from its effects. <strong>Bardsong</strong> enhancements are
     removed at the end of your next turn or when you are granted a new
-    <strong>Bardsong</strong> enhancement.</p><p>While under the effect of
-    <strong>Bardsong: Army’s Paeon</strong>, all allies may each reroll a single
-    d20 that landed on a 3 or lower when making an ability check. You may do so
-    after learning whether the ability scored a direct hit. Any die rerolled in
-    this way cannot be rerolled again, and its result must be used.</p>
+    <strong>Bardsong</strong> enhancement.</p><p>When a character is under the
+    effect of <strong>The Warden’s Paean</strong>, remove the next enfeeblement
+    inflicted. Some enfeeblements cannot be removed by this effect. <strong>The
+    Warden’s Paean</strong> is removed when its effect is resolved.</p>
   favourite: false
   effectActionsLocked: false
   type: Trait
@@ -20,15 +19,24 @@ system:
   modType: All Damage
   operator: +
   modAmount: 5
+  limitationUnits: phase
+  uses: 0
   hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: false
+  tags: []
+  hasDuration: false
+  duration:
+    turns: 0
+    rounds: 0
 effects:
-  - origin: Compendium.foundryvtt-final-fantasy.traits.Item.mMSFdDFZc39caho9
+  - origin: Item.YTaSZog4J0PzT0yt
     flags:
       foundryvtt-final-fantasy:
         overlay: true
-    name: Army’s Paeon
-    img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song.webp
-    _id: OqPXtOyIDfJstkao
+    name: Warden’s Paeon
+    img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song2.webp
+    _id: QGr7WXfeTZa0b9Vc
     type: base
     system:
       tags: []
@@ -42,7 +50,7 @@ effects:
       turns: null
       startRound: null
       startTurn: null
-    description: <p></p>
+    description: ''
     tint: '#ffffff'
     transfer: false
     statuses: []
@@ -53,25 +61,25 @@ effects:
       coreVersion: '12.331'
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
-      createdTime: 1736689213585
-      modifiedTime: 1736689659132
-      lastModifiedBy: A3f8BsJ7eYm0X14M
-    _key: '!items.effects!mMSFdDFZc39caho9.OqPXtOyIDfJstkao'
-folder: null
-sort: 200000
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!8Vzw6HsA1CB6iS4X.QGr7WXfeTZa0b9Vc'
+folder: KUmn5ryH1G7DqWKD
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
 flags: {}
 _stats:
-  compendiumSource: Item.0tX24ufqPUgFVKMc
-  duplicateSource: Item.0tX24ufqPUgFVKMc
+  compendiumSource: null
+  duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1733929986937
-  modifiedTime: 1736689817976
+  createdTime: 1736692613744
+  modifiedTime: 1736692613744
   lastModifiedBy: A3f8BsJ7eYm0X14M
-_id: mMSFdDFZc39caho9
-_key: '!items!mMSFdDFZc39caho9'
+_id: 8Vzw6HsA1CB6iS4X
+sort: 0
+_key: '!items!8Vzw6HsA1CB6iS4X'
 

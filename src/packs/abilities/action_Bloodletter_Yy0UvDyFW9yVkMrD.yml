@@ -59,6 +59,7 @@ system:
   type: reaction
   hasBaseEffect: true
   baseEffectType: damage
+  baseEffectDamage: '4'
 effects: []
 flags: {}
 _stats:
@@ -68,7 +69,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1735734261076
-  modifiedTime: 1735761329532
+  modifiedTime: 1736692911158
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0

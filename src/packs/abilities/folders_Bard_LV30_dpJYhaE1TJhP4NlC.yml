@@ -1,0 +1,20 @@
+name: Bard LV30
+sorting: a
+folder: null
+type: Item
+_id: dpJYhaE1TJhP4NlC
+description: ''
+sort: 400000
+color: '#a43438'
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1735733125998
+  modifiedTime: 1736688377735
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!folders!dpJYhaE1TJhP4NlC'
+

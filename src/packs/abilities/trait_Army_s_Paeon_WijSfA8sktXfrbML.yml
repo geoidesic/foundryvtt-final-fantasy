@@ -1,6 +1,6 @@
 name: Army’s Paeon
 type: trait
-img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song.webp
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song2.webp
 system:
   description: >-
     <p>While under the effect of a <strong>Bardsong</strong> enhancement, all
@@ -20,7 +20,16 @@ system:
   modType: All Damage
   operator: +
   modAmount: 5
+  limitationUnits: phase
+  uses: 0
   hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: false
+  tags: []
+  hasDuration: false
+  duration:
+    turns: 0
+    rounds: 0
 effects:
   - origin: Compendium.foundryvtt-final-fantasy.traits.Item.mMSFdDFZc39caho9
     flags:
@@ -53,25 +62,25 @@ effects:
       coreVersion: '12.331'
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
-      createdTime: 1736689213585
-      modifiedTime: 1736689659132
-      lastModifiedBy: A3f8BsJ7eYm0X14M
-    _key: '!items.effects!mMSFdDFZc39caho9.OqPXtOyIDfJstkao'
-folder: null
-sort: 200000
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+    _key: '!items.effects!WijSfA8sktXfrbML.OqPXtOyIDfJstkao'
+folder: KUmn5ryH1G7DqWKD
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
 flags: {}
 _stats:
-  compendiumSource: Item.0tX24ufqPUgFVKMc
-  duplicateSource: Item.0tX24ufqPUgFVKMc
+  compendiumSource: null
+  duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1733929986937
-  modifiedTime: 1736689817976
+  createdTime: 1736689834356
+  modifiedTime: 1736689845141
   lastModifiedBy: A3f8BsJ7eYm0X14M
-_id: mMSFdDFZc39caho9
-_key: '!items!mMSFdDFZc39caho9'
+_id: WijSfA8sktXfrbML
+sort: 0
+_key: '!items!WijSfA8sktXfrbML'
 

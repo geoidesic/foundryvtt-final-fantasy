@@ -1,11 +1,12 @@
-folder: nRAJgRhHFGuGK55u
-name: Quick Knock 1
+folder: A7mqVVazWAueGJPN
+name: Quick Knock 2
 type: action
 img: systems/foundryvtt-final-fantasy/assets/icons/actions/quick-knock.webp
 system:
   description: >-
-    <p><strong>Base Effect</strong>: Deals 2 damage to all targets. 
-    </p><p><strong>Direct Hit</strong>: Deals an additional 1d6 damage.</p>
+    <p><strong>Base Effect</strong>: Deals 3 damage to all
+    targets.</p><p><strong>Direct Hit</strong>: Deals an additional 1d6
+    damage.</p>
   favourite: false
   effectActionsLocked: false
   hasAspected: false
@@ -16,7 +17,6 @@ system:
   trigger: ''
   hasTarget: true
   target: all
-  baseEffect: ''
   hasCheck: true
   checkAttribute: dex
   checkBonus: 0
@@ -36,18 +36,13 @@ system:
   duration: 0
   durationUnits: phase
   uses: 0
-  formula: '2'
   hasCost: false
   cost: 0
-  hasProcTrigger: false
   procTrigger: null
   grants:
     list: []
     value: false
   enables:
-    list: []
-    value: false
-  combos:
     list: []
     value: false
   hasTags: false
@@ -57,9 +52,16 @@ system:
   requires:
     list: []
     value: false
-  baseEffectType: damage
   hasBaseEffect: true
-  baseEffectDamage: '2'
+  baseEffectHealing: ''
+  baseEffectDamage: '3'
+  hasSplitDamage: false
+  procs:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
 effects: []
 flags: {}
 _stats:
@@ -68,13 +70,13 @@ _stats:
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1735733535811
-  modifiedTime: 1736692878235
+  createdTime: 1736692997773
+  modifiedTime: 1736692997773
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
-_id: 9LfoH8u8M9PkXIeD
-sort: 200000
-_key: '!items!9LfoH8u8M9PkXIeD'
+_id: LrvNQjxf9DkgEaHI
+sort: 0
+_key: '!items!LrvNQjxf9DkgEaHI'
 
