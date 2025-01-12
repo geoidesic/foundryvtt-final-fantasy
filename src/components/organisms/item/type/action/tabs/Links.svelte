@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
@@ -18,19 +18,23 @@
   .flexcol
     .flex3.left.high
       ItemBucket(
-        title="{localize('FF15.Requires')}"
+        title="{localize('Requires')}"
         key="requires",
       )
       ItemBucket(
-        title="{localize('FF15.Target')} {localize('Effects')}",
+        title="{localize('Removes')}"
+        key="removes",
+      )
+      ItemBucket(
+        title="{localize('Target')} {localize('Effects')}",
         key="grants",
       )
       ItemBucket(
-        title="{localize('FF15.Enabled')} {localize('Traits')}",
+        title="{localize('Enabled')} {localize('Traits')}",
         key="enables",
       )
       ItemBucket(
-        title="{localize('FF15.ProcTriggers')}",
+        title="{localize('ProcTriggers')}",
         key="procs",
       )
         +if("$item.system.procs.value")

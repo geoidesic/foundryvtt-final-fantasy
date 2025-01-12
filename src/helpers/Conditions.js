@@ -117,17 +117,17 @@ export function getDefaultStatusEffects() {
       ]
     },
     {
-      id: "enabled",
-      name: localize("statusEffects.enabled.name"),
-      icon: `icons/svg/upgrade.svg`,
-      description: localize("statusEffects.enabled.description"),
+      id: "transcendent",
+      name: localize("statusEffects.transcendent.name"),
+      icon: "icons/svg/ice-aura.svg",
+      description: localize("statusEffects.transcendent.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: true } },
       changes: []
     },
     {
       id: "focus",
       name: localize("statusEffects.focus.name"),
-      icon: `icons/svg/eye.svg`,
+      icon: "icons/svg/eye.svg",
       description: localize("statusEffects.focus.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: true } },
       changes: []

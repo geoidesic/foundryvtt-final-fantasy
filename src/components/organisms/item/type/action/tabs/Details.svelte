@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { 
     getRangeOptions, getDurationOptions, getDurationUnits, 
     getLimitationOptions, getLimitationUnits, getAspectedOptions, 
@@ -46,15 +46,18 @@
   const directHitConditionOptions = getDefaultStatusEffects().map((effect) => ({ value: effect.id, label: effect.name }));
 
   const costOptions = [
-    { value: 1, label: localize("FF15.Types.Item.Types.Options.Cost.1") },
-    { value: 2, label: localize("FF15.Types.Item.Types.Options.Cost.2") },
-    { value: 3, label: localize("FF15.Types.Item.Types.Options.Cost.3") },
-    { value: 4, label: localize("FF15.Types.Item.Types.Options.Cost.4") },
+    { value: 1, label: localize("Types.Item.Types.Options.Cost.1") },
+    { value: 2, label: localize("Types.Item.Types.Options.Cost.2") },
+    { value: 3, label: localize("Types.Item.Types.Options.Cost.3") },
+    { value: 4, label: localize("Types.Item.Types.Options.Cost.4") },
   ];
 
   console.log(schemaFieldObjects);
 
-  $: checkOptions = schemaFieldKeys.map((key) => ({ value: key, label: key.toUpperCase() }));
+  $: checkOptions = [
+    ...schemaFieldKeys.map((key) => ({ value: key, label: key.toUpperCase() })),
+    { value: "critical", label: localize("Types.Item.Types.Options.Check.critical") }
+  ];
   $: if(!$item.system.hasTrigger) {
     $item.update({system: {trigger: null}})
   }
@@ -64,17 +67,17 @@
 <template lang="pug">
   .item-sheet.details.overflow.wide
     .flexcol.flex3.left.high.wide
-      h3.left {localize("FF15.General")}
+      h3.left {localize("General")}
       .flexrow.sheet-row.justify-vertical.wide
         .flex1
-          label(for="type") {localize("FF15.Type")}
+          label(for="type") {localize("Type")}
         .flex4.right.wide
           DocSelect.wide.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
       
 
       .flexrow.justify-vertical
         .flex4
-          h3.left {localize("FF15.BaseEffect")}
+          h3.left {localize("BaseEffect")}
         .flex0.right
           DocCheckbox( name="hasBaseEffect" valuePath="system.hasBaseEffect")
       +if("$item.system.hasBaseEffect")
@@ -89,25 +92,32 @@
           .flex2.right
             DocInput(id="baseEffectHealing" name="baseEffectHealing" valuePath="system.baseEffectHealing")
 
+      
       .flexrow.justify-vertical
         .flex4
-          h3.left Split Damage
+          h3.left {localize("Types.Item.Target")}
         .flex0.right
-          DocCheckbox(name="hasSplitDamage" valuePath="system.hasSplitDamage")
+          DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
 
-      .flexrow.justify-vertical
-        .flex4
-          h3.left {localize("FF15.CR")}
-        .flex0.right
-          DocCheckbox( name="hasCR" valuePath="system.hasCR")
-
-      +if("$item.system.hasCR")
+      +if("$item.system.hasTarget")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="CR") {localize("FF15.Type")}
+            label(for="target") {localize("Type")}
           .flex4.right.wide
-            DocSelect.wide.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
+            DocSelect.wide.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
       
+      .flexrow.justify-vertical
+        .flex4
+          h3.left {localize("Types.Item.Range")}
+        .flex0.right
+          DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
+      +if("$item.system.hasRanged")
+
+        .flexrow.sheet-row.justify-vertical.wide
+            .flex1
+              label(for="rangeType") {localize("Type")}
+            .flex4.right.wide
+              DocSelect.wide.right.wide(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
       .flexrow.justify-vertical
         .flex4
           h3.left Checks
@@ -124,43 +134,18 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left {localize("FF15.Types.Item.Trigger")}
+          h3.left {localize("CR")}
         .flex0.right
-          DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
+          DocCheckbox( name="hasCR" valuePath="system.hasCR")
 
-      +if("$item.system.hasTrigger")
+      +if("$item.system.hasCR")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="trigger") {localize("FF15.Type")}
+            label(for="CR") {localize("Type")}
           .flex4.right.wide
-            DocSelect.wide.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
-    
+            DocSelect.wide.right(id="CR" name="CR" options="{CROptions}" valuePath="system.CR")
       
-      .flexrow.justify-vertical
-        .flex4
-          h3.left {localize("FF15.Types.Item.Target")}
-        .flex0.right
-          DocCheckbox(id="hasTarget" name="hasTarget" valuePath="system.hasTarget")
 
-      +if("$item.system.hasTarget")
-        .flexrow.sheet-row.justify-vertical.wide
-          .flex1
-            label(for="target") {localize("FF15.Type")}
-          .flex4.right.wide
-            DocSelect.wide.right(id="target" name="target" options="{targetOptions}" valuePath="system.target")
-      
-      .flexrow.justify-vertical
-        .flex4
-          h3.left {localize("FF15.Types.Item.Range")}
-        .flex0.right
-          DocCheckbox( name="hasRanged" valuePath="system.hasRanged")
-      +if("$item.system.hasRanged")
-
-        .flexrow.sheet-row.justify-vertical.wide
-            .flex1
-              label(for="rangeType") {localize("FF15.Type")}
-            .flex4.right.wide
-              DocSelect.wide.right.wide(id="rangeType" name="rangeType" options="{rangeOptions}" valuePath="system.rangeType")
 
 
       .flexrow.justify-vertical
@@ -195,6 +180,19 @@
         .flex0.right
           DocCheckbox( name="hasAspected" valuePath="system.hasAspected")
 
+      .flexrow.justify-vertical
+        .flex4
+          h3.left {localize("Types.Item.Trigger")}
+        .flex0.right
+          DocCheckbox( name="hasTrigger" valuePath="system.hasTrigger")
+
+      +if("$item.system.hasTrigger")
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
+            label(for="trigger") {localize("Type")}
+          .flex4.right.wide
+            DocSelect.wide.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
+    
       +if("$item.system.hasAspected")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
@@ -226,10 +224,15 @@
       +if("$item.system.hasHeavierShot")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="heavierShot") {localize("FF15.Type")}
+            label(for="heavierShot") {localize("Type")}
           .flex4.right.wide
             DocSelect.wide.right(id="heavierShot" name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
 
+      .flexrow.justify-vertical
+        .flex4
+          h3.left Split Damage
+        .flex0.right
+          DocCheckbox(name="hasSplitDamage" valuePath="system.hasSplitDamage")
 
       .flexrow.justify-vertical
         .flex4
@@ -240,7 +243,7 @@
       +if("$item.system.hasDirectHit")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="directHitType") {localize("FF15.Type")}
+            label(for="directHitType") {localize("Type")}
           .flex4.right.wide
             DocSelect.wide.right(id="directHitType" name="directHitType" options="{directHitOptions}" valuePath="system.directHitType")
 

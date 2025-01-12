@@ -67,6 +67,8 @@ export const getRangeOptions = () => [
   { value: "3x3a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.3x3a") },
   { value: "3x3aa", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.3x3aa") },
   { value: "5x5a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5a") },
+  { value: "5x5e", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5e") },
+  { value: "5x5i", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5i") },
 ];
 
 export const getCROptions = () => [
@@ -85,6 +87,7 @@ export const getTargetOptions = () => [
   { value: "single", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.single") },
   { value: "enemy", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.enemy") },
   { value: "all", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.all") },
+  { value: "allallies", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.allallies") },
   { value: "ally", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.ally") },
 ];
 
@@ -103,6 +106,7 @@ export const getUsesUnitOptions = () => [
 export const getTriggerOptions = () =>  [
   { value: "any", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.any") },
   { value: "ability", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.ability") },
+  { value: "beforeresolve", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.beforeresolve") },
   { value: "nearby", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.nearby") },
   { value: "move", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.move") },
   { value: "beforedamage", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.beforedamage") },

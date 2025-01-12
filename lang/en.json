@@ -49,6 +49,7 @@
     "Primary": "Primary",
     "ProcTriggers": "Proc Triggers",
     "Quantity": "Quantity",
+    "Removes": "Removes",
     "Requires": "Requires",
     "Round": "Round",
     "Search": "Search",
@@ -181,6 +182,9 @@
               "Debuff": "Debuff",
               "Trait": "Trait"
             },
+            "Check": {
+              "critical": "Check for critical"
+            },
             "CR": {
               "def": "Physical",
               "mag": "Magic",
@@ -194,6 +198,7 @@
               "single": "Single",
               "enemy": "The enemy that triggered this ability",
               "all": "All enemies within range",
+              "allallies": "All allies within range",
               "ally": "Ally"
             },
             "Aspected": {
@@ -229,6 +234,7 @@
             "Trigger": {
               "any": "Any time",
               "ability": "Immediately after an enemy makes an ability check",
+              "beforeresolve": "Immediately before an ability used by an enemy is resolved",
               "nearby": "Immediately before an ability used by an enemy within 2 squares is resolved",
               "move": "Immediately before an enemy moves",
               "endturn": "When any character finishes their turn",
@@ -244,6 +250,7 @@
               "3x3a": "A 3x3 area centered on this character",
               "3x3aa": "A 3x3 area adjacent to this character",
               "5x5a": "A 5x5 area centered on this character",
+              "5x5e": "A 5x5 area within 10 squares of this character",
               "5x5i": "A 5x\u221E area extending in a straight line from 1 square adjacent to this character"
             },
             "Type": {
@@ -434,9 +441,9 @@
         "name": "Comatose",
         "description": "A comatose character cannot move, nor act, nor speak and is unaware of their surroundings."
       },
-      "enabled": {
-        "name": "Enabled",
-        "description": "Character has a trait enabled."
+      "transcendent": {
+        "name": "Transcendent",
+        "description": "A transcendent character is immune to damage and enfeeblements from enemies."
       },
       "focus": {
         "name": "Focus",
