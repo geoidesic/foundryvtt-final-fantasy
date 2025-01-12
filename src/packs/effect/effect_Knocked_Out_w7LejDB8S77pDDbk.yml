@@ -1,0 +1,59 @@
+name: Knocked Out
+type: effect
+_id: w7LejDB8S77pDDbk
+img: icons/svg/unconscious.svg
+system:
+  description: <p>A knocked out character is unconscious and cannot act.</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.w7LejDB8S77pDDbk
+    flags:
+      foundryvtt-final-fantasy: {}
+    name: Knocked Out
+    img: icons/svg/unconscious.svg
+    _id: GUSbcrlmNZ9pZG8v
+    type: base
+    system:
+      tags: []
+    changes: []
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses:
+      - ko
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1736613517142
+      modifiedTime: 1736613523576
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!w7LejDB8S77pDDbk.GUSbcrlmNZ9pZG8v'
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736613460185
+  modifiedTime: 1736613512544
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!w7LejDB8S77pDDbk'
+

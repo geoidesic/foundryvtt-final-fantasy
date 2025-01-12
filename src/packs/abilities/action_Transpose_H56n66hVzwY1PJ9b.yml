@@ -1,0 +1,82 @@
+folder: 2vXjsO2RHttdE0jq
+name: Transpose
+type: action
+_id: H56n66hVzwY1PJ9b
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/transpose.webp
+system:
+  description: >-
+    <p><strong>Base Effect</strong>: Removes <em>Umbral Ice</em> and grants
+    <em>Astral Fire</em>, or removes <em>Astral Fire</em> and grants <em>Umbral
+    Ice</em>. </p><p><strong>Limitation</strong>: Once per turn.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: false
+  rangeType: ''
+  hasTrigger: false
+  trigger: ''
+  hasTarget: false
+  target: ''
+  baseEffectHealing: ''
+  baseEffectDamage: ''
+  hasBaseEffect: false
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: true
+  limitation: 1
+  limitationUnits: turn
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: false
+  cost: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  type: secondary
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736682782342
+  modifiedTime: 1736682855830
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!H56n66hVzwY1PJ9b'
+

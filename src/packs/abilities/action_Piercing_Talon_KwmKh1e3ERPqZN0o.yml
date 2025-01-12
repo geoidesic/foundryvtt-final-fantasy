@@ -1,0 +1,87 @@
+folder: 6GktXnjVciQhPpXb
+name: Piercing Talon
+type: action
+_id: KwmKh1e3ERPqZN0o
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/piercing-talon.webp
+system:
+  description: >-
+    <p><span class="s1"><strong>Target</strong>:</span> Single </p><p><span
+    class="s1"><strong>Range</strong>:</span> 5 squares</p><p class="p1"><span
+    class="s1"><strong>Check</strong>:</span> <span class="s2">STR</span> (d20 +
+    5) </p><p class="p1"><span class="s1"><strong>CR</strong>:</span> Target’s
+    <span class="s2">Defense</span></p><p class="p1"><span
+    class="s1"><strong>Base Effect</strong>:</span> Deals 3 damage to the
+    target.</p><p class="p1"><span class="s1"><strong>Direct
+    Hit</strong>:</span> Deals an additional 2d6 damage.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 5sq
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: single
+  baseEffectHealing: ''
+  baseEffectDamage: '3'
+  hasBaseEffect: true
+  hasCheck: true
+  checkAttribute: str
+  checkBonus: 0
+  hasCR: true
+  CR: def
+  hasDirectHit: true
+  directHitType: damage
+  directHitDamage: 2d6
+  directHitText: <p>Deals an additional 2d6 damage.</p>
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: false
+  cost: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  type: primary
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736685084063
+  modifiedTime: 1736685213789
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!KwmKh1e3ERPqZN0o'
+

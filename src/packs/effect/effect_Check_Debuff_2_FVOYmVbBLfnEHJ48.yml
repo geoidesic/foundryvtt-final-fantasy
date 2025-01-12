@@ -1,0 +1,63 @@
+name: Check Debuff 2
+type: effect
+_id: FVOYmVbBLfnEHJ48
+img: icons/svg/downgrade.svg
+system:
+  description: <p>All targets incur a -2 penalty on all checks</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.FVOYmVbBLfnEHJ48
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Check Debuff 2
+    img: icons/svg/downgrade.svg
+    _id: wT2Dou90WipXGbbV
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: GlobalCheckDebuff
+        mode: 0
+        value: '2'
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1736682390870
+      modifiedTime: 1736682411794
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!FVOYmVbBLfnEHJ48.wT2Dou90WipXGbbV'
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736682312975
+  modifiedTime: 1736682387164
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!FVOYmVbBLfnEHJ48'
+

@@ -1,0 +1,82 @@
+folder: ukRFJxyZ3p5P4R52
+name: Cure II
+type: action
+_id: r20omFAyHKfJ3E6d
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/cure2.webp
+system:
+  description: >-
+    <p><strong>Cost</strong>: 2 MP Target: Single Range: 10
+    squares</p><p><strong>Check</strong>: Special (d20,
+    Critical)</p><p><strong>Base Effect</strong>: Restores 2d6 + 7 HP to the
+    target.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 10sq
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: single
+  baseEffectHealing: 2d6+7
+  baseEffectDamage: ''
+  hasBaseEffect: true
+  hasCheck: true
+  checkAttribute: critical
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: true
+  cost: 2
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - invoked
+    - magic
+  isMagic: false
+  type: primary
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736612198473
+  modifiedTime: 1736612710824
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!r20omFAyHKfJ3E6d'
+

@@ -1,0 +1,84 @@
+folder: DEJou8aVfUt51722
+name: Life Surge
+type: action
+_id: XGiH1ZBsPC5dH4Aa
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/life-surge.webp
+system:
+  description: >-
+    <p><strong>Base Effect</strong>: Grants <em>Drain</em> until the end of this
+    turn and one advantage die on your next ability
+    check.</p><p><strong>Limitation</strong>: Once per phase</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: false
+  rangeType: ''
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: self
+  baseEffectHealing: ''
+  baseEffectDamage: ''
+  hasBaseEffect: false
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: true
+  limitation: 1
+  limitationUnits: phase
+  hasDuration: true
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: false
+  cost: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.3xSGaIIL7Mvn3Iyg
+    value: true
+  requires:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.u2lZzMVTtFuaMKDE
+    value: true
+  hasTags: false
+  tags: []
+  isMagic: false
+  type: secondary
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736685355795
+  modifiedTime: 1736687161138
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!XGiH1ZBsPC5dH4Aa'
+

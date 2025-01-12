@@ -1,0 +1,65 @@
+name: Thundercloud
+type: effect
+_id: PmC2opLU8LEKmtHD
+img: systems/foundryvtt-final-fantasy/assets/icons/effects/thundercloud.webp
+system:
+  description: >-
+    <p>The next lightning-aspected ability you use this phase costs 0 MP and
+    deals an additional 6 damage.</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.PmC2opLU8LEKmtHD
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Thundercloud
+    img: systems/foundryvtt-final-fantasy/assets/icons/effects/thundercloud.webp
+    _id: 95EEpkXOi546qH0H
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: Thundercloud
+        mode: 0
+        value: special
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1736681433143
+      modifiedTime: 1736681825040
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!PmC2opLU8LEKmtHD.95EEpkXOi546qH0H'
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736681344234
+  modifiedTime: 1736681431336
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!PmC2opLU8LEKmtHD'
+

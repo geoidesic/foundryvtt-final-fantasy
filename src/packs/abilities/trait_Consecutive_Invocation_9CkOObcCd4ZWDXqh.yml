@@ -1,0 +1,50 @@
+folder: z6EVVWDx6gzZnn8p
+name: Consecutive Invocation
+type: trait
+img: >-
+  systems/foundryvtt-final-fantasy/assets/icons/traits/conscutive-invocation.webp
+system:
+  description: >-
+    <p>On your turn, after resolving the effects of an ability that enables this
+    trait, you may forgo all standard movement until the end of your turn to use
+    an additional invoked primary ability. You may choose a new target when
+    using this additional ability. <strong>Consecutive Invocation</strong> can
+    only be used once per turn, and does not prevent you from using focus to
+    perform an additional secondary action.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: 0
+  hasModifier: false
+  modType: ''
+  operator: ''
+  modAmount: 0
+  limitationUnits: phase
+  uses: 0
+  hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: false
+  tags: []
+  hasDuration: false
+  duration:
+    turns: 0
+    rounds: 0
+effects: []
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736679561774
+  modifiedTime: 1736679561801
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: 9CkOObcCd4ZWDXqh
+sort: 200000
+_key: '!items!9CkOObcCd4ZWDXqh'
+

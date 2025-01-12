@@ -1,0 +1,84 @@
+name: Magic Slot Ready
+type: trait
+_id: 56RX1DK2tc3MndMt
+img: systems/foundryvtt-final-fantasy/assets/icons/effects/magic-slot-ready.webp
+system:
+  description: <p>Enables the use of a `magic` action.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: Trait
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  uses: 0
+  hasModifier: false
+  modType: ''
+  operator: +
+  modAmount: 0
+  hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: true
+  tags:
+    - magic
+  hasDuration: false
+  duration:
+    turns: 0
+    rounds: 0
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.traits.Item.56RX1DK2tc3MndMt
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Magic Slot Ready
+    img: >-
+      systems/foundryvtt-final-fantasy/assets/icons/effects/magic-slot-ready.webp
+    _id: dqvKHQfQr0KxQrbo
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: EnableCombatTurnSlot
+        mode: 0
+        value: magic
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1736683893584
+      modifiedTime: 1736684100240
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!56RX1DK2tc3MndMt.dqvKHQfQr0KxQrbo'
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736683734335
+  modifiedTime: 1736683888172
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!56RX1DK2tc3MndMt'
+

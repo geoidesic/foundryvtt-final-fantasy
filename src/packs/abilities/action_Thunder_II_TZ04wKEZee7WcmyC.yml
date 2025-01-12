@@ -1,0 +1,91 @@
+folder: VBXQFI8P9EaK2cvn
+name: Thunder II
+type: action
+_id: TZ04wKEZee7WcmyC
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/thunder2.webp
+system:
+  description: >-
+    <p><strong>Cost</strong>: 2 MP Target: All enemies within
+    range</p><p><strong>Range</strong>: A 5x5 area within 10 squares of this
+    character</p><p><strong>Base Effect</strong>: Inflicts a <em>DOT (3)</em> on
+    all targets. Whenever the <em>DOT (3)</em>s inflicted by this ability deal
+    damage, roll a single d20. On a 19 or 20, the following <em>proc effect</em>
+    triggers.</p><p><strong>Thundercloud</strong>: The next
+    <em>lightning-aspected</em> ability you use this phase costs 0 MP and deals
+    an additional 6 damage.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: true
+  aspected: lightning
+  hasRanged: true
+  rangeType: 5x5e
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: all
+  baseEffectHealing: ''
+  baseEffectDamage: ''
+  hasBaseEffect: false
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: mag
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: true
+  cost: 2
+  procTrigger: 19
+  procs:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.PmC2opLU8LEKmtHD
+    value: true
+  grants:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.xPuHTKniWvsRFPOz
+    value: true
+  requires:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - magic
+    - invoked
+  isMagic: false
+  type: primary
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736681911121
+  modifiedTime: 1736682244833
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!TZ04wKEZee7WcmyC'
+

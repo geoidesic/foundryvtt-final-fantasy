@@ -1,0 +1,82 @@
+folder: 4EV7SBGL7lat5k6N
+name: Second Wind
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/second-wind.webp
+system:
+  description: >-
+    <p><strong>Trigger</strong>: When any character finishes their
+    turn</p><p><strong>Base Effect</strong>: Restores 1d6 + 2 HP.
+    </p><p><strong>Limitation</strong>: Once per phase</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: false
+  rangeType: ''
+  hasTrigger: true
+  trigger: turn
+  hasTarget: true
+  target: self
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: true
+  limitation: 1
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasCost: false
+  cost: 0
+  procTrigger: null
+  grants:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  requires:
+    list: []
+    value: false
+  type: reaction
+  hasBaseEffect: true
+  baseEffectHealing: ''
+  baseEffectDamage: ''
+  hasSplitDamage: false
+  procs:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+effects: []
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736687576072
+  modifiedTime: 1736687576072
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+_id: GISlxMop9b6qZwxH
+sort: 0
+_key: '!items!GISlxMop9b6qZwxH'
+

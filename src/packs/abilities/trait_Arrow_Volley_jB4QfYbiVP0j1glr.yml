@@ -25,7 +25,7 @@ system:
     - volley
 effects:
   - origin: Compendium.foundryvtt-final-fantasy.traits.Item.D6cCmn3uB1zFwBT6
-    disabled: true
+    disabled: false
     transfer: false
     flags:
       foundryvtt-final-fantasy:
@@ -66,7 +66,7 @@ effects:
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
       createdTime: null
-      modifiedTime: 1735897187320
+      modifiedTime: 1736684045068
       lastModifiedBy: A3f8BsJ7eYm0X14M
     _key: '!items.effects!jB4QfYbiVP0j1glr.9chOYyyVsSuQ8vKb'
 folder: Ma4fkb8prmmWpTLI

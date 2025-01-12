@@ -1,13 +1,13 @@
 folder: S90w0S777crGKYCk
-name: Combo
+name: Warrior Combo
 type: trait
 img: systems/foundryvtt-final-fantasy/assets/icons/traits/combo.webp
 system:
   description: >-
     <p>After resolving the effects of an ability with Combo, you may use one of
-    the specified abilities at any point during your turn. You may move before
-    doing so, and may choose a new target when using this additional
-    ability.</p>
+    the specified abilities (i.e. those with the <em>combo</em> tag) at any
+    point during your turn. You may move before doing so, and may choose a new
+    target when using this additional ability.</p>
   favourite: false
   effectActionsLocked: false
   type: ''
@@ -78,7 +78,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736608127691
-  modifiedTime: 1736608127691
+  modifiedTime: 1736679137942
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _id: 6MXpuNE14pvtYZyf
 sort: 0

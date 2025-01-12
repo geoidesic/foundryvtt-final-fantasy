@@ -3,7 +3,7 @@ type: trait
 _id: mGvKPQBuMnWlD7je
 img: systems/foundryvtt-final-fantasy/assets/icons/actions/straight-shot.webp
 system:
-  description: ''
+  description: <p>Enables the <em>Straight Shot</em> ability.</p>
   favourite: false
   effectActionsLocked: false
   type: ''
@@ -29,7 +29,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1735044370333
-  modifiedTime: 1735044391237
+  modifiedTime: 1736683818642
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!mGvKPQBuMnWlD7je'
 

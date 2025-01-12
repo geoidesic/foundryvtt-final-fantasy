@@ -1,0 +1,84 @@
+folder: QHVq2UkrxN16pJWT
+name: Aero
+type: action
+_id: lT0flC6EOvRPENB2
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/aero.webp
+system:
+  description: >-
+    <p><strong>Cost</strong>: 1 MP Target: Single Range: 10
+    squares</p><p><strong>Base Effect</strong>: Inflicts a DOT (3) on the
+    target.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: true
+  aspected: wind
+  hasRanged: true
+  rangeType: 10sq
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: single
+  baseEffectHealing: ''
+  baseEffectDamage: ''
+  hasBaseEffect: false
+  hasCheck: true
+  checkAttribute: critical
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: true
+  cost: 1
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - magic
+    - invoked
+  isMagic: false
+  type: secondary
+effects: []
+sort: 100000
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736614099454
+  modifiedTime: 1736678813563
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!lT0flC6EOvRPENB2'
+

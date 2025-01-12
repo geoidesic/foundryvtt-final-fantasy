@@ -1,0 +1,63 @@
+name: Advantage
+type: effect
+_id: 3xSGaIIL7Mvn3Iyg
+img: systems/foundryvtt-final-fantasy/assets/icons/effects/advantage.webp
+system:
+  description: <p>Your next ability check has 1 advantage dice</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.3xSGaIIL7Mvn3Iyg
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Advantage
+    img: systems/foundryvtt-final-fantasy/assets/icons/effects/advantage.webp
+    _id: urBPgvrbof7ZdbQY
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: Advantage
+        mode: 0
+        value: '1'
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1736687106580
+      modifiedTime: 1736687124292
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!3xSGaIIL7Mvn3Iyg.urBPgvrbof7ZdbQY'
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736685662548
+  modifiedTime: 1736687098222
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!3xSGaIIL7Mvn3Iyg'
+

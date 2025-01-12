@@ -1,0 +1,46 @@
+folder: GOTgySBtwlDsB1HU
+name: Power Surge
+type: trait
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/power-surge.webp
+system:
+  description: >-
+    <p>While under the effect of <strong>Power Surge</strong>, your abilities
+    deal an additional 2 damage. <strong>Power Surge</strong> is removed when
+    you are <strong>Knocked Out</strong>.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: 0
+  hasModifier: false
+  modType: ''
+  operator: ''
+  modAmount: 0
+  limitationUnits: phase
+  uses: 0
+  hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: false
+  tags: []
+  hasDuration: false
+  duration:
+    turns: 0
+    rounds: 0
+effects: []
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736684458276
+  modifiedTime: 1736684458276
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: TedM91XlveMB05uv
+sort: 0
+_key: '!items!TedM91XlveMB05uv'
+

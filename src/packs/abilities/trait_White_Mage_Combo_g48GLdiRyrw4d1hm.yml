@@ -1,0 +1,86 @@
+folder: azjbT1oG4gIxHZrO
+name: White Mage Combo
+type: trait
+img: systems/foundryvtt-final-fantasy/assets/icons/traits/combo.webp
+system:
+  description: >-
+    <p>After resolving the effects of an ability with Combo, you may use one of
+    the specified abilities (i.e. those with the <em>combo</em> tag) at any
+    point during your turn. You may move before doing so, and may choose a new
+    target when using this additional ability.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: ''
+  hasLimitation: false
+  limitation: 0
+  hasModifier: false
+  modType: ''
+  operator: ''
+  modAmount: 0
+  limitationUnits: phase
+  uses: 0
+  hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: false
+  tags: []
+  hasDuration: false
+  duration:
+    turns: 0
+    rounds: 0
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.abilities.Item.6MXpuNE14pvtYZyf
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Combo
+    img: systems/foundryvtt-final-fantasy/assets/icons/traits/combo.webp
+    _id: tNWFukj7tJuxzVXZ
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: EnableCombatTurnSlot
+        value: magic
+        mode: null
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: null
+      modifiedTime: 1736679216470
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!g48GLdiRyrw4d1hm.tNWFukj7tJuxzVXZ'
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736679197442
+  modifiedTime: 1736679197442
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_id: g48GLdiRyrw4d1hm
+sort: 0
+_key: '!items!g48GLdiRyrw4d1hm'
+

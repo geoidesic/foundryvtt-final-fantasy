@@ -1,0 +1,83 @@
+folder: ukRFJxyZ3p5P4R52
+name: Medica
+type: action
+_id: WvJufPHglzMiQwRx
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/medica.webp
+system:
+  description: >-
+    <p><strong>Cost</strong>: 2 MP Target: All allies within
+    range</p><p><strong>Range</strong>: A 5x 5 area centered on this
+    character</p><p><strong>Check</strong>: Special (d20,
+    Critical)</p><p><strong>Base Effect</strong>: Restores 1d6 + 3 HP to all
+    targets.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 5x5a
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: allallies
+  baseEffectHealing: 1d6+3
+  baseEffectDamage: ''
+  hasBaseEffect: true
+  hasCheck: true
+  checkAttribute: critical
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: false
+  cost: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - magic
+    - invoked
+  isMagic: false
+  type: primary
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736612730264
+  modifiedTime: 1736613012165
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!WvJufPHglzMiQwRx'
+

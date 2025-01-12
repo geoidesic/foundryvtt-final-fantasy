@@ -1,0 +1,83 @@
+folder: ukRFJxyZ3p5P4R52
+name: Stone
+type: action
+_id: UqXsZcNsCyaVqPBu
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/stone.webp
+system:
+  description: >-
+    <p><strong>Cost</strong>: 1 MP Target: Single Range: 10
+    squares</p><p><strong>Check</strong>: MND (d20 + 5)
+    </p><p><strong>CR</strong>: Target’s Magic Defense</p><p><strong>Base
+    Effect</strong>: Deals 2 damage to the target.</p><p><strong>Direct
+    Hit</strong>: Deals an additional 1d6 damage.</p>
+  favourite: false
+  effectActionsLocked: false
+  hasAspected: true
+  aspected: earth
+  hasRanged: true
+  rangeType: 10sq
+  hasTrigger: false
+  trigger: ''
+  hasTarget: true
+  target: single
+  baseEffectHealing: ''
+  baseEffectDamage: '2'
+  hasBaseEffect: true
+  hasCheck: true
+  checkAttribute: mnd
+  checkBonus: 0
+  hasCR: true
+  CR: mag
+  hasDirectHit: true
+  directHitType: damage
+  directHitDamage: 1d6
+  directHitText: <p>Deals an additional 1d6 damage.</p>
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  hasDuration: false
+  duration: 0
+  durationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCost: true
+  cost: 1
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - magic
+    - invoked
+  isMagic: false
+  type: primary
+effects: []
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1736612081625
+  modifiedTime: 1736612692245
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!UqXsZcNsCyaVqPBu'
+
