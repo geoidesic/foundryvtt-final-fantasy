@@ -183,12 +183,15 @@ export default class RollCalcActor extends RollCalc {
    */
   async abilityAction(item, options = {}) {
     try {
+
       // Early return if guards fail
       if (!(await this._handleGuards(item, [
         this.RG.isAction, this.RG.isActorsTurn, this.RG.isReaction,
         this.RG.targetsMatchActionIntent, this.RG.hasRequiredEffects,
         this.RG.hasActiveEnablerSlot, this.RG.hasRemainingUses, this.RG.hasModifiers
-      ]))) return;
+      ]))) {
+        return;
+      }
 
       const targets = game.user.targets;
       const hasTargets = targets.size > 0;
@@ -213,13 +216,7 @@ export default class RollCalcActor extends RollCalc {
         isCritical = rollResult.isCritical;
         d20Result = rollResult.d20Result;
 
-        game.system.log.d("[ACTION] Roll result:", {
-          itemName: item.name,
-          total: roll.total,
-          isSuccess,
-          isCritical,
-          d20Result
-        });
+      
 
         // Create message data with roll results
         const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
@@ -228,15 +225,15 @@ export default class RollCalcActor extends RollCalc {
         messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
 
         message = await roll.toMessage(messageData);
-
-        // If successful, handle effects
-        if (isSuccess) {
-          await this._handleEnablerEffects(item);
-        }
       } else {
         message = item.system.hasBaseEffect && item.system.baseEffectType === 'damage'
           ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
           : await this.defaultChat(item);
+      }
+
+      // Process enabler effects regardless of roll success
+      if (item.system.enables?.list?.length > 0) {
+        await this._handleEnablerEffects(item);
       }
 
       // Check for proc trigger
@@ -349,6 +346,15 @@ export default class RollCalcActor extends RollCalc {
     // If it's a critical hit, we auto-succeed regardless of DC
     const isSuccess = isCritical || roll.total >= item.system.CR;
 
+    game.system.log.o('[ABILITY:ROLL] CR check:', {
+      itemName: item.name,
+      rollTotal: roll.total,
+      CR: item.system.CR,
+      isSuccess,
+      isCritical,
+      d20Result
+    });
+
     // If it's a critical hit and a healer recovery skill, double the healing
     if (isCritical && Boolean(item?.system?.baseEffectHealing)) {
       // Double the healing dice
@@ -378,11 +384,14 @@ export default class RollCalcActor extends RollCalc {
    * @return {Promise<void>} Returns a promise that resolves when the enabler effects have been handled
    */
   async _handleEnablerEffects(item) {
+    game.system.log.o('[ABILITY:ENABLER] Processing enabler effects for:', item.name);
     let allEnabledEffects = [];
     for (const enablesItemRef of item.system.enables.list) {
+      game.system.log.o('[ABILITY:ENABLER] Processing enabler item ref:', enablesItemRef);
       const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
       allEnabledEffects = allEnabledEffects.concat(effects);
     }
+    game.system.log.o('[ABILITY:ENABLER] Enabled effects:', allEnabledEffects);
     return allEnabledEffects;
   }
 
@@ -485,19 +494,40 @@ export default class RollCalcActor extends RollCalc {
       return;
     }
 
-    // First try to find a matching tag-based slot
     let slotToUse;
-    const customSlots = actionState.available.filter(slot =>
-      slot !== 'primary' && slot !== 'secondary'
-    );
 
-    // Check for matching tag slot first
-    if (item.system.tags?.length) {
+    game.system.log.o('[SLOT:USAGE] Checking slots:', {
+      itemName: item.name,
+      actionType,
+      itemTags: item.system.tags,
+      itemSystem: item.system,
+      requires: item.system.requires
+    });
+
+    // First check for primary/secondary slot
+    if (actionState.available.includes(actionType)) {
+      slotToUse = actionType;
+      game.system.log.o('[SLOT:USAGE] Using default action type slot:', actionType);
+    }
+
+    // If no primary/secondary slot found, check for custom slots
+    if (!slotToUse && item.system.tags?.length) {
+      const customSlots = actionState.available.filter(slot =>
+        slot !== 'primary' && slot !== 'secondary'
+      );
+
       const matchingSlot = customSlots.find(slot =>
         item.system.tags.includes(slot)
       );
+
       if (matchingSlot) {
         slotToUse = matchingSlot;
+
+        game.system.log.o('[SLOT:USAGE] Found matching slot:', {
+          slot: matchingSlot,
+          itemName: item.name,
+          itemTags: item.system.tags
+        });
 
         const enablerEffectForThisSlot = this.params.actor.enablerEffects.find(effect => 
           effect.changes.some(change => 
@@ -505,25 +535,34 @@ export default class RollCalcActor extends RollCalc {
           )
         );
 
-        //- the effect's origin item flag contains the original effect uuid, which can be disected to get the original item
-        const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, 'origin.effect.uuid').split('.').slice(0, -2).join('.');
-        const originItem = fromUuidSync(originItemUuid);
-        if (originItem) {
-          const uses = (originItem.system.uses || 0) + 1;
-          await originItem.update({ system: { uses } });
-        }
+        if (enablerEffectForThisSlot) {
+          game.system.log.o('[SLOT:USAGE] Found enabler effect:', {
+            effectName: enablerEffectForThisSlot.name,
+            changes: enablerEffectForThisSlot.changes,
+            origin: enablerEffectForThisSlot.origin
+          });
 
-        //- also remove the enabler effect from the actor
-        enablerEffectForThisSlot.delete();
+          const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, 'origin.effect.uuid').split('.').slice(0, -2).join('.');
+          const originItem = fromUuidSync(originItemUuid);
+          if (originItem) {
+            game.system.log.o('[SLOT:USAGE] Found origin item:', {
+              name: originItem.name,
+              currentUses: originItem.system.uses,
+              maxUses: originItem.system.maxUses
+            });
+
+            const uses = (originItem.system.uses || 0) + 1;
+            await originItem.update({ system: { uses } });
+          }
+
+          game.system.log.o('[SLOT:USAGE] Removing enabler effect:', enablerEffectForThisSlot.name);
+          await enablerEffectForThisSlot.delete();
+        }
       }
     }
 
-    // If no tag slot found, fall back to primary/secondary
-    if (!slotToUse && actionState.available.includes(actionType)) {
-      slotToUse = actionType;
-    }
-
     if (!slotToUse) {
+      game.system.log.w('[SLOT:USAGE] No slot found to use for:', item.name);
       return;
     }
 
@@ -539,6 +578,15 @@ export default class RollCalcActor extends RollCalc {
       type: slotToUse,
       messageId: message.id
     }];
+
+    game.system.log.o('[SLOT:USAGE] Updating action state:', {
+      oldAvailable: actionState.available,
+      newAvailable,
+      oldUsed: actionState.used,
+      newUsed,
+      itemName: item.name,
+      slotUsed: slotToUse
+    });
 
     // Update the actor's action state
     await this.params.actor.update({
@@ -591,14 +639,26 @@ export default class RollCalcActor extends RollCalc {
       return [];
     }
 
+    game.system.log.o('[ENABLE] Found compendium item:', { 
+      name: compendiumItem.name, 
+      type: compendiumItem.type,
+      hasEffects: compendiumItem.hasEffects
+    });
+
     // Find actor's version of the item by matching name and type
     const actorItem = this.params.actor.items.find(item => 
       item.name === compendiumItem.name && 
       item.type === compendiumItem.type
     );
 
-    if (!actorItem) { return [] }
-    if (!actorItem.hasEffects) { return [] }
+    if (!actorItem) {
+      game.system.log.w("[ENABLE] Could not find matching actor item for:", compendiumItem.name);
+      return [];
+    }
+    if (!actorItem.hasEffects) {
+      game.system.log.w("[ENABLE] Actor item has no effects:", actorItem.name);
+      return [];
+    }
 
     // Check if we've hit the usage limit using the actor's version of the item
     const hasRemainingUses = await this.params.actor.actorItemHasRemainingUses(actorItem);
@@ -609,10 +669,12 @@ export default class RollCalcActor extends RollCalc {
     }
 
     // Enable any disabled effects and get their UUIDs
+    game.system.log.o('[ENABLE] Enabling linked effects for:', actorItem.name);
     const effectsEnabled = await this.params.actor.enableLinkedEffects(actorItem);
 
     // If we enabled any effects, create chat message
     if (effectsEnabled.length) {
+      game.system.log.o('[ENABLE] Effects enabled:', effectsEnabled);
       // Just send a chat message instead of recursively calling ability
       await this.defaultChat(actorItem);
     }

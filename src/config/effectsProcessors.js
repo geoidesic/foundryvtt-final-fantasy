@@ -6,6 +6,8 @@ import effects from '~/src/helpers/effects';
  * @return {void} Nothing is returned
  */
 export function setupEffectsProcessors() {
+  game.system.log.o('[EFFECTS] Setting up effect processors');
+
   Hooks.on('FF15.processAdditionalBaseDamageFromItem', (event) => {
     const processor = new effects.PrimaryBaseDamageBuff(event.actor);
     processor.process(event);
@@ -17,6 +19,7 @@ export function setupEffectsProcessors() {
   });
 
   Hooks.on('FF15.EnableCombatTurnSlot', async (event) => {
+    game.system.log.o('[EFFECTS] EnableCombatTurnSlot hook triggered:', event);
     const processor = new effects.EnableCombatTurnSlot(event.actor);
     await processor.process(event);
   });
@@ -40,4 +43,5 @@ export function setupEffectsProcessors() {
     const processor = new effects.ProcTrigger(event.actor);
     await processor.process(event);
   });
+
 }

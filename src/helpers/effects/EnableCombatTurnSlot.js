@@ -10,30 +10,34 @@ export default class EnableCombatTurnSlot {
   }
 
   /**
-   * Process the enable combat turn slot effect
-   * @param {object} event - The event containing effect data
-   * @return {Promise<void>} A promise that resolves when processing is complete
+   * Process the effect
+   * @param {object} event - The event object containing actor, change, and effect
+   * @return {Promise<void>} Returns a promise that resolves when the effect has been processed
    */
   async process(event) {
-    const { change } = event;
-    const target = 'system.actionState.available';
-    const current = foundry.utils.getProperty(this.actor, target) || [];
-    
-    // Ensure we're working with an array
+
+    const { actor, change } = event;
+    const { value } = change;
+
+    // Get current action state
+    const current = actor.system.actionState.available;
     if (!Array.isArray(current)) {
-      game.system.log.w('EFFECTS | EnableCombatTurnSlot target is not an array', { target, current });
       return;
     }
 
-    // Create a new array with the value pushed
-    const updated = [...current];
-    if (!updated.includes(change.value)) {
-      updated.push(change.value);
-    }
 
-    // Update the actor with the new array
-    await this.actor.update({
-      [target]: updated
-    });
+    // Only add if not already included
+    if (!current.includes(value)) {
+      const updated = [...current, value];
+      
+      // Update the actor's data directly first
+      actor.system.actionState.available = updated;
+      
+      // Then persist the change
+      await actor.update({
+        'system.actionState.available': updated
+      });
+      
+    }
   }
 } 

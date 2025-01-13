@@ -188,14 +188,15 @@ export default class FF15Actor extends Actor {
   }
 
   /**
-   * Enable effects from an item on this actor
-   * @param {Item} item - The item to enable effects from
-   * @return {Array} Array of effect UUIDs that were enabled
+   * Enable linked effects for an item
+   * @param {Item} item - The item to enable effects for
+   * @return {Promise<Array>} Returns a promise that resolves with an array of enabled effect UUIDs
    */
   async enableLinkedEffects(item) {
     let effectsEnabled = [];
 
     for (const effect of item.effects) {
+     
       // First check if we have a matching effect
       const matchingEffect = this.matchingEffect(effect);
       
@@ -234,9 +235,10 @@ export default class FF15Actor extends Actor {
    */
   async _processEffectHooks(effect) {
     for (const change of effect.changes) {
-      if (activeEffectModes.find(e => e.value === change.mode)) {
+      const matchingMode = activeEffectModes.find(e => e.value === change.mode);
+      if (matchingMode) {
         await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
-      }
+      } 
     }
   }
 
