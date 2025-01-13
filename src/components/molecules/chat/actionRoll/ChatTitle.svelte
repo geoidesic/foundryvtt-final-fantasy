@@ -51,7 +51,7 @@
     .flexrow.title(on:click="{handleTitleClick}" role="button" aria-label="Toggle description")
       .texture
       +if("showProfileImage")   
-        div(
+        .flex1(
           role="button" 
           on:click="{openActorSheet}" 
           aria-label="Open {FFMessage.actor.name}'s character sheet"
@@ -73,7 +73,7 @@
           role="button"
           aria-label="Open {FFMessage.item.name} item sheet"
         ) {FFMessage.item.name}
-      .flex3
+      .flex4
         .flexcol
           .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
           +if("item?.system?.tags?.length > 0") 
@@ -81,7 +81,7 @@
               .flexrow.right(style="justify-content: flex-end; gap: 2px")
                 +each("item?.system?.tags as tag")
                   .flex0.right
-                    Tag.badge.small.round.low({tag} remover="{false}")
+                    Tag.badge.smaller.round.low({tag} remover="{false}")
       img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
 </template>
 
@@ -111,8 +111,6 @@
     padding: 0.2rem
     overflow: hidden
     cursor: pointer
-    .text
-      margin-left: 40px
     
     +mixins.texture-background(var(--message-color))
     +mixins.texture-texture($intensity: 0.05, $bgSize: 53%)

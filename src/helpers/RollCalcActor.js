@@ -388,7 +388,7 @@ export default class RollCalcActor extends RollCalc {
     let allEnabledEffects = [];
     for (const enablesItemRef of item.system.enables.list) {
       game.system.log.o('[ABILITY:ENABLER] Processing enabler item ref:', enablesItemRef);
-      const effects = await this._handleSingleItemEffectEnabling(enablesItemRef);
+      const effects = await this._handleSingleItemEffectEnabling(item, enablesItemRef);
       allEnabledEffects = allEnabledEffects.concat(effects);
     }
     game.system.log.o('[ABILITY:ENABLER] Enabled effects:', allEnabledEffects);
@@ -628,10 +628,11 @@ export default class RollCalcActor extends RollCalc {
 
   /**
    * Handle single item effect enabling
+   * @param {Item} item - The item to enable
    * @param {string} enablesItemRef - The item reference to enable
    * @return {Promise<void>} Returns a promise that resolves when the item effect has been enabled
    */
-  async _handleSingleItemEffectEnabling(enablesItemRef) {
+  async _handleSingleItemEffectEnabling(item, enablesItemRef) {
     // Get the compendium item for reference
     const compendiumItem = await fromUuid(enablesItemRef.uuid);
     if (!compendiumItem) {
@@ -675,8 +676,10 @@ export default class RollCalcActor extends RollCalc {
     // If we enabled any effects, create chat message
     if (effectsEnabled.length) {
       game.system.log.o('[ENABLE] Effects enabled:', effectsEnabled);
-      // Just send a chat message instead of recursively calling ability
-      await this.defaultChat(actorItem);
+      //- if the enabler effect item has the same name as the triggering item, don't send a default chat message
+      if (item.name !== actorItem.name) {
+        await this.defaultChat(actorItem);
+      }
     }
 
     return effectsEnabled;
