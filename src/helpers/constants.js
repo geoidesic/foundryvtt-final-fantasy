@@ -11,11 +11,6 @@ export const LOG_STYLES = {
   b: 'color: blue;'
 };
 
-export const getBaseEffectTypeOptions = () => [
-  { value: 'damage', label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectType.damage") },
-  { value: 'heal', label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectType.heal") },
-];
-
 export const getDamageDiceRerollOptions = () => [
   { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.one") },
   { value: 2, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.two") },

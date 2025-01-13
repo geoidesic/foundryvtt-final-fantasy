@@ -226,7 +226,7 @@ export default class RollCalcActor extends RollCalc {
 
         message = await roll.toMessage(messageData);
       } else {
-        message = item.system.hasBaseEffect && item.system.baseEffectType === 'damage'
+        message = item.system.hasBaseEffect && Boolean(item.system.baseEffectDamage)
           ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
           : await this.defaultChat(item);
       }

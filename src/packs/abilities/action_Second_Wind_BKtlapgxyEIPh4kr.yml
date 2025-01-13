@@ -59,7 +59,7 @@ system:
     value: false
   type: reaction
   hasBaseEffect: true
-  baseEffectType: heal
+  baseEffectHealing: 1d6+2
 effects: []
 flags: {}
 _stats:
@@ -69,7 +69,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1735734275601
-  modifiedTime: 1735761393780
+  modifiedTime: 1736760808175
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0

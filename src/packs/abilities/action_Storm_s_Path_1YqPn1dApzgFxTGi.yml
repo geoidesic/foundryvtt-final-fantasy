@@ -21,8 +21,6 @@ system:
   trigger: ''
   hasTarget: true
   target: single
-  baseEffectType: damage
-  baseEffect: ''
   hasBaseEffect: true
   hasCheck: true
   checkAttribute: str

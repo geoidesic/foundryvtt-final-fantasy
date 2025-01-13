@@ -161,10 +161,6 @@
             "Description": "Each Job has a single definitive limit Break ability."
           },
           "Options": {
-            "BaseEffectType": {
-              "damage": "Damage",
-              "heal": "Heal"
-            },
             "DirectHit": {
               "damage": "Damage",
               "markers": "Remove Markers",

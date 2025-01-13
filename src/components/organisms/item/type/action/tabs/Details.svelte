@@ -5,7 +5,7 @@
     getRangeOptions, getDurationOptions, getDurationUnits, 
     getLimitationOptions, getLimitationUnits, getAspectedOptions, 
     getTargetOptions, getHeavyshotOptions, getTriggerOptions, 
-    getDirectHitOptions, getTypeOptions, getBaseEffectTypeOptions 
+    getDirectHitOptions, getTypeOptions 
   } from "~/src/helpers/constants.js";
   import { getCROptions } from "~/src/helpers/constants.js";
   import { PCModel } from "~/src/models/actors/PC.js";
@@ -30,7 +30,6 @@
     .filter(([key, value]) => value instanceof SchemaField)
     .map(([key, value]) => ({ key, value }));
 
-  const baseEffectTypeOptions = getBaseEffectTypeOptions();
   const CROptions = getCROptions();
   const limitationOptions = getLimitationOptions();
   const limitationUnitsOptions = getLimitationUnits();

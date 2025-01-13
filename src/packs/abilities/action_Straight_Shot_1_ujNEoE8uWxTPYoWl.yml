@@ -62,7 +62,6 @@ system:
     list:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
     value: true
-  baseEffectType: damage
   hasBaseEffect: true
   baseEffectDamage: '3'
 effects: []

@@ -57,7 +57,6 @@ system:
   requires:
     list: []
     value: false
-  baseEffectType: damage
   hasBaseEffect: true
   baseEffectDamage: '2'
 effects: []
