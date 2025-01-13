@@ -155,65 +155,59 @@
    * Apply Result
    **************/
   async function applyResult(target) {
-    if (!target.actor || target.isUnlinked) return;
+    if (isApplyDisabled(target)) return;
 
-    const penalty = FFMessage.extraModifiers?.penalty || 0;
-    const results = { damage: 0, directHit: 0 };
+    const token = canvas.tokens.get(target.id);
+    if (!token) return;
 
-    // Calculate base damage
-    if (item?.system?.baseEffectDamage) {
-      results.damage = parseInt(item?.system.baseEffectDamage) || 0;
-      // If split damage is enabled, divide the damage by the number of targets (rounding up)
-      if (item?.system?.hasSplitDamage && FFMessage.targets.length > 0) {
-        results.damage = Math.ceil(results.damage / FFMessage.targets.length);
-      }
-      totalDamage = results.damage;
-    }
+    const damageResults = FFMessageState.damageResults[target.id];
+    if (!damageResults) return;
 
-    // Calculate direct hit damage if applicable - only if it's a hit
-    if (isHit(target) && item?.system?.hasDirectHit && item?.system?.directHitDamage) {
-      const directHitRoll = await new Roll(FFMessageState.damageResults[target.id].directHit).evaluate({ async: true });
-      if (game.modules.get('dice-so-nice')?.active) {
-        await game.dice3d.showForRoll(directHitRoll);
-      }
-      results.directHitResult = directHitRoll.total;
-      // If split damage is enabled, divide the direct hit damage by the number of targets (rounding up)
-      if (item?.system?.hasSplitDamage && FFMessage.targets.length > 0) {
-        results.directHitResult = Math.ceil(results.directHitResult / FFMessage.targets.length);
-      }
-      totalDamage += results.directHitResult;
-    } 
-
-    // Apply damage to target
-    const currentHP = target?.actor?.system?.points?.HP?.val;
-    const newHP = Math.max(0, currentHP - totalDamage);
-
-    await target?.actor?.update({
-      "system.points.HP.val": newHP,
+    // Ensure numeric values for damage calculation
+    const baseDamage = parseInt(damageResults.damage) || 0;
+    const directHitDamage = parseInt(damageResults.directHitResult) || 0;
+    const totalDamage = baseDamage + directHitDamage;
+    
+    game.system.log.o('[DAMAGE] Calculating total:', {
+      baseDamage,
+      directHitDamage,
+      totalDamage
     });
+    
+    // Create scrolling text showing the damage
+    await canvas.interface.createScrollingText(
+      token.center,
+      `-${totalDamage}`,
+      {
+        anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
+        direction: CONST.TEXT_ANCHOR_POINTS.TOP,
+        duration: 1000,
+        distance: 100,
+        fontSize: 36,
+        fill: "#ff0000",
+        stroke: "#000",
+        strokeThickness: 4
+      }
+    );
 
-    // Toggle KO condition if HP drops to 0
-    if (currentHP > 0 && newHP <= 0) {
-      await target?.actor?.toggleStatusEffect("ko");
-    }
-    // Update stores
+    // Update the actor's HP
+    const newHP = token.actor.system.points.HP.val - totalDamage;
+    await token.actor.update({ "system.points.HP.val": newHP });
+
+    // Update the message state to show this result has been applied
     const newDamageResults = {...FFMessageState.damageResults};
-    newDamageResults[target.id].damage = results.damage;
-    newDamageResults[target.id].directHitResult = results.directHitResult;
-    newDamageResults[target.id].originalHP = currentHP;
-    newDamageResults[target.id].applied = isCritical;
-    newDamageResults[target.id].wasKOd = currentHP > 0 && newHP <= 0;
+    newDamageResults[target.id].applied = true;
+    newDamageResults[target.id].wasKOd = newHP <= 0;
 
     await $message.update({
       flags: {
         [SYSTEM_ID]: {
-          state: {
+          state: {  
             damageResults: newDamageResults
           }
         },
       },
     });
-
   }
 
   /**************
@@ -222,8 +216,30 @@
   async function undoResult(target) {
     if (!target.actor || target.isUnlinked) return;
 
-    const result = FFMessageState.damageResults[target.id]
+    const token = canvas.tokens.get(target.id);
+    if (!token) return;
+
+    const result = FFMessageState.damageResults[target.id];
     if (!result) return;
+
+    const currentHP = token.actor.system.points.HP.val;
+    const restoredAmount = result.originalHP - currentHP;
+
+    // Create scrolling text showing the restored HP
+    await canvas.interface.createScrollingText(
+      token.center,
+      `+${restoredAmount}`,
+      {
+        anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
+        direction: CONST.TEXT_ANCHOR_POINTS.TOP,
+        duration: 1000,
+        distance: 100,
+        fontSize: 36,
+        fill: "#00ff00",
+        stroke: "#000",
+        strokeThickness: 4
+      }
+    );
 
     // Restore original HP
     await target?.actor?.update({
@@ -248,7 +264,6 @@
         },
       },
     });
-
   }
 
 
