@@ -15,26 +15,26 @@
         .flexcol.flex1.left
           ol.properties-list
             li.bg-gold.white.border-gold {$item?.system?.type?.capitalize()}
-            +if("$item.system.hasCost")
-              li Cost: {$item.system.cost} MP
-            +if("$item.system.hasCR")
-              li {CROptions.find((option) => option.value === $item.system.CR)?.label}
-            +if("$item.system.hasCheck")
-              li {$item.system.checkAttribute.toUpperCase()}
-            +if("$item.system.hasHeavierShot")
-              li Heavier Shot Type: {$item.system.heavierShotType}
-            +if("$item.system.hasLimitation")
-              li {limitationOptions.find((option) => option.value === $item.system.limitation)?.label}
-            +if("$item.system.hasRanged")
-              li Range: {$item.system.rangeType}
-            +if("$item.system.hasTarget")
-              li Target: {$item.system.target.capitalize()}
-            +if("$item.system.hasTrigger")
-              li Trigger: {$item.system.trigger.capitalize()}
-            +if("$item.system.directHitType")
-              li Direct Hit: {$item.system.directHitType.capitalize()}
-                +if("$item.system.directHitDamage")
-                  | : {$item.system.directHitDamage}
+            +if("$item?.system?.hasCost")
+              li Cost: {$item?.system?.cost} MP
+            +if("$item?.system?.hasCR")
+              li {CROptions.find((option) => option.value === $item?.system?.CR)?.label}
+            +if("$item?.system?.hasCheck")
+              li {$item?.system?.checkAttribute.toUpperCase()}
+            +if("$item?.system?.hasHeavierShot")
+              li Heavier Shot Type: {$item?.system?.heavierShotType}
+            +if("$item?.system?.hasLimitation")
+              li {limitationOptions.find((option) => option.value === $item?.system?.limitation)?.label}
+            +if("$item?.system?.hasRanged")
+              li Range: {$item?.system?.rangeType}
+            +if("$item?.system?.hasTarget")
+              li Target: {$item?.system?.target.capitalize()}
+            +if("$item?.system?.hasTrigger")
+              li Trigger: {$item?.system?.trigger.capitalize()}
+            +if("$item?.system?.directHitType")
+              li Direct Hit: {$item?.system?.directHitType.capitalize()}
+                +if("$item?.system?.directHitDamage")
+                  | : {$item?.system?.directHitDamage}
 
     
 </template>

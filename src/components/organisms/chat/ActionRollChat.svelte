@@ -60,6 +60,7 @@
     game.system.log.b("RollChat $message", $message);
     game.system.log.b("RollChat FFMessage", FFMessage);
     game.system.log.b("RollChat FFMessage.isCritical", FFMessage.isCritical);
+    game.system.log.b("RollChat item", item);
   }
 
   function getDamageResults(passedTargets) {
@@ -67,23 +68,23 @@
     const DamageResults = new Map();
     for (const id of passedTargets) {
       let token = canvas.tokens.get(id);
-      const baseDamageFormula = item.system?.hasSplitDamage 
-        ? `Split BaseDamage (${item.system?.baseEffectDamage} ÷ ${passedTargets.length})`
-        : `Base Damage (${item.system?.baseEffectDamage})`;
-      const directHitDisplayFormula = item.system?.hasSplitDamage
-        ? `Split Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item.system?.directHitDamage} ÷ ${passedTargets.length}) `
-        : `Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item.system?.directHitDamage})`;
+      const baseDamageFormula = item?.system?.hasSplitDamage 
+        ? `Split BaseDamage (${item?.system?.baseEffectDamage} ÷ ${passedTargets.length})`
+        : `Base Damage (${item?.system?.baseEffectDamage})`;
+      const directHitDisplayFormula = item?.system?.hasSplitDamage
+        ? `Split Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item?.system?.directHitDamage} ÷ ${passedTargets.length}) `
+        : `Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item?.system?.directHitDamage})`;
 
       DamageResults.set(id, {
-        damage: item.system?.baseEffectDamage,
-        healing: item.system?.baseEffectHealing,
+        damage: item?.system?.baseEffectDamage,
+        healing: item?.system?.baseEffectHealing,
         baseDamageFormula,
-        directHit: item.system?.directHitDamage,
-        directHitFormula: item.system?.directHitDamage,
+        directHit: item?.system?.directHitDamage,
+        directHitFormula: item?.system?.directHitDamage,
         directHitDisplayFormula,
         directHitResult: false,
         applied: false,
-        originalHP: token.actor.system.points.HP.val,
+        originalHP: token.actor?.system.points.HP.val,
         wasKOd: false,
       });
     }
@@ -254,7 +255,7 @@
   async function applyTrait() {
     if (!item?.system?.enables?.list?.length) return;
 
-    const trait = await fromUuid(item.system.enables.list[0].uuid);
+    const trait = await fromUuid(item?.system?.enables?.list[0].uuid);
     if (!trait) return;
 
     // Apply trait to all existing targets
@@ -309,13 +310,13 @@
   ChatTitle(on:toggleDescription="{handleToggleDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")
     .flexrow.mt-xs(class="{showDescription ? 'visible' : ''}")
-      .flex4#chat-description.inset {@html item.system.description}
+      .flex4#chat-description.inset {@html item?.system?.description}
         Header
   +if("content")
     .flexrow.gap-4.leather.mt-xs
       .flex3.content
         div {@html content}
-  +if("FFMessage?.item?.type === 'action'")
+  +if("FFMessage?.item?.type === 'action' && item")
     .action-result
       .target-list
         +each("targetTokens as target")
@@ -346,11 +347,11 @@
                           +else
                             i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                 .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
-                  +if("item.system?.baseEffectDamage")
+                  +if("item?.system?.baseEffectDamage")
                     .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDamageFormula(target)}")
                       .flex3.left.font-cinzel.smaller Damage 
                       .flex1.right.no-wrap {displayDamage(target)}
-                  +if("item.system?.hasDirectHit")
+                  +if("item?.system?.hasDirectHit")
                     .flex1.formula.flexrow.justify-vertical.smaller(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDirectHitDisplayFormula(target)}")
                       .flex3.left.font-cinzel.even-smaller Direct Hit 
                       .flex1.right.no-wrap {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
@@ -415,12 +416,10 @@
   align-items: center
   gap: 0.5em
   position: relative
-  
-  .target-img
-    width: 36px
-    height: 36px
-    border: none
-    position: relative
+  flex: 0 0 36px
+  img.target-img
+    object-fit: cover
+    border-radius: var(--border-radius)
 
 
 button:disabled
