@@ -4,7 +4,7 @@
   import { writable, derived } from "svelte/store";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
-
+  import { createDamageText } from "~/src/helpers/canvas";
 
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
@@ -174,21 +174,7 @@
       totalDamage
     });
     
-    // Create scrolling text showing the damage
-    await canvas.interface.createScrollingText(
-      token.center,
-      `-${totalDamage}`,
-      {
-        anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
-        direction: CONST.TEXT_ANCHOR_POINTS.TOP,
-        duration: 1000,
-        distance: 100,
-        fontSize: 36,
-        fill: "#ff0000",
-        stroke: "#000",
-        strokeThickness: 4
-      }
-    );
+    createDamageText(token, totalDamage);
 
     // Update the actor's HP
     const newHP = token.actor.system.points.HP.val - totalDamage;
@@ -225,21 +211,7 @@
     const currentHP = token.actor.system.points.HP.val;
     const restoredAmount = result.originalHP - currentHP;
 
-    // Create scrolling text showing the restored HP
-    await canvas.interface.createScrollingText(
-      token.center,
-      `+${restoredAmount}`,
-      {
-        anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
-        direction: CONST.TEXT_ANCHOR_POINTS.TOP,
-        duration: 1000,
-        distance: 100,
-        fontSize: 36,
-        fill: "#00ff00",
-        stroke: "#000",
-        strokeThickness: 4
-      }
-    );
+    createDamageText(token, restoredAmount, true);
 
     // Restore original HP
     await target?.actor?.update({
