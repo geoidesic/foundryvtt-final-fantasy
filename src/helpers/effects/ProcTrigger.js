@@ -17,10 +17,11 @@ export default class ProcTrigger {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
-    
+    game.system.log.o('[PROC] Starting proc trigger process:', event);
 
     const { item, roll } = event;
     if (!item.system.procs?.list?.length) {
+      game.system.log.o('[PROC] No procs in list, returning');
       return;
     }
 
@@ -31,37 +32,37 @@ export default class ProcTrigger {
       d20Result = d20Term.modifiers.includes('kh1') 
         ? Math.max(...d20Term.results.map(r => r.result))
         : d20Term.results[0].result;
+      game.system.log.o('[PROC] Using existing roll d20 result:', d20Result);
     } else {
       const procRoll = await new Roll('1d20').evaluate();
       d20Result = procRoll.terms[0].results[0].result;
+      game.system.log.o('[PROC] Made new roll d20 result:', d20Result);
     }
 
-
     if (!item.system.procTrigger || d20Result < item.system.procTrigger) {
+      game.system.log.o('[PROC] Roll did not meet proc trigger threshold:', {
+        procTrigger: item.system.procTrigger,
+        d20Result
+      });
       return;
     }
 
+    game.system.log.o('[PROC] Processing proc effects');
     // Process each proc effect
     for (const procRef of item.system.procs.list) {
+      game.system.log.o('[PROC] Processing proc ref:', procRef);
       
       const procItem = await fromUuid(procRef.uuid);
       if (!procItem) {
+        game.system.log.o('[PROC] Could not find proc item:', procRef.uuid);
         continue;
       }
+      game.system.log.o('[PROC] Found proc item:', procItem);
 
-      // Find actor's version of the proc item
-      const actorItem = this.actor.items.find(i => 
-        i.name === procItem.name && 
-        i.type === procItem.type
-      );
-
-
-      if (!actorItem?.hasEffects) {
-        continue;
-      }
-
-      // Enable the effects
-      await this.actor.enableLinkedEffects(actorItem);
+      // Add the proc effect directly to the actor
+      game.system.log.o('[PROC] Adding proc effect to actor:', procItem.name);
+      const addedEffects = await this.actor.addLinkedEffects(procItem);
+      game.system.log.o('[PROC] Added effects:', addedEffects);
 
       // Send a chat message for the proc trigger
       await ChatMessage.create({
@@ -77,12 +78,12 @@ export default class ProcTrigger {
                 img: this.actor.img
               },
               item: {
-                _id: actorItem._id,
-                uuid: actorItem.uuid,
-                name: actorItem.name,
-                img: actorItem.img,
-                type: actorItem.type,
-                system: actorItem.system
+                _id: procItem._id,
+                uuid: procItem.uuid,
+                name: procItem.name,
+                img: procItem.img,
+                type: procItem.type,
+                system: procItem.system
               }
             }
           }

@@ -75,18 +75,20 @@
         ? `Split Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item?.system?.directHitDamage} ÷ ${passedTargets.length}) `
         : `Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item?.system?.directHitDamage})`;
 
-      DamageResults.set(id, {
+      const damageResult = {
         damage: item?.system?.baseEffectDamage,
         healing: item?.system?.baseEffectHealing,
         baseDamageFormula,
-        directHit: item?.system?.directHitDamage,
-        directHitFormula: item?.system?.directHitDamage,
-        directHitDisplayFormula,
+        directHit: item?.system?.hasDirectHit ? item?.system?.directHitDamage : null,
+        directHitFormula: item?.system?.hasDirectHit ? item?.system?.directHitDamage : null,
+        directHitDisplayFormula: item?.system?.hasDirectHit ? directHitDisplayFormula : null,
         directHitResult: false,
         applied: false,
         originalHP: token.actor?.system.points.HP.val,
         wasKOd: false,
-      });
+      };
+
+      DamageResults.set(id, damageResult);
     }
 
     /**
@@ -96,8 +98,11 @@
      *  status effect bonuses. Using call would only allow the first modification
      *  to occur.
     */
-    Hooks.callAll('FF15.processAdditionalBaseDamageFromItem', {item, actor, DamageResults});
-    Hooks.callAll('FF15.DamageDiceReroll', {item, actor, DamageResults});
+    if (DamageResults.size > 0) {
+      Hooks.callAll('FF15.processAdditionalBaseDamageFromItem', {item, actor, DamageResults});
+      Hooks.callAll('FF15.DamageDiceReroll', {item, actor, DamageResults});
+    }
+
     return DamageResults;
   }
 

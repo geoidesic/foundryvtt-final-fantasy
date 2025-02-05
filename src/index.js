@@ -7,7 +7,7 @@ import FFEffectModel from "~/src/models/ActiveEffectModel.js"
 import FFToken from "~/src/extensions/token.js"
 import FFCombat from './extensions/combat.js'
 import FFCombatant from './extensions/combatant.js'
-import RollGuards from "~/src/helpers/RollGuards";
+import RollGuards from "~/src/helpers/rolls/RollGuards";
 import hooks from "~/src/hooks";
 
 /* eslint-disable-next-line no-unused-vars */

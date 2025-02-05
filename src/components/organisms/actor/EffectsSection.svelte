@@ -11,7 +11,7 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
-  import RollCalcActor from "~/src/helpers/RollCalcActor";
+  import RollCalcActor from "~/src/helpers/rolls/RollCalcActor";
   import Badge from "~/src/components/atoms/Badge.svelte";
 
   const Actor = getContext("#doc");
