@@ -79,7 +79,7 @@ export default class RollCalcActor extends RollCalc {
     const roll = await new Roll(rollFormula).evaluate({ async: true });
     const isCritical = roll.total === 20;
     const messageData = {
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: $actor }) : null,
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
       flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       roll,
