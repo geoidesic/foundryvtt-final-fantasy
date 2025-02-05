@@ -2,6 +2,7 @@ import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "~/src/helpers/constants.js"
 import RollCalc from "./RollCalc.js"
 import ActionHandler from "./handlers/ActionHandler.js";
+import AttributeHandler from "./handlers/AttributeHandler.js";
 import EffectManager from "./handlers/EffectManager.js";
 import CombatSlotManager from "./handlers/CombatSlotManager.js";
 import GuardManager from "./handlers/GuardManager.js";
@@ -15,6 +16,7 @@ export default class RollCalcActor extends RollCalc {
     super(params);
     this.params = params;
     this.actionHandler = new ActionHandler(params.actor);
+    this.attributeHandler = new AttributeHandler(params.actor);
     this.effectManager = new EffectManager(params.actor);
     this.combatSlotManager = new CombatSlotManager(params.actor);
     this.guardManager = new GuardManager(params.actor, this.RG);
@@ -73,36 +75,7 @@ export default class RollCalcActor extends RollCalc {
    * @return {Promise<void>} Returns a promise that resolves when the attribute check is complete
    */
   async attribute(key, code) {
-    const attributeValue = this.params.actor.system.attributes[key][code].val;
-    const rollFormula = `1d20 + ${attributeValue}`;
-    const attributeName = game.i18n.localize(`FF15.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
-    const roll = await new Roll(rollFormula).evaluate({ async: true });
-    const isCritical = roll.total === 20;
-    const messageData = {
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      roll,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "AttributeRollChat",
-            actor: {
-              _id: this.params.actor._id,
-              name: this.params.actor.name,
-              img: this.params.actor.img
-            },
-            flavor: `${attributeName} ${game.i18n.localize('FF15.Check')}`,
-            key: key,
-            code: code,
-            modifier: attributeValue,
-            isCritical
-          },
-          css: `attribute-roll ${isCritical ? 'crit' : ''}`
-        }
-      }
-    };
-    await roll.toMessage(messageData);
+    await this.attributeHandler.handle({key, code});
   }
 
   /**
