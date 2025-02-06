@@ -232,26 +232,32 @@
     if (!token) return;
 
     const result = FFMessageState.damageResults[target.id];
-    if (!result) return;
+    if (!result || !result.applied) return;  // Only undo if it was actually applied
 
     const currentHP = token.actor.system.points.HP.val;
-    const restoredAmount = result.originalHP - currentHP;
+    const originalHP = result.originalHP;
 
-    createDamageText(token, restoredAmount, true);
-
-    // Restore original HP
-    await target?.actor?.update({
-      "system.points.HP.val": result.originalHP,
-    });
-
-    // Remove KO if we applied it
-    if (result.wasKOd) {
-      await target?.actor?.toggleStatusEffect("ko");
+    // Only restore HP if it's different from the original
+    if (currentHP !== originalHP) {
+      createDamageText(token, originalHP - currentHP, true);
+      await token.actor.update({
+        "system.points.HP.val": originalHP
+      });
     }
 
+    // Only remove KO if we applied it
+    if (result.wasKOd) {
+      await token.actor.toggleStatusEffect("ko");
+    }
+
+    // Update only this target's results in the message state
     const newDamageResults = {...FFMessageState.damageResults};
-    newDamageResults[target.id].applied = false;
-    newDamageResults[target.id].wasKOd = false;
+    newDamageResults[target.id] = {
+      ...newDamageResults[target.id],
+      applied: false,
+      wasKOd: false,
+      directHitResult: false
+    };
 
     await $message.update({
       flags: {
@@ -313,6 +319,26 @@
   const handleToggleDescription = () => {
     showDescription = !showDescription;
   };
+
+  async function abilityAction(item, options = {}) {
+    try {
+      // Early return if guards fail
+      if (!(await this.GuardManager.handleGuards(item, [
+        'isAction', 'isActorsTurn', 'isReaction',
+        'targetsMatchActionIntent','hasNoUnappliedDamage', 'hasRequiredEffects',
+        'hasActiveEnablerSlot', 'hasRemainingUses', 'hasModifiers'
+      ]))) {
+        return;
+      }
+
+      // Handle the action
+      const result = await this.ActionHandler.handle(item, options);
+
+      // ... existing code ...
+    } catch (error) {
+      // ... existing code ...
+    }
+  }
 </script>
 
 <template lang="pug">

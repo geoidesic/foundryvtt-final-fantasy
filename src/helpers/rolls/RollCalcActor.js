@@ -1,4 +1,3 @@
-
 import { SYSTEM_ID } from "~/src/helpers/constants.js"
 import RollCalc from "./RollCalc.js"
 import ActionHandler from "./handlers/ActionHandler.js";
@@ -77,8 +76,8 @@ export default class RollCalcActor extends RollCalc {
     try {
       // Early return if guards fail
       if (!(await this.GuardManager.handleGuards(item, [
-        'isAction', 'isActorsTurn', 'isReaction',
-        'targetsMatchActionIntent', 'hasRequiredEffects',
+        'isAction', 'hasNoUnappliedDamage', 'isActorsTurn', 
+        'isReaction', 'targetsMatchActionIntent', 'hasRequiredEffects',
         'hasActiveEnablerSlot', 'hasRemainingUses', 'hasModifiers'
       ]))) {
         return;

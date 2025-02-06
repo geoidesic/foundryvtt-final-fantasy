@@ -427,4 +427,37 @@ export default class RollGuards {
     return hasSlot;
   }
 
+  /**
+   * Check if there are any unapplied damage results in chat messages
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether there are no unapplied damage results
+   */
+  async hasNoUnappliedDamage(item) {
+    // Skip this check for non-damaging actions
+    if (!item.system.baseEffectDamage && !item.system.directHitDamage) return true;
+
+    // Get all chat messages for this actor
+    const messages = game.messages.filter(m => {
+      const data = m.flags?.[SYSTEM_ID]?.data;
+      return data?.actor?._id === this.actor.id && 
+             data?.chatTemplate === "ActionRollChat" &&
+             (data?.item?.system?.baseEffectDamage || data?.item?.system?.directHitDamage);
+    });
+
+    // Check if any messages have unapplied damage
+    for (const message of messages) {
+      const state = message.flags?.[SYSTEM_ID]?.state;
+      if (!state?.damageResults) continue;
+
+      // Check if any target has unapplied damage
+      const hasUnappliedDamage = Object.values(state.damageResults).some(result => !result.applied);
+      
+      if (hasUnappliedDamage) {
+        ui.notifications.warn("You have unapplied damage results. Please apply or undo them before making another action roll.");
+        return false;
+      }
+    }
+
+    return true;
+  }
 }
