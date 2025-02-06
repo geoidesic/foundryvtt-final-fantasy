@@ -1,5 +1,6 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 import { generateRandomElementId } from "~/src/helpers/util";
+import { createDefaultChat } from "~/src/helpers/rolls/handlers/DefaultChatHandler.js";
 
 /**
  * Handles all action-related operations
@@ -20,9 +21,7 @@ export default class ActionHandler {
    */
   async handle(item, options = {}) {
     try {
-      const targets = game.user.targets;
-      const hasTargets = targets.size > 0;
-      const targetIds = Array.from(targets).map(target => target.id);
+      const { targets, hasTargets, targetIds } = this._getActionTargets();
 
       let message;
       let roll;
@@ -30,67 +29,12 @@ export default class ActionHandler {
       let d20Result = null;
 
       if (item.system.hasCR) {
-        // Handle roll with modifiers
-        const rollResult = await this._handleRollWithModifiers(item);
-        roll = rollResult.roll;
-        isCritical = rollResult.isCritical;
-        d20Result = rollResult.d20Result;
-
-        // Create message data with roll results
-        const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
-        messageData.flags[SYSTEM_ID].data.isCritical = isCritical;
-        messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
-
-        // Get target's defense value based on CR type
-        if (hasTargets) {
-          const target = targets.values().next().value;
-          const targetActor = target.actor;
-          
-          let crValue = 0;
-          if (targetActor) {
-            if (targetActor.type === "npc") {
-              crValue = targetActor.system.attributes[item.system.CR]?.val || 0;
-            } else {
-              crValue = targetActor.system.attributes.secondary[item.system.CR]?.val || 0;
-            }
-          }
-
-          const isSuccess = isCritical || roll.total >= crValue;
-          messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
-
-          game.system.log.o('[ABILITY:ROLL] CR check:', {
-            itemName: item.name,
-            rollTotal: roll.total,
-            CR: item.system.CR,
-            crValue,
-            isSuccess,
-            isCritical,
-            d20Result
-          });
-
-          // Check for proc trigger after confirming hit
-          if (item.system.procTrigger && isSuccess) {
-            game.system.log.o('[PROC] Triggering proc for:', {
-              itemName: item.name,
-              roll: roll.total,
-              isSuccess,
-              isCritical
-            });
-            
-            Hooks.callAll('FF15.ProcTrigger', { 
-              actor: this.actor, 
-              item,
-              roll,
-              targets
-            });
-          }
-        }
-
-        message = await roll.toMessage(messageData);
+        ({ message, roll, isCritical, d20Result } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
+        // Use createDefaultChat if there's no custom action message
         message = item.system.hasBaseEffect && Boolean(item.system.baseEffectDamage)
           ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
-          : await this._createDefaultChat(item);
+          : await createDefaultChat(this.actor, item);
       }
 
       return {
@@ -104,19 +48,129 @@ export default class ActionHandler {
       };
     } catch (error) {
       game.system.log.e("Error in action handler", error);
-      ui.notifications.error(game.i18n.format("FF15.Errors.ActionHandlingFailed", { target: this.actor.name }));
+      ui.notifications.error(
+        game.i18n.format("FF15.Errors.ActionHandlingFailed", { target: this.actor.name })
+      );
       return { success: false, message: null };
     }
   }
 
   /**
+   * @internal
+   * Retrieves targets from the user and checks if they exist.
+   */
+  _getActionTargets() {
+    const targets = game.user.targets;
+    const hasTargets = targets.size > 0;
+    const targetIds = Array.from(targets).map(target => target.id);
+    return { targets, hasTargets, targetIds };
+  }
+
+  /**
+   * @internal
+   * Creates and returns the final message, roll, and critical data if an item uses CR checks.
+   */
+  async _rollWithCR(item, targets, hasTargets, targetIds) {
+    // Handle roll with modifiers
+    const { roll, isCritical, d20Result } = await this._handleRollWithModifiers(item);
+
+    // Create initial message data
+    const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
+    messageData.flags[SYSTEM_ID].data.isCritical = isCritical;
+    messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
+
+    // If there are targets, figure out the CR value from the target
+    if (hasTargets) {
+      const {
+        crValue,
+        targetActor
+      } = this._getTargetCRValue(item, targets);
+
+      // Evaluate success
+      const isSuccess = this._evaluateSuccess({ roll, crValue, isCritical });
+      messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
+
+      // Log CR check output
+      game.system.log.o('[ABILITY:ROLL] CR check:', {
+        itemName: item.name,
+        rollTotal: roll.total,
+        CR: item.system.CR,
+        crValue,
+        isSuccess,
+        isCritical,
+        d20Result
+      });
+
+      // Trigger proc if it's successful
+      if (item.system.procTrigger && isSuccess) {
+        this._triggerProc(item, roll, targets, isSuccess, isCritical);
+      }
+    }
+
+    // Send the roll message to the chat
+    const message = await roll.toMessage(messageData);
+    return { message, roll, isCritical, d20Result };
+  }
+
+  /**
+   * @internal
+   * Retrieves the CR value from the first target if available.
+   */
+  _getTargetCRValue(item, targets) {
+    const target = targets.values().next().value;
+    const targetActor = target?.actor;
+    let crValue = 0;
+
+    if (targetActor) {
+      if (targetActor.type === "npc") {
+        crValue = targetActor.system.attributes[item.system.CR]?.val || 0;
+      } else {
+        crValue = targetActor.system.attributes.secondary[item.system.CR]?.val || 0;
+      }
+    }
+
+    return { crValue, targetActor };
+  }
+
+  /**
+   * @internal
+   * Evaluates if a roll is successful based on CR and critical.
+   */
+  _evaluateSuccess({ roll, crValue, isCritical }) {
+    // If critical, auto success. Otherwise compare to CR value.
+    return isCritical || roll.total >= crValue;
+  }
+
+  /**
+   * @internal
+   * Triggers a proc if the item has a proc condition and is successful.
+   */
+  _triggerProc(item, roll, targets, isSuccess, isCritical) {
+    game.system.log.o('[PROC] Triggering proc for:', {
+      itemName: item.name,
+      roll: roll.total,
+      isSuccess,
+      isCritical
+    });
+
+    Hooks.callAll('FF15.ProcTrigger', {
+      actor: this.actor,
+      item,
+      roll,
+      targets
+    });
+  }
+
+  /**
+   * @internal
    * Create message data for an action
-   * @private
    */
   _createActionMessageData(item, hasTargets, targets, roll = null, isCritical = false) {
     const messageData = {
       id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
+      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner')
+        ? ChatMessage.getSpeaker({ actor: this.actor })
+        : null,
       flavor: `${item.name}`,
       style: CONST.CHAT_MESSAGE_STYLES.ROLL,
       rolls: roll ? [roll] : [],
@@ -124,27 +178,8 @@ export default class ActionHandler {
         [SYSTEM_ID]: {
           data: {
             chatTemplate: "ActionRollChat",
-            actor: {
-              _id: this.actor._id,
-              uuid: this.actor.uuid,
-              name: this.actor.name,
-              img: this.actor.img
-            },
-            item: {
-              _id: item._id,
-              uuid: item.uuid,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: {
-                baseEffectHealing: item.system?.baseEffectHealing,
-                baseEffectDamage: item.system?.baseEffectDamage,
-                directHitDamage: item.system?.directHitDamage,
-                hasDirectHit: item.system?.hasDirectHit,
-                CR: item.system?.CR,
-                isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
-              }
-            },
+            actor: this._buildActorData(this.actor),
+            item: this._buildItemData(item),
             hasTargets,
             targets,
             isSuccess: false,
@@ -168,31 +203,56 @@ export default class ActionHandler {
   }
 
   /**
+   * @internal
+   * Builds a minimal data object for the actor to embed in a chat flag.
+   */
+  _buildActorData(actor) {
+    return {
+      _id: actor._id,
+      uuid: actor.uuid,
+      name: actor.name,
+      img: actor.img
+    };
+  }
+
+  /**
+   * @internal
+   * Builds a minimal data object for the item to embed in a chat flag.
+   */
+  _buildItemData(item) {
+    return {
+      _id: item._id,
+      uuid: item.uuid,
+      name: item.name,
+      img: item.img,
+      type: item.type,
+      system: {
+        baseEffectHealing: item.system?.baseEffectHealing,
+        baseEffectDamage: item.system?.baseEffectDamage,
+        directHitDamage: item.system?.directHitDamage,
+        hasDirectHit: item.system?.hasDirectHit,
+        CR: item.system?.CR,
+        isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
+      }
+    };
+  }
+
+  /**
+   * @internal
    * Handle roll with modifiers
-   * @private
    */
   async _handleRollWithModifiers(item) {
-    let [diceCount, diceType] = [1, 20];
-    let formula = '';
+    // Construct the final roll formula
+    const formula = this._constructRollFormulaFromModifiers(item);
 
-    // Get modifiers from the actor
-    const modifiers = this.actor.getRollModifiers?.() || {};
-    if (modifiers.extraModifiers) {
-      const { bonusDice, penalty } = modifiers.extraModifiers;
-      if (bonusDice) {
-        diceCount += parseInt(bonusDice);
-        diceType = '20kh1';
-      }
-      formula = `${diceCount}d${diceType}${penalty ? ` - ${penalty}` : ''}`;
-    }
-
-    // Handle attribute check
+    // Combine formula with attribute checks, if any
     const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
+  
+    // Evaluate the roll
     const roll = await new Roll(rollFormula, rollData).evaluate();
     
-    // Handle critical hit detection
-    const criticalInfo = await this._handleCriticalHit(roll, item);
-    const { isCritical, d20Result } = criticalInfo;
+    // Detect critical hits
+    const { isCritical, d20Result } = await this._handleCriticalHit(roll, item);
 
     game.system.log.o('[ABILITY:ROLL] Roll result:', {
       itemName: item.name,
@@ -201,31 +261,47 @@ export default class ActionHandler {
       d20Result
     });
 
-    return {
-      roll,
-      isCritical,
-      d20Result
-    };
+    return { roll, isCritical, d20Result };
   }
 
   /**
+   * @internal
+   * Constructs the roll formula by reading actor's extra modifiers.
+   */
+  _constructRollFormulaFromModifiers(item) {
+    let [diceCount, diceType] = [1, 20];
+    let formula = '';
+
+    const modifiers = this.actor.getRollModifiers?.() || {};
+    const { bonusDice, penalty } = modifiers.extraModifiers || {};
+
+    // If there's advantage or extra dice, we modify the standard d20
+    if (bonusDice) {
+      diceCount += parseInt(bonusDice, 10);
+      // For advantage-like mechanics, use 'kh1' to keep the highest roll
+      diceType = '20kh1';
+    }
+
+    // Build the formula piece
+    formula = `${diceCount}d${diceType}${penalty ? ` - ${penalty}` : ''}`;
+    return formula;
+  }
+
+  /**
+   * @internal
    * Handle critical hit detection and processing
-   * @private
    */
   async _handleCriticalHit(roll, item) {
-    // Get the d20 result safely
     const d20Term = roll.terms?.[0];
     if (!d20Term) {
       game.system.log.w("[CRITICAL] No d20 term found in roll:", roll);
       return { isCritical: false, d20Result: 0 };
     }
 
-    // Get the highest result if using advantage (kh1), otherwise use first result
     const d20Result = d20Term.modifiers?.includes('kh1')
       ? Math.max(...d20Term.results.map(r => r.result))
       : d20Term.results?.[0]?.result ?? 0;
 
-    // Check if it's a critical hit (natural 20)
     const isCritical = d20Result === 20;
 
     game.system.log.d("[CRITICAL] Critical hit check:", {
@@ -235,86 +311,52 @@ export default class ActionHandler {
       isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
     });
 
-    // If it's a critical hit, we need to:
-    // 1. Double the damage/healing dice
-    // 2. Auto-succeed the check
+    // If it's a critical hit, double the damage/healing dice
     if (isCritical) {
-      // Double all damage/healing dice formulas
-      const formulaFields = Boolean(item?.system?.baseEffectHealing) 
-        ? ['baseEffectHealing'] // Only double healing for healer recovery skills
-        : ['directHitDamage', 'baseEffectDamage']; // Double damage for other skills
-
-      for (const field of formulaFields) {
-        const formula = item.system?.[field];
-        if (formula) {
-          // Double the number of dice in all dice expressions
-          const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
-            return `${parseInt(count) * 2}d${sides}`;
-          });
-          item.system[field] = modifiedFormula;
-
-          game.system.log.d("[CRITICAL] Modified formula:", {
-            field,
-            original: formula,
-            modified: modifiedFormula
-          });
-        }
-      }
+      this._doubleDamageHealsIfNeeded(item);
     }
 
-    return {
-      isCritical,
-      d20Result,
-      // Return original roll formula for reference
-      originalFormulas: {
-        directHitDamage: item.system?.directHitDamage,
-        baseEffectDamage: item.system?.baseEffectDamage
-      }
-    };
+    return { isCritical, d20Result };
   }
 
   /**
+   * @internal
+   * Doubles relevant "dice" fields if item is a critical hit.
+   */
+  _doubleDamageHealsIfNeeded(item) {
+    // Only double healing for healer recovery skills, otherwise damage.
+    const formulaFields = Boolean(item?.system?.baseEffectHealing)
+      ? ['baseEffectHealing']
+      : ['directHitDamage', 'baseEffectDamage'];
+
+    for (const field of formulaFields) {
+      const formula = item.system?.[field];
+      if (formula) {
+        // Double the number of dice in all dice expressions
+        const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
+          return `${parseInt(count, 10) * 2}d${sides}`;
+        });
+        item.system[field] = modifiedFormula;
+
+        game.system.log.d("[CRITICAL] Modified formula:", {
+          field,
+          original: formula,
+          modified: modifiedFormula
+        });
+      }
+    }
+  }
+
+  /**
+   * @internal
    * Handle attribute check
-   * @private
    */
   async _handleAttributeCheck(item, rollFormula, rollData = {}) {
-    // Add attribute check if specified
     if (item.system.hasCheck) {
       const attrVal = this.actor.system.attributes.primary[item.system.checkAttribute]?.val || 0;
       rollData[item.system.checkAttribute] = attrVal;
       rollFormula += ` + @${item.system.checkAttribute}`;
     }
     return { rollFormula, rollData };
-  }
-
-  /**
-   * Create a default chat message for an item
-   * @private
-   */
-  async _createDefaultChat(item) {
-    return await ChatMessage.create({
-      user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: 'RollChat',
-            actor: {
-              _id: this.actor._id,
-              name: this.actor.name,
-              img: this.actor.img
-            },
-            item: {
-              _id: item._id,
-              uuid: item.uuid,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: item.system
-            }
-          }
-        }
-      }
-    });
   }
 } 

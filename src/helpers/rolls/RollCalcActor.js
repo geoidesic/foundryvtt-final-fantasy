@@ -6,6 +6,7 @@ import AttributeHandler from "./handlers/AttributeHandler.js";
 import EffectManager from "./handlers/EffectManager.js";
 import CombatSlotManager from "./handlers/CombatSlotManager.js";
 import GuardManager from "./handlers/GuardManager.js";
+import { createDefaultChat } from "~/src/helpers/rolls/handlers/DefaultChatHandler.js";
 
 /**
  * Extends RollCalc to handle actor-specific roll calculations
@@ -28,30 +29,7 @@ export default class RollCalcActor extends RollCalc {
    * @return {Promise<ChatMessage>} The created chat message
    */
   async defaultChat(item) {
-    return await ChatMessage.create({
-      user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: 'RollChat',
-            actor: {
-              _id: this.params.actor._id,
-              name: this.params.actor.name,
-              img: this.params.actor.img
-            },
-            item: {
-              _id: item._id,
-              uuid: item.uuid,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: item.system
-            }
-          }
-        }
-      }
-    });
+    return await createDefaultChat(this.params.actor, item);
   }
 
   /**
