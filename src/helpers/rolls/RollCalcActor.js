@@ -83,8 +83,11 @@ export default class RollCalcActor extends RollCalc {
         return;
       }
 
+      // Get the modifiers from the guard
+      const extraModifiers = this.GuardManager.RG.shuttle.hasModifiers.extraModifiers;
+
       // Handle the action
-      const result = await this.ActionHandler.handle(item, options);
+      const result = await this.ActionHandler.handle(item, { ...options, extraModifiers });
       if (!result.handledSuccessfully) {
         return;
       }

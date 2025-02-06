@@ -22,6 +22,7 @@ export default class ActionHandler {
    */
   async handle(item, options = {}) {
     try {
+      this.options = options;  // Store options for use in other methods
       const { targets, hasTargets, targetIds } = this._getActionTargets();
 
       let roll;
@@ -251,8 +252,8 @@ export default class ActionHandler {
     let [diceCount, diceType] = [1, 20];
     let formula = '';
 
-    const modifiers = this.actor.getRollModifiers?.() || {};
-    const { bonusDice, penalty } = modifiers.extraModifiers || {};
+    // Get modifiers from the options passed through
+    const { bonusDice, penalty } = this.options?.extraModifiers || {};
 
     // If there's advantage or extra dice, we modify the standard d20
     if (bonusDice) {
