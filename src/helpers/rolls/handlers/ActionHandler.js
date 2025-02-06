@@ -295,7 +295,7 @@ export default class ActionHandler {
 
     // If it's a critical hit, double the damage/healing dice
     if (isCritical) {
-      this._doubleDamageHealsIfNeeded(item);
+      this._doubleCriticalDamageIfNeeded(item);
     }
 
     return { isCritical, d20Result };
@@ -305,26 +305,35 @@ export default class ActionHandler {
    * @internal
    * Doubles relevant "dice" fields if item is a critical hit.
    */
-  _doubleDamageHealsIfNeeded(item) {
+  _doubleCriticalDamageIfNeeded(item) {
     // Only double healing for healer recovery skills, otherwise damage.
     const formulaFields = Boolean(item?.system?.baseEffectHealing)
       ? ['baseEffectHealing']
       : ['directHitDamage', 'baseEffectDamage'];
 
+    game.system.log.o('[CRITICAL] Doubling damage/healing for critical hit:', {
+      itemName: item.name,
+      formulaFields
+    });
+
     for (const field of formulaFields) {
       const formula = item.system?.[field];
+      game.system.log.o('[CRITICAL] Formula:', {
+        field,
+        formula
+      });
       if (formula) {
         // Double the number of dice in all dice expressions
         const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
           return `${parseInt(count, 10) * 2}d${sides}`;
         });
+        game.system.log.o('[CRITICAL] Modified formula:', {
+          field,
+          formula,
+          modifiedFormula
+        });
         item.system[field] = modifiedFormula;
 
-        game.system.log.d("[CRITICAL] Modified formula:", {
-          field,
-          original: formula,
-          modified: modifiedFormula
-        });
       }
     }
   }

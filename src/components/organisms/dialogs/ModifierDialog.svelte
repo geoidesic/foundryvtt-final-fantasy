@@ -32,7 +32,7 @@ form.modifier-dialog
           label="{localize('Modifiers.Penalty')}"
           value="{penalty}"
           on:change!="{e => handlePenaltyChange(e.detail)}"
-          maxStars="{7}"
+          maxStars="{8}"
           icon="fas fa-burst"
           activeColor="var(--color-negative)"
         )
@@ -43,7 +43,7 @@ form.modifier-dialog
           label="{localize('Modifiers.Advantage')}"
           value="{bonusDice}"
           on:change!="{e => handleBonusChange(e.detail)}"
-          maxStars="{7}"
+          maxStars="{8}"
           icon="fas fa-dice-d20"
           activeColor="var(--ff-border-color)"
         )

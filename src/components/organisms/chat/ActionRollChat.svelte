@@ -65,23 +65,36 @@
   }
 
   function getDamageResults(passedTargets) {
-    
     const DamageResults = new Map();
     for (const id of passedTargets) {
       let token = canvas.tokens.get(id);
+      
+      // Handle base damage formula
+      let baseEffectDamage = item?.system?.baseEffectDamage;
+      if (FFMessage?.isCritical && baseEffectDamage) {
+        // Double the number of dice for critical hits
+        baseEffectDamage = baseEffectDamage.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
+          return `${parseInt(count, 10) * 2}d${sides}`;
+        });
+      }
+
+      // For direct hit, we'll use the original formula, handle critical hits, and let the hooks handle modifications
+      const directHitDamage = item?.system?.directHitDamage;
+
       const baseDamageFormula = item?.system?.hasSplitDamage 
-        ? `Split BaseDamage (${item?.system?.baseEffectDamage} ÷ ${passedTargets.length})`
-        : `Base Damage (${item?.system?.baseEffectDamage})`;
+        ? `Split BaseDamage (${baseEffectDamage} ÷ ${passedTargets.length})`
+        : `Base Damage (${baseEffectDamage})`;
+
       const directHitDisplayFormula = item?.system?.hasSplitDamage
-        ? `Split Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item?.system?.directHitDamage} ÷ ${passedTargets.length}) `
-        : `Direct Hit ${FFMessage?.isCritical ? ' + Critical ' : ''}(${item?.system?.directHitDamage})`;
+        ? `Split Direct Hit (${directHitDamage} ÷ ${passedTargets.length})`
+        : `Direct Hit (${directHitDamage})`;
 
       const damageResult = {
-        damage: item?.system?.baseEffectDamage,
+        damage: baseEffectDamage,
         healing: item?.system?.baseEffectHealing,
         baseDamageFormula,
-        directHit: item?.system?.hasDirectHit ? item?.system?.directHitDamage : null,
-        directHitFormula: item?.system?.hasDirectHit ? item?.system?.directHitDamage : null,
+        directHit: item?.system?.hasDirectHit ? directHitDamage : null,
+        directHitFormula: item?.system?.hasDirectHit ? directHitDamage : null,
         directHitDisplayFormula: item?.system?.hasDirectHit ? directHitDisplayFormula : null,
         directHitResult: false,
         applied: false,
@@ -101,7 +114,12 @@
     */
     if (DamageResults.size > 0) {
       Hooks.callAll('FF15.processAdditionalBaseDamageFromItem', {item, actor, DamageResults});
-      Hooks.callAll('FF15.DamageDiceReroll', {item, actor, DamageResults});
+      Hooks.callAll('FF15.DamageDiceReroll', {
+        item, 
+        actor, 
+        DamageResults, 
+        isCritical: FFMessage?.isCritical
+      });
     }
 
     return DamageResults;
@@ -373,11 +391,11 @@
                           .flex1.relative.right
                             +if("FFMessage?.isCritical")
                               .critical
-                                Meteor(fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1" size="28")
+                                Meteor(fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1" size="25")
                                 .overlay(style="margin: 0; font-size: 1rem; color: #fff") 
-                                  i.fa-solid.bg-white.round(data-tooltip="{localize('CriticalSuccess')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                                  i.icon.fa-solid.bg-white.round(data-tooltip="{localize('CriticalSuccess')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                               +else
-                                i.fa-solid.bg-white.round(data-tooltip="{isHit(target) ? localize('DirectHit') : localize('DirectHitMissed')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                                i.icon.fa-solid.bg-white.round(data-tooltip="{isHit(target) ? localize('DirectHit') : localize('DirectHitMissed')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                   
                   .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
                     +if("item?.system?.baseEffectDamage")
@@ -463,18 +481,29 @@ button:disabled
   +mixins.background(rgb(98 49 50), 0.05, none)
 
 .critical
+  position: relative
   color: #ffd700
   text-shadow: 0 0 3px rgba(255, 215, 0, 0.5)
   animation: pulse 1s infinite
+  width: 25px
+  height: 25px
+  margin-top: -5px
 
 .overlay
   position: absolute
-  top: 54%
+  top: 57%
   left: 48%
   transform: translate(-50%, -50%)
-  font-size: 1.2rem
   font-weight: bold
   pointer-events: none
+  width: 0
+  height: 0
+  display: flex
+  align-items: center
+  justify-content: center
+
+.icon
+  font-size: 14px
 
 @keyframes pulse
   0%
