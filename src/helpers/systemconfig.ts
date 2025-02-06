@@ -1,3 +1,11 @@
+export {};
+
+declare global {
+  interface AssumeHookRan {
+    ready: true;
+  }
+}
+
 export default {
   "CR": {
     "easy": 5,
