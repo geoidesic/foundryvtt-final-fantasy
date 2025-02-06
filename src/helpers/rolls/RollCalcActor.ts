@@ -7,11 +7,23 @@ import CombatSlotManager from "./handlers/CombatSlotManager.js";
 import GuardManager from "./handlers/GuardManager.js";
 import DefaultChat from "~/src/helpers/rolls/handlers/DefaultChatHandler.js";
 
+
 /**
  * Extends RollCalc to handle actor-specific roll calculations
  * @extends {RollCalc}
  */
 export default class RollCalcActor extends RollCalc {
+  params: {
+    actor: Actor;
+    item: Item;
+  };
+  ActionHandler: ActionHandler;
+  AttributeHandler: AttributeHandler;
+  EffectManager: EffectManager;
+  CombatSlotManager: CombatSlotManager;
+  GuardManager: GuardManager;
+  DefaultChat: DefaultChat;
+
   constructor(params) {
     super(params);
     this.params = params;
@@ -19,7 +31,7 @@ export default class RollCalcActor extends RollCalc {
     this.AttributeHandler = new AttributeHandler(params.actor);
     this.EffectManager = new EffectManager(params.actor);
     this.CombatSlotManager = new CombatSlotManager(params.actor);
-    this.GuardManager = new GuardManager(params.actor, this.RG);
+    this.GuardManager = new GuardManager(params.actor);
     this.DefaultChat = new DefaultChat(params.actor);
   }
 
@@ -82,12 +94,12 @@ export default class RollCalcActor extends RollCalc {
 
       // Handle the action
       const result = await this.ActionHandler.handle(item, options);
-      if (!result.isSuccess) {
+      if (!result.handledSuccessfully) {
         return;
       }
 
       // Handle proc triggers
-      if (item.system.procTrigger && result.isSuccess) {
+      if (item.system.procTrigger) {
         Hooks.callAll('FF15.ProcTrigger', {
           actor: this.params.actor,
           item,
