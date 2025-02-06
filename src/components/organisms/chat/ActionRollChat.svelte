@@ -370,23 +370,20 @@
                       .flex0.target-info.pointer
                         +if("target && !target.isUnlinked")
                           img.target-img.clickable(src="{getTargetImage(target)}" alt="{target.name}" on:click!="{openActorSheet(target.actor)}")
-                      .flex1
-                        .target-name.font-cinzel.smaller {target.name}
-                  .flex1.thin-border(class="{FFMessage?.isCritical ? 'py-none' : ''}")
-                    .flexcol
-                      .col.target-defense.flexrow.justify-vertical.no-wrap
-                        .flex1.left.font-cinzel.smallest(data-tooltip-class="FF15-tooltip" data-tooltip="Defense") DEF 
-                        .flex1.m1-xs.center {getDefenseValue(target)}
-                      .col.flexrow.justify-vertical.no-wrap
-                        .flex2.font-cinzel.smallest {isHit(target) ? "Hit" : "Miss"}
-                        .flex1.relative
-                          +if("FFMessage?.isCritical")
-                            .critical
-                              Meteor(fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1" size="28")
-                              .overlay(style="margin: 0; font-size: 1rem; color: #fff") 
+                      .flex1.flexcol.thin-border
+                        .col.target-name.font-cinzel.smaller {target.name}
+                        .col.flexrow.justify-vertical.no-wrap
+                          .flex1.left.font-cinzel(data-tooltip-class="FF15-tooltip" data-tooltip="Defense") DEF 
+                          .flex1.m1-xs.left {getDefenseValue(target)}
+                          .flex1.relative.right
+                            +if("FFMessage?.isCritical")
+                              .critical
+                                Meteor(fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1" size="28")
+                                .overlay(style="margin: 0; font-size: 1rem; color: #fff") 
+                                  i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                              +else
                                 i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
-                            +else
-                              i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                  
                   .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
                     +if("item?.system?.baseEffectDamage")
                       .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDamageFormula(target)}")
