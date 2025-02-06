@@ -29,13 +29,14 @@ export default class ActionHandler {
       let isCritical = false;
       let d20Result = null;
       let isSuccess;
+      let message;
 
       if (item.system.hasCR) {
-        ({ roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
+        ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
         // Use DefaultChat if there's no custom action message
         if(item.system.hasBaseEffect && Boolean(item.system.baseEffectDamage)) {
-          ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
+          message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
         } else {
           this.DefaultChat.handle(item);
         }
@@ -48,7 +49,8 @@ export default class ActionHandler {
         d20Result,
         hasTargets,
         targets,
-        isSuccess
+        isSuccess,
+        message
       };
     } catch (error) {
       game.system.log.e("Error in action handler", error);
@@ -108,8 +110,8 @@ export default class ActionHandler {
     }
 
     // Send the roll message to the chat
-    await roll.toMessage(messageData);
-    return { roll, isCritical, d20Result, isSuccess };
+    const message = await roll.toMessage(messageData);
+    return { message, roll, isCritical, d20Result, isSuccess };
   }
 
   /**
