@@ -1,18 +1,14 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./src/*"
-      ]
+      "~/*": ["./*"]
     },
-    "importsNotUsedAsValues": "error",
-    "allowImportingTsExtensions": true,
     "isolatedModules": true,
-    "preserveValueImports": true,
     "types": [
       "@league-of-foundry-developers/foundry-vtt-types",
       "vitest/globals",
-      "svelte/store/types"
+      "svelte"
     ],
     "strictNullChecks": true,
     "lib": [
@@ -23,6 +19,8 @@
     "moduleResolution": "node",
     "module": "esnext",
     "target": "esnext",
-    "ignoreDeprecations": "5.0"
+    "ignoreDeprecations": "5.0",
+    "verbatimModuleSyntax": true,
+    "noEmit": true
   }
 }
