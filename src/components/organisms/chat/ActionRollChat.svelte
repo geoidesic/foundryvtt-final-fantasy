@@ -169,9 +169,23 @@
     const damageResults = FFMessageState.damageResults[target.id];
     if (!damageResults) return;
 
-    // Ensure numeric values for damage calculation
+    // Calculate base damage
     const baseDamage = parseInt(damageResults.damage) || 0;
-    const directHitDamage = parseInt(damageResults.directHitResult) || 0;
+    let directHitDamage = 0;
+
+    // Calculate direct hit damage if applicable - only if it's a hit
+    if (isHit(target) && item?.system?.hasDirectHit && item?.system?.directHitDamage) {
+      if (damageResults.directHit.includes('d')) {
+        const directHitRoll = await new Roll(damageResults.directHit).evaluate({ async: true });
+        if (game.modules.get('dice-so-nice')?.active) {
+          await game.dice3d.showForRoll(directHitRoll);
+        }
+        directHitDamage = directHitRoll.total;
+      } else {
+        directHitDamage = parseInt(damageResults.directHit) || 0;
+      }
+    }
+
     const totalDamage = baseDamage + directHitDamage;
     
     game.system.log.o('[DAMAGE] Calculating total:', {
@@ -186,10 +200,16 @@
     const newHP = token.actor.system.points.HP.val - totalDamage;
     await token.actor.update({ "system.points.HP.val": newHP });
 
+    // Toggle KO condition if HP drops to 0
+    if (token.actor.system.points.HP.val > 0 && newHP <= 0) {
+      await token.actor.toggleStatusEffect("ko");
+    }
+
     // Update the message state to show this result has been applied
     const newDamageResults = {...FFMessageState.damageResults};
     newDamageResults[target.id].applied = true;
     newDamageResults[target.id].wasKOd = newHP <= 0;
+    newDamageResults[target.id].directHitResult = directHitDamage;
 
     await $message.update({
       flags: {
