@@ -1,3 +1,4 @@
+
 import { SYSTEM_ID } from "~/src/helpers/constants.js"
 import RollCalc from "./RollCalc.js"
 import ActionHandler from "./handlers/ActionHandler.js";
@@ -13,16 +14,7 @@ import DefaultChat from "~/src/helpers/rolls/handlers/DefaultChatHandler.js";
  * @extends {RollCalc}
  */
 export default class RollCalcActor extends RollCalc {
-  params: {
-    actor: Actor;
-    item: Item;
-  };
-  ActionHandler: ActionHandler;
-  AttributeHandler: AttributeHandler;
-  EffectManager: EffectManager;
-  CombatSlotManager: CombatSlotManager;
-  GuardManager: GuardManager;
-  DefaultChat: DefaultChat;
+
 
   constructor(params) {
     super(params);
