@@ -1,6 +1,6 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 import { generateRandomElementId } from "~/src/helpers/util";
-import { createDefaultChat } from "~/src/helpers/rolls/handlers/DefaultChatHandler.js";
+import { createDefaultChat } from "~/src/helpers/rolls/handlers/DefaultChatHandler";
 
 /**
  * Handles all action-related operations
