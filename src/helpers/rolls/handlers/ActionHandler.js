@@ -1,6 +1,6 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 import { generateRandomElementId } from "~/src/helpers/util";
-import { createDefaultChat } from "~/src/helpers/rolls/handlers/DefaultChatHandler";
+import DefaultChat from "~/src/helpers/rolls/handlers/DefaultChatHandler";
 
 /**
  * Handles all action-related operations
@@ -11,6 +11,7 @@ export default class ActionHandler {
    */
   constructor(actor) {
     this.actor = actor;
+    this.DefaultChat = new DefaultChat(actor);
   }
 
   /**
@@ -31,10 +32,10 @@ export default class ActionHandler {
       if (item.system.hasCR) {
         ({ message, roll, isCritical, d20Result } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
-        // Use createDefaultChat if there's no custom action message
+        // Use DefaultChat if there's no custom action message
         message = item.system.hasBaseEffect && Boolean(item.system.baseEffectDamage)
           ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
-          : await createDefaultChat(this.actor, item);
+          : await this.DefaultChat.handle(item);
       }
 
       return {
@@ -101,15 +102,12 @@ export default class ActionHandler {
         d20Result
       });
 
-      // Trigger proc if it's successful
-      if (item.system.procTrigger && isSuccess) {
-        this._triggerProc(item, roll, targets, isSuccess, isCritical);
-      }
+
     }
 
     // Send the roll message to the chat
     const message = await roll.toMessage(messageData);
-    return { message, roll, isCritical, d20Result };
+    return { message, roll, isCritical, d20Result, isSuccess };
   }
 
   /**
@@ -139,26 +137,6 @@ export default class ActionHandler {
   _evaluateSuccess({ roll, crValue, isCritical }) {
     // If critical, auto success. Otherwise compare to CR value.
     return isCritical || roll.total >= crValue;
-  }
-
-  /**
-   * @internal
-   * Triggers a proc if the item has a proc condition and is successful.
-   */
-  _triggerProc(item, roll, targets, isSuccess, isCritical) {
-    game.system.log.o('[PROC] Triggering proc for:', {
-      itemName: item.name,
-      roll: roll.total,
-      isSuccess,
-      isCritical
-    });
-
-    Hooks.callAll('FF15.ProcTrigger', {
-      actor: this.actor,
-      item,
-      roll,
-      targets
-    });
   }
 
   /**

@@ -1,5 +1,5 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
-
+import DefaultChat  from "~/src/helpers/rolls/handlers/ActionHandler";
 /**
  * Handles all effect-related operations
  */
@@ -9,6 +9,7 @@ export default class EffectManager {
    */
   constructor(actor) {
     this.actor = actor;
+    this.DefaultChat = new DefaultChat(actor);
   }
 
   /**
@@ -170,7 +171,7 @@ export default class EffectManager {
       game.system.log.o('[ENABLE] Effects enabled:', effectsEnabled);
       //- if the enabler effect item has the same name as the triggering item, don't send a default chat message
       if (item.name !== actorItem.name) {
-        await this._createDefaultChat(actorItem);
+        await this.DefaultChat.handle(actorItem);
       }
     }
 
@@ -203,34 +204,4 @@ export default class EffectManager {
     return shouldDisable;
   }
 
-  /**
-   * Create a default chat message for an item
-   * @private
-   */
-  async _createDefaultChat(item) {
-    return await ChatMessage.create({
-      user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID, 'chatMessageSenderIsActorOwner') ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: 'RollChat',
-            actor: {
-              _id: this.actor._id,
-              name: this.actor.name,
-              img: this.actor.img
-            },
-            item: {
-              _id: item._id,
-              uuid: item.uuid,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: item.system
-            }
-          }
-        }
-      }
-    });
-  }
 } 

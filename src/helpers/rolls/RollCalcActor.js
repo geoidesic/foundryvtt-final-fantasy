@@ -1,4 +1,3 @@
-import { generateRandomElementId } from "~/src/helpers/util";
 import { SYSTEM_ID } from "~/src/helpers/constants.js"
 import RollCalc from "./RollCalc.js"
 import ActionHandler from "./handlers/ActionHandler.js";
@@ -6,7 +5,7 @@ import AttributeHandler from "./handlers/AttributeHandler.js";
 import EffectManager from "./handlers/EffectManager.js";
 import CombatSlotManager from "./handlers/CombatSlotManager.js";
 import GuardManager from "./handlers/GuardManager.js";
-import { createDefaultChat } from "~/src/helpers/rolls/handlers/DefaultChatHandler.js";
+import DefaultChat from "~/src/helpers/rolls/handlers/DefaultChatHandler.js";
 
 /**
  * Extends RollCalc to handle actor-specific roll calculations
@@ -16,28 +15,25 @@ export default class RollCalcActor extends RollCalc {
   constructor(params) {
     super(params);
     this.params = params;
-    this.actionHandler = new ActionHandler(params.actor);
-    this.attributeHandler = new AttributeHandler(params.actor);
-    this.effectManager = new EffectManager(params.actor);
-    this.combatSlotManager = new CombatSlotManager(params.actor);
-    this.guardManager = new GuardManager(params.actor, this.RG);
+    this.ActionHandler = new ActionHandler(params.actor);
+    this.AttributeHandler = new AttributeHandler(params.actor);
+    this.EffectManager = new EffectManager(params.actor);
+    this.CombatSlotManager = new CombatSlotManager(params.actor);
+    this.GuardManager = new GuardManager(params.actor, this.RG);
+    this.DefaultChat = new DefaultChat(params.actor);
   }
 
   /**
-   * Create a default chat message for an item
    * @param {Item} item - The item to create a chat message for
-   * @return {Promise<ChatMessage>} The created chat message
    */
-  async defaultChat(item) {
-    return await createDefaultChat(this.params.actor, item);
+  defaultChat(item) {
+    this.DefaultChat.handle(item);
   }
 
   /**
-   * Create a chat message for equipment
    * @param {Item} item - The equipment item
-   * @return {Promise<ChatMessage>} The created chat message
    */
-  async equipment(item) {
+  equipment(item) {
     this.params.item = item;
     ChatMessage.create({
       user: game.user.id,
@@ -47,44 +43,36 @@ export default class RollCalcActor extends RollCalc {
   }
 
   /**
-   * Roll an attribute check
    * @param {string} key - The attribute key
    * @param {string} code - The attribute code
-   * @return {Promise<void>} Returns a promise that resolves when the attribute check is complete
    */
-  async attribute(key, code) {
-    await this.attributeHandler.handle({key, code});
+  attribute(key, code) {
+    this.AttributeHandler.handle({key, code});
   }
 
   /**
-   * Handle an ability roll
    * @param {string} type - The type of ability
    * @param {Item} item - The ability item
-   * @return {Promise<void>} Returns a promise that resolves when the ability has been handled
    */
-  async ability(type, item) {
-    await this._routeAbility(item);
+  ability(type, item) {
+    this._routeAbility(item);
   }
 
   /**
-   * Handle a trait ability
    * @param {Item} item - The trait item
-   * @return {Promise<ChatMessage>} The created chat message
    */
-  async abilityTrait(item) {
-    return await this.defaultChat(item);
+  abilityTrait(item) {
+    this.defaultChat(item);
   }
 
   /**
-   * Handle an action ability
    * @param {Item} item - The action item
    * @param {Object} [options={}] - Additional options
-   * @return {Promise<ChatMessage|void>} Returns a promise that resolves with the created chat message if successful
    */
   async abilityAction(item, options = {}) {
     try {
       // Early return if guards fail
-      if (!(await this.guardManager.handleGuards(item, [
+      if (!(await this.GuardManager.handleGuards(item, [
         'isAction', 'isActorsTurn', 'isReaction',
         'targetsMatchActionIntent', 'hasRequiredEffects',
         'hasActiveEnablerSlot', 'hasRemainingUses', 'hasModifiers'
@@ -93,18 +81,27 @@ export default class RollCalcActor extends RollCalc {
       }
 
       // Handle the action
-      const result = await this.actionHandler.handle(item, options);
-      if (!result.success) {
+      const result = await this.ActionHandler.handle(item, options);
+      if (!result.isSuccess) {
         return;
       }
 
+      // Handle proc triggers
+      if (item.system.procTrigger && result.isSuccess) {
+        Hooks.callAll('FF15.ProcTrigger', {
+          actor: this.params.actor,
+          item,
+          roll: result.roll,
+          targets: result.targets
+        });
+      }
+
       // Handle effects
-      await this.effectManager.handleEffects(item, result);
+      await this.EffectManager.handleEffects(item, result);
 
       // Mark slot as used
-      await this.combatSlotManager.markSlotUsed(item, result);
+      await this.CombatSlotManager.markSlotUsed(item, result);
 
-      return result.message;
     } catch (error) {
       game.system.log.e("Error in ability action", error);
       ui.notifications.error(game.i18n.format("FF15.Errors.AbilityActionFailed", { target: this.params.actor.name }));
@@ -116,11 +113,11 @@ export default class RollCalcActor extends RollCalc {
    * @param {Item} item - The item to route
    * @return {Promise<void>} Returns a promise that resolves when the ability has been routed and handled
    */
-  async _routeAbility(item) {
+  _routeAbility(item) {
     if (item.type === "action") {
-      await this.abilityAction(item);
+      this.abilityAction(item);
     } else if (item.type === "trait") {
-      await this.abilityTrait(item);
+      this.abilityTrait(item);
     }
   }
 }
