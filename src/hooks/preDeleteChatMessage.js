@@ -11,6 +11,16 @@ export default function preDeleteChatMessage() {
     const FFMessage = message.getFlag(SYSTEM_ID, 'data');
     if (!FFMessage || !FFMessage.actor || !FFMessage.item || FFMessage.item.type !== 'action') return;
 
+    // Check if message has applied damage results
+    const state = message.getFlag(SYSTEM_ID, 'state');
+    if (state?.damageResults) {
+      const hasAppliedDamage = Object.values(state.damageResults).some(result => result.applied);
+      if (hasAppliedDamage) {
+        game.system.log.w('[SLOT:RESTORE] Message has applied damage results, not restoring slot');
+        return;
+      }
+    }
+
     const actor = game.actors.get(FFMessage.actor._id);
     if (!actor) return;
 
@@ -28,5 +38,4 @@ export default function preDeleteChatMessage() {
       });
     }
   });
-
 }

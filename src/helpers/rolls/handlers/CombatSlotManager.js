@@ -21,6 +21,16 @@ export default class CombatSlotManager {
     const { message } = result;
     const actionType = item.system.type || 'primary';
 
+    // Skip if message already has applied damage results
+    const state = message?.flags?.[SYSTEM_ID]?.state;
+    if (state?.damageResults) {
+      const hasAppliedDamage = Object.values(state.damageResults).some(result => result.applied);
+      if (hasAppliedDamage) {
+        game.system.log.w('[SLOT:USAGE] Message already has applied damage results, skipping slot update');
+        return;
+      }
+    }
+
     // Track reaction usage
     if (item.system.type === 'reaction') {
       await this.actor.update({
