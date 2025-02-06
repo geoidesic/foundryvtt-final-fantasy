@@ -5,7 +5,8 @@
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
   import { createDamageText } from "~/src/helpers/canvas";
-
+  import { localize } from "~/src/helpers/util";
+  
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
   import Header from "~/src/components/organisms/item/type/action/Header.svelte";
@@ -380,9 +381,9 @@
                               .critical
                                 Meteor(fill="var(--ff-border-color)" innerFill="var(--message-color)" innerOpacity="1" opacity="1" size="28")
                                 .overlay(style="margin: 0; font-size: 1rem; color: #fff") 
-                                  i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                                  i.fa-solid.bg-white.round(data-tooltip="{localize('CriticalSuccess')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                               +else
-                                i.fa-solid.bg-white.round(class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                                i.fa-solid.bg-white.round(data-tooltip="{isHit(target) ? localize('DirectHit') : localize('DirectHitMissed')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                   
                   .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
                     +if("item?.system?.baseEffectDamage")
