@@ -454,7 +454,7 @@
   align-items: center
   gap: 0.5em
   position: relative
-  flex: 0 0 36px
+  flex: 0 0 45px
   img.target-img
     object-fit: cover
     border-radius: var(--border-radius)
