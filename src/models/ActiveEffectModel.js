@@ -1,5 +1,5 @@
 const {
-  StringField, ArrayField
+  StringField, ArrayField, BooleanField
 } = foundry.data.fields;
 
 /**
@@ -16,6 +16,8 @@ export default class FFEffectModel extends foundry.abstract.TypeDataModel {
       tags: new ArrayField(
         new StringField({ required: false, initial: '' })
       ),
+      isStackable: new BooleanField({ required: false, initial: false }),
+
     }
   }
 }

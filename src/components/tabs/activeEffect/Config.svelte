@@ -39,6 +39,7 @@ onMount(async () => {
       .flexrow.justify-vertical
         .flex4
           p.caption  {localize("EFFECT.TransferEffectToActor.Caption")}
+
       .flexrow.justify-vertical
         .flex4
           label.gold(for="overlay") {localize("EFFECT.Overlay.Label")}
@@ -47,6 +48,16 @@ onMount(async () => {
       .flexrow.justify-vertical
         .flex4
           p.caption  {localize("EFFECT.Overlay.Caption")}
+          
+      .flexrow.justify-vertical
+        .flex4
+          label.gold(for="stackable") {localize("EFFECT.Stackable.Label")}
+        .flex0.right
+          DocCheckbox(name="stackable" valuePath="{`flags.${SYSTEM_ID}.stackable`}")
+      .flexrow.justify-vertical
+        .flex4
+          p.caption  {localize("EFFECT.Stackable.Caption")}
+
       .flexrow.justify-vertical
         .flex4
           label.gold(for="suspended") {localize("EFFECT.Suspended.Label")}
