@@ -117,21 +117,12 @@
   }
 
   async function initializeStores() {
-    if(FFMessageState.initialised) {
-      setTargetTokens(FFMessage.targets);
-      return;
-    }
+    if (FFMessage?.item?.type === "action" && hasTargets) {
+      let storedDamageResults = FFMessageState.damageResults;
 
-    if (FFMessage?.item?.type === "action") {
-      if (hasTargets) {
-        let storedDamageResults = FFMessageState.damageResults;
-
-        if (FFMessage.targets.length > 0) {
-          if (!storedDamageResults) {
-            storedDamageResults = getDamageResults(FFMessage.targets);
-          }
-          
-          targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id));
+      if (FFMessage.targets.length > 0) {
+        if (!storedDamageResults && !FFMessageState.initialised) {
+          storedDamageResults = getDamageResults(FFMessage.targets);
           
           if ($message) {
             await $message.update({
@@ -146,6 +137,9 @@
             });
           }
         }
+        
+        // Always set target tokens, regardless of initialization state
+        targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id));
       }
     }
   }
