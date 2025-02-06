@@ -111,7 +111,7 @@ export default class CombatSlotManager {
     // Create new used array
     const newUsed = [...this.actor.system.actionState.used, {
       type: slotToUse,
-      messageId: message.id
+      // messageId: message.id
     }];
 
     game.system.log.o('[SLOT:USAGE] Updating action state:', {

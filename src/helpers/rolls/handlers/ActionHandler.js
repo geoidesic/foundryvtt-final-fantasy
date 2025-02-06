@@ -24,35 +24,37 @@ export default class ActionHandler {
     try {
       const { targets, hasTargets, targetIds } = this._getActionTargets();
 
-      let message;
       let roll;
       let isCritical = false;
       let d20Result = null;
+      let isSuccess;
 
       if (item.system.hasCR) {
-        ({ message, roll, isCritical, d20Result } = await this._rollWithCR(item, targets, hasTargets, targetIds));
+        ({ roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
         // Use DefaultChat if there's no custom action message
-        message = item.system.hasBaseEffect && Boolean(item.system.baseEffectDamage)
-          ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
-          : await this.DefaultChat.handle(item);
+        if(item.system.hasBaseEffect && Boolean(item.system.baseEffectDamage)) {
+          ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds))
+        } else {
+          this.DefaultChat.handle(item);
+        }
       }
 
       return {
-        success: true,
-        message,
-        roll,
+        handledSuccessfully: true,
         isCritical,
+        roll,
         d20Result,
         hasTargets,
-        targets
+        targets,
+        isSuccess
       };
     } catch (error) {
       game.system.log.e("Error in action handler", error);
       ui.notifications.error(
         game.i18n.format("FF15.Errors.ActionHandlingFailed", { target: this.actor.name })
       );
-      return { success: false, message: null };
+      return { handledSuccessfully: false };
     }
   }
 
@@ -74,7 +76,7 @@ export default class ActionHandler {
   async _rollWithCR(item, targets, hasTargets, targetIds) {
     // Handle roll with modifiers
     const { roll, isCritical, d20Result } = await this._handleRollWithModifiers(item);
-
+    let isSuccess = false;
     // Create initial message data
     const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
     messageData.flags[SYSTEM_ID].data.isCritical = isCritical;
@@ -88,7 +90,8 @@ export default class ActionHandler {
       } = this._getTargetCRValue(item, targets);
 
       // Evaluate success
-      const isSuccess = this._evaluateSuccess({ roll, crValue, isCritical });
+      isSuccess = this._evaluateSuccess({ roll, crValue, isCritical });
+      game.system.log.o('[ABILITY:ROLL] CR check isSuccess:', isSuccess);
       messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
 
       // Log CR check output
@@ -101,13 +104,11 @@ export default class ActionHandler {
         isCritical,
         d20Result
       });
-
-
     }
 
     // Send the roll message to the chat
-    const message = await roll.toMessage(messageData);
-    return { message, roll, isCritical, d20Result, isSuccess };
+    await roll.toMessage(messageData);
+    return { roll, isCritical, d20Result, isSuccess };
   }
 
   /**

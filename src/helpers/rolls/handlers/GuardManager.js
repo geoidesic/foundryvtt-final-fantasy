@@ -1,3 +1,5 @@
+import RollGuards from "../RollGuards.js";
+
 /**
  * Handles all guard checks
  */
@@ -8,7 +10,6 @@ export default class GuardManager {
    */
   constructor(actor, rollGuards) {
     this.actor = actor;
-    this.RG = rollGuards;
   }
 
   /**
@@ -20,14 +21,14 @@ export default class GuardManager {
   async handleGuards(item, guardMethodNames) {
     // Run guards sequentially, stop on first failure
     for (const methodName of guardMethodNames) {
-      const guardMethod = this.RG[methodName];
+      const guardMethod = RollGuards[methodName];
       if (!guardMethod) {
         game.system.log.w(`[GUARD] Guard method ${methodName} not found`);
         continue;
       }
 
       try {
-        const result = await guardMethod.call(this.RG, item);
+        const result = await guardMethod.call(RollGuards, item);
         if (!result) {
           game.system.log.d(`[GUARD] ${methodName} check failed for ${item.name}`);
           return false;
