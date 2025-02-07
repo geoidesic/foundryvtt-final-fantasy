@@ -76,7 +76,7 @@
 <template lang="pug">
   ApplicationShell(bind:elementRoot bind:stylesApp)
     //- @why NB: do not remove this next element; it doesn't have to be `pre` can be any element, but without it the button animations defined in styles below will not work. I don't know why. It's magic.
-    Tabs.tabs.tall(tabs="{tabs}" activeTab="{activeTab}" sheet="{sheet}")
+    Tabs.tabs.tall(tabs="{tabs}" activeTab="{activeTab}" sheet="['actor', 'PC']")
 </template>
 
 <style lang="sass">

@@ -19,7 +19,6 @@
     wildcard = filterDoc.embedded.create(ActiveEffect, wildcardConfig);
   }
 
-  const item = getContext("#doc");
 
   let key = false,
     keyUp = true,
@@ -31,7 +30,7 @@
   const app = getContext("#external").application;
 
   //- @why: some fields are only available on actor sheets
-  $: parentIsActor = isParentActor($item);
+  $: parentIsActor = isParentActor($doc) || (sheet && sheet.includes('actor'));
   // Determine if this is an actor sheet
   $: isActorSheet = sheet === 'actor';
   // Check if user is GM
@@ -215,18 +214,18 @@
               src="{getAvatarForVersion(effect, window.game.version)}" 
               alt="avatar for game version"
             )
+          td.left.expand.no-wrap {effect.name}
           +if("parentIsActor")
-            td.left.expand.no-wrap {effect.name}
-          td.img.left
-            +if("effect.getFlag(SYSTEM_ID, 'transferredBy.actor.img')")
-              img.icon.nopointer(
-                src="{effect.getFlag(SYSTEM_ID, 'transferredBy.actor.img')}" 
-                alt="avatar for effect origin"
-                data-tooltip="{effect.getFlag(SYSTEM_ID, 'transferredBy.actor.name')}"
-                data-tooltip-class="FF15-tooltip"
-              )
-              +else
-                span.no-wrap {localize('Unknown')}
+            td.img.left
+              +if("effect.getFlag(SYSTEM_ID, 'transferredBy.actor.img')")
+                img.icon.nopointer(
+                  src="{effect.getFlag(SYSTEM_ID, 'transferredBy.actor.img')}" 
+                  alt="avatar for effect origin"
+                  data-tooltip="{effect.getFlag(SYSTEM_ID, 'transferredBy.actor.name')}"
+                  data-tooltip-class="FF15-tooltip"
+                )
+                +else
+                  span.no-wrap {localize('Unknown')}
           td.buttons.right.no-wrap
             +if("!$doc.system.effectActionsLocked && showDelete")
               button.stealth(on:click="{editItem(index, effect)}")
