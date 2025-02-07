@@ -287,7 +287,7 @@ export default class FF15Actor extends Actor {
    */
   async toggleStatusEffect(statusId, options) {
 
-    if (game.combat && statusId === 'focus') {
+    if (game.combat?.started && statusId === 'focus') {
       //- if actor has focus, and there are no secondary action slots left, prevent the effect from being removed
       if (this.statuses.has('focus') && !this.system.actionState.available.includes('secondary')) {
         ui.notifications.warn('You cannot change Focus while you have no secondary action slots left.');
@@ -297,11 +297,77 @@ export default class FF15Actor extends Actor {
         ui.notifications.warn('You cannot change Focus while you have moved this turn.');
         return false;
       }
+
+      // Find all traits that sacrifice movement
+      const movementSacrificingTraits = this.items.filter(item => 
+        item.type === 'trait' && 
+        item.system.sacrificesMovement
+      );
+
+      game.system.log.o('[TOGGLE STATUS] Found movement sacrificing traits:', {
+        traits: movementSacrificingTraits.map(t => ({
+          name: t.name,
+          type: t.type,
+          sacrificesMovement: t.system.sacrificesMovement,
+          effects: t.effects.map(e => ({
+            name: e.name,
+            disabled: e.disabled,
+            changes: e.changes,
+            flags: e.flags
+          }))
+        }))
+      });
       //- if actor has focus, and has not moved, add the secondary action slot
       if (!this.statuses.has('focus') && !this.system.hasMoved && !this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
+
+        for (const trait of movementSacrificingTraits) {
+          //- find the related enabler slot for this and enable it
+          const enablerEffects = trait.effects.filter(e => 
+            e.changes.some(c => c.key === 'EnableCombatTurnSlot' && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
+          );
+
+          // Add each enabler slot to available if not already included
+          for (const effect of enablerEffects) {
+            for (const change of effect.changes) {
+              if (change.key === 'EnableCombatTurnSlot' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+                const value = change.value;
+                if (!this.system.actionState.available.includes(value)) {
+                  const updated = [...this.system.actionState.available, value];
+                  await this.update({
+                    'system.actionState.available': updated
+                  });
+                }
+              }
+            }
+          }
+        }
+
         await this.update({ system: { actionState: { available: [...this.system.actionState.available, 'secondary'] } } });
       }
       if (this.statuses.has('focus') && !this.system.hasMoved && this.hasSpecificDuplicate(this.system.actionState.available, 'secondary')) {
+
+        for (const trait of movementSacrificingTraits) {
+          //- find the related enabler slot for this and disable it
+          const enablerEffects = trait.effects.filter(e => 
+            e.changes.some(c => c.key === 'EnableCombatTurnSlot' && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
+          );
+
+          // Remove each enabler slot from available
+          for (const effect of enablerEffects) {
+            for (const change of effect.changes) {
+              if (change.key === 'EnableCombatTurnSlot' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+                const value = change.value;
+                if (this.system.actionState.available.includes(value)) {
+                  const updated = this.system.actionState.available.filter(slot => slot !== value);
+                  await this.update({
+                    'system.actionState.available': updated
+                  });
+                }
+              }
+            }
+          }
+        }
+
         await this.update({ system: { actionState: { available: this.removeFirstDuplicate(this.system.actionState.available, 'secondary') } } });
       }
     }
