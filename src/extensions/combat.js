@@ -43,6 +43,9 @@ export default class FFCombat extends Combat {
    * @return {Promise<void>} Returns a promise that resolves when all combatants have been reset
    */
   async resetCombatantAbilities() {
+    // Conditions that should persist through combat reset
+    const persistentConditions = ['ko', 'dead', 'comatose', 'brink'];
+
     const combatants = this.combatants.contents;
     // For each combatant
     for (const combatant of combatants) {
@@ -53,11 +56,16 @@ export default class FFCombat extends Combat {
       const items = actor.items.filter(i => i.system.hasLimitation);
       await resetUses(items);
 
-      // Disable or delete all status effects
+      // Disable or delete all status effects except persistent conditions
       for (const effect of actor.effects) {
+       
         if (effect.isTransferred) {
           await effect.update({ disabled: true });
         } else {
+          // Skip effects that apply persistent conditions
+          if (effect.statuses?.some(status => persistentConditions.includes(status))) {
+            continue;
+          }
           await effect.delete();
         }
       }
