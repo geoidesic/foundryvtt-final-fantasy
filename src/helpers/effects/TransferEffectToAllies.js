@@ -64,7 +64,7 @@ export default class TransferEffectToAllies {
       // Create a copy of the effect on the ally
       const effectData = {
         name: effect.name,
-        icon: effect.icon,
+        img: effect.img,
         changes,
         flags: foundry.utils.deepClone(effect.flags),
         origin: effect.origin,
