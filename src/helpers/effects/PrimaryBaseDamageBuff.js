@@ -18,19 +18,41 @@ export default class PrimaryBaseDamageBuff {
    */
   async process(event) {
     const { DamageResults } = event;
+    game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Processing primary base damage buff effect', {
+      DamageResults,
+      actorEffects: this.actor.effects
+    });
     
     for (const effect of this.actor.effects) {
       const origin = fromUuidSync(effect.origin);
+      game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Processing effect:', {
+        effect,
+        origin,
+        changes: effect.changes
+      });
+      
       for (const change of effect.changes) {
+        game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Checking change:', {
+          key: change.key,
+          mode: change.mode,
+          value: change.value,
+          matches: change.key === 'PrimaryBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
+        });
         
-        if(change.key === '@PrimaryBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.ADD) {
-          for (const [targetData] of DamageResults) {
+        if(change.key === 'PrimaryBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+          for (const [tokenId, targetData] of DamageResults) {
+            const oldDamage = targetData.damage;
             targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
             targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
+            game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Applied damage buff:', {
+              tokenId,
+              oldDamage,
+              newDamage: targetData.damage,
+              addedValue: change.value
+            });
           }
         }
       }
     }
   }
-  
 }
