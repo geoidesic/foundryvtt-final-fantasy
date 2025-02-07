@@ -1,3 +1,4 @@
+//- Takes the yml and packs that into the db
 import { compilePack } from '@foundryvtt/foundryvtt-cli';
 import { promises as fs } from 'fs';
 import path from 'path';

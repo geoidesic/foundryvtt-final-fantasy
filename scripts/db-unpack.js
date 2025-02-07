@@ -1,3 +1,4 @@
+//- generates the yml from the db
 import { extractPack } from "@foundryvtt/foundryvtt-cli";
 import { promises as fs } from "fs";
 import path from "path";
