@@ -64,6 +64,7 @@ onMount(async () => {
             name="stackable" 
             options="{stackingOptions}" 
             valuePath="{`flags.${SYSTEM_ID}.stackable`}"
+            defaultValue="differentSource"
           )
       .flexrow.justify-vertical
         .flex4
