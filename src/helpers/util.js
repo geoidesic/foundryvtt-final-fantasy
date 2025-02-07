@@ -10,7 +10,7 @@ export const log = {
     this.d = (level >= this.DEBUG) ? console.debug.bind(window.console, LOG_PREFIX) : () => { };
     this.v = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX) : () => { };
 
-    // Colorized log methods
+    // Colorized log methods - short versions
     this.p = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.p) : () => { };
     this.g = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.g) : () => { };
     this.r = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.r) : () => { };
@@ -23,6 +23,20 @@ export const log = {
     this.br = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.br) : () => { };
     this.pi = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.pi) : () => { };
     this.t = (level >= this.VERBOSE) ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.t) : () => { };
+
+    // Colorized log methods - full name aliases
+    this.purple = this.p;
+    this.green = this.g;
+    this.red = this.r;
+    this.orange = this.o;
+    this.blue = this.b;
+    this.yellow = this.y;
+    this.cyan = this.c;
+    this.magenta = this.m;
+    this.gray = this.gr;
+    this.brown = this.br;
+    this.pink = this.pi;
+    this.teal = this.t;
 
     this.loggingLevel = level;
   },
