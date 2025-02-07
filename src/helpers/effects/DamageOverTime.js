@@ -44,10 +44,11 @@ export default class DamageOverTime {
 
     await this.actor.update({ "system.points.HP.val": newHP });
 
-    // If the actor was KO'd by the DOT, apply the KO status
-    if (currentHP > 0 && newHP <= 0) {
-      game.system.log.o("[DOT] Actor KO'd by DOT");
+    // Check if actor should be KO'd
+    if (this.actor.system.points.HP.val === 0 && !this.actor.statuses.has('ko')) {
+      game.system.log.o("[DOT] Actor at 0 HP and not KO'd, applying KO status");
       await this.actor.toggleStatusEffect("ko");
+      game.system.log.o("[DOT] KO status applied");
     }
 
     // Create a chat message using RollChat template

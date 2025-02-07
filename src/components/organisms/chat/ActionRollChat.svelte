@@ -220,11 +220,24 @@
 
     // Update the actor's HP
     const newHP = token.actor.system.points.HP.val - totalDamage;
+    game.system.log.o('[KO CHECK] Before HP update:', {
+      currentHP: token.actor.system.points.HP.val,
+      totalDamage,
+      newHP
+    });
+
     await token.actor.update({ "system.points.HP.val": newHP });
 
-    // Toggle KO condition if HP drops to 0
-    if (token.actor.system.points.HP.val > 0 && newHP <= 0) {
+    game.system.log.o('[KO CHECK] After HP update:', {
+      updatedCurrentHP: token.actor.system.points.HP.val,
+      hasKoStatus: token.actor.statuses.has('ko')
+    });
+
+    // Toggle KO if HP is 0 and not already KO'd
+    if (token.actor.system.points.HP.val === 0 && !token.actor.statuses.has('ko')) {
+      game.system.log.o('[KO CHECK] Applying KO status');
       await token.actor.toggleStatusEffect("ko");
+      game.system.log.o('[KO CHECK] KO status applied');
     }
 
     // Update the message state to show this result has been applied
