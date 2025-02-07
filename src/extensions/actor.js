@@ -148,20 +148,26 @@ export default class FF15Actor extends Actor {
       return [];
     }
 
-    // Convert effects to plain objects and set combat duration
-    const effectsData = Array.from(item.effects).map(effect => {
-      // Check for existing effect with same ID
-      const existingEffect = this.effects.find(e =>
-        e.name === effect.name &&
-        effect.origin?.actor?.uuid === this.uuid
-      );
+    const effectsToCreate = [];
+    for (const effect of item.effects) {
+      // Check if effect is stackable
+      const isStackable = effect.system.isStackable;
+      
+      // Get origin actor UUID from the effect
+      const originActorUuid = effect.getFlag(SYSTEM_ID, 'origin.actor.uuid');
+      const isFromSameSource = originActorUuid === this.uuid;
 
-      if (existingEffect) {
-        game.system.log.t("[ADD LINKED EFFECTS] Existing effect found:", existingEffect);
-        return null;
+      // If not stackable and from same source, check for existing effect
+      if (!isStackable && isFromSameSource) {
+        const existingEffect = this.matchingEffect(effect);
+        if (existingEffect) {
+          game.system.log.t("[ADD LINKED EFFECTS] Non-stackable effect from same source already exists:", existingEffect);
+          continue;
+        }
       }
 
-      return {
+      // Prepare effect data for creation
+      const effectData = {
         ...effect.toObject(),
         disabled: false,
         flags: {
@@ -181,67 +187,32 @@ export default class FF15Actor extends Actor {
           }
         }
       };
-    }).filter(Boolean);
 
-    if (!effectsData.length) {
+      effectsToCreate.push(effectData);
+    }
+
+    if (!effectsToCreate.length) {
       game.system.log.t("[ADD LINKED EFFECTS] No effects to add");
       return [];
     }
 
-    for (const effectData of effectsData) {
+    // Set combat duration for each effect
+    for (const effectData of effectsToCreate) {
       await FFActiveEffect.setCombatDuration(effectData);
     }
-    game.system.log.t("[ADD LINKED EFFECTS] Creating effects on actor:", this, effectsData);
-    const created = await this.createEmbeddedDocuments("ActiveEffect", effectsData);
-    game.system.log.t("[ADD LINKED EFFECTS] Created effects:", created);
-    return created.map(e => e.uuid);
-  }
 
-  /**
-   * Enable linked effects for an item
-   * @param {Item} item - The item to enable effects for
-   * @return {Promise<Array>} Returns a promise that resolves with an array of enabled effect UUIDs
-   */
-  async enableLinkedEffects(item) {
-    game.system.log.g("[ENABLE] Enabling linked effects for:", item.name);
-    let effectsEnabled = [];
-
-    for (const effect of item.effects) {
-      game.system.log.g("[ENABLE] Effect:", effect);
-      // First check if we have a matching effect
-      const matchingEffect = this.matchingEffect(effect);
-      
-      if (matchingEffect) {
-        game.system.log.g("[ENABLE] Matching effect found:", matchingEffect);
-        // If we have a matching effect and it's disabled, enable it
-        if (matchingEffect.disabled) {
-          game.system.log.g("[ENABLE] Enabling disabled matching effect");
-          await matchingEffect.update({ disabled: false });
-          effectsEnabled.push(matchingEffect.uuid);
-        }
-        // Process hooks for the matching effect
-        if (!matchingEffect.isSuppressed) {
-          game.system.log.g("[ENABLE] matching effect is not suppressed, processing hooks for matchingEffect: ", matchingEffect);
-          await this._processEffectHooks(matchingEffect);
-        }
-      } else {
-        // If no matching effect exists, use addLinkedEffects to create it
-        const addedEffects = await this.addLinkedEffects(item);
-        game.system.log.g("[ENABLE] Added effects:", addedEffects);
-        effectsEnabled = effectsEnabled.concat(addedEffects);
-
-        // Process hooks for newly added effects
-        for (const uuid of addedEffects) {
-          const newEffect = await fromUuid(uuid);
-          if (newEffect && !newEffect.isSuppressed) {
-            game.system.log.g("[ENABLE] newEffect is not suppressed, processing hooks for newEffect: ", newEffect);
-            await this._processEffectHooks(newEffect);
-          }
-        }
+    game.system.log.t("[ADD LINKED EFFECTS] Creating effects on actor:", this, effectsToCreate);
+    const created = await this.createEmbeddedDocuments("ActiveEffect", effectsToCreate);
+    
+    // Process hooks for newly created effects
+    for (const effect of created) {
+      if (!effect.isSuppressed) {
+        await this._processEffectHooks(effect);
       }
     }
 
-    return effectsEnabled;
+    game.system.log.t("[ADD LINKED EFFECTS] Created effects:", created);
+    return created.map(e => e.uuid);
   }
 
   /**

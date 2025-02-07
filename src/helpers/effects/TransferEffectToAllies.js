@@ -56,16 +56,11 @@ export default class TransferEffectToAllies {
         continue;
       }
 
-
-      let changes = foundry.utils.deepClone(effect.changes);
-      //- remove the TransferEffectToAllies change
-      changes = changes.filter(change => change.key !== 'TransferEffectToAllies');
-
       // Create a copy of the effect on the ally
       const effectData = {
         name: effect.name,
         img: effect.img,
-        changes,
+        changes: foundry.utils.deepClone(effect.changes),
         flags: foundry.utils.deepClone(effect.flags),
         origin: effect.origin,
         disabled: false

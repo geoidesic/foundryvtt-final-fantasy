@@ -169,13 +169,13 @@ export default class EffectManager {
       return [];
     }
 
-    // Enable any disabled effects and get their UUIDs
-    game.system.log.o('[ENABLE] Enabling linked effects for:', actorItem.name);
-    const effectsEnabled = await this.actor.enableLinkedEffects(actorItem);
+    // Add effects and get their UUIDs
+    game.system.log.o('[ENABLE] Adding linked effects for:', actorItem.name);
+    const effectsEnabled = await this.actor.addLinkedEffects(actorItem);
 
-    // If we enabled any effects, create chat message
+    // If we added any effects, create chat message
     if (effectsEnabled.length) {
-      game.system.log.o('[ENABLE] Effects enabled:', effectsEnabled);
+      game.system.log.o('[ENABLE] Effects added:', effectsEnabled);
       //- if the enabler effect item has the same name as the triggering item, don't send a default chat message
       if (item.name !== actorItem.name) {
         await this.DefaultChat.handle(actorItem);
