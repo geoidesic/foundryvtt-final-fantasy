@@ -240,6 +240,10 @@
               "two": "Two dice",
               "three": "Three dice"
             },
+            "SacrificesMovement": {
+              "label": "Sacrifices Movement",
+              "description": "If checked, this effect will require the actor to sacrifice their movement to activate."
+            },
             "Heavyshot": {
               "straignt": "Grants Straight Shot Ready",
               "spread": "Grants Spread Shot Ready"

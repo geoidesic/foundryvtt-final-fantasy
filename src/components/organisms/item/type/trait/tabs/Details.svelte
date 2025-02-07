@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { getLimitationOptions, getDurationOptions, getDurationUnits, getLimitationUnits, getDamageDiceRerollOptions } from "~/src/helpers/constants"
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
@@ -16,16 +16,16 @@
   const durationUnitsOptions = getDurationUnits();
 
   const typeOptions = [
-    { value: "Buff", label: localize("FF15.Types.Item.Types.Options.TraitType.Buff") },
-    { value: "Debuff", label: localize("FF15.Types.Item.Types.Options.TraitType.Debuff") },
-    { value: "Trait", label: localize("FF15.Types.Item.Types.Options.TraitType.Trait") },
+    { value: "Buff", label: localize("Types.Item.Types.Options.TraitType.Buff") },
+    { value: "Debuff", label: localize("Types.Item.Types.Options.TraitType.Debuff") },
+    { value: "Trait", label: localize("Types.Item.Types.Options.TraitType.Trait") },
   ];
   const modOptions = [
-    { value: "All Checks", label: localize("FF15.Types.Item.Types.Options.ModType.Allchecks") },
-    { value: "All Damage", label: localize("FF15.Types.Item.Types.Options.ModType.AllDamage") },
-    { value: "Bonus Dice", label: localize("FF15.Types.Item.Types.Options.ModType.BonusDice") },
-    { value: "Movement", label: localize("FF15.Types.Item.Types.Options.ModType.Movement") },
-    { value: "DOT", label: localize("FF15.Types.Item.Types.Options.ModType.DOT") },
+    { value: "All Checks", label: localize("Types.Item.Types.Options.ModType.Allchecks") },
+    { value: "All Damage", label: localize("Types.Item.Types.Options.ModType.AllDamage") },
+    { value: "Bonus Dice", label: localize("Types.Item.Types.Options.ModType.BonusDice") },
+    { value: "Movement", label: localize("Types.Item.Types.Options.ModType.Movement") },
+    { value: "DOT", label: localize("Types.Item.Types.Options.ModType.DOT") },
   ];
   const operatorOptions = [
     { value: "+", label: '+' },
@@ -89,6 +89,13 @@
         .flex3.right
           DocInput.wide.right(id="modAmount" name="modAmount" valuePath="system.modAmount")
   
+
+    //- allow breathing space at the bottom of the scroll area
+    .flexrow.justify-vertical
+      .flex4
+        h3.left.tooltip(data-tooltip="{localize('Types.Item.Types.Options.SacrificesMovement.description')}") {localize("Types.Item.Types.Options.SacrificesMovement.label")}
+      .flex0.right
+        DocCheckbox(name="sacrificesMovement" valuePath="system.sacrificesMovement")
       
     .flexrow.justify-vertical
       .flex4
@@ -99,7 +106,7 @@
       .flexrow.sheet-row.justify-vertical
 
         .flex3
-          label(for="damageDiceReroll") {localize("FF15.Types.Item.Types.Options.DamageDiceReroll.label")}
+          label(for="damageDiceReroll") {localize("Types.Item.Types.Options.DamageDiceReroll.label")}
         .flex2.right
           DocSelect.left(style="min-width: 4em;" id="damageDiceReroll" name="damageDiceReroll" options="{damageDiceRerollOptions}" valuePath="system.damageDiceReroll")
   
@@ -111,7 +118,6 @@
     +if("$item.system.hasTags")
       .px-sm
         TagInput
-      //- allow breathing space at the bottom of the scroll area
       .pb-lg 
 </template>
 

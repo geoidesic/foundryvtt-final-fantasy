@@ -36,6 +36,7 @@ export class TraitModel extends FFItemDataModel {
         turns: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
         rounds: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
       }),
+      sacrificesMovement: new BooleanField({ required: false, initial: false }),
     };
   }
 
