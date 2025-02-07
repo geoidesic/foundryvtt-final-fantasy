@@ -102,7 +102,7 @@
       },
       "Stackable": {
         "Label": "Stackable",
-        "Caption": "If checked, this Effect will be able to stack with other instances of itself on the same Actor."
+        "Caption": "If checked, this Effect will be able to stack with other instances of itself, from the same source, on the same target. (The default is stackable from different sources.)"
       },
       "Suspended": {
         "Label": "Suspended",
