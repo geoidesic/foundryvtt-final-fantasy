@@ -8,7 +8,14 @@ export const LOG_STYLES = {
   g: 'color: green;',
   r: 'color: red;',
   o: 'color: orange;',
-  b: 'color: blue;'
+  b: 'color: blue;',
+  y: 'color: yellow;',
+  c: 'color: cyan;',
+  m: 'color: magenta;',
+  gr: 'color: gray;',
+  br: 'color: brown;',
+  pi: 'color: pink;',
+  t: 'color: teal;'
 };
 
 export const getDamageDiceRerollOptions = () => [
