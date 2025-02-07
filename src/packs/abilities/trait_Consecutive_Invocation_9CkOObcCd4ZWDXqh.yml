@@ -13,24 +13,65 @@ system:
     perform an additional secondary action.</p>
   favourite: false
   effectActionsLocked: false
-  type: ''
-  hasLimitation: false
-  limitation: 0
+  type: Trait
+  hasLimitation: true
+  limitation: 1
   hasModifier: false
   modType: ''
   operator: ''
   modAmount: 0
-  limitationUnits: phase
+  limitationUnits: turn
   uses: 0
   hasDamageDiceReroll: false
   damageDiceReroll: 0
-  hasTags: false
-  tags: []
+  hasTags: true
+  tags:
+    - invoked
   hasDuration: false
   duration:
     turns: 0
     rounds: 0
-effects: []
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.abilities.Item.9CkOObcCd4ZWDXqh
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Consecutive Invocation
+    img: >-
+      systems/foundryvtt-final-fantasy/assets/icons/traits/conscutive-invocation.webp
+    _id: hVwkvAFSmrLkVL08
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: EnableCombatTurnSlot
+        value: invoked
+        mode: 0
+        priority: 1
+    disabled: true
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1738746585796
+      modifiedTime: 1738856364515
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!9CkOObcCd4ZWDXqh.hVwkvAFSmrLkVL08'
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
@@ -42,7 +83,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736679561774
-  modifiedTime: 1736679561801
+  modifiedTime: 1738855272445
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _id: 9CkOObcCd4ZWDXqh
 sort: 200000

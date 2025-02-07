@@ -20,6 +20,8 @@ effects:
       surge:
         source: user
         trigger: passive
+      foundryvtt-final-fantasy:
+        overlay: true
     name: DOT (3)
     img: systems/foundryvtt-final-fantasy/assets/icons/status/DOT3.webp
     _id: eyMHWDQSzkCbPMvW
@@ -41,8 +43,7 @@ effects:
       startTurn: null
     description: ''
     tint: '#ffffff'
-    statuses:
-      - slow
+    statuses: []
     sort: 0
     _stats:
       compendiumSource: null
@@ -51,8 +52,8 @@ effects:
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
       createdTime: null
-      modifiedTime: null
-      lastModifiedBy: null
+      modifiedTime: 1738926244779
+      lastModifiedBy: A3f8BsJ7eYm0X14M
     _key: '!items.effects!xPuHTKniWvsRFPOz.eyMHWDQSzkCbPMvW'
 flags: {}
 _stats:

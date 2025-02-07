@@ -43,7 +43,7 @@ system:
   hasCost: false
   cost: 0
   hasProcTrigger: false
-  procTrigger: null
+  procTrigger: 15
   grants:
     list: []
     value: false
@@ -78,7 +78,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1735733540431
-  modifiedTime: 1736692871949
+  modifiedTime: 1738853898179
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0

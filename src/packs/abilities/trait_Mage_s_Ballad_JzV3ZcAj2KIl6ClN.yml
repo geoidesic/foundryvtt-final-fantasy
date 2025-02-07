@@ -40,6 +40,7 @@ effects:
         source: user
         trigger: passive
         overlay: true
+        stackable: false
     name: Mage's Ballad
     img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song.webp
     _id: OfT8PTgm4qHN99oi
@@ -76,7 +77,7 @@ effects:
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
       createdTime: 1736019135156
-      modifiedTime: 1736069313812
+      modifiedTime: 1738923596726
       lastModifiedBy: A3f8BsJ7eYm0X14M
     _key: '!items.effects!JzV3ZcAj2KIl6ClN.OfT8PTgm4qHN99oi'
 folder: Ma4fkb8prmmWpTLI

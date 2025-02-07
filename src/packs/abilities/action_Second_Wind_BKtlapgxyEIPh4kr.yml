@@ -59,6 +59,7 @@ system:
     value: false
   type: reaction
   hasBaseEffect: true
+  baseEffectType: heal
   baseEffectHealing: 1d6+2
 effects: []
 flags: {}
