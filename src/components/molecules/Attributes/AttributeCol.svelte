@@ -3,9 +3,9 @@
   import Attribute from "~/src/components/atoms/actor/Attribute.svelte";
 
   export let data;
-  export let abbreviateLabel;
+  export let abbreviateLabel = false;
   export let key;
-  export let showSign;
+  export let showSign = false;
 
   export let onclick;
 

@@ -6,7 +6,7 @@ import Corner from '~/src/components/atoms/PortraitFrame/corner.svelte';
 export let img = false;
 export let imgSrc = `${ASSET_PATH}/portraits/witch2.webp`;
 export let strokeColor="#514030";
-export let onClick;
+export let onclick = undefined;
 export let size = 50;
 
 onMount(() => {
@@ -16,7 +16,7 @@ onMount(() => {
 .atom(class="{$$restProps?.class?.includes('high') ? 'high' : ''}")
   .frame({...$$restProps})
     +if("img")
-      img(src="{imgSrc}" alt="avatar" on:click="{onClick}")
+      img(src="{imgSrc}" alt="avatar" on:click="{onclick}")
       +else
         slot
     Corner.corner.bottom-right(strokeColor="{strokeColor}" size="{size}")

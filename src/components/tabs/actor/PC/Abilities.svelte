@@ -15,6 +15,7 @@
   import Badge from "~/src/components/atoms/Badge.svelte";
   import Tag from "~/src/components/atoms/Tag.svelte";
 
+  export let sheet;
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
   const RollCalc = new RollCalcActor({ actor: $Actor });

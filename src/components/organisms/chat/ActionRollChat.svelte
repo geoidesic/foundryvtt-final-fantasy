@@ -15,6 +15,8 @@
   export let FFMessage
   export let FFMessageState
   export let content
+  export let classes = ''
+  export let messageId
 
   const item = fromUuidSync(FFMessage.item.uuid);
   if(item) {
