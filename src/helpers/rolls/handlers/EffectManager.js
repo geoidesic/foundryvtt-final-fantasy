@@ -198,6 +198,38 @@ export default class EffectManager {
       }
     }
 
+    if (actorItem.type === 'trait' && actorItem.system.sacrificesMovement) {
+      const tokenId = this.actor.token?.id;
+      if (tokenId && getTokenMovement(tokenId) > 0) {
+        ui.notifications.warn(`Cannot enable ${actorItem.name} after moving.`);
+        return [];
+      } else {
+        // game.system.log.o('[FOCUS] Pre-toggle state:', {
+        //   hasFocus: this.actor.statuses.has('focus'),
+        //   hasMoved: this.actor.system.hasMoved,
+        //   actionState: this.actor.system.actionState,
+        //   hasSecondarySlot: this.actor.system.actionState.available.includes('secondary'),
+        //   hasSecondaryDuplicate: this.actor.hasSpecificDuplicate(this.actor.system.actionState.available, 'secondary'),
+        //   inCombat: !!game.combat
+        // });
+
+        if (!game.combat) {
+          ui.notifications.warn("Focus can only be toggled during combat.");
+          return [];
+        }
+
+        await this.actor.toggleStatusEffect("focus");
+
+        // game.system.log.o('[FOCUS] Post-toggle state:', {
+        //   hasFocus: this.actor.statuses.has('focus'),
+        //   hasMoved: this.actor.system.hasMoved,
+        //   actionState: this.actor.system.actionState,
+        //   hasSecondarySlot: this.actor.system.actionState.available.includes('secondary'),
+        //   hasSecondaryDuplicate: this.actor.hasSpecificDuplicate(this.actor.system.actionState.available, 'secondary')
+        // });
+      }
+    }
+
     return effectsEnabled;
   }
 
