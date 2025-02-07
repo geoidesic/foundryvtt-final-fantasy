@@ -47,21 +47,21 @@ export default function updateCombat() {
       const currentActor = combatant.actor;
       if (!currentActor) continue;
 
-      game.system.log.o("[EFFECT] Processing actor:", {
-        name: currentActor.name,
-        type: currentActor.type,
-        id: currentActor.id
-      });
+      // game.system.log.o("[EFFECT] Processing actor:", {
+      //   name: currentActor.name,
+      //   type: currentActor.type,
+      //   id: currentActor.id
+      // });
 
       const effects = currentActor.effects;
-      game.system.log.o("[EFFECT] Actor effects count:", effects.size);
+      // game.system.log.o("[EFFECT] Actor effects count:", effects.size);
 
       for (const effect of effects) {
-        game.system.log.o("[EFFECT] Processing effect:", {
-          name: effect.name,
-          disabled: effect.disabled,
-          changes: effect.changes
-        });
+        // game.system.log.o("[EFFECT] Processing effect:", {
+        //   name: effect.name,
+        //   disabled: effect.disabled,
+        //   changes: effect.changes
+        // });
 
         // Get the previous turn's state
         const previousCombatant = combat.turns[combat.previous?.turn];
@@ -69,25 +69,25 @@ export default function updateCombat() {
         const wasAdventurerStepEnd = previousCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC";
         const wasEnemyStepEnd = previousCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
 
-        game.system.log.o("[EFFECT] Previous combat state:", {
-          wasAdventurerStepEnd,
-          wasEnemyStepEnd,
-          previousCombatant: previousCombatant?.actor?.name,
-          nextCombatant: nextCombatant?.actor?.name
-        });
+        // game.system.log.o("[EFFECT] Previous combat state:", {
+        //   wasAdventurerStepEnd,
+        //   wasEnemyStepEnd,
+        //   previousCombatant: previousCombatant?.actor?.name,
+        //   nextCombatant: nextCombatant?.actor?.name
+        // });
 
         // Process DOT effects at the end of each step
         if (!effect.disabled) {
           // At adventurer step end, process DOTs on PCs
           if (wasAdventurerStepEnd && currentActor.type === "PC") {
-            game.system.log.o("[EFFECT] Processing PC DOT at adventurer step end");
+            // game.system.log.o("[EFFECT] Processing PC DOT at adventurer step end");
             for (const change of effect.changes) {
-              game.system.log.o("[EFFECT] Checking PC change:", {
-                key: change.key,
-                mode: change.mode,
-                value: change.value,
-                expectedMode: ACTIVE_EFFECT_MODES.CUSTOM
-              });
+              // game.system.log.o("[EFFECT] Checking PC change:", {
+              //   key: change.key,
+              //   mode: change.mode,
+              //   value: change.value,
+              //   expectedMode: ACTIVE_EFFECT_MODES.CUSTOM
+              // });
               if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
                 await Hooks.callAll('FF15.DamageOverTime', { actor: currentActor, change, effect });
               }
@@ -95,16 +95,16 @@ export default function updateCombat() {
           }
           // At enemy step end, process DOTs on NPCs
           else if (wasEnemyStepEnd && currentActor.type === "NPC") {
-            game.system.log.o("[EFFECT] Processing NPC DOT at enemy step end");
+            // game.system.log.o("[EFFECT] Processing NPC DOT at enemy step end");
             for (const change of effect.changes) {
-              game.system.log.o("[EFFECT] Checking NPC change:", {
-                key: change.key,
-                mode: change.mode,
-                value: change.value,
-                expectedMode: ACTIVE_EFFECT_MODES.CUSTOM
-              });
+              // game.system.log.o("[EFFECT] Checking NPC change:", {
+              //   key: change.key,
+              //   mode: change.mode,
+              //   value: change.value,
+              //   expectedMode: ACTIVE_EFFECT_MODES.CUSTOM
+              // });
               if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-                game.system.log.o("[EFFECT] Found valid DOT change, calling hook");
+                // game.system.log.o("[EFFECT] Found valid DOT change, calling hook");
                 await Hooks.callAll('FF15.DamageOverTime', { actor: currentActor, change, effect });
               }
             }

@@ -53,8 +53,15 @@ export default class EffectManager {
    * @private
    */
   async _handleTargetEffects(item, targets) {
-    if (!item.system.grants?.list?.length) return;
 
+    if (!item.system.grants?.list?.length) return;
+    
+    game.system.log.o("[STACKING EFFECTS] Source actor using this item:", {
+      actor: this.actor?.name,
+      itemName: item?.name,
+      itemUUID: item?.uuid,
+    });
+    
     for (const target of targets) {
       const targetActor = target.actor;
       if (!targetActor) continue;
@@ -94,8 +101,7 @@ export default class EffectManager {
             // For non-status effects, clean up the data to only include valid ActiveEffect fields
             const cleanData = {
               name: effect.name,
-              label: effect.label,
-              icon: effect.icon,
+              img: effect.img,
               changes: foundry.utils.deepClone(effect.changes),
               duration: effectItem.system.duration,
               disabled: false,
@@ -153,6 +159,7 @@ export default class EffectManager {
       game.system.log.w("[ENABLE] Actor item has no effects:", actorItem.name);
       return [];
     }
+    game.system.log.o("[ENABLE] Actor item :", actorItem);
 
     // Check if we've hit the usage limit using the actor's version of the item
     const hasRemainingUses = await this.actor.actorItemHasRemainingUses(actorItem);

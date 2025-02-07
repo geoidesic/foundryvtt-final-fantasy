@@ -17,8 +17,12 @@ export default class DamageDiceReroll {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
+    game.system.log.o('[DAMAGE DICE REROLL] Processing damage dice reroll effect');
     const { DamageResults, isCritical } = event;
-    if(!DamageResults || !DamageResults.size) return;
+    if(!DamageResults || !DamageResults.size) {
+      game.system.log.w('[DAMAGE DICE REROLL] No damage results found');
+      return;
+    }
 
     for (const effect of this.actor.effects) {
       if (effect.disabled || effect.isSuppressed) continue;

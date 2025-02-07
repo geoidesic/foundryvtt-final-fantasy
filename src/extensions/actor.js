@@ -143,7 +143,10 @@ export default class FF15Actor extends Actor {
    * @return {Array} Array of effect UUIDs that were enabled
    */
   async addLinkedEffects(item) {
-    if (!item.hasEffects) return [];
+    if (!item.hasEffects) {
+      game.system.log.t("[ADD LINKED EFFECTS] Item has no effects:", item);
+      return [];
+    }
 
     // Convert effects to plain objects and set combat duration
     const effectsData = Array.from(item.effects).map(effect => {
@@ -153,7 +156,10 @@ export default class FF15Actor extends Actor {
         effect.origin?.actor?.uuid === this.uuid
       );
 
-      if (existingEffect) return null;
+      if (existingEffect) {
+        game.system.log.t("[ADD LINKED EFFECTS] Existing effect found:", existingEffect);
+        return null;
+      }
 
       return {
         ...effect.toObject(),
@@ -177,13 +183,17 @@ export default class FF15Actor extends Actor {
       };
     }).filter(Boolean);
 
-    if (!effectsData.length) return [];
+    if (!effectsData.length) {
+      game.system.log.t("[ADD LINKED EFFECTS] No effects to add");
+      return [];
+    }
 
     for (const effectData of effectsData) {
       await FFActiveEffect.setCombatDuration(effectData);
     }
-
+    game.system.log.t("[ADD LINKED EFFECTS] Creating effects on actor:", this, effectsData);
     const created = await this.createEmbeddedDocuments("ActiveEffect", effectsData);
+    game.system.log.t("[ADD LINKED EFFECTS] Created effects:", created);
     return created.map(e => e.uuid);
   }
 
@@ -193,32 +203,38 @@ export default class FF15Actor extends Actor {
    * @return {Promise<Array>} Returns a promise that resolves with an array of enabled effect UUIDs
    */
   async enableLinkedEffects(item) {
+    game.system.log.g("[ENABLE] Enabling linked effects for:", item.name);
     let effectsEnabled = [];
 
     for (const effect of item.effects) {
-     
+      game.system.log.g("[ENABLE] Effect:", effect);
       // First check if we have a matching effect
       const matchingEffect = this.matchingEffect(effect);
       
       if (matchingEffect) {
+        game.system.log.g("[ENABLE] Matching effect found:", matchingEffect);
         // If we have a matching effect and it's disabled, enable it
         if (matchingEffect.disabled) {
+          game.system.log.g("[ENABLE] Enabling disabled matching effect");
           await matchingEffect.update({ disabled: false });
           effectsEnabled.push(matchingEffect.uuid);
         }
         // Process hooks for the matching effect
         if (!matchingEffect.isSuppressed) {
+          game.system.log.g("[ENABLE] matching effect is not suppressed, processing hooks for matchingEffect: ", matchingEffect);
           await this._processEffectHooks(matchingEffect);
         }
       } else {
         // If no matching effect exists, use addLinkedEffects to create it
         const addedEffects = await this.addLinkedEffects(item);
+        game.system.log.g("[ENABLE] Added effects:", addedEffects);
         effectsEnabled = effectsEnabled.concat(addedEffects);
 
         // Process hooks for newly added effects
         for (const uuid of addedEffects) {
           const newEffect = await fromUuid(uuid);
           if (newEffect && !newEffect.isSuppressed) {
+            game.system.log.g("[ENABLE] newEffect is not suppressed, processing hooks for newEffect: ", newEffect);
             await this._processEffectHooks(newEffect);
           }
         }
@@ -237,6 +253,7 @@ export default class FF15Actor extends Actor {
     for (const change of effect.changes) {
       const matchingMode = activeEffectModes.find(e => e.value === change.mode);
       if (matchingMode) {
+        game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", change.key);
         await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
       } 
     }
