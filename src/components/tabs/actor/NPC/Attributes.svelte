@@ -11,6 +11,7 @@
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import DescriptionBlockNPC from "~/src/components/molecules/DescriptionBlockNPC.svelte";
 
+  export let sheet;
   const documentStore = getContext("#doc");
 
   const application = getContext("#external").application;

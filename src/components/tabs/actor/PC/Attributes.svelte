@@ -9,6 +9,7 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
 
+  export let sheet;
   const actor = getContext("#doc");
 </script>
 
