@@ -78,7 +78,7 @@ export default class RollCalcActor extends RollCalc {
       if (!(await this.GuardManager.handleGuards(item, [
         'isAction', 'hasNoUnappliedDamage', 'isActorsTurn', 
         'isReaction', 'targetsMatchActionIntent', 'hasRequiredEffects',
-        'hasActiveEnablerSlot', 'hasRemainingUses', 'hasModifiers'
+        'hasAvailableActionSlot', 'hasRemainingUses', 'hasModifiers'
       ]))) {
         return;
       }

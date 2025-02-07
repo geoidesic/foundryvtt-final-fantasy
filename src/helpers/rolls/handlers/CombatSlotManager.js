@@ -54,6 +54,11 @@ export default class CombatSlotManager {
       slotToUse = actionType;
       game.system.log.o('[SLOT:USAGE] Using default action type slot:', actionType);
     }
+    // #105 Allow using primary slot for secondary actions
+    else if (actionType === 'secondary' && this.actor.system.actionState.available.includes('primary')) {
+      slotToUse = 'primary';
+      game.system.log.o('[SLOT:USAGE] Using primary slot for secondary action');
+    }
 
     // If no primary/secondary slot found, check for custom slots
     if (!slotToUse && item.system.tags?.length) {

@@ -348,7 +348,7 @@
       if (!(await this.GuardManager.handleGuards(item, [
         'isAction', 'isActorsTurn', 'isReaction',
         'targetsMatchActionIntent','hasNoUnappliedDamage', 'hasRequiredEffects',
-        'hasActiveEnablerSlot', 'hasRemainingUses', 'hasModifiers'
+        'hasAvailableActionSlot', 'hasRemainingUses', 'hasModifiers'
       ]))) {
         return;
       }

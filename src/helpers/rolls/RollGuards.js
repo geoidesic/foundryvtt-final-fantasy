@@ -272,37 +272,54 @@ export default class RollGuards {
   }
 
   /**
-   * Check if there is an active enabler slot available
+   * Check if there is an appropriate action slot available
    * @param {Item} item - The item to check
    * @return {Promise<boolean>} Whether an enabler slot is available
    */
-  async hasActiveEnablerSlot(item) {
+  async hasAvailableActionSlot(item) {
     // Skip this check for reactions
     if (item.system.type === 'reaction') return true;
 
     const { actionState } = this.actor.system;
     const actionType = item.system.type || 'primary'; // default to primary if not set
 
+    game.system.log.cyan('[SLOT:USAGE] Checking available action slot:', actionType);
+
     // Get enabler slots (non-primary/secondary slots)
     const enablerSlots = actionState.available.filter(slot =>
       slot !== 'primary' && slot !== 'secondary'
     );
 
+    game.system.log.cyan('[SLOT:USAGE] Enabler slots:', enablerSlots);
+
     // First check if any of the item's tags match enabler slots
+    // @why: because we want to allow custom slots to be used first if they match an enabler slot
     if (item.system.tags?.some(tag => enablerSlots.includes(tag))) {
       return true;
     }
+
+    game.system.log.cyan('[SLOT:USAGE] No enabler slots match:', item.system.tags);
 
     // Then check if we have a matching action slot (primary/secondary)
     if (actionState.available.includes(actionType)) {
       return true;
     }
 
+    game.system.log.cyan('[SLOT:USAGE] No matching action slot:', actionType);
+
+    // If actionType is secondary, then we can use the secondary or primary slot
+    if (actionType === 'secondary' && actionState.available.filter(slot => slot === 'secondary' || slot === 'primary').length) {
+      return true;
+    }
+
+    game.system.log.cyan('[SLOT:USAGE] No matching action slot:', actionType);
+
     // Finally check enabled effects if we have enablers
     if (await this.hasEnablers(item)) {
       const enabledEffects = this.actor.effects.filter(
         effect => effect.system.tags?.includes('enabler')
       );
+      game.system.log.cyan('[SLOT:USAGE] Enabled effects:', enabledEffects);
 
       if (enabledEffects?.length) {
         const enabledEffectsLinkedToEnablerSlots = enabledEffects.filter(
