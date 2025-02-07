@@ -212,11 +212,11 @@
             )
           td.left.expand.no-wrap {effect.name}
           td.img.left
-            +if("effect.getFlag(SYSTEM_ID, 'origin.actor.img')")
+            +if("effect.getFlag(SYSTEM_ID, 'transferredBy.actor.img')")
               img.icon.nopointer(
-                src="{effect.getFlag(SYSTEM_ID, 'origin.actor.img')}" 
+                src="{effect.getFlag(SYSTEM_ID, 'transferredBy.actor.img')}" 
                 alt="avatar for effect origin"
-                data-tooltip="{effect.getFlag(SYSTEM_ID, 'origin.actor.name')}"
+                data-tooltip="{effect.getFlag(SYSTEM_ID, 'transferredBy.actor.name')}"
                 data-tooltip-class="FF15-tooltip"
               )
               +else

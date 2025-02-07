@@ -21,7 +21,7 @@ export default class TransferEffectToAllies {
 
     const transferredEffects = game.actors.reduce((acc, actor) => {
       return acc.concat(actor.effects.filter(e => 
-        e.getFlag(SYSTEM_ID, 'origin.actor.uuid') === this.actor.uuid &&
+        e.getFlag(SYSTEM_ID, 'transferredBy.actor.uuid') === this.actor.uuid &&
         e.name === effect.name
       ));
     }, []);
@@ -66,14 +66,22 @@ export default class TransferEffectToAllies {
         disabled: false
       };
 
+      game.system.log.p("[TRANSFER] Original effect flags:", effect.flags);
+      game.system.log.p("[TRANSFER] Cloned effect flags:", effectData.flags);
+
       //NB: do not set duration as this will be controlled by the origin item
-      effectData.flags[SYSTEM_ID].origin = {
-        actor: {
-          uuid: this.actor.uuid,
-          name: this.actor.name,
-          img: this.actor.img
+      effectData.flags[SYSTEM_ID] = {
+        ...effectData.flags[SYSTEM_ID],
+        transferredBy: {
+          actor: {
+            uuid: this.actor.uuid,
+            name: this.actor.name,
+            img: this.actor.img
+          }
         }
       }
+
+      game.system.log.p("[TRANSFER] Final effect flags after origin update:", effectData.flags);
 
       try {
         await token.actor.createEmbeddedDocuments('ActiveEffect', [effectData]);

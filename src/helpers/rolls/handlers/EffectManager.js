@@ -142,7 +142,14 @@ export default class EffectManager {
     game.system.log.o('[ENABLE] Found compendium item:', { 
       name: compendiumItem.name, 
       type: compendiumItem.type,
-      hasEffects: compendiumItem.hasEffects
+      hasEffects: compendiumItem.hasEffects,
+      effects: compendiumItem.effects.map(e => ({
+        name: e.name,
+        flags: foundry.utils.deepClone(e.flags),
+        rawFlags: foundry.utils.deepClone(e.flags?.[SYSTEM_ID]),
+        stackable: e.getFlag(SYSTEM_ID, 'stackable'),
+        toObject: foundry.utils.deepClone(e.toObject())
+      }))
     });
 
     // Find actor's version of the item by matching name and type
@@ -159,7 +166,16 @@ export default class EffectManager {
       game.system.log.w("[ENABLE] Actor item has no effects:", actorItem.name);
       return [];
     }
-    game.system.log.o("[ENABLE] Actor item :", actorItem);
+    game.system.log.o("[ENABLE] Actor item :", {
+      item: actorItem,
+      effects: actorItem.effects.map(e => ({
+        name: e.name,
+        flags: foundry.utils.deepClone(e.flags),
+        rawFlags: foundry.utils.deepClone(e.flags?.[SYSTEM_ID]),
+        stackable: e.getFlag(SYSTEM_ID, 'stackable'),
+        toObject: foundry.utils.deepClone(e.toObject())
+      }))
+    });
 
     // Check if we've hit the usage limit using the actor's version of the item
     const hasRemainingUses = await this.actor.actorItemHasRemainingUses(actorItem);

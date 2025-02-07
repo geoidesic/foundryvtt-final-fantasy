@@ -15,9 +15,7 @@ export default class FFEffectModel extends foundry.abstract.TypeDataModel {
     return {
       tags: new ArrayField(
         new StringField({ required: false, initial: '' })
-      ),
-      isStackable: new BooleanField({ required: false, initial: false }),
-
+      )
     }
   }
 }

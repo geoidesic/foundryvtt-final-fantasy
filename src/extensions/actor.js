@@ -108,33 +108,16 @@ export default class FF15Actor extends Actor {
   }
 
   /**
-   * Find a matching effect based on provided criteria
-   * @param {ActiveEffect} effect - The effect to match against
-   * @param {Object} criteria - Object with keys matching effect properties and values to match against
-   * @return {ActiveEffect|undefined} The matching effect or undefined if none found
+   * Get the set of actor UUIDs that have applied an effect with this name
+   * @param {ActiveEffect} effect - The effect to check for
+   * @return {Set<string>} Set of actor UUIDs that have applied this effect
    */
-  matchingEffect(effect, criteria = {}) {
-    return this.effects.find(ae => {
-      // Match on name
-      if (ae.name !== effect.name) return false;
-
-      // Match on origin, handling compendium references
-      // Extract the item ID from the compendium reference
-      const originItemId = effect.origin?.split('.').pop();
-      const existingItemId = ae.origin?.split('.').pop();
-      if (originItemId !== existingItemId) return false;
-
-      // Check each additional criteria
-      for (const [key, value] of Object.entries(criteria)) {
-        // If the value is a function, use it as a predicate
-        if (typeof value === 'function') {
-          if (!value(ae[key])) return false;
-        }
-        // Otherwise do a direct comparison
-        else if (ae[key] !== value) return false;
-      }
-      return true;
-    });
+  getEffectSources(effect) {
+    return new Set(
+      this.effects
+        .filter(e => e.name === effect.name)
+        .map(e => e.getFlag(SYSTEM_ID, 'transferredBy.actor.uuid') || this.uuid)
+    );
   }
 
   /**
@@ -144,29 +127,45 @@ export default class FF15Actor extends Actor {
    */
   async addLinkedEffects(item) {
     if (!item.hasEffects) {
-      game.system.log.t("[ADD LINKED EFFECTS] Item has no effects:", item);
+      game.system.log.p("[ADD LINKED EFFECTS] Item has no effects:", item);
       return [];
     }
 
     const effectsToCreate = [];
     for (const effect of item.effects) {
-      // Check if effect is stackable
-      const isStackable = effect.system.isStackable;
-      
-      // Get origin actor UUID from the effect
-      const originActorUuid = effect.getFlag(SYSTEM_ID, 'origin.actor.uuid');
-      const isFromSameSource = originActorUuid === this.uuid;
+      // Log the full effect data for debugging
+      game.system.log.p("[ADD LINKED EFFECTS] Processing effect:", {
+        name: effect.name,
+        system: effect.system,
+        flags: effect.flags,
+        origin: effect.origin
+      });
 
-      // If not stackable and from same source, check for existing effect
-      if (!isStackable && isFromSameSource) {
-        const existingEffect = this.matchingEffect(effect);
-        if (existingEffect) {
-          game.system.log.t("[ADD LINKED EFFECTS] Non-stackable effect from same source already exists:", existingEffect);
-          continue;
-        }
+      // Add detailed flag logging
+      game.system.log.p("[ADD LINKED EFFECTS] Effect flags detail:", {
+        rawFlags: effect.flags,
+        systemFlags: effect.flags?.[SYSTEM_ID],
+        stackableFlag: effect.getFlag(SYSTEM_ID, 'stackable'),
+        overlayFlag: effect.getFlag(SYSTEM_ID, 'overlay')
+      });
+
+      const sourceActors = this.getEffectSources(effect);
+      const isStackable = effect.getFlag(SYSTEM_ID, 'stackable');
+      
+      // If this source already has a non-stackable version of this effect, skip
+      if (sourceActors.has(this.uuid) && !isStackable) {
+        game.system.log.p("[ADD LINKED EFFECTS] Non-stackable effect already exists from this source:", {
+          name: effect.name,
+          source: this.uuid,
+          existingSources: Array.from(sourceActors)
+        });
+        continue;
       }
 
-      // Prepare effect data for creation
+      // If we get here, either:
+      // 1. No matching effects exist
+      // 2. Matching effects exist but from different sources (always stacks)
+      // 3. Matching effect exists from this source but is stackable
       const effectData = {
         ...effect.toObject(),
         disabled: false,
@@ -174,6 +173,7 @@ export default class FF15Actor extends Actor {
           ...effect.flags,
           [SYSTEM_ID]: {
             overlay: effect.getFlag(SYSTEM_ID, 'overlay'),
+            stackable: effect.getFlag(SYSTEM_ID, 'stackable'),
             origin: {
               actor: {
                 uuid: this.uuid,
@@ -183,16 +183,24 @@ export default class FF15Actor extends Actor {
               effect: {
                 uuid: effect.uuid
               }
+            },
+            transferredBy: {
+              actor: {
+                uuid: this.uuid,
+                name: this.name,
+                img: this.img
+              }
             }
           }
         }
       };
 
+      game.system.log.p("[ADD LINKED EFFECTS] Prepared effect data for creation:", effectData);
       effectsToCreate.push(effectData);
     }
 
     if (!effectsToCreate.length) {
-      game.system.log.t("[ADD LINKED EFFECTS] No effects to add");
+      game.system.log.p("[ADD LINKED EFFECTS] No effects to add");
       return [];
     }
 
@@ -201,7 +209,7 @@ export default class FF15Actor extends Actor {
       await FFActiveEffect.setCombatDuration(effectData);
     }
 
-    game.system.log.t("[ADD LINKED EFFECTS] Creating effects on actor:", this, effectsToCreate);
+    game.system.log.p("[ADD LINKED EFFECTS] Creating effects on actor:", this.name, effectsToCreate);
     const created = await this.createEmbeddedDocuments("ActiveEffect", effectsToCreate);
     
     // Process hooks for newly created effects
@@ -211,7 +219,12 @@ export default class FF15Actor extends Actor {
       }
     }
 
-    game.system.log.t("[ADD LINKED EFFECTS] Created effects:", created);
+    game.system.log.p("[ADD LINKED EFFECTS] Created effects:", created.map(e => ({
+      name: e.name,
+      system: e.system,
+      flags: e.flags,
+      uuid: e.uuid
+    })));
     return created.map(e => e.uuid);
   }
 
