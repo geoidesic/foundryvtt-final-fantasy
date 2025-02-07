@@ -436,11 +436,10 @@ export default class RollGuards {
     // Skip this check for non-damaging actions
     if (!item.system.baseEffectDamage && !item.system.directHitDamage) return true;
 
-    // Get all chat messages for this actor
+    // Get all chat messages with damage
     const messages = game.messages.filter(m => {
       const data = m.flags?.[SYSTEM_ID]?.data;
-      return data?.actor?._id === this.actor.id && 
-             data?.chatTemplate === "ActionRollChat" &&
+      return data?.chatTemplate === "ActionRollChat" &&
              (data?.item?.system?.baseEffectDamage || data?.item?.system?.directHitDamage);
     });
 
@@ -453,7 +452,7 @@ export default class RollGuards {
       const hasUnappliedDamage = Object.values(state.damageResults).some(result => !result.applied);
       
       if (hasUnappliedDamage) {
-        ui.notifications.warn("You have unapplied damage results. Please apply or undo them before making another action roll.");
+        ui.notifications.warn("There are unapplied damage results in chat. Please apply or undo them before making another action roll.");
         return false;
       }
     }
