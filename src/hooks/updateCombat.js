@@ -1,5 +1,6 @@
 import { resetUses, resetActionState } from '~/src/helpers/util.js';
 import { ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
+import { resetTokenMovement } from '~/src/stores';
 
 /**
  * Hook that runs when combat is updated
@@ -39,8 +40,9 @@ export default function updateCombat() {
       });
     }
   
-    //- reset hasMoved flag
+    //- reset hasMoved flag and movement store
     await actor.update({ system: { hasMoved: false } });
+    resetTokenMovement(previousTurn.token.id);
   
     // Check for expired effects and process DOT effects on all actors in combat
     for (const combatant of combat.turns) {

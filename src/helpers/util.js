@@ -114,6 +114,7 @@ export function isAttribute(val) {
   return false;
 }
 
+
 /**
  * Checks if an item is a passive effect
  * @param {Item} item - The item to check
