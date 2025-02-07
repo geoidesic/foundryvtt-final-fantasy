@@ -163,7 +163,7 @@ export default class EffectManager {
       return [];
     }
     if (!actorItem.hasEffects) {
-      game.system.log.w("[ENABLE] Actor item has no effects:", actorItem.name);
+      game.system.log.w("[ENABLE] Actor item has no effects:", actorItem.name, actorItem);
       return [];
     }
     game.system.log.o("[ENABLE] Actor item :", {
