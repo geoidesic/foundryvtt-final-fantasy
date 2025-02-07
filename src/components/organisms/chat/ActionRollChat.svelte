@@ -156,8 +156,15 @@
           }
         }
         
-        // Always set target tokens, regardless of initialization state
-        targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id));
+        // Wait for canvas to be ready before getting tokens
+        if (canvas.ready) {
+          targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)).filter(Boolean);
+        } else {
+          // If canvas isn't ready, wait for it
+          Hooks.once('canvasReady', () => {
+            targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)).filter(Boolean);
+          });
+        }
       }
     }
   }
