@@ -154,8 +154,7 @@ export default class ActionHandler {
         ? ChatMessage.getSpeaker({ actor: this.actor })
         : null,
       flavor: `${item.name}`,
-      style: CONST.CHAT_MESSAGE_STYLES.ROLL,
-      rolls: roll ? [roll] : [],
+      rolls: roll ? [roll] : undefined,
       flags: {
         [SYSTEM_ID]: {
           data: {
