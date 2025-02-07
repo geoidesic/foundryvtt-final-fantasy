@@ -18,4 +18,19 @@ export default class FFEffectModel extends foundry.abstract.TypeDataModel {
       )
     }
   }
+
+  /** @override */
+  prepareBaseData() {
+    super.prepareBaseData();
+    
+    // Ensure flags exist
+    if (!this.parent.flags['foundryvtt-final-fantasy']) {
+      this.parent.flags['foundryvtt-final-fantasy'] = {};
+    }
+    
+    // Set default stackable behavior if not already set
+    if (!this.parent.flags['foundryvtt-final-fantasy'].stackable) {
+      this.parent.flags['foundryvtt-final-fantasy'].stackable = 'differentSource';
+    }
+  }
 }
