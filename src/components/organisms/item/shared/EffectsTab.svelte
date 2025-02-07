@@ -9,7 +9,7 @@
 
   import { getEffectOrigin } from "~/src/helpers/util";
   import { SYSTEM_ID } from "~/src/helpers/constants";
-  import { localize } from "~/src/helpers/util";
+  import { localize, isParentActor } from "~/src/helpers/util";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
 
   export let sheet;
@@ -18,6 +18,8 @@
     filterDoc = new TJSDocument($doc);
     wildcard = filterDoc.embedded.create(ActiveEffect, wildcardConfig);
   }
+
+  const item = getContext("#doc");
 
   let key = false,
     keyUp = true,
@@ -28,6 +30,8 @@
   const doc = getContext("#doc");
   const app = getContext("#external").application;
 
+  //- @why: some fields are only available on actor sheets
+  $: parentIsActor = isParentActor($item);
   // Determine if this is an actor sheet
   $: isActorSheet = sheet === 'actor';
   // Check if user is GM
@@ -198,7 +202,8 @@
       tr.gold
         th.img.shrink(scope="col")
         th.left.expand.ml-sm(scope="col") {localize('Name')}
-        th.left.shrink(scope="col") {localize('Origin')}
+        +if("parentIsActor")
+          th.left.shrink(scope="col") {localize('Origin')}
         th.buttons(scope="col" class="{lockCSS}")
           button.stealth(class="{lockCSS}" on:click="{toggleLock}")
             i.fa(class="{faLockCSS}")
@@ -210,7 +215,8 @@
               src="{getAvatarForVersion(effect, window.game.version)}" 
               alt="avatar for game version"
             )
-          td.left.expand.no-wrap {effect.name}
+          +if("parentIsActor")
+            td.left.expand.no-wrap {effect.name}
           td.img.left
             +if("effect.getFlag(SYSTEM_ID, 'transferredBy.actor.img')")
               img.icon.nopointer(
