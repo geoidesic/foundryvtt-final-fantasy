@@ -39,7 +39,7 @@ export default class FFCombat extends Combat {
   }
 
   /**
-   * Reset abilities and states for all combatants
+   * Reset abilities and states, action slots, and effects for all combatants
    * @return {Promise<void>} Returns a promise that resolves when all combatants have been reset
    */
   async resetCombatantAbilities() {
