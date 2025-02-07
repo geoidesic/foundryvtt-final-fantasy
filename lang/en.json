@@ -101,8 +101,18 @@
         "Caption": "If checked, this Effect will be displayed as an overlay on the Actor's token, when active."
       },
       "Stackable": {
-        "Label": "Stackable",
-        "Caption": "If checked, this Effect will be able to stack with other instances of itself, from the same source, on the same target. (The default is stackable from different sources.)"
+        "Label": "Stacking Behavior",
+        "Caption": "Controls how this effect interacts with other instances of itself on the same target.",
+        "Options": {
+          "differentSource": "Stacking (if from different source)",
+          "anySource": "Stacking (from any source)",
+          "replaces": "Replaces"
+        },
+        "Descriptions": {
+          "differentSource": "Effect will stack with instances from different sources, but not from the same source.",
+          "anySource": "Effect will stack with any instance, regardless of source.",
+          "replaces": "New instances of this effect will replace existing ones (e.g. Bardsong effects)."
+        }
       },
       "Suspended": {
         "Label": "Suspended",

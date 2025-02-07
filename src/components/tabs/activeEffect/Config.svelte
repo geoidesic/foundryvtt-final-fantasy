@@ -11,6 +11,12 @@ import TagSelect from "~/src/components/molecules/TagSelect.svelte";
 
 const doc = getContext("#doc");
 
+const stackingOptions = [
+  { value: "differentSource", label: localize("EFFECT.Stackable.Options.differentSource") },
+  { value: "anySource", label: localize("EFFECT.Stackable.Options.anySource") },
+  { value: "replaces", label: localize("EFFECT.Stackable.Options.replaces") }
+];
+
 $: statusOptions = getDefaultStatusEffects().map(status => status.id);
 
 onMount(async () => {
@@ -52,8 +58,13 @@ onMount(async () => {
       .flexrow.justify-vertical
         .flex4
           label.gold(for="stackable") {localize("EFFECT.Stackable.Label")}
-        .flex0.right
-          DocCheckbox(name="stackable" valuePath="{`flags.${SYSTEM_ID}.stackable`}")
+        .flex4.right
+          DocSelect.wide.right(
+            id="stackable" 
+            name="stackable" 
+            options="{stackingOptions}" 
+            valuePath="{`flags.${SYSTEM_ID}.stackable`}"
+          )
       .flexrow.justify-vertical
         .flex4
           p.caption  {localize("EFFECT.Stackable.Caption")}

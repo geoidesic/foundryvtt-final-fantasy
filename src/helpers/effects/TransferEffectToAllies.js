@@ -45,6 +45,8 @@ export default class TransferEffectToAllies {
     game.system.log.p("[TRANSFER] Source actor:", this.actor.name);
     game.system.log.p("[TRANSFER] Effect:", effect);
 
+    // Get stacking behavior
+    const stackingBehavior = effect.getFlag(SYSTEM_ID, 'stackable') || 'differentSource';
    
     // Create the effect on each ally's actor
     for (const token of this.actor.allyTokens) {
@@ -54,6 +56,17 @@ export default class TransferEffectToAllies {
       if (!token.actor) {
         game.system.log.p("[TRANSFER] No actor for token, skipping");
         continue;
+      }
+
+      // Handle stacking behavior
+      if (stackingBehavior === 'replaces') {
+        // Delete all existing instances of this effect before adding the new one
+        const existingEffects = token.actor.effects.filter(e => e.name === effect.name);
+        game.system.log.p("[TRANSFER] Found existing effects to replace:", existingEffects.length);
+        for (const existingEffect of existingEffects) {
+          game.system.log.p("[TRANSFER] Removing existing effect for replacement:", existingEffect.name);
+          await existingEffect.delete();
+        }
       }
 
       // Create a copy of the effect on the ally

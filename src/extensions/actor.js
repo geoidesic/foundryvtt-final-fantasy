@@ -150,22 +150,40 @@ export default class FF15Actor extends Actor {
       });
 
       const sourceActors = this.getEffectSources(effect);
-      const isStackable = effect.getFlag(SYSTEM_ID, 'stackable');
+      const stackingBehavior = effect.getFlag(SYSTEM_ID, 'stackable') || 'differentSource';
       
-      // If this source already has a non-stackable version of this effect, skip
-      if (sourceActors.has(this.uuid) && !isStackable) {
-        game.system.log.p("[ADD LINKED EFFECTS] Non-stackable effect already exists from this source:", {
-          name: effect.name,
-          source: this.uuid,
-          existingSources: Array.from(sourceActors)
-        });
-        continue;
+      // Handle different stacking behaviors
+      switch (stackingBehavior) {
+        case 'replaces':
+          // Delete all existing instances of this effect before adding the new one
+          const existingEffects = this.effects.filter(e => e.name === effect.name);
+          game.system.log.p("[ADD LINKED EFFECTS] Found existing effects to replace:", existingEffects.length);
+          for (const existingEffect of existingEffects) {
+            game.system.log.p("[ADD LINKED EFFECTS] Removing existing effect for replacement:", existingEffect.name);
+            await existingEffect.delete();
+          }
+          break;
+        case 'anySource':
+          // Always allow stacking
+          break;
+        case 'differentSource':
+        default:
+          // Only allow one instance per source
+          if (sourceActors.has(this.uuid)) {
+            game.system.log.p("[ADD LINKED EFFECTS] Effect already exists from this source:", {
+              name: effect.name,
+              source: this.uuid,
+              existingSources: Array.from(sourceActors)
+            });
+            continue;
+          }
       }
 
       // If we get here, either:
       // 1. No matching effects exist
-      // 2. Matching effects exist but from different sources (always stacks)
-      // 3. Matching effect exists from this source but is stackable
+      // 2. Matching effects exist but stacking is allowed (anySource)
+      // 3. Matching effects exist but were deleted (replaces)
+      // 4. Matching effects exist but from different sources (differentSource)
       const effectData = {
         ...effect.toObject(),
         disabled: false,

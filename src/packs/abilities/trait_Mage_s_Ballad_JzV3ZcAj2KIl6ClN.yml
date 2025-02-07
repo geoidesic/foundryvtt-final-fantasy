@@ -8,8 +8,8 @@ system:
     <em><strong>Bardsong</strong></em> enhancements are removed at the end of
     your next turn or when you are granted a new
     <em><strong>Bardsong</strong></em> enhancement.</p><p><strong>Bardsong:
-    Mage’s Ballad Enhancement</strong> While under the effect of
-    <em><strong>Bardsong: Mage’s Ballad</strong></em>, all allies may each
+    Mage's Ballad Enhancement</strong> While under the effect of
+    <em><strong>Bardsong: Mage's Ballad</strong></em>, all allies may each
     reroll a single die when determining the amount of damage dealt by an
     ability. Any die rerolled in this way cannot be rerolled again, and its
     result must be used.</p>
@@ -40,7 +40,7 @@ effects:
         source: user
         trigger: passive
         overlay: true
-        stackable: false
+        stackable: replaces
     name: Mage's Ballad
     img: systems/foundryvtt-final-fantasy/assets/icons/traits/bards-song.webp
     _id: OfT8PTgm4qHN99oi
