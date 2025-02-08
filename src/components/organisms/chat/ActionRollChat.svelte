@@ -185,6 +185,22 @@
   async function applyResult(target) {
     if (isApplyDisabled(target)) return;
 
+    // Immediately update the message state to disable the button
+    const newDamageResults = {...FFMessageState.damageResults};
+    newDamageResults[target.id] = {
+      ...newDamageResults[target.id],
+      applied: true
+    };
+    await $message.update({
+      flags: {
+        [SYSTEM_ID]: {
+          state: {  
+            damageResults: newDamageResults
+          }
+        },
+      },
+    });
+
     const token = canvas.tokens.get(target.id);
     if (!token) return;
 
@@ -240,11 +256,12 @@
       game.system.log.o('[KO CHECK] KO status applied');
     }
 
-    // Update the message state to show this result has been applied
-    const newDamageResults = {...FFMessageState.damageResults};
-    newDamageResults[target.id].applied = true;
-    newDamageResults[target.id].wasKOd = newHP <= 0;
-    newDamageResults[target.id].directHitResult = directHitDamage;
+    // Update the final state with all the results
+    newDamageResults[target.id] = {
+      ...newDamageResults[target.id],
+      wasKOd: newHP <= 0,
+      directHitResult: directHitDamage
+    };
 
     await $message.update({
       flags: {
