@@ -21,7 +21,6 @@ system:
   trigger: invoke
   hasTarget: true
   target: enemy
-  baseEffect: ''
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0

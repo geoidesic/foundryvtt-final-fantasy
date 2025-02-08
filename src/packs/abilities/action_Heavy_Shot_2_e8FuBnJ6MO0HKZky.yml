@@ -56,7 +56,6 @@ system:
   requires:
     list: []
     value: false
-  hasBaseEffect: true
   procs:
     value: true
     list:
@@ -68,6 +67,7 @@ system:
     list: []
     value: false
   hasBaseEffectDamage: true
+  hasBaseEffectHealing: false
 effects: []
 flags: {}
 _stats:

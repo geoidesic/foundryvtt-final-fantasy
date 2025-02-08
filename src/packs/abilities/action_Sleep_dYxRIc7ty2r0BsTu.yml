@@ -24,7 +24,8 @@ system:
   target: allallies
   baseEffectHealing: ''
   baseEffectDamage: ''
-  hasBaseEffect: false
+  hasBaseEffectHealing: false
+  hasBaseEffectDamage: false
   hasCheck: true
   checkAttribute: int
   checkBonus: 0

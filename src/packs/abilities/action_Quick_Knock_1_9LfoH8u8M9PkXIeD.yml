@@ -16,7 +16,6 @@ system:
   trigger: ''
   hasTarget: true
   target: all
-  baseEffect: ''
   hasCheck: true
   checkAttribute: dex
   checkBonus: 0
@@ -57,9 +56,8 @@ system:
   requires:
     list: []
     value: false
-  baseEffectType: damage
-  hasBaseEffect: true
   baseEffectDamage: '2'
+  hasBaseEffectHealing: false
   hasBaseEffectDamage: true
 effects: []
 flags: {}

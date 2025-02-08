@@ -23,7 +23,8 @@ system:
   target: single
   baseEffectHealing: ''
   baseEffectDamage: ''
-  hasBaseEffect: false
+  hasBaseEffectHealing: false
+  hasBaseEffectDamage: false
   hasCheck: true
   checkAttribute: mnd
   checkBonus: 0

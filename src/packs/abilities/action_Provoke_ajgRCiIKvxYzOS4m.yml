@@ -21,7 +21,8 @@ system:
   target: enemy
   baseEffectHealing: ''
   baseEffectDamage: ''
-  hasBaseEffect: false
+  hasBaseEffectHealing: false
+  hasBaseEffectDamage: false
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0

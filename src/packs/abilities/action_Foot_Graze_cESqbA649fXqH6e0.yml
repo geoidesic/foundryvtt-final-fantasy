@@ -17,7 +17,6 @@ system:
   trigger: move
   hasTarget: true
   target: enemy
-  baseEffect: ''
   hasCheck: true
   checkAttribute: dex
   checkBonus: 0

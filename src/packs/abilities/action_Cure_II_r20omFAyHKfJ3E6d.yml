@@ -21,7 +21,6 @@ system:
   target: single
   baseEffectHealing: 2d6+7
   baseEffectDamage: ''
-  hasBaseEffect: true
   hasCheck: true
   checkAttribute: critical
   checkBonus: 0
@@ -64,6 +63,7 @@ system:
   isMagic: false
   type: primary
   hasBaseEffectHealing: true
+  hasBaseEffectDamage: false
   baseEffectHealingType: target
 effects: []
 sort: 0

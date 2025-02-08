@@ -26,7 +26,6 @@ system:
   target: ''
   baseEffectHealing: 1d6+3
   baseEffectDamage: ''
-  hasBaseEffect: true
   hasCheck: true
   checkAttribute: critical
   checkBonus: 0
@@ -75,6 +74,7 @@ system:
     list:
       - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.w7LejDB8S77pDDbk
   hasBaseEffectHealing: true
+  hasBaseEffectDamage: false
   baseEffectHealingType: target
 effects: []
 sort: 0

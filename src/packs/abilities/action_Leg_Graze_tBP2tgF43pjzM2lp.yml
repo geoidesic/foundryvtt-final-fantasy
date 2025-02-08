@@ -19,7 +19,6 @@ system:
   trigger: ability
   hasTarget: true
   target: enemy
-  baseEffect: ''
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0

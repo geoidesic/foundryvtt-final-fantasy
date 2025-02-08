@@ -20,9 +20,8 @@ system:
   trigger: ''
   hasTarget: true
   target: single
-  baseEffectType: ''
-  baseEffect: ''
-  hasBaseEffect: true
+  hasBaseEffectDamage: true
+  hasBaseEffectHealing: false
   hasCheck: true
   checkAttribute: str
   checkBonus: 0

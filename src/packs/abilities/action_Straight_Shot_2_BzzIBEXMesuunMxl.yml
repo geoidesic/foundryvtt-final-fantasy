@@ -56,7 +56,6 @@ system:
     list:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
     value: true
-  hasBaseEffect: true
   baseEffectHealing: ''
   baseEffectDamage: '5'
   hasSplitDamage: false
@@ -67,6 +66,7 @@ system:
     list: []
     value: false
   hasBaseEffectDamage: true
+  hasBaseEffectHealing: false
 effects: []
 flags: {}
 _stats:

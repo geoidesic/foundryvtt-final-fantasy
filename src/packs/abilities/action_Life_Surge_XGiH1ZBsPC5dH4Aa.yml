@@ -20,7 +20,8 @@ system:
   target: self
   baseEffectHealing: ''
   baseEffectDamage: ''
-  hasBaseEffect: false
+  hasBaseEffectHealing: false
+  hasBaseEffectDamage: false
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0
@@ -65,7 +66,6 @@ system:
   tags: []
   isMagic: false
   type: secondary
-  hasBaseEffectHealing: false
 effects: []
 sort: 0
 ownership:

@@ -52,7 +52,6 @@ system:
   requires:
     list: []
     value: false
-  hasBaseEffect: true
   baseEffectHealing: ''
   baseEffectDamage: '3'
   hasSplitDamage: false
@@ -63,6 +62,7 @@ system:
     list: []
     value: false
   hasBaseEffectDamage: true
+  hasBaseEffectHealing: false
 effects: []
 flags: {}
 _stats:

@@ -19,7 +19,6 @@ system:
   trigger: turn
   hasTarget: true
   target: single
-  baseEffect: ''
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0

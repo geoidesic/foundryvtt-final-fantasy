@@ -22,7 +22,6 @@ system:
   target: allallies
   baseEffectHealing: 1d6+3
   baseEffectDamage: ''
-  hasBaseEffect: true
   hasCheck: true
   checkAttribute: critical
   checkBonus: 0
@@ -66,6 +65,7 @@ system:
   type: primary
   hasBaseEffectHealing: true
   baseEffectHealingType: target
+  hasBaseEffectDamage: false
 effects: []
 sort: 0
 ownership:

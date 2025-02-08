@@ -21,7 +21,6 @@ system:
   target: self
   baseEffectHealing: 1d6+2
   baseEffectDamage: ''
-  hasBaseEffect: true
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0
@@ -62,6 +61,7 @@ system:
   isMagic: false
   type: reaction
   hasBaseEffectHealing: true
+  hasBaseEffectDamage: false
   baseEffectHealingType: self
 effects: []
 sort: 0

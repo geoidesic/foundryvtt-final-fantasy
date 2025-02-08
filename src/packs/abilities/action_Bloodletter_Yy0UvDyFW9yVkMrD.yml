@@ -16,7 +16,6 @@ system:
   trigger: turn
   hasTarget: true
   target: single
-  baseEffect: ''
   hasCheck: false
   checkAttribute: ''
   checkBonus: 0
@@ -57,10 +56,9 @@ system:
     list: []
     value: false
   type: reaction
-  hasBaseEffect: true
-  baseEffectType: damage
   baseEffectDamage: '4'
   hasBaseEffectDamage: true
+  hasBaseEffectHealing: false
 effects: []
 flags: {}
 _stats:

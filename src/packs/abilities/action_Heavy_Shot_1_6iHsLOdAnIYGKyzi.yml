@@ -19,7 +19,6 @@ system:
   trigger: ''
   hasTarget: true
   target: single
-  baseEffect: ''
   hasCheck: true
   checkAttribute: dex
   checkBonus: 0
@@ -62,8 +61,6 @@ system:
   requires:
     list: []
     value: false
-  baseEffectType: damage
-  hasBaseEffect: true
   procs:
     value: true
     list:

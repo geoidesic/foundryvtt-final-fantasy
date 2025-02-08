@@ -24,7 +24,7 @@ system:
   target: all
   baseEffectHealing: ''
   baseEffectDamage: '3'
-  hasBaseEffect: false
+  hasBaseEffectHealing: false
   hasCheck: true
   checkAttribute: int
   checkBonus: 0

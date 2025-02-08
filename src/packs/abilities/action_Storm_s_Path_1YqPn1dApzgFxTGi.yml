@@ -21,9 +21,6 @@ system:
   trigger: ''
   hasTarget: true
   target: single
-  baseEffectType: damage
-  baseEffect: ''
-  hasBaseEffect: true
   hasCheck: true
   checkAttribute: str
   checkBonus: 0
@@ -71,6 +68,8 @@ system:
   type: primary
   baseEffectDamage: '2'
   baseEffectHealing: '2'
+  hasBaseEffectDamage: true
+  hasBaseEffectHealing: true
 effects: []
 sort: 0
 ownership:

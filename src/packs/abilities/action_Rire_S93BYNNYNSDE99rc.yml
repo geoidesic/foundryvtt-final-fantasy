@@ -23,7 +23,8 @@ system:
   target: single
   baseEffectHealing: ''
   baseEffectDamage: '3'
-  hasBaseEffect: true
+  hasBaseEffectHealing: false
+  hasBaseEffectDamage: true
   hasCheck: true
   checkAttribute: int
   checkBonus: 0
@@ -70,7 +71,6 @@ system:
     - invoked
   isMagic: false
   type: primary
-  hasBaseEffectDamage: true
 effects: []
 sort: 0
 ownership:
