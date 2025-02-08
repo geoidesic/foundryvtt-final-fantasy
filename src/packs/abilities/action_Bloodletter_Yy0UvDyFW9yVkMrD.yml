@@ -36,8 +36,8 @@ system:
   durationUnits: phase
   uses: 0
   formula: '4'
-  hasCost: false
-  cost: 0
+  hasCostMP: false
+  costMP: 0
   hasProcTrigger: false
   procTrigger: null
   grants:

@@ -54,8 +54,8 @@ export class ActionModel extends FFItemDataModel {
         choices: ['primary', 'secondary', 'reaction', 'limit', 'combo']
       }),
       hasSplitDamage: new BooleanField({ required: false, initial: false }),
-      hasCost: new BooleanField({ required: false, initial: false }),
-      cost: new NumberField({ required: false, initial: 0 }),
+      hasCostMP: new BooleanField({ required: false, initial: false }),
+      costMP: new NumberField({ required: false, initial: 0 }),
       procTrigger: new NumberField({ required: false, initial: null }),
       procs: new SchemaField({
         list: new ArrayField(

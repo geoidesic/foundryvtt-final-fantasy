@@ -40,8 +40,8 @@ system:
   durationUnits: phase
   uses: 0
   hasSplitDamage: false
-  hasCost: true
-  cost: 1
+  hasCostMP: true
+  costMP: 1
   procTrigger: null
   procs:
     list: []

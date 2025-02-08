@@ -38,8 +38,8 @@ system:
   duration: 0
   durationUnits: phase
   uses: 0
-  hasCost: false
-  cost: 0
+  hasCostMP: false
+  costMP: 0
   procTrigger: null
   grants:
     list: []

@@ -15,8 +15,8 @@
         .flexcol.flex1.left
           ol.properties-list
             li.bg-gold.white.border-gold {$item?.system?.type?.capitalize()}
-            +if("$item?.system?.hasCost")
-              li Cost: {$item?.system?.cost} MP
+            +if("$item?.system?.hasCostMP")
+              li Cost: {$item?.system?.costMP} MP
             +if("$item?.system?.hasCR")
               li {CROptions.find((option) => option.value === $item?.system?.CR)?.label}
             +if("$item?.system?.hasCheck")

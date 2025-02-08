@@ -217,14 +217,14 @@
         .flex4
           h3.left Cost
         .flex0.right
-          DocCheckbox( name="hasCost" valuePath="system.hasCost")
+          DocCheckbox( name="hasCostMP" valuePath="system.hasCostMP")
 
-      +if("$item.system.hasCost")
+      +if("$item.system.hasCostMP")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
             label(for="cost") MP
           .flex4.right.wide
-            DocSelect.wide.right(id="cost" name="cost" type="number" options="{costOptions}" valuePath="system.cost")
+            DocSelect.wide.right(id="cost" name="cost" type="number" options="{costOptions}" valuePath="system.costMP")
       
 
       .flexrow.justify-vertical
