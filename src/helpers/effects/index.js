@@ -6,6 +6,7 @@ import TransferEffectToAllies from './TransferEffectToAllies.js';
 import EnableCombatTurnSlot from './EnableCombatTurnSlot.js';
 import DamageOverTime from './DamageOverTime.js';
 import ProcTrigger from './ProcTrigger.js';
+import LucidDreaming from './LucidDreaming.js';
 
 /**
  * Collection of custom effect processors
@@ -18,5 +19,6 @@ export default {
   TransferEffectToAllies,
   EnableCombatTurnSlot,
   DamageOverTime,
-  ProcTrigger
+  ProcTrigger,
+  LucidDreaming
 };
