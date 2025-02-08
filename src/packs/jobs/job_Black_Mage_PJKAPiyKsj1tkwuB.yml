@@ -32,6 +32,7 @@ system:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.WG7TTZvJQBgwGvba
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.H56n66hVzwY1PJ9b
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.VU45filpiLFCz4RU
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
     value: true
 effects: []
 flags: {}
@@ -42,7 +43,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736007800736
-  modifiedTime: 1736687794695
+  modifiedTime: 1738973636698
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0

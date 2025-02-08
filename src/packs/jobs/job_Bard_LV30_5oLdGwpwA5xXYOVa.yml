@@ -29,6 +29,7 @@ system:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.m4wMEsgPq8s3vrHG
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.JzV3ZcAj2KIl6ClN
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.bj2fFclWqjgWL8Ib
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
   level: 30
   role: DPS
   favourite: false
@@ -42,7 +43,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736007797746
-  modifiedTime: 1736694513386
+  modifiedTime: 1738973624935
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0
