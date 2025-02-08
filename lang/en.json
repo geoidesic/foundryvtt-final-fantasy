@@ -21,6 +21,8 @@
     "Abilities": "Abilities",
     "Action": "Action",
     "BaseEffect": "Base Effect",
+    "BaseEffectDamage": "Base Effect Damage",
+    "BaseEffectHealing": "Base Effect Healing",
     "Bookmark": "Bookmark",
     "ChatText": "Chat Text",
     "Check": "Check",
@@ -195,6 +197,10 @@
               "Buff": "Buff",
               "Debuff": "Debuff",
               "Trait": "Trait"
+            },
+            "BaseEffectHealingType": {
+              "self": "Self",
+              "target": "Target"
             },
             "Check": {
               "critical": "Check for critical"

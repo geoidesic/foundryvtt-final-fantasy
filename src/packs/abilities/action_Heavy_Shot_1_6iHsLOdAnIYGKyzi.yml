@@ -69,6 +69,8 @@ system:
     list:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
   baseEffectDamage: '2'
+  hasBaseEffectDamage: true
+  hasBaseEffectHealing: false
 effects: []
 flags: {}
 _stats:
@@ -78,7 +80,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1735733540431
-  modifiedTime: 1738853898179
+  modifiedTime: 1739000950279
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0

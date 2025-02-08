@@ -49,7 +49,7 @@ system:
     value: false
   grants:
     list:
-      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.gKn4x3QxHY0g9pcz
+      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.oSL7HHIqsFwCUobP
     value: true
   requires:
     list: []
@@ -77,7 +77,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736687182324
-  modifiedTime: 1736687275150
+  modifiedTime: 1739001278747
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!7K2eyGb5Hae8JrV0'
 

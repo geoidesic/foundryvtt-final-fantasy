@@ -74,6 +74,8 @@ system:
     value: true
     list:
       - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.w7LejDB8S77pDDbk
+  hasBaseEffectHealing: true
+  baseEffectHealingType: target
 effects: []
 sort: 0
 ownership:
@@ -87,7 +89,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736613141684
-  modifiedTime: 1736614050394
+  modifiedTime: 1739001370043
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!uI2ZJqZWR4bWsLhs'
 

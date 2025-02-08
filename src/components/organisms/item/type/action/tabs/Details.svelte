@@ -5,7 +5,7 @@
     getRangeOptions, getDurationOptions, getDurationUnits, 
     getLimitationOptions, getLimitationUnits, getAspectedOptions, 
     getTargetOptions, getHeavyshotOptions, getTriggerOptions, 
-    getDirectHitOptions, getTypeOptions 
+    getDirectHitOptions, getTypeOptions, getBaseEffectHealingTypeOptions
   } from "~/src/helpers/constants.js";
   import { getCROptions } from "~/src/helpers/constants.js";
   import { PCModel } from "~/src/models/actors/PC.js";
@@ -43,7 +43,7 @@
   const directHitOptions = getDirectHitOptions();
   const typeOptions = getTypeOptions();
   const directHitConditionOptions = getDefaultStatusEffects().map((effect) => ({ value: effect.id, label: effect.name }));
-
+  const baseEffectHealingTypeOptions = getBaseEffectHealingTypeOptions();
   const costOptions = [
     { value: 1, label: localize("Types.Item.Types.Options.Cost.1") },
     { value: 2, label: localize("Types.Item.Types.Options.Cost.2") },
@@ -76,19 +76,32 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left {localize("BaseEffect")}
+          h3.left {localize("BaseEffectDamage")}
         .flex0.right
-          DocCheckbox( name="hasBaseEffect" valuePath="system.hasBaseEffect")
-      +if("$item.system.hasBaseEffect")
+          DocCheckbox( name="hasBaseEffectDamage" valuePath="system.hasBaseEffectDamage")
+      +if("$item.system.hasBaseEffectDamage")
         .flexrow.sheet-row.justify-vertical.px-sm
           .flex3
             label(for="baseEffectDamage") Damage
           .flex2.right
             DocInput(id="baseEffectDamage" name="baseEffectDamage" valuePath="system.baseEffectDamage")
+
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left {localize("BaseEffectHealing")}
+        .flex0.right
+          DocCheckbox( name="hasBaseEffectHealing" valuePath="system.hasBaseEffectHealing")
+      +if("$item.system.hasBaseEffectHealing")
         .flexrow.sheet-row.justify-vertical.px-sm
           .flex3
-            label(for="baseEffectHealing") Healing
-          .flex2.right
+            label(for="baseEffectHealing") Type
+          .flex4.right
+            DocSelect.wide.right(id="baseEffectHealingType" name="baseEffectHealingType" options="{baseEffectHealingTypeOptions}" valuePath="system.baseEffectHealingType")
+        .flexrow.sheet-row.justify-vertical.px-sm
+          .flex3
+            label(for="baseEffectHealing") Amount
+          .flex4.right
             DocInput(id="baseEffectHealing" name="baseEffectHealing" valuePath="system.baseEffectHealing")
 
       

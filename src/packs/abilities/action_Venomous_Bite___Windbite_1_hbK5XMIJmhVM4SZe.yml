@@ -61,6 +61,7 @@ system:
   requires:
     list: []
     value: false
+  hasBaseEffectDamage: false
 effects: []
 flags: {}
 _stats:
@@ -70,7 +71,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1735733533198
-  modifiedTime: 1736322633185
+  modifiedTime: 1739000991604
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0

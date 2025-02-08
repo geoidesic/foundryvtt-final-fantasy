@@ -63,6 +63,8 @@ system:
     - magic
   isMagic: false
   type: primary
+  hasBaseEffectHealing: true
+  baseEffectHealingType: target
 effects: []
 sort: 0
 ownership:
@@ -76,7 +78,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736612198473
-  modifiedTime: 1736612710824
+  modifiedTime: 1739001328310
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!r20omFAyHKfJ3E6d'
 

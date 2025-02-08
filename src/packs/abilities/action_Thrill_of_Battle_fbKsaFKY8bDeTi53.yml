@@ -18,7 +18,7 @@ system:
   hasTrigger: true
   trigger: beforedamage
   hasTarget: false
-  target: ''
+  target: self
   baseEffectHealing: 1d6+2
   baseEffectDamage: ''
   hasBaseEffect: true
@@ -61,6 +61,8 @@ system:
   tags: []
   isMagic: false
   type: reaction
+  hasBaseEffectHealing: true
+  baseEffectHealingType: self
 effects: []
 sort: 0
 ownership:
@@ -74,7 +76,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736611071174
-  modifiedTime: 1736611553445
+  modifiedTime: 1739000853823
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!fbKsaFKY8bDeTi53'
 

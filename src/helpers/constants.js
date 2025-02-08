@@ -54,6 +54,11 @@ export const getTypeOptions = () => [
   { value: "combo", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.combo") },
 ];
 
+export const getBaseEffectHealingTypeOptions = () => [
+  { value: "self", label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectHealingType.self") },
+  { value: "target", label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectHealingType.target") },
+];
+
 export const getSizeOptions = () => [
   { value: "small", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.small") },
   { value: "medium", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.medium") },

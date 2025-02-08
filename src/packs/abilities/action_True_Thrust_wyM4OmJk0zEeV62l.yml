@@ -22,7 +22,7 @@ system:
   hasTarget: true
   target: single
   baseEffectHealing: ''
-  baseEffectDamage: ''
+  baseEffectDamage: '3'
   hasBaseEffect: false
   hasCheck: true
   checkAttribute: str
@@ -67,6 +67,7 @@ system:
   tags: []
   isMagic: false
   type: primary
+  hasBaseEffectDamage: true
 effects: []
 sort: 0
 ownership:
@@ -80,7 +81,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736684500790
-  modifiedTime: 1736684731367
+  modifiedTime: 1739001233461
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!wyM4OmJk0zEeV62l'
 
