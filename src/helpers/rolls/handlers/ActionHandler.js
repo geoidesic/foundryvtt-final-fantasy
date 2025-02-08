@@ -42,10 +42,9 @@ export default class ActionHandler {
         }
       }
 
-      // Handle healing if the action has healing effects
+      // Handle healing if the action has healing effects - moved outside the CR check block
       if (item.system.baseEffectHealing) {
-          // If no targets, heal the actor using the ability
-          await this._handleHealing(item, this.actor, isCritical);
+        await this._handleHealing(item, this.actor, isCritical);
       }
 
       return {
