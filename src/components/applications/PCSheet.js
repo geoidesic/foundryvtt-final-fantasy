@@ -278,7 +278,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     }
     
     //- if equipment duplicate, increment quantity and return
-    const duplicate = actor.items.find(x => x.name == droppedItem.name);
+    const duplicate = actor.items.find(x => x.name == droppedItem.name && x.type == droppedItem.type);
     if(duplicate) {
       await duplicate.update({system: {quantity: duplicate.system.quantity + 1}})
       ui.notifications.info(`Found matching item "${duplicate.name}" and incremented quantity.`)
