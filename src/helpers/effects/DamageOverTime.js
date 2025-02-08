@@ -1,4 +1,5 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
+import { ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
 
 /**
  * Handles damage over time effects
@@ -77,5 +78,79 @@ export default class DamageOverTime {
         }
       }
     });
+  }
+
+  /**
+   * Handle DOT effects during combat updates
+   * @param {Combat} combat - The combat being updated
+   * @param {object} changed - The changes made to the combat
+   * @param {object} options - Update options
+   */
+  async updateCombat(combat, changed, options) {
+    game.system.log.o("[DOT updateCombat] Starting method for actor:", {
+      name: this.actor.name,
+      type: this.actor.type,
+      id: this.actor.id
+    });
+
+    // Get the previous turn's state
+    const previousCombatant = combat.turns[combat.previous?.turn];
+    const nextCombatant = combat.turns[combat.previous?.turn + 1];
+    const wasAdventurerStepEnd = previousCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC";
+    const wasEnemyStepEnd = previousCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
+
+    game.system.log.o("[DOT updateCombat] Combat state:", {
+      wasAdventurerStepEnd,
+      wasEnemyStepEnd,
+      previousCombatant: previousCombatant?.actor?.name,
+      nextCombatant: nextCombatant?.actor?.name
+    });
+
+    // Process DOT effects at the end of each step
+    const effects = this.actor.effects;
+    game.system.log.o("[DOT updateCombat] Found effects:", effects.size);
+
+    for (const effect of effects) {
+      game.system.log.o("[DOT updateCombat] Processing effect:", {
+        name: effect.name,
+        disabled: effect.disabled,
+        changes: effect.changes
+      });
+
+      if (!effect.disabled) {
+        // At adventurer step end, process DOTs on PCs
+        if (wasAdventurerStepEnd && this.actor.type === "PC") {
+          game.system.log.o("[DOT updateCombat] Processing PC DOT at adventurer step end");
+          for (const change of effect.changes) {
+            game.system.log.o("[DOT updateCombat] Checking change:", {
+              key: change.key,
+              mode: change.mode,
+              value: change.value
+            });
+
+            if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+              game.system.log.o("[DOT updateCombat] Calling DOT hook");
+              await Hooks.callAll('FF15.DamageOverTime', { actor: this.actor, change, effect });
+            }
+          }
+        }
+        // At enemy step end, process DOTs on NPCs
+        else if (wasEnemyStepEnd && this.actor.type === "NPC") {
+          game.system.log.o("[DOT updateCombat] Processing NPC DOT at enemy step end");
+          for (const change of effect.changes) {
+            game.system.log.o("[DOT updateCombat] Checking change:", {
+              key: change.key,
+              mode: change.mode,
+              value: change.value
+            });
+
+            if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+              game.system.log.o("[DOT updateCombat] Calling DOT hook");
+              await Hooks.callAll('FF15.DamageOverTime', { actor: this.actor, change, effect });
+            }
+          }
+        }
+      }
+    }
   }
 } 
