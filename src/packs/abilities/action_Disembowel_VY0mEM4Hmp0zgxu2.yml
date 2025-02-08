@@ -69,7 +69,6 @@ system:
     - combo
   isMagic: false
   type: primary
-  hasBaseEffectDamage: true
 effects: []
 sort: 0
 ownership:
