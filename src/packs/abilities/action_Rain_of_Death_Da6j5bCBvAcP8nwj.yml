@@ -67,7 +67,6 @@ system:
   tags: []
   isMagic: false
   type: reaction
-
 effects: []
 sort: 0
 ownership:
