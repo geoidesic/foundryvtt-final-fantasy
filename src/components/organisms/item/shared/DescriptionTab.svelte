@@ -1,6 +1,9 @@
 <script>
 import { onMount } from 'svelte';
 import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
+
+export let sheet;
+
 </script>
 <template lang="pug">
 

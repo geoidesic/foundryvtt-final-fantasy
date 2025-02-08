@@ -3,7 +3,8 @@
   import { localize } from "~/src/helpers/util";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import Tag from "../atoms/Tag.svelte";
-  
+  import { getPropertyCompat } from "~/src/helpers/getPropertyCompat";
+
   const doc = getContext("#doc");
 
   export let availableTags = [];
@@ -13,7 +14,7 @@
   $: currentTags = (() => {
     const tags = tagsPath.startsWith('flags') 
       ? ($doc.getFlag(SYSTEM_ID, tagsPath) || [])
-      : getProperty($doc, tagsPath) || [];
+      : getPropertyCompat($doc, tagsPath) || [];
     return Array.isArray(tags) ? tags : Array.from(tags);
   })();
 

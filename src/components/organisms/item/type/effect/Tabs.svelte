@@ -8,7 +8,7 @@
   import Description from "~/src/components/organisms/item/shared/DescriptionTab.svelte";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
 
-  let activeTab = "description";
+  export let activeTab = "description";
   // Tabs
   const tabs = [
     { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },

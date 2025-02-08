@@ -5,7 +5,7 @@
   export let tabs = [];
 
   // type of sheet
-  export let sheet;
+  export let sheet = void 0;
   export let activeTab = void 0;
 
   onMount(() => {

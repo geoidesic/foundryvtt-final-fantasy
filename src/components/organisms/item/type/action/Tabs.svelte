@@ -10,7 +10,7 @@
   import Details from "~/src/components/organisms/item/type/action/tabs/Details.svelte";
   import Links from "~/src/components/organisms/item/type/action/tabs/Links.svelte";
 
-  let activeTab = "description";
+  export let activeTab = "description";
   // Tabs
   const tabs = [
     { label: localize(`${SYSTEM_CODE}.ChatText`), id: "description", component: Description },
