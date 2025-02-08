@@ -37,17 +37,37 @@ export default class ActionHandler {
       if (item.system.hasCR) {
         ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
+        // Log item system state for debugging
+        game.system.log.o('[ACTION:HANDLE] Item system state:', {
+          itemName: item.name,
+          hasBaseEffectDamage: item.system.hasBaseEffectDamage,
+          hasBaseEffectHealing: item.system.hasBaseEffectHealing,
+          hasBaseEffectRestoreMP: item.system.hasBaseEffectRestoreMP,
+          baseEffectDamage: item.system.baseEffectDamage,
+          baseEffectHealing: item.system.baseEffectHealing,
+          baseEffectRestoreMP: item.system.baseEffectRestoreMP,
+          fullSystem: item.system
+        });
+
         // Use DefaultChat if there's no custom action message
-        if((item.system.hasBaseEffectDamage || item.system.hasBaseEffectHealing) && (Boolean(item.system.baseEffectDamage) || Boolean(item.system.baseEffectHealing))) {
+        if(item.system.hasBaseEffectDamage || item.system.hasBaseEffectHealing || item.system.hasBaseEffectRestoreMP) {
+          game.system.log.o('[ACTION:HANDLE] Creating custom message');
           message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
         } else {
+          game.system.log.o('[ACTION:HANDLE] Using DefaultChat');
           this.DefaultChat.handle(item);
         }
       }
 
-      // Handle healing if the action has healing effects - moved outside the CR check block
+      // Handle healing if the action has healing effects
       if (item.system.baseEffectHealing) {
         await this._handleHealing(item, this.actor, isCritical);
+      }
+
+      // Handle MP restoration if the action has MP restoration effects (self only)
+      if (item.system.hasBaseEffectRestoreMP && item.system.baseEffectRestoreMP) {
+        game.system.log.o('[MP:RESTORE] Attempting MP restoration');
+        await this._handleMPRestoration(item);
       }
 
       return {
@@ -258,6 +278,7 @@ export default class ActionHandler {
       system: {
         baseEffectHealing: item.system?.baseEffectHealing,
         baseEffectDamage: item.system?.baseEffectDamage,
+        baseEffectRestoreMP: item.system?.baseEffectRestoreMP,
         directHitDamage: item.system?.directHitDamage,
         hasDirectHit: item.system?.hasDirectHit,
         CR: item.system?.CR,
@@ -353,10 +374,15 @@ export default class ActionHandler {
    * Doubles relevant "dice" fields if item is a critical hit.
    */
   _doubleCriticalDamageIfNeeded(item) {
-    // Only double healing for healer recovery skills, otherwise damage.
-    const formulaFields = Boolean(item?.system?.baseEffectHealing)
-      ? ['baseEffectHealing']
-      : ['directHitDamage', 'baseEffectDamage'];
+    // Determine which formulas to double based on item type
+    let formulaFields = [];
+    
+    if (Boolean(item?.system?.baseEffectHealing)) {
+      formulaFields.push('baseEffectHealing');
+    }
+    if (!formulaFields.length) {
+      formulaFields = ['directHitDamage', 'baseEffectDamage'];
+    }
 
     game.system.log.o('[CRITICAL] Doubling damage/healing for critical hit:', {
       itemName: item.name,
@@ -436,6 +462,68 @@ export default class ActionHandler {
       game.system.log.o('[MP:COST] Successfully deducted MP cost');
     } catch (error) {
       game.system.log.e('[MP:COST] Error deducting MP cost:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * @internal
+   * Handle MP restoration from an action (self only)
+   * @param {Item} item - The action item
+   * @return {Promise<void>} A promise that resolves when MP restoration is complete
+   */
+  async _handleMPRestoration(item) {
+    game.system.log.o('[MP:RESTORE] Starting MP restoration check:', {
+      itemName: item.name,
+      hasRestoreMP: item.system.hasBaseEffectRestoreMP,
+      restoreMP: item.system.baseEffectRestoreMP,
+      itemSystem: item.system
+    });
+
+    if (!item.system.baseEffectRestoreMP) {
+      game.system.log.o('[MP:RESTORE] No MP restoration to handle');
+      return;
+    }
+
+    game.system.log.o('[MP:RESTORE] Rolling MP restoration:', {
+      formula: item.system.baseEffectRestoreMP
+    });
+
+    // Convert formula to string if it's a number
+    const formula = String(item.system.baseEffectRestoreMP);
+    const mpRoll = await new Roll(formula).evaluate();
+    const mpAmount = mpRoll.total;
+
+    game.system.log.o('[MP:RESTORE] MP roll result:', {
+      roll: mpRoll,
+      total: mpAmount
+    });
+
+    game.system.log.o('[MP:RESTORE] Actor MP data:', {
+      actor: this.actor.name,
+      points: this.actor.system.points,
+      MP: this.actor.system.points?.MP
+    });
+
+    // Calculate new MP value, not exceeding max MP
+    const currentMP = this.actor.system.points.MP.val;
+    const maxMP = this.actor.system.points.MP.max;
+    const newMP = Math.min(currentMP + mpAmount, maxMP);
+
+    game.system.log.o('[MP:RESTORE] MP calculation:', {
+      currentMP,
+      maxMP,
+      mpAmount,
+      newMP,
+      mpRestored: newMP - currentMP
+    });
+
+    try {
+      // Update the actor's MP
+      await this.actor.update({ "system.points.MP.val": newMP });
+      game.system.log.o('[MP:RESTORE] Successfully restored MP');
+    } catch (error) {
+      game.system.log.e('[MP:RESTORE] Error restoring MP:', error);
       throw error;
     }
   }

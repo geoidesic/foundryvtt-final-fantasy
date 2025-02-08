@@ -1,5 +1,4 @@
 {
-  
   "TYPES": {
     "Actor": {
       "PC": "Player Character",
@@ -20,9 +19,6 @@
     "three": "3",
     "Abilities": "Abilities",
     "Action": "Action",
-    "BaseEffect": "Base Effect",
-    "BaseEffectDamage": "Base Effect Damage",
-    "BaseEffectHealing": "Base Effect Healing",
     "Bookmark": "Bookmark",
     "ChatText": "Chat Text",
     "Check": "Check",
@@ -152,7 +148,11 @@
             "SingleTarget": "%s requires a single target. Please select just one target and roll again.",
             "SingleTargetNotSelf": "%s requires a single target. Please select just one target that is not yourself and roll again.",
             "TargetSelf": "%s requires you to target yourself. Please target your own actor's token and roll again.",
-            "UsesRemaining": "Uses Remaining"
+            "UsesRemaining": "Uses Remaining",
+            "BaseEffect": "Base Effect",
+            "BaseEffectDamage": "Base Effect Damage",
+            "BaseEffectHealing": "Base Effect Healing",
+            "BaseEffectRestoreMP": "Base Effect Restore MP"
           },
           "equipment": {
             "Label": "Equipment",

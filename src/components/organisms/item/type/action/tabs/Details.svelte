@@ -76,7 +76,7 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left {localize("BaseEffectDamage")}
+          h3.left {localize("Types.Item.Types.action.BaseEffectDamage")}
         .flex0.right
           DocCheckbox( name="hasBaseEffectDamage" valuePath="system.hasBaseEffectDamage")
       +if("$item.system.hasBaseEffectDamage")
@@ -86,10 +86,24 @@
           .flex2.right
             DocInput(id="baseEffectDamage" name="baseEffectDamage" valuePath="system.baseEffectDamage")
 
+      
 
       .flexrow.justify-vertical
         .flex4
-          h3.left {localize("BaseEffectHealing")}
+          h3.left {localize("Types.Item.Types.action.BaseEffectRestoreMP")}
+        .flex0.right
+          DocCheckbox( name="hasBaseEffectRestoreMP" valuePath="system.hasBaseEffectRestoreMP")
+      +if("$item.system.hasBaseEffectRestoreMP")
+        .flexrow.sheet-row.justify-vertical.px-sm
+          .flex3
+            label(for="baseEffectRestoreMP") Restore MP
+          .flex2.right
+            DocInput(id="baseEffectRestoreMP" name="baseEffectRestoreMP" valuePath="system.baseEffectRestoreMP")
+
+
+      .flexrow.justify-vertical
+        .flex4
+          h3.left {localize("Types.Item.Types.action.BaseEffectHealing")}
         .flex0.right
           DocCheckbox( name="hasBaseEffectHealing" valuePath="system.hasBaseEffectHealing")
       +if("$item.system.hasBaseEffectHealing")
