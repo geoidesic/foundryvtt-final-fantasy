@@ -1,0 +1,64 @@
+name: Sprint
+type: effect
+_id: JcoqvIMT7yzcKqRt
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/sprint.webp
+system:
+  description: <p>Double's an actor's speed.</p>
+effects:
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.JcoqvIMT7yzcKqRt
+    flags:
+      foundryvtt-final-fantasy:
+        stackable: replaces
+        overlay: true
+    name: Sprint
+    img: systems/foundryvtt-final-fantasy/assets/icons/actions/sprint.webp
+    _id: 2qB5utPjC5m5j1BO
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: system.attributes.secondary.spd.val
+        mode: 1
+        value: '2'
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1738973014259
+      modifiedTime: 1738973064626
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!JcoqvIMT7yzcKqRt.2qB5utPjC5m5j1BO'
+folder: null
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1738971478002
+  modifiedTime: 1738972548334
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!JcoqvIMT7yzcKqRt'
+

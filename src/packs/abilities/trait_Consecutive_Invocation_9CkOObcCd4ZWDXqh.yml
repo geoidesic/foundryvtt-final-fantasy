@@ -31,6 +31,7 @@ system:
   duration:
     turns: 0
     rounds: 0
+  sacrificesMovement: true
 effects:
   - origin: Compendium.foundryvtt-final-fantasy.abilities.Item.9CkOObcCd4ZWDXqh
     flags:
@@ -48,7 +49,7 @@ effects:
         value: invoked
         mode: 0
         priority: 1
-    disabled: true
+    disabled: false
     duration:
       startTime: null
       seconds: null
@@ -69,7 +70,7 @@ effects:
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
       createdTime: 1738746585796
-      modifiedTime: 1738856364515
+      modifiedTime: 1738934440685
       lastModifiedBy: A3f8BsJ7eYm0X14M
     _key: '!items.effects!9CkOObcCd4ZWDXqh.hVwkvAFSmrLkVL08'
 ownership:
@@ -83,7 +84,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736679561774
-  modifiedTime: 1738855272445
+  modifiedTime: 1738957150193
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _id: 9CkOObcCd4ZWDXqh
 sort: 200000

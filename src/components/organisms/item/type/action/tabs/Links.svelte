@@ -30,6 +30,10 @@
         key="grants",
       )
       ItemBucket(
+        title="{localize('Source')} {localize('Effects')}",
+        key="sourceGrants",
+      )
+      ItemBucket(
         title="{localize('Enabled')} {localize('Traits')}",
         key="enables",
       )
