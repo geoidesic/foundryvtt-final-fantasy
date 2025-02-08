@@ -31,6 +31,9 @@ export default class ActionHandler {
       let isSuccess;
       let message;
 
+      // Handle MP cost before rolling
+      await this._handleCostMP(item);
+
       if (item.system.hasCR) {
         ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
@@ -212,7 +215,9 @@ export default class ActionHandler {
           },
           state: {
             damageResults: false,
-            initialised: false
+            initialised: false,
+            mpCost: item.system.hasCostMP ? item.system.costMP : 0,
+            mpRestored: false
           },
           css: `leather ${isCritical ? 'crit' : ''}`
         }
@@ -391,5 +396,47 @@ export default class ActionHandler {
       rollFormula += ` + @${item.system.checkAttribute}`;
     }
     return { rollFormula, rollData };
+  }
+
+  /**
+   * @internal
+   * Handle MP cost for an action
+   * @param {Item} item - The action item
+   * @return {Promise<void>} A promise that resolves when MP cost is handled
+   */
+  async _handleCostMP(item) {
+    game.system.log.o('[MP:COST] Starting MP cost handling:', {
+      itemName: item.name,
+      hasCostMP: item.system.hasCostMP,
+      costMP: item.system.costMP,
+      itemSystem: item.system
+    });
+
+    if (!item.system.hasCostMP || !item.system.costMP) {
+      game.system.log.o('[MP:COST] No MP cost to handle');
+      return;
+    }
+
+    const cost = item.system.costMP;
+    const currentMP = this.actor.system.points.MP.val;
+
+    game.system.log.o('[MP:COST] Deducting MP cost:', {
+      itemName: item.name,
+      cost,
+      currentMP,
+      newMP: currentMP - cost,
+      actorMP: this.actor.system.points.MP
+    });
+
+    try {
+      // Update the actor's MP
+      await this.actor.update({
+        'system.points.MP.val': currentMP - cost
+      });
+      game.system.log.o('[MP:COST] Successfully deducted MP cost');
+    } catch (error) {
+      game.system.log.e('[MP:COST] Error deducting MP cost:', error);
+      throw error;
+    }
   }
 } 

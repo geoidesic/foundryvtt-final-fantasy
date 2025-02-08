@@ -476,4 +476,47 @@ export default class RollGuards {
 
     return true;
   }
+
+  /**
+   * Check if the actor has enough MP to use the action
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether the actor has enough MP
+   */
+  async meetsMPCost(item) {
+    game.system.log.o('[MP:CHECK] Starting MP cost check:', {
+      itemName: item.name,
+      hasCostMP: item.system.hasCostMP,
+      costMP: item.system.costMP
+    });
+
+    // Skip this check if the item doesn't have an MP cost
+    if (!item.system.hasCostMP || !item.system.costMP) {
+      game.system.log.o('[MP:CHECK] No MP cost, skipping check');
+      return true;
+    }
+
+    // Get current MP based on actor type
+    let currentMP;
+    
+      // For PCs, MP is stored in system.points.MP.val
+      currentMP = this.actor.system.points.MP.val;
+      game.system.log.o('[MP:CHECK] PC MP:', currentMP);
+    
+
+    const cost = item.system.costMP;
+
+    game.system.log.o('[MP:CHECK] Checking MP cost:', {
+      actorType: this.actor.type,
+      currentMP,
+      cost,
+      hasEnough: currentMP >= cost
+    });
+
+    if (currentMP < cost) {
+      ui.notifications.warn(`Not enough MP to use ${item.name}. Required: ${cost} MP, Current: ${currentMP} MP`);
+      return false;
+    }
+
+    return true;
+  }
 }

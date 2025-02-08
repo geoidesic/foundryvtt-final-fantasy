@@ -371,26 +371,6 @@
   const handleToggleDescription = () => {
     showDescription = !showDescription;
   };
-
-  async function abilityAction(item, options = {}) {
-    try {
-      // Early return if guards fail
-      if (!(await this.GuardManager.handleGuards(item, [
-        'isAction', 'isActorsTurn', 'isReaction',
-        'targetsMatchActionIntent','hasNoUnappliedDamage', 'hasRequiredEffects',
-        'hasAvailableActionSlot', 'hasRemainingUses', 'hasModifiers'
-      ]))) {
-        return;
-      }
-
-      // Handle the action
-      const result = await this.ActionHandler.handle(item, options);
-
-      // ... existing code ...
-    } catch (error) {
-      // ... existing code ...
-    }
-  }
 </script>
 
 <template lang="pug">

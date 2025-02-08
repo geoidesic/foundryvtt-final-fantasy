@@ -25,7 +25,7 @@
       .flex2.left
         .header.val
           .header
-            DocInput.wide(clickType="click" pulse="{true}" type="number" name="BP" min=0 max="{$actor.system.points.BP.max}" valuePath="system.points.MP.val")
+            DocInput.wide(clickType="click" pulse="{true}" type="number" name="BP" min=0 max="{$actor.system.points.BP.max}" valuePath="system.points.BP.val")
         
   </template>
 

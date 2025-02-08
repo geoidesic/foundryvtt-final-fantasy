@@ -28,6 +28,42 @@ export default function preDeleteChatMessage() {
     const { actionState } = actor.system;
     const usedAction = actionState.used.find(u => u.messageId === message.id);
 
+    // Restore MP cost if the action had one and hasn't been restored yet
+    if (state?.mpCost && !state.mpRestored) {
+      game.system.log.o('[MP:RESTORE] Starting MP restoration check:', {
+        itemName: FFMessage.item.name,
+        mpCost: state.mpCost
+      });
+
+      const currentMP = actor.system.points.MP.val;
+
+      game.system.log.o('[MP:RESTORE] Restoring MP cost:', {
+        itemName: FFMessage.item.name,
+        mpCost: state.mpCost,
+        currentMP,
+        newMP: currentMP + state.mpCost
+      });
+
+      try {
+        await actor.update({
+          'system.points.MP.val': currentMP + state.mpCost
+        });
+        // Mark MP as restored to prevent double restoration
+        await message.update({
+          [`flags.${SYSTEM_ID}.state.mpRestored`]: true
+        });
+        game.system.log.o('[MP:RESTORE] Successfully restored MP cost');
+      } catch (error) {
+        game.system.log.e('[MP:RESTORE] Error restoring MP cost:', error);
+      }
+    } else {
+      game.system.log.o('[MP:RESTORE] No MP cost to restore:', {
+        itemName: FFMessage.item.name,
+        mpCost: state?.mpCost,
+        alreadyRestored: state?.mpRestored
+      });
+    }
+
     if (usedAction) {
       // Restore the action
       await actor.update({
