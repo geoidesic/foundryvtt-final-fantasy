@@ -64,6 +64,7 @@ system:
   isMagic: false
   type: secondary
   hasBaseEffectRestoreMP: true
+  baseEffectRestoreMP: 2
 effects: []
 sort: 0
 ownership:
@@ -77,7 +78,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736682979616
-  modifiedTime: 1739024394626
+  modifiedTime: 1739028449979
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!TxoGJ8k0LO5BlOCs'
 
