@@ -1,23 +1,24 @@
-name: Bind
+name: Primary Action Base Damage Buff 1
 type: effect
-img: icons/svg/net.svg
+img: icons/svg/explosion.svg
 system:
-  description: >-
-    <p><strong>Bind (Enfeeblement):</strong></p><p>• While Bound, small and
-    medium characters’ Speed falls to 0, while larger characters’ Speed is
-    reduced by 2.</p><p>• Characters receive one advantage die when making
-    ability checks targeting a Bound character.</p>
+  description: <p>This condition buffs all your <em>primary</em> actions' base damage.</p>
 effects:
-  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.BDfRAII5Aw5A42Wn
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.rBeeXb5aL2TlEBUa
     flags:
-      foundryvtt-final-fantasy: {}
-    name: Bind
-    img: icons/svg/net.svg
-    _id: ZMxr5ESOUw1Nzsg2
+      foundryvtt-final-fantasy:
+        overlay: true
+    name: Primary Action Base Damage Buff 1
+    img: icons/svg/explosion.svg
+    _id: 5cn3e9ljYYysnISV
     type: base
     system:
       tags: []
-    changes: []
+    changes:
+      - key: PrimaryBaseDamageBuff
+        mode: null
+        value: '1'
+        priority: 1
     disabled: false
     duration:
       startTime: null
@@ -30,8 +31,7 @@ effects:
     description: ''
     tint: '#ffffff'
     transfer: false
-    statuses:
-      - bind
+    statuses: []
     sort: 0
     _stats:
       compendiumSource: null
@@ -39,10 +39,10 @@ effects:
       coreVersion: '12.331'
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
-      createdTime: null
-      modifiedTime: 1736322434748
+      createdTime: 1738974056284
+      modifiedTime: 1738974096765
       lastModifiedBy: A3f8BsJ7eYm0X14M
-    _key: '!items.effects!51gWTHIi8SX7yM74.ZMxr5ESOUw1Nzsg2'
+    _key: '!items.effects!rBeeXb5aL2TlEBUa.5cn3e9ljYYysnISV'
 flags: {}
 _stats:
   compendiumSource: null
@@ -50,14 +50,14 @@ _stats:
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1736322395584
+  createdTime: 1736322401501
   modifiedTime: 1738974204225
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
 folder: null
-_id: 51gWTHIi8SX7yM74
-sort: 1900000
-_key: '!items!51gWTHIi8SX7yM74'
+_id: rBeeXb5aL2TlEBUa
+sort: 1800000
+_key: '!items!rBeeXb5aL2TlEBUa'
 

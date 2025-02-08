@@ -41,7 +41,7 @@ effects:
       lastModifiedBy: A3f8BsJ7eYm0X14M
     _key: '!items.effects!sHcigoDjvkJqx3lY.6vrMZGnDbdTIbYxw'
 folder: null
-sort: 0
+sort: 1100000
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
@@ -53,7 +53,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736607986203
-  modifiedTime: 1736608033183
+  modifiedTime: 1738974204225
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!sHcigoDjvkJqx3lY'
 

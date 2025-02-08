@@ -1,29 +1,25 @@
-name: Extra Base Damage 1
+name: Primary Action Base Damage Buff 2
 type: effect
 img: icons/svg/explosion.svg
 system:
   description: <p>This condition buffs all your <em>primary</em> actions' base damage.</p>
 effects:
-  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.X8RJde8JMumdBtSy
-    disabled: false
-    transfer: false
+  - origin: Compendium.foundryvtt-final-fantasy.effect.Item.gKn4x3QxHY0g9pcz
     flags:
-      surge:
-        source: user
-        trigger: passive
       foundryvtt-final-fantasy:
         overlay: true
-    name: Extra Base Damage 2
+    name: Primary Action Base Damage Buff 2
     img: icons/svg/explosion.svg
-    _id: NykToumuINsiYtW6
+    _id: cEyYiE7ePhzh80PV
     type: base
     system:
       tags: []
     changes:
       - key: PrimaryBaseDamageBuff
-        value: '1'
-        mode: 0
+        mode: null
+        value: '2'
         priority: 1
+    disabled: false
     duration:
       startTime: null
       seconds: null
@@ -32,10 +28,9 @@ effects:
       turns: null
       startRound: null
       startTurn: null
-    description: >-
-      <p>This condition buffs all your <em>primary</em> actions' base
-      damage.</p>
+    description: ''
     tint: '#ffffff'
+    transfer: false
     statuses: []
     sort: 0
     _stats:
@@ -44,10 +39,10 @@ effects:
       coreVersion: '12.331'
       systemId: foundryvtt-final-fantasy
       systemVersion: 0.0.1
-      createdTime: null
-      modifiedTime: 1736609303820
+      createdTime: 1738974104512
+      modifiedTime: 1738974111600
       lastModifiedBy: A3f8BsJ7eYm0X14M
-    _key: '!items.effects!rBeeXb5aL2TlEBUa.NykToumuINsiYtW6'
+    _key: '!items.effects!gKn4x3QxHY0g9pcz.cEyYiE7ePhzh80PV'
 flags: {}
 _stats:
   compendiumSource: null
@@ -55,14 +50,14 @@ _stats:
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
-  createdTime: 1736322401501
-  modifiedTime: 1736322402974
+  createdTime: 1736322402958
+  modifiedTime: 1738974204225
   lastModifiedBy: A3f8BsJ7eYm0X14M
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
 folder: null
-_id: rBeeXb5aL2TlEBUa
-sort: 300000
-_key: '!items!rBeeXb5aL2TlEBUa'
+_id: gKn4x3QxHY0g9pcz
+sort: 1700000
+_key: '!items!gKn4x3QxHY0g9pcz'
 

@@ -3,7 +3,7 @@ import { ACTIVE_EFFECT_MODES } from "~/src/helpers/constants";
 /**
  * Handles primary base damage buff effects
  */
-export default class PrimaryBaseDamageBuff {
+export default class AbilityBaseDamageBuff {
   /**
    * @param {Actor} actor - The actor this effect is applied to
    */
@@ -17,20 +17,11 @@ export default class PrimaryBaseDamageBuff {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
-    const { DamageResults, item } = event;
+    const { DamageResults } = event;
     game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Processing primary base damage buff effect', {
       DamageResults,
-      actorEffects: this.actor.effects,
-      item
+      actorEffects: this.actor.effects
     });
-    
-    // Only apply the buff if the ability is primary
-    if (!item?.system?.type || item.system.type !== 'primary') {
-      game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Skipping - not a primary ability', {
-        itemType: item?.system?.type
-      });
-      return;
-    }
     
     for (const effect of this.actor.effects) {
       const origin = fromUuidSync(effect.origin);
@@ -45,10 +36,10 @@ export default class PrimaryBaseDamageBuff {
           key: change.key,
           mode: change.mode,
           value: change.value,
-          matches: change.key === 'PrimaryBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
+          matches: change.key === 'AbilityBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
         });
         
-        if(change.key === 'PrimaryBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+        if(change.key === 'AbilityBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
           for (const [tokenId, targetData] of DamageResults) {
             const oldDamage = targetData.damage;
             targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
