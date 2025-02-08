@@ -93,17 +93,37 @@ export default class DamageOverTime {
       id: this.actor.id
     });
 
+    // Determine if we're moving forward or backward in turns
+    const isMovingForward = changed.round > combat.previous.round || 
+      (changed.round === combat.previous.round && changed.turn > combat.previous.turn);
+    
+    game.system.log.o("[DOT updateCombat] Turn direction:", {
+      currentRound: changed.round,
+      previousRound: combat.previous.round,
+      currentTurn: changed.turn,
+      previousTurn: combat.previous.turn,
+      isMovingForward
+    });
+
     // Get the previous turn's state
     const previousCombatant = combat.turns[combat.previous?.turn];
     const nextCombatant = combat.turns[combat.previous?.turn + 1];
-    const wasAdventurerStepEnd = previousCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC";
-    const wasEnemyStepEnd = previousCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
+    
+    // When moving backwards, we need to flip our logic
+    const wasAdventurerStepEnd = isMovingForward
+      ? previousCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC"
+      : previousCombatant?.actor?.type === "NPC" && nextCombatant?.actor?.type === "PC";
+    
+    const wasEnemyStepEnd = isMovingForward
+      ? previousCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC")
+      : previousCombatant?.actor?.type === "PC" && (!nextCombatant || nextCombatant?.actor?.type === "NPC");
 
     game.system.log.o("[DOT updateCombat] Combat state:", {
       wasAdventurerStepEnd,
       wasEnemyStepEnd,
       previousCombatant: previousCombatant?.actor?.name,
-      nextCombatant: nextCombatant?.actor?.name
+      nextCombatant: nextCombatant?.actor?.name,
+      isMovingForward
     });
 
     // Process DOT effects at the end of each step
