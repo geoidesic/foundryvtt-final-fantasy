@@ -35,11 +35,17 @@ export default class ActionHandler {
         ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
         // Use DefaultChat if there's no custom action message
-        if(item.system.hasBaseEffect && Boolean(item.system.baseEffectDamage)) {
+        if(item.system.hasBaseEffect && (Boolean(item.system.baseEffectDamage) || Boolean(item.system.baseEffectHealing))) {
           message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
         } else {
           this.DefaultChat.handle(item);
         }
+      }
+
+      // Handle healing if the action has healing effects
+      if (item.system.baseEffectHealing) {
+          // If no targets, heal the actor using the ability
+          await this._handleHealing(item, this.actor, isCritical);
       }
 
       return {
@@ -112,6 +118,44 @@ export default class ActionHandler {
     // Send the roll message to the chat
     const message = await roll.toMessage(messageData);
     return { message, roll, isCritical, d20Result, isSuccess };
+  }
+
+  /**
+   * @internal
+   * Handle healing from an action
+   * @param {Item} item - The action item
+   * @param {Actor} targetActor - The actor to heal
+   * @param {boolean} isCritical - Whether this was a critical hit
+   * @return {Promise<void>} A promise that resolves when healing is complete
+   */
+  async _handleHealing(item, targetActor, isCritical = false) {
+    if (!item.system.baseEffectHealing) return;
+
+    // If it's a critical hit, the healing formula should already be doubled by _handleCriticalHit
+    const healingRoll = await new Roll(item.system.baseEffectHealing).evaluate();
+    const healingAmount = healingRoll.total;
+
+    game.system.log.o('[HEALING] Applying healing:', {
+      itemName: item.name,
+      targetName: targetActor.name,
+      healingAmount,
+      isCritical
+    });
+
+    // Calculate new HP value, not exceeding max HP
+    const currentHP = targetActor.system.points.HP.val;
+    const maxHP = targetActor.system.points.HP.max;
+    const newHP = Math.min(currentHP + healingAmount, maxHP);
+
+    game.system.log.o('[HEALING] HP values:', {
+      currentHP,
+      maxHP,
+      newHP,
+      healingApplied: newHP - currentHP
+    });
+
+    // Update the target's HP
+    await targetActor.update({ "system.points.HP.val": newHP });
   }
 
   /**
