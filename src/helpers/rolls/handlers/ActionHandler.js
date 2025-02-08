@@ -35,7 +35,7 @@ export default class ActionHandler {
         ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
         // Use DefaultChat if there's no custom action message
-        if(item.system.hasBaseEffect && (Boolean(item.system.baseEffectDamage) || Boolean(item.system.baseEffectHealing))) {
+        if((item.system.hasBaseEffectDamage || item.system.hasBaseEffectHealing) && (Boolean(item.system.baseEffectDamage) || Boolean(item.system.baseEffectHealing))) {
           message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
         } else {
           this.DefaultChat.handle(item);

@@ -1,5 +1,6 @@
 // Import effects directly
 import PrimaryBaseDamageBuff from './PrimaryBaseDamageBuff.js';
+import AbilityBaseDamageBuff from './AbilityBaseDamageBuff.js';
 import DamageDiceReroll from './DamageDiceReroll.js';
 import TransferEffectToAllies from './TransferEffectToAllies.js';
 import EnableCombatTurnSlot from './EnableCombatTurnSlot.js';
@@ -12,6 +13,7 @@ import ProcTrigger from './ProcTrigger.js';
  */
 export default {
   PrimaryBaseDamageBuff,
+  AbilityBaseDamageBuff,
   DamageDiceReroll,
   TransferEffectToAllies,
   EnableCombatTurnSlot,

@@ -8,9 +8,11 @@ import effects from '~/src/helpers/effects';
 export function setupEffectsProcessors() {
   game.system.log.o('[EFFECTS] Setting up effect processors');
 
-  Hooks.on('FF15.processAdditionalBaseDamageFromItem', (event) => {
-    const processor = new effects.PrimaryBaseDamageBuff(event.actor);
-    processor.process(event);
+  Hooks.on('FF15.processAdditionalBaseDamageFromItem', async (event) => {
+    let processor = new effects.PrimaryBaseDamageBuff(event.actor);
+    await processor.process(event);
+    processor = new effects.AbilityBaseDamageBuff(event.actor);
+    await processor.process(event);
   });
 
   Hooks.on('FF15.DamageDiceReroll', (event) => {
