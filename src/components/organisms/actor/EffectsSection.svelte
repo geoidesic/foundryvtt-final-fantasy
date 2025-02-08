@@ -83,7 +83,7 @@
   }
 
   function getAvatarForVersion(source, version) {
-    return version < 12 ? source.icon : source.img
+    return version < 12 ? source.icon : source.img;
   }
   
   $: ActiveEffects = [...$wildcard]

@@ -137,7 +137,8 @@
     const effect = await ActiveEffect.create(
       {
         label: $doc.name,
-        icon: $doc.img,
+        icon: $doc.img,  // For pre-v12 compatibility
+        img: $doc.img,   // For v12+
         origin: $doc.uuid,
         renderSheet:true,
         flags: {
@@ -163,7 +164,7 @@
   }
 
   function getAvatarForVersion(source, version) {
-    return version < 12 ? source.icon : source.img
+    return version < 12 ? source.icon : source.img;
   }
   
   onMount(() => {
@@ -211,7 +212,7 @@
           td.img
             img.icon(
               class="{effect.isSuppressed ? 'suspended' : 'active'}" 
-              src="{getAvatarForVersion(effect, window.game.version)}" 
+              src="{getAvatarForVersion(effect, effect.getFlag(SYSTEM_ID, 'version') || 0)}" 
               alt="avatar for game version"
             )
           td.left.expand.no-wrap {effect.name}

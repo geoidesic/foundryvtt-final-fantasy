@@ -11,6 +11,7 @@ export function getDefaultStatusEffects() {
       id: "dead",
       name: localize("statusEffects.dead.name"),
       icon: "icons/svg/skull.svg",
+      img: "icons/svg/skull.svg",
       description: localize("statusEffects.dead.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -19,6 +20,7 @@ export function getDefaultStatusEffects() {
       id: "comatose",
       name: localize("statusEffects.comatose.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/coma.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/coma.svg`,
       description: localize("statusEffects.comatose.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -27,6 +29,7 @@ export function getDefaultStatusEffects() {
       id: "ko",
       name: localize("statusEffects.ko.name"),
       icon: "icons/svg/unconscious.svg",
+      img: "icons/svg/unconscious.svg",
       description: localize("statusEffects.ko.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -35,6 +38,7 @@ export function getDefaultStatusEffects() {
       id: "surprised",
       name: localize("statusEffects.surprised.name"),
       icon: "icons/svg/stoned.svg",
+      img: "icons/svg/stoned.svg",
       description: localize("statusEffects.surprised.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -43,6 +47,7 @@ export function getDefaultStatusEffects() {
       id: "brink",
       name: localize("statusEffects.brink.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/supine.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/supine.svg`,
       description: localize("statusEffects.brink.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -51,6 +56,7 @@ export function getDefaultStatusEffects() {
       id: "bind",
       name: localize("statusEffects.bind.name"),
       icon: "icons/svg/net.svg",
+      img: "icons/svg/net.svg",
       description: localize("statusEffects.bind.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -59,6 +65,7 @@ export function getDefaultStatusEffects() {
       id: "enmity",
       name: localize("statusEffects.enmity.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/enrage.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/enrage.svg`,
       description: localize("statusEffects.enmity.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -67,6 +74,7 @@ export function getDefaultStatusEffects() {
       id: "weakness",
       name: localize("statusEffects.weakness.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/crutch.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/crutch.svg`,
       description: localize("statusEffects.weakness.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -75,6 +83,7 @@ export function getDefaultStatusEffects() {
       id: "stun",
       name: localize("statusEffects.stun.name"),
       icon: "icons/svg/daze.svg",
+      img: "icons/svg/daze.svg",
       description: localize("statusEffects.stun.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -83,6 +92,7 @@ export function getDefaultStatusEffects() {
       id: "prone",
       name: localize("statusEffects.prone.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/prone.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/prone.svg`,
       description: localize("statusEffects.prone.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -92,6 +102,7 @@ export function getDefaultStatusEffects() {
       name: localize("statusEffects.blind.name"),
       description: localize("statusEffects.blind.description"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/blindfold.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/blindfold.svg`,
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
     },
@@ -100,26 +111,28 @@ export function getDefaultStatusEffects() {
       name: localize("statusEffects.slow.name"),
       description: localize("statusEffects.slow.description"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/slowed.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/slowed.svg`,
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: [
         {
           key: "system.attributes.secondary.spd.val",
           value: 0.5,
-          mode: activeEffectModes.find(mode => mode.label === "multiply").value,
+          mode: activeEffectModes.find((mode) => mode.label === "multiply").value,
           priority: 1
         },
         {
           key: "system.globalCheckMod",
           value: -2,
-          mode: activeEffectModes.find(mode => mode.label === "add").value,
+          mode: activeEffectModes.find((mode) => mode.label === "add").value,
           priority: 1
-        },
+        }
       ]
     },
     {
       id: "transcendent",
       name: localize("statusEffects.transcendent.name"),
       icon: "icons/svg/ice-aura.svg",
+      img: "icons/svg/ice-aura.svg",
       description: localize("statusEffects.transcendent.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: true } },
       changes: []
@@ -128,6 +141,7 @@ export function getDefaultStatusEffects() {
       id: "focus",
       name: localize("statusEffects.focus.name"),
       icon: "icons/svg/eye.svg",
+      img: "icons/svg/eye.svg",
       description: localize("statusEffects.focus.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: true } },
       changes: []
