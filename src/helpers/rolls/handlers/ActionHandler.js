@@ -38,23 +38,23 @@ export default class ActionHandler {
         ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
       } else {
         // Log item system state for debugging
-        game.system.log.o('[ACTION:HANDLE] Item system state:', {
-          itemName: item.name,
-          hasBaseEffectDamage: item.system.hasBaseEffectDamage,
-          hasBaseEffectHealing: item.system.hasBaseEffectHealing,
-          hasBaseEffectRestoreMP: item.system.hasBaseEffectRestoreMP,
-          baseEffectDamage: item.system.baseEffectDamage,
-          baseEffectHealing: item.system.baseEffectHealing,
-          baseEffectRestoreMP: item.system.baseEffectRestoreMP,
-          fullSystem: item.system
-        });
+        // game.system.log.o('[ACTION:HANDLE] Item system state:', {
+        //   itemName: item.name,
+        //   hasBaseEffectDamage: item.system.hasBaseEffectDamage,
+        //   hasBaseEffectHealing: item.system.hasBaseEffectHealing,
+        //   hasBaseEffectRestoreMP: item.system.hasBaseEffectRestoreMP,
+        //   baseEffectDamage: item.system.baseEffectDamage,
+        //   baseEffectHealing: item.system.baseEffectHealing,
+        //   baseEffectRestoreMP: item.system.baseEffectRestoreMP,
+        //   fullSystem: item.system
+        // });
 
         // Use DefaultChat if there's no custom action message
         if(item.system.hasBaseEffectDamage || item.system.hasBaseEffectHealing || item.system.hasBaseEffectRestoreMP) {
-          game.system.log.o('[ACTION:HANDLE] Creating custom message');
+          // game.system.log.o('[ACTION:HANDLE] Creating custom message');
           message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
         } else {
-          game.system.log.o('[ACTION:HANDLE] Using DefaultChat');
+          // game.system.log.o('[ACTION:HANDLE] Using DefaultChat');
           this.DefaultChat.handle(item);
         }
       }
@@ -66,7 +66,7 @@ export default class ActionHandler {
 
       // Handle MP restoration if the action has MP restoration effects (self only)
       if (item.system.hasBaseEffectRestoreMP && item.system.baseEffectRestoreMP) {
-        game.system.log.o('[MP:RESTORE] Attempting MP restoration');
+        // game.system.log.o('[MP:RESTORE] Attempting MP restoration');
         await this._handleMPRestoration(item);
       }
 

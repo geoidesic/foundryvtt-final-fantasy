@@ -20,10 +20,10 @@ export default class GuardManager {
    * @return {Promise<boolean>} Returns true if all guards pass, false otherwise
    */
   async handleGuards(item, guardMethodNames) {
-    game.system.log.o('[GUARDS] Starting guard checks for:', {
-      itemName: item.name,
-      guardMethodNames
-    });
+    // game.system.log.o('[GUARDS] Starting guard checks for:', {
+    //   itemName: item.name,
+    //   guardMethodNames
+    // });
 
     // Run guards sequentially, stop on first failure
     for (const methodName of guardMethodNames) {
@@ -34,9 +34,9 @@ export default class GuardManager {
       }
 
       try {
-        game.system.log.o(`[GUARD] Running guard: ${methodName}`);
+        // game.system.log.o(`[GUARD] Running guard: ${methodName}`);
         const result = await guardMethod.call(this.RG, item);
-        game.system.log.o(`[GUARD] ${methodName} result:`, result);
+        // game.system.log.o(`[GUARD] ${methodName} result:`, result);
         
         if (!result) {
           game.system.log.d(`[GUARD] ${methodName} check failed for ${item.name}`);
@@ -47,7 +47,7 @@ export default class GuardManager {
         return false;
       }
     }
-    game.system.log.o('[GUARDS] All guards passed');
+    // game.system.log.o('[GUARDS] All guards passed');
     return true;
   }
 } 
