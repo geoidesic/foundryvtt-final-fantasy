@@ -62,6 +62,9 @@ system:
   tags: []
   isMagic: false
   type: secondary
+  hasBaseEffectBarrier: true
+  baseEffectBP: 2
+  hasBaseEffect: true
 effects: []
 ownership:
   default: 0
@@ -74,7 +77,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736683238042
-  modifiedTime: 1736683238042
+  modifiedTime: 1739088151633
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _id: SYUPHesDkBuwiCR5
 sort: 0

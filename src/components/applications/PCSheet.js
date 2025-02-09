@@ -271,7 +271,15 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
       return this._onDropJob(event, data);
     }
 
-    //- effect items are not to be dropped directly on the actor
+    /**
+     * Effect items are not to be dropped directly on the actor
+     * @why: because Effect Items are not ActiveEffects, 
+     * dropping them directly on the actor will have no effect,
+     * other than to break the Actor sheet because it will accumulate
+     * invisible Effect items that cannot be removed, for there is no
+     * mechanism to remove them and no use for them. Effect items are only 
+     * to be dropped onto other items, not actors.
+     */
     if (droppedItem.type === "effect") {
       ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`))
       return false;

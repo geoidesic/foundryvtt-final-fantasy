@@ -70,6 +70,11 @@ export default class ActionHandler {
         await this._handleMPRestoration(item);
       }
 
+      // Handle barrier if the action has barrier effects
+      if (item.system.hasBaseEffectBarrier && item.system.baseEffectBP) {
+        await this._handleBarrier(item);
+      }
+
       return {
         handledSuccessfully: true,
         isCritical,
@@ -279,6 +284,8 @@ export default class ActionHandler {
         baseEffectHealing: item.system?.baseEffectHealing,
         baseEffectDamage: item.system?.baseEffectDamage,
         baseEffectRestoreMP: item.system?.baseEffectRestoreMP,
+        baseEffectBP: item.system?.baseEffectBP,
+        hasBaseEffectBarrier: item.system?.hasBaseEffectBarrier,
         directHitDamage: item.system?.directHitDamage,
         hasDirectHit: item.system?.hasDirectHit,
         CR: item.system?.CR,
@@ -526,5 +533,30 @@ export default class ActionHandler {
       game.system.log.e('[MP:RESTORE] Error restoring MP:', error);
       throw error;
     }
+  }
+
+  /**
+   * @internal
+   * Handle barrier points from an action
+   * @param {Item} item - The action item
+   * @return {Promise<void>} A promise that resolves when barrier is applied
+   */
+  async _handleBarrier(item) {
+    if (!item.system.baseEffectBP) return;
+
+    const barrierAmount = item.system.baseEffectBP;
+    const currentBP = this.actor.system.points.BP.val;
+    const newBP = currentBP + barrierAmount;
+
+    game.system.log.o('[BARRIER] Applying barrier points:', {
+      itemName: item.name,
+      actorName: this.actor.name,
+      currentBP,
+      barrierAmount,
+      newBP
+    });
+
+    // Update the actor's BP
+    await this.actor.update({ "system.points.BP.val": newBP });
   }
 } 

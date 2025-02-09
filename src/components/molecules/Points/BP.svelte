@@ -16,12 +16,6 @@
         .sub-header
           .header (Barrier Points)
 
-      .flex2
-        .flex.sub-header 
-          .header Max
-        .flex.max.header 
-          .header
-            DocInput.wide(clickType="click" pulse="{true}" type="number" name="BP" min=0 valuePath="system.points.BP.max")
       .flex2.left
         .header.val
           .header

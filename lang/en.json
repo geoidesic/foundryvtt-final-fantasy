@@ -150,9 +150,10 @@
             "TargetSelf": "%s requires you to target yourself. Please target your own actor's token and roll again.",
             "UsesRemaining": "Uses Remaining",
             "BaseEffect": "Base Effect",
-            "BaseEffectDamage": "Base Effect Damage",
-            "BaseEffectHealing": "Base Effect Healing",
-            "BaseEffectRestoreMP": "Base Effect Restore MP"
+            "BaseEffectDamage": "Damage",
+            "BaseEffectHealing": "Healing",
+            "BaseEffectRestoreMP": "Restore MP",
+            "BaseEffectBarrier": "Barrier"
           },
           "equipment": {
             "Label": "Equipment",

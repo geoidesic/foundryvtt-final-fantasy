@@ -66,6 +66,7 @@ system:
     - invoked
   isMagic: false
   type: primary
+  hasBaseEffect: false
 effects: []
 sort: 0
 ownership:
@@ -79,7 +80,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736612883034
-  modifiedTime: 1736613097670
+  modifiedTime: 1739088609317
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _key: '!items!h1r4qfcw3HVkDbfC'
 

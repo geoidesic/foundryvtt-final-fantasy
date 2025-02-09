@@ -1,0 +1,87 @@
+folder: z6EVVWDx6gzZnn8p
+name: Lucid Dreaming
+type: trait
+_id: D0NkatEm5ii9MtT1
+img: systems/foundryvtt-final-fantasy/assets/icons/actions/lucid-dreaming.webp
+system:
+  description: >-
+    <p><strong>Base Effect</strong>: Recover an additional 1 MP at the end of
+    this round’s [Adventurer Step]. If no MP is recovered, this has no
+    effect.</p>
+  favourite: false
+  effectActionsLocked: false
+  type: Trait
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  uses: 0
+  hasModifier: false
+  modType: ''
+  operator: +
+  modAmount: 0
+  hasDamageDiceReroll: false
+  damageDiceReroll: 0
+  hasTags: false
+  tags: []
+  hasDuration: true
+  duration:
+    turns: 0
+    rounds: 1
+  sacrificesMovement: false
+effects:
+  - img: systems/foundryvtt-final-fantasy/assets/icons/actions/lucid-dreaming.webp
+    origin: Compendium.foundryvtt-final-fantasy.abilities.Item.D0NkatEm5ii9MtT1
+    flags:
+      foundryvtt-final-fantasy:
+        overlay: true
+        stackable: replaces
+    name: Lucid Dreaming
+    _id: anHKLEYdVYf3pu1e
+    type: base
+    system:
+      tags: []
+    changes:
+      - key: LucidDreaming
+        mode: 0
+        value: '1'
+        priority: 1
+    disabled: false
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    description: ''
+    tint: '#ffffff'
+    transfer: false
+    statuses: []
+    sort: 0
+    _stats:
+      compendiumSource: null
+      duplicateSource: null
+      coreVersion: '12.331'
+      systemId: foundryvtt-final-fantasy
+      systemVersion: 0.0.1
+      createdTime: 1739028635562
+      modifiedTime: 1739029002313
+      lastModifiedBy: A3f8BsJ7eYm0X14M
+    _key: '!items.effects!D0NkatEm5ii9MtT1.anHKLEYdVYf3pu1e'
+sort: 0
+ownership:
+  default: 0
+  A3f8BsJ7eYm0X14M: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1739028577672
+  modifiedTime: 1739028623180
+  lastModifiedBy: A3f8BsJ7eYm0X14M
+_key: '!items!D0NkatEm5ii9MtT1'
+

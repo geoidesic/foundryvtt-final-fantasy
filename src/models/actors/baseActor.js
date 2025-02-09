@@ -33,8 +33,7 @@ export class FFActorDataModel extends FFTypeDataModel {
           max: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
         }),
         BP: new SchemaField({
-          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 }),
-          max: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
+          val: new NumberField({ required: true, integer: true, min: 0, initial: 0 })
         })
       }),
       attributes: new SchemaField({

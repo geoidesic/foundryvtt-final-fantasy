@@ -63,6 +63,10 @@ system:
   tags: []
   isMagic: false
   type: secondary
+  sourceGrants:
+    value: true
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.D0NkatEm5ii9MtT1
 effects: []
 ownership:
   default: 0
@@ -75,7 +79,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736682962443
-  modifiedTime: 1736682962443
+  modifiedTime: 1739029547150
   lastModifiedBy: A3f8BsJ7eYm0X14M
 _id: uAmngwv4yTAzUqnN
 sort: 0

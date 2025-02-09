@@ -75,48 +75,70 @@
       
 
       .flexrow.justify-vertical
-        .flex4
-          h3.left {localize("Types.Item.Types.action.BaseEffectDamage")}
+        .flex4 
+          +if("$item.system.hasBaseEffect")
+            h2.left Base Effect
+            +else
+              h3.left Base Effect
+        
         .flex0.right
-          DocCheckbox( name="hasBaseEffectDamage" valuePath="system.hasBaseEffectDamage")
-      +if("$item.system.hasBaseEffectDamage")
-        .flexrow.sheet-row.justify-vertical.px-sm
-          .flex3
-            label(for="baseEffectDamage") Damage
-          .flex2.right
-            DocInput(id="baseEffectDamage" name="baseEffectDamage" valuePath="system.baseEffectDamage")
+          DocCheckbox( name="hasBaseEffect" valuePath="system.hasBaseEffect")
+      +if("$item.system.hasBaseEffect")
+        .subsection
+          .flexrow.justify-vertical
+            .flex4
+              h3.left {localize("Types.Item.Types.action.BaseEffectBarrier")}
+            .flex0.right
+              DocCheckbox( name="hasBaseEffectBarrier" valuePath="system.hasBaseEffectBarrier")
+          +if("$item.system.hasBaseEffectBarrier")
+            .flexrow.sheet-row.justify-vertical.px-sm
+              .flex3
+                label(for="baseEffectBP") Barrier Points
+              .flex2.right
+                DocInput(id="baseEffectBP" name="baseEffectBP" valuePath="system.baseEffectBP")
+          .flexrow.justify-vertical
+            .flex4
+              h3.left {localize("Types.Item.Types.action.BaseEffectDamage")}
+            .flex0.right
+              DocCheckbox( name="hasBaseEffectDamage" valuePath="system.hasBaseEffectDamage")
+          +if("$item.system.hasBaseEffectDamage")
+            .flexrow.sheet-row.justify-vertical.px-sm
+              .flex3
+                label(for="baseEffectDamage") Damage
+              .flex2.right
+                DocInput(id="baseEffectDamage" name="baseEffectDamage" valuePath="system.baseEffectDamage")
 
-      
+          .flexrow.justify-vertical
+            .flex4
+              h3.left {localize("Types.Item.Types.action.BaseEffectHealing")}
+            .flex0.right
+              DocCheckbox( name="hasBaseEffectHealing" valuePath="system.hasBaseEffectHealing")
+          +if("$item.system.hasBaseEffectHealing")
+            .flexrow.sheet-row.justify-vertical.px-sm
+              .flex3
+                label(for="baseEffectHealing") Type
+              .flex4.right
+                DocSelect.wide.right(id="baseEffectHealingType" name="baseEffectHealingType" options="{baseEffectHealingTypeOptions}" valuePath="system.baseEffectHealingType")
+            .flexrow.sheet-row.justify-vertical.px-sm
+              .flex3
+                label(for="baseEffectHealing") Amount
+              .flex4.right
+                DocInput(id="baseEffectHealing" name="baseEffectHealing" valuePath="system.baseEffectHealing")
+          
 
-      .flexrow.justify-vertical
-        .flex4
-          h3.left {localize("Types.Item.Types.action.BaseEffectRestoreMP")}
-        .flex0.right
-          DocCheckbox( name="hasBaseEffectRestoreMP" valuePath="system.hasBaseEffectRestoreMP")
-      +if("$item.system.hasBaseEffectRestoreMP")
-        .flexrow.sheet-row.justify-vertical.px-sm
-          .flex3
-            label(for="baseEffectRestoreMP") Restore MP
-          .flex2.right
-            DocInput(id="baseEffectRestoreMP" name="baseEffectRestoreMP" valuePath="system.baseEffectRestoreMP")
+          .flexrow.justify-vertical
+            .flex4
+              h3.left {localize("Types.Item.Types.action.BaseEffectRestoreMP")}
+            .flex0.right
+              DocCheckbox( name="hasBaseEffectRestoreMP" valuePath="system.hasBaseEffectRestoreMP")
+          +if("$item.system.hasBaseEffectRestoreMP")
+            .flexrow.sheet-row.justify-vertical.px-sm
+              .flex3
+                label(for="baseEffectRestoreMP") Restore MP
+              .flex2.right
+                DocInput(id="baseEffectRestoreMP" name="baseEffectRestoreMP" valuePath="system.baseEffectRestoreMP")
 
 
-      .flexrow.justify-vertical
-        .flex4
-          h3.left {localize("Types.Item.Types.action.BaseEffectHealing")}
-        .flex0.right
-          DocCheckbox( name="hasBaseEffectHealing" valuePath="system.hasBaseEffectHealing")
-      +if("$item.system.hasBaseEffectHealing")
-        .flexrow.sheet-row.justify-vertical.px-sm
-          .flex3
-            label(for="baseEffectHealing") Type
-          .flex4.right
-            DocSelect.wide.right(id="baseEffectHealingType" name="baseEffectHealingType" options="{baseEffectHealingTypeOptions}" valuePath="system.baseEffectHealingType")
-        .flexrow.sheet-row.justify-vertical.px-sm
-          .flex3
-            label(for="baseEffectHealing") Amount
-          .flex4.right
-            DocInput(id="baseEffectHealing" name="baseEffectHealing" valuePath="system.baseEffectHealing")
 
       
       .flexrow.justify-vertical
@@ -303,4 +325,8 @@
       max-height: calc(100% - 15px) //- prevents the scrolling area's content from being hidden below the fold
 
       +mixins.inset(1rem)
+
+    .subsection
+      +mixins.inset(0.5rem)
+      margin-bottom: 0.5rem
 </style>
