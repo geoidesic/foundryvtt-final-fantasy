@@ -234,11 +234,44 @@
     
     createDamageText(token, totalDamage);
 
-    // Update the actor's HP
-    const newHP = token.actor.system.points.HP.val - totalDamage;
-    game.system.log.o('[KO CHECK] Before HP update:', {
-      currentHP: token.actor.system.points.HP.val,
+    // Handle barrier points first
+    const currentBP = token.actor.system.points.BP.val;
+    let remainingDamage = totalDamage;
+    let newBP = currentBP;
+
+    game.system.log.o('[BARRIER] Before damage application:', {
+      currentBP,
       totalDamage,
+      remainingDamage
+    });
+
+    if (currentBP > 0) {
+      // If we have barrier points, reduce them first
+      if (currentBP >= totalDamage) {
+        // Barrier absorbs all damage
+        newBP = currentBP - totalDamage;
+        remainingDamage = 0;
+      } else {
+        // Barrier absorbs some damage
+        remainingDamage = totalDamage - currentBP;
+        newBP = 0;
+      }
+
+      game.system.log.o('[BARRIER] After barrier calculation:', {
+        newBP,
+        remainingDamage
+      });
+
+      // Update barrier points
+      await token.actor.update({ "system.points.BP.val": newBP });
+    }
+
+    // Update the actor's HP with remaining damage
+    const currentHP = token.actor.system.points.HP.val;
+    const newHP = Math.max(currentHP - remainingDamage, 0);
+    game.system.log.o('[KO CHECK] Before HP update:', {
+      currentHP,
+      remainingDamage,
       newHP
     });
 
