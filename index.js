@@ -10,12 +10,15 @@ const LOG_STYLES = {
   g: "color: green;",
   r: "color: red;",
   o: "color: orange;",
-  b: "color: blue;"
+  b: "color: blue;",
+  y: "color: yellow;",
+  c: "color: cyan;",
+  m: "color: magenta;",
+  gr: "color: gray;",
+  br: "color: brown;",
+  pi: "color: pink;",
+  t: "color: teal;"
 };
-const getBaseEffectTypeOptions = /* @__PURE__ */ __name(() => [
-  { value: "damage", label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectType.damage") },
-  { value: "heal", label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectType.heal") }
-], "getBaseEffectTypeOptions");
 const getDamageDiceRerollOptions = /* @__PURE__ */ __name(() => [
   { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.one") },
   { value: 2, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.two") },
@@ -47,6 +50,10 @@ const getTypeOptions = /* @__PURE__ */ __name(() => [
   { value: "limit", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.limit") },
   { value: "combo", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.combo") }
 ], "getTypeOptions");
+const getBaseEffectHealingTypeOptions = /* @__PURE__ */ __name(() => [
+  { value: "self", label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectHealingType.self") },
+  { value: "target", label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectHealingType.target") }
+], "getBaseEffectHealingTypeOptions");
 const getSizeOptions = /* @__PURE__ */ __name(() => [
   { value: "small", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.small") },
   { value: "medium", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.medium") },
@@ -60,7 +67,9 @@ const getRangeOptions = /* @__PURE__ */ __name(() => [
   { value: "10sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.10sq") },
   { value: "3x3a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.3x3a") },
   { value: "3x3aa", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.3x3aa") },
-  { value: "5x5a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5a") }
+  { value: "5x5a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5a") },
+  { value: "5x5e", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5e") },
+  { value: "5x5i", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5i") }
 ], "getRangeOptions");
 const getCROptions = /* @__PURE__ */ __name(() => [
   { value: "def", label: game.i18n.localize("FF15.Types.Item.Types.Options.CR.def") },
@@ -77,6 +86,7 @@ const getTargetOptions = /* @__PURE__ */ __name(() => [
   { value: "single", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.single") },
   { value: "enemy", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.enemy") },
   { value: "all", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.all") },
+  { value: "allallies", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.allallies") },
   { value: "ally", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.ally") }
 ], "getTargetOptions");
 const getAspectedOptions = /* @__PURE__ */ __name(() => [
@@ -88,9 +98,14 @@ const getAspectedOptions = /* @__PURE__ */ __name(() => [
 const getTriggerOptions = /* @__PURE__ */ __name(() => [
   { value: "any", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.any") },
   { value: "ability", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.ability") },
+  { value: "beforeresolve", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.beforeresolve") },
+  { value: "nearby", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.nearby") },
   { value: "move", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.move") },
-  { value: "turn", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.turn") },
-  { value: "invoke", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.invoke") }
+  { value: "beforedamage", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.beforedamage") },
+  { value: "endturn", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.endturn") },
+  { value: "startturn", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.startturn") },
+  { value: "invoke", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
+  { value: "adjacentinvoke", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.adjacentinvoke") }
 ], "getTriggerOptions");
 const getHeavyshotOptions = /* @__PURE__ */ __name(() => [
   { value: "straignt", label: game.i18n.localize("FF15.Types.Item.Types.Options.Heavyshot.straignt") },
@@ -284,28 +299,14 @@ class FF15Actor extends Actor {
     return false;
   }
   /**
-   * Find a matching effect based on provided criteria
-   * @param {ActiveEffect} effect - The effect to match against
-   * @param {Object} criteria - Object with keys matching effect properties and values to match against
-   * @return {ActiveEffect|undefined} The matching effect or undefined if none found
+   * Get the set of actor UUIDs that have applied an effect with this name
+   * @param {ActiveEffect} effect - The effect to check for
+   * @return {Set<string>} Set of actor UUIDs that have applied this effect
    */
-  matchingEffect(effect, criteria = {}) {
-    return this.effects.find((ae) => {
-      if (ae.name !== effect.name)
-        return false;
-      const originItemId = effect.origin?.split(".").pop();
-      const existingItemId = ae.origin?.split(".").pop();
-      if (originItemId !== existingItemId)
-        return false;
-      for (const [key, value] of Object.entries(criteria)) {
-        if (typeof value === "function") {
-          if (!value(ae[key]))
-            return false;
-        } else if (ae[key] !== value)
-          return false;
-      }
-      return true;
-    });
+  getEffectSources(effect) {
+    return new Set(
+      this.effects.filter((e) => e.name === effect.name).map((e) => e.getFlag(SYSTEM_ID, "transferredBy.actor.uuid") || this.uuid)
+    );
   }
   /**
    * Add effects from an item to this actor
@@ -313,21 +314,56 @@ class FF15Actor extends Actor {
    * @return {Array} Array of effect UUIDs that were enabled
    */
   async addLinkedEffects(item) {
-    if (!item.hasEffects)
+    if (!item.hasEffects) {
+      game.system.log.p("[ADD LINKED EFFECTS] Item has no effects:", item);
       return [];
-    const effectsData = Array.from(item.effects).map((effect) => {
-      const existingEffect = this.effects.find(
-        (e) => e.name === effect.name && effect.origin?.actor?.uuid === this.uuid
-      );
-      if (existingEffect)
-        return null;
-      return {
+    }
+    const effectsToCreate = [];
+    for (const effect of item.effects) {
+      game.system.log.p("[ADD LINKED EFFECTS] Processing effect:", {
+        name: effect.name,
+        system: effect.system,
+        flags: effect.flags,
+        origin: effect.origin
+      });
+      game.system.log.p("[ADD LINKED EFFECTS] Effect flags detail:", {
+        rawFlags: effect.flags,
+        systemFlags: effect.flags?.[SYSTEM_ID],
+        stackableFlag: effect.getFlag(SYSTEM_ID, "stackable"),
+        overlayFlag: effect.getFlag(SYSTEM_ID, "overlay")
+      });
+      const sourceActors = this.getEffectSources(effect);
+      const stackingBehavior = effect.getFlag(SYSTEM_ID, "stackable") || "differentSource";
+      switch (stackingBehavior) {
+        case "replaces":
+          const existingEffects = this.effects.filter((e) => e.name === effect.name);
+          game.system.log.p("[ADD LINKED EFFECTS] Found existing effects to replace:", existingEffects.length);
+          for (const existingEffect of existingEffects) {
+            game.system.log.p("[ADD LINKED EFFECTS] Removing existing effect for replacement:", existingEffect.name);
+            await existingEffect.delete();
+          }
+          break;
+        case "anySource":
+          break;
+        case "differentSource":
+        default:
+          if (sourceActors.has(this.uuid)) {
+            game.system.log.p("[ADD LINKED EFFECTS] Effect already exists from this source:", {
+              name: effect.name,
+              source: this.uuid,
+              existingSources: Array.from(sourceActors)
+            });
+            continue;
+          }
+      }
+      const effectData = {
         ...effect.toObject(),
         disabled: false,
         flags: {
           ...effect.flags,
           [SYSTEM_ID]: {
             overlay: effect.getFlag(SYSTEM_ID, "overlay"),
+            stackable: effect.getFlag(SYSTEM_ID, "stackable"),
             origin: {
               actor: {
                 uuid: this.uuid,
@@ -337,48 +373,41 @@ class FF15Actor extends Actor {
               effect: {
                 uuid: effect.uuid
               }
+            },
+            transferredBy: {
+              actor: {
+                uuid: this.uuid,
+                name: this.name,
+                img: this.img
+              }
             }
           }
         }
       };
-    }).filter(Boolean);
-    if (!effectsData.length)
+      game.system.log.p("[ADD LINKED EFFECTS] Prepared effect data for creation:", effectData);
+      effectsToCreate.push(effectData);
+    }
+    if (!effectsToCreate.length) {
+      game.system.log.p("[ADD LINKED EFFECTS] No effects to add");
       return [];
-    for (const effectData of effectsData) {
+    }
+    for (const effectData of effectsToCreate) {
       await FFActiveEffect.setCombatDuration(effectData);
     }
-    const created = await this.createEmbeddedDocuments("ActiveEffect", effectsData);
-    return created.map((e) => e.uuid);
-  }
-  /**
-   * Enable effects from an item on this actor
-   * @param {Item} item - The item to enable effects from
-   * @return {Array} Array of effect UUIDs that were enabled
-   */
-  async enableLinkedEffects(item) {
-    let effectsEnabled = [];
-    for (const effect of item.effects) {
-      const matchingEffect = this.matchingEffect(effect);
-      if (matchingEffect) {
-        if (matchingEffect.disabled) {
-          await matchingEffect.update({ disabled: false });
-          effectsEnabled.push(matchingEffect.uuid);
-        }
-        if (!matchingEffect.isSuppressed) {
-          await this._processEffectHooks(matchingEffect);
-        }
-      } else {
-        const addedEffects = await this.addLinkedEffects(item);
-        effectsEnabled = effectsEnabled.concat(addedEffects);
-        for (const uuid of addedEffects) {
-          const newEffect = await fromUuid(uuid);
-          if (newEffect && !newEffect.isSuppressed) {
-            await this._processEffectHooks(newEffect);
-          }
-        }
+    game.system.log.p("[ADD LINKED EFFECTS] Creating effects on actor:", this.name, effectsToCreate);
+    const created = await this.createEmbeddedDocuments("ActiveEffect", effectsToCreate);
+    for (const effect of created) {
+      if (!effect.isSuppressed) {
+        await this._processEffectHooks(effect);
       }
     }
-    return effectsEnabled;
+    game.system.log.p("[ADD LINKED EFFECTS] Created effects:", created.map((e) => ({
+      name: e.name,
+      system: e.system,
+      flags: e.flags,
+      uuid: e.uuid
+    })));
+    return created.map((e) => e.uuid);
   }
   /**
    * Process effect hooks for an effect
@@ -387,7 +416,9 @@ class FF15Actor extends Actor {
    */
   async _processEffectHooks(effect) {
     for (const change of effect.changes) {
-      if (activeEffectModes.find((e) => e.value === change.mode)) {
+      const matchingMode = activeEffectModes.find((e) => e.value === change.mode);
+      if (matchingMode) {
+        game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", change.key);
         await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
       }
     }
@@ -416,7 +447,7 @@ class FF15Actor extends Actor {
    *                                 - undefined if no changes need to be made
    */
   async toggleStatusEffect(statusId, options) {
-    if (game.combat && statusId === "focus") {
+    if (game.combat?.started && statusId === "focus") {
       if (this.statuses.has("focus") && !this.system.actionState.available.includes("secondary")) {
         ui.notifications.warn("You cannot change Focus while you have no secondary action slots left.");
         return false;
@@ -425,12 +456,67 @@ class FF15Actor extends Actor {
         ui.notifications.warn("You cannot change Focus while you have moved this turn.");
         return false;
       }
+      const movementSacrificingTraits = this.items.filter(
+        (item) => item.type === "trait" && item.system.sacrificesMovement
+      );
+      game.system.log.o("[TOGGLE STATUS] Found movement sacrificing traits:", {
+        traits: movementSacrificingTraits.map((t) => ({
+          name: t.name,
+          type: t.type,
+          sacrificesMovement: t.system.sacrificesMovement,
+          effects: t.effects.map((e) => ({
+            name: e.name,
+            disabled: e.disabled,
+            changes: e.changes,
+            flags: e.flags
+          }))
+        }))
+      });
       if (!this.statuses.has("focus") && !this.system.hasMoved && !this.hasSpecificDuplicate(this.system.actionState.available, "secondary")) {
+        for (const trait of movementSacrificingTraits) {
+          const enablerEffects = trait.effects.filter(
+            (e) => e.changes.some((c) => c.key === "EnableCombatTurnSlot" && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
+          );
+          for (const effect of enablerEffects) {
+            for (const change of effect.changes) {
+              if (change.key === "EnableCombatTurnSlot" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+                const value = change.value;
+                if (!this.system.actionState.available.includes(value)) {
+                  const updated = [...this.system.actionState.available, value];
+                  await this.update({
+                    "system.actionState.available": updated
+                  });
+                }
+              }
+            }
+          }
+        }
         await this.update({ system: { actionState: { available: [...this.system.actionState.available, "secondary"] } } });
       }
       if (this.statuses.has("focus") && !this.system.hasMoved && this.hasSpecificDuplicate(this.system.actionState.available, "secondary")) {
+        for (const trait of movementSacrificingTraits) {
+          const enablerEffects = trait.effects.filter(
+            (e) => e.changes.some((c) => c.key === "EnableCombatTurnSlot" && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
+          );
+          for (const effect of enablerEffects) {
+            for (const change of effect.changes) {
+              if (change.key === "EnableCombatTurnSlot" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+                const value = change.value;
+                if (this.system.actionState.available.includes(value)) {
+                  const updated = this.system.actionState.available.filter((slot) => slot !== value);
+                  await this.update({
+                    "system.actionState.available": updated
+                  });
+                }
+              }
+            }
+          }
+        }
         await this.update({ system: { actionState: { available: this.removeFirstDuplicate(this.system.actionState.available, "secondary") } } });
       }
+    }
+    if (["ko", "dead", "comatose", "brink", "surprised", "bind", "stun"].includes(statusId)) {
+      options = { ...options, overlay: true };
     }
     return super.toggleStatusEffect(statusId, options);
   }
@@ -544,7 +630,8 @@ class FF15Item extends Item {
 }
 const {
   StringField: StringField$6,
-  ArrayField: ArrayField$4
+  ArrayField: ArrayField$4,
+  BooleanField: BooleanField$6
 } = foundry.data.fields;
 class FFEffectModel extends foundry.abstract.TypeDataModel {
   static {
@@ -560,6 +647,16 @@ class FFEffectModel extends foundry.abstract.TypeDataModel {
         new StringField$6({ required: false, initial: "" })
       )
     };
+  }
+  /** @override */
+  prepareBaseData() {
+    super.prepareBaseData();
+    if (!this.parent.flags["foundryvtt-final-fantasy"]) {
+      this.parent.flags["foundryvtt-final-fantasy"] = {};
+    }
+    if (!this.parent.flags["foundryvtt-final-fantasy"].stackable) {
+      this.parent.flags["foundryvtt-final-fantasy"].stackable = "differentSource";
+    }
   }
 }
 class FFToken extends Token {
@@ -611,6 +708,32 @@ const log$1 = {
     };
     this.b = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.b) : () => {
     };
+    this.y = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.y) : () => {
+    };
+    this.c = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.c) : () => {
+    };
+    this.m = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.m) : () => {
+    };
+    this.gr = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.gr) : () => {
+    };
+    this.br = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.br) : () => {
+    };
+    this.pi = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.pi) : () => {
+    };
+    this.t = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.t) : () => {
+    };
+    this.purple = this.p;
+    this.green = this.g;
+    this.red = this.r;
+    this.orange = this.o;
+    this.blue = this.b;
+    this.yellow = this.y;
+    this.cyan = this.c;
+    this.magenta = this.m;
+    this.gray = this.gr;
+    this.brown = this.br;
+    this.pink = this.pi;
+    this.teal = this.t;
     this.loggingLevel = level;
   },
   get level() {
@@ -751,10 +874,11 @@ class FFCombat extends Combat {
     return currentCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
   }
   /**
-   * Reset abilities and states for all combatants
+   * Reset abilities and states, action slots, and effects for all combatants
    * @return {Promise<void>} Returns a promise that resolves when all combatants have been reset
    */
   async resetCombatantAbilities() {
+    const persistentConditions = ["ko", "dead", "comatose", "brink"];
     const combatants = this.combatants.contents;
     for (const combatant of combatants) {
       const actor = combatant.actor;
@@ -766,6 +890,9 @@ class FFCombat extends Combat {
         if (effect.isTransferred) {
           await effect.update({ disabled: true });
         } else {
+          if (effect.statuses?.some((status) => persistentConditions.includes(status))) {
+            continue;
+          }
           await effect.delete();
         }
       }
@@ -1005,6 +1132,11 @@ function loop(callback) {
   };
 }
 __name(loop, "loop");
+var define_global_default = {};
+const globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
+  // @ts-ignore Node typings have this
+  define_global_default
+);
 function append(target, node) {
   target.appendChild(node);
 }
@@ -1893,7 +2025,7 @@ function get_each_context$h(ctx, list, i) {
   return child_ctx;
 }
 __name(get_each_context$h, "get_each_context$h");
-function create_if_block$u(ctx) {
+function create_if_block$v(ctx) {
   let label_1;
   let t;
   return {
@@ -1925,7 +2057,7 @@ function create_if_block$u(ctx) {
     }
   };
 }
-__name(create_if_block$u, "create_if_block$u");
+__name(create_if_block$v, "create_if_block$v");
 function create_each_block$h(ctx) {
   let i_1;
   let i_1_class_value;
@@ -2046,7 +2178,7 @@ function create_fragment$1j(ctx) {
   let dispose;
   let if_block = (
     /*label*/
-    ctx[2] && create_if_block$u(ctx)
+    ctx[2] && create_if_block$v(ctx)
   );
   let each_value = ensure_array_like(
     /*stars*/
@@ -2102,7 +2234,7 @@ function create_fragment$1j(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$u(ctx2);
+          if_block = create_if_block$v(ctx2);
           if_block.c();
           if_block.m(div1, t);
         }
@@ -2153,7 +2285,7 @@ function create_fragment$1j(ctx) {
   };
 }
 __name(create_fragment$1j, "create_fragment$1j");
-function instance$1b($$self, $$props, $$invalidate) {
+function instance$1c($$self, $$props, $$invalidate) {
   let stars;
   let { maxStars = 5 } = $$props;
   let { icon = "fas fa-star" } = $$props;
@@ -2216,14 +2348,14 @@ function instance$1b($$self, $$props, $$invalidate) {
     keydown_handler
   ];
 }
-__name(instance$1b, "instance$1b");
+__name(instance$1c, "instance$1c");
 class StarRating extends SvelteComponent {
   static {
     __name(this, "StarRating");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$1b, create_fragment$1j, safe_not_equal, {
+    init$1(this, options, instance$1c, create_fragment$1j, safe_not_equal, {
       maxStars: 0,
       icon: 1,
       value: 8,
@@ -2251,7 +2383,7 @@ function create_fragment$1i(ctx) {
           /*penalty*/
           ctx2[0]
         ),
-        maxStars: 7,
+        maxStars: 8,
         icon: "fas fa-burst",
         activeColor: "var(--color-negative)"
       }
@@ -2275,7 +2407,7 @@ function create_fragment$1i(ctx) {
           /*bonusDice*/
           ctx2[1]
         ),
-        maxStars: 7,
+        maxStars: 8,
         icon: "fas fa-dice-d20",
         activeColor: "var(--ff-border-color)"
       }
@@ -2412,7 +2544,7 @@ function create_fragment$1i(ctx) {
   };
 }
 __name(create_fragment$1i, "create_fragment$1i");
-function instance$1a($$self, $$props, $$invalidate) {
+function instance$1b($$self, $$props, $$invalidate) {
   let { penalty = 0 } = $$props;
   let { bonusDice = 0 } = $$props;
   let { mutuallyExclusive = false } = $$props;
@@ -2456,14 +2588,14 @@ function instance$1a($$self, $$props, $$invalidate) {
     change_handler_1
   ];
 }
-__name(instance$1a, "instance$1a");
+__name(instance$1b, "instance$1b");
 class ModifierDialog extends SvelteComponent {
   static {
     __name(this, "ModifierDialog");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$1a, create_fragment$1i, safe_not_equal, {
+    init$1(this, options, instance$1b, create_fragment$1i, safe_not_equal, {
       penalty: 0,
       bonusDice: 1,
       mutuallyExclusive: 4
@@ -2703,28 +2835,37 @@ class RollGuards {
     return true;
   }
   /**
-   * Check if there is an active enabler slot available
+   * Check if there is an appropriate action slot available
    * @param {Item} item - The item to check
    * @return {Promise<boolean>} Whether an enabler slot is available
    */
-  async hasActiveEnablerSlot(item) {
+  async hasAvailableActionSlot(item) {
     if (item.system.type === "reaction")
       return true;
     const { actionState } = this.actor.system;
     const actionType = item.system.type || "primary";
+    game.system.log.cyan("[SLOT:USAGE] Checking available action slot:", actionType);
     const enablerSlots = actionState.available.filter(
       (slot) => slot !== "primary" && slot !== "secondary"
     );
+    game.system.log.cyan("[SLOT:USAGE] Enabler slots:", enablerSlots);
     if (item.system.tags?.some((tag) => enablerSlots.includes(tag))) {
       return true;
     }
+    game.system.log.cyan("[SLOT:USAGE] No enabler slots match:", item.system.tags);
     if (actionState.available.includes(actionType)) {
       return true;
     }
+    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
+    if (actionType === "secondary" && actionState.available.filter((slot) => slot === "secondary" || slot === "primary").length) {
+      return true;
+    }
+    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
     if (await this.hasEnablers(item)) {
       const enabledEffects = this.actor.effects.filter(
         (effect) => effect.system.tags?.includes("enabler")
       );
+      game.system.log.cyan("[SLOT:USAGE] Enabled effects:", enabledEffects);
       if (enabledEffects?.length) {
         const enabledEffectsLinkedToEnablerSlots = enabledEffects.filter(
           (effect) => enablerSlots.some((slot) => {
@@ -2829,6 +2970,48 @@ class RollGuards {
       ui.notifications.warn(`No ${actionType} action slot available.`);
     }
     return hasSlot;
+  }
+  /**
+   * Check if there are any unapplied damage results in chat messages
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether there are no unapplied damage results
+   */
+  async hasNoUnappliedDamage(item) {
+    if (!item.system.baseEffectDamage && !item.system.directHitDamage)
+      return true;
+    const messages = game.messages.filter((m) => {
+      const data = m.flags?.[SYSTEM_ID]?.data;
+      return data?.chatTemplate === "ActionRollChat" && (data?.item?.system?.baseEffectDamage || data?.item?.system?.directHitDamage);
+    });
+    for (const message of messages) {
+      const state = message.flags?.[SYSTEM_ID]?.state;
+      if (!state?.damageResults)
+        continue;
+      const hasUnappliedDamage = Object.values(state.damageResults).some((result) => !result.applied);
+      if (hasUnappliedDamage) {
+        ui.notifications.warn("There are unapplied damage results in chat. Please apply or undo them before making another action roll.");
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+   * Check if the actor has enough MP to use the action
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether the actor has enough MP
+   */
+  async meetsMPCost(item) {
+    if (!item.system.hasCostMP || !item.system.costMP) {
+      return true;
+    }
+    let currentMP;
+    currentMP = this.actor.system.points.MP.val;
+    const cost = item.system.costMP;
+    if (currentMP < cost) {
+      ui.notifications.warn(`Not enough MP to use ${item.name}. Required: ${cost} MP, Current: ${currentMP} MP`);
+      return false;
+    }
+    return true;
   }
 }
 class Hashing {
@@ -3073,6 +3256,655 @@ function renderCombatTracker() {
   });
 }
 __name(renderCombatTracker, "renderCombatTracker");
+const subscriber_queue = [];
+function readable(value, start) {
+  return {
+    subscribe: writable(value, start).subscribe
+  };
+}
+__name(readable, "readable");
+function writable(value, start = noop) {
+  let stop;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  __name(set, "set");
+  function update2(fn) {
+    set(fn(value));
+  }
+  __name(update2, "update");
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set, update2) || noop;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0 && stop) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  __name(subscribe2, "subscribe");
+  return { set, update: update2, subscribe: subscribe2 };
+}
+__name(writable, "writable");
+function derived(stores, fn, initial_value) {
+  const single = !Array.isArray(stores);
+  const stores_array = single ? [stores] : stores;
+  if (!stores_array.every(Boolean)) {
+    throw new Error("derived() expects stores as input, got a falsy value");
+  }
+  const auto = fn.length < 2;
+  return readable(initial_value, (set, update2) => {
+    let started = false;
+    const values = [];
+    let pending = 0;
+    let cleanup = noop;
+    const sync = /* @__PURE__ */ __name(() => {
+      if (pending) {
+        return;
+      }
+      cleanup();
+      const result = fn(single ? values[0] : values, set, update2);
+      if (auto) {
+        set(result);
+      } else {
+        cleanup = is_function(result) ? result : noop;
+      }
+    }, "sync");
+    const unsubscribers = stores_array.map(
+      (store, i) => subscribe(
+        store,
+        (value) => {
+          values[i] = value;
+          pending &= ~(1 << i);
+          if (started) {
+            sync();
+          }
+        },
+        () => {
+          pending |= 1 << i;
+        }
+      )
+    );
+    started = true;
+    sync();
+    return /* @__PURE__ */ __name(function stop() {
+      run_all(unsubscribers);
+      cleanup();
+      started = false;
+    }, "stop");
+  });
+}
+__name(derived, "derived");
+const mappedGameTargets = writable(false);
+const tokenMovement = /* @__PURE__ */ new Map();
+const getTokenMovement$1 = /* @__PURE__ */ __name((tokenId) => tokenMovement.get(tokenId) || 0, "getTokenMovement$1");
+const addTokenMovement = /* @__PURE__ */ __name((tokenId, distance) => {
+  const current = getTokenMovement$1(tokenId);
+  tokenMovement.set(tokenId, current + distance);
+}, "addTokenMovement");
+const resetTokenMovement = /* @__PURE__ */ __name((tokenId) => {
+  tokenMovement.set(tokenId, 0);
+}, "resetTokenMovement");
+class PrimaryBaseDamageBuff {
+  static {
+    __name(this, "PrimaryBaseDamageBuff");
+  }
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Process the primary base damage buff effect
+   * @param {object} event - The event containing damage results
+   * @return {Promise<void>} A promise that resolves when processing is complete
+   */
+  async process(event) {
+    const { DamageResults, item } = event;
+    game.system.log.o("[PRIMARY BASE DAMAGE BUFF] Processing primary base damage buff effect", {
+      DamageResults,
+      actorEffects: this.actor.effects,
+      item
+    });
+    if (!item?.system?.type || item.system.type !== "primary") {
+      game.system.log.o("[PRIMARY BASE DAMAGE BUFF] Skipping - not a primary ability", {
+        itemType: item?.system?.type
+      });
+      return;
+    }
+    for (const effect of this.actor.effects) {
+      const origin = fromUuidSync(effect.origin);
+      game.system.log.o("[PRIMARY BASE DAMAGE BUFF] Processing effect:", {
+        effect,
+        origin,
+        changes: effect.changes
+      });
+      for (const change of effect.changes) {
+        game.system.log.o("[PRIMARY BASE DAMAGE BUFF] Checking change:", {
+          key: change.key,
+          mode: change.mode,
+          value: change.value,
+          matches: change.key === "PrimaryBaseDamageBuff" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
+        });
+        if (change.key === "PrimaryBaseDamageBuff" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+          for (const [tokenId, targetData] of DamageResults) {
+            const oldDamage = targetData.damage;
+            targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
+            targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
+            game.system.log.o("[PRIMARY BASE DAMAGE BUFF] Applied damage buff:", {
+              tokenId,
+              oldDamage,
+              newDamage: targetData.damage,
+              addedValue: change.value
+            });
+          }
+        }
+      }
+    }
+  }
+}
+class AbilityBaseDamageBuff {
+  static {
+    __name(this, "AbilityBaseDamageBuff");
+  }
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Process the primary base damage buff effect
+   * @param {object} event - The event containing damage results
+   * @return {Promise<void>} A promise that resolves when processing is complete
+   */
+  async process(event) {
+    const { DamageResults } = event;
+    game.system.log.o("[ABILIEY DAMAGE BUFF] Processing ability base damage buff effect", {
+      DamageResults,
+      actorEffects: this.actor.effects
+    });
+    for (const effect of this.actor.effects) {
+      const origin = fromUuidSync(effect.origin);
+      game.system.log.o("[ABILIEY DAMAGE BUFF] Processing effect:", {
+        effect,
+        origin,
+        changes: effect.changes
+      });
+      for (const change of effect.changes) {
+        game.system.log.o("[ABILIEY DAMAGE BUFF] Checking change:", {
+          key: change.key,
+          mode: change.mode,
+          value: change.value,
+          matches: change.key === "AbilityBaseDamageBuff" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
+        });
+        if (change.key === "AbilityBaseDamageBuff" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+          for (const [tokenId, targetData] of DamageResults) {
+            const oldDamage = targetData.damage;
+            targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
+            targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
+            game.system.log.o("[ABILIEY DAMAGE BUFF] Applied damage buff:", {
+              tokenId,
+              oldDamage,
+              newDamage: targetData.damage,
+              addedValue: change.value
+            });
+          }
+        }
+      }
+    }
+  }
+}
+class DamageDiceReroll {
+  static {
+    __name(this, "DamageDiceReroll");
+  }
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Process the damage dice reroll effect
+   * @param {object} event - The event containing damage results
+   * @return {Promise<void>} A promise that resolves when processing is complete
+   */
+  async process(event) {
+    game.system.log.o("[DAMAGE DICE REROLL] Processing damage dice reroll effect");
+    const { DamageResults, isCritical } = event;
+    if (!DamageResults || !DamageResults.size) {
+      game.system.log.w("[DAMAGE DICE REROLL] No damage results found");
+      return;
+    }
+    for (const effect of this.actor.effects) {
+      if (effect.disabled || effect.isSuppressed)
+        continue;
+      fromUuidSync(effect.origin);
+      for (const change of effect.changes) {
+        if (change.key === "DamageDiceReroll" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+          for (const [targetId, targetData] of DamageResults) {
+            game.system.log.o("[DAMAGE DICE REROLL] Target data:", {
+              targetId,
+              targetData
+            });
+            if (!targetData.directHit)
+              continue;
+            const [numDice, dieType] = targetData.directHit.split("d").map(Number);
+            if (!numDice || !dieType)
+              continue;
+            const additionalDice = Number(change.value) || 1;
+            const newNumDice = numDice + additionalDice;
+            game.system.log.o("[DAMAGE DICE REROLL] New number of dice:", {
+              newNumDice
+            });
+            const kh = numDice;
+            targetData.directHit = `${newNumDice}d${dieType}kh${kh}`;
+            targetData.directHitFormula = targetData.directHit;
+            const parts = [];
+            parts.push(`1D${dieType}`);
+            if (isCritical) {
+              parts.push("CRITICAL");
+            }
+            parts.push(effect.name.toUpperCase());
+            targetData.directHitDisplayFormula = `(${parts.join(" + ")})`;
+          }
+        }
+      }
+    }
+  }
+}
+class TransferEffectToAllies {
+  static {
+    __name(this, "TransferEffectToAllies");
+  }
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Delete transferred effects from allies
+   * @param {object} event - The event containing effect data
+   * @return {Promise<void>} Returns a promise that resolves when the effects have been deleted
+   */
+  async delete(event) {
+    const { effect } = event;
+    const transferredEffects = game.actors.reduce((acc, actor) => {
+      return acc.concat(actor.effects.filter(
+        (e) => e.getFlag(SYSTEM_ID, "transferredBy.actor.uuid") === this.actor.uuid && e.name === effect.name
+      ));
+    }, []);
+    game.system.log.p("[EFFECT] Removing transferredEffects", transferredEffects);
+    game.system.log.p("[EFFECT] Removing transferred effects for", effect.name);
+    for (const transferredEffect of transferredEffects) {
+      await transferredEffect.delete();
+    }
+  }
+  /**
+   * Process the transfer effect to allies
+   * @param {object} event - The event containing effect data
+   * @return {Promise<void>} A promise that resolves when processing is complete
+   */
+  async process(event) {
+    game.system.log.p("[TRANSFER] Starting effect transfer process", event);
+    const { effect } = event;
+    game.system.log.p("[TRANSFER] Source actor:", this.actor.name);
+    game.system.log.p("[TRANSFER] Effect:", effect);
+    const stackingBehavior = effect.getFlag(SYSTEM_ID, "stackable") || "differentSource";
+    for (const token of this.actor.allyTokens) {
+      game.system.log.p("[TRANSFER] Processing token:", token.name);
+      if (!token.actor) {
+        game.system.log.p("[TRANSFER] No actor for token, skipping");
+        continue;
+      }
+      if (stackingBehavior === "replaces") {
+        const existingEffects = token.actor.effects.filter((e) => e.name === effect.name);
+        game.system.log.p("[TRANSFER] Found existing effects to replace:", existingEffects.length);
+        for (const existingEffect of existingEffects) {
+          game.system.log.p("[TRANSFER] Removing existing effect for replacement:", existingEffect.name);
+          await existingEffect.delete();
+        }
+      }
+      const effectData = {
+        name: effect.name,
+        img: effect.img,
+        changes: foundry.utils.deepClone(effect.changes),
+        flags: foundry.utils.deepClone(effect.flags),
+        origin: effect.origin,
+        disabled: false
+      };
+      game.system.log.p("[TRANSFER] Original effect flags:", effect.flags);
+      game.system.log.p("[TRANSFER] Cloned effect flags:", effectData.flags);
+      effectData.flags[SYSTEM_ID] = {
+        ...effectData.flags[SYSTEM_ID],
+        transferredBy: {
+          actor: {
+            uuid: this.actor.uuid,
+            name: this.actor.name,
+            img: this.actor.img
+          }
+        }
+      };
+      game.system.log.p("[TRANSFER] Final effect flags after origin update:", effectData.flags);
+      try {
+        await token.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
+        game.system.log.p("[TRANSFER] Successfully created effect on", token.name, effectData, token.actor);
+      } catch (error) {
+        game.system.log.e("[TRANSFER] Error creating effect:", error);
+      }
+    }
+  }
+}
+class EnableCombatTurnSlot {
+  static {
+    __name(this, "EnableCombatTurnSlot");
+  }
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Process the effect
+   * @param {object} event - The event object containing actor, change, and effect
+   * @return {Promise<void>} Returns a promise that resolves when the effect has been processed
+   */
+  async process(event) {
+    const { actor, change } = event;
+    const { value } = change;
+    const current = actor.system.actionState.available;
+    if (!Array.isArray(current)) {
+      return;
+    }
+    if (!current.includes(value)) {
+      const updated = [...current, value];
+      actor.system.actionState.available = updated;
+      await actor.update({
+        "system.actionState.available": updated
+      });
+    }
+  }
+}
+class DamageOverTime {
+  static {
+    __name(this, "DamageOverTime");
+  }
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Process the damage over time effect
+   * @param {object} event - The event containing damage results
+   * @return {Promise<void>} A promise that resolves when processing is complete
+   */
+  async process(event) {
+    const { change, effect, isMovingForward = true } = event;
+    const currentHP = this.actor.system.points.HP.val;
+    const dotDamage = (parseInt(change.value) || 0) * (isMovingForward ? 1 : -1);
+    if (dotDamage === 0)
+      return;
+    const newHP = Math.max(0, currentHP - dotDamage);
+    game.system.log.o("[DOT] Applying damage:", {
+      actor: this.actor.name,
+      damage: dotDamage,
+      newHP
+    });
+    await this.actor.update({ "system.points.HP.val": newHP });
+    if (isMovingForward && this.actor.system.points.HP.val === 0 && !this.actor.statuses.has("ko")) {
+      await this.actor.toggleStatusEffect("ko");
+    }
+    await ChatMessage.create({
+      user: game.user.id,
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "RollChat",
+            actor: {
+              _id: this.actor.id,
+              name: this.actor.name,
+              img: this.actor.img
+            },
+            item: {
+              name: effect.name,
+              img: effect.img || effect.icon,
+              // Support both v11 and v12
+              type: "effect",
+              system: {
+                description: `${this.actor.name} ${isMovingForward ? "takes" : "recovers"} ${Math.abs(dotDamage)} damage ${isMovingForward ? "from" : "due to reversing"} ${effect.name}`,
+                formula: dotDamage.toString()
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+  /**
+   * Handle DOT effects during combat updates
+   * @param {Combat} combat - The combat being updated
+   * @param {object} changed - The changes made to the combat
+   * @param {object} options - Update options
+   */
+  async updateCombat(combat, changed, options) {
+    if (!("turn" in changed || "round" in changed) || changed.turn === null) {
+      game.system.log.o("[DOT] Skipping - no turn/round change:", { changed });
+      return;
+    }
+    const previousCombatant = combat.turns[combat.previous?.turn];
+    if (!previousCombatant || previousCombatant.actor.id !== this.actor.id) {
+      game.system.log.o("[DOT] Skipping - not previous combatant:", {
+        actor: this.actor.name,
+        previousCombatant: previousCombatant?.actor?.name,
+        previousTurn: combat.previous?.turn,
+        currentTurn: combat.turn
+      });
+      return;
+    }
+    const isMovingForward = options.direction === 1;
+    const nextTurn = combat.previous?.turn + 1;
+    const isLastTurn = nextTurn === combat.turns.length;
+    const nextCombatant = isLastTurn ? combat.turns[0] : combat.turns[nextTurn];
+    game.system.log.o("[DOT] Checking phase:", {
+      actor: this.actor.name,
+      direction: isMovingForward ? "forward" : "backward",
+      previousType: previousCombatant?.actor?.type,
+      nextType: nextCombatant?.actor?.type,
+      nextTurn,
+      totalTurns: combat.turns.length,
+      isLastTurn,
+      isWrapping: isLastTurn
+    });
+    const lastPC = [...combat.turns].reverse().find((t) => t.actor?.type === "PC");
+    const lastNPC = [...combat.turns].reverse().find((t) => t.actor?.type === "NPC");
+    const isLastOfType = this.actor.type === "PC" && lastPC?.actor?.id === this.actor.id || this.actor.type === "NPC" && lastNPC?.actor?.id === this.actor.id;
+    const nextType = nextCombatant?.actor?.type;
+    const isPhaseTransition = this.actor.type === "PC" && nextType === "NPC" || this.actor.type === "NPC" && nextType === "PC" || isLastTurn && isLastOfType;
+    game.system.log.o("[DOT] Phase check:", {
+      actor: this.actor.name,
+      actorType: this.actor.type,
+      nextType,
+      isPhaseTransition,
+      isLastOfType,
+      isLastTurn
+    });
+    if (!isPhaseTransition) {
+      game.system.log.o("[DOT] Skipping - not a phase transition:", {
+        actor: this.actor.name,
+        direction: isMovingForward ? "forward" : "backward",
+        actorType: this.actor.type,
+        nextType,
+        isLastOfType
+      });
+      return;
+    }
+    const relevantEffects = this.actor.effects.filter(
+      (e) => !e.disabled && e.changes.some((c) => c.key === "DamageOverTime" && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
+    );
+    if (relevantEffects.length === 0) {
+      game.system.log.o("[DOT] Skipping - no relevant effects:", {
+        actor: this.actor.name,
+        effectCount: this.actor.effects.size
+      });
+      return;
+    }
+    game.system.log.o("[DOT] Processing combat update:", {
+      actor: this.actor.name,
+      direction: isMovingForward ? "forward" : "backward",
+      phase: {
+        currentType: this.actor.type,
+        nextType
+      }
+    });
+    for (const effect of relevantEffects) {
+      for (const change of effect.changes) {
+        if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+          await Hooks.callAll("FF15.DamageOverTime", {
+            actor: this.actor,
+            change,
+            effect,
+            isMovingForward
+          });
+        }
+      }
+    }
+  }
+}
+let ProcTrigger$1 = class ProcTrigger {
+  static {
+    __name(this, "ProcTrigger");
+  }
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Process the proc trigger effect
+   * @param {object} event - The event containing item and roll data
+   * @return {Promise<void>} A promise that resolves when processing is complete
+   */
+  async process(event) {
+    game.system.log.o("[PROC] Starting proc trigger process:", event);
+    const { item, roll } = event;
+    if (!item.system.procs?.list?.length) {
+      game.system.log.o("[PROC] No procs in list, returning");
+      return;
+    }
+    let d20Result;
+    if (item.system.hasCR && roll) {
+      const d20Term = roll.terms[0];
+      d20Result = d20Term.modifiers.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results[0].result;
+      game.system.log.o("[PROC] Using existing roll d20 result:", d20Result);
+    } else {
+      const procRoll = await new Roll("1d20").evaluate();
+      d20Result = procRoll.terms[0].results[0].result;
+      game.system.log.o("[PROC] Made new roll d20 result:", d20Result);
+    }
+    if (!item.system.procTrigger || d20Result < item.system.procTrigger) {
+      game.system.log.o("[PROC] Roll did not meet proc trigger threshold:", {
+        procTrigger: item.system.procTrigger,
+        d20Result
+      });
+      return;
+    }
+    game.system.log.o("[PROC] Processing proc effects");
+    for (const procRef of item.system.procs.list) {
+      game.system.log.o("[PROC] Processing proc ref:", procRef);
+      const procItem = await fromUuid(procRef.uuid);
+      if (!procItem) {
+        game.system.log.o("[PROC] Could not find proc item:", procRef.uuid);
+        continue;
+      }
+      game.system.log.o("[PROC] Found proc item:", procItem);
+      game.system.log.o("[PROC] Adding proc effect to actor:", procItem.name);
+      const addedEffects = await this.actor.addLinkedEffects(procItem);
+      game.system.log.o("[PROC] Added effects:", addedEffects);
+      await ChatMessage.create({
+        user: game.user.id,
+        speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
+        flags: {
+          [SYSTEM_ID]: {
+            data: {
+              chatTemplate: "RollChat",
+              actor: {
+                _id: this.actor._id,
+                name: this.actor.name,
+                img: this.actor.img
+              },
+              item: {
+                _id: procItem._id,
+                uuid: procItem.uuid,
+                name: procItem.name,
+                img: procItem.img,
+                type: procItem.type,
+                system: procItem.system
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+};
+class ProcTrigger2 {
+  static {
+    __name(this, "ProcTrigger");
+  }
+  /**
+   * @param {Actor} actor - The actor this effect is applied to
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Process the proc trigger effect
+   * @param {object} event - The event containing item and roll data
+   * @return {Promise<void>} A promise that resolves when processing is complete
+   */
+  async process(event) {
+  }
+}
+const effects = {
+  PrimaryBaseDamageBuff,
+  AbilityBaseDamageBuff,
+  DamageDiceReroll,
+  TransferEffectToAllies,
+  EnableCombatTurnSlot,
+  DamageOverTime,
+  ProcTrigger: ProcTrigger$1,
+  LucidDreaming: ProcTrigger2
+};
 function updateCombat() {
   Hooks.on("updateCombat", async (combat, changed, options, userId) => {
     if (!("turn" in changed || "round" in changed) || changed.turn === null)
@@ -3097,80 +3929,14 @@ function updateCombat() {
       });
     }
     await actor.update({ system: { hasMoved: false } });
+    resetTokenMovement(previousTurn.token.id);
     for (const combatant of combat.turns) {
       const currentActor = combatant.actor;
       if (!currentActor)
         continue;
-      game.system.log.o("[EFFECT] Processing actor:", {
-        name: currentActor.name,
-        type: currentActor.type,
-        id: currentActor.id
-      });
-      const effects2 = currentActor.effects;
-      game.system.log.o("[EFFECT] Actor effects count:", effects2.size);
-      for (const effect of effects2) {
-        game.system.log.o("[EFFECT] Processing effect:", {
-          name: effect.name,
-          disabled: effect.disabled,
-          changes: effect.changes
-        });
-        const previousCombatant = combat.turns[combat.previous?.turn];
-        const nextCombatant = combat.turns[combat.previous?.turn + 1];
-        const wasAdventurerStepEnd = previousCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC";
-        const wasEnemyStepEnd = previousCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
-        game.system.log.o("[EFFECT] Previous combat state:", {
-          wasAdventurerStepEnd,
-          wasEnemyStepEnd,
-          previousCombatant: previousCombatant?.actor?.name,
-          nextCombatant: nextCombatant?.actor?.name
-        });
-        if (!effect.disabled) {
-          if (wasAdventurerStepEnd && currentActor.type === "PC") {
-            game.system.log.o("[EFFECT] Processing PC DOT at adventurer step end");
-            for (const change of effect.changes) {
-              game.system.log.o("[EFFECT] Checking PC change:", {
-                key: change.key,
-                mode: change.mode,
-                value: change.value,
-                expectedMode: ACTIVE_EFFECT_MODES.CUSTOM
-              });
-              if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-                await Hooks.callAll("FF15.DamageOverTime", { actor: currentActor, change, effect });
-              }
-            }
-          } else if (wasEnemyStepEnd && currentActor.type === "NPC") {
-            game.system.log.o("[EFFECT] Processing NPC DOT at enemy step end");
-            for (const change of effect.changes) {
-              game.system.log.o("[EFFECT] Checking NPC change:", {
-                key: change.key,
-                mode: change.mode,
-                value: change.value,
-                expectedMode: ACTIVE_EFFECT_MODES.CUSTOM
-              });
-              if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-                game.system.log.o("[EFFECT] Found valid DOT change, calling hook");
-                await Hooks.callAll("FF15.DamageOverTime", { actor: currentActor, change, effect });
-              }
-            }
-          }
-        }
-        if (!effect.duration?.rounds && !effect.duration?.turns)
-          continue;
-        const isExpired = effect.duration.remaining <= 0;
-        if (!isExpired)
-          continue;
-        if (actor.effects.find((e) => e.id === effect.id)) {
-          try {
-            await effect.delete();
-          } catch (error) {
-            game.system.log.e("[EFFECT] Error deleting effect:", error);
-          }
-        }
-        for (const change of effect.changes) {
-          if (ACTIVE_EFFECT_MODES.CUSTOM === change.mode) {
-            await Hooks.callAll(`FF15.${change.key}Delete`, { actor: currentActor, change, effect });
-          }
-        }
+      const effectProcessors = Object.values(effects).map((EffectClass) => new EffectClass(currentActor)).filter((processor) => typeof processor.updateCombat === "function");
+      for (const processor of effectProcessors) {
+        await processor.updateCombat(combat, changed, options);
       }
     }
   });
@@ -3452,107 +4218,6 @@ function _deepMerge(target = {}, ...sourceObj) {
   return target;
 }
 __name(_deepMerge, "_deepMerge");
-const subscriber_queue = [];
-function readable(value, start) {
-  return {
-    subscribe: writable(value, start).subscribe
-  };
-}
-__name(readable, "readable");
-function writable(value, start = noop) {
-  let stop;
-  const subscribers = /* @__PURE__ */ new Set();
-  function set(new_value) {
-    if (safe_not_equal(value, new_value)) {
-      value = new_value;
-      if (stop) {
-        const run_queue = !subscriber_queue.length;
-        for (const subscriber of subscribers) {
-          subscriber[1]();
-          subscriber_queue.push(subscriber, value);
-        }
-        if (run_queue) {
-          for (let i = 0; i < subscriber_queue.length; i += 2) {
-            subscriber_queue[i][0](subscriber_queue[i + 1]);
-          }
-          subscriber_queue.length = 0;
-        }
-      }
-    }
-  }
-  __name(set, "set");
-  function update2(fn) {
-    set(fn(value));
-  }
-  __name(update2, "update");
-  function subscribe2(run2, invalidate = noop) {
-    const subscriber = [run2, invalidate];
-    subscribers.add(subscriber);
-    if (subscribers.size === 1) {
-      stop = start(set, update2) || noop;
-    }
-    run2(value);
-    return () => {
-      subscribers.delete(subscriber);
-      if (subscribers.size === 0 && stop) {
-        stop();
-        stop = null;
-      }
-    };
-  }
-  __name(subscribe2, "subscribe");
-  return { set, update: update2, subscribe: subscribe2 };
-}
-__name(writable, "writable");
-function derived(stores, fn, initial_value) {
-  const single = !Array.isArray(stores);
-  const stores_array = single ? [stores] : stores;
-  if (!stores_array.every(Boolean)) {
-    throw new Error("derived() expects stores as input, got a falsy value");
-  }
-  const auto = fn.length < 2;
-  return readable(initial_value, (set, update2) => {
-    let started = false;
-    const values = [];
-    let pending = 0;
-    let cleanup = noop;
-    const sync = /* @__PURE__ */ __name(() => {
-      if (pending) {
-        return;
-      }
-      cleanup();
-      const result = fn(single ? values[0] : values, set, update2);
-      if (auto) {
-        set(result);
-      } else {
-        cleanup = is_function(result) ? result : noop;
-      }
-    }, "sync");
-    const unsubscribers = stores_array.map(
-      (store, i) => subscribe(
-        store,
-        (value) => {
-          values[i] = value;
-          pending &= ~(1 << i);
-          if (started) {
-            sync();
-          }
-        },
-        () => {
-          pending |= 1 << i;
-        }
-      )
-    );
-    started = true;
-    sync();
-    return /* @__PURE__ */ __name(function stop() {
-      run_all(unsubscribers);
-      cleanup();
-      started = false;
-    }, "stop");
-  });
-}
-__name(derived, "derived");
 function isMinimalWritableStore(store) {
   if (store === null || store === void 0) {
     return false;
@@ -5355,7 +6020,6 @@ class TJSDocument {
     }
   }
 }
-const mappedGameTargets = writable(false);
 function formatDotpath(path) {
   return path.replace(/\[/g, ".").replace(/]/g, "");
 }
@@ -5389,14 +6053,53 @@ function resolveDotpath(obj, path, default_ = void 0, opts = null) {
   return item.val === void 0 ? default_ : item.val;
 }
 __name(resolveDotpath, "resolveDotpath");
+function create_if_block$u(ctx) {
+  let div;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      div.innerHTML = `<i class="fas fa-xmark"></i>`;
+      attr(div, "class", "remove right svelte-FF15-1y0mhim");
+      attr(div, "aria-label", "Remove tag");
+      attr(div, "role", "button");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      if (!mounted) {
+        dispose = listen(
+          div,
+          "click",
+          /*click_handler*/
+          ctx[6]
+        );
+        mounted = true;
+      }
+    },
+    p: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_if_block$u, "create_if_block$u");
 function create_fragment$1h(ctx) {
   let div1;
   let div0;
   let t;
+  let if_block = (
+    /*remover*/
+    ctx[1] && create_if_block$u(ctx)
+  );
   let div1_levels = [
     { class: "badge center" },
     /*$$restProps*/
-    ctx[2]
+    ctx[4]
   ];
   let div_data_1 = {};
   for (let i = 0; i < div1_levels.length; i += 1) {
@@ -5410,14 +6113,18 @@ function create_fragment$1h(ctx) {
         /*tag*/
         ctx[0]
       );
-      attr(div0, "class", "label svelte-FF15-1ew9fya");
+      if (if_block)
+        if_block.c();
+      attr(div0, "class", "label");
       set_attributes(div1, div_data_1);
-      toggle_class(div1, "svelte-FF15-1ew9fya", true);
+      toggle_class(div1, "svelte-FF15-1y0mhim", true);
     },
     m(target, anchor) {
       insert(target, div1, anchor);
       append(div1, div0);
       append(div0, t);
+      if (if_block)
+        if_block.m(div1, null);
     },
     p(ctx2, [dirty]) {
       if (dirty & /*tag*/
@@ -5427,13 +6134,28 @@ function create_fragment$1h(ctx) {
           /*tag*/
           ctx2[0]
         );
+      if (
+        /*remover*/
+        ctx2[1]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block$u(ctx2);
+          if_block.c();
+          if_block.m(div1, null);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
       set_attributes(div1, div_data_1 = get_spread_update(div1_levels, [
         { class: "badge center" },
         dirty & /*$$restProps*/
-        4 && /*$$restProps*/
-        ctx2[2]
+        16 && /*$$restProps*/
+        ctx2[4]
       ]));
-      toggle_class(div1, "svelte-FF15-1ew9fya", true);
+      toggle_class(div1, "svelte-FF15-1y0mhim", true);
     },
     i: noop,
     o: noop,
@@ -5441,38 +6163,74 @@ function create_fragment$1h(ctx) {
       if (detaching) {
         detach(div1);
       }
+      if (if_block)
+        if_block.d();
     }
   };
 }
 __name(create_fragment$1h, "create_fragment$1h");
-function instance$19($$self, $$props, $$invalidate) {
+function instance$1a($$self, $$props, $$invalidate) {
   const omit_props_names = ["tag", "remover", "path"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
+  let $doc;
   let { tag = "" } = $$props;
   let { remover = true } = $$props;
   let { path = "system.tags" } = $$props;
   const doc = getContext("#doc");
-  component_subscribe($$self, doc, (value) => $$invalidate(5, value));
+  component_subscribe($$self, doc, (value) => $$invalidate(7, $doc = value));
+  async function removeTag(tag2) {
+    if (remover) {
+      if (path.startsWith("flags.")) {
+        const flagPath = path.slice(6);
+        const [moduleId, ...rest] = flagPath.split(".");
+        const currentTags = $doc.getFlag(moduleId, rest.join(".")) || [];
+        const tags = currentTags.filter((t) => t !== tag2);
+        await $doc.setFlag(moduleId, rest.join("."), tags);
+      } else if (path.startsWith("system.")) {
+        const currentTags = $doc.system.tags || [];
+        const tags = currentTags.filter((t) => t !== tag2);
+        await $doc.update({ system: { tags } });
+      } else {
+        const currentTags = resolveDotpath($doc, path);
+        game.system.log.g("currentTags", currentTags);
+        const type = Array.isArray(currentTags) ? "array" : currentTags instanceof Set ? "set" : "object";
+        game.system.log.g("type", type);
+        let tags;
+        if (type === "array") {
+          tags = currentTags.filter((t) => t !== tag2);
+          await $doc.update({ [path]: tags });
+        } else if (type === "set") {
+          tags = new Set([...currentTags].filter((t) => t !== tag2));
+          game.system.log.g("tags", tags);
+          await $doc.update({ [path]: tags });
+        } else {
+          game.system.log.g("currentTags NOT IMPLEMENTED", currentTags);
+        }
+      }
+    }
+  }
+  __name(removeTag, "removeTag");
+  const click_handler2 = /* @__PURE__ */ __name(() => removeTag(tag), "click_handler");
   $$self.$$set = ($$new_props) => {
     $$props = assign(assign({}, $$props), exclude_internal_props($$new_props));
-    $$invalidate(2, $$restProps = compute_rest_props($$props, omit_props_names));
+    $$invalidate(4, $$restProps = compute_rest_props($$props, omit_props_names));
     if ("tag" in $$new_props)
       $$invalidate(0, tag = $$new_props.tag);
     if ("remover" in $$new_props)
-      $$invalidate(3, remover = $$new_props.remover);
+      $$invalidate(1, remover = $$new_props.remover);
     if ("path" in $$new_props)
-      $$invalidate(4, path = $$new_props.path);
+      $$invalidate(5, path = $$new_props.path);
   };
-  return [tag, doc, $$restProps, remover, path];
+  return [tag, remover, doc, removeTag, $$restProps, path, click_handler2];
 }
-__name(instance$19, "instance$19");
+__name(instance$1a, "instance$1a");
 class Tag extends SvelteComponent {
   static {
     __name(this, "Tag");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$19, create_fragment$1h, safe_not_equal, { tag: 0, remover: 3, path: 4 });
+    init$1(this, options, instance$1a, create_fragment$1h, safe_not_equal, { tag: 0, remover: 1, path: 5 });
   }
 }
 function get_each_context$g(ctx, list, i) {
@@ -5544,29 +6302,29 @@ function create_if_block$t(ctx) {
       if (if_block1)
         if_block1.c();
       img = element("img");
-      attr(div0, "class", "texture svelte-FF15-pj6pwf");
+      attr(div0, "class", "texture svelte-FF15-zy8isi");
       attr(div1, "class", "flex4 link pointer");
       attr(div1, "role", "button");
       attr(div1, "aria-label", div1_aria_label_value = "Open " + /*FFMessage*/
       ctx[0].actor.name + "'s character sheet");
       attr(div2, "class", "flexrow");
       attr(div3, "class", "col");
-      attr(div4, "class", "col font-cinzel smaller pointer item-name nooverflow svelte-FF15-pj6pwf");
+      attr(div4, "class", "col font-cinzel smaller pointer item-name nooverflow svelte-FF15-zy8isi");
       attr(div4, "role", "button");
       attr(div4, "aria-label", div4_aria_label_value = "Open " + /*FFMessage*/
       ctx[0].item.name + " item sheet");
       attr(div5, "class", div5_class_value = "flex3 flexcol nooverflow " + /*showProfileImage*/
-      (ctx[2] ? "text" : "") + " svelte-FF15-pj6pwf");
-      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-FF15-pj6pwf");
+      (ctx[2] ? "text" : ""));
+      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-FF15-zy8isi");
       attr(div7, "class", "flexcol");
-      attr(div8, "class", "flex3");
-      attr(img, "class", "icon right item svelte-FF15-pj6pwf");
+      attr(div8, "class", "flex4");
+      attr(img, "class", "icon right item svelte-FF15-zy8isi");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[0].item.img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*FFMessage*/
       ctx[0].item.name);
-      attr(div9, "class", "flexrow title svelte-FF15-pj6pwf");
+      attr(div9, "class", "flexrow title svelte-FF15-zy8isi");
       attr(div9, "role", "button");
       attr(div9, "aria-label", "Toggle description");
     },
@@ -5650,7 +6408,7 @@ function create_if_block$t(ctx) {
       }
       if (!current || dirty & /*showProfileImage*/
       4 && div5_class_value !== (div5_class_value = "flex3 flexcol nooverflow " + /*showProfileImage*/
-      (ctx2[2] ? "text" : "") + " svelte-FF15-pj6pwf")) {
+      (ctx2[2] ? "text" : ""))) {
         attr(div5, "class", div5_class_value);
       }
       if ((!current || dirty & /*FFMessage*/
@@ -5727,12 +6485,13 @@ function create_if_block_2$d(ctx) {
     c() {
       div = element("div");
       img = element("img");
-      attr(img, "class", "icon avatar svelte-FF15-pj6pwf");
+      attr(img, "class", "icon avatar svelte-FF15-zy8isi");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[0].actor.img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*FFMessage*/
       ctx[0].actor.name);
+      attr(div, "class", "flex1");
       attr(div, "role", "button");
       attr(div, "aria-label", div_aria_label_value = "Open " + /*FFMessage*/
       ctx[0].actor.name + "'s character sheet");
@@ -5872,7 +6631,7 @@ function create_each_block$g(ctx) {
   let current;
   tag_1 = new Tag({
     props: {
-      class: "badge small low",
+      class: "badge smaller round low",
       tag: (
         /*tag*/
         ctx[12]
@@ -5930,7 +6689,7 @@ function create_fragment$1g(ctx) {
       div = element("div");
       if (if_block)
         if_block.c();
-      attr(div, "class", "chat-title svelte-FF15-pj6pwf");
+      attr(div, "class", "chat-title svelte-FF15-zy8isi");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -5983,7 +6742,7 @@ function create_fragment$1g(ctx) {
   };
 }
 __name(create_fragment$1g, "create_fragment$1g");
-function instance$18($$self, $$props, $$invalidate) {
+function instance$19($$self, $$props, $$invalidate) {
   let showProfileImage;
   let $message;
   const dispatch2 = createEventDispatcher();
@@ -6033,14 +6792,14 @@ function instance$18($$self, $$props, $$invalidate) {
     click_handler2
   ];
 }
-__name(instance$18, "instance$18");
+__name(instance$19, "instance$19");
 let ChatTitle$1 = class ChatTitle extends SvelteComponent {
   static {
     __name(this, "ChatTitle");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$18, create_fragment$1g, safe_not_equal, {});
+    init$1(this, options, instance$19, create_fragment$1g, safe_not_equal, {});
   }
 };
 function create_fragment$1f(ctx) {
@@ -6155,7 +6914,7 @@ function create_fragment$1f(ctx) {
   };
 }
 __name(create_fragment$1f, "create_fragment$1f");
-function instance$17($$self, $$props, $$invalidate) {
+function instance$18($$self, $$props, $$invalidate) {
   let hasTargets;
   let disabled;
   let buttonCss;
@@ -6283,14 +7042,14 @@ function instance$17($$self, $$props, $$invalidate) {
     $mappedGameTargets
   ];
 }
-__name(instance$17, "instance$17");
+__name(instance$18, "instance$18");
 class EquipmentChat extends SvelteComponent {
   static {
     __name(this, "EquipmentChat");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$17, create_fragment$1f, safe_not_equal, { FFMessage: 0, messageId: 5 });
+    init$1(this, options, instance$18, create_fragment$1f, safe_not_equal, { FFMessage: 0, messageId: 5 });
   }
 }
 function create_fragment$1e(ctx) {
@@ -6371,7 +7130,7 @@ function create_fragment$1e(ctx) {
   };
 }
 __name(create_fragment$1e, "create_fragment$1e");
-function instance$16($$self, $$props, $$invalidate) {
+function instance$17($$self, $$props, $$invalidate) {
   let hasTargets;
   let disabled;
   let applied;
@@ -6421,16 +7180,34 @@ function instance$16($$self, $$props, $$invalidate) {
     $mappedGameTargets
   ];
 }
-__name(instance$16, "instance$16");
+__name(instance$17, "instance$17");
 class RollChat extends SvelteComponent {
   static {
     __name(this, "RollChat");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$16, create_fragment$1e, safe_not_equal, { FFMessage: 0 });
+    init$1(this, options, instance$17, create_fragment$1e, safe_not_equal, { FFMessage: 0 });
   }
 }
+function createDamageText(token, amount, isHealing = false) {
+  const displayValue = `${isHealing ? "+" : "-"}${Math.abs(amount)}`;
+  canvas.interface.createScrollingText(
+    token.center,
+    displayValue,
+    {
+      anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
+      direction: CONST.TEXT_ANCHOR_POINTS.TOP,
+      duration: 1e3,
+      distance: 100,
+      fontSize: 36,
+      fill: isHealing ? "#00ff00" : "#ff0000",
+      stroke: "#000",
+      strokeThickness: 4
+    }
+  );
+}
+__name(createDamageText, "createDamageText");
 function create_fragment$1d(ctx) {
   let svg;
   let g;
@@ -6550,7 +7327,7 @@ function create_fragment$1d(ctx) {
   };
 }
 __name(create_fragment$1d, "create_fragment$1d");
-function instance$15($$self, $$props, $$invalidate) {
+function instance$16($$self, $$props, $$invalidate) {
   let { size = 100 } = $$props;
   let { strokeWidth = 2 } = $$props;
   let { strokeColor = "#000" } = $$props;
@@ -6575,14 +7352,14 @@ function instance$15($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [size, strokeWidth, strokeColor, rotation, fill, flip, $$props];
 }
-__name(instance$15, "instance$15");
+__name(instance$16, "instance$16");
 class Corner extends SvelteComponent {
   static {
     __name(this, "Corner");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$15, create_fragment$1d, safe_not_equal, {
+    init$1(this, options, instance$16, create_fragment$1d, safe_not_equal, {
       size: 0,
       strokeWidth: 1,
       strokeColor: 2,
@@ -6677,7 +7454,7 @@ function create_if_block$s(ctx) {
       if (!mounted) {
         dispose = listen(img_1, "click", function() {
           if (is_function(
-            /*onClick*/
+            /*onclick*/
             ctx[3]
           ))
             ctx[3].apply(this, arguments);
@@ -6922,14 +7699,14 @@ function create_fragment$1c(ctx) {
   };
 }
 __name(create_fragment$1c, "create_fragment$1c");
-function instance$14($$self, $$props, $$invalidate) {
-  const omit_props_names = ["img", "imgSrc", "strokeColor", "onClick", "size"];
+function instance$15($$self, $$props, $$invalidate) {
+  const omit_props_names = ["img", "imgSrc", "strokeColor", "onclick", "size"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   let { $$slots: slots = {}, $$scope } = $$props;
   let { img = false } = $$props;
   let { imgSrc = `${ASSET_PATH}/portraits/witch2.webp` } = $$props;
   let { strokeColor = "#514030" } = $$props;
-  let { onClick } = $$props;
+  let { onclick = void 0 } = $$props;
   let { size = 50 } = $$props;
   onMount(() => {
   });
@@ -6942,27 +7719,27 @@ function instance$14($$self, $$props, $$invalidate) {
       $$invalidate(1, imgSrc = $$new_props.imgSrc);
     if ("strokeColor" in $$new_props)
       $$invalidate(2, strokeColor = $$new_props.strokeColor);
-    if ("onClick" in $$new_props)
-      $$invalidate(3, onClick = $$new_props.onClick);
+    if ("onclick" in $$new_props)
+      $$invalidate(3, onclick = $$new_props.onclick);
     if ("size" in $$new_props)
       $$invalidate(4, size = $$new_props.size);
     if ("$$scope" in $$new_props)
       $$invalidate(6, $$scope = $$new_props.$$scope);
   };
-  return [img, imgSrc, strokeColor, onClick, size, $$restProps, $$scope, slots];
+  return [img, imgSrc, strokeColor, onclick, size, $$restProps, $$scope, slots];
 }
-__name(instance$14, "instance$14");
+__name(instance$15, "instance$15");
 class PortraitFrame extends SvelteComponent {
   static {
     __name(this, "PortraitFrame");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$14, create_fragment$1c, safe_not_equal, {
+    init$1(this, options, instance$15, create_fragment$1c, safe_not_equal, {
       img: 0,
       imgSrc: 1,
       strokeColor: 2,
-      onClick: 3,
+      onclick: 3,
       size: 4
     });
   }
@@ -6972,7 +7749,7 @@ function create_if_block_9$1(ctx) {
   let t0;
   let t1_value = (
     /*$item*/
-    ctx[0].system.cost + ""
+    ctx[0]?.system?.costMP + ""
   );
   let t1;
   let t2;
@@ -6992,7 +7769,7 @@ function create_if_block_9$1(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*$item*/
       1 && t1_value !== (t1_value = /*$item*/
-      ctx2[0].system.cost + ""))
+      ctx2[0]?.system?.costMP + ""))
         set_data(t1, t1_value);
     },
     d(detaching) {
@@ -7043,7 +7820,7 @@ function create_if_block_7$1(ctx) {
   let li;
   let t_value = (
     /*$item*/
-    ctx[0].system.checkAttribute.toUpperCase() + ""
+    ctx[0]?.system?.checkAttribute.toUpperCase() + ""
   );
   let t;
   return {
@@ -7058,7 +7835,7 @@ function create_if_block_7$1(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*$item*/
       1 && t_value !== (t_value = /*$item*/
-      ctx2[0].system.checkAttribute.toUpperCase() + ""))
+      ctx2[0]?.system?.checkAttribute.toUpperCase() + ""))
         set_data(t, t_value);
     },
     d(detaching) {
@@ -7069,12 +7846,12 @@ function create_if_block_7$1(ctx) {
   };
 }
 __name(create_if_block_7$1, "create_if_block_7$1");
-function create_if_block_6$1(ctx) {
+function create_if_block_6$2(ctx) {
   let li;
   let t0;
   let t1_value = (
     /*$item*/
-    ctx[0].system.heavierShotType + ""
+    ctx[0]?.system?.heavierShotType + ""
   );
   let t1;
   return {
@@ -7091,7 +7868,7 @@ function create_if_block_6$1(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*$item*/
       1 && t1_value !== (t1_value = /*$item*/
-      ctx2[0].system.heavierShotType + ""))
+      ctx2[0]?.system?.heavierShotType + ""))
         set_data(t1, t1_value);
     },
     d(detaching) {
@@ -7101,7 +7878,7 @@ function create_if_block_6$1(ctx) {
     }
   };
 }
-__name(create_if_block_6$1, "create_if_block_6$1");
+__name(create_if_block_6$2, "create_if_block_6$2");
 function create_if_block_5$2(ctx) {
   let li;
   let t_value = (
@@ -7138,12 +7915,12 @@ function create_if_block_5$2(ctx) {
   };
 }
 __name(create_if_block_5$2, "create_if_block_5$2");
-function create_if_block_4$5(ctx) {
+function create_if_block_4$6(ctx) {
   let li;
   let t0;
   let t1_value = (
     /*$item*/
-    ctx[0].system.rangeType + ""
+    ctx[0]?.system?.rangeType + ""
   );
   let t1;
   return {
@@ -7160,7 +7937,7 @@ function create_if_block_4$5(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*$item*/
       1 && t1_value !== (t1_value = /*$item*/
-      ctx2[0].system.rangeType + ""))
+      ctx2[0]?.system?.rangeType + ""))
         set_data(t1, t1_value);
     },
     d(detaching) {
@@ -7170,13 +7947,13 @@ function create_if_block_4$5(ctx) {
     }
   };
 }
-__name(create_if_block_4$5, "create_if_block_4$5");
-function create_if_block_3$7(ctx) {
+__name(create_if_block_4$6, "create_if_block_4$6");
+function create_if_block_3$8(ctx) {
   let li;
   let t0;
   let t1_value = (
     /*$item*/
-    ctx[0].system.target.capitalize() + ""
+    ctx[0]?.system?.target.capitalize() + ""
   );
   let t1;
   return {
@@ -7193,7 +7970,7 @@ function create_if_block_3$7(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*$item*/
       1 && t1_value !== (t1_value = /*$item*/
-      ctx2[0].system.target.capitalize() + ""))
+      ctx2[0]?.system?.target.capitalize() + ""))
         set_data(t1, t1_value);
     },
     d(detaching) {
@@ -7203,13 +7980,13 @@ function create_if_block_3$7(ctx) {
     }
   };
 }
-__name(create_if_block_3$7, "create_if_block_3$7");
+__name(create_if_block_3$8, "create_if_block_3$8");
 function create_if_block_2$c(ctx) {
   let li;
   let t0;
   let t1_value = (
     /*$item*/
-    ctx[0].system.trigger.capitalize() + ""
+    ctx[0]?.system?.trigger.capitalize() + ""
   );
   let t1;
   return {
@@ -7226,7 +8003,7 @@ function create_if_block_2$c(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*$item*/
       1 && t1_value !== (t1_value = /*$item*/
-      ctx2[0].system.trigger.capitalize() + ""))
+      ctx2[0]?.system?.trigger.capitalize() + ""))
         set_data(t1, t1_value);
     },
     d(detaching) {
@@ -7242,12 +8019,12 @@ function create_if_block$r(ctx) {
   let t0;
   let t1_value = (
     /*$item*/
-    ctx[0].system.directHitType.capitalize() + ""
+    ctx[0]?.system?.directHitType.capitalize() + ""
   );
   let t1;
   let if_block = (
     /*$item*/
-    ctx[0].system.directHitDamage && create_if_block_1$h(ctx)
+    ctx[0]?.system?.directHitDamage && create_if_block_1$h(ctx)
   );
   return {
     c() {
@@ -7267,11 +8044,11 @@ function create_if_block$r(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*$item*/
       1 && t1_value !== (t1_value = /*$item*/
-      ctx2[0].system.directHitType.capitalize() + ""))
+      ctx2[0]?.system?.directHitType.capitalize() + ""))
         set_data(t1, t1_value);
       if (
         /*$item*/
-        ctx2[0].system.directHitDamage
+        ctx2[0]?.system?.directHitDamage
       ) {
         if (if_block) {
           if_block.p(ctx2, dirty);
@@ -7299,7 +8076,7 @@ function create_if_block_1$h(ctx) {
   let t0;
   let t1_value = (
     /*$item*/
-    ctx[0].system.directHitDamage + ""
+    ctx[0]?.system?.directHitDamage + ""
   );
   let t1;
   return {
@@ -7314,7 +8091,7 @@ function create_if_block_1$h(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*$item*/
       1 && t1_value !== (t1_value = /*$item*/
-      ctx2[0].system.directHitDamage + ""))
+      ctx2[0]?.system?.directHitDamage + ""))
         set_data(t1, t1_value);
     },
     d(detaching) {
@@ -7348,39 +8125,39 @@ function create_fragment$1b(ctx) {
   let if_block7_anchor;
   let if_block0 = (
     /*$item*/
-    ctx[0].system.hasCost && create_if_block_9$1(ctx)
+    ctx[0]?.system?.hasCostMP && create_if_block_9$1(ctx)
   );
   let if_block1 = (
     /*$item*/
-    ctx[0].system.hasCR && create_if_block_8$1(ctx)
+    ctx[0]?.system?.hasCR && create_if_block_8$1(ctx)
   );
   let if_block2 = (
     /*$item*/
-    ctx[0].system.hasCheck && create_if_block_7$1(ctx)
+    ctx[0]?.system?.hasCheck && create_if_block_7$1(ctx)
   );
   let if_block3 = (
     /*$item*/
-    ctx[0].system.hasHeavierShot && create_if_block_6$1(ctx)
+    ctx[0]?.system?.hasHeavierShot && create_if_block_6$2(ctx)
   );
   let if_block4 = (
     /*$item*/
-    ctx[0].system.hasLimitation && create_if_block_5$2(ctx)
+    ctx[0]?.system?.hasLimitation && create_if_block_5$2(ctx)
   );
   let if_block5 = (
     /*$item*/
-    ctx[0].system.hasRanged && create_if_block_4$5(ctx)
+    ctx[0]?.system?.hasRanged && create_if_block_4$6(ctx)
   );
   let if_block6 = (
     /*$item*/
-    ctx[0].system.hasTarget && create_if_block_3$7(ctx)
+    ctx[0]?.system?.hasTarget && create_if_block_3$8(ctx)
   );
   let if_block7 = (
     /*$item*/
-    ctx[0].system.hasTrigger && create_if_block_2$c(ctx)
+    ctx[0]?.system?.hasTrigger && create_if_block_2$c(ctx)
   );
   let if_block8 = (
     /*$item*/
-    ctx[0].system.directHitType && create_if_block$r(ctx)
+    ctx[0]?.system?.directHitType && create_if_block$r(ctx)
   );
   return {
     c() {
@@ -7466,7 +8243,7 @@ function create_fragment$1b(ctx) {
         set_data(t, t_value);
       if (
         /*$item*/
-        ctx2[0].system.hasCost
+        ctx2[0]?.system?.hasCostMP
       ) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
@@ -7481,7 +8258,7 @@ function create_fragment$1b(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasCR
+        ctx2[0]?.system?.hasCR
       ) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
@@ -7496,7 +8273,7 @@ function create_fragment$1b(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasCheck
+        ctx2[0]?.system?.hasCheck
       ) {
         if (if_block2) {
           if_block2.p(ctx2, dirty);
@@ -7511,12 +8288,12 @@ function create_fragment$1b(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasHeavierShot
+        ctx2[0]?.system?.hasHeavierShot
       ) {
         if (if_block3) {
           if_block3.p(ctx2, dirty);
         } else {
-          if_block3 = create_if_block_6$1(ctx2);
+          if_block3 = create_if_block_6$2(ctx2);
           if_block3.c();
           if_block3.m(ol, if_block3_anchor);
         }
@@ -7526,7 +8303,7 @@ function create_fragment$1b(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasLimitation
+        ctx2[0]?.system?.hasLimitation
       ) {
         if (if_block4) {
           if_block4.p(ctx2, dirty);
@@ -7541,12 +8318,12 @@ function create_fragment$1b(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasRanged
+        ctx2[0]?.system?.hasRanged
       ) {
         if (if_block5) {
           if_block5.p(ctx2, dirty);
         } else {
-          if_block5 = create_if_block_4$5(ctx2);
+          if_block5 = create_if_block_4$6(ctx2);
           if_block5.c();
           if_block5.m(ol, if_block5_anchor);
         }
@@ -7556,12 +8333,12 @@ function create_fragment$1b(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasTarget
+        ctx2[0]?.system?.hasTarget
       ) {
         if (if_block6) {
           if_block6.p(ctx2, dirty);
         } else {
-          if_block6 = create_if_block_3$7(ctx2);
+          if_block6 = create_if_block_3$8(ctx2);
           if_block6.c();
           if_block6.m(ol, if_block6_anchor);
         }
@@ -7571,7 +8348,7 @@ function create_fragment$1b(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasTrigger
+        ctx2[0]?.system?.hasTrigger
       ) {
         if (if_block7) {
           if_block7.p(ctx2, dirty);
@@ -7586,7 +8363,7 @@ function create_fragment$1b(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.directHitType
+        ctx2[0]?.system?.directHitType
       ) {
         if (if_block8) {
           if_block8.p(ctx2, dirty);
@@ -7628,24 +8405,24 @@ function create_fragment$1b(ctx) {
   };
 }
 __name(create_fragment$1b, "create_fragment$1b");
-function instance$13($$self, $$props, $$invalidate) {
+function instance$14($$self, $$props, $$invalidate) {
   let $item;
   const item = getContext("#doc");
   component_subscribe($$self, item, (value) => $$invalidate(0, $item = value));
   const CROptions = getCROptions();
   const limitationOptions = getLimitationOptions();
-  const func = /* @__PURE__ */ __name((option) => option.value === $item.system.CR, "func");
-  const func_1 = /* @__PURE__ */ __name((option) => option.value === $item.system.limitation, "func_1");
+  const func = /* @__PURE__ */ __name((option) => option.value === $item?.system?.CR, "func");
+  const func_1 = /* @__PURE__ */ __name((option) => option.value === $item?.system?.limitation, "func_1");
   return [$item, item, CROptions, limitationOptions, func, func_1];
 }
-__name(instance$13, "instance$13");
+__name(instance$14, "instance$14");
 let Header$5 = class Header extends SvelteComponent {
   static {
     __name(this, "Header");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$13, create_fragment$1b, safe_not_equal, {});
+    init$1(this, options, instance$14, create_fragment$1b, safe_not_equal, {});
   }
 };
 function create_fragment$1a(ctx) {
@@ -7777,7 +8554,7 @@ function create_fragment$1a(ctx) {
   };
 }
 __name(create_fragment$1a, "create_fragment$1a");
-function instance$12($$self, $$props, $$invalidate) {
+function instance$13($$self, $$props, $$invalidate) {
   let { size = 35 } = $$props;
   let { fill = "currentColor" } = $$props;
   let { innerFill = "currentColor" } = $$props;
@@ -7799,14 +8576,14 @@ function instance$12($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [size, fill, innerFill, opacity, innerOpacity, $$props];
 }
-__name(instance$12, "instance$12");
+__name(instance$13, "instance$13");
 class Meteor extends SvelteComponent {
   static {
     __name(this, "Meteor");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$12, create_fragment$1a, safe_not_equal, {
+    init$1(this, options, instance$13, create_fragment$1a, safe_not_equal, {
       size: 0,
       fill: 1,
       innerFill: 2,
@@ -7815,13 +8592,14 @@ class Meteor extends SvelteComponent {
     });
   }
 }
+const { Boolean: Boolean_1 } = globals;
 function get_each_context$f(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[32] = list[i];
+  child_ctx[33] = list[i];
   return child_ctx;
 }
 __name(get_each_context$f, "get_each_context$f");
-function create_if_block_5$1(ctx) {
+function create_if_block_6$1(ctx) {
   let div2;
   let div1;
   let div0;
@@ -7853,7 +8631,7 @@ function create_if_block_5$1(ctx) {
     }
   };
 }
-__name(create_if_block_5$1, "create_if_block_5$1");
+__name(create_if_block_6$1, "create_if_block_6$1");
 function create_if_block$q(ctx) {
   let div1;
   let div0;
@@ -7876,8 +8654,8 @@ function create_if_block$q(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "target-list svelte-FF15-zy8dpc");
-      attr(div1, "class", "action-result svelte-FF15-zy8dpc");
+      attr(div0, "class", "target-list svelte-FF15-1uhww5r");
+      attr(div1, "class", "action-result svelte-FF15-1uhww5r");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -7925,7 +8703,7 @@ function create_if_block$q(ctx) {
       current = true;
     },
     o(local) {
-      each_blocks = each_blocks.filter(Boolean);
+      each_blocks = each_blocks.filter(Boolean_1);
       for (let i = 0; i < each_blocks.length; i += 1) {
         transition_out(each_blocks[i]);
       }
@@ -7940,7 +8718,333 @@ function create_if_block$q(ctx) {
   };
 }
 __name(create_if_block$q, "create_if_block$q");
-function create_if_block_4$4(ctx) {
+function create_if_block_1$g(ctx) {
+  let div17;
+  let div16;
+  let div0;
+  let div15;
+  let div9;
+  let div8;
+  let div1;
+  let div7;
+  let div2;
+  let t0_value = (
+    /*target*/
+    ctx[33].name + ""
+  );
+  let t0;
+  let div6;
+  let div3;
+  let div4;
+  let t2_value = getDefenseValue(
+    /*target*/
+    ctx[33]
+  ) + "";
+  let t2;
+  let div5;
+  let current_block_type_index;
+  let if_block1;
+  let div10;
+  let if_block2_anchor;
+  let div10_class_value;
+  let div14;
+  let div13;
+  let div11;
+  let button0;
+  let i0;
+  let button0_disabled_value;
+  let div12;
+  let button1;
+  let i1;
+  let button1_disabled_value;
+  let div15_class_value;
+  let current;
+  let mounted;
+  let dispose;
+  let if_block0 = (
+    /*target*/
+    ctx[33] && !/*target*/
+    ctx[33].isUnlinked && create_if_block_5$1(ctx)
+  );
+  const if_block_creators = [create_if_block_4$5, create_else_block$5];
+  const if_blocks = [];
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*FFMessage*/
+      ctx2[0]?.isCritical
+    )
+      return 0;
+    return 1;
+  }
+  __name(select_block_type, "select_block_type");
+  current_block_type_index = select_block_type(ctx);
+  if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+  let if_block2 = (
+    /*item*/
+    ctx[9]?.system?.baseEffectDamage && create_if_block_3$7(ctx)
+  );
+  let if_block3 = (
+    /*item*/
+    ctx[9]?.system?.hasDirectHit && create_if_block_2$b(ctx)
+  );
+  return {
+    c() {
+      div17 = element("div");
+      div16 = element("div");
+      div0 = element("div");
+      div15 = element("div");
+      div9 = element("div");
+      div8 = element("div");
+      div1 = element("div");
+      if (if_block0)
+        if_block0.c();
+      div7 = element("div");
+      div2 = element("div");
+      t0 = text(t0_value);
+      div6 = element("div");
+      div3 = element("div");
+      div3.textContent = "DEF ";
+      div4 = element("div");
+      t2 = text(t2_value);
+      div5 = element("div");
+      if_block1.c();
+      div10 = element("div");
+      if (if_block2)
+        if_block2.c();
+      if_block2_anchor = empty();
+      if (if_block3)
+        if_block3.c();
+      div14 = element("div");
+      div13 = element("div");
+      div11 = element("div");
+      button0 = element("button");
+      i0 = element("i");
+      div12 = element("div");
+      button1 = element("button");
+      i1 = element("i");
+      attr(div0, "class", "texture svelte-FF15-1uhww5r");
+      attr(div1, "class", "flex0 target-info pointer svelte-FF15-1uhww5r");
+      attr(div2, "class", "col target-name font-cinzel smaller svelte-FF15-1uhww5r");
+      attr(div3, "class", "flex1 left font-cinzel");
+      attr(div3, "data-tooltip-class", "FF15-tooltip");
+      attr(div3, "data-tooltip", "Defense");
+      attr(div4, "class", "flex1 m1-xs left");
+      attr(div5, "class", "flex1 relative right");
+      attr(div6, "class", "col flexrow justify-vertical no-wrap");
+      attr(div7, "class", "flex1 flexcol thin-border");
+      attr(div8, "class", "flexrow justify-vertical gap-4");
+      attr(div9, "class", "flex3");
+      attr(div10, "class", div10_class_value = "flex2 thin-border offwhite " + /*isApplyDisabled*/
+      (ctx[2](
+        /*target*/
+        ctx[33]
+      ) ? "bg-silver" : "bg-gold"));
+      set_style(div10, "min-height", "2.6rem");
+      attr(i0, "class", "fa-solid fa-check");
+      attr(button0, "class", "stealth apply-trait svelte-FF15-1uhww5r");
+      button0.disabled = button0_disabled_value = /*isApplyDisabled*/
+      ctx[2](
+        /*target*/
+        ctx[33]
+      );
+      attr(div11, "class", "flex1");
+      attr(i1, "class", "fa-solid fa-refresh");
+      attr(button1, "class", "stealth apply-trait svelte-FF15-1uhww5r");
+      button1.disabled = button1_disabled_value = !/*isApplyDisabled*/
+      ctx[2](
+        /*target*/
+        ctx[33]
+      );
+      attr(div12, "class", "flex1");
+      attr(div13, "class", "flexcol");
+      attr(div14, "class", "flex0");
+      attr(div15, "class", div15_class_value = "target-row flexrow " + /*target*/
+      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FF15-1uhww5r");
+      attr(div16, "class", "background svelte-FF15-1uhww5r");
+      attr(div17, "class", "leatherbook svelte-FF15-1uhww5r");
+    },
+    m(target, anchor) {
+      insert(target, div17, anchor);
+      append(div17, div16);
+      append(div16, div0);
+      append(div16, div15);
+      append(div15, div9);
+      append(div9, div8);
+      append(div8, div1);
+      if (if_block0)
+        if_block0.m(div1, null);
+      append(div8, div7);
+      append(div7, div2);
+      append(div2, t0);
+      append(div7, div6);
+      append(div6, div3);
+      append(div6, div4);
+      append(div4, t2);
+      append(div6, div5);
+      if_blocks[current_block_type_index].m(div5, null);
+      append(div15, div10);
+      if (if_block2)
+        if_block2.m(div10, null);
+      append(div10, if_block2_anchor);
+      if (if_block3)
+        if_block3.m(div10, null);
+      append(div15, div14);
+      append(div14, div13);
+      append(div13, div11);
+      append(div11, button0);
+      append(button0, i0);
+      append(div13, div12);
+      append(div12, button1);
+      append(button1, i1);
+      current = true;
+      if (!mounted) {
+        dispose = [
+          listen(button0, "click", function() {
+            if (is_function(
+              /*applyResult*/
+              ctx[12](
+                /*target*/
+                ctx[33]
+              )
+            ))
+              ctx[12](
+                /*target*/
+                ctx[33]
+              ).apply(this, arguments);
+          }),
+          listen(button1, "click", function() {
+            if (is_function(
+              /*undoResult*/
+              ctx[13](
+                /*target*/
+                ctx[33]
+              )
+            ))
+              ctx[13](
+                /*target*/
+                ctx[33]
+              ).apply(this, arguments);
+          })
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (
+        /*target*/
+        ctx[33] && !/*target*/
+        ctx[33].isUnlinked
+      ) {
+        if (if_block0) {
+          if_block0.p(ctx, dirty);
+        } else {
+          if_block0 = create_if_block_5$1(ctx);
+          if_block0.c();
+          if_block0.m(div1, null);
+        }
+      } else if (if_block0) {
+        if_block0.d(1);
+        if_block0 = null;
+      }
+      if ((!current || dirty[0] & /*targetTokens*/
+      8) && t0_value !== (t0_value = /*target*/
+      ctx[33].name + ""))
+        set_data(t0, t0_value);
+      if ((!current || dirty[0] & /*targetTokens*/
+      8) && t2_value !== (t2_value = getDefenseValue(
+        /*target*/
+        ctx[33]
+      ) + ""))
+        set_data(t2, t2_value);
+      let previous_block_index = current_block_type_index;
+      current_block_type_index = select_block_type(ctx);
+      if (current_block_type_index === previous_block_index) {
+        if_blocks[current_block_type_index].p(ctx, dirty);
+      } else {
+        group_outros();
+        transition_out(if_blocks[previous_block_index], 1, 1, () => {
+          if_blocks[previous_block_index] = null;
+        });
+        check_outros();
+        if_block1 = if_blocks[current_block_type_index];
+        if (!if_block1) {
+          if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+          if_block1.c();
+        } else {
+          if_block1.p(ctx, dirty);
+        }
+        transition_in(if_block1, 1);
+        if_block1.m(div5, null);
+      }
+      if (
+        /*item*/
+        ctx[9]?.system?.baseEffectDamage
+      )
+        if_block2.p(ctx, dirty);
+      if (
+        /*item*/
+        ctx[9]?.system?.hasDirectHit
+      )
+        if_block3.p(ctx, dirty);
+      if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
+      12 && div10_class_value !== (div10_class_value = "flex2 thin-border offwhite " + /*isApplyDisabled*/
+      (ctx[2](
+        /*target*/
+        ctx[33]
+      ) ? "bg-silver" : "bg-gold"))) {
+        attr(div10, "class", div10_class_value);
+      }
+      if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
+      12 && button0_disabled_value !== (button0_disabled_value = /*isApplyDisabled*/
+      ctx[2](
+        /*target*/
+        ctx[33]
+      ))) {
+        button0.disabled = button0_disabled_value;
+      }
+      if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
+      12 && button1_disabled_value !== (button1_disabled_value = !/*isApplyDisabled*/
+      ctx[2](
+        /*target*/
+        ctx[33]
+      ))) {
+        button1.disabled = button1_disabled_value;
+      }
+      if (!current || dirty[0] & /*targetTokens*/
+      8 && div15_class_value !== (div15_class_value = "target-row flexrow " + /*target*/
+      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FF15-1uhww5r")) {
+        attr(div15, "class", div15_class_value);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(if_block1);
+      current = true;
+    },
+    o(local) {
+      transition_out(if_block1);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div17);
+      }
+      if (if_block0)
+        if_block0.d();
+      if_blocks[current_block_type_index].d();
+      if (if_block2)
+        if_block2.d();
+      if (if_block3)
+        if_block3.d();
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_if_block_1$g, "create_if_block_1$g");
+function create_if_block_5$1(ctx) {
   let img;
   let img_src_value;
   let img_alt_value;
@@ -7949,14 +9053,14 @@ function create_if_block_4$4(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "target-img clickable svelte-FF15-zy8dpc");
+      attr(img, "class", "target-img clickable svelte-FF15-1uhww5r");
       if (!src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
-        ctx[32]
+        ctx[33]
       )))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*target*/
-      ctx[32].name);
+      ctx[33].name);
     },
     m(target, anchor) {
       insert(target, img, anchor);
@@ -7966,12 +9070,12 @@ function create_if_block_4$4(ctx) {
             /*openActorSheet*/
             ctx[15](
               /*target*/
-              ctx[32].actor
+              ctx[33].actor
             )
           ))
             ctx[15](
               /*target*/
-              ctx[32].actor
+              ctx[33].actor
             ).apply(this, arguments);
         });
         mounted = true;
@@ -7982,13 +9086,13 @@ function create_if_block_4$4(ctx) {
       if (dirty[0] & /*targetTokens*/
       8 && !src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
-        ctx[32]
+        ctx[33]
       ))) {
         attr(img, "src", img_src_value);
       }
       if (dirty[0] & /*targetTokens*/
       8 && img_alt_value !== (img_alt_value = /*target*/
-      ctx[32].name)) {
+      ctx[33].name)) {
         attr(img, "alt", img_alt_value);
       }
     },
@@ -8001,30 +9105,44 @@ function create_if_block_4$4(ctx) {
     }
   };
 }
-__name(create_if_block_4$4, "create_if_block_4$4");
+__name(create_if_block_5$1, "create_if_block_5$1");
 function create_else_block$5(ctx) {
   let i;
   let i_class_value;
+  let i_data_tooltip_value;
   return {
     c() {
       i = element("i");
-      attr(i, "class", i_class_value = "fa-solid bg-white round " + /*isHit*/
+      attr(i, "class", i_class_value = "icon fa-solid bg-white round " + /*isHit*/
       (ctx[14](
         /*target*/
-        ctx[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative"));
+        ctx[33]
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FF15-1uhww5r");
+      attr(i, "data-tooltip", i_data_tooltip_value = /*isHit*/
+      ctx[14](
+        /*target*/
+        ctx[33]
+      ) ? localize$1("DirectHit") : localize$1("DirectHitMissed"));
     },
     m(target, anchor) {
       insert(target, i, anchor);
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*targetTokens*/
-      8 && i_class_value !== (i_class_value = "fa-solid bg-white round " + /*isHit*/
+      8 && i_class_value !== (i_class_value = "icon fa-solid bg-white round " + /*isHit*/
       (ctx2[14](
         /*target*/
-        ctx2[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative"))) {
+        ctx2[33]
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FF15-1uhww5r")) {
         attr(i, "class", i_class_value);
+      }
+      if (dirty[0] & /*targetTokens*/
+      8 && i_data_tooltip_value !== (i_data_tooltip_value = /*isHit*/
+      ctx2[14](
+        /*target*/
+        ctx2[33]
+      ) ? localize$1("DirectHit") : localize$1("DirectHitMissed"))) {
+        attr(i, "data-tooltip", i_data_tooltip_value);
       }
     },
     i: noop,
@@ -8037,7 +9155,7 @@ function create_else_block$5(ctx) {
   };
 }
 __name(create_else_block$5, "create_else_block$5");
-function create_if_block_3$6(ctx) {
+function create_if_block_4$5(ctx) {
   let div1;
   let meteor;
   let div0;
@@ -8050,7 +9168,7 @@ function create_if_block_3$6(ctx) {
       innerFill: "var(--message-color)",
       innerOpacity: "1",
       opacity: "1",
-      size: "28"
+      size: "25"
     }
   });
   return {
@@ -8059,16 +9177,17 @@ function create_if_block_3$6(ctx) {
       create_component(meteor.$$.fragment);
       div0 = element("div");
       i = element("i");
-      attr(i, "class", i_class_value = "fa-solid bg-white round " + /*isHit*/
+      attr(i, "class", i_class_value = "icon fa-solid bg-white round " + /*isHit*/
       (ctx[14](
         /*target*/
-        ctx[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative"));
-      attr(div0, "class", "overlay svelte-FF15-zy8dpc");
+        ctx[33]
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FF15-1uhww5r");
+      attr(i, "data-tooltip", localize$1("CriticalSuccess"));
+      attr(div0, "class", "overlay svelte-FF15-1uhww5r");
       set_style(div0, "margin", "0");
       set_style(div0, "font-size", "1rem");
       set_style(div0, "color", "#fff");
-      attr(div1, "class", "critical svelte-FF15-zy8dpc");
+      attr(div1, "class", "critical svelte-FF15-1uhww5r");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -8079,11 +9198,11 @@ function create_if_block_3$6(ctx) {
     },
     p(ctx2, dirty) {
       if (!current || dirty[0] & /*targetTokens*/
-      8 && i_class_value !== (i_class_value = "fa-solid bg-white round " + /*isHit*/
+      8 && i_class_value !== (i_class_value = "icon fa-solid bg-white round " + /*isHit*/
       (ctx2[14](
         /*target*/
-        ctx2[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative"))) {
+        ctx2[33]
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FF15-1uhww5r")) {
         attr(i, "class", i_class_value);
       }
     },
@@ -8105,8 +9224,8 @@ function create_if_block_3$6(ctx) {
     }
   };
 }
-__name(create_if_block_3$6, "create_if_block_3$6");
-function create_if_block_2$b(ctx) {
+__name(create_if_block_4$5, "create_if_block_4$5");
+function create_if_block_3$7(ctx) {
   let div2;
   let div0;
   let div1;
@@ -8114,7 +9233,7 @@ function create_if_block_2$b(ctx) {
     /*displayDamage*/
     ctx[8](
       /*target*/
-      ctx[32]
+      ctx[33]
     ) + ""
   );
   let t1;
@@ -8133,7 +9252,7 @@ function create_if_block_2$b(ctx) {
       attr(div2, "data-tooltip", div2_data_tooltip_value = /*displayDamageFormula*/
       ctx[7](
         /*target*/
-        ctx[32]
+        ctx[33]
       ));
     },
     m(target, anchor) {
@@ -8147,14 +9266,14 @@ function create_if_block_2$b(ctx) {
       264 && t1_value !== (t1_value = /*displayDamage*/
       ctx2[8](
         /*target*/
-        ctx2[32]
+        ctx2[33]
       ) + ""))
         set_data(t1, t1_value);
       if (dirty[0] & /*displayDamageFormula, targetTokens*/
       136 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDamageFormula*/
       ctx2[7](
         /*target*/
-        ctx2[32]
+        ctx2[33]
       ))) {
         attr(div2, "data-tooltip", div2_data_tooltip_value);
       }
@@ -8166,8 +9285,8 @@ function create_if_block_2$b(ctx) {
     }
   };
 }
-__name(create_if_block_2$b, "create_if_block_2$b");
-function create_if_block_1$g(ctx) {
+__name(create_if_block_3$7, "create_if_block_3$7");
+function create_if_block_2$b(ctx) {
   let div2;
   let div0;
   let div1;
@@ -8175,12 +9294,12 @@ function create_if_block_1$g(ctx) {
     /*isHit*/
     (ctx[14](
       /*target*/
-      ctx[32]
+      ctx[33]
     ) ? (
       /*displayDirectHitDamage*/
       ctx[6](
         /*target*/
-        ctx[32]
+        ctx[33]
       )
     ) : "N/A") + ""
   );
@@ -8200,7 +9319,7 @@ function create_if_block_1$g(ctx) {
       attr(div2, "data-tooltip", div2_data_tooltip_value = /*displayDirectHitDisplayFormula*/
       ctx[5](
         /*target*/
-        ctx[32]
+        ctx[33]
       ));
     },
     m(target, anchor) {
@@ -8214,12 +9333,12 @@ function create_if_block_1$g(ctx) {
       72 && t1_value !== (t1_value = /*isHit*/
       (ctx2[14](
         /*target*/
-        ctx2[32]
+        ctx2[33]
       ) ? (
         /*displayDirectHitDamage*/
         ctx2[6](
           /*target*/
-          ctx2[32]
+          ctx2[33]
         )
       ) : "N/A") + ""))
         set_data(t1, t1_value);
@@ -8227,7 +9346,7 @@ function create_if_block_1$g(ctx) {
       40 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDirectHitDisplayFormula*/
       ctx2[5](
         /*target*/
-        ctx2[32]
+        ctx2[33]
       ))) {
         attr(div2, "data-tooltip", div2_data_tooltip_value);
       }
@@ -8239,363 +9358,67 @@ function create_if_block_1$g(ctx) {
     }
   };
 }
-__name(create_if_block_1$g, "create_if_block_1$g");
+__name(create_if_block_2$b, "create_if_block_2$b");
 function create_each_block$f(ctx) {
-  let div21;
-  let div20;
-  let div0;
-  let div19;
-  let div5;
-  let div4;
-  let div1;
-  let div3;
-  let div2;
-  let t0_value = (
-    /*target*/
-    ctx[32].name + ""
-  );
-  let t0;
-  let div13;
-  let div12;
-  let div8;
-  let div6;
-  let div7;
-  let t2_value = getDefenseValue(
-    /*target*/
-    ctx[32]
-  ) + "";
-  let t2;
-  let div11;
-  let div9;
-  let t3_value = (
-    /*isHit*/
-    ctx[14](
-      /*target*/
-      ctx[32]
-    ) ? "Hit" : "Miss"
-  );
-  let t3;
-  let div10;
-  let current_block_type_index;
-  let if_block1;
-  let div13_class_value;
-  let div14;
-  let if_block2_anchor;
-  let div14_class_value;
-  let div18;
-  let div17;
-  let div15;
-  let button0;
-  let i0;
-  let button0_disabled_value;
-  let div16;
-  let button1;
-  let i1;
-  let button1_disabled_value;
-  let div19_class_value;
+  let if_block_anchor;
   let current;
-  let mounted;
-  let dispose;
-  let if_block0 = !/*target*/
-  ctx[32].isUnlinked && create_if_block_4$4(ctx);
-  const if_block_creators = [create_if_block_3$6, create_else_block$5];
-  const if_blocks = [];
-  function select_block_type(ctx2, dirty) {
-    if (
-      /*FFMessage*/
-      ctx2[0]?.isCritical
-    )
-      return 0;
-    return 1;
-  }
-  __name(select_block_type, "select_block_type");
-  current_block_type_index = select_block_type(ctx);
-  if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-  let if_block2 = (
-    /*item*/
-    ctx[9].system?.formula && create_if_block_2$b(ctx)
-  );
-  let if_block3 = (
-    /*item*/
-    ctx[9].system?.hasDirectHit && create_if_block_1$g(ctx)
+  let if_block = (
+    /*target*/
+    ctx[33] && create_if_block_1$g(ctx)
   );
   return {
     c() {
-      div21 = element("div");
-      div20 = element("div");
-      div0 = element("div");
-      div19 = element("div");
-      div5 = element("div");
-      div4 = element("div");
-      div1 = element("div");
-      if (if_block0)
-        if_block0.c();
-      div3 = element("div");
-      div2 = element("div");
-      t0 = text(t0_value);
-      div13 = element("div");
-      div12 = element("div");
-      div8 = element("div");
-      div6 = element("div");
-      div6.textContent = "DEF ";
-      div7 = element("div");
-      t2 = text(t2_value);
-      div11 = element("div");
-      div9 = element("div");
-      t3 = text(t3_value);
-      div10 = element("div");
-      if_block1.c();
-      div14 = element("div");
-      if (if_block2)
-        if_block2.c();
-      if_block2_anchor = empty();
-      if (if_block3)
-        if_block3.c();
-      div18 = element("div");
-      div17 = element("div");
-      div15 = element("div");
-      button0 = element("button");
-      i0 = element("i");
-      div16 = element("div");
-      button1 = element("button");
-      i1 = element("i");
-      attr(div0, "class", "texture svelte-FF15-zy8dpc");
-      attr(div1, "class", "flex0 target-info pointer svelte-FF15-zy8dpc");
-      attr(div2, "class", "target-name font-cinzel smaller svelte-FF15-zy8dpc");
-      attr(div3, "class", "flex1");
-      attr(div4, "class", "flexrow justify-vertical gap-4");
-      attr(div5, "class", "flex3");
-      attr(div6, "class", "flex1 left font-cinzel smallest");
-      attr(div6, "data-tooltip-class", "FF15-tooltip");
-      attr(div6, "data-tooltip", "Defense");
-      attr(div7, "class", "flex1 m1-xs center");
-      attr(div8, "class", "col target-defense flexrow justify-vertical no-wrap");
-      attr(div9, "class", "flex2 font-cinzel smallest");
-      attr(div10, "class", "flex1 relative");
-      attr(div11, "class", "col flexrow justify-vertical no-wrap");
-      attr(div12, "class", "flexcol");
-      attr(div13, "class", div13_class_value = "flex1 thin-border " + /*FFMessage*/
-      (ctx[0]?.isCritical ? "py-none" : ""));
-      attr(div14, "class", div14_class_value = "flex2 thin-border offwhite " + /*isApplyDisabled*/
-      (ctx[2](
-        /*target*/
-        ctx[32]
-      ) ? "bg-silver" : "bg-gold"));
-      set_style(div14, "min-height", "2.6rem");
-      attr(i0, "class", "fa-solid fa-check");
-      attr(button0, "class", "stealth apply-trait svelte-FF15-zy8dpc");
-      button0.disabled = button0_disabled_value = /*isApplyDisabled*/
-      ctx[2](
-        /*target*/
-        ctx[32]
-      );
-      attr(div15, "class", "flex1");
-      attr(i1, "class", "fa-solid fa-refresh");
-      attr(button1, "class", "stealth apply-trait svelte-FF15-zy8dpc");
-      button1.disabled = button1_disabled_value = !/*isApplyDisabled*/
-      ctx[2](
-        /*target*/
-        ctx[32]
-      );
-      attr(div16, "class", "flex1");
-      attr(div17, "class", "flexcol");
-      attr(div18, "class", "flex0");
-      attr(div19, "class", div19_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-FF15-zy8dpc");
-      attr(div20, "class", "background svelte-FF15-zy8dpc");
-      attr(div21, "class", "leatherbook svelte-FF15-zy8dpc");
+      if (if_block)
+        if_block.c();
+      if_block_anchor = empty();
     },
     m(target, anchor) {
-      insert(target, div21, anchor);
-      append(div21, div20);
-      append(div20, div0);
-      append(div20, div19);
-      append(div19, div5);
-      append(div5, div4);
-      append(div4, div1);
-      if (if_block0)
-        if_block0.m(div1, null);
-      append(div4, div3);
-      append(div3, div2);
-      append(div2, t0);
-      append(div19, div13);
-      append(div13, div12);
-      append(div12, div8);
-      append(div8, div6);
-      append(div8, div7);
-      append(div7, t2);
-      append(div12, div11);
-      append(div11, div9);
-      append(div9, t3);
-      append(div11, div10);
-      if_blocks[current_block_type_index].m(div10, null);
-      append(div19, div14);
-      if (if_block2)
-        if_block2.m(div14, null);
-      append(div14, if_block2_anchor);
-      if (if_block3)
-        if_block3.m(div14, null);
-      append(div19, div18);
-      append(div18, div17);
-      append(div17, div15);
-      append(div15, button0);
-      append(button0, i0);
-      append(div17, div16);
-      append(div16, button1);
-      append(button1, i1);
+      if (if_block)
+        if_block.m(target, anchor);
+      insert(target, if_block_anchor, anchor);
       current = true;
-      if (!mounted) {
-        dispose = [
-          listen(button0, "click", function() {
-            if (is_function(
-              /*applyResult*/
-              ctx[12](
-                /*target*/
-                ctx[32]
-              )
-            ))
-              ctx[12](
-                /*target*/
-                ctx[32]
-              ).apply(this, arguments);
-          }),
-          listen(button1, "click", function() {
-            if (is_function(
-              /*undoResult*/
-              ctx[13](
-                /*target*/
-                ctx[32]
-              )
-            ))
-              ctx[13](
-                /*target*/
-                ctx[32]
-              ).apply(this, arguments);
-          })
-        ];
-        mounted = true;
-      }
     },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (!/*target*/
-      ctx[32].isUnlinked) {
-        if (if_block0) {
-          if_block0.p(ctx, dirty);
+    p(ctx2, dirty) {
+      if (
+        /*target*/
+        ctx2[33]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+          if (dirty[0] & /*targetTokens*/
+          8) {
+            transition_in(if_block, 1);
+          }
         } else {
-          if_block0 = create_if_block_4$4(ctx);
-          if_block0.c();
-          if_block0.m(div1, null);
+          if_block = create_if_block_1$g(ctx2);
+          if_block.c();
+          transition_in(if_block, 1);
+          if_block.m(if_block_anchor.parentNode, if_block_anchor);
         }
-      } else if (if_block0) {
-        if_block0.d(1);
-        if_block0 = null;
-      }
-      if ((!current || dirty[0] & /*targetTokens*/
-      8) && t0_value !== (t0_value = /*target*/
-      ctx[32].name + ""))
-        set_data(t0, t0_value);
-      if ((!current || dirty[0] & /*targetTokens*/
-      8) && t2_value !== (t2_value = getDefenseValue(
-        /*target*/
-        ctx[32]
-      ) + ""))
-        set_data(t2, t2_value);
-      if ((!current || dirty[0] & /*targetTokens*/
-      8) && t3_value !== (t3_value = /*isHit*/
-      ctx[14](
-        /*target*/
-        ctx[32]
-      ) ? "Hit" : "Miss"))
-        set_data(t3, t3_value);
-      let previous_block_index = current_block_type_index;
-      current_block_type_index = select_block_type(ctx);
-      if (current_block_type_index === previous_block_index) {
-        if_blocks[current_block_type_index].p(ctx, dirty);
-      } else {
+      } else if (if_block) {
         group_outros();
-        transition_out(if_blocks[previous_block_index], 1, 1, () => {
-          if_blocks[previous_block_index] = null;
+        transition_out(if_block, 1, 1, () => {
+          if_block = null;
         });
         check_outros();
-        if_block1 = if_blocks[current_block_type_index];
-        if (!if_block1) {
-          if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
-          if_block1.c();
-        } else {
-          if_block1.p(ctx, dirty);
-        }
-        transition_in(if_block1, 1);
-        if_block1.m(div10, null);
-      }
-      if (!current || dirty[0] & /*FFMessage*/
-      1 && div13_class_value !== (div13_class_value = "flex1 thin-border " + /*FFMessage*/
-      (ctx[0]?.isCritical ? "py-none" : ""))) {
-        attr(div13, "class", div13_class_value);
-      }
-      if (
-        /*item*/
-        ctx[9].system?.formula
-      )
-        if_block2.p(ctx, dirty);
-      if (
-        /*item*/
-        ctx[9].system?.hasDirectHit
-      )
-        if_block3.p(ctx, dirty);
-      if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
-      12 && div14_class_value !== (div14_class_value = "flex2 thin-border offwhite " + /*isApplyDisabled*/
-      (ctx[2](
-        /*target*/
-        ctx[32]
-      ) ? "bg-silver" : "bg-gold"))) {
-        attr(div14, "class", div14_class_value);
-      }
-      if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
-      12 && button0_disabled_value !== (button0_disabled_value = /*isApplyDisabled*/
-      ctx[2](
-        /*target*/
-        ctx[32]
-      ))) {
-        button0.disabled = button0_disabled_value;
-      }
-      if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
-      12 && button1_disabled_value !== (button1_disabled_value = !/*isApplyDisabled*/
-      ctx[2](
-        /*target*/
-        ctx[32]
-      ))) {
-        button1.disabled = button1_disabled_value;
-      }
-      if (!current || dirty[0] & /*targetTokens*/
-      8 && div19_class_value !== (div19_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-FF15-zy8dpc")) {
-        attr(div19, "class", div19_class_value);
       }
     },
     i(local) {
       if (current)
         return;
-      transition_in(if_block1);
+      transition_in(if_block);
       current = true;
     },
     o(local) {
-      transition_out(if_block1);
+      transition_out(if_block);
       current = false;
     },
     d(detaching) {
       if (detaching) {
-        detach(div21);
+        detach(if_block_anchor);
       }
-      if (if_block0)
-        if_block0.d();
-      if_blocks[current_block_type_index].d();
-      if (if_block2)
-        if_block2.d();
-      if (if_block3)
-        if_block3.d();
-      mounted = false;
-      run_all(dispose);
+      if (if_block)
+        if_block.d(detaching);
     }
   };
 }
@@ -8610,7 +9433,7 @@ function create_fragment$19(ctx) {
   let html_tag;
   let raw_value = (
     /*item*/
-    ctx[9].system.description + ""
+    ctx[9]?.system?.description + ""
   );
   let html_anchor;
   let header;
@@ -8629,11 +9452,13 @@ function create_fragment$19(ctx) {
   header = new Header$5({});
   let if_block0 = (
     /*content*/
-    ctx[1] && create_if_block_5$1(ctx)
+    ctx[1] && create_if_block_6$1(ctx)
   );
   let if_block1 = (
     /*FFMessage*/
-    ctx[0]?.item?.type === "action" && create_if_block$q(ctx)
+    ctx[0]?.item?.type === "action" && /*item*/
+    ctx[9] && /*targetTokens*/
+    ctx[3].length && create_if_block$q(ctx)
   );
   return {
     c() {
@@ -8655,12 +9480,12 @@ function create_fragment$19(ctx) {
       attr(div0, "class", "pointer");
       attr(div0, "role", "button");
       html_tag.a = html_anchor;
-      attr(div1, "class", "flex4 inset svelte-FF15-zy8dpc");
+      attr(div1, "class", "flex4 inset svelte-FF15-1uhww5r");
       attr(div1, "id", "chat-description");
       attr(div2, "class", div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx[4] ? "visible" : "") + " svelte-FF15-zy8dpc");
+      (ctx[4] ? "visible" : "") + " svelte-FF15-1uhww5r");
       attr(div3, "class", div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[4] ? "expanded" : "") + " svelte-FF15-zy8dpc");
+      (ctx[4] ? "expanded" : "") + " svelte-FF15-1uhww5r");
       attr(div4, "class", "chat");
     },
     m(target, anchor) {
@@ -8692,12 +9517,12 @@ function create_fragment$19(ctx) {
     p(ctx2, dirty) {
       if (!current || dirty[0] & /*showDescription*/
       16 && div2_class_value !== (div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx2[4] ? "visible" : "") + " svelte-FF15-zy8dpc")) {
+      (ctx2[4] ? "visible" : "") + " svelte-FF15-1uhww5r")) {
         attr(div2, "class", div2_class_value);
       }
       if (!current || dirty[0] & /*showDescription*/
       16 && div3_class_value !== (div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[4] ? "expanded" : "") + " svelte-FF15-zy8dpc")) {
+      (ctx2[4] ? "expanded" : "") + " svelte-FF15-1uhww5r")) {
         attr(div3, "class", div3_class_value);
       }
       if (
@@ -8707,7 +9532,7 @@ function create_fragment$19(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_5$1(ctx2);
+          if_block0 = create_if_block_6$1(ctx2);
           if_block0.c();
           if_block0.m(div4, if_block0_anchor);
         }
@@ -8717,12 +9542,14 @@ function create_fragment$19(ctx) {
       }
       if (
         /*FFMessage*/
-        ctx2[0]?.item?.type === "action"
+        ctx2[0]?.item?.type === "action" && /*item*/
+        ctx2[9] && /*targetTokens*/
+        ctx2[3].length
       ) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
-          if (dirty[0] & /*FFMessage*/
-          1) {
+          if (dirty[0] & /*FFMessage, targetTokens*/
+          9) {
             transition_in(if_block1, 1);
           }
         } else {
@@ -8769,12 +9596,7 @@ function create_fragment$19(ctx) {
   };
 }
 __name(create_fragment$19, "create_fragment$19");
-function getTargetTokens(targets) {
-  if (!targets.length)
-    return [];
-  return targets.map((id) => canvas?.tokens?.get(id));
-}
-__name(getTargetTokens, "getTargetTokens");
+let totalDamage = 0;
 function getDefenseValue(target) {
   if (target?.isUnlinked || !target?.actor?.system?.attributes)
     return 0;
@@ -8793,7 +9615,7 @@ function getTargetImage(target) {
   return target?.document?.texture?.src || target?.actor?.img;
 }
 __name(getTargetImage, "getTargetImage");
-function instance$11($$self, $$props, $$invalidate) {
+function instance$12($$self, $$props, $$invalidate) {
   let actor;
   let isApplyDisabled;
   let displayDamage;
@@ -8806,6 +9628,8 @@ function instance$11($$self, $$props, $$invalidate) {
   let { FFMessage } = $$props;
   let { FFMessageState } = $$props;
   let { content } = $$props;
+  let { classes = "" } = $$props;
+  let { messageId } = $$props;
   const item = fromUuidSync(FFMessage.item.uuid);
   if (item) {
     const Item2 = new TJSDocument();
@@ -8813,10 +9637,9 @@ function instance$11($$self, $$props, $$invalidate) {
     setContext("#doc", Item2);
   }
   const message = getContext("message");
-  component_subscribe($$self, message, (value) => $$invalidate(27, $message = value));
-  let totalDamage = 0;
+  component_subscribe($$self, message, (value) => $$invalidate(28, $message = value));
   let isMounted = false;
-  let targetTokens = [];
+  let targetTokens = false;
   let showDescription = false;
   let roll = 0;
   let hasTargets = false;
@@ -8832,48 +9655,54 @@ function instance$11($$self, $$props, $$invalidate) {
     game.system.log.b("RollChat $message", $message);
     game.system.log.b("RollChat FFMessage", FFMessage);
     game.system.log.b("RollChat FFMessage.isCritical", FFMessage.isCritical);
+    game.system.log.b("RollChat item", item);
   }
   __name(log2, "log");
   function getDamageResults(passedTargets) {
     const DamageResults = /* @__PURE__ */ new Map();
     for (const id of passedTargets) {
       let token = canvas.tokens.get(id);
-      const baseDamageFormula = item.system?.hasSplitDamage ? `Split BaseDamage (${item.system?.formula} ÷ ${passedTargets.length})` : `Base Damage (${item.system?.formula})`;
-      const directHitDisplayFormula = item.system?.hasSplitDamage ? `Split Direct Hit ${FFMessage?.isCritical ? " + Critical " : ""}(${item.system?.directHitDamage} ÷ ${passedTargets.length}) ` : `Direct Hit ${FFMessage?.isCritical ? " + Critical " : ""}(${item.system?.directHitDamage})`;
-      DamageResults.set(id, {
-        damage: item.system?.formula,
+      let baseEffectDamage = item?.system?.baseEffectDamage;
+      if (FFMessage?.isCritical && baseEffectDamage) {
+        baseEffectDamage = baseEffectDamage.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
+          return `${parseInt(count, 10) * 2}d${sides}`;
+        });
+      }
+      const directHitDamage = item?.system?.directHitDamage;
+      const baseDamageFormula = item?.system?.hasSplitDamage ? `Split BaseDamage (${baseEffectDamage} ÷ ${passedTargets.length})` : `Base Damage (${baseEffectDamage})`;
+      const directHitDisplayFormula = item?.system?.hasSplitDamage ? `Split Direct Hit (${directHitDamage} ÷ ${passedTargets.length})` : `Direct Hit (${directHitDamage})`;
+      const damageResult = {
+        damage: baseEffectDamage,
+        healing: item?.system?.baseEffectHealing,
         baseDamageFormula,
-        directHit: item.system?.directHitDamage,
-        directHitFormula: item.system?.directHitDamage,
-        directHitDisplayFormula,
+        directHit: item?.system?.hasDirectHit ? directHitDamage : null,
+        directHitFormula: item?.system?.hasDirectHit ? directHitDamage : null,
+        directHitDisplayFormula: item?.system?.hasDirectHit ? directHitDisplayFormula : null,
         directHitResult: false,
         applied: false,
-        originalHP: token.actor.system.points.HP.val,
+        originalHP: token.actor?.system.points.HP.val,
         wasKOd: false
+      };
+      DamageResults.set(id, damageResult);
+    }
+    if (DamageResults.size > 0) {
+      Hooks.callAll("FF15.processAdditionalBaseDamageFromItem", { item, actor, DamageResults });
+      Hooks.callAll("FF15.DamageDiceReroll", {
+        item,
+        actor,
+        DamageResults,
+        isCritical: FFMessage?.isCritical
       });
     }
-    Hooks.callAll("FF15.processAdditionalBaseDamageFromItem", { item, actor, DamageResults });
-    Hooks.callAll("FF15.DamageDiceReroll", { item, actor, DamageResults });
     return DamageResults;
   }
   __name(getDamageResults, "getDamageResults");
-  function setTargetTokens(targets) {
-    $$invalidate(3, targetTokens = getTargetTokens(targets));
-  }
-  __name(setTargetTokens, "setTargetTokens");
   async function initializeStores() {
-    if (FFMessageState.initialised) {
-      setTargetTokens(FFMessage.targets);
-      return;
-    }
-    if (FFMessage?.item?.type === "action") {
-      if (hasTargets) {
-        let storedDamageResults = FFMessageState.damageResults;
-        if (FFMessage.targets.length > 0) {
-          if (!storedDamageResults) {
-            storedDamageResults = getDamageResults(FFMessage.targets);
-          }
-          $$invalidate(3, targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)));
+    if (FFMessage?.item?.type === "action" && hasTargets) {
+      let storedDamageResults = FFMessageState.damageResults;
+      if (FFMessage.targets.length > 0) {
+        if (!storedDamageResults && !FFMessageState.initialised) {
+          storedDamageResults = getDamageResults(FFMessage.targets);
           if ($message) {
             await $message.update({
               flags: {
@@ -8887,6 +9716,13 @@ function instance$11($$self, $$props, $$invalidate) {
             });
           }
         }
+        if (canvas.ready) {
+          $$invalidate(3, targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)).filter(Boolean));
+        } else {
+          Hooks.once("canvasReady", () => {
+            $$invalidate(3, targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)).filter(Boolean));
+          });
+        }
       }
     }
   }
@@ -8896,42 +9732,66 @@ function instance$11($$self, $$props, $$invalidate) {
       await initializeStores();
       isMounted = true;
     }
+    game.system.log.o("[ACTION ROLL CHAT] Mounted targetTokens", targetTokens);
   });
   async function applyResult(target) {
-    if (!target.actor || target.isUnlinked)
+    if (isApplyDisabled(target))
       return;
-    FFMessage.extraModifiers?.penalty || 0;
-    const results = { damage: 0, directHit: 0 };
-    if (item?.system?.formula) {
-      results.damage = parseInt(item?.system.formula) || 0;
-      if (item?.system?.hasSplitDamage && FFMessage.targets.length > 0) {
-        results.damage = Math.ceil(results.damage / FFMessage.targets.length);
-      }
-      totalDamage = results.damage;
-    }
-    if (isHit(target) && item?.system?.hasDirectHit && item?.system?.directHitDamage) {
-      const directHitRoll = await new Roll(FFMessageState.damageResults[target.id].directHit).evaluate({ async: true });
-      if (game.modules.get("dice-so-nice")?.active) {
-        await game.dice3d.showForRoll(directHitRoll);
-      }
-      results.directHitResult = directHitRoll.total;
-      if (item?.system?.hasSplitDamage && FFMessage.targets.length > 0) {
-        results.directHitResult = Math.ceil(results.directHitResult / FFMessage.targets.length);
-      }
-      totalDamage += results.directHitResult;
-    }
-    const currentHP = target?.actor?.system?.points?.HP?.val;
-    const newHP = Math.max(0, currentHP - totalDamage);
-    await target?.actor?.update({ "system.points.HP.val": newHP });
-    if (currentHP > 0 && newHP <= 0) {
-      await target?.actor?.toggleStatusEffect("ko");
-    }
     const newDamageResults = { ...FFMessageState.damageResults };
-    newDamageResults[target.id].damage = results.damage;
-    newDamageResults[target.id].directHitResult = results.directHitResult;
-    newDamageResults[target.id].originalHP = currentHP;
-    newDamageResults[target.id].applied = isCritical;
-    newDamageResults[target.id].wasKOd = currentHP > 0 && newHP <= 0;
+    newDamageResults[target.id] = {
+      ...newDamageResults[target.id],
+      applied: true
+    };
+    await $message.update({
+      flags: {
+        [SYSTEM_ID]: {
+          state: { damageResults: newDamageResults }
+        }
+      }
+    });
+    const token = canvas.tokens.get(target.id);
+    if (!token)
+      return;
+    const damageResults = FFMessageState.damageResults[target.id];
+    if (!damageResults)
+      return;
+    const baseDamage = parseInt(damageResults.damage) || 0;
+    let directHitDamage = 0;
+    if (isHit(target) && item?.system?.hasDirectHit && item?.system?.directHitDamage) {
+      if (damageResults.directHit.includes("d")) {
+        const directHitRoll = await new Roll(damageResults.directHit).evaluate({ async: true });
+        if (game.modules.get("dice-so-nice")?.active) {
+          await game.dice3d.showForRoll(directHitRoll);
+        }
+        directHitDamage = directHitRoll.total;
+      } else {
+        directHitDamage = parseInt(damageResults.directHit) || 0;
+      }
+    }
+    const totalDamage2 = baseDamage + directHitDamage;
+    game.system.log.o("[DAMAGE] Calculating total:", { baseDamage, directHitDamage, totalDamage: totalDamage2 });
+    createDamageText(token, totalDamage2);
+    const newHP = token.actor.system.points.HP.val - totalDamage2;
+    game.system.log.o("[KO CHECK] Before HP update:", {
+      currentHP: token.actor.system.points.HP.val,
+      totalDamage: totalDamage2,
+      newHP
+    });
+    await token.actor.update({ "system.points.HP.val": newHP });
+    game.system.log.o("[KO CHECK] After HP update:", {
+      updatedCurrentHP: token.actor.system.points.HP.val,
+      hasKoStatus: token.actor.statuses.has("ko")
+    });
+    if (token.actor.system.points.HP.val === 0 && !token.actor.statuses.has("ko")) {
+      game.system.log.o("[KO CHECK] Applying KO status");
+      await token.actor.toggleStatusEffect("ko");
+      game.system.log.o("[KO CHECK] KO status applied");
+    }
+    newDamageResults[target.id] = {
+      ...newDamageResults[target.id],
+      wasKOd: newHP <= 0,
+      directHitResult: directHitDamage
+    };
     await $message.update({
       flags: {
         [SYSTEM_ID]: {
@@ -8944,18 +9804,28 @@ function instance$11($$self, $$props, $$invalidate) {
   async function undoResult(target) {
     if (!target.actor || target.isUnlinked)
       return;
-    const result = FFMessageState.damageResults[target.id];
-    if (!result)
+    const token = canvas.tokens.get(target.id);
+    if (!token)
       return;
-    await target?.actor?.update({
-      "system.points.HP.val": result.originalHP
-    });
+    const result = FFMessageState.damageResults[target.id];
+    if (!result || !result.applied)
+      return;
+    const currentHP = token.actor.system.points.HP.val;
+    const originalHP = result.originalHP;
+    if (currentHP !== originalHP) {
+      createDamageText(token, originalHP - currentHP, true);
+      await token.actor.update({ "system.points.HP.val": originalHP });
+    }
     if (result.wasKOd) {
-      await target?.actor?.toggleStatusEffect("ko");
+      await token.actor.toggleStatusEffect("ko");
     }
     const newDamageResults = { ...FFMessageState.damageResults };
-    newDamageResults[target.id].applied = false;
-    newDamageResults[target.id].wasKOd = false;
+    newDamageResults[target.id] = {
+      ...newDamageResults[target.id],
+      applied: false,
+      wasKOd: false,
+      directHitResult: false
+    };
     await $message.update({
       flags: {
         [SYSTEM_ID]: {
@@ -8985,6 +9855,10 @@ function instance$11($$self, $$props, $$invalidate) {
       $$invalidate(17, FFMessageState = $$props2.FFMessageState);
     if ("content" in $$props2)
       $$invalidate(1, content = $$props2.content);
+    if ("classes" in $$props2)
+      $$invalidate(18, classes = $$props2.classes);
+    if ("messageId" in $$props2)
+      $$invalidate(19, messageId = $$props2.messageId);
   };
   $$self.$$.update = () => {
     if ($$self.$$.dirty[0] & /*FFMessage*/
@@ -9013,14 +9887,14 @@ function instance$11($$self, $$props, $$invalidate) {
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
     1) {
-      $$invalidate(18, roll = FFMessage?.roll || 0);
+      $$invalidate(20, roll = FFMessage?.roll || 0);
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
     1) {
-      $$invalidate(19, penalty = FFMessage?.extraModifiers?.penalty || 0);
+      $$invalidate(21, penalty = FFMessage?.extraModifiers?.penalty || 0);
     }
     if ($$self.$$.dirty[0] & /*roll, penalty*/
-    786432) {
+    3145728) {
       totalRoll = roll - penalty;
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
@@ -9048,11 +9922,13 @@ function instance$11($$self, $$props, $$invalidate) {
     openActorSheet,
     handleToggleDescription,
     FFMessageState,
+    classes,
+    messageId,
     roll,
     penalty
   ];
 }
-__name(instance$11, "instance$11");
+__name(instance$12, "instance$12");
 class ActionRollChat extends SvelteComponent {
   static {
     __name(this, "ActionRollChat");
@@ -9062,13 +9938,15 @@ class ActionRollChat extends SvelteComponent {
     init$1(
       this,
       options,
-      instance$11,
+      instance$12,
       create_fragment$19,
       safe_not_equal,
       {
         FFMessage: 0,
         FFMessageState: 17,
-        content: 1
+        content: 1,
+        classes: 18,
+        messageId: 19
       },
       null,
       [-1, -1]
@@ -9450,7 +10328,7 @@ function create_fragment$18(ctx) {
   };
 }
 __name(create_fragment$18, "create_fragment$18");
-function instance$10($$self, $$props, $$invalidate) {
+function instance$11($$self, $$props, $$invalidate) {
   let showProfileImage;
   let { $$slots: slots = {}, $$scope } = $$props;
   let { data } = $$props;
@@ -9491,14 +10369,14 @@ function instance$10($$self, $$props, $$invalidate) {
     slots
   ];
 }
-__name(instance$10, "instance$10");
+__name(instance$11, "instance$11");
 class ChatTitle2 extends SvelteComponent {
   static {
     __name(this, "ChatTitle");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$10, create_fragment$18, safe_not_equal, {
+    init$1(this, options, instance$11, create_fragment$18, safe_not_equal, {
       data: 0,
       overlayValue: 1,
       overlayColor: 2,
@@ -9813,7 +10691,7 @@ function create_fragment$17(ctx) {
   };
 }
 __name(create_fragment$17, "create_fragment$17");
-function instance$$($$self, $$props, $$invalidate) {
+function instance$10($$self, $$props, $$invalidate) {
   let title;
   let height;
   let style;
@@ -9868,14 +10746,14 @@ function instance$$($$self, $$props, $$invalidate) {
     height
   ];
 }
-__name(instance$$, "instance$$");
+__name(instance$10, "instance$10");
 class AttributeRollChat extends SvelteComponent {
   static {
     __name(this, "AttributeRollChat");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$$, create_fragment$17, safe_not_equal, {
+    init$1(this, options, instance$10, create_fragment$17, safe_not_equal, {
       FFMessage: 0,
       content: 1,
       enableToggle: 7
@@ -10101,8 +10979,8 @@ function create_fragment$16(ctx) {
   };
 }
 __name(create_fragment$16, "create_fragment$16");
-function instance$_($$self, $$props, $$invalidate) {
-  let $actor2;
+function instance$$($$self, $$props, $$invalidate) {
+  let $actor;
   let { FFMessage } = $$props;
   let { messageId } = $$props;
   let isReady = false;
@@ -10113,7 +10991,7 @@ function instance$_($$self, $$props, $$invalidate) {
       }
     }
   );
-  component_subscribe($$self, actor, (value) => $$invalidate(8, $actor2 = value));
+  component_subscribe($$self, actor, (value) => $$invalidate(8, $actor = value));
   let message = new TJSDocument(void 0);
   const sourceActor = game.actors.get(FFMessage.actor._id);
   const sourceMessage = game.messages.get(messageId);
@@ -10137,8 +11015,8 @@ function instance$_($$self, $$props, $$invalidate) {
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$actor*/
     256) {
-      if ($actor2) {
-        const ownerColor = getActorOwner($actor2).color;
+      if ($actor) {
+        const ownerColor = getActorOwner($actor).color;
         const colorCalc = new ColourContrastCalculator(ownerColor);
         const cssVars = colorCalc.getCSSVariables();
         $$invalidate(2, messageColor = cssVars.color);
@@ -10157,17 +11035,17 @@ function instance$_($$self, $$props, $$invalidate) {
     actor,
     $$props,
     messageId,
-    $actor2
+    $actor
   ];
 }
-__name(instance$_, "instance$_");
+__name(instance$$, "instance$$");
 class FFChat extends SvelteComponent {
   static {
     __name(this, "FFChat");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$_, create_fragment$16, safe_not_equal, { FFMessage: 0, messageId: 7 });
+    init$1(this, options, instance$$, create_fragment$16, safe_not_equal, { FFMessage: 0, messageId: 7 });
   }
 }
 function renderChatMessage() {
@@ -10241,11 +11119,49 @@ function preDeleteChatMessage() {
     const FFMessage = message.getFlag(SYSTEM_ID, "data");
     if (!FFMessage || !FFMessage.actor || !FFMessage.item || FFMessage.item.type !== "action")
       return;
+    const state = message.getFlag(SYSTEM_ID, "state");
+    if (state?.damageResults) {
+      const hasAppliedDamage = Object.values(state.damageResults).some((result) => result.applied);
+      if (hasAppliedDamage) {
+        game.system.log.w("[SLOT:RESTORE] Message has applied damage results, not restoring slot");
+        return;
+      }
+    }
     const actor = game.actors.get(FFMessage.actor._id);
     if (!actor)
       return;
     const { actionState } = actor.system;
     const usedAction = actionState.used.find((u) => u.messageId === message.id);
+    if (state?.mpCost && !state.mpRestored) {
+      game.system.log.o("[MP:RESTORE] Starting MP restoration check:", {
+        itemName: FFMessage.item.name,
+        mpCost: state.mpCost
+      });
+      const currentMP = actor.system.points.MP.val;
+      game.system.log.o("[MP:RESTORE] Restoring MP cost:", {
+        itemName: FFMessage.item.name,
+        mpCost: state.mpCost,
+        currentMP,
+        newMP: currentMP + state.mpCost
+      });
+      try {
+        await actor.update({
+          "system.points.MP.val": currentMP + state.mpCost
+        });
+        await message.update({
+          [`flags.${SYSTEM_ID}.state.mpRestored`]: true
+        });
+        game.system.log.o("[MP:RESTORE] Successfully restored MP cost");
+      } catch (error) {
+        game.system.log.e("[MP:RESTORE] Error restoring MP cost:", error);
+      }
+    } else {
+      game.system.log.o("[MP:RESTORE] No MP cost to restore:", {
+        itemName: FFMessage.item.name,
+        mpCost: state?.mpCost,
+        alreadyRestored: state?.mpRestored
+      });
+    }
     if (usedAction) {
       await actor.update({
         "system.actionState": {
@@ -10382,6 +11298,7 @@ function getDefaultStatusEffects() {
       id: "dead",
       name: localize$1("statusEffects.dead.name"),
       icon: "icons/svg/skull.svg",
+      img: "icons/svg/skull.svg",
       description: localize$1("statusEffects.dead.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10390,6 +11307,7 @@ function getDefaultStatusEffects() {
       id: "comatose",
       name: localize$1("statusEffects.comatose.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/coma.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/coma.svg`,
       description: localize$1("statusEffects.comatose.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10398,6 +11316,7 @@ function getDefaultStatusEffects() {
       id: "ko",
       name: localize$1("statusEffects.ko.name"),
       icon: "icons/svg/unconscious.svg",
+      img: "icons/svg/unconscious.svg",
       description: localize$1("statusEffects.ko.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10406,6 +11325,7 @@ function getDefaultStatusEffects() {
       id: "surprised",
       name: localize$1("statusEffects.surprised.name"),
       icon: "icons/svg/stoned.svg",
+      img: "icons/svg/stoned.svg",
       description: localize$1("statusEffects.surprised.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10414,6 +11334,7 @@ function getDefaultStatusEffects() {
       id: "brink",
       name: localize$1("statusEffects.brink.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/supine.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/supine.svg`,
       description: localize$1("statusEffects.brink.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10422,6 +11343,7 @@ function getDefaultStatusEffects() {
       id: "bind",
       name: localize$1("statusEffects.bind.name"),
       icon: "icons/svg/net.svg",
+      img: "icons/svg/net.svg",
       description: localize$1("statusEffects.bind.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10430,6 +11352,7 @@ function getDefaultStatusEffects() {
       id: "enmity",
       name: localize$1("statusEffects.enmity.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/enrage.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/enrage.svg`,
       description: localize$1("statusEffects.enmity.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10438,6 +11361,7 @@ function getDefaultStatusEffects() {
       id: "weakness",
       name: localize$1("statusEffects.weakness.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/crutch.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/crutch.svg`,
       description: localize$1("statusEffects.weakness.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10446,6 +11370,7 @@ function getDefaultStatusEffects() {
       id: "stun",
       name: localize$1("statusEffects.stun.name"),
       icon: "icons/svg/daze.svg",
+      img: "icons/svg/daze.svg",
       description: localize$1("statusEffects.stun.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10454,6 +11379,7 @@ function getDefaultStatusEffects() {
       id: "prone",
       name: localize$1("statusEffects.prone.name"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/prone.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/prone.svg`,
       description: localize$1("statusEffects.prone.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
@@ -10463,6 +11389,7 @@ function getDefaultStatusEffects() {
       name: localize$1("statusEffects.blind.name"),
       description: localize$1("statusEffects.blind.description"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/blindfold.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/blindfold.svg`,
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: []
     },
@@ -10471,6 +11398,7 @@ function getDefaultStatusEffects() {
       name: localize$1("statusEffects.slow.name"),
       description: localize$1("statusEffects.slow.description"),
       icon: `systems/${SYSTEM_ID}/assets/icons/status/slowed.svg`,
+      img: `systems/${SYSTEM_ID}/assets/icons/status/slowed.svg`,
       flags: { [SYSTEM_ID]: { periodic: false, special: false } },
       changes: [
         {
@@ -10488,17 +11416,19 @@ function getDefaultStatusEffects() {
       ]
     },
     {
-      id: "enabled",
-      name: localize$1("statusEffects.enabled.name"),
-      icon: `icons/svg/upgrade.svg`,
-      description: localize$1("statusEffects.enabled.description"),
+      id: "transcendent",
+      name: localize$1("statusEffects.transcendent.name"),
+      icon: "icons/svg/ice-aura.svg",
+      img: "icons/svg/ice-aura.svg",
+      description: localize$1("statusEffects.transcendent.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: true } },
       changes: []
     },
     {
       id: "focus",
       name: localize$1("statusEffects.focus.name"),
-      icon: `icons/svg/eye.svg`,
+      icon: "icons/svg/eye.svg",
+      img: "icons/svg/eye.svg",
       description: localize$1("statusEffects.focus.description"),
       flags: { [SYSTEM_ID]: { periodic: false, special: true } },
       changes: []
@@ -21826,7 +22756,7 @@ function create_fragment$15(ctx) {
 }
 __name(create_fragment$15, "create_fragment$15");
 const s_REGEX_HTML = /^\s*<.*>$/;
-function instance$Z($$self, $$props, $$invalidate) {
+function instance$_($$self, $$props, $$invalidate) {
   let title;
   let icon;
   let label;
@@ -21911,14 +22841,14 @@ function instance$Z($$self, $$props, $$invalidate) {
     title
   ];
 }
-__name(instance$Z, "instance$Z");
+__name(instance$_, "instance$_");
 class TJSHeaderButton extends SvelteComponent {
   static {
     __name(this, "TJSHeaderButton");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$Z, create_fragment$15, safe_not_equal, { button: 0 });
+    init$1(this, options, instance$_, create_fragment$15, safe_not_equal, { button: 0 });
   }
   get button() {
     return this.$$.ctx[0];
@@ -22456,7 +23386,7 @@ function create_fragment$14(ctx) {
   };
 }
 __name(create_fragment$14, "create_fragment$14");
-function instance$Y($$self, $$props, $$invalidate) {
+function instance$Z($$self, $$props, $$invalidate) {
   let $focusKeep;
   let $focusAuto;
   let $elementRoot;
@@ -22617,14 +23547,14 @@ function instance$Y($$self, $$props, $$invalidate) {
     $storeDraggable
   ];
 }
-__name(instance$Y, "instance$Y");
+__name(instance$Z, "instance$Z");
 class TJSApplicationHeader extends SvelteComponent {
   static {
     __name(this, "TJSApplicationHeader");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$Y, create_fragment$14, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
+    init$1(this, options, instance$Z, create_fragment$14, safe_not_equal, { draggable: 0, draggableOptions: 20 }, null, [-1, -1]);
   }
 }
 function create_fragment$13(ctx) {
@@ -22691,7 +23621,7 @@ function create_fragment$13(ctx) {
   };
 }
 __name(create_fragment$13, "create_fragment$13");
-function instance$X($$self, $$props, $$invalidate) {
+function instance$Y($$self, $$props, $$invalidate) {
   let $storeElementRoot;
   let $storeMinimized;
   let $storeResizable;
@@ -22829,14 +23759,14 @@ function instance$X($$self, $$props, $$invalidate) {
     div_binding
   ];
 }
-__name(instance$X, "instance$X");
+__name(instance$Y, "instance$Y");
 class ResizableHandle extends SvelteComponent {
   static {
     __name(this, "ResizableHandle");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$X, create_fragment$13, safe_not_equal, { isResizable: 8 });
+    init$1(this, options, instance$Y, create_fragment$13, safe_not_equal, { isResizable: 8 });
   }
 }
 function create_fragment$12(ctx) {
@@ -22876,7 +23806,7 @@ function create_fragment$12(ctx) {
   };
 }
 __name(create_fragment$12, "create_fragment$12");
-function instance$W($$self, $$props, $$invalidate) {
+function instance$X($$self, $$props, $$invalidate) {
   let { elementRoot = void 0 } = $$props;
   let { enabled = true } = $$props;
   let ignoreElements, wrapEl;
@@ -22917,14 +23847,14 @@ function instance$W($$self, $$props, $$invalidate) {
   };
   return [wrapEl, onFocus, elementRoot, enabled, div_binding];
 }
-__name(instance$W, "instance$W");
+__name(instance$X, "instance$X");
 class TJSFocusWrap extends SvelteComponent {
   static {
     __name(this, "TJSFocusWrap");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$W, create_fragment$12, safe_not_equal, { elementRoot: 2, enabled: 3 });
+    init$1(this, options, instance$X, create_fragment$12, safe_not_equal, { elementRoot: 2, enabled: 3 });
   }
 }
 function create_else_block$3(ctx) {
@@ -23539,7 +24469,7 @@ function create_fragment$11(ctx) {
   };
 }
 __name(create_fragment$11, "create_fragment$11");
-function instance$V($$self, $$props, $$invalidate) {
+function instance$W($$self, $$props, $$invalidate) {
   let appResizeObserver;
   let $focusKeep;
   let $focusAuto;
@@ -23852,7 +24782,7 @@ function instance$V($$self, $$props, $$invalidate) {
     div_binding_1
   ];
 }
-__name(instance$V, "instance$V");
+__name(instance$W, "instance$W");
 class ApplicationShell extends SvelteComponent {
   static {
     __name(this, "ApplicationShell");
@@ -23862,7 +24792,7 @@ class ApplicationShell extends SvelteComponent {
     init$1(
       this,
       options,
-      instance$V,
+      instance$W,
       create_fragment$11,
       safe_not_equal,
       {
@@ -24548,7 +25478,7 @@ function create_fragment$10(ctx) {
   };
 }
 __name(create_fragment$10, "create_fragment$10");
-function instance$U($$self, $$props, $$invalidate) {
+function instance$V($$self, $$props, $$invalidate) {
   let dontShowWelcome2;
   let $dontShowWelcomeStore;
   let { elementRoot = void 0 } = $$props;
@@ -24601,14 +25531,14 @@ function instance$U($$self, $$props, $$invalidate) {
     applicationshell_elementRoot_binding
   ];
 }
-__name(instance$U, "instance$U");
+__name(instance$V, "instance$V");
 class WelcomeAppShell extends SvelteComponent {
   static {
     __name(this, "WelcomeAppShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$U, create_fragment$10, safe_not_equal, { elementRoot: 0 });
+    init$1(this, options, instance$V, create_fragment$10, safe_not_equal, { elementRoot: 0 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -27251,9 +28181,13 @@ class ActionModel extends FFItemDataModel {
       trigger: new StringField$3({ required: false, initial: "" }),
       hasTarget: new BooleanField$2({ required: false, initial: false }),
       target: new StringField$3({ required: false, initial: "" }),
-      baseEffectType: new StringField$3({ required: false, initial: "" }),
-      baseEffect: new StringField$3({ required: false, initial: "" }),
-      hasBaseEffect: new BooleanField$2({ required: false, initial: false }),
+      baseEffectHealing: new StringField$3({ required: false, initial: "" }),
+      baseEffectHealingType: new StringField$3({ required: false, initial: "" }),
+      baseEffectDamage: new StringField$3({ required: false, initial: "" }),
+      hasBaseEffectHealing: new BooleanField$2({ required: false, initial: false }),
+      hasBaseEffectDamage: new BooleanField$2({ required: false, initial: false }),
+      hasBaseEffectRestoreMP: new BooleanField$2({ required: false, initial: false }),
+      baseEffectRestoreMP: new NumberField$3({ required: false, initial: 0 }),
       hasCheck: new BooleanField$2({ required: false, initial: false }),
       checkAttribute: new StringField$3({ required: false, initial: "" }),
       checkBonus: new NumberField$3({ required: false, initial: 0 }),
@@ -27277,10 +28211,9 @@ class ActionModel extends FFItemDataModel {
         required: false,
         choices: ["primary", "secondary", "reaction", "limit", "combo"]
       }),
-      formula: new StringField$3({ required: false, initial: "" }),
       hasSplitDamage: new BooleanField$2({ required: false, initial: false }),
-      hasCost: new BooleanField$2({ required: false, initial: false }),
-      cost: new NumberField$3({ required: false, initial: 0 }),
+      hasCostMP: new BooleanField$2({ required: false, initial: false }),
+      costMP: new NumberField$3({ required: false, initial: 0 }),
       procTrigger: new NumberField$3({ required: false, initial: null }),
       procs: new SchemaField$2({
         list: new ArrayField$2(
@@ -27302,6 +28235,16 @@ class ActionModel extends FFItemDataModel {
         ),
         value: new BooleanField$2({ required: true, initial: false })
       }),
+      sourceGrants: new SchemaField$2({
+        list: new ArrayField$2(
+          new ObjectField$1({
+            fields: {
+              uuid: new StringField$3({ required: true, initial: "" })
+            }
+          })
+        ),
+        value: new BooleanField$2({ required: true, initial: false })
+      }),
       requires: new SchemaField$2({
         list: new ArrayField$2(
           new ObjectField$1({
@@ -27312,7 +28255,7 @@ class ActionModel extends FFItemDataModel {
         ),
         value: new BooleanField$2({ required: true, initial: false })
       }),
-      enables: new SchemaField$2({
+      removes: new SchemaField$2({
         list: new ArrayField$2(
           new ObjectField$1({
             fields: {
@@ -27322,7 +28265,7 @@ class ActionModel extends FFItemDataModel {
         ),
         value: new BooleanField$2({ required: true, initial: false })
       }),
-      combos: new SchemaField$2({
+      enables: new SchemaField$2({
         list: new ArrayField$2(
           new ObjectField$1({
             fields: {
@@ -27436,7 +28379,8 @@ class TraitModel extends FFItemDataModel {
       duration: new SchemaField({
         turns: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
         rounds: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 })
-      })
+      }),
+      sacrificesMovement: new BooleanField({ required: false, initial: false })
     };
   }
 }
@@ -27449,337 +28393,20 @@ function setupModels() {
   CONFIG.Actor.dataModels["NPC"] = NPCModel;
 }
 __name(setupModels, "setupModels");
-class PrimaryBaseDamageBuff {
-  static {
-    __name(this, "PrimaryBaseDamageBuff");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the primary base damage buff effect
-   * @param {object} event - The event containing damage results
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    const { DamageResults } = event;
-    for (const effect of this.actor.effects) {
-      const origin = fromUuidSync(effect.origin);
-      for (const change of effect.changes) {
-        if (change.key === "@PrimaryBaseDamageBuff" && change.mode === ACTIVE_EFFECT_MODES.ADD) {
-          for (const [targetData] of DamageResults) {
-            targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
-            targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
-          }
-        }
-      }
-    }
-  }
-}
-class DamageDiceReroll {
-  static {
-    __name(this, "DamageDiceReroll");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the damage dice reroll effect
-   * @param {object} event - The event containing damage results
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    const { DamageResults } = event;
-    if (!DamageResults || !DamageResults.size)
-      return;
-    for (const effect of this.actor.effects) {
-      if (effect.disabled || effect.isSuppressed)
-        continue;
-      const origin = fromUuidSync(effect.origin);
-      for (const change of effect.changes) {
-        if (change.key === "DamageDiceReroll" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          for (const [targetData] of DamageResults) {
-            const [numDice, dieType] = targetData.directHit.split("d").map(Number);
-            if (!numDice || !dieType)
-              continue;
-            const additionalDice = Number(change.value) || 1;
-            const newNumDice = numDice + additionalDice;
-            const kh = numDice;
-            targetData.directHit = `${newNumDice}d${dieType}kh${kh}`;
-            targetData.baseDamageFormula += ` + ${origin.name}`;
-            targetData.directHitDisplayFormula += ` + ${effect.name}`;
-          }
-        }
-      }
-    }
-  }
-}
-class TransferEffectToAllies {
-  static {
-    __name(this, "TransferEffectToAllies");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Delete transferred effects from allies
-   * @param {object} event - The event containing effect data
-   * @return {Promise<void>} Returns a promise that resolves when the effects have been deleted
-   */
-  async delete(event) {
-    const { effect } = event;
-    const transferredEffects = game.actors.reduce((acc, actor) => {
-      return acc.concat(actor.effects.filter(
-        (e) => e.getFlag(SYSTEM_ID, "origin.actor.uuid") === this.actor.uuid && e.name === effect.name
-      ));
-    }, []);
-    game.system.log.p("[EFFECT] Removing transferredEffects", transferredEffects);
-    game.system.log.p("[EFFECT] Removing transferred effects for", effect.name);
-    for (const transferredEffect of transferredEffects) {
-      await transferredEffect.delete();
-    }
-  }
-  /**
-   * Process the transfer effect to allies
-   * @param {object} event - The event containing effect data
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    game.system.log.p("[TRANSFER] Starting effect transfer process", event);
-    const { effect } = event;
-    game.system.log.p("[TRANSFER] Source actor:", this.actor.name);
-    game.system.log.p("[TRANSFER] Effect:", effect);
-    for (const token of this.actor.allyTokens) {
-      game.system.log.p("[TRANSFER] Processing token:", token.name);
-      if (!token.actor) {
-        game.system.log.p("[TRANSFER] No actor for token, skipping");
-        continue;
-      }
-      let changes = foundry.utils.deepClone(effect.changes);
-      changes = changes.filter((change) => change.key !== "TransferEffectToAllies");
-      const effectData = {
-        name: effect.name,
-        label: effect.label,
-        icon: effect.icon,
-        changes,
-        flags: foundry.utils.deepClone(effect.flags),
-        origin: effect.origin,
-        disabled: false
-      };
-      effectData.flags[SYSTEM_ID].origin = {
-        actor: {
-          uuid: this.actor.uuid,
-          name: this.actor.name,
-          img: this.actor.img
-        }
-      };
-      try {
-        await token.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
-        game.system.log.p("[TRANSFER] Successfully created effect on", token.name, effectData, token.actor);
-      } catch (error) {
-        game.system.log.e("[TRANSFER] Error creating effect:", error);
-      }
-    }
-  }
-}
-class EnableCombatTurnSlot {
-  static {
-    __name(this, "EnableCombatTurnSlot");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the enable combat turn slot effect
-   * @param {object} event - The event containing effect data
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    const { change } = event;
-    const target = "system.actionState.available";
-    const current = foundry.utils.getProperty(this.actor, target) || [];
-    if (!Array.isArray(current)) {
-      game.system.log.w("EFFECTS | EnableCombatTurnSlot target is not an array", { target, current });
-      return;
-    }
-    const updated = [...current];
-    if (!updated.includes(change.value)) {
-      updated.push(change.value);
-    }
-    await this.actor.update({
-      [target]: updated
-    });
-  }
-}
-class DamageOverTime {
-  static {
-    __name(this, "DamageOverTime");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the damage over time effect
-   * @param {object} event - The event containing damage results
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    game.system.log.o("[DOT] Processing event:", event);
-    const { change, effect } = event;
-    const currentHP = this.actor.system.points.HP.val;
-    const dotDamage = parseInt(change.value) || 0;
-    game.system.log.o("[DOT] Current state:", {
-      actorName: this.actor.name,
-      currentHP,
-      dotDamage,
-      change
-    });
-    if (dotDamage <= 0) {
-      game.system.log.o("[DOT] No damage to apply");
-      return;
-    }
-    const newHP = Math.max(0, currentHP - dotDamage);
-    game.system.log.o("[DOT] Applying damage:", {
-      actorName: this.actor.name,
-      currentHP,
-      newHP,
-      damage: dotDamage
-    });
-    await this.actor.update({ "system.points.HP.val": newHP });
-    if (currentHP > 0 && newHP <= 0) {
-      game.system.log.o("[DOT] Actor KO'd by DOT");
-      await this.actor.toggleStatusEffect("ko");
-    }
-    await ChatMessage.create({
-      user: game.user.id,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "RollChat",
-            actor: {
-              _id: this.actor.id,
-              name: this.actor.name,
-              img: this.actor.img
-            },
-            item: {
-              name: effect.name,
-              img: effect.icon,
-              type: "effect",
-              system: {
-                description: `${this.actor.name} takes ${dotDamage} damage from ${effect.name}`,
-                formula: dotDamage.toString()
-              }
-            }
-          }
-        }
-      }
-    });
-  }
-}
-class ProcTrigger {
-  static {
-    __name(this, "ProcTrigger");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the proc trigger effect
-   * @param {object} event - The event containing item and roll data
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    const { item, roll } = event;
-    if (!item.system.procs?.list?.length) {
-      return;
-    }
-    let d20Result;
-    if (item.system.hasCR && roll) {
-      const d20Term = roll.terms[0];
-      d20Result = d20Term.modifiers.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results[0].result;
-    } else {
-      const procRoll = await new Roll("1d20").evaluate();
-      d20Result = procRoll.terms[0].results[0].result;
-    }
-    if (!item.system.procTrigger || d20Result < item.system.procTrigger) {
-      return;
-    }
-    for (const procRef of item.system.procs.list) {
-      const procItem = await fromUuid(procRef.uuid);
-      if (!procItem) {
-        continue;
-      }
-      const actorItem = this.actor.items.find(
-        (i) => i.name === procItem.name && i.type === procItem.type
-      );
-      if (!actorItem?.hasEffects) {
-        continue;
-      }
-      await this.actor.enableLinkedEffects(actorItem);
-      await ChatMessage.create({
-        user: game.user.id,
-        speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-        flags: {
-          [SYSTEM_ID]: {
-            data: {
-              chatTemplate: "RollChat",
-              actor: {
-                _id: this.actor._id,
-                name: this.actor.name,
-                img: this.actor.img
-              },
-              item: {
-                _id: actorItem._id,
-                uuid: actorItem.uuid,
-                name: actorItem.name,
-                img: actorItem.img,
-                type: actorItem.type,
-                system: actorItem.system
-              }
-            }
-          }
-        }
-      });
-    }
-  }
-}
-const effects = {
-  PrimaryBaseDamageBuff,
-  DamageDiceReroll,
-  TransferEffectToAllies,
-  EnableCombatTurnSlot,
-  DamageOverTime,
-  ProcTrigger
-};
 function setupEffectsProcessors() {
-  Hooks.on("FF15.processAdditionalBaseDamageFromItem", (event) => {
-    const processor = new effects.PrimaryBaseDamageBuff(event.actor);
-    processor.process(event);
+  game.system.log.o("[EFFECTS] Setting up effect processors");
+  Hooks.on("FF15.processAdditionalBaseDamageFromItem", async (event) => {
+    let processor = new effects.PrimaryBaseDamageBuff(event.actor);
+    await processor.process(event);
+    processor = new effects.AbilityBaseDamageBuff(event.actor);
+    await processor.process(event);
   });
   Hooks.on("FF15.DamageDiceReroll", (event) => {
     const processor = new effects.DamageDiceReroll(event.actor);
     processor.process(event);
   });
   Hooks.on("FF15.EnableCombatTurnSlot", async (event) => {
+    game.system.log.o("[EFFECTS] EnableCombatTurnSlot hook triggered:", event);
     const processor = new effects.EnableCombatTurnSlot(event.actor);
     await processor.process(event);
   });
@@ -28101,7 +28728,7 @@ function create_fragment$$(ctx) {
   };
 }
 __name(create_fragment$$, "create_fragment$$");
-function instance$T($$self, $$props, $$invalidate) {
+function instance$U($$self, $$props, $$invalidate) {
   const omit_props_names = [
     "options",
     "valuePath",
@@ -28190,14 +28817,14 @@ function instance$T($$self, $$props, $$invalidate) {
     select_change_handler
   ];
 }
-__name(instance$T, "instance$T");
+__name(instance$U, "instance$U");
 class DocSelect extends SvelteComponent {
   static {
     __name(this, "DocSelect");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$T, create_fragment$$, safe_not_equal, {
+    init$1(this, options, instance$U, create_fragment$$, safe_not_equal, {
       options: 0,
       valuePath: 6,
       document: 7,
@@ -28265,7 +28892,7 @@ class DocSelect extends SvelteComponent {
     flush();
   }
 }
-function create_if_block_3$5(ctx) {
+function create_if_block_3$6(ctx) {
   let div1;
   let div0;
   let input;
@@ -28275,7 +28902,7 @@ function create_if_block_3$5(ctx) {
   let dispose;
   let if_block = (
     /*LABEL*/
-    ctx[13] && create_if_block_4$3(ctx)
+    ctx[13] && create_if_block_4$4(ctx)
   );
   let input_levels = [
     /*$$restProps*/
@@ -28407,8 +29034,8 @@ function create_if_block_3$5(ctx) {
     }
   };
 }
-__name(create_if_block_3$5, "create_if_block_3$5");
-function create_if_block_4$3(ctx) {
+__name(create_if_block_3$6, "create_if_block_3$6");
+function create_if_block_4$4(ctx) {
   let div;
   let label_1;
   let t0;
@@ -28455,7 +29082,7 @@ function create_if_block_4$3(ctx) {
     }
   };
 }
-__name(create_if_block_4$3, "create_if_block_4$3");
+__name(create_if_block_4$4, "create_if_block_4$4");
 function create_if_block$i(ctx) {
   let button;
   let div;
@@ -28790,7 +29417,7 @@ function create_fragment$_(ctx) {
   let if_block1_anchor;
   let if_block0 = (
     /*alwaysEditable*/
-    ctx[7] && create_if_block_3$5(ctx)
+    ctx[7] && create_if_block_3$6(ctx)
   );
   let if_block1 = !/*alwaysEditable*/
   ctx[7] && create_if_block$i(ctx);
@@ -28819,7 +29446,7 @@ function create_fragment$_(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_3$5(ctx2);
+          if_block0 = create_if_block_3$6(ctx2);
           if_block0.c();
           if_block0.m(if_block0_anchor.parentNode, if_block0_anchor);
         }
@@ -28862,7 +29489,7 @@ const input_handler_1 = /* @__PURE__ */ __name(() => {
 }, "input_handler_1");
 const click_handler = /* @__PURE__ */ __name(() => {
 }, "click_handler");
-function instance$S($$self, $$props, $$invalidate) {
+function instance$T($$self, $$props, $$invalidate) {
   let isEmpty;
   const omit_props_names = [
     "placeholder",
@@ -29107,7 +29734,7 @@ function instance$S($$self, $$props, $$invalidate) {
     input_binding_1
   ];
 }
-__name(instance$S, "instance$S");
+__name(instance$T, "instance$T");
 class DocInput extends SvelteComponent {
   static {
     __name(this, "DocInput");
@@ -29117,7 +29744,7 @@ class DocInput extends SvelteComponent {
     init$1(
       this,
       options,
-      instance$S,
+      instance$T,
       create_fragment$_,
       safe_not_equal,
       {
@@ -29476,7 +30103,7 @@ function create_fragment$Z(ctx) {
   };
 }
 __name(create_fragment$Z, "create_fragment$Z");
-function instance$R($$self, $$props, $$invalidate) {
+function instance$S($$self, $$props, $$invalidate) {
   let $doc;
   const doc = getContext("#doc");
   component_subscribe($$self, doc, (value) => $$invalidate(14, $doc = value));
@@ -29558,14 +30185,14 @@ function instance$R($$self, $$props, $$invalidate) {
     click_handler_1
   ];
 }
-__name(instance$R, "instance$R");
+__name(instance$S, "instance$S");
 class Changes extends SvelteComponent {
   static {
     __name(this, "Changes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$R, create_fragment$Z, safe_not_equal, {});
+    init$1(this, options, instance$S, create_fragment$Z, safe_not_equal, {});
   }
 }
 function get_each_context$b(ctx, list, i) {
@@ -30012,9 +30639,9 @@ function create_fragment$Y(ctx) {
   };
 }
 __name(create_fragment$Y, "create_fragment$Y");
-function instance$Q($$self, $$props, $$invalidate) {
+function instance$R($$self, $$props, $$invalidate) {
   let { tabs = [] } = $$props;
-  let { sheet } = $$props;
+  let { sheet = void 0 } = $$props;
   let { activeTab: activeTab2 = void 0 } = $$props;
   onMount(() => {
     $$invalidate(0, activeTab2 = tabs[0].id);
@@ -30033,14 +30660,14 @@ function instance$Q($$self, $$props, $$invalidate) {
   $$props = exclude_internal_props($$props);
   return [activeTab2, tabs, sheet, $$props, click_handler2];
 }
-__name(instance$Q, "instance$Q");
+__name(instance$R, "instance$R");
 class Tabs extends SvelteComponent {
   static {
     __name(this, "Tabs");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$Q, create_fragment$Y, safe_not_equal, { tabs: 1, sheet: 2, activeTab: 0 });
+    init$1(this, options, instance$R, create_fragment$Y, safe_not_equal, { tabs: 1, sheet: 2, activeTab: 0 });
   }
 }
 function create_if_block$g(ctx) {
@@ -30194,7 +30821,7 @@ function create_fragment$X(ctx) {
   };
 }
 __name(create_fragment$X, "create_fragment$X");
-function instance$P($$self, $$props, $$invalidate) {
+function instance$Q($$self, $$props, $$invalidate) {
   let $doc;
   let { valuePath = "" } = $$props;
   let { document: document2 = false } = $$props;
@@ -30262,14 +30889,14 @@ function instance$P($$self, $$props, $$invalidate) {
     input_change_handler
   ];
 }
-__name(instance$P, "instance$P");
+__name(instance$Q, "instance$Q");
 class DocCheckbox extends SvelteComponent {
   static {
     __name(this, "DocCheckbox");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$P, create_fragment$X, safe_not_equal, {
+    init$1(this, options, instance$Q, create_fragment$X, safe_not_equal, {
       valuePath: 7,
       document: 8,
       preventDefault: 9,
@@ -30534,7 +31161,7 @@ function create_fragment$W(ctx) {
   };
 }
 __name(create_fragment$W, "create_fragment$W");
-function instance$O($$self, $$props, $$invalidate) {
+function instance$P($$self, $$props, $$invalidate) {
   let { onUpdateRevealButtons = void 0 } = $$props;
   let { sectionEl = void 0 } = $$props;
   const revealed = sectionEl.classList.contains("revealed");
@@ -30547,14 +31174,14 @@ function instance$O($$self, $$props, $$invalidate) {
   };
   return [onUpdateRevealButtons, sectionEl, revealed, click_handler2];
 }
-__name(instance$O, "instance$O");
+__name(instance$P, "instance$P");
 class RevealSecretButton extends SvelteComponent {
   static {
     __name(this, "RevealSecretButton");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$O, create_fragment$W, safe_not_equal, { onUpdateRevealButtons: 0, sectionEl: 1 });
+    init$1(this, options, instance$P, create_fragment$W, safe_not_equal, { onUpdateRevealButtons: 0, sectionEl: 1 });
   }
 }
 function processHTML({ html, process, selector, containerElement = "div", firstMatchOnly = false, namespaceURI }) {
@@ -31067,7 +31694,7 @@ function create_fragment$V(ctx) {
   };
 }
 __name(create_fragment$V, "create_fragment$V");
-function instance$N($$self, $$props, $$invalidate) {
+function instance$O($$self, $$props, $$invalidate) {
   let $doc;
   let $applicationActiveWindow;
   let { content = "" } = $$props;
@@ -31360,14 +31987,14 @@ function instance$N($$self, $$props, $$invalidate) {
     div_binding_1
   ];
 }
-__name(instance$N, "instance$N");
+__name(instance$O, "instance$O");
 class TJSProseMirror extends SvelteComponent {
   static {
     __name(this, "TJSProseMirror");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$N, create_fragment$V, safe_not_equal, {
+    init$1(this, options, instance$O, create_fragment$V, safe_not_equal, {
       content: 15,
       enrichedContent: 1,
       options: 0
@@ -31489,7 +32116,7 @@ __name(create_fragment$U, "create_fragment$U");
 function doSomethingWithEnrichedContent(event) {
 }
 __name(doSomethingWithEnrichedContent, "doSomethingWithEnrichedContent");
-function instance$M($$self, $$props, $$invalidate) {
+function instance$N($$self, $$props, $$invalidate) {
   const omit_props_names = ["content", "attr", "classes", "editable"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   let $doc;
@@ -31554,14 +32181,14 @@ function instance$M($$self, $$props, $$invalidate) {
     editor_start_handler
   ];
 }
-__name(instance$M, "instance$M");
+__name(instance$N, "instance$N");
 let ProseMirror$1 = class ProseMirror2 extends SvelteComponent {
   static {
     __name(this, "ProseMirror");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$M, create_fragment$U, safe_not_equal, {
+    init$1(this, options, instance$N, create_fragment$U, safe_not_equal, {
       content: 0,
       attr: 5,
       classes: 6,
@@ -31597,6 +32224,15 @@ let ProseMirror$1 = class ProseMirror2 extends SvelteComponent {
     flush();
   }
 };
+function getPropertyCompat(object, key) {
+  const foundryVersion = (game?.version ?? game?.data?.version) || "0.0";
+  const [majorVersion] = foundryVersion.split(".").map((v) => parseInt(v, 10) || 0);
+  if (majorVersion >= 12 && foundry?.utils?.getProperty) {
+    return foundry.utils.getProperty(object, key);
+  }
+  return globalThis.getProperty(object, key);
+}
+__name(getPropertyCompat, "getPropertyCompat");
 function get_each_context$a(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[10] = list[i];
@@ -31884,7 +32520,7 @@ function create_fragment$T(ctx) {
   };
 }
 __name(create_fragment$T, "create_fragment$T");
-function instance$L($$self, $$props, $$invalidate) {
+function instance$M($$self, $$props, $$invalidate) {
   let currentTags;
   let availableUnselectedTags;
   let $doc;
@@ -31937,7 +32573,7 @@ function instance$L($$self, $$props, $$invalidate) {
     if ($$self.$$.dirty & /*tagsPath, $doc*/
     129) {
       $$invalidate(1, currentTags = (() => {
-        const tags = tagsPath.startsWith("flags") ? $doc.getFlag(SYSTEM_ID, tagsPath) || [] : getProperty($doc, tagsPath) || [];
+        const tags = tagsPath.startsWith("flags") ? $doc.getFlag(SYSTEM_ID, tagsPath) || [] : getPropertyCompat($doc, tagsPath) || [];
         return Array.isArray(tags) ? tags : Array.from(tags);
       })());
     }
@@ -31958,19 +32594,19 @@ function instance$L($$self, $$props, $$invalidate) {
     select_change_handler
   ];
 }
-__name(instance$L, "instance$L");
+__name(instance$M, "instance$M");
 class TagSelect extends SvelteComponent {
   static {
     __name(this, "TagSelect");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$L, create_fragment$T, safe_not_equal, { availableTags: 6, tagsPath: 0 });
+    init$1(this, options, instance$M, create_fragment$T, safe_not_equal, { availableTags: 6, tagsPath: 0 });
   }
 }
 function create_fragment$S(ctx) {
-  let div32;
-  let div31;
+  let div37;
+  let div36;
   let div5;
   let div1;
   let div0;
@@ -31980,7 +32616,7 @@ function create_fragment$S(ctx) {
   let label0;
   let div3;
   let docinput;
-  let div25;
+  let div30;
   let div8;
   let div6;
   let label1;
@@ -32001,22 +32637,30 @@ function create_fragment$S(ctx) {
   let div16;
   let label3;
   let div17;
-  let doccheckbox2;
+  let docselect;
   let div20;
   let div19;
   let p2;
-  let div22;
+  let div23;
   let div21;
   let label4;
+  let div22;
+  let doccheckbox2;
+  let div25;
   let div24;
-  let div23;
-  let tagselect;
-  let div30;
+  let p3;
   let div27;
   let div26;
   let label5;
   let div29;
   let div28;
+  let tagselect;
+  let div35;
+  let div32;
+  let div31;
+  let label6;
+  let div34;
+  let div33;
   let prosemirror;
   let current;
   docinput = new DocInput({
@@ -32035,6 +32679,19 @@ function create_fragment$S(ctx) {
     props: {
       name: "overlay",
       valuePath: `flags.${SYSTEM_ID}.overlay`
+    }
+  });
+  docselect = new DocSelect({
+    props: {
+      class: "wide right",
+      id: "stackable",
+      name: "stackable",
+      options: (
+        /*stackingOptions*/
+        ctx[1]
+      ),
+      valuePath: `flags.${SYSTEM_ID}.stackable`,
+      defaultValue: "differentSource"
     }
   });
   doccheckbox2 = new DocCheckbox({
@@ -32058,8 +32715,8 @@ function create_fragment$S(ctx) {
   });
   return {
     c() {
-      div32 = element("div");
-      div31 = element("div");
+      div37 = element("div");
+      div36 = element("div");
       div5 = element("div");
       div1 = element("div");
       div0 = element("div");
@@ -32071,7 +32728,7 @@ function create_fragment$S(ctx) {
       label0.textContent = `${localize$1("Name")}`;
       div3 = element("div");
       create_component(docinput.$$.fragment);
-      div25 = element("div");
+      div30 = element("div");
       div8 = element("div");
       div6 = element("div");
       label1 = element("label");
@@ -32095,27 +32752,37 @@ function create_fragment$S(ctx) {
       div18 = element("div");
       div16 = element("div");
       label3 = element("label");
-      label3.textContent = `${localize$1("EFFECT.Suspended.Label")}`;
+      label3.textContent = `${localize$1("EFFECT.Stackable.Label")}`;
       div17 = element("div");
-      create_component(doccheckbox2.$$.fragment);
+      create_component(docselect.$$.fragment);
       div20 = element("div");
       div19 = element("div");
       p2 = element("p");
-      p2.textContent = `${localize$1("EFFECT.Suspended.Caption")}`;
-      div22 = element("div");
+      p2.textContent = `${localize$1("EFFECT.Stackable.Caption")}`;
+      div23 = element("div");
       div21 = element("div");
       label4 = element("label");
-      label4.textContent = `${localize$1("EFFECT.Label.Statuses")}`;
+      label4.textContent = `${localize$1("EFFECT.Suspended.Label")}`;
+      div22 = element("div");
+      create_component(doccheckbox2.$$.fragment);
+      div25 = element("div");
       div24 = element("div");
-      div23 = element("div");
-      create_component(tagselect.$$.fragment);
-      div30 = element("div");
+      p3 = element("p");
+      p3.textContent = `${localize$1("EFFECT.Suspended.Caption")}`;
       div27 = element("div");
       div26 = element("div");
       label5 = element("label");
-      label5.textContent = `${localize$1("EFFECT.Description.Label")}`;
+      label5.textContent = `${localize$1("EFFECT.Label.Statuses")}`;
       div29 = element("div");
       div28 = element("div");
+      create_component(tagselect.$$.fragment);
+      div35 = element("div");
+      div32 = element("div");
+      div31 = element("div");
+      label6 = element("label");
+      label6.textContent = `${localize$1("EFFECT.Description.Label")}`;
+      div34 = element("div");
+      div33 = element("div");
       create_component(prosemirror.$$.fragment);
       attr(h1, "class", "center");
       attr(div0, "class", "flex4");
@@ -32143,34 +32810,42 @@ function create_fragment$S(ctx) {
       attr(div14, "class", "flex4");
       attr(div15, "class", "flexrow justify-vertical");
       attr(label3, "class", "gold svelte-FF15-16c3i1w");
-      attr(label3, "for", "suspended");
+      attr(label3, "for", "stackable");
       attr(div16, "class", "flex4");
-      attr(div17, "class", "flex0 right");
+      attr(div17, "class", "flex4 right");
       attr(div18, "class", "flexrow justify-vertical");
       attr(p2, "class", "caption");
       attr(div19, "class", "flex4");
       attr(div20, "class", "flexrow justify-vertical");
       attr(label4, "class", "gold svelte-FF15-16c3i1w");
-      attr(label4, "for", "statuses");
+      attr(label4, "for", "suspended");
       attr(div21, "class", "flex4");
-      attr(div22, "class", "flexrow justify-vertical");
-      attr(div23, "class", "flex2 left");
-      attr(div24, "class", "flexcol sheet-row justify-vertical");
-      attr(div25, "class", "flex0 mt-sm");
+      attr(div22, "class", "flex0 right");
+      attr(div23, "class", "flexrow justify-vertical");
+      attr(p3, "class", "caption");
+      attr(div24, "class", "flex4");
+      attr(div25, "class", "flexrow justify-vertical");
       attr(label5, "class", "gold svelte-FF15-16c3i1w");
-      attr(label5, "for", "description");
+      attr(label5, "for", "statuses");
       attr(div26, "class", "flex4");
       attr(div27, "class", "flexrow justify-vertical");
-      attr(div28, "class", "flex2 left prose high short");
-      attr(div29, "class", "flexcol sheet-row justify-vertical high");
-      attr(div30, "class", "flex1 mb-xl");
-      attr(div31, "class", "flexcol flex3 left high wide mb-md");
-      attr(div32, "class", "item-sheet details overflow wide inset mt-sm high svelte-FF15-16c3i1w");
+      attr(div28, "class", "flex2 left");
+      attr(div29, "class", "flexcol sheet-row justify-vertical");
+      attr(div30, "class", "flex0 mt-sm");
+      attr(label6, "class", "gold svelte-FF15-16c3i1w");
+      attr(label6, "for", "description");
+      attr(div31, "class", "flex4");
+      attr(div32, "class", "flexrow justify-vertical");
+      attr(div33, "class", "flex2 left prose high short");
+      attr(div34, "class", "flexcol sheet-row justify-vertical high");
+      attr(div35, "class", "flex1 mb-xl");
+      attr(div36, "class", "flexcol flex3 left high wide mb-md");
+      attr(div37, "class", "item-sheet details overflow wide inset mt-sm high svelte-FF15-16c3i1w");
     },
     m(target, anchor) {
-      insert(target, div32, anchor);
-      append(div32, div31);
-      append(div31, div5);
+      insert(target, div37, anchor);
+      append(div37, div36);
+      append(div36, div5);
       append(div5, div1);
       append(div1, div0);
       append(div0, h1);
@@ -32179,44 +32854,52 @@ function create_fragment$S(ctx) {
       append(div2, label0);
       append(div4, div3);
       mount_component(docinput, div3, null);
-      append(div31, div25);
-      append(div25, div8);
+      append(div36, div30);
+      append(div30, div8);
       append(div8, div6);
       append(div6, label1);
       append(div8, div7);
       mount_component(doccheckbox0, div7, null);
-      append(div25, div10);
+      append(div30, div10);
       append(div10, div9);
       append(div9, p0);
-      append(div25, div13);
+      append(div30, div13);
       append(div13, div11);
       append(div11, label2);
       append(div13, div12);
       mount_component(doccheckbox1, div12, null);
-      append(div25, div15);
+      append(div30, div15);
       append(div15, div14);
       append(div14, p1);
-      append(div25, div18);
+      append(div30, div18);
       append(div18, div16);
       append(div16, label3);
       append(div18, div17);
-      mount_component(doccheckbox2, div17, null);
-      append(div25, div20);
+      mount_component(docselect, div17, null);
+      append(div30, div20);
       append(div20, div19);
       append(div19, p2);
-      append(div25, div22);
-      append(div22, div21);
+      append(div30, div23);
+      append(div23, div21);
       append(div21, label4);
+      append(div23, div22);
+      mount_component(doccheckbox2, div22, null);
+      append(div30, div25);
       append(div25, div24);
-      append(div24, div23);
-      mount_component(tagselect, div23, null);
-      append(div31, div30);
+      append(div24, p3);
       append(div30, div27);
       append(div27, div26);
       append(div26, label5);
       append(div30, div29);
       append(div29, div28);
-      mount_component(prosemirror, div28, null);
+      mount_component(tagselect, div28, null);
+      append(div36, div35);
+      append(div35, div32);
+      append(div32, div31);
+      append(div31, label6);
+      append(div35, div34);
+      append(div34, div33);
+      mount_component(prosemirror, div33, null);
       current = true;
     },
     p(ctx2, [dirty]) {
@@ -32233,6 +32916,7 @@ function create_fragment$S(ctx) {
       transition_in(docinput.$$.fragment, local);
       transition_in(doccheckbox0.$$.fragment, local);
       transition_in(doccheckbox1.$$.fragment, local);
+      transition_in(docselect.$$.fragment, local);
       transition_in(doccheckbox2.$$.fragment, local);
       transition_in(tagselect.$$.fragment, local);
       transition_in(prosemirror.$$.fragment, local);
@@ -32242,6 +32926,7 @@ function create_fragment$S(ctx) {
       transition_out(docinput.$$.fragment, local);
       transition_out(doccheckbox0.$$.fragment, local);
       transition_out(doccheckbox1.$$.fragment, local);
+      transition_out(docselect.$$.fragment, local);
       transition_out(doccheckbox2.$$.fragment, local);
       transition_out(tagselect.$$.fragment, local);
       transition_out(prosemirror.$$.fragment, local);
@@ -32249,11 +32934,12 @@ function create_fragment$S(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div32);
+        detach(div37);
       }
       destroy_component(docinput);
       destroy_component(doccheckbox0);
       destroy_component(doccheckbox1);
+      destroy_component(docselect);
       destroy_component(doccheckbox2);
       destroy_component(tagselect);
       destroy_component(prosemirror);
@@ -32261,23 +32947,37 @@ function create_fragment$S(ctx) {
   };
 }
 __name(create_fragment$S, "create_fragment$S");
-function instance$K($$self, $$props, $$invalidate) {
+function instance$L($$self, $$props, $$invalidate) {
   let statusOptions;
   getContext("#doc");
+  const stackingOptions = [
+    {
+      value: "differentSource",
+      label: localize$1("EFFECT.Stackable.Options.differentSource")
+    },
+    {
+      value: "anySource",
+      label: localize$1("EFFECT.Stackable.Options.anySource")
+    },
+    {
+      value: "replaces",
+      label: localize$1("EFFECT.Stackable.Options.replaces")
+    }
+  ];
   onMount(async () => {
     console.log("ActiveEffectSheet Config");
   });
   $$invalidate(0, statusOptions = getDefaultStatusEffects().map((status) => status.id));
-  return [statusOptions];
+  return [statusOptions, stackingOptions];
 }
-__name(instance$K, "instance$K");
+__name(instance$L, "instance$L");
 class Config extends SvelteComponent {
   static {
     __name(this, "Config");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$K, create_fragment$S, safe_not_equal, {});
+    init$1(this, options, instance$L, create_fragment$S, safe_not_equal, {});
   }
 }
 function create_default_slot_1$2(ctx) {
@@ -32460,7 +33160,7 @@ function create_fragment$R(ctx) {
   };
 }
 __name(create_fragment$R, "create_fragment$R");
-function instance$J($$self, $$props, $$invalidate) {
+function instance$K($$self, $$props, $$invalidate) {
   let { elementRoot = void 0 } = $$props;
   let { doc } = $$props;
   getContext("#external").application;
@@ -32507,14 +33207,14 @@ function instance$J($$self, $$props, $$invalidate) {
     applicationshell_elementRoot_binding
   ];
 }
-__name(instance$J, "instance$J");
+__name(instance$K, "instance$K");
 class FFActiveEffectShell extends SvelteComponent {
   static {
     __name(this, "FFActiveEffectShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$J, create_fragment$R, safe_not_equal, { elementRoot: 0, doc: 3 });
+    init$1(this, options, instance$K, create_fragment$R, safe_not_equal, { elementRoot: 0, doc: 3 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -32796,27 +33496,31 @@ class RollCalc {
     this.playMessageSound();
   }
 }
-class RollCalcActor extends RollCalc {
+class DefaultChatHandler {
   static {
-    __name(this, "RollCalcActor");
+    __name(this, "DefaultChatHandler");
   }
   /**
-   * Create a default chat message for an item
-   * @param {Item} item - The item to create a chat message for
-   * @return {Promise<ChatMessage>} The created chat message
+   * @param {Actor} actor - The actor this handler is for
    */
-  async defaultChat(item) {
-    return await ChatMessage.create({
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * @param {Item} item - The item to create a chat message for
+   */
+  handle(item) {
+    ChatMessage.create({
       user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
       flags: {
         [SYSTEM_ID]: {
           data: {
             chatTemplate: "RollChat",
             actor: {
-              _id: this.params.actor._id,
-              name: this.params.actor.name,
-              img: this.params.actor.img
+              _id: this.actor._id,
+              name: this.actor.name,
+              img: this.actor.img
             },
             item: {
               _id: item._id,
@@ -32831,114 +33535,178 @@ class RollCalcActor extends RollCalc {
       }
     });
   }
-  /**
-   * Create a chat message for equipment
-   * @param {Item} item - The equipment item
-   * @return {Promise<ChatMessage>} The created chat message
-   */
-  async equipment(item) {
-    this.params.item = item;
-    ChatMessage.create({
-      user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      flags: { [SYSTEM_ID]: { data: { ...this.params, chatTemplate: "EquipmentChat" } } }
-    });
+}
+class ActionHandler {
+  static {
+    __name(this, "ActionHandler");
   }
   /**
-   * Roll an attribute check
-   * @param {string} key - The attribute key
-   * @param {string} code - The attribute code
-   * @return {Promise<void>} Returns a promise that resolves when the attribute check is complete
+   * @param {Actor} actor - The actor this handler is for
    */
-  async attribute(key, code) {
-    const attributeValue = this.params.actor.system.attributes[key][code].val;
-    const rollFormula = `1d20 + ${attributeValue}`;
-    const attributeName = game.i18n.localize(`FF15.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
-    const roll = await new Roll(rollFormula).evaluate({ async: true });
-    const isCritical2 = roll.total === 20;
-    const messageData = {
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: $actor }) : null,
-      flavor: `${attributeName} ${game.i18n.localize("FF15.Check")}`,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      roll,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "AttributeRollChat",
-            actor: {
-              _id: this.params.actor._id,
-              name: this.params.actor.name,
-              img: this.params.actor.img
-            },
-            flavor: `${attributeName} ${game.i18n.localize("FF15.Check")}`,
-            key,
-            code,
-            modifier: attributeValue,
-            isCritical: isCritical2
-          },
-          css: `attribute-roll ${isCritical2 ? "crit" : ""}`
+  constructor(actor) {
+    this.actor = actor;
+    this.DefaultChat = new DefaultChatHandler(actor);
+  }
+  /**
+   * Handle an action ability
+   * @param {Item} item - The action item
+   * @param {Object} [options={}] - Additional options
+   * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
+   */
+  async handle(item, options = {}) {
+    try {
+      this.options = options;
+      const { targets, hasTargets, targetIds } = this._getActionTargets();
+      let roll;
+      let isCritical = false;
+      let d20Result = null;
+      let isSuccess;
+      let message;
+      await this._handleCostMP(item);
+      if (item.system.hasCR) {
+        ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
+      } else {
+        if (item.system.hasBaseEffectDamage || item.system.hasBaseEffectHealing || item.system.hasBaseEffectRestoreMP) {
+          message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
+        } else {
+          this.DefaultChat.handle(item);
         }
       }
-    };
-    await roll.toMessage(messageData);
+      if (item.system.baseEffectHealing) {
+        await this._handleHealing(item, this.actor, isCritical);
+      }
+      if (item.system.hasBaseEffectRestoreMP && item.system.baseEffectRestoreMP) {
+        await this._handleMPRestoration(item);
+      }
+      return {
+        handledSuccessfully: true,
+        isCritical,
+        roll,
+        d20Result,
+        hasTargets,
+        targets,
+        isSuccess,
+        message
+      };
+    } catch (error) {
+      game.system.log.e("Error in action handler", error);
+      ui.notifications.error(
+        game.i18n.format("FF15.Errors.ActionHandlingFailed", { target: this.actor.name })
+      );
+      return { handledSuccessfully: false };
+    }
   }
   /**
-   * Handle an ability roll
-   * @param {string} type - The type of ability
-   * @param {Item} item - The ability item
-   * @return {Promise<void>} Returns a promise that resolves when the ability roll is complete
+   * @internal
+   * Retrieves targets from the user and checks if they exist.
    */
-  async ability(type, item) {
-    await this._routeAbility(item);
+  _getActionTargets() {
+    const targets = game.user.targets;
+    const hasTargets = targets.size > 0;
+    const targetIds = Array.from(targets).map((target) => target.id);
+    return { targets, hasTargets, targetIds };
   }
   /**
-   * Handle a trait ability
-   * @param {Item} item - The trait item
-   * @return {Promise<ChatMessage>} The created chat message
+   * @internal
+   * Creates and returns the final message, roll, and critical data if an item uses CR checks.
    */
-  async abilityTrait(item) {
-    return await this.defaultChat(item);
+  async _rollWithCR(item, targets, hasTargets, targetIds) {
+    const { roll, isCritical, d20Result } = await this._handleRollWithModifiers(item);
+    let isSuccess = false;
+    const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
+    messageData.flags[SYSTEM_ID].data.isCritical = isCritical;
+    messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
+    if (hasTargets) {
+      const {
+        crValue,
+        targetActor
+      } = this._getTargetCRValue(item, targets);
+      isSuccess = this._evaluateSuccess({ roll, crValue, isCritical });
+      game.system.log.o("[ABILITY:ROLL] CR check isSuccess:", isSuccess);
+      messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
+      game.system.log.o("[ABILITY:ROLL] CR check:", {
+        itemName: item.name,
+        rollTotal: roll.total,
+        CR: item.system.CR,
+        crValue,
+        isSuccess,
+        isCritical,
+        d20Result
+      });
+    }
+    const message = await roll.toMessage(messageData);
+    return { message, roll, isCritical, d20Result, isSuccess };
   }
   /**
-   * Create message data for an action
+   * @internal
+   * Handle healing from an action
    * @param {Item} item - The action item
-   * @param {boolean} hasTargets - Whether there are targets
-   * @param {Array} targets - Array of target ids
-   * @param {Roll} [roll=null] - Optional roll data
-   * @param {boolean} [isCritical=false] - Whether the roll was critical
-   * @return {Object} Returns the message data object for chat display
+   * @param {Actor} targetActor - The actor to heal
+   * @param {boolean} isCritical - Whether this was a critical hit
+   * @return {Promise<void>} A promise that resolves when healing is complete
    */
-  _createActionMessageData(item, hasTargets, targets, roll = null, isCritical2 = false) {
+  async _handleHealing(item, targetActor, isCritical = false) {
+    if (!item.system.baseEffectHealing)
+      return;
+    const healingRoll = await new Roll(item.system.baseEffectHealing).evaluate();
+    const healingAmount = healingRoll.total;
+    game.system.log.o("[HEALING] Applying healing:", {
+      itemName: item.name,
+      targetName: targetActor.name,
+      healingAmount,
+      isCritical
+    });
+    const currentHP = targetActor.system.points.HP.val;
+    const maxHP = targetActor.system.points.HP.max;
+    const newHP = Math.min(currentHP + healingAmount, maxHP);
+    game.system.log.o("[HEALING] HP values:", {
+      currentHP,
+      maxHP,
+      newHP,
+      healingApplied: newHP - currentHP
+    });
+    await targetActor.update({ "system.points.HP.val": newHP });
+  }
+  /**
+   * @internal
+   * Retrieves the CR value from the first target if available.
+   */
+  _getTargetCRValue(item, targets) {
+    const target = targets.values().next().value;
+    const targetActor = target?.actor;
+    let crValue = 0;
+    if (targetActor) {
+      if (targetActor.type === "npc") {
+        crValue = targetActor.system.attributes[item.system.CR]?.val || 0;
+      } else {
+        crValue = targetActor.system.attributes.secondary[item.system.CR]?.val || 0;
+      }
+    }
+    return { crValue, targetActor };
+  }
+  /**
+   * @internal
+   * Evaluates if a roll is successful based on CR and critical.
+   */
+  _evaluateSuccess({ roll, crValue, isCritical }) {
+    return isCritical || roll.total >= crValue;
+  }
+  /**
+   * @internal
+   * Create message data for an action
+   */
+  _createActionMessageData(item, hasTargets, targets, roll = null, isCritical = false) {
     const messageData = {
       id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
       flavor: `${item.name}`,
-      style: CONST.CHAT_MESSAGE_STYLES.ROLL,
-      rolls: roll ? [roll] : [],
+      rolls: roll ? [roll] : void 0,
       flags: {
         [SYSTEM_ID]: {
           data: {
             chatTemplate: "ActionRollChat",
-            actor: {
-              _id: this.params.actor._id,
-              uuid: this.params.actor.uuid,
-              name: this.params.actor.name,
-              img: this.params.actor.img
-            },
-            item: {
-              _id: item._id,
-              uuid: item.uuid,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: {
-                formula: item.system?.formula,
-                directHitDamage: item.system?.directHitDamage,
-                hasDirectHit: item.system?.hasDirectHit,
-                CR: item.system?.CR,
-                isHealerRecovery: item.system?.isHealerRecovery
-              }
-            },
+            actor: this._buildActorData(this.actor),
+            item: this._buildItemData(item),
             hasTargets,
             targets,
             isSuccess: false,
@@ -32947,9 +33715,11 @@ class RollCalcActor extends RollCalc {
           },
           state: {
             damageResults: false,
-            initialised: false
+            initialised: false,
+            mpCost: item.system.hasCostMP ? item.system.costMP : 0,
+            mpRestored: false
           },
-          css: `leather ${isCritical2 ? "crit" : ""}`
+          css: `leather ${isCritical ? "crit" : ""}`
         }
       }
     };
@@ -32959,189 +33729,333 @@ class RollCalcActor extends RollCalc {
     return messageData;
   }
   /**
-   * Handle an action ability
-   * @param {Item} item - The action item
-   * @param {Object} [options={}] - Additional options
-   * @return {Promise<ChatMessage|void>} Returns a promise that resolves with the created chat message if successful
+   * @internal
+   * Builds a minimal data object for the actor to embed in a chat flag.
    */
-  async abilityAction(item, options = {}) {
-    try {
-      if (!await this._handleGuards(item, [
-        this.RG.isAction,
-        this.RG.isActorsTurn,
-        this.RG.isReaction,
-        this.RG.targetsMatchActionIntent,
-        this.RG.hasRequiredEffects,
-        this.RG.hasActiveEnablerSlot,
-        this.RG.hasRemainingUses,
-        this.RG.hasModifiers
-      ]))
-        return;
-      const targets = game.user.targets;
-      const hasTargets = targets.size > 0;
-      const targetIds = Array.from(targets).map((target) => target.id);
-      if (item.system.grants?.value && hasTargets) {
-        await this._handleTargetEffects(item, targets);
-      }
-      let message;
-      let roll;
-      let isSuccess = false;
-      let isCritical2 = false;
-      let d20Result = null;
-      if (item.system.hasCR) {
-        const rollResult = await this._handleRollWithModifiers(item);
-        roll = rollResult.roll;
-        isSuccess = rollResult.isSuccess;
-        isCritical2 = rollResult.isCritical;
-        d20Result = rollResult.d20Result;
-        game.system.log.d("[ACTION] Roll result:", {
-          itemName: item.name,
-          total: roll.total,
-          isSuccess,
-          isCritical: isCritical2,
-          d20Result
-        });
-        const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical2);
-        messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
-        messageData.flags[SYSTEM_ID].data.isCritical = isCritical2;
-        messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
-        message = await roll.toMessage(messageData);
-        if (isSuccess) {
-          await this._handleEnablerEffects(item);
-        }
-      } else {
-        message = item.system.hasBaseEffect && item.system.baseEffectType === "damage" ? await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds)) : await this.defaultChat(item);
-      }
-      if (item.system.procTrigger) {
-        Hooks.callAll("FF15.ProcTrigger", {
-          actor: this.params.actor,
-          item,
-          roll,
-          targets
-        });
-      }
-      await this._markCombatTrackerActionSlotAsUsed(item, item.system.type || "primary", message);
-      return message;
-    } catch (error) {
-      game.system.log.e("Error applying effects", error);
-      ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: this.params.actor.name }));
-    }
+  _buildActorData(actor) {
+    return {
+      _id: actor._id,
+      uuid: actor.uuid,
+      name: actor.name,
+      img: actor.img
+    };
   }
   /**
-   * Handle critical hit detection and processing
-   * @param {Roll} roll - The roll object
-   * @param {Item} item - The item being used
-   * @return {Object} Object containing critical hit information
+   * @internal
+   * Builds a minimal data object for the item to embed in a chat flag.
    */
-  async _handleCriticalHit(roll, item) {
-    const d20Term = roll.terms[0];
-    const d20Result = d20Term.modifiers.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results[0].result;
-    const isCritical2 = d20Result === 20;
-    game.system.log.d("[CRITICAL] Critical hit check:", {
-      d20Result,
-      isCritical: isCritical2,
-      itemName: item.name,
-      isHealerRecovery: item.system.isHealerRecovery
-    });
-    if (isCritical2) {
-      const isHealerRecovery = item.system.baseEffectType === "heal";
-      const formulaFields = isHealerRecovery ? ["formula"] : ["directHitDamage", "formula"];
-      for (const field of formulaFields) {
-        const formula = item.system[field];
-        if (formula) {
-          const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
-            return `${parseInt(count) * 2}d${sides}`;
-          });
-          item.system[field] = modifiedFormula;
-          game.system.log.d("[CRITICAL] Modified formula:", {
-            field,
-            original: formula,
-            modified: modifiedFormula
-          });
-        }
-      }
-    }
+  _buildItemData(item) {
     return {
-      isCritical: isCritical2,
-      d20Result,
-      // Return original roll formula for reference
-      originalFormulas: {
-        directHitDamage: item.system.directHitDamage,
-        formula: item.system.formula
+      _id: item._id,
+      uuid: item.uuid,
+      name: item.name,
+      img: item.img,
+      type: item.type,
+      system: {
+        baseEffectHealing: item.system?.baseEffectHealing,
+        baseEffectDamage: item.system?.baseEffectDamage,
+        baseEffectRestoreMP: item.system?.baseEffectRestoreMP,
+        directHitDamage: item.system?.directHitDamage,
+        hasDirectHit: item.system?.hasDirectHit,
+        CR: item.system?.CR,
+        isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
       }
     };
   }
   /**
+   * @internal
    * Handle roll with modifiers
-   * @param {Item} item - The item being used
-   * @return {Promise<object>} Returns an object containing roll results including total, success, critical, and d20 result
    */
   async _handleRollWithModifiers(item) {
-    let [diceCount, diceType] = [1, 20];
-    let formula = "";
-    if (this.RG.shuttle.hasModifiers.extraModifiers) {
-      const { bonusDice, penalty } = this.RG.shuttle.hasModifiers.extraModifiers;
-      if (bonusDice) {
-        diceCount += parseInt(bonusDice);
-        diceType = "20kh1";
-      }
-      formula = `${diceCount}d${diceType}${penalty ? ` - ${penalty}` : ""}`;
-    }
+    const formula = this._constructRollFormulaFromModifiers(item);
     const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
     const roll = await new Roll(rollFormula, rollData).evaluate();
-    const criticalInfo = await this._handleCriticalHit(roll, item);
-    const { isCritical: isCritical2, d20Result } = criticalInfo;
-    const isSuccess = isCritical2 || roll.total >= item.system.CR;
-    game.system.log.d("[ROLL] Roll details:", {
-      formula: roll.formula,
-      d20Result,
-      total: roll.total,
-      terms: roll.terms,
-      isCritical: isCritical2,
-      isSuccess,
-      CR: item.system.CR,
-      isHealerRecovery: item.system.isHealerRecovery
-    });
-    if (isCritical2 && item.system.isHealerRecovery && item.system.formula) {
-      const healFormula = item.system.formula;
-      const modifiedFormula = healFormula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
-        return `${parseInt(count) * 2}d${sides}`;
-      });
-      item.system.formula = modifiedFormula;
-      game.system.log.d("[CRITICAL] Modified healing formula:", {
-        original: healFormula,
-        modified: modifiedFormula
-      });
-    }
-    return {
-      roll,
-      isSuccess,
-      isCritical: isCritical2,
+    const { isCritical, d20Result } = await this._handleCriticalHit(roll, item);
+    game.system.log.o("[ABILITY:ROLL] Roll result:", {
+      itemName: item.name,
+      rollTotal: roll.total,
+      isCritical,
       d20Result
+    });
+    return { roll, isCritical, d20Result };
+  }
+  /**
+   * @internal
+   * Constructs the roll formula by reading actor's extra modifiers.
+   */
+  _constructRollFormulaFromModifiers(item) {
+    let [diceCount, diceType] = [1, 20];
+    let formula = "";
+    const { bonusDice, penalty } = this.options?.extraModifiers || {};
+    if (bonusDice) {
+      diceCount += parseInt(bonusDice, 10);
+      diceType = "20kh1";
+    }
+    formula = `${diceCount}d${diceType}${penalty ? ` - ${penalty}` : ""}`;
+    return formula;
+  }
+  /**
+   * @internal
+   * Handle critical hit detection and processing
+   */
+  async _handleCriticalHit(roll, item) {
+    const d20Term = roll.terms?.[0];
+    if (!d20Term) {
+      game.system.log.w("[CRITICAL] No d20 term found in roll:", roll);
+      return { isCritical: false, d20Result: 0 };
+    }
+    const d20Result = d20Term.modifiers?.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results?.[0]?.result ?? 0;
+    const isCritical = d20Result === 20;
+    game.system.log.d("[CRITICAL] Critical hit check:", {
+      d20Result,
+      isCritical,
+      itemName: item.name,
+      isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
+    });
+    if (isCritical) {
+      this._doubleCriticalDamageIfNeeded(item);
+    }
+    return { isCritical, d20Result };
+  }
+  /**
+   * @internal
+   * Doubles relevant "dice" fields if item is a critical hit.
+   */
+  _doubleCriticalDamageIfNeeded(item) {
+    let formulaFields = [];
+    if (Boolean(item?.system?.baseEffectHealing)) {
+      formulaFields.push("baseEffectHealing");
+    }
+    if (!formulaFields.length) {
+      formulaFields = ["directHitDamage", "baseEffectDamage"];
+    }
+    game.system.log.o("[CRITICAL] Doubling damage/healing for critical hit:", {
+      itemName: item.name,
+      formulaFields
+    });
+    for (const field of formulaFields) {
+      const formula = item.system?.[field];
+      game.system.log.o("[CRITICAL] Formula:", {
+        field,
+        formula
+      });
+      if (formula) {
+        const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
+          return `${parseInt(count, 10) * 2}d${sides}`;
+        });
+        game.system.log.o("[CRITICAL] Modified formula:", {
+          field,
+          formula,
+          modifiedFormula
+        });
+        item.system[field] = modifiedFormula;
+      }
+    }
+  }
+  /**
+   * @internal
+   * Handle attribute check
+   */
+  async _handleAttributeCheck(item, rollFormula, rollData = {}) {
+    if (item.system.hasCheck) {
+      const attrVal = this.actor.system.attributes.primary[item.system.checkAttribute]?.val || 0;
+      rollData[item.system.checkAttribute] = attrVal;
+      rollFormula += ` + @${item.system.checkAttribute}`;
+    }
+    return { rollFormula, rollData };
+  }
+  /**
+   * @internal
+   * Handle MP cost for an action
+   * @param {Item} item - The action item
+   * @return {Promise<void>} A promise that resolves when MP cost is handled
+   */
+  async _handleCostMP(item) {
+    game.system.log.o("[MP:COST] Starting MP cost handling:", {
+      itemName: item.name,
+      hasCostMP: item.system.hasCostMP,
+      costMP: item.system.costMP,
+      itemSystem: item.system
+    });
+    if (!item.system.hasCostMP || !item.system.costMP) {
+      game.system.log.o("[MP:COST] No MP cost to handle");
+      return;
+    }
+    const cost = item.system.costMP;
+    const currentMP = this.actor.system.points.MP.val;
+    game.system.log.o("[MP:COST] Deducting MP cost:", {
+      itemName: item.name,
+      cost,
+      currentMP,
+      newMP: currentMP - cost,
+      actorMP: this.actor.system.points.MP
+    });
+    try {
+      await this.actor.update({
+        "system.points.MP.val": currentMP - cost
+      });
+      game.system.log.o("[MP:COST] Successfully deducted MP cost");
+    } catch (error) {
+      game.system.log.e("[MP:COST] Error deducting MP cost:", error);
+      throw error;
+    }
+  }
+  /**
+   * @internal
+   * Handle MP restoration from an action (self only)
+   * @param {Item} item - The action item
+   * @return {Promise<void>} A promise that resolves when MP restoration is complete
+   */
+  async _handleMPRestoration(item) {
+    game.system.log.o("[MP:RESTORE] Starting MP restoration check:", {
+      itemName: item.name,
+      hasRestoreMP: item.system.hasBaseEffectRestoreMP,
+      restoreMP: item.system.baseEffectRestoreMP,
+      itemSystem: item.system
+    });
+    if (!item.system.baseEffectRestoreMP) {
+      game.system.log.o("[MP:RESTORE] No MP restoration to handle");
+      return;
+    }
+    game.system.log.o("[MP:RESTORE] Rolling MP restoration:", {
+      formula: item.system.baseEffectRestoreMP
+    });
+    const formula = String(item.system.baseEffectRestoreMP);
+    const mpRoll = await new Roll(formula).evaluate();
+    const mpAmount = mpRoll.total;
+    game.system.log.o("[MP:RESTORE] MP roll result:", {
+      roll: mpRoll,
+      total: mpAmount
+    });
+    game.system.log.o("[MP:RESTORE] Actor MP data:", {
+      actor: this.actor.name,
+      points: this.actor.system.points,
+      MP: this.actor.system.points?.MP
+    });
+    const currentMP = this.actor.system.points.MP.val;
+    const maxMP = this.actor.system.points.MP.max;
+    const newMP = Math.min(currentMP + mpAmount, maxMP);
+    game.system.log.o("[MP:RESTORE] MP calculation:", {
+      currentMP,
+      maxMP,
+      mpAmount,
+      newMP,
+      mpRestored: newMP - currentMP
+    });
+    try {
+      await this.actor.update({ "system.points.MP.val": newMP });
+      game.system.log.o("[MP:RESTORE] Successfully restored MP");
+    } catch (error) {
+      game.system.log.e("[MP:RESTORE] Error restoring MP:", error);
+      throw error;
+    }
+  }
+}
+class AttributeHandler {
+  static {
+    __name(this, "AttributeHandler");
+  }
+  /**
+   * @param {Actor} actor - The actor this handler is for
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Handle an action ability
+   * @param {Object} [options={}] -  options
+   * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
+   */
+  async handle(options = {}) {
+    const { key, code } = options;
+    const attributeValue = this.actor.system.attributes[key][code].val;
+    const rollFormula = `1d20 + ${attributeValue}`;
+    const attributeName = game.i18n.localize(`FF15.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
+    const roll = await new Roll(rollFormula).evaluate({ async: true });
+    const isCritical = roll.total === 20;
+    const messageData = {
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
+      flavor: `${attributeName} ${game.i18n.localize("FF15.Check")}`,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      roll,
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "AttributeRollChat",
+            actor: {
+              _id: this.actor._id,
+              name: this.actor.name,
+              img: this.actor.img
+            },
+            flavor: `${attributeName} ${game.i18n.localize("FF15.Check")}`,
+            key,
+            code,
+            modifier: attributeValue,
+            isCritical
+          },
+          css: `attribute-roll ${isCritical ? "crit" : ""}`
+        }
+      }
     };
+    await roll.toMessage(messageData);
+  }
+}
+class EffectManager {
+  static {
+    __name(this, "EffectManager");
+  }
+  /**
+   * @param {Actor} actor - The actor this handler is for
+   */
+  constructor(actor) {
+    this.actor = actor;
+    this.DefaultChat = new ActionHandler(actor);
+  }
+  /**
+   * Handle all effects for an action
+   * @param {Item} item - The item being used
+   * @param {Object} result - The result from the action handler
+   * @return {Promise<void>} Returns a promise that resolves when all effects are handled
+   */
+  async handleEffects(item, result) {
+    const { hasTargets, targets } = result;
+    if (item.system.grants?.value && hasTargets) {
+      await this._handleTargetEffects(item, targets);
+    }
+    if (item.system.sourceGrants?.list?.length) {
+      await this._handleSourceEffects(item);
+    }
+    if (item.system.enables?.list?.length > 0) {
+      await this._handleEnablerEffects(item);
+    }
   }
   /**
    * Handle enabler effects for an action
-   * @param {Item} item - The item being used
-   * @return {Promise<void>} Returns a promise that resolves when the enabler effects have been handled
+   * @private
    */
   async _handleEnablerEffects(item) {
+    game.system.log.o("[ABILITY:ENABLER] Processing enabler effects for:", item.name);
     let allEnabledEffects = [];
     for (const enablesItemRef of item.system.enables.list) {
-      const effects2 = await this._handleSingleItemEffectEnabling(enablesItemRef);
+      game.system.log.o("[ABILITY:ENABLER] Processing enabler item ref:", enablesItemRef);
+      const effects2 = await this._handleSingleItemEffectEnabling(item, enablesItemRef);
       allEnabledEffects = allEnabledEffects.concat(effects2);
     }
+    game.system.log.o("[ABILITY:ENABLER] Enabled effects:", allEnabledEffects);
     return allEnabledEffects;
   }
   /**
    * Handle target effects
-   * @param {Item} item - The item being used
-   * @param {Set} targets - The targets to apply effects to
-   * @return {Promise<void>} Returns a promise that resolves when all target effects have been applied
+   * @private
    */
   async _handleTargetEffects(item, targets) {
     if (!item.system.grants?.list?.length)
       return;
+    game.system.log.o("[STACKING EFFECTS] Source actor using this item:", {
+      actor: this.actor?.name,
+      itemName: item?.name,
+      itemUUID: item?.uuid
+    });
     for (const target of targets) {
       const targetActor = target.actor;
       if (!targetActor)
@@ -33169,8 +34083,7 @@ class RollCalcActor extends RollCalc {
             }
             const cleanData = {
               name: effect.name,
-              label: effect.label,
-              icon: effect.icon,
+              img: effect.img,
               changes: foundry.utils.deepClone(effect.changes),
               duration: effectItem.system.duration,
               disabled: false,
@@ -33191,74 +34104,133 @@ class RollCalcActor extends RollCalc {
     }
   }
   /**
-   * Mark combat tracker action slot as used
-   * @param {Item} item - The item being used
-   * @param {string} actionType - The type of action
-   * @param {ChatMessage} message - The chat message
-   * @return {Promise<void>} Returns a promise that resolves when the combat tracker is updated
+   * Handle effects that should be applied to the source actor
+   * @private
    */
-  async _markCombatTrackerActionSlotAsUsed(item, actionType, message) {
-    if (!await this._handleGuards(item, [
-      this.RG.isCombat
-    ])) {
+  async _handleSourceEffects(item) {
+    if (!item.system.sourceGrants?.list?.length)
       return;
-    }
-    const { actionState } = this.params.actor.system;
-    if (item.system.type === "reaction") {
-      await this.params.actor.update({
-        "system.actionState.usedReaction": true
-      });
-      return;
-    }
-    let slotToUse;
-    const customSlots = actionState.available.filter(
-      (slot) => slot !== "primary" && slot !== "secondary"
-    );
-    if (item.system.tags?.length) {
-      const matchingSlot = customSlots.find(
-        (slot) => item.system.tags.includes(slot)
-      );
-      if (matchingSlot) {
-        slotToUse = matchingSlot;
-        const enablerEffectForThisSlot = this.params.actor.enablerEffects.find(
-          (effect) => effect.changes.some(
-            (change) => change.value === matchingSlot
-          )
-        );
-        const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, "origin.effect.uuid").split(".").slice(0, -2).join(".");
-        const originItem = fromUuidSync(originItemUuid);
-        if (originItem) {
-          const uses = (originItem.system.uses || 0) + 1;
-          await originItem.update({ system: { uses } });
+    game.system.log.o("[SOURCE EFFECTS] Source actor using this item:", {
+      actor: this.actor?.name,
+      itemName: item?.name,
+      itemUUID: item?.uuid
+    });
+    try {
+      const effectPromises = item.system.sourceGrants.list.flatMap(async (grantRef) => {
+        const effectItem = await fromUuid(grantRef.uuid);
+        if (!effectItem) {
+          return [];
         }
-        enablerEffectForThisSlot.delete();
+        return effectItem.effects.map((effect) => {
+          const existingEffect = this.actor.effects.find(
+            (e) => e.name === effect.name && e.origin === item.uuid
+          );
+          if (existingEffect) {
+            return null;
+          }
+          if (effect.statuses?.size) {
+            const statuses = Array.from(effect.statuses);
+            const statusesToToggle = statuses.filter((status) => !this.actor.statuses.has(status));
+            if (statusesToToggle.length) {
+              this.actor.toggleStatusEffect(statusesToToggle[0]);
+            }
+            return null;
+          }
+          const cleanData = {
+            name: effect.name,
+            img: effect.img,
+            changes: foundry.utils.deepClone(effect.changes),
+            duration: effectItem.system.duration,
+            disabled: false,
+            flags: foundry.utils.deepClone(effect.flags),
+            origin: item.uuid
+          };
+          return cleanData;
+        });
+      });
+      const effectData = (await Promise.all(effectPromises)).flat().filter(Boolean);
+      if (effectData.length) {
+        await this.actor.createEmbeddedDocuments("ActiveEffect", effectData);
+      }
+    } catch (error) {
+      game.system.log.e("Error applying effects to source", error);
+      ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: this.actor.name }));
+    }
+  }
+  /**
+   * Handle single item effect enabling
+   * @private
+   */
+  async _handleSingleItemEffectEnabling(item, enablesItemRef) {
+    const compendiumItem = await fromUuid(enablesItemRef.uuid);
+    if (!compendiumItem) {
+      game.system.log.w("[ENABLE] Could not find compendium item for uuid:", enablesItemRef.uuid);
+      return [];
+    }
+    game.system.log.o("[ENABLE] Found compendium item:", {
+      name: compendiumItem.name,
+      type: compendiumItem.type,
+      hasEffects: compendiumItem.hasEffects,
+      effects: compendiumItem.effects.map((e) => ({
+        name: e.name,
+        flags: foundry.utils.deepClone(e.flags),
+        rawFlags: foundry.utils.deepClone(e.flags?.[SYSTEM_ID]),
+        stackable: e.getFlag(SYSTEM_ID, "stackable"),
+        toObject: foundry.utils.deepClone(e.toObject())
+      }))
+    });
+    const actorItem = this.actor.items.find(
+      (item2) => item2.name === compendiumItem.name && item2.type === compendiumItem.type
+    );
+    if (!actorItem) {
+      game.system.log.w("[ENABLE] Could not find matching actor item for:", compendiumItem.name);
+      return [];
+    }
+    if (!actorItem.hasEffects) {
+      game.system.log.w("[ENABLE] Actor item has no effects:", actorItem.name, actorItem);
+      return [];
+    }
+    game.system.log.o("[ENABLE] Actor item :", {
+      item: actorItem,
+      effects: actorItem.effects.map((e) => ({
+        name: e.name,
+        flags: foundry.utils.deepClone(e.flags),
+        rawFlags: foundry.utils.deepClone(e.flags?.[SYSTEM_ID]),
+        stackable: e.getFlag(SYSTEM_ID, "stackable"),
+        toObject: foundry.utils.deepClone(e.toObject())
+      }))
+    });
+    const hasRemainingUses = await this.actor.actorItemHasRemainingUses(actorItem);
+    if (!hasRemainingUses) {
+      game.system.log.w("[ENABLE]", `${actorItem.name} has been used ${actorItem.currentUses} times, reaching its usage limit of ${actorItem.maxUses}`);
+      return [];
+    }
+    game.system.log.o("[ENABLE] Adding linked effects for:", actorItem.name);
+    const effectsEnabled = await this.actor.addLinkedEffects(actorItem);
+    if (effectsEnabled.length) {
+      game.system.log.o("[ENABLE] Effects added:", effectsEnabled);
+      if (item.name !== actorItem.name) {
+        await this.DefaultChat.handle(actorItem);
       }
     }
-    if (!slotToUse && actionState.available.includes(actionType)) {
-      slotToUse = actionType;
+    if (actorItem.type === "trait" && actorItem.system.sacrificesMovement) {
+      const tokenId = this.actor.token?.id;
+      if (tokenId && getTokenMovement(tokenId) > 0) {
+        ui.notifications.warn(`Cannot enable ${actorItem.name} after moving.`);
+        return [];
+      } else {
+        if (!game.combat) {
+          ui.notifications.warn("Focus can only be toggled during combat.");
+          return [];
+        }
+        await this.actor.toggleStatusEffect("focus");
+      }
     }
-    if (!slotToUse) {
-      return;
-    }
-    const newAvailable = [...actionState.available];
-    const indexToRemove = newAvailable.findIndex((slot) => slot === slotToUse);
-    if (indexToRemove !== -1) {
-      newAvailable.splice(indexToRemove, 1);
-    }
-    const newUsed = [...actionState.used, {
-      type: slotToUse,
-      messageId: message.id
-    }];
-    await this.params.actor.update({
-      "system.actionState.available": newAvailable,
-      "system.actionState.used": newUsed
-    });
+    return effectsEnabled;
   }
   /**
    * Check if item should be disabled by tags
-   * @param {Item} item - The item to check
-   * @param {Item} origin - The origin item
-   * @return {Promise<boolean>} Returns true if the item should be disabled based on tags
+   * @private
    */
   async _shouldDisableByTags(item, origin) {
     const itemTags = item?.system?.tags || [];
@@ -33267,10 +34239,7 @@ class RollCalcActor extends RollCalc {
   }
   /**
    * Check if item should be disabled by requirements
-   * @param {Item} item - The item to check
-   * @param {Item} origin - The origin item
-   * @param {Effect} effect - The effect to check
-   * @return {Promise<boolean>} Returns true if the item should be disabled based on requirements
+   * @private
    */
   async _shouldDisableByRequirements(item, origin, effect) {
     if (!item.hasRequires)
@@ -33282,78 +34251,264 @@ class RollCalcActor extends RollCalc {
     });
     return shouldDisable;
   }
+}
+class CombatSlotManager {
+  static {
+    __name(this, "CombatSlotManager");
+  }
   /**
-   * Handle single item effect enabling
-   * @param {string} enablesItemRef - The item reference to enable
-   * @return {Promise<void>} Returns a promise that resolves when the item effect has been enabled
+   * @param {Actor} actor - The actor this handler is for
    */
-  async _handleSingleItemEffectEnabling(enablesItemRef) {
-    const compendiumItem = await fromUuid(enablesItemRef.uuid);
-    if (!compendiumItem) {
-      game.system.log.w("[ENABLE] Could not find compendium item for uuid:", enablesItemRef.uuid);
-      return [];
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Mark a slot as used in the combat tracker
+   * @param {Item} item - The item being used
+   * @param {Object} result - The result from the action handler
+   * @return {Promise<void>} Returns a promise that resolves when the slot is marked
+   */
+  async markSlotUsed(item, result) {
+    const { message } = result;
+    const actionType = item.system.type || "primary";
+    const state = message?.flags?.[SYSTEM_ID]?.state;
+    if (state?.damageResults) {
+      const hasAppliedDamage = Object.values(state.damageResults).some((result2) => result2.applied);
+      if (hasAppliedDamage) {
+        game.system.log.w("[SLOT:USAGE] Message already has applied damage results, skipping slot update");
+        return;
+      }
     }
-    const actorItem = this.params.actor.items.find(
-      (item) => item.name === compendiumItem.name && item.type === compendiumItem.type
-    );
-    if (!actorItem) {
-      return [];
+    if (item.system.type === "reaction") {
+      await this.actor.update({
+        "system.actionState.usedReaction": true
+      });
+      return;
     }
-    if (!actorItem.hasEffects) {
-      return [];
+    let slotToUse;
+    game.system.log.o("[SLOT:USAGE] Checking slots:", {
+      itemName: item.name,
+      actionType,
+      itemTags: item.system.tags,
+      itemSystem: item.system,
+      requires: item.system.requires
+    });
+    if (this.actor.system.actionState.available.includes(actionType)) {
+      slotToUse = actionType;
+      game.system.log.o("[SLOT:USAGE] Using default action type slot:", actionType);
+    } else if (actionType === "secondary" && this.actor.system.actionState.available.includes("primary")) {
+      slotToUse = "primary";
+      game.system.log.o("[SLOT:USAGE] Using primary slot for secondary action");
     }
-    const hasRemainingUses = await this.params.actor.actorItemHasRemainingUses(actorItem);
-    if (!hasRemainingUses) {
-      game.system.log.w("[ENABLE]", `${actorItem.name} has been used ${actorItem.currentUses} times, reaching its usage limit of ${actorItem.maxUses}`);
-      return [];
+    if (!slotToUse && item.system.tags?.length) {
+      const customSlots = this.actor.system.actionState.available.filter(
+        (slot) => slot !== "primary" && slot !== "secondary"
+      );
+      const matchingSlot = customSlots.find(
+        (slot) => item.system.tags.includes(slot)
+      );
+      if (matchingSlot) {
+        slotToUse = matchingSlot;
+        game.system.log.o("[SLOT:USAGE] Found matching slot:", {
+          slot: matchingSlot,
+          itemName: item.name,
+          itemTags: item.system.tags
+        });
+        const enablerEffectForThisSlot = this.actor.enablerEffects.find(
+          (effect) => effect.changes.some(
+            (change) => change.value === matchingSlot
+          )
+        );
+        if (enablerEffectForThisSlot) {
+          game.system.log.o("[SLOT:USAGE] Found enabler effect:", {
+            effectName: enablerEffectForThisSlot.name,
+            changes: enablerEffectForThisSlot.changes,
+            origin: enablerEffectForThisSlot.origin
+          });
+          const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, "origin.effect.uuid").split(".").slice(0, -2).join(".");
+          const originItem = fromUuidSync(originItemUuid);
+          if (originItem) {
+            game.system.log.o("[SLOT:USAGE] Found origin item:", {
+              name: originItem.name,
+              currentUses: originItem.system.uses,
+              maxUses: originItem.system.maxUses
+            });
+            const uses = (originItem.system.uses || 0) + 1;
+            await originItem.update({ system: { uses } });
+          }
+          game.system.log.o("[SLOT:USAGE] Removing enabler effect:", enablerEffectForThisSlot.name);
+          await enablerEffectForThisSlot.delete();
+        }
+      }
     }
-    const effectsEnabled = await this.params.actor.enableLinkedEffects(actorItem);
-    if (effectsEnabled.length) {
-      await this.defaultChat(actorItem);
+    if (!slotToUse) {
+      game.system.log.w("[SLOT:USAGE] No slot found to use for:", item.name);
+      return;
     }
-    return effectsEnabled;
+    const newAvailable = [...this.actor.system.actionState.available];
+    const indexToRemove = newAvailable.findIndex((slot) => slot === slotToUse);
+    if (indexToRemove !== -1) {
+      newAvailable.splice(indexToRemove, 1);
+    }
+    const newUsed = [...this.actor.system.actionState.used, {
+      type: slotToUse,
+      messageId: message?.id
+    }];
+    game.system.log.o("[SLOT:USAGE] Updating action state:", {
+      oldAvailable: this.actor.system.actionState.available,
+      newAvailable,
+      oldUsed: this.actor.system.actionState.used,
+      newUsed,
+      itemName: item.name,
+      slotUsed: slotToUse
+    });
+    await this.actor.update({
+      "system.actionState.available": newAvailable,
+      "system.actionState.used": newUsed
+    });
+  }
+}
+class GuardManager {
+  static {
+    __name(this, "GuardManager");
+  }
+  /**
+   * @param {Actor} actor - The actor this handler is for
+   * @param {RollGuards} rollGuards - The RollGuards instance to use for checks
+   */
+  constructor(actor) {
+    this.actor = actor;
+    this.RG = new RollGuards(actor);
   }
   /**
    * Handle guards for an item
    * @param {Item} item - The item to check guards for
-   * @param {Array} guardMethodsArray - Array of guard methods to check
+   * @param {Array<string>} guardMethodNames - Array of guard method names to check
    * @return {Promise<boolean>} Returns true if all guards pass, false otherwise
    */
-  async _handleGuards(item, guardMethodsArray) {
-    for (const guardMethod of guardMethodsArray) {
-      const result = await guardMethod.call(this.RG, item);
-      if (!result) {
+  async handleGuards(item, guardMethodNames) {
+    for (const methodName of guardMethodNames) {
+      const guardMethod = this.RG[methodName];
+      if (!guardMethod) {
+        game.system.log.w(`[GUARD] Guard method ${methodName} not found`);
+        continue;
+      }
+      try {
+        const result = await guardMethod.call(this.RG, item);
+        if (!result) {
+          game.system.log.d(`[GUARD] ${methodName} check failed for ${item.name}`);
+          return false;
+        }
+      } catch (error) {
+        game.system.log.e(`[GUARD] Error in ${methodName} check:`, error);
         return false;
       }
     }
     return true;
+  }
+}
+class RollCalcActor extends RollCalc {
+  static {
+    __name(this, "RollCalcActor");
+  }
+  constructor(params) {
+    super(params);
+    this.params = params;
+    this.ActionHandler = new ActionHandler(params.actor);
+    this.AttributeHandler = new AttributeHandler(params.actor);
+    this.EffectManager = new EffectManager(params.actor);
+    this.CombatSlotManager = new CombatSlotManager(params.actor);
+    this.GuardManager = new GuardManager(params.actor);
+    this.DefaultChat = new DefaultChatHandler(params.actor);
+  }
+  /**
+   * @param {Item} item - The item to create a chat message for
+   */
+  defaultChat(item) {
+    this.DefaultChat.handle(item);
+  }
+  /**
+   * @param {Item} item - The equipment item
+   */
+  equipment(item) {
+    this.params.item = item;
+    ChatMessage.create({
+      user: game.user.id,
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      flags: { [SYSTEM_ID]: { data: { ...this.params, chatTemplate: "EquipmentChat" } } }
+    });
+  }
+  /**
+   * @param {string} key - The attribute key
+   * @param {string} code - The attribute code
+   */
+  attribute(key, code) {
+    this.AttributeHandler.handle({ key, code });
+  }
+  /**
+   * @param {string} type - The type of ability
+   * @param {Item} item - The ability item
+   */
+  ability(type, item) {
+    this._routeAbility(item);
+  }
+  /**
+   * @param {Item} item - The trait item
+   */
+  abilityTrait(item) {
+    this.defaultChat(item);
+  }
+  /**
+   * @param {Item} item - The action item
+   * @param {Object} [options={}] - Additional options
+   */
+  async abilityAction(item, options = {}) {
+    try {
+      if (!await this.GuardManager.handleGuards(item, [
+        "isAction",
+        "hasNoUnappliedDamage",
+        "isActorsTurn",
+        "isReaction",
+        "targetsMatchActionIntent",
+        "hasRequiredEffects",
+        "hasAvailableActionSlot",
+        "hasRemainingUses",
+        "meetsMPCost",
+        "hasModifiers"
+      ])) {
+        return;
+      }
+      const extraModifiers = this.GuardManager.RG.shuttle.hasModifiers.extraModifiers;
+      const result = await this.ActionHandler.handle(item, { ...options, extraModifiers });
+      if (!result.handledSuccessfully) {
+        return;
+      }
+      if (item.system.procTrigger) {
+        Hooks.callAll("FF15.ProcTrigger", {
+          actor: this.params.actor,
+          item,
+          roll: result.roll,
+          targets: result.targets
+        });
+      }
+      await this.EffectManager.handleEffects(item, result);
+      await this.CombatSlotManager.markSlotUsed(item, result);
+    } catch (error) {
+      game.system.log.e("Error in ability action", error);
+      ui.notifications.error(game.i18n.format("FF15.Errors.AbilityActionFailed", { target: this.params.actor.name }));
+    }
   }
   /**
    * Route ability to appropriate handler
    * @param {Item} item - The item to route
    * @return {Promise<void>} Returns a promise that resolves when the ability has been routed and handled
    */
-  async _routeAbility(item) {
+  _routeAbility(item) {
     if (item.type === "action") {
-      await this.abilityAction(item);
+      this.abilityAction(item);
     } else if (item.type === "trait") {
-      await this.abilityTrait(item);
+      this.abilityTrait(item);
     }
-  }
-  /**
-   * Handle attribute check
-   * @param {Item} item - The item for the check
-   * @param {string} rollFormula - The formula to roll
-   * @param {object} rollData - Additional roll data
-   * @return {Promise<void>} Returns a promise that resolves when the attribute check has been processed
-   */
-  async _handleAttributeCheck(item, rollFormula, rollData = {}) {
-    if (item.system.hasCheck) {
-      const attrVal = this.params.actor.system.attributes.primary[item.system.checkAttribute]?.val || 0;
-      rollData[item.system.checkAttribute] = attrVal;
-      rollFormula += ` + @${item.system.checkAttribute}`;
-    }
-    return { rollFormula, rollData };
   }
 }
 function create_fragment$Q(ctx) {
@@ -33377,7 +34532,7 @@ function create_fragment$Q(ctx) {
       if (default_slot)
         default_slot.c();
       attr(div, "class", div_class_value = "badge " + /*badgeClasses*/
-      ctx[0] + " svelte-FF15-u3kb4c");
+      ctx[0] + " svelte-FF15-qkzukj");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -33412,7 +34567,7 @@ function create_fragment$Q(ctx) {
       }
       if (!current || dirty & /*badgeClasses*/
       1 && div_class_value !== (div_class_value = "badge " + /*badgeClasses*/
-      ctx2[0] + " svelte-FF15-u3kb4c")) {
+      ctx2[0] + " svelte-FF15-qkzukj")) {
         attr(div, "class", div_class_value);
       }
     },
@@ -33436,7 +34591,7 @@ function create_fragment$Q(ctx) {
   };
 }
 __name(create_fragment$Q, "create_fragment$Q");
-function instance$I($$self, $$props, $$invalidate) {
+function instance$J($$self, $$props, $$invalidate) {
   let badgeClasses;
   let { $$slots: slots = {}, $$scope } = $$props;
   let { type = "" } = $$props;
@@ -33454,30 +34609,30 @@ function instance$I($$self, $$props, $$invalidate) {
   };
   return [badgeClasses, type, $$scope, slots];
 }
-__name(instance$I, "instance$I");
+__name(instance$J, "instance$J");
 class Badge extends SvelteComponent {
   static {
     __name(this, "Badge");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$I, create_fragment$Q, safe_not_equal, { type: 1 });
+    init$1(this, options, instance$J, create_fragment$Q, safe_not_equal, { type: 1 });
   }
 }
 function get_each_context$9(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[21] = list[i];
-  child_ctx[23] = i;
+  child_ctx[22] = list[i];
+  child_ctx[24] = i;
   return child_ctx;
 }
 __name(get_each_context$9, "get_each_context$9");
 function get_each_context_1$1(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[24] = list[i];
+  child_ctx[25] = list[i];
   return child_ctx;
 }
 __name(get_each_context_1$1, "get_each_context_1$1");
-function create_if_block_4$2(ctx) {
+function create_if_block_4$3(ctx) {
   let h1;
   let table;
   let tr;
@@ -33517,7 +34672,7 @@ function create_if_block_4$2(ctx) {
       button = element("button");
       button.innerHTML = `<i class="fa-solid fa-trash"></i>`;
       attr(h1, "class", "left gold");
-      attr(img, "class", "icon svelte-FF15-1ylt7sb");
+      attr(img, "class", "icon svelte-FF15-1g13pt8");
       if (!src_url_equal(img.src, img_src_value = /*$Actor*/
       ctx[0].system.job?.img))
         attr(img, "src", img_src_value);
@@ -33602,8 +34757,8 @@ function create_if_block_4$2(ctx) {
     }
   };
 }
-__name(create_if_block_4$2, "create_if_block_4$2");
-function create_if_block_3$4(ctx) {
+__name(create_if_block_4$3, "create_if_block_4$3");
+function create_if_block_3$5(ctx) {
   let div;
   let badge;
   let current;
@@ -33613,7 +34768,7 @@ function create_if_block_3$4(ctx) {
         /*badgeType*/
         ctx[16](
           /*item*/
-          ctx[21]
+          ctx[22]
         )
       ),
       $$slots: { default: [create_default_slot$f] },
@@ -33624,7 +34779,7 @@ function create_if_block_3$4(ctx) {
     c() {
       div = element("div");
       create_component(badge.$$.fragment);
-      attr(div, "class", "flex0 right ml-sm svelte-FF15-1ylt7sb");
+      attr(div, "class", "flex0 right ml-sm pt-s svelte-FF15-1g13pt8");
       attr(div, "data-tooltip-class", "FF15-tooltip");
       attr(div, "data-tooltip", localize("FF15.Types.Item.Types.action.UsesRemaining"));
     },
@@ -33640,10 +34795,10 @@ function create_if_block_3$4(ctx) {
         badge_changes.type = /*badgeType*/
         ctx2[16](
           /*item*/
-          ctx2[21]
+          ctx2[22]
         );
       if (dirty & /*$$scope, items*/
-      134217760) {
+      268435488) {
         badge_changes.$$scope = { dirty, ctx: ctx2 };
       }
       badge.$set(badge_changes);
@@ -33666,11 +34821,11 @@ function create_if_block_3$4(ctx) {
     }
   };
 }
-__name(create_if_block_3$4, "create_if_block_3$4");
+__name(create_if_block_3$5, "create_if_block_3$5");
 function create_default_slot$f(ctx) {
   let t_value = (
     /*item*/
-    ctx[21].usesRemaining + ""
+    ctx[22].usesRemaining + ""
   );
   let t;
   return {
@@ -33683,7 +34838,7 @@ function create_default_slot$f(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*items*/
       32 && t_value !== (t_value = /*item*/
-      ctx2[21].usesRemaining + ""))
+      ctx2[22].usesRemaining + ""))
         set_data(t, t_value);
     },
     d(detaching) {
@@ -33699,7 +34854,7 @@ function create_if_block_2$7(ctx) {
   let current;
   let each_value_1 = ensure_array_like(
     /*item*/
-    ctx[21].system.tags
+    ctx[22].system.tags
   );
   let each_blocks = [];
   for (let i = 0; i < each_value_1.length; i += 1) {
@@ -33729,7 +34884,7 @@ function create_if_block_2$7(ctx) {
       32) {
         each_value_1 = ensure_array_like(
           /*item*/
-          ctx2[21].system.tags
+          ctx2[22].system.tags
         );
         let i;
         for (i = 0; i < each_value_1.length; i += 1) {
@@ -33780,13 +34935,12 @@ function create_each_block_1$1(ctx) {
   let current;
   tag_1 = new Tag({
     props: {
-      class: "badge small",
+      class: "badge small square",
       tag: (
         /*tag*/
-        ctx[24]
+        ctx[25]
       ),
-      remover: false,
-      style: "margin-top: -2px;"
+      remover: false
     }
   });
   return {
@@ -33802,7 +34956,7 @@ function create_each_block_1$1(ctx) {
       if (dirty & /*items*/
       32)
         tag_1_changes.tag = /*tag*/
-        ctx2[24];
+        ctx2[25];
       tag_1.$set(tag_1_changes);
     },
     i(local) {
@@ -33830,18 +34984,18 @@ function create_if_block_1$b(ctx) {
   return {
     c() {
       button0 = element("button");
-      button0.innerHTML = `<i class="left fa fa-edit svelte-FF15-1ylt7sb" role="button"></i>`;
+      button0.innerHTML = `<i class="left fa fa-edit svelte-FF15-1g13pt8" role="button"></i>`;
       button1 = element("button");
-      button1.innerHTML = `<i class="left fa fa-copy svelte-FF15-1ylt7sb" role="button"></i>`;
+      button1.innerHTML = `<i class="left fa fa-copy svelte-FF15-1g13pt8" role="button"></i>`;
       button2 = element("button");
-      button2.innerHTML = `<i class="left fa fa-trash svelte-FF15-1ylt7sb" role="button"></i>`;
-      attr(button0, "class", "stealth svelte-FF15-1ylt7sb");
+      button2.innerHTML = `<i class="left fa fa-trash svelte-FF15-1g13pt8" role="button"></i>`;
+      attr(button0, "class", "stealth svelte-FF15-1g13pt8");
       attr(button0, "data-tooltip-class", "FF15-tooltip");
       attr(button0, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Edit"));
-      attr(button1, "class", "stealth svelte-FF15-1ylt7sb");
+      attr(button1, "class", "stealth svelte-FF15-1g13pt8");
       attr(button1, "data-tooltip-class", "FF15-tooltip");
       attr(button1, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Duplicate"));
-      attr(button2, "class", "stealth svelte-FF15-1ylt7sb");
+      attr(button2, "class", "stealth svelte-FF15-1g13pt8");
       attr(button2, "data-tooltip-class", "FF15-tooltip");
       attr(button2, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Delete"));
     },
@@ -33854,11 +35008,11 @@ function create_if_block_1$b(ctx) {
           listen(button0, "click", function() {
             if (is_function(editItem$3(
               /*item*/
-              ctx[21]
+              ctx[22]
             )))
               editItem$3(
                 /*item*/
-                ctx[21]
+                ctx[22]
               ).apply(this, arguments);
           }),
           listen(button1, "click", function() {
@@ -33866,16 +35020,16 @@ function create_if_block_1$b(ctx) {
               /*duplicateItem*/
               ctx[10](
                 /*index*/
-                ctx[23],
+                ctx[24],
                 /*item*/
-                ctx[21]
+                ctx[22]
               )
             ))
               ctx[10](
                 /*index*/
-                ctx[23],
+                ctx[24],
                 /*item*/
-                ctx[21]
+                ctx[22]
               ).apply(this, arguments);
           }),
           listen(button2, "click", function() {
@@ -33883,16 +35037,16 @@ function create_if_block_1$b(ctx) {
               /*deleteItem*/
               ctx[11](
                 /*index*/
-                ctx[23],
+                ctx[24],
                 /*item*/
-                ctx[21]
+                ctx[22]
               )
             ))
               ctx[11](
                 /*index*/
-                ctx[23],
+                ctx[24],
                 /*item*/
-                ctx[21]
+                ctx[22]
               ).apply(this, arguments);
           })
         ];
@@ -33926,7 +35080,7 @@ function create_each_block$9(ctx) {
   let a;
   let t_value = (
     /*item*/
-    ctx[21].name + ""
+    ctx[22].name + ""
   );
   let t;
   let a_class_value;
@@ -33943,11 +35097,11 @@ function create_each_block$9(ctx) {
   let dispose;
   let if_block0 = (
     /*item*/
-    ctx[21].system.hasLimitation && game.combat && create_if_block_3$4(ctx)
+    ctx[22].system.hasLimitation && game.combat && create_if_block_3$5(ctx)
   );
   let if_block1 = (
     /*item*/
-    ctx[21].system.tags && create_if_block_2$7(ctx)
+    ctx[22].system.tags && create_if_block_2$7(ctx)
   );
   let if_block2 = !/*$doc*/
   ctx[1].system.inventoryLocked && create_if_block_1$b(ctx);
@@ -33972,41 +35126,41 @@ function create_each_block$9(ctx) {
       td4 = element("td");
       if (if_block2)
         if_block2.c();
-      attr(img, "class", "icon svelte-FF15-1ylt7sb");
+      attr(img, "class", "icon svelte-FF15-1g13pt8");
       if (!src_url_equal(img.src, img_src_value = /*item*/
-      ctx[21].img))
+      ctx[22].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
-      ctx[21].name);
-      attr(td0, "class", "img svelte-FF15-1ylt7sb");
+      ctx[22].name);
+      attr(td0, "class", "img svelte-FF15-1g13pt8");
       attr(td0, "data-tooltip-class", "FF15-tooltip");
       attr(td0, "data-tooltip", localize("FF15.Use"));
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-FF15-1ylt7sb");
+      (ctx[22].system.isMagic ? "pulse" : "") + " svelte-FF15-1g13pt8");
       attr(a, "role", "button");
-      attr(div0, "class", "flex3 left svelte-FF15-1ylt7sb");
+      attr(div0, "class", "flex3 left svelte-FF15-1g13pt8");
       attr(div0, "data-tooltip-class", "FF15-tooltip wordy");
       attr(div0, "data-tooltip", div0_data_tooltip_value = /*item*/
-      ctx[21].system.description);
-      attr(div1, "class", "flexrow svelte-FF15-1ylt7sb");
-      attr(td1, "class", "left svelte-FF15-1ylt7sb");
-      attr(td2, "class", "right svelte-FF15-1ylt7sb");
+      ctx[22].system.description);
+      attr(div1, "class", "flexrow svelte-FF15-1g13pt8");
+      attr(td1, "class", "left text ellipsis svelte-FF15-1g13pt8");
+      attr(td2, "class", "right no-wrap svelte-FF15-1g13pt8");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1ylt7sb");
+      (ctx[22].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1g13pt8");
       attr(i, "role", "button");
-      attr(button, "class", "stealth svelte-FF15-1ylt7sb");
+      attr(button, "class", "stealth svelte-FF15-1g13pt8");
+      attr(td3, "class", "shrink svelte-FF15-1g13pt8");
       attr(td3, "data-tooltip-class", "FF15-tooltip");
       attr(td3, "data-tooltip", localize("FF15.Bookmark"));
-      attr(td3, "class", "svelte-FF15-1ylt7sb");
-      attr(td4, "class", "min buttons right svelte-FF15-1ylt7sb");
+      attr(td4, "class", "min buttons right svelte-FF15-1g13pt8");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*actionTypeClass*/
         ctx[17](
           /*item*/
-          ctx[21]
+          ctx[22]
         )
-      ) + " svelte-FF15-1ylt7sb");
+      ) + " svelte-FF15-1g13pt8");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -34036,36 +35190,36 @@ function create_each_block$9(ctx) {
               /*RollCalc*/
               ctx[8].ability(
                 /*item*/
-                ctx[21].type,
+                ctx[22].type,
                 /*item*/
-                ctx[21]
+                ctx[22]
               )
             ))
               ctx[8].ability(
                 /*item*/
-                ctx[21].type,
+                ctx[22].type,
                 /*item*/
-                ctx[21]
+                ctx[22]
               ).apply(this, arguments);
           }),
           listen(a, "click", function() {
             if (is_function(showItemSheet$4(
               /*item*/
-              ctx[21]
+              ctx[22]
             )))
               showItemSheet$4(
                 /*item*/
-                ctx[21]
+                ctx[22]
               ).apply(this, arguments);
           }),
           listen(button, "click", function() {
             if (is_function(toggleBookmark(
               /*item*/
-              ctx[21]
+              ctx[22]
             )))
               toggleBookmark(
                 /*item*/
-                ctx[21]
+                ctx[22]
               ).apply(this, arguments);
           })
         ];
@@ -34076,31 +35230,31 @@ function create_each_block$9(ctx) {
       ctx = new_ctx;
       if (!current || dirty & /*items*/
       32 && !src_url_equal(img.src, img_src_value = /*item*/
-      ctx[21].img)) {
+      ctx[22].img)) {
         attr(img, "src", img_src_value);
       }
       if (!current || dirty & /*items*/
       32 && img_alt_value !== (img_alt_value = /*item*/
-      ctx[21].name)) {
+      ctx[22].name)) {
         attr(img, "alt", img_alt_value);
       }
       if ((!current || dirty & /*items*/
       32) && t_value !== (t_value = /*item*/
-      ctx[21].name + ""))
+      ctx[22].name + ""))
         set_data(t, t_value);
       if (!current || dirty & /*items*/
       32 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-FF15-1ylt7sb")) {
+      (ctx[22].system.isMagic ? "pulse" : "") + " svelte-FF15-1g13pt8")) {
         attr(a, "class", a_class_value);
       }
       if (!current || dirty & /*items*/
       32 && div0_data_tooltip_value !== (div0_data_tooltip_value = /*item*/
-      ctx[21].system.description)) {
+      ctx[22].system.description)) {
         attr(div0, "data-tooltip", div0_data_tooltip_value);
       }
       if (
         /*item*/
-        ctx[21].system.hasLimitation && game.combat
+        ctx[22].system.hasLimitation && game.combat
       ) {
         if (if_block0) {
           if_block0.p(ctx, dirty);
@@ -34109,7 +35263,7 @@ function create_each_block$9(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_3$4(ctx);
+          if_block0 = create_if_block_3$5(ctx);
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(div1, null);
@@ -34123,7 +35277,7 @@ function create_each_block$9(ctx) {
       }
       if (
         /*item*/
-        ctx[21].system.tags
+        ctx[22].system.tags
       ) {
         if (if_block1) {
           if_block1.p(ctx, dirty);
@@ -34146,7 +35300,7 @@ function create_each_block$9(ctx) {
       }
       if (!current || dirty & /*items*/
       32 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1ylt7sb")) {
+      (ctx[22].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1g13pt8")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -34167,9 +35321,9 @@ function create_each_block$9(ctx) {
         /*actionTypeClass*/
         ctx[17](
           /*item*/
-          ctx[21]
+          ctx[22]
         )
-      ) + " svelte-FF15-1ylt7sb")) {
+      ) + " svelte-FF15-1g13pt8")) {
         attr(tr, "class", tr_class_value);
       }
     },
@@ -34268,7 +35422,7 @@ function create_fragment$P(ctx) {
   let dispose;
   let if_block0 = (
     /*$Actor*/
-    ctx[0].system.job?.name && create_if_block_4$2(ctx)
+    ctx[0].system.job?.name && create_if_block_4$3(ctx)
   );
   let each_value = ensure_array_like(
     /*items*/
@@ -34316,17 +35470,17 @@ function create_fragment$P(ctx) {
       attr(th2, "scope", "col");
       attr(th2, "colspan", "1");
       attr(i, "class", i_class_value = "fa " + /*faLockCSS*/
-      ctx[3] + " svelte-FF15-1ylt7sb");
+      ctx[3] + " svelte-FF15-1g13pt8");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[4] + " svelte-FF15-1ylt7sb");
+      ctx[4] + " svelte-FF15-1g13pt8");
       attr(th3, "class", th3_class_value = "buttons " + /*lockCSS*/
-      ctx[4] + " svelte-FF15-1ylt7sb");
+      ctx[4] + " svelte-FF15-1g13pt8");
       attr(th3, "scope", "col");
       attr(th3, "colspan", "2");
       attr(tr, "class", "gold");
-      attr(table, "class", "borderless even svelte-FF15-1ylt7sb");
-      attr(div0, "class", "padded svelte-FF15-1ylt7sb");
-      attr(div1, "class", "panel overflow containerx svelte-FF15-1ylt7sb");
+      attr(table, "class", "borderless even svelte-FF15-1g13pt8");
+      attr(div0, "class", "padded svelte-FF15-1g13pt8");
+      attr(div1, "class", "panel overflow containerx svelte-FF15-1g13pt8");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -34368,7 +35522,7 @@ function create_fragment$P(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_4$2(ctx2);
+          if_block0 = create_if_block_4$3(ctx2);
           if_block0.c();
           if_block0.m(div0, h1);
         }
@@ -34378,17 +35532,17 @@ function create_fragment$P(ctx) {
       }
       if (!current || dirty & /*faLockCSS*/
       8 && i_class_value !== (i_class_value = "fa " + /*faLockCSS*/
-      ctx2[3] + " svelte-FF15-1ylt7sb")) {
+      ctx2[3] + " svelte-FF15-1g13pt8")) {
         attr(i, "class", i_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       16 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[4] + " svelte-FF15-1ylt7sb")) {
+      ctx2[4] + " svelte-FF15-1g13pt8")) {
         attr(button, "class", button_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       16 && th3_class_value !== (th3_class_value = "buttons " + /*lockCSS*/
-      ctx2[4] + " svelte-FF15-1ylt7sb")) {
+      ctx2[4] + " svelte-FF15-1g13pt8")) {
         attr(th3, "class", th3_class_value);
       }
       if (dirty & /*actionTypeClass, items, deleteItem, duplicateItem, editItem, $doc, badgeType, game, showItemSheet, RollCalc*/
@@ -34470,7 +35624,7 @@ function showItemSheet$4(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$4, "showItemSheet$4");
-function instance$H($$self, $$props, $$invalidate) {
+function instance$I($$self, $$props, $$invalidate) {
   let items;
   let lockCSS;
   let faLockCSS;
@@ -34478,6 +35632,7 @@ function instance$H($$self, $$props, $$invalidate) {
   let $Actor;
   let $doc;
   let $wildcard;
+  let { sheet } = $$props;
   const Actor2 = getContext("#doc");
   component_subscribe($$self, Actor2, (value) => $$invalidate(0, $Actor = value));
   const doc = new TJSDocument($Actor);
@@ -34501,7 +35656,7 @@ function instance$H($$self, $$props, $$invalidate) {
       return a.type.localeCompare(b.type);
     }
   });
-  component_subscribe($$self, wildcard, (value) => $$invalidate(18, $wildcard = value));
+  component_subscribe($$self, wildcard, (value) => $$invalidate(19, $wildcard = value));
   function duplicateItem(item) {
     const itemData = item.toObject();
     delete itemData._id;
@@ -34605,9 +35760,13 @@ function instance$H($$self, $$props, $$invalidate) {
   const actionTypeClass = /* @__PURE__ */ __name((item) => {
     return item.type === "action" ? item.system?.type : "trait";
   }, "actionTypeClass");
+  $$self.$$set = ($$props2) => {
+    if ("sheet" in $$props2)
+      $$invalidate(18, sheet = $$props2.sheet);
+  };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$wildcard*/
-    262144) {
+    524288) {
       $$invalidate(5, items = [...$wildcard]);
     }
     if ($$self.$$.dirty & /*$doc*/
@@ -34642,17 +35801,18 @@ function instance$H($$self, $$props, $$invalidate) {
     deleteJob,
     badgeType,
     actionTypeClass,
+    sheet,
     $wildcard
   ];
 }
-__name(instance$H, "instance$H");
+__name(instance$I, "instance$I");
 let Abilities$1 = class Abilities extends SvelteComponent {
   static {
     __name(this, "Abilities");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$H, create_fragment$P, safe_not_equal, {});
+    init$1(this, options, instance$I, create_fragment$P, safe_not_equal, { sheet: 18 });
   }
 };
 function create_if_block$d(ctx) {
@@ -34846,14 +36006,14 @@ function create_fragment$O(ctx) {
   };
 }
 __name(create_fragment$O, "create_fragment$O");
-function instance$G($$self, $$props, $$invalidate) {
+function instance$H($$self, $$props, $$invalidate) {
   let label;
   let value;
   let isEditing;
   let sign;
   let disabled;
   let $width;
-  let $actor2;
+  let $actor;
   let { code } = $$props;
   let { key } = $$props;
   let { abbreviateLabel = false } = $$props;
@@ -34862,14 +36022,14 @@ function instance$G($$self, $$props, $$invalidate) {
     console.log("default onclick");
   }, "onclick") } = $$props;
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value2) => $$invalidate(15, $actor2 = value2));
+  component_subscribe($$self, actor, (value2) => $$invalidate(15, $actor = value2));
   const application = getContext("#external").application;
   const { width } = application.position.stores;
   component_subscribe($$self, width, (value2) => $$invalidate(14, $width = value2));
   const add = /* @__PURE__ */ __name(() => {
     if (!isEditing)
       return;
-    $actor2.update({
+    $actor.update({
       system: {
         attributes: { [key]: { [code]: { val: value + 1 } } }
       }
@@ -34878,7 +36038,7 @@ function instance$G($$self, $$props, $$invalidate) {
   const remove = /* @__PURE__ */ __name(() => {
     if (!isEditing)
       return;
-    $actor2.update({
+    $actor.update({
       system: {
         attributes: { [key]: { [code]: { val: value - 1 } } }
       }
@@ -34909,11 +36069,11 @@ function instance$G($$self, $$props, $$invalidate) {
     }
     if ($$self.$$.dirty & /*$actor, key, code*/
     32771) {
-      $$invalidate(4, value = $actor2?.system?.attributes?.[key]?.[code]?.val);
+      $$invalidate(4, value = $actor?.system?.attributes?.[key]?.[code]?.val);
     }
     if ($$self.$$.dirty & /*$actor*/
     32768) {
-      $$invalidate(3, isEditing = $actor2?.system?.isEditing);
+      $$invalidate(3, isEditing = $actor?.system?.isEditing);
     }
     if ($$self.$$.dirty & /*showSign, value*/
     8208) {
@@ -34940,17 +36100,17 @@ function instance$G($$self, $$props, $$invalidate) {
     abbreviateLabel,
     showSign,
     $width,
-    $actor2
+    $actor
   ];
 }
-__name(instance$G, "instance$G");
+__name(instance$H, "instance$H");
 class Attribute extends SvelteComponent {
   static {
     __name(this, "Attribute");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$G, create_fragment$O, safe_not_equal, {
+    init$1(this, options, instance$H, create_fragment$O, safe_not_equal, {
       code: 0,
       key: 1,
       abbreviateLabel: 12,
@@ -35123,11 +36283,11 @@ function create_fragment$N(ctx) {
   };
 }
 __name(create_fragment$N, "create_fragment$N");
-function instance$F($$self, $$props, $$invalidate) {
+function instance$G($$self, $$props, $$invalidate) {
   let { data } = $$props;
-  let { abbreviateLabel } = $$props;
+  let { abbreviateLabel = false } = $$props;
   let { key } = $$props;
-  let { showSign } = $$props;
+  let { showSign = false } = $$props;
   let { onclick } = $$props;
   onMount(() => {
   });
@@ -35145,14 +36305,14 @@ function instance$F($$self, $$props, $$invalidate) {
   };
   return [data, abbreviateLabel, key, showSign, onclick];
 }
-__name(instance$F, "instance$F");
+__name(instance$G, "instance$G");
 let AttributeCol$1 = class AttributeCol extends SvelteComponent {
   static {
     __name(this, "AttributeCol");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$F, create_fragment$N, safe_not_equal, {
+    init$1(this, options, instance$G, create_fragment$N, safe_not_equal, {
       data: 0,
       abbreviateLabel: 1,
       key: 2,
@@ -35223,7 +36383,7 @@ function create_fragment$M(ctx) {
   };
 }
 __name(create_fragment$M, "create_fragment$M");
-function instance$E($$self, $$props, $$invalidate) {
+function instance$F($$self, $$props, $$invalidate) {
   let { onclick } = $$props;
   let data = [
     { code: "str" },
@@ -35238,14 +36398,14 @@ function instance$E($$self, $$props, $$invalidate) {
   };
   return [onclick, data];
 }
-__name(instance$E, "instance$E");
+__name(instance$F, "instance$F");
 let PrimaryAttributes$1 = class PrimaryAttributes extends SvelteComponent {
   static {
     __name(this, "PrimaryAttributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$E, create_fragment$M, safe_not_equal, { onclick: 0 });
+    init$1(this, options, instance$F, create_fragment$M, safe_not_equal, { onclick: 0 });
   }
 };
 function create_fragment$L(ctx) {
@@ -35308,7 +36468,7 @@ function create_fragment$L(ctx) {
   };
 }
 __name(create_fragment$L, "create_fragment$L");
-function instance$D($$self, $$props, $$invalidate) {
+function instance$E($$self, $$props, $$invalidate) {
   let { onclick } = $$props;
   let data = [{ code: "def" }, { code: "mag" }, { code: "vig" }, { code: "spd" }];
   $$self.$$set = ($$props2) => {
@@ -35317,14 +36477,14 @@ function instance$D($$self, $$props, $$invalidate) {
   };
   return [onclick, data];
 }
-__name(instance$D, "instance$D");
+__name(instance$E, "instance$E");
 let SecondaryAttributes$1 = class SecondaryAttributes extends SvelteComponent {
   static {
     __name(this, "SecondaryAttributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$D, create_fragment$L, safe_not_equal, { onclick: 0 });
+    init$1(this, options, instance$E, create_fragment$L, safe_not_equal, { onclick: 0 });
   }
 };
 function create_fragment$K(ctx) {
@@ -35384,24 +36544,24 @@ function create_fragment$K(ctx) {
   };
 }
 __name(create_fragment$K, "create_fragment$K");
-function instance$C($$self, $$props, $$invalidate) {
-  let $actor2;
+function instance$D($$self, $$props, $$invalidate) {
+  let $actor;
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value) => $$invalidate(2, $actor2 = value));
-  const RollCalc2 = new RollCalcActor({ actor: $actor2 });
+  component_subscribe($$self, actor, (value) => $$invalidate(2, $actor = value));
+  const RollCalc2 = new RollCalcActor({ actor: $actor });
   const onclick = /* @__PURE__ */ __name(async (key, code) => {
     await RollCalc2.attribute(key, code);
   }, "onclick");
   return [actor, onclick];
 }
-__name(instance$C, "instance$C");
+__name(instance$D, "instance$D");
 let AttributeBlock$1 = class AttributeBlock extends SvelteComponent {
   static {
     __name(this, "AttributeBlock");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$C, create_fragment$K, safe_not_equal, {});
+    init$1(this, options, instance$D, create_fragment$K, safe_not_equal, {});
   }
 };
 function create_fragment$J(ctx) {
@@ -35523,13 +36683,13 @@ function create_fragment$J(ctx) {
   };
 }
 __name(create_fragment$J, "create_fragment$J");
-function instance$B($$self, $$props, $$invalidate) {
+function instance$C($$self, $$props, $$invalidate) {
   let jobName;
   let roleName;
   let level;
-  let $actor2;
+  let $actor;
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value) => $$invalidate(5, $actor2 = value));
+  component_subscribe($$self, actor, (value) => $$invalidate(5, $actor = value));
   onMount(() => {
   });
   async function rest(event) {
@@ -35537,13 +36697,13 @@ function instance$B($$self, $$props, $$invalidate) {
       title: "",
       content: localize("FF15.TitleBlock.ConfirmRest"),
       yes: async () => {
-        await $actor2.update({
+        await $actor.update({
           system: {
             points: {
-              MP: { val: $actor2.system.points.MP.max },
-              HP: { val: $actor2.system.points.HP.max }
+              MP: { val: $actor.system.points.MP.max },
+              HP: { val: $actor.system.points.HP.max }
             },
-            BP: { val: $actor2.system.points.BP.max }
+            BP: { val: $actor.system.points.BP.max }
           }
         });
         ui.notifications.info(localize("FF15.TitleBlock.PointsRestored"));
@@ -35556,31 +36716,31 @@ function instance$B($$self, $$props, $$invalidate) {
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$actor*/
     32) {
-      $$invalidate(2, jobName = $actor2.system.job?.name.split(" ")[0].toUpperCase());
+      $$invalidate(2, jobName = $actor.system.job?.name.split(" ")[0].toUpperCase());
     }
     if ($$self.$$.dirty & /*$actor*/
     32) {
-      $$invalidate(1, roleName = $actor2.system.job?.role.toUpperCase());
+      $$invalidate(1, roleName = $actor.system.job?.role.toUpperCase());
     }
     if ($$self.$$.dirty & /*$actor*/
     32) {
-      $$invalidate(0, level = $actor2.system.job?.level || "");
+      $$invalidate(0, level = $actor.system.job?.level || "");
     }
     if ($$self.$$.dirty & /*$actor*/
     32) {
-      $actor2.system.job?.name ? true : false;
+      $actor.system.job?.name ? true : false;
     }
   };
-  return [level, roleName, jobName, actor, rest, $actor2];
+  return [level, roleName, jobName, actor, rest, $actor];
 }
-__name(instance$B, "instance$B");
+__name(instance$C, "instance$C");
 class TitleBlock extends SvelteComponent {
   static {
     __name(this, "TitleBlock");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$B, create_fragment$J, safe_not_equal, {});
+    init$1(this, options, instance$C, create_fragment$J, safe_not_equal, {});
   }
 }
 function create_fragment$I(ctx) {
@@ -35672,7 +36832,7 @@ function create_fragment$I(ctx) {
   };
 }
 __name(create_fragment$I, "create_fragment$I");
-function instance$A($$self, $$props, $$invalidate) {
+function instance$B($$self, $$props, $$invalidate) {
   let $documentStore;
   const application = getContext("#external").application;
   const documentStore = getContext("#doc");
@@ -35712,14 +36872,14 @@ function instance$A($$self, $$props, $$invalidate) {
   __name(_launchTokenizer, "_launchTokenizer");
   return [$documentStore, documentStore, _editToken];
 }
-__name(instance$A, "instance$A");
+__name(instance$B, "instance$B");
 let AttributeSection$1 = class AttributeSection extends SvelteComponent {
   static {
     __name(this, "AttributeSection");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$A, create_fragment$I, safe_not_equal, {});
+    init$1(this, options, instance$B, create_fragment$I, safe_not_equal, {});
   }
 };
 function create_fragment$H(ctx) {
@@ -35830,22 +36990,22 @@ function create_fragment$H(ctx) {
   };
 }
 __name(create_fragment$H, "create_fragment$H");
-function instance$z($$self, $$props, $$invalidate) {
-  let $actor2;
+function instance$A($$self, $$props, $$invalidate) {
+  let $actor;
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor2 = value));
+  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
   onMount(() => {
   });
-  return [$actor2, actor];
+  return [$actor, actor];
 }
-__name(instance$z, "instance$z");
+__name(instance$A, "instance$A");
 class HP extends SvelteComponent {
   static {
     __name(this, "HP");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$z, create_fragment$H, safe_not_equal, {});
+    init$1(this, options, instance$A, create_fragment$H, safe_not_equal, {});
   }
 }
 function create_fragment$G(ctx) {
@@ -35956,22 +37116,22 @@ function create_fragment$G(ctx) {
   };
 }
 __name(create_fragment$G, "create_fragment$G");
-function instance$y($$self, $$props, $$invalidate) {
-  let $actor2;
+function instance$z($$self, $$props, $$invalidate) {
+  let $actor;
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor2 = value));
+  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
   onMount(() => {
   });
-  return [$actor2, actor];
+  return [$actor, actor];
 }
-__name(instance$y, "instance$y");
+__name(instance$z, "instance$z");
 class MP extends SvelteComponent {
   static {
     __name(this, "MP");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$y, create_fragment$G, safe_not_equal, {});
+    init$1(this, options, instance$z, create_fragment$G, safe_not_equal, {});
   }
 }
 function create_fragment$F(ctx) {
@@ -36010,7 +37170,7 @@ function create_fragment$F(ctx) {
         /*$actor*/
         ctx[0].system.points.BP.max
       ),
-      valuePath: "system.points.MP.val"
+      valuePath: "system.points.BP.val"
     }
   });
   return {
@@ -36082,22 +37242,22 @@ function create_fragment$F(ctx) {
   };
 }
 __name(create_fragment$F, "create_fragment$F");
-function instance$x($$self, $$props, $$invalidate) {
-  let $actor2;
+function instance$y($$self, $$props, $$invalidate) {
+  let $actor;
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor2 = value));
+  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
   onMount(() => {
   });
-  return [$actor2, actor];
+  return [$actor, actor];
 }
-__name(instance$x, "instance$x");
+__name(instance$y, "instance$y");
 class BP extends SvelteComponent {
   static {
     __name(this, "BP");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$x, create_fragment$F, safe_not_equal, {});
+    init$1(this, options, instance$y, create_fragment$F, safe_not_equal, {});
   }
 }
 function create_fragment$E(ctx) {
@@ -36448,7 +37608,7 @@ function openItem(index, item) {
   item.sheet.render(true);
 }
 __name(openItem, "openItem");
-function instance$w($$self, $$props, $$invalidate) {
+function instance$x($$self, $$props, $$invalidate) {
   let ActiveEffects;
   let $doc;
   let $wildcard;
@@ -36498,14 +37658,14 @@ function instance$w($$self, $$props, $$invalidate) {
     keydown_handler
   ];
 }
-__name(instance$w, "instance$w");
+__name(instance$x, "instance$x");
 class EffectsSection extends SvelteComponent {
   static {
     __name(this, "EffectsSection");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$w, create_fragment$D, safe_not_equal, {});
+    init$1(this, options, instance$x, create_fragment$D, safe_not_equal, {});
   }
 }
 function get_each_context$6(ctx, list, i) {
@@ -36526,7 +37686,7 @@ function create_if_block$b(ctx) {
   let current;
   let if_block = (
     /*combat*/
-    ctx[1] && create_if_block_3$3()
+    ctx[1] && create_if_block_3$4()
   );
   let each_value = ensure_array_like(
     /*items*/
@@ -36591,7 +37751,7 @@ function create_if_block$b(ctx) {
         if (if_block)
           ;
         else {
-          if_block = create_if_block_3$3();
+          if_block = create_if_block_3$4();
           if_block.c();
           if_block.m(tr, th2);
         }
@@ -36652,7 +37812,7 @@ function create_if_block$b(ctx) {
   };
 }
 __name(create_if_block$b, "create_if_block$b");
-function create_if_block_3$3(ctx) {
+function create_if_block_3$4(ctx) {
   let th;
   return {
     c() {
@@ -36669,7 +37829,7 @@ function create_if_block_3$3(ctx) {
     }
   };
 }
-__name(create_if_block_3$3, "create_if_block_3$3");
+__name(create_if_block_3$4, "create_if_block_3$4");
 function create_if_block_1$9(ctx) {
   let td;
   let current;
@@ -37091,7 +38251,7 @@ function showItemSheet$3(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$3, "showItemSheet$3");
-function instance$v($$self, $$props, $$invalidate) {
+function instance$w($$self, $$props, $$invalidate) {
   let items;
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -37190,14 +38350,14 @@ function instance$v($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$v, "instance$v");
+__name(instance$w, "instance$w");
 class Favourites extends SvelteComponent {
   static {
     __name(this, "Favourites");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$v, create_fragment$C, safe_not_equal, {});
+    init$1(this, options, instance$w, create_fragment$C, safe_not_equal, {});
   }
 }
 function create_if_block_1$8(ctx) {
@@ -37633,7 +38793,7 @@ function create_fragment$B(ctx) {
       }
       const portraitframe0_changes = {};
       if (dirty & /*$$scope*/
-      4) {
+      8) {
         portraitframe0_changes.$$scope = { dirty, ctx: ctx2 };
       }
       portraitframe0.$set(portraitframe0_changes);
@@ -37662,7 +38822,7 @@ function create_fragment$B(ctx) {
       }
       const portraitframe1_changes = {};
       if (dirty & /*$$scope*/
-      4) {
+      8) {
         portraitframe1_changes.$$scope = { dirty, ctx: ctx2 };
       }
       portraitframe1.$set(portraitframe1_changes);
@@ -37700,20 +38860,25 @@ function create_fragment$B(ctx) {
   };
 }
 __name(create_fragment$B, "create_fragment$B");
-function instance$u($$self, $$props, $$invalidate) {
-  let $actor2;
+function instance$v($$self, $$props, $$invalidate) {
+  let $actor;
+  let { sheet } = $$props;
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor2 = value));
-  return [$actor2, actor];
+  component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
+  $$self.$$set = ($$props2) => {
+    if ("sheet" in $$props2)
+      $$invalidate(2, sheet = $$props2.sheet);
+  };
+  return [$actor, actor, sheet];
 }
-__name(instance$u, "instance$u");
+__name(instance$v, "instance$v");
 let Attributes$1 = class Attributes extends SvelteComponent {
   static {
     __name(this, "Attributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$u, create_fragment$B, safe_not_equal, {});
+    init$1(this, options, instance$v, create_fragment$B, safe_not_equal, { sheet: 2 });
   }
 };
 function create_fragment$A(ctx) {
@@ -37816,19 +38981,19 @@ function create_fragment$A(ctx) {
   };
 }
 __name(create_fragment$A, "create_fragment$A");
-function instance$t($$self) {
+function instance$u($$self) {
   const proseMirrorClasses = ["left", "small"];
   const proseMirrorClasses2 = ["left"];
   return [proseMirrorClasses, proseMirrorClasses2];
 }
-__name(instance$t, "instance$t");
+__name(instance$u, "instance$u");
 class Profile extends SvelteComponent {
   static {
     __name(this, "Profile");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$t, create_fragment$A, safe_not_equal, {});
+    init$1(this, options, instance$u, create_fragment$A, safe_not_equal, {});
   }
 }
 function get_each_context$5(ctx, list, i) {
@@ -38315,7 +39480,7 @@ function showItemSheet$2(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$2, "showItemSheet$2");
-function instance$s($$self, $$props, $$invalidate) {
+function instance$t($$self, $$props, $$invalidate) {
   let items;
   let lockCSS;
   let faLockCSS;
@@ -38412,23 +39577,91 @@ function instance$s($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$s, "instance$s");
+__name(instance$t, "instance$t");
 class Inventory extends SvelteComponent {
   static {
     __name(this, "Inventory");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$s, create_fragment$z, safe_not_equal, {});
+    init$1(this, options, instance$t, create_fragment$z, safe_not_equal, {});
   }
 }
 function get_each_context$4(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[32] = list[i];
-  child_ctx[34] = i;
+  child_ctx[33] = list[i];
+  child_ctx[35] = i;
   return child_ctx;
 }
 __name(get_each_context$4, "get_each_context$4");
+function create_if_block_4$2(ctx) {
+  let th;
+  return {
+    c() {
+      th = element("th");
+      th.textContent = `${localize$1("Origin")}`;
+      attr(th, "class", "left shrink");
+      attr(th, "scope", "col");
+    },
+    m(target, anchor) {
+      insert(target, th, anchor);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(th);
+      }
+    }
+  };
+}
+__name(create_if_block_4$2, "create_if_block_4$2");
+function create_if_block_2$5(ctx) {
+  let td;
+  let show_if;
+  function select_block_type(ctx2, dirty) {
+    if (dirty[0] & /*ActiveEffects*/
+    2)
+      show_if = null;
+    if (show_if == null)
+      show_if = !!/*effect*/
+      ctx2[33].getFlag(SYSTEM_ID, "transferredBy.actor.img");
+    if (show_if)
+      return create_if_block_3$3;
+    return create_else_block;
+  }
+  __name(select_block_type, "select_block_type");
+  let current_block_type = select_block_type(ctx, [-1, -1]);
+  let if_block = current_block_type(ctx);
+  return {
+    c() {
+      td = element("td");
+      if_block.c();
+      attr(td, "class", "img left");
+    },
+    m(target, anchor) {
+      insert(target, td, anchor);
+      if_block.m(td, null);
+    },
+    p(ctx2, dirty) {
+      if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block) {
+        if_block.p(ctx2, dirty);
+      } else {
+        if_block.d(1);
+        if_block = current_block_type(ctx2);
+        if (if_block) {
+          if_block.c();
+          if_block.m(td, null);
+        }
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(td);
+      }
+      if_block.d();
+    }
+  };
+}
+__name(create_if_block_2$5, "create_if_block_2$5");
 function create_else_block(ctx) {
   let span;
   return {
@@ -38449,7 +39682,7 @@ function create_else_block(ctx) {
   };
 }
 __name(create_else_block, "create_else_block");
-function create_if_block_2$5(ctx) {
+function create_if_block_3$3(ctx) {
   let img;
   let img_src_value;
   let img_data_tooltip_value;
@@ -38458,11 +39691,11 @@ function create_if_block_2$5(ctx) {
       img = element("img");
       attr(img, "class", "icon nopointer");
       if (!src_url_equal(img.src, img_src_value = /*effect*/
-      ctx[32].getFlag(SYSTEM_ID, "origin.actor.img")))
+      ctx[33].getFlag(SYSTEM_ID, "transferredBy.actor.img")))
         attr(img, "src", img_src_value);
       attr(img, "alt", "avatar for effect origin");
       attr(img, "data-tooltip", img_data_tooltip_value = /*effect*/
-      ctx[32].getFlag(SYSTEM_ID, "origin.actor.name"));
+      ctx[33].getFlag(SYSTEM_ID, "transferredBy.actor.name"));
       attr(img, "data-tooltip-class", "FF15-tooltip");
     },
     m(target, anchor) {
@@ -38471,12 +39704,12 @@ function create_if_block_2$5(ctx) {
     p(ctx2, dirty) {
       if (dirty[0] & /*ActiveEffects*/
       2 && !src_url_equal(img.src, img_src_value = /*effect*/
-      ctx2[32].getFlag(SYSTEM_ID, "origin.actor.img"))) {
+      ctx2[33].getFlag(SYSTEM_ID, "transferredBy.actor.img"))) {
         attr(img, "src", img_src_value);
       }
       if (dirty[0] & /*ActiveEffects*/
       2 && img_data_tooltip_value !== (img_data_tooltip_value = /*effect*/
-      ctx2[32].getFlag(SYSTEM_ID, "origin.actor.name"))) {
+      ctx2[33].getFlag(SYSTEM_ID, "transferredBy.actor.name"))) {
         attr(img, "data-tooltip", img_data_tooltip_value);
       }
     },
@@ -38487,7 +39720,7 @@ function create_if_block_2$5(ctx) {
     }
   };
 }
-__name(create_if_block_2$5, "create_if_block_2$5");
+__name(create_if_block_3$3, "create_if_block_3$3");
 function create_if_block_1$7(ctx) {
   let button0;
   let button1;
@@ -38510,32 +39743,32 @@ function create_if_block_1$7(ctx) {
           listen(button0, "click", function() {
             if (is_function(editItem$1(
               /*index*/
-              ctx[34],
+              ctx[35],
               /*effect*/
-              ctx[32]
+              ctx[33]
             )))
               editItem$1(
                 /*index*/
-                ctx[34],
+                ctx[35],
                 /*effect*/
-                ctx[32]
+                ctx[33]
               ).apply(this, arguments);
           }),
           listen(button1, "click", function() {
             if (is_function(
               /*deleteItem*/
-              ctx[8](
+              ctx[9](
                 /*index*/
-                ctx[34],
+                ctx[35],
                 /*effect*/
-                ctx[32]
+                ctx[33]
               )
             ))
-              ctx[8](
+              ctx[9](
                 /*index*/
-                ctx[34],
+                ctx[35],
                 /*effect*/
-                ctx[32]
+                ctx[33]
               ).apply(this, arguments);
           })
         ];
@@ -38565,27 +39798,15 @@ function create_each_block$4(ctx) {
   let td1;
   let t_value = (
     /*effect*/
-    ctx[32].name + ""
+    ctx[33].name + ""
   );
   let t;
   let td2;
-  let show_if;
-  let td3;
   let tr_class_value;
-  function select_block_type(ctx2, dirty) {
-    if (dirty[0] & /*ActiveEffects*/
-    2)
-      show_if = null;
-    if (show_if == null)
-      show_if = !!/*effect*/
-      ctx2[32].getFlag(SYSTEM_ID, "origin.actor.img");
-    if (show_if)
-      return create_if_block_2$5;
-    return create_else_block;
-  }
-  __name(select_block_type, "select_block_type");
-  let current_block_type = select_block_type(ctx, [-1, -1]);
-  let if_block0 = current_block_type(ctx);
+  let if_block0 = (
+    /*parentIsActor*/
+    ctx[7] && create_if_block_2$5(ctx)
+  );
   let if_block1 = !/*$doc*/
   ctx[0].system.effectActionsLocked && /*showDelete*/
   ctx[6] && create_if_block_1$7(ctx);
@@ -38596,27 +39817,27 @@ function create_each_block$4(ctx) {
       img = element("img");
       td1 = element("td");
       t = text(t_value);
+      if (if_block0)
+        if_block0.c();
       td2 = element("td");
-      if_block0.c();
-      td3 = element("td");
       if (if_block1)
         if_block1.c();
       attr(img, "class", img_class_value = "icon " + /*effect*/
-      (ctx[32].isSuppressed ? "suspended" : "active"));
+      (ctx[33].isSuppressed ? "suspended" : "active"));
       if (!src_url_equal(img.src, img_src_value = getAvatarForVersion(
         /*effect*/
-        ctx[32],
-        window.game.version
+        ctx[33],
+        /*effect*/
+        ctx[33].getFlag(SYSTEM_ID, "version") || 0
       )))
         attr(img, "src", img_src_value);
       attr(img, "alt", "avatar for game version");
       attr(td0, "class", "img");
       attr(td1, "class", "left expand no-wrap");
-      attr(td2, "class", "img left");
-      attr(td3, "class", "buttons right no-wrap");
+      attr(td2, "class", "buttons right no-wrap");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*effect*/
-        ctx[32].disabled ? "disabled" : ""
+        ctx[33].disabled ? "disabled" : ""
       ) + " svelte-FF15-1af8azc");
     },
     m(target, anchor) {
@@ -38625,39 +39846,45 @@ function create_each_block$4(ctx) {
       append(td0, img);
       append(tr, td1);
       append(td1, t);
+      if (if_block0)
+        if_block0.m(tr, null);
       append(tr, td2);
-      if_block0.m(td2, null);
-      append(tr, td3);
       if (if_block1)
-        if_block1.m(td3, null);
+        if_block1.m(td2, null);
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*ActiveEffects*/
       2 && img_class_value !== (img_class_value = "icon " + /*effect*/
-      (ctx2[32].isSuppressed ? "suspended" : "active"))) {
+      (ctx2[33].isSuppressed ? "suspended" : "active"))) {
         attr(img, "class", img_class_value);
       }
       if (dirty[0] & /*ActiveEffects*/
       2 && !src_url_equal(img.src, img_src_value = getAvatarForVersion(
         /*effect*/
-        ctx2[32],
-        window.game.version
+        ctx2[33],
+        /*effect*/
+        ctx2[33].getFlag(SYSTEM_ID, "version") || 0
       ))) {
         attr(img, "src", img_src_value);
       }
       if (dirty[0] & /*ActiveEffects*/
       2 && t_value !== (t_value = /*effect*/
-      ctx2[32].name + ""))
+      ctx2[33].name + ""))
         set_data(t, t_value);
-      if (current_block_type === (current_block_type = select_block_type(ctx2, dirty)) && if_block0) {
-        if_block0.p(ctx2, dirty);
-      } else {
-        if_block0.d(1);
-        if_block0 = current_block_type(ctx2);
+      if (
+        /*parentIsActor*/
+        ctx2[7]
+      ) {
         if (if_block0) {
+          if_block0.p(ctx2, dirty);
+        } else {
+          if_block0 = create_if_block_2$5(ctx2);
           if_block0.c();
-          if_block0.m(td2, null);
+          if_block0.m(tr, td2);
         }
+      } else if (if_block0) {
+        if_block0.d(1);
+        if_block0 = null;
       }
       if (!/*$doc*/
       ctx2[0].system.effectActionsLocked && /*showDelete*/
@@ -38667,7 +39894,7 @@ function create_each_block$4(ctx) {
         } else {
           if_block1 = create_if_block_1$7(ctx2);
           if_block1.c();
-          if_block1.m(td3, null);
+          if_block1.m(td2, null);
         }
       } else if (if_block1) {
         if_block1.d(1);
@@ -38676,7 +39903,7 @@ function create_each_block$4(ctx) {
       if (dirty[0] & /*ActiveEffects*/
       2 && tr_class_value !== (tr_class_value = null_to_empty(
         /*effect*/
-        ctx2[32].disabled ? "disabled" : ""
+        ctx2[33].disabled ? "disabled" : ""
       ) + " svelte-FF15-1af8azc")) {
         attr(tr, "class", tr_class_value);
       }
@@ -38685,7 +39912,8 @@ function create_each_block$4(ctx) {
       if (detaching) {
         detach(tr);
       }
-      if_block0.d();
+      if (if_block0)
+        if_block0.d();
       if (if_block1)
         if_block1.d();
     }
@@ -38720,13 +39948,13 @@ function create_if_block$8(ctx) {
             button0,
             "click",
             /*openActiveEffectEditor*/
-            ctx[11]
+            ctx[12]
           ),
           listen(
             button1,
             "click",
             /*removeAllEffects*/
-            ctx[9]
+            ctx[10]
           )
         ];
         mounted = true;
@@ -38752,14 +39980,17 @@ function create_fragment$y(ctx) {
   let th0;
   let th1;
   let th2;
-  let th3;
   let button;
   let i;
   let i_class_value;
   let button_class_value;
-  let th3_class_value;
+  let th2_class_value;
   let mounted;
   let dispose;
+  let if_block0 = (
+    /*parentIsActor*/
+    ctx[7] && create_if_block_4$2()
+  );
   let each_value = ensure_array_like(
     /*ActiveEffects*/
     ctx[1]
@@ -38768,7 +39999,7 @@ function create_fragment$y(ctx) {
   for (let i2 = 0; i2 < each_value.length; i2 += 1) {
     each_blocks[i2] = create_each_block$4(get_each_context$4(ctx, each_value, i2));
   }
-  let if_block = (
+  let if_block1 = (
     /*showAddRemoveButtons*/
     ctx[5] && create_if_block$8(ctx)
   );
@@ -38783,30 +40014,28 @@ function create_fragment$y(ctx) {
       th0 = element("th");
       th1 = element("th");
       th1.textContent = `${localize$1("Name")}`;
+      if (if_block0)
+        if_block0.c();
       th2 = element("th");
-      th2.textContent = `${localize$1("Origin")}`;
-      th3 = element("th");
       button = element("button");
       i = element("i");
       for (let i2 = 0; i2 < each_blocks.length; i2 += 1) {
         each_blocks[i2].c();
       }
-      if (if_block)
-        if_block.c();
+      if (if_block1)
+        if_block1.c();
       attr(h1, "class", "gold");
       attr(th0, "class", "img shrink");
       attr(th0, "scope", "col");
       attr(th1, "class", "left expand ml-sm");
       attr(th1, "scope", "col");
-      attr(th2, "class", "left shrink");
-      attr(th2, "scope", "col");
       attr(i, "class", i_class_value = "fa " + /*faLockCSS*/
       ctx[3] + " svelte-FF15-1af8azc");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
       ctx[4] + " svelte-FF15-1af8azc");
-      attr(th3, "class", th3_class_value = "buttons " + /*lockCSS*/
+      attr(th2, "class", th2_class_value = "buttons " + /*lockCSS*/
       ctx[4] + " svelte-FF15-1af8azc");
-      attr(th3, "scope", "col");
+      attr(th2, "scope", "col");
       attr(tr, "class", "gold");
       attr(table, "class", "borderless even");
       attr(div0, "class", "padded");
@@ -38820,28 +40049,44 @@ function create_fragment$y(ctx) {
       append(table, tr);
       append(tr, th0);
       append(tr, th1);
+      if (if_block0)
+        if_block0.m(tr, null);
       append(tr, th2);
-      append(tr, th3);
-      append(th3, button);
+      append(th2, button);
       append(button, i);
       for (let i2 = 0; i2 < each_blocks.length; i2 += 1) {
         if (each_blocks[i2]) {
           each_blocks[i2].m(table, null);
         }
       }
-      if (if_block)
-        if_block.m(div0, null);
+      if (if_block1)
+        if_block1.m(div0, null);
       if (!mounted) {
         dispose = listen(
           button,
           "click",
           /*toggleLock*/
-          ctx[10]
+          ctx[11]
         );
         mounted = true;
       }
     },
     p(ctx2, dirty) {
+      if (
+        /*parentIsActor*/
+        ctx2[7]
+      ) {
+        if (if_block0)
+          ;
+        else {
+          if_block0 = create_if_block_4$2();
+          if_block0.c();
+          if_block0.m(tr, th2);
+        }
+      } else if (if_block0) {
+        if_block0.d(1);
+        if_block0 = null;
+      }
       if (dirty[0] & /*faLockCSS*/
       8 && i_class_value !== (i_class_value = "fa " + /*faLockCSS*/
       ctx2[3] + " svelte-FF15-1af8azc")) {
@@ -38853,12 +40098,12 @@ function create_fragment$y(ctx) {
         attr(button, "class", button_class_value);
       }
       if (dirty[0] & /*lockCSS*/
-      16 && th3_class_value !== (th3_class_value = "buttons " + /*lockCSS*/
+      16 && th2_class_value !== (th2_class_value = "buttons " + /*lockCSS*/
       ctx2[4] + " svelte-FF15-1af8azc")) {
-        attr(th3, "class", th3_class_value);
+        attr(th2, "class", th2_class_value);
       }
-      if (dirty[0] & /*ActiveEffects, deleteItem, $doc, showDelete*/
-      323) {
+      if (dirty[0] & /*ActiveEffects, deleteItem, $doc, showDelete, parentIsActor*/
+      707) {
         each_value = ensure_array_like(
           /*ActiveEffects*/
           ctx2[1]
@@ -38883,16 +40128,16 @@ function create_fragment$y(ctx) {
         /*showAddRemoveButtons*/
         ctx2[5]
       ) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
+        if (if_block1) {
+          if_block1.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$8(ctx2);
-          if_block.c();
-          if_block.m(div0, null);
+          if_block1 = create_if_block$8(ctx2);
+          if_block1.c();
+          if_block1.m(div0, null);
         }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
+      } else if (if_block1) {
+        if_block1.d(1);
+        if_block1 = null;
       }
     },
     i: noop,
@@ -38901,9 +40146,11 @@ function create_fragment$y(ctx) {
       if (detaching) {
         detach(div1);
       }
+      if (if_block0)
+        if_block0.d();
       destroy_each(each_blocks, detaching);
-      if (if_block)
-        if_block.d();
+      if (if_block1)
+        if_block1.d();
       mounted = false;
       dispose();
     }
@@ -38919,7 +40166,8 @@ function getAvatarForVersion(source, version2) {
   return version2 < 12 ? source.icon : source.img;
 }
 __name(getAvatarForVersion, "getAvatarForVersion");
-function instance$r($$self, $$props, $$invalidate) {
+function instance$s($$self, $$props, $$invalidate) {
+  let parentIsActor;
   let isActorSheet;
   let isGM;
   let showDelete;
@@ -38927,7 +40175,7 @@ function instance$r($$self, $$props, $$invalidate) {
   let lockCSS;
   let faLockCSS;
   let $doc;
-  let $wildcard, $$unsubscribe_wildcard = noop, $$subscribe_wildcard = /* @__PURE__ */ __name(() => ($$unsubscribe_wildcard(), $$unsubscribe_wildcard = subscribe(wildcard, ($$value) => $$invalidate(16, $wildcard = $$value)), wildcard), "$$subscribe_wildcard");
+  let $wildcard, $$unsubscribe_wildcard = noop, $$subscribe_wildcard = /* @__PURE__ */ __name(() => ($$unsubscribe_wildcard(), $$unsubscribe_wildcard = subscribe(wildcard, ($$value) => $$invalidate(17, $wildcard = $$value)), wildcard), "$$subscribe_wildcard");
   $$self.$$.on_destroy.push(() => $$unsubscribe_wildcard());
   let { sheet } = $$props;
   function resetEffectList() {
@@ -39003,6 +40251,9 @@ function instance$r($$self, $$props, $$invalidate) {
       {
         label: $doc.name,
         icon: $doc.img,
+        // For pre-v12 compatibility
+        img: $doc.img,
+        // For v12+
         origin: $doc.uuid,
         renderSheet: true,
         flags: { [SYSTEM_ID]: {} }
@@ -39026,23 +40277,27 @@ function instance$r($$self, $$props, $$invalidate) {
   });
   $$self.$$set = ($$props2) => {
     if ("sheet" in $$props2)
-      $$invalidate(12, sheet = $$props2.sheet);
+      $$invalidate(13, sheet = $$props2.sheet);
   };
   $$self.$$.update = () => {
+    if ($$self.$$.dirty[0] & /*$doc, sheet*/
+    8193) {
+      $$invalidate(7, parentIsActor = isParentActor($doc) || sheet && sheet.includes("actor"));
+    }
     if ($$self.$$.dirty[0] & /*sheet*/
-    4096) {
-      $$invalidate(15, isActorSheet = sheet === "actor");
+    8192) {
+      $$invalidate(16, isActorSheet = sheet === "actor");
     }
     if ($$self.$$.dirty[0] & /*isActorSheet, isGM*/
-    49152) {
+    98304) {
       $$invalidate(6, showDelete = !isActorSheet || isGM);
     }
     if ($$self.$$.dirty[0] & /*isActorSheet, isGM*/
-    49152) {
+    98304) {
       $$invalidate(5, showAddRemoveButtons = !isActorSheet || isGM);
     }
     if ($$self.$$.dirty[0] & /*$wildcard*/
-    65536) {
+    131072) {
       $$invalidate(1, ActiveEffects = [...$wildcard].map((effect) => {
         return effect;
       }));
@@ -39060,7 +40315,7 @@ function instance$r($$self, $$props, $$invalidate) {
       parseInt($doc.system.xp?.unspent) || 0;
     }
   };
-  $$invalidate(14, isGM = game.user.isGM);
+  $$invalidate(15, isGM = game.user.isGM);
   return [
     $doc,
     ActiveEffects,
@@ -39069,6 +40324,7 @@ function instance$r($$self, $$props, $$invalidate) {
     lockCSS,
     showAddRemoveButtons,
     showDelete,
+    parentIsActor,
     doc,
     deleteItem,
     removeAllEffects,
@@ -39081,24 +40337,24 @@ function instance$r($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$r, "instance$r");
+__name(instance$s, "instance$s");
 class EffectsTab extends SvelteComponent {
   static {
     __name(this, "EffectsTab");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$r, create_fragment$y, safe_not_equal, { sheet: 12, resetEffectList: 13 }, null, [-1, -1]);
+    init$1(this, options, instance$s, create_fragment$y, safe_not_equal, { sheet: 13, resetEffectList: 14 }, null, [-1, -1]);
   }
   get sheet() {
-    return this.$$.ctx[12];
+    return this.$$.ctx[13];
   }
   set sheet(sheet) {
     this.$$set({ sheet });
     flush();
   }
   get resetEffectList() {
-    return this.$$.ctx[13];
+    return this.$$.ctx[14];
   }
 }
 function create_default_slot$c(ctx) {
@@ -39111,7 +40367,8 @@ function create_default_slot$c(ctx) {
         /*tabs*/
         ctx[3]
       ),
-      activeTab: activeTab$1
+      activeTab: activeTab$1,
+      sheet: "['actor', 'PC']"
     }
   });
   return {
@@ -39191,7 +40448,7 @@ function create_fragment$x(ctx) {
     p(ctx2, [dirty]) {
       const applicationshell_changes = {};
       if (dirty & /*$$scope, tabs*/
-      32776) {
+      65544) {
         applicationshell_changes.$$scope = { dirty, ctx: ctx2 };
       }
       if (!updating_elementRoot && dirty & /*elementRoot*/
@@ -39227,7 +40484,7 @@ function create_fragment$x(ctx) {
 }
 __name(create_fragment$x, "create_fragment$x");
 let activeTab$1 = "attributes";
-function instance$q($$self, $$props, $$invalidate) {
+function instance$r($$self, $$props, $$invalidate) {
   let tabs;
   let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(9, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
   let $applicationWindowHeaderIconsOnly;
@@ -39313,14 +40570,14 @@ function instance$q($$self, $$props, $$invalidate) {
     applicationshell_stylesApp_binding
   ];
 }
-__name(instance$q, "instance$q");
+__name(instance$r, "instance$r");
 class PCSheetShell extends SvelteComponent {
   static {
     __name(this, "PCSheetShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$q, create_fragment$x, safe_not_equal, { elementRoot: 0, documentStore: 1 });
+    init$1(this, options, instance$r, create_fragment$x, safe_not_equal, { elementRoot: 0, documentStore: 1 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -39390,7 +40647,7 @@ function create_fragment$w(ctx) {
   };
 }
 __name(create_fragment$w, "create_fragment$w");
-function instance$p($$self, $$props, $$invalidate) {
+function instance$q($$self, $$props, $$invalidate) {
   let { elementRoot } = $$props;
   function applicationshell_elementRoot_binding(value) {
     elementRoot = value;
@@ -39403,14 +40660,14 @@ function instance$p($$self, $$props, $$invalidate) {
   };
   return [elementRoot, applicationshell_elementRoot_binding];
 }
-__name(instance$p, "instance$p");
+__name(instance$q, "instance$q");
 class DocumentShell extends SvelteComponent {
   static {
     __name(this, "DocumentShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$p, create_fragment$w, safe_not_equal, { elementRoot: 0 });
+    init$1(this, options, instance$q, create_fragment$w, safe_not_equal, { elementRoot: 0 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -39621,8 +40878,9 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
    * @return {Promise<void>} Returns a promise that resolves when the edit mode is toggled
    */
   async _onToggleEdit(event) {
-    if (event) {
-      event.preventDefault();
+    game.system.log.p("[TOGGLE EDIT] _onToggleEdit event", event);
+    if (event?.event) {
+      event.event.preventDefault();
     }
     await this.reactive.document.update({ system: { isEditing: !this.reactive.document.system.isEditing } });
     this.render();
@@ -39776,7 +41034,7 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
       ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`));
       return false;
     }
-    const duplicate = actor.items.find((x) => x.name == droppedItem.name);
+    const duplicate = actor.items.find((x) => x.name == droppedItem.name && x.type == droppedItem.type);
     if (duplicate) {
       await duplicate.update({ system: { quantity: duplicate.system.quantity + 1 } });
       ui.notifications.info(`Found matching item "${duplicate.name}" and incremented quantity.`);
@@ -40700,7 +41958,7 @@ function showItemSheet$1(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$1, "showItemSheet$1");
-function instance$o($$self, $$props, $$invalidate) {
+function instance$p($$self, $$props, $$invalidate) {
   let items;
   let lockCSS;
   let faLockCSS;
@@ -40867,14 +42125,14 @@ function instance$o($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$o, "instance$o");
+__name(instance$p, "instance$p");
 class Abilities2 extends SvelteComponent {
   static {
     __name(this, "Abilities");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$o, create_fragment$v, safe_not_equal, {});
+    init$1(this, options, instance$p, create_fragment$v, safe_not_equal, {});
   }
 }
 function get_each_context$2(ctx, list, i) {
@@ -41041,7 +42299,7 @@ function create_fragment$u(ctx) {
   };
 }
 __name(create_fragment$u, "create_fragment$u");
-function instance$n($$self, $$props, $$invalidate) {
+function instance$o($$self, $$props, $$invalidate) {
   let { data } = $$props;
   let { abbreviateLabel } = $$props;
   let { key } = $$props;
@@ -41063,14 +42321,14 @@ function instance$n($$self, $$props, $$invalidate) {
   };
   return [data, abbreviateLabel, key, showSign, onclick];
 }
-__name(instance$n, "instance$n");
+__name(instance$o, "instance$o");
 class AttributeCol2 extends SvelteComponent {
   static {
     __name(this, "AttributeCol");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$n, create_fragment$u, safe_not_equal, {
+    init$1(this, options, instance$o, create_fragment$u, safe_not_equal, {
       data: 0,
       abbreviateLabel: 1,
       key: 2,
@@ -41140,7 +42398,7 @@ function create_fragment$t(ctx) {
   };
 }
 __name(create_fragment$t, "create_fragment$t");
-function instance$m($$self, $$props, $$invalidate) {
+function instance$n($$self, $$props, $$invalidate) {
   let { onclick } = $$props;
   let data = [
     { code: "str" },
@@ -41155,14 +42413,14 @@ function instance$m($$self, $$props, $$invalidate) {
   };
   return [onclick, data];
 }
-__name(instance$m, "instance$m");
+__name(instance$n, "instance$n");
 class PrimaryAttributes2 extends SvelteComponent {
   static {
     __name(this, "PrimaryAttributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$m, create_fragment$t, safe_not_equal, { onclick: 0 });
+    init$1(this, options, instance$n, create_fragment$t, safe_not_equal, { onclick: 0 });
   }
 }
 function create_fragment$s(ctx) {
@@ -41224,7 +42482,7 @@ function create_fragment$s(ctx) {
   };
 }
 __name(create_fragment$s, "create_fragment$s");
-function instance$l($$self, $$props, $$invalidate) {
+function instance$m($$self, $$props, $$invalidate) {
   let { onclick } = $$props;
   let data = [{ code: "def" }, { code: "mag" }, { code: "vig" }, { code: "spd" }];
   $$self.$$set = ($$props2) => {
@@ -41233,14 +42491,14 @@ function instance$l($$self, $$props, $$invalidate) {
   };
   return [onclick, data];
 }
-__name(instance$l, "instance$l");
+__name(instance$m, "instance$m");
 class SecondaryAttributes2 extends SvelteComponent {
   static {
     __name(this, "SecondaryAttributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$l, create_fragment$s, safe_not_equal, { onclick: 0 });
+    init$1(this, options, instance$m, create_fragment$s, safe_not_equal, { onclick: 0 });
   }
 }
 function create_fragment$r(ctx) {
@@ -41338,11 +42596,11 @@ function create_fragment$r(ctx) {
   };
 }
 __name(create_fragment$r, "create_fragment$r");
-function instance$k($$self, $$props, $$invalidate) {
-  let $actor2;
+function instance$l($$self, $$props, $$invalidate) {
+  let $actor;
   const sizeOptions = getSizeOptions();
   const actor = getContext("#doc");
-  component_subscribe($$self, actor, (value) => $$invalidate(4, $actor2 = value));
+  component_subscribe($$self, actor, (value) => $$invalidate(4, $actor = value));
   const sizeToGrid = {
     tiny: 0.5,
     small: 1,
@@ -41353,19 +42611,19 @@ function instance$k($$self, $$props, $$invalidate) {
   };
   const onSizeChange = /* @__PURE__ */ __name(async (newSize) => {
     const gridSize = sizeToGrid[newSize.toLowerCase()] || 1;
-    await $actor2.update({
+    await $actor.update({
       "prototypeToken.width": gridSize,
       "prototypeToken.height": gridSize
     });
   }, "onSizeChange");
   const onclick = /* @__PURE__ */ __name(async (key, code) => {
-    game.system.log.d("actor", $actor2);
-    const attributeValue = $actor2.system.attributes[key][code].val;
+    game.system.log.d("actor", $actor);
+    const attributeValue = $actor.system.attributes[key][code].val;
     const rollFormula = `1d20 + ${attributeValue}`;
     const attributeName = code.toUpperCase();
     const roll = await new Roll(rollFormula).evaluate({ async: true });
     const messageData = {
-      speaker: ChatMessage.getSpeaker({ actor: $actor2 }),
+      speaker: ChatMessage.getSpeaker({ actor: $actor }),
       flavor: `${attributeName} Check`,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       roll,
@@ -41374,9 +42632,9 @@ function instance$k($$self, $$props, $$invalidate) {
           data: {
             chatTemplate: "AttributeRollChat",
             actor: {
-              _id: $actor2._id,
-              name: $actor2.name,
-              img: $actor2.img
+              _id: $actor._id,
+              name: $actor.name,
+              img: $actor.img
             }
           }
         }
@@ -41386,14 +42644,14 @@ function instance$k($$self, $$props, $$invalidate) {
   }, "onclick");
   return [sizeOptions, actor, onSizeChange, onclick];
 }
-__name(instance$k, "instance$k");
+__name(instance$l, "instance$l");
 class AttributeBlock2 extends SvelteComponent {
   static {
     __name(this, "AttributeBlock");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$k, create_fragment$r, safe_not_equal, {});
+    init$1(this, options, instance$l, create_fragment$r, safe_not_equal, {});
   }
 }
 function create_fragment$q(ctx) {
@@ -41448,20 +42706,20 @@ function create_fragment$q(ctx) {
   };
 }
 __name(create_fragment$q, "create_fragment$q");
-function instance$j($$self, $$props, $$invalidate) {
+function instance$k($$self, $$props, $$invalidate) {
   getContext("#external").application;
   const documentStore = getContext("#doc");
   component_subscribe($$self, documentStore, (value) => $$invalidate(2, value));
   return [documentStore];
 }
-__name(instance$j, "instance$j");
+__name(instance$k, "instance$k");
 class AttributeSection2 extends SvelteComponent {
   static {
     __name(this, "AttributeSection");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$j, create_fragment$q, safe_not_equal, {});
+    init$1(this, options, instance$k, create_fragment$q, safe_not_equal, {});
   }
 }
 function create_fragment$p(ctx) {
@@ -41572,7 +42830,7 @@ function create_fragment$o(ctx) {
   };
 }
 __name(create_fragment$o, "create_fragment$o");
-function instance$i($$self, $$props, $$invalidate) {
+function instance$j($$self, $$props, $$invalidate) {
   let $documentStore;
   const application = getContext("#external").application;
   const documentStore = getContext("#doc");
@@ -41612,14 +42870,14 @@ function instance$i($$self, $$props, $$invalidate) {
   __name(_launchTokenizer, "_launchTokenizer");
   return [$documentStore, documentStore, _editToken];
 }
-__name(instance$i, "instance$i");
+__name(instance$j, "instance$j");
 class Portrait extends SvelteComponent {
   static {
     __name(this, "Portrait");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$i, create_fragment$o, safe_not_equal, {});
+    init$1(this, options, instance$j, create_fragment$o, safe_not_equal, {});
   }
 }
 function create_default_slot$a(ctx) {
@@ -42090,7 +43348,7 @@ function create_fragment$m(ctx) {
       }
       const portraitframe0_changes = {};
       if (dirty & /*$$scope*/
-      64) {
+      128) {
         portraitframe0_changes.$$scope = { dirty, ctx: ctx2 };
       }
       portraitframe0.$set(portraitframe0_changes);
@@ -42150,7 +43408,7 @@ function create_fragment$m(ctx) {
       }
       const portraitframe1_changes = {};
       if (dirty & /*$$scope*/
-      64) {
+      128) {
         portraitframe1_changes.$$scope = { dirty, ctx: ctx2 };
       }
       portraitframe1.$set(portraitframe1_changes);
@@ -42191,34 +43449,39 @@ function create_fragment$m(ctx) {
   };
 }
 __name(create_fragment$m, "create_fragment$m");
-function instance$h($$self, $$props, $$invalidate) {
+function instance$i($$self, $$props, $$invalidate) {
   let smallwindow;
   let largewindow;
   let $width;
+  let { sheet } = $$props;
   getContext("#doc");
   const application = getContext("#external").application;
   const { width } = application.position.stores;
-  component_subscribe($$self, width, (value) => $$invalidate(3, $width = value));
+  component_subscribe($$self, width, (value) => $$invalidate(4, $width = value));
+  $$self.$$set = ($$props2) => {
+    if ("sheet" in $$props2)
+      $$invalidate(3, sheet = $$props2.sheet);
+  };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$width*/
-    8) {
+    16) {
       $$invalidate(1, smallwindow = $width <= 750);
     }
     if ($$self.$$.dirty & /*$width*/
-    8) {
+    16) {
       $$invalidate(0, largewindow = $width > 750);
     }
   };
-  return [largewindow, smallwindow, width, $width];
+  return [largewindow, smallwindow, width, sheet, $width];
 }
-__name(instance$h, "instance$h");
+__name(instance$i, "instance$i");
 class Attributes2 extends SvelteComponent {
   static {
     __name(this, "Attributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$h, create_fragment$m, safe_not_equal, {});
+    init$1(this, options, instance$i, create_fragment$m, safe_not_equal, { sheet: 3 });
   }
 }
 function create_default_slot$8(ctx) {
@@ -42231,7 +43494,8 @@ function create_default_slot$8(ctx) {
         /*tabs*/
         ctx[3]
       ),
-      activeTab
+      activeTab,
+      sheet: "['actor', 'NPC']"
     }
   });
   return {
@@ -42347,7 +43611,7 @@ function create_fragment$l(ctx) {
 }
 __name(create_fragment$l, "create_fragment$l");
 let activeTab = "attributes";
-function instance$g($$self, $$props, $$invalidate) {
+function instance$h($$self, $$props, $$invalidate) {
   let tabs;
   let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(9, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
   let $applicationWindowHeaderIconsOnly;
@@ -42423,14 +43687,14 @@ function instance$g($$self, $$props, $$invalidate) {
     applicationshell_stylesApp_binding
   ];
 }
-__name(instance$g, "instance$g");
+__name(instance$h, "instance$h");
 class NPCSheetShell extends SvelteComponent {
   static {
     __name(this, "NPCSheetShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$g, create_fragment$l, safe_not_equal, { elementRoot: 0, documentStore: 1 });
+    init$1(this, options, instance$h, create_fragment$l, safe_not_equal, { elementRoot: 0, documentStore: 1 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -42823,59 +44087,181 @@ function create_fragment$k(ctx) {
   };
 }
 __name(create_fragment$k, "create_fragment$k");
+function instance$g($$self, $$props, $$invalidate) {
+  let { sheet } = $$props;
+  $$self.$$set = ($$props2) => {
+    if ("sheet" in $$props2)
+      $$invalidate(0, sheet = $$props2.sheet);
+  };
+  return [sheet];
+}
+__name(instance$g, "instance$g");
 class DescriptionTab extends SvelteComponent {
   static {
     __name(this, "DescriptionTab");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$k, safe_not_equal, {});
+    init$1(this, options, instance$g, create_fragment$k, safe_not_equal, { sheet: 0 });
   }
 }
-function create_if_block_14(ctx) {
+function create_if_block_16(ctx) {
   let div2;
   let div0;
-  let docselect;
   let div1;
   let docinput;
   let current;
-  docselect = new DocSelect({
-    props: {
-      class: "wide left",
-      id: "baseEffectType",
-      name: "baseEffectType",
-      type: "number",
-      options: (
-        /*baseEffectTypeOptions*/
-        ctx[3]
-      ),
-      valuePath: "system.baseEffectType"
-    }
-  });
   docinput = new DocInput({
     props: {
-      id: "formula",
-      name: "formula",
-      valuePath: "system.formula"
+      id: "baseEffectDamage",
+      name: "baseEffectDamage",
+      valuePath: "system.baseEffectDamage"
     }
   });
   return {
     c() {
       div2 = element("div");
       div0 = element("div");
-      create_component(docselect.$$.fragment);
+      div0.innerHTML = `<label for="baseEffectDamage">Damage</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
       attr(div1, "class", "flex2 right");
-      attr(div2, "class", "flexrow sheet-row justify-vertical");
+      attr(div2, "class", "flexrow sheet-row justify-vertical px-sm");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
-      mount_component(docselect, div0, null);
       append(div2, div1);
       mount_component(docinput, div1, null);
+      current = true;
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(docinput.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(docinput.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(docinput);
+    }
+  };
+}
+__name(create_if_block_16, "create_if_block_16");
+function create_if_block_15(ctx) {
+  let div2;
+  let div0;
+  let div1;
+  let docinput;
+  let current;
+  docinput = new DocInput({
+    props: {
+      id: "baseEffectRestoreMP",
+      name: "baseEffectRestoreMP",
+      valuePath: "system.baseEffectRestoreMP"
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      div0.innerHTML = `<label for="baseEffectRestoreMP">Restore MP</label>`;
+      div1 = element("div");
+      create_component(docinput.$$.fragment);
+      attr(div0, "class", "flex3");
+      attr(div1, "class", "flex2 right");
+      attr(div2, "class", "flexrow sheet-row justify-vertical px-sm");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      append(div2, div1);
+      mount_component(docinput, div1, null);
+      current = true;
+    },
+    i(local) {
+      if (current)
+        return;
+      transition_in(docinput.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(docinput.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(docinput);
+    }
+  };
+}
+__name(create_if_block_15, "create_if_block_15");
+function create_if_block_14(ctx) {
+  let div2;
+  let div0;
+  let div1;
+  let docselect;
+  let div5;
+  let div3;
+  let div4;
+  let docinput;
+  let current;
+  docselect = new DocSelect({
+    props: {
+      class: "wide right",
+      id: "baseEffectHealingType",
+      name: "baseEffectHealingType",
+      options: (
+        /*baseEffectHealingTypeOptions*/
+        ctx[16]
+      ),
+      valuePath: "system.baseEffectHealingType"
+    }
+  });
+  docinput = new DocInput({
+    props: {
+      id: "baseEffectHealing",
+      name: "baseEffectHealing",
+      valuePath: "system.baseEffectHealing"
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      div0.innerHTML = `<label for="baseEffectHealing">Type</label>`;
+      div1 = element("div");
+      create_component(docselect.$$.fragment);
+      div5 = element("div");
+      div3 = element("div");
+      div3.innerHTML = `<label for="baseEffectHealing">Amount</label>`;
+      div4 = element("div");
+      create_component(docinput.$$.fragment);
+      attr(div0, "class", "flex3");
+      attr(div1, "class", "flex4 right");
+      attr(div2, "class", "flexrow sheet-row justify-vertical px-sm");
+      attr(div3, "class", "flex3");
+      attr(div4, "class", "flex4 right");
+      attr(div5, "class", "flexrow sheet-row justify-vertical px-sm");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      append(div2, div1);
+      mount_component(docselect, div1, null);
+      insert(target, div5, anchor);
+      append(div5, div3);
+      append(div5, div4);
+      mount_component(docinput, div4, null);
       current = true;
     },
     p: noop,
@@ -42894,6 +44280,7 @@ function create_if_block_14(ctx) {
     d(detaching) {
       if (detaching) {
         detach(div2);
+        detach(div5);
       }
       destroy_component(docselect);
       destroy_component(docinput);
@@ -42911,13 +44298,13 @@ function create_if_block_13(ctx) {
   docselect = new DocSelect({
     props: {
       class: "wide right",
-      id: "CR",
-      name: "CR",
+      id: "target",
+      name: "target",
       options: (
-        /*CROptions*/
-        ctx[4]
+        /*targetOptions*/
+        ctx[11]
       ),
-      valuePath: "system.CR"
+      valuePath: "system.target"
     }
   });
   return {
@@ -42925,10 +44312,10 @@ function create_if_block_13(ctx) {
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("FF15.Type")}`;
+      label.textContent = `${localize$1("Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
-      attr(label, "for", "CR");
+      attr(label, "for", "target");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -42962,6 +44349,66 @@ function create_if_block_13(ctx) {
 }
 __name(create_if_block_13, "create_if_block_13");
 function create_if_block_12(ctx) {
+  let div2;
+  let div0;
+  let label;
+  let div1;
+  let docselect;
+  let current;
+  docselect = new DocSelect({
+    props: {
+      class: "wide right wide",
+      id: "rangeType",
+      name: "rangeType",
+      options: (
+        /*rangeOptions*/
+        ctx[8]
+      ),
+      valuePath: "system.rangeType"
+    }
+  });
+  return {
+    c() {
+      div2 = element("div");
+      div0 = element("div");
+      label = element("label");
+      label.textContent = `${localize$1("Type")}`;
+      div1 = element("div");
+      create_component(docselect.$$.fragment);
+      attr(label, "for", "rangeType");
+      attr(div0, "class", "flex1");
+      attr(div1, "class", "flex4 right wide");
+      attr(div2, "class", "flexrow sheet-row justify-vertical wide");
+    },
+    m(target, anchor) {
+      insert(target, div2, anchor);
+      append(div2, div0);
+      append(div0, label);
+      append(div2, div1);
+      mount_component(docselect, div1, null);
+      current = true;
+    },
+    p: noop,
+    i(local) {
+      if (current)
+        return;
+      transition_in(docselect.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      transition_out(docselect.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div2);
+      }
+      destroy_component(docselect);
+    }
+  };
+}
+__name(create_if_block_12, "create_if_block_12");
+function create_if_block_11(ctx) {
   let div2;
   let div0;
   let div1;
@@ -43023,67 +44470,6 @@ function create_if_block_12(ctx) {
     }
   };
 }
-__name(create_if_block_12, "create_if_block_12");
-function create_if_block_11(ctx) {
-  let div2;
-  let div0;
-  let label;
-  let div1;
-  let docselect;
-  let current;
-  docselect = new DocSelect({
-    props: {
-      class: "wide right",
-      id: "trigger",
-      name: "trigger",
-      type: "number",
-      options: (
-        /*triggerOptions*/
-        ctx[11]
-      ),
-      valuePath: "system.trigger"
-    }
-  });
-  return {
-    c() {
-      div2 = element("div");
-      div0 = element("div");
-      label = element("label");
-      label.textContent = `${localize("FF15.Type")}`;
-      div1 = element("div");
-      create_component(docselect.$$.fragment);
-      attr(label, "for", "trigger");
-      attr(div0, "class", "flex1");
-      attr(div1, "class", "flex4 right wide");
-      attr(div2, "class", "flexrow sheet-row justify-vertical wide");
-    },
-    m(target, anchor) {
-      insert(target, div2, anchor);
-      append(div2, div0);
-      append(div0, label);
-      append(div2, div1);
-      mount_component(docselect, div1, null);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(docselect.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(docselect.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div2);
-      }
-      destroy_component(docselect);
-    }
-  };
-}
 __name(create_if_block_11, "create_if_block_11");
 function create_if_block_10(ctx) {
   let div2;
@@ -43095,13 +44481,13 @@ function create_if_block_10(ctx) {
   docselect = new DocSelect({
     props: {
       class: "wide right",
-      id: "target",
-      name: "target",
+      id: "CR",
+      name: "CR",
       options: (
-        /*targetOptions*/
-        ctx[12]
+        /*CROptions*/
+        ctx[3]
       ),
-      valuePath: "system.target"
+      valuePath: "system.CR"
     }
   });
   return {
@@ -43109,10 +44495,10 @@ function create_if_block_10(ctx) {
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("FF15.Type")}`;
+      label.textContent = `${localize$1("Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
-      attr(label, "for", "target");
+      attr(label, "for", "CR");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -43148,59 +44534,73 @@ __name(create_if_block_10, "create_if_block_10");
 function create_if_block_9(ctx) {
   let div2;
   let div0;
-  let label;
+  let docselect0;
   let div1;
-  let docselect;
+  let docselect1;
   let current;
-  docselect = new DocSelect({
+  docselect0 = new DocSelect({
     props: {
-      class: "wide right wide",
-      id: "rangeType",
-      name: "rangeType",
+      class: "left",
+      id: "limitation",
+      name: "limitation",
+      type: "number",
       options: (
-        /*rangeOptions*/
-        ctx[9]
+        /*limitationOptions*/
+        ctx[4]
       ),
-      valuePath: "system.rangeType"
+      valuePath: "system.limitation"
+    }
+  });
+  docselect1 = new DocSelect({
+    props: {
+      class: "right",
+      id: "limitationUnits",
+      name: "limitationUnits",
+      options: (
+        /*limitationUnitsOptions*/
+        ctx[5]
+      ),
+      valuePath: "system.limitationUnits"
     }
   });
   return {
     c() {
       div2 = element("div");
       div0 = element("div");
-      label = element("label");
-      label.textContent = `${localize("FF15.Type")}`;
+      create_component(docselect0.$$.fragment);
       div1 = element("div");
-      create_component(docselect.$$.fragment);
-      attr(label, "for", "rangeType");
-      attr(div0, "class", "flex1");
-      attr(div1, "class", "flex4 right wide");
+      create_component(docselect1.$$.fragment);
+      attr(div0, "class", "flex2 left");
+      attr(div1, "class", "flex2 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
-      append(div0, label);
+      mount_component(docselect0, div0, null);
       append(div2, div1);
-      mount_component(docselect, div1, null);
+      mount_component(docselect1, div1, null);
       current = true;
     },
     p: noop,
     i(local) {
       if (current)
         return;
-      transition_in(docselect.$$.fragment, local);
+      transition_in(docselect0.$$.fragment, local);
+      transition_in(docselect1.$$.fragment, local);
       current = true;
     },
     o(local) {
-      transition_out(docselect.$$.fragment, local);
+      transition_out(docselect0.$$.fragment, local);
+      transition_out(docselect1.$$.fragment, local);
       current = false;
     },
     d(detaching) {
       if (detaching) {
         detach(div2);
       }
-      destroy_component(docselect);
+      destroy_component(docselect0);
+      destroy_component(docselect1);
     }
   };
 }
@@ -43215,26 +44615,26 @@ function create_if_block_8(ctx) {
   docselect0 = new DocSelect({
     props: {
       class: "left",
-      id: "limitation",
-      name: "limitation",
+      id: "duration",
+      name: "duration",
       type: "number",
       options: (
-        /*limitationOptions*/
-        ctx[5]
+        /*durationOptions*/
+        ctx[6]
       ),
-      valuePath: "system.limitation"
+      valuePath: "system.duration"
     }
   });
   docselect1 = new DocSelect({
     props: {
       class: "right",
-      id: "limitationUnits",
-      name: "limitationUnits",
+      id: "durationUnits",
+      name: "durationUnits",
       options: (
-        /*limitationUnitsOptions*/
-        ctx[6]
+        /*durationUnitsOptions*/
+        ctx[7]
       ),
-      valuePath: "system.limitationUnits"
+      valuePath: "system.durationUnits"
     }
   });
   return {
@@ -43282,73 +44682,60 @@ __name(create_if_block_8, "create_if_block_8");
 function create_if_block_7(ctx) {
   let div2;
   let div0;
-  let docselect0;
+  let label;
   let div1;
-  let docselect1;
+  let docselect;
   let current;
-  docselect0 = new DocSelect({
+  docselect = new DocSelect({
     props: {
-      class: "left",
-      id: "duration",
-      name: "duration",
+      class: "wide right",
+      id: "trigger",
+      name: "trigger",
       type: "number",
       options: (
-        /*durationOptions*/
-        ctx[7]
+        /*triggerOptions*/
+        ctx[10]
       ),
-      valuePath: "system.duration"
-    }
-  });
-  docselect1 = new DocSelect({
-    props: {
-      class: "right",
-      id: "durationUnits",
-      name: "durationUnits",
-      options: (
-        /*durationUnitsOptions*/
-        ctx[8]
-      ),
-      valuePath: "system.durationUnits"
+      valuePath: "system.trigger"
     }
   });
   return {
     c() {
       div2 = element("div");
       div0 = element("div");
-      create_component(docselect0.$$.fragment);
+      label = element("label");
+      label.textContent = `${localize$1("Type")}`;
       div1 = element("div");
-      create_component(docselect1.$$.fragment);
-      attr(div0, "class", "flex2 left");
-      attr(div1, "class", "flex2 right");
+      create_component(docselect.$$.fragment);
+      attr(label, "for", "trigger");
+      attr(div0, "class", "flex1");
+      attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
-      mount_component(docselect0, div0, null);
+      append(div0, label);
       append(div2, div1);
-      mount_component(docselect1, div1, null);
+      mount_component(docselect, div1, null);
       current = true;
     },
     p: noop,
     i(local) {
       if (current)
         return;
-      transition_in(docselect0.$$.fragment, local);
-      transition_in(docselect1.$$.fragment, local);
+      transition_in(docselect.$$.fragment, local);
       current = true;
     },
     o(local) {
-      transition_out(docselect0.$$.fragment, local);
-      transition_out(docselect1.$$.fragment, local);
+      transition_out(docselect.$$.fragment, local);
       current = false;
     },
     d(detaching) {
       if (detaching) {
         detach(div2);
       }
-      destroy_component(docselect0);
-      destroy_component(docselect1);
+      destroy_component(docselect);
     }
   };
 }
@@ -43367,7 +44754,7 @@ function create_if_block_6(ctx) {
       type: "number",
       options: (
         /*aspectedOptions*/
-        ctx[13]
+        ctx[12]
       ),
       valuePath: "system.aspected"
     }
@@ -43426,7 +44813,7 @@ function create_if_block_5(ctx) {
         /*costOptions*/
         ctx[17]
       ),
-      valuePath: "system.cost"
+      valuePath: "system.costMP"
     }
   });
   return {
@@ -43481,7 +44868,7 @@ function create_if_block_4$1(ctx) {
       name: "heavierShot",
       options: (
         /*heavyshotOptions*/
-        ctx[10]
+        ctx[9]
       ),
       valuePath: "system.heavierShot"
     }
@@ -43491,7 +44878,7 @@ function create_if_block_4$1(ctx) {
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("FF15.Type")}`;
+      label.textContent = `${localize$1("Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "heavierShot");
@@ -43541,7 +44928,7 @@ function create_if_block_3$1(ctx) {
       name: "directHitType",
       options: (
         /*directHitOptions*/
-        ctx[14]
+        ctx[13]
       ),
       valuePath: "system.directHitType"
     }
@@ -43551,7 +44938,7 @@ function create_if_block_3$1(ctx) {
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("FF15.Type")}`;
+      label.textContent = `${localize$1("Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "directHitType");
@@ -43650,7 +45037,7 @@ function create_if_block_1$4(ctx) {
       name: "directHitCondition",
       options: (
         /*directHitConditionOptions*/
-        ctx[16]
+        ctx[15]
       ),
       valuePath: "system.directHitCondition"
     }
@@ -43744,8 +45131,8 @@ function create_if_block$5(ctx) {
 }
 __name(create_if_block$5, "create_if_block$5");
 function create_fragment$j(ctx) {
-  let div43;
-  let div42;
+  let div49;
+  let div48;
   let h30;
   let div2;
   let div0;
@@ -43759,6 +45146,7 @@ function create_fragment$j(ctx) {
   let doccheckbox0;
   let div8;
   let div6;
+  let h32;
   let div7;
   let doccheckbox1;
   let div11;
@@ -43768,6 +45156,7 @@ function create_fragment$j(ctx) {
   let doccheckbox2;
   let div14;
   let div12;
+  let h34;
   let div13;
   let doccheckbox3;
   let div17;
@@ -43777,7 +45166,6 @@ function create_fragment$j(ctx) {
   let doccheckbox4;
   let div20;
   let div18;
-  let h36;
   let div19;
   let doccheckbox5;
   let div23;
@@ -43799,8 +45187,10 @@ function create_fragment$j(ctx) {
   let doccheckbox9;
   let div35;
   let div33;
+  let h311;
   let div34;
   let doccheckbox10;
+  let if_block9_anchor;
   let div38;
   let div36;
   let div37;
@@ -43809,9 +45199,17 @@ function create_fragment$j(ctx) {
   let div39;
   let div40;
   let doccheckbox12;
-  let if_block11_anchor;
-  let if_block12_anchor;
+  let div44;
+  let div42;
+  let div43;
+  let doccheckbox13;
+  let div47;
+  let div45;
+  let div46;
+  let doccheckbox14;
   let if_block13_anchor;
+  let if_block14_anchor;
+  let if_block15_anchor;
   let current;
   docselect = new DocSelect({
     props: {
@@ -43821,74 +45219,78 @@ function create_fragment$j(ctx) {
       type: "number",
       options: (
         /*typeOptions*/
-        ctx[15]
+        ctx[14]
       ),
       valuePath: "system.type"
     }
   });
   doccheckbox0 = new DocCheckbox({
     props: {
-      name: "hasBaseEffect",
-      valuePath: "system.hasBaseEffect"
+      name: "hasBaseEffectDamage",
+      valuePath: "system.hasBaseEffectDamage"
     }
   });
   let if_block0 = (
     /*$item*/
-    ctx[0].system.hasBaseEffect && create_if_block_14(ctx)
+    ctx[0].system.hasBaseEffectDamage && create_if_block_16()
   );
   doccheckbox1 = new DocCheckbox({
     props: {
-      name: "hasSplitDamage",
-      valuePath: "system.hasSplitDamage"
+      name: "hasBaseEffectRestoreMP",
+      valuePath: "system.hasBaseEffectRestoreMP"
     }
-  });
-  doccheckbox2 = new DocCheckbox({
-    props: { name: "hasCR", valuePath: "system.hasCR" }
   });
   let if_block1 = (
     /*$item*/
-    ctx[0].system.hasCR && create_if_block_13(ctx)
+    ctx[0].system.hasBaseEffectRestoreMP && create_if_block_15()
   );
-  doccheckbox3 = new DocCheckbox({
+  doccheckbox2 = new DocCheckbox({
     props: {
-      name: "hasCheck",
-      valuePath: "system.hasCheck"
+      name: "hasBaseEffectHealing",
+      valuePath: "system.hasBaseEffectHealing"
     }
   });
   let if_block2 = (
     /*$item*/
-    ctx[0].system.hasCheck && create_if_block_12(ctx)
+    ctx[0].system.hasBaseEffectHealing && create_if_block_14(ctx)
   );
-  doccheckbox4 = new DocCheckbox({
-    props: {
-      name: "hasTrigger",
-      valuePath: "system.hasTrigger"
-    }
-  });
-  let if_block3 = (
-    /*$item*/
-    ctx[0].system.hasTrigger && create_if_block_11(ctx)
-  );
-  doccheckbox5 = new DocCheckbox({
+  doccheckbox3 = new DocCheckbox({
     props: {
       id: "hasTarget",
       name: "hasTarget",
       valuePath: "system.hasTarget"
     }
   });
-  let if_block4 = (
+  let if_block3 = (
     /*$item*/
-    ctx[0].system.hasTarget && create_if_block_10(ctx)
+    ctx[0].system.hasTarget && create_if_block_13(ctx)
   );
-  doccheckbox6 = new DocCheckbox({
+  doccheckbox4 = new DocCheckbox({
     props: {
       name: "hasRanged",
       valuePath: "system.hasRanged"
     }
   });
+  let if_block4 = (
+    /*$item*/
+    ctx[0].system.hasRanged && create_if_block_12(ctx)
+  );
+  doccheckbox5 = new DocCheckbox({
+    props: {
+      name: "hasCheck",
+      valuePath: "system.hasCheck"
+    }
+  });
   let if_block5 = (
     /*$item*/
-    ctx[0].system.hasRanged && create_if_block_9(ctx)
+    ctx[0].system.hasCheck && create_if_block_11(ctx)
+  );
+  doccheckbox6 = new DocCheckbox({
+    props: { name: "hasCR", valuePath: "system.hasCR" }
+  });
+  let if_block6 = (
+    /*$item*/
+    ctx[0].system.hasCR && create_if_block_10(ctx)
   );
   doccheckbox7 = new DocCheckbox({
     props: {
@@ -43896,9 +45298,9 @@ function create_fragment$j(ctx) {
       valuePath: "system.hasLimitation"
     }
   });
-  let if_block6 = (
+  let if_block7 = (
     /*$item*/
-    ctx[0].system.hasLimitation && create_if_block_8(ctx)
+    ctx[0].system.hasLimitation && create_if_block_9(ctx)
   );
   doccheckbox8 = new DocCheckbox({
     props: {
@@ -43906,9 +45308,9 @@ function create_fragment$j(ctx) {
       valuePath: "system.hasDuration"
     }
   });
-  let if_block7 = (
+  let if_block8 = (
     /*$item*/
-    ctx[0].system.hasDuration && create_if_block_7(ctx)
+    ctx[0].system.hasDuration && create_if_block_8(ctx)
   );
   doccheckbox9 = new DocCheckbox({
     props: {
@@ -43916,167 +45318,200 @@ function create_fragment$j(ctx) {
       valuePath: "system.hasAspected"
     }
   });
-  let if_block8 = (
-    /*$item*/
-    ctx[0].system.hasAspected && create_if_block_6(ctx)
-  );
   doccheckbox10 = new DocCheckbox({
     props: {
-      name: "hasCost",
-      valuePath: "system.hasCost"
+      name: "hasTrigger",
+      valuePath: "system.hasTrigger"
     }
   });
   let if_block9 = (
     /*$item*/
-    ctx[0].system.hasCost && create_if_block_5(ctx)
+    ctx[0].system.hasTrigger && create_if_block_7(ctx)
+  );
+  let if_block10 = (
+    /*$item*/
+    ctx[0].system.hasAspected && create_if_block_6(ctx)
   );
   doccheckbox11 = new DocCheckbox({
+    props: {
+      name: "hasCostMP",
+      valuePath: "system.hasCostMP"
+    }
+  });
+  let if_block11 = (
+    /*$item*/
+    ctx[0].system.hasCostMP && create_if_block_5(ctx)
+  );
+  doccheckbox12 = new DocCheckbox({
     props: {
       name: "hasHeavierShot",
       valuePath: "system.hasHeavierShot"
     }
   });
-  let if_block10 = (
+  let if_block12 = (
     /*$item*/
     ctx[0].system.hasHeavierShot && create_if_block_4$1(ctx)
   );
-  doccheckbox12 = new DocCheckbox({
+  doccheckbox13 = new DocCheckbox({
+    props: {
+      name: "hasSplitDamage",
+      valuePath: "system.hasSplitDamage"
+    }
+  });
+  doccheckbox14 = new DocCheckbox({
     props: {
       name: "hasDirectHit",
       valuePath: "system.hasDirectHit"
     }
   });
-  let if_block11 = (
+  let if_block13 = (
     /*$item*/
     ctx[0].system.hasDirectHit && create_if_block_3$1(ctx)
   );
-  let if_block12 = (
+  let if_block14 = (
     /*$item*/
     ctx[0].system.directHitType === "damage" && create_if_block_2$3()
   );
-  let if_block13 = (
+  let if_block15 = (
     /*$item*/
     ctx[0].system.directHitType === "condition" && create_if_block_1$4(ctx)
   );
-  let if_block14 = (
+  let if_block16 = (
     /*$item*/
     ctx[0].system.hasDirectHit && create_if_block$5()
   );
   return {
     c() {
-      div43 = element("div");
-      div42 = element("div");
+      div49 = element("div");
+      div48 = element("div");
       h30 = element("h3");
-      h30.textContent = `${localize("FF15.General")}`;
+      h30.textContent = `${localize$1("General")}`;
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("FF15.Type")}`;
+      label.textContent = `${localize$1("Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       div5 = element("div");
       div3 = element("div");
       h31 = element("h3");
-      h31.textContent = `${localize("FF15.BaseEffect")}`;
+      h31.textContent = `${localize$1("Types.Item.Types.action.BaseEffectDamage")}`;
       div4 = element("div");
       create_component(doccheckbox0.$$.fragment);
       if (if_block0)
         if_block0.c();
       div8 = element("div");
       div6 = element("div");
-      div6.innerHTML = `<h3 class="left">Split Damage</h3>`;
+      h32 = element("h3");
+      h32.textContent = `${localize$1("Types.Item.Types.action.BaseEffectRestoreMP")}`;
       div7 = element("div");
       create_component(doccheckbox1.$$.fragment);
+      if (if_block1)
+        if_block1.c();
       div11 = element("div");
       div9 = element("div");
       h33 = element("h3");
-      h33.textContent = `${localize("FF15.CR")}`;
+      h33.textContent = `${localize$1("Types.Item.Types.action.BaseEffectHealing")}`;
       div10 = element("div");
       create_component(doccheckbox2.$$.fragment);
-      if (if_block1)
-        if_block1.c();
-      div14 = element("div");
-      div12 = element("div");
-      div12.innerHTML = `<h3 class="left">Checks</h3>`;
-      div13 = element("div");
-      create_component(doccheckbox3.$$.fragment);
       if (if_block2)
         if_block2.c();
+      div14 = element("div");
+      div12 = element("div");
+      h34 = element("h3");
+      h34.textContent = `${localize$1("Types.Item.Target")}`;
+      div13 = element("div");
+      create_component(doccheckbox3.$$.fragment);
+      if (if_block3)
+        if_block3.c();
       div17 = element("div");
       div15 = element("div");
       h35 = element("h3");
-      h35.textContent = `${localize("FF15.Types.Item.Trigger")}`;
+      h35.textContent = `${localize$1("Types.Item.Range")}`;
       div16 = element("div");
       create_component(doccheckbox4.$$.fragment);
-      if (if_block3)
-        if_block3.c();
-      div20 = element("div");
-      div18 = element("div");
-      h36 = element("h3");
-      h36.textContent = `${localize("FF15.Types.Item.Target")}`;
-      div19 = element("div");
-      create_component(doccheckbox5.$$.fragment);
       if (if_block4)
         if_block4.c();
+      div20 = element("div");
+      div18 = element("div");
+      div18.innerHTML = `<h3 class="left">Checks</h3>`;
+      div19 = element("div");
+      create_component(doccheckbox5.$$.fragment);
+      if (if_block5)
+        if_block5.c();
       div23 = element("div");
       div21 = element("div");
       h37 = element("h3");
-      h37.textContent = `${localize("FF15.Types.Item.Range")}`;
+      h37.textContent = `${localize$1("CR")}`;
       div22 = element("div");
       create_component(doccheckbox6.$$.fragment);
-      if (if_block5)
-        if_block5.c();
+      if (if_block6)
+        if_block6.c();
       div26 = element("div");
       div24 = element("div");
       div24.innerHTML = `<h3 class="left">Limitation</h3>`;
       div25 = element("div");
       create_component(doccheckbox7.$$.fragment);
-      if (if_block6)
-        if_block6.c();
+      if (if_block7)
+        if_block7.c();
       div29 = element("div");
       div27 = element("div");
       div27.innerHTML = `<h3 class="left">Duration</h3>`;
       div28 = element("div");
       create_component(doccheckbox8.$$.fragment);
-      if (if_block7)
-        if_block7.c();
+      if (if_block8)
+        if_block8.c();
       div32 = element("div");
       div30 = element("div");
       div30.innerHTML = `<h3 class="left">Aspected</h3>`;
       div31 = element("div");
       create_component(doccheckbox9.$$.fragment);
-      if (if_block8)
-        if_block8.c();
       div35 = element("div");
       div33 = element("div");
-      div33.innerHTML = `<h3 class="left">Cost</h3>`;
+      h311 = element("h3");
+      h311.textContent = `${localize$1("Types.Item.Trigger")}`;
       div34 = element("div");
       create_component(doccheckbox10.$$.fragment);
       if (if_block9)
         if_block9.c();
-      div38 = element("div");
-      div36 = element("div");
-      div36.innerHTML = `<h3 class="left">Heavier Shot</h3>`;
-      div37 = element("div");
-      create_component(doccheckbox11.$$.fragment);
+      if_block9_anchor = empty();
       if (if_block10)
         if_block10.c();
-      div41 = element("div");
-      div39 = element("div");
-      div39.innerHTML = `<h3 class="left">Direct Hit</h3>`;
-      div40 = element("div");
-      create_component(doccheckbox12.$$.fragment);
+      div38 = element("div");
+      div36 = element("div");
+      div36.innerHTML = `<h3 class="left">Cost</h3>`;
+      div37 = element("div");
+      create_component(doccheckbox11.$$.fragment);
       if (if_block11)
         if_block11.c();
-      if_block11_anchor = empty();
+      div41 = element("div");
+      div39 = element("div");
+      div39.innerHTML = `<h3 class="left">Heavier Shot</h3>`;
+      div40 = element("div");
+      create_component(doccheckbox12.$$.fragment);
       if (if_block12)
         if_block12.c();
-      if_block12_anchor = empty();
+      div44 = element("div");
+      div42 = element("div");
+      div42.innerHTML = `<h3 class="left">Split Damage</h3>`;
+      div43 = element("div");
+      create_component(doccheckbox13.$$.fragment);
+      div47 = element("div");
+      div45 = element("div");
+      div45.innerHTML = `<h3 class="left">Direct Hit</h3>`;
+      div46 = element("div");
+      create_component(doccheckbox14.$$.fragment);
       if (if_block13)
         if_block13.c();
       if_block13_anchor = empty();
       if (if_block14)
         if_block14.c();
+      if_block14_anchor = empty();
+      if (if_block15)
+        if_block15.c();
+      if_block15_anchor = empty();
+      if (if_block16)
+        if_block16.c();
       attr(h30, "class", "left");
       attr(label, "for", "type");
       attr(div0, "class", "flex1");
@@ -44086,6 +45521,7 @@ function create_fragment$j(ctx) {
       attr(div3, "class", "flex4");
       attr(div4, "class", "flex0 right");
       attr(div5, "class", "flexrow justify-vertical");
+      attr(h32, "class", "left");
       attr(div6, "class", "flex4");
       attr(div7, "class", "flex0 right");
       attr(div8, "class", "flexrow justify-vertical");
@@ -44093,6 +45529,7 @@ function create_fragment$j(ctx) {
       attr(div9, "class", "flex4");
       attr(div10, "class", "flex0 right");
       attr(div11, "class", "flexrow justify-vertical");
+      attr(h34, "class", "left");
       attr(div12, "class", "flex4");
       attr(div13, "class", "flex0 right");
       attr(div14, "class", "flexrow justify-vertical");
@@ -44100,7 +45537,6 @@ function create_fragment$j(ctx) {
       attr(div15, "class", "flex4");
       attr(div16, "class", "flex0 right");
       attr(div17, "class", "flexrow justify-vertical");
-      attr(h36, "class", "left");
       attr(div18, "class", "flex4");
       attr(div19, "class", "flex0 right");
       attr(div20, "class", "flexrow justify-vertical");
@@ -44117,6 +45553,7 @@ function create_fragment$j(ctx) {
       attr(div30, "class", "flex4");
       attr(div31, "class", "flex0 right");
       attr(div32, "class", "flexrow justify-vertical");
+      attr(h311, "class", "left");
       attr(div33, "class", "flex4");
       attr(div34, "class", "flex0 right");
       attr(div35, "class", "flexrow justify-vertical");
@@ -44126,126 +45563,146 @@ function create_fragment$j(ctx) {
       attr(div39, "class", "flex4");
       attr(div40, "class", "flex0 right");
       attr(div41, "class", "flexrow justify-vertical");
-      attr(div42, "class", "flexcol flex3 left high wide");
-      attr(div43, "class", "item-sheet details overflow wide svelte-FF15-7hc7it");
+      attr(div42, "class", "flex4");
+      attr(div43, "class", "flex0 right");
+      attr(div44, "class", "flexrow justify-vertical");
+      attr(div45, "class", "flex4");
+      attr(div46, "class", "flex0 right");
+      attr(div47, "class", "flexrow justify-vertical");
+      attr(div48, "class", "flexcol flex3 left high wide");
+      attr(div49, "class", "item-sheet details overflow wide svelte-FF15-7hc7it");
     },
     m(target, anchor) {
-      insert(target, div43, anchor);
-      append(div43, div42);
-      append(div42, h30);
-      append(div42, div2);
+      insert(target, div49, anchor);
+      append(div49, div48);
+      append(div48, h30);
+      append(div48, div2);
       append(div2, div0);
       append(div0, label);
       append(div2, div1);
       mount_component(docselect, div1, null);
-      append(div42, div5);
+      append(div48, div5);
       append(div5, div3);
       append(div3, h31);
       append(div5, div4);
       mount_component(doccheckbox0, div4, null);
       if (if_block0)
-        if_block0.m(div42, null);
-      append(div42, div8);
+        if_block0.m(div48, null);
+      append(div48, div8);
       append(div8, div6);
+      append(div6, h32);
       append(div8, div7);
       mount_component(doccheckbox1, div7, null);
-      append(div42, div11);
+      if (if_block1)
+        if_block1.m(div48, null);
+      append(div48, div11);
       append(div11, div9);
       append(div9, h33);
       append(div11, div10);
       mount_component(doccheckbox2, div10, null);
-      if (if_block1)
-        if_block1.m(div42, null);
-      append(div42, div14);
+      if (if_block2)
+        if_block2.m(div48, null);
+      append(div48, div14);
       append(div14, div12);
+      append(div12, h34);
       append(div14, div13);
       mount_component(doccheckbox3, div13, null);
-      if (if_block2)
-        if_block2.m(div42, null);
-      append(div42, div17);
+      if (if_block3)
+        if_block3.m(div48, null);
+      append(div48, div17);
       append(div17, div15);
       append(div15, h35);
       append(div17, div16);
       mount_component(doccheckbox4, div16, null);
-      if (if_block3)
-        if_block3.m(div42, null);
-      append(div42, div20);
+      if (if_block4)
+        if_block4.m(div48, null);
+      append(div48, div20);
       append(div20, div18);
-      append(div18, h36);
       append(div20, div19);
       mount_component(doccheckbox5, div19, null);
-      if (if_block4)
-        if_block4.m(div42, null);
-      append(div42, div23);
+      if (if_block5)
+        if_block5.m(div48, null);
+      append(div48, div23);
       append(div23, div21);
       append(div21, h37);
       append(div23, div22);
       mount_component(doccheckbox6, div22, null);
-      if (if_block5)
-        if_block5.m(div42, null);
-      append(div42, div26);
+      if (if_block6)
+        if_block6.m(div48, null);
+      append(div48, div26);
       append(div26, div24);
       append(div26, div25);
       mount_component(doccheckbox7, div25, null);
-      if (if_block6)
-        if_block6.m(div42, null);
-      append(div42, div29);
+      if (if_block7)
+        if_block7.m(div48, null);
+      append(div48, div29);
       append(div29, div27);
       append(div29, div28);
       mount_component(doccheckbox8, div28, null);
-      if (if_block7)
-        if_block7.m(div42, null);
-      append(div42, div32);
+      if (if_block8)
+        if_block8.m(div48, null);
+      append(div48, div32);
       append(div32, div30);
       append(div32, div31);
       mount_component(doccheckbox9, div31, null);
-      if (if_block8)
-        if_block8.m(div42, null);
-      append(div42, div35);
+      append(div48, div35);
       append(div35, div33);
+      append(div33, h311);
       append(div35, div34);
       mount_component(doccheckbox10, div34, null);
       if (if_block9)
-        if_block9.m(div42, null);
-      append(div42, div38);
+        if_block9.m(div48, null);
+      append(div48, if_block9_anchor);
+      if (if_block10)
+        if_block10.m(div48, null);
+      append(div48, div38);
       append(div38, div36);
       append(div38, div37);
       mount_component(doccheckbox11, div37, null);
-      if (if_block10)
-        if_block10.m(div42, null);
-      append(div42, div41);
+      if (if_block11)
+        if_block11.m(div48, null);
+      append(div48, div41);
       append(div41, div39);
       append(div41, div40);
       mount_component(doccheckbox12, div40, null);
-      if (if_block11)
-        if_block11.m(div42, null);
-      append(div42, if_block11_anchor);
       if (if_block12)
-        if_block12.m(div42, null);
-      append(div42, if_block12_anchor);
+        if_block12.m(div48, null);
+      append(div48, div44);
+      append(div44, div42);
+      append(div44, div43);
+      mount_component(doccheckbox13, div43, null);
+      append(div48, div47);
+      append(div47, div45);
+      append(div47, div46);
+      mount_component(doccheckbox14, div46, null);
       if (if_block13)
-        if_block13.m(div42, null);
-      append(div42, if_block13_anchor);
+        if_block13.m(div48, null);
+      append(div48, if_block13_anchor);
       if (if_block14)
-        if_block14.m(div42, null);
+        if_block14.m(div48, null);
+      append(div48, if_block14_anchor);
+      if (if_block15)
+        if_block15.m(div48, null);
+      append(div48, if_block15_anchor);
+      if (if_block16)
+        if_block16.m(div48, null);
       current = true;
     },
     p(ctx2, [dirty]) {
       if (
         /*$item*/
-        ctx2[0].system.hasBaseEffect
+        ctx2[0].system.hasBaseEffectDamage
       ) {
         if (if_block0) {
-          if_block0.p(ctx2, dirty);
           if (dirty & /*$item*/
           1) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_14(ctx2);
+          if_block0 = create_if_block_16();
           if_block0.c();
           transition_in(if_block0, 1);
-          if_block0.m(div42, div8);
+          if_block0.m(div48, div8);
         }
       } else if (if_block0) {
         group_outros();
@@ -44256,19 +45713,18 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasCR
+        ctx2[0].system.hasBaseEffectRestoreMP
       ) {
         if (if_block1) {
-          if_block1.p(ctx2, dirty);
           if (dirty & /*$item*/
           1) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_13(ctx2);
+          if_block1 = create_if_block_15();
           if_block1.c();
           transition_in(if_block1, 1);
-          if_block1.m(div42, div14);
+          if_block1.m(div48, div11);
         }
       } else if (if_block1) {
         group_outros();
@@ -44279,7 +45735,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasCheck
+        ctx2[0].system.hasBaseEffectHealing
       ) {
         if (if_block2) {
           if_block2.p(ctx2, dirty);
@@ -44288,10 +45744,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_12(ctx2);
+          if_block2 = create_if_block_14(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
-          if_block2.m(div42, div17);
+          if_block2.m(div48, div14);
         }
       } else if (if_block2) {
         group_outros();
@@ -44302,7 +45758,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasTrigger
+        ctx2[0].system.hasTarget
       ) {
         if (if_block3) {
           if_block3.p(ctx2, dirty);
@@ -44311,10 +45767,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block_11(ctx2);
+          if_block3 = create_if_block_13(ctx2);
           if_block3.c();
           transition_in(if_block3, 1);
-          if_block3.m(div42, div20);
+          if_block3.m(div48, div17);
         }
       } else if (if_block3) {
         group_outros();
@@ -44325,7 +45781,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasTarget
+        ctx2[0].system.hasRanged
       ) {
         if (if_block4) {
           if_block4.p(ctx2, dirty);
@@ -44334,10 +45790,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block4, 1);
           }
         } else {
-          if_block4 = create_if_block_10(ctx2);
+          if_block4 = create_if_block_12(ctx2);
           if_block4.c();
           transition_in(if_block4, 1);
-          if_block4.m(div42, div23);
+          if_block4.m(div48, div20);
         }
       } else if (if_block4) {
         group_outros();
@@ -44348,7 +45804,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasRanged
+        ctx2[0].system.hasCheck
       ) {
         if (if_block5) {
           if_block5.p(ctx2, dirty);
@@ -44357,10 +45813,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block5, 1);
           }
         } else {
-          if_block5 = create_if_block_9(ctx2);
+          if_block5 = create_if_block_11(ctx2);
           if_block5.c();
           transition_in(if_block5, 1);
-          if_block5.m(div42, div26);
+          if_block5.m(div48, div23);
         }
       } else if (if_block5) {
         group_outros();
@@ -44371,7 +45827,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasLimitation
+        ctx2[0].system.hasCR
       ) {
         if (if_block6) {
           if_block6.p(ctx2, dirty);
@@ -44380,10 +45836,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block6, 1);
           }
         } else {
-          if_block6 = create_if_block_8(ctx2);
+          if_block6 = create_if_block_10(ctx2);
           if_block6.c();
           transition_in(if_block6, 1);
-          if_block6.m(div42, div29);
+          if_block6.m(div48, div26);
         }
       } else if (if_block6) {
         group_outros();
@@ -44394,7 +45850,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasDuration
+        ctx2[0].system.hasLimitation
       ) {
         if (if_block7) {
           if_block7.p(ctx2, dirty);
@@ -44403,10 +45859,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block7, 1);
           }
         } else {
-          if_block7 = create_if_block_7(ctx2);
+          if_block7 = create_if_block_9(ctx2);
           if_block7.c();
           transition_in(if_block7, 1);
-          if_block7.m(div42, div32);
+          if_block7.m(div48, div29);
         }
       } else if (if_block7) {
         group_outros();
@@ -44417,7 +45873,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasAspected
+        ctx2[0].system.hasDuration
       ) {
         if (if_block8) {
           if_block8.p(ctx2, dirty);
@@ -44426,10 +45882,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block8, 1);
           }
         } else {
-          if_block8 = create_if_block_6(ctx2);
+          if_block8 = create_if_block_8(ctx2);
           if_block8.c();
           transition_in(if_block8, 1);
-          if_block8.m(div42, div35);
+          if_block8.m(div48, div32);
         }
       } else if (if_block8) {
         group_outros();
@@ -44440,7 +45896,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasCost
+        ctx2[0].system.hasTrigger
       ) {
         if (if_block9) {
           if_block9.p(ctx2, dirty);
@@ -44449,10 +45905,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block9, 1);
           }
         } else {
-          if_block9 = create_if_block_5(ctx2);
+          if_block9 = create_if_block_7(ctx2);
           if_block9.c();
           transition_in(if_block9, 1);
-          if_block9.m(div42, div38);
+          if_block9.m(div48, if_block9_anchor);
         }
       } else if (if_block9) {
         group_outros();
@@ -44463,7 +45919,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasHeavierShot
+        ctx2[0].system.hasAspected
       ) {
         if (if_block10) {
           if_block10.p(ctx2, dirty);
@@ -44472,10 +45928,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block10, 1);
           }
         } else {
-          if_block10 = create_if_block_4$1(ctx2);
+          if_block10 = create_if_block_6(ctx2);
           if_block10.c();
           transition_in(if_block10, 1);
-          if_block10.m(div42, div41);
+          if_block10.m(div48, div38);
         }
       } else if (if_block10) {
         group_outros();
@@ -44486,7 +45942,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasDirectHit
+        ctx2[0].system.hasCostMP
       ) {
         if (if_block11) {
           if_block11.p(ctx2, dirty);
@@ -44495,10 +45951,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block11, 1);
           }
         } else {
-          if_block11 = create_if_block_3$1(ctx2);
+          if_block11 = create_if_block_5(ctx2);
           if_block11.c();
           transition_in(if_block11, 1);
-          if_block11.m(div42, if_block11_anchor);
+          if_block11.m(div48, div41);
         }
       } else if (if_block11) {
         group_outros();
@@ -44509,18 +45965,19 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.directHitType === "damage"
+        ctx2[0].system.hasHeavierShot
       ) {
         if (if_block12) {
+          if_block12.p(ctx2, dirty);
           if (dirty & /*$item*/
           1) {
             transition_in(if_block12, 1);
           }
         } else {
-          if_block12 = create_if_block_2$3();
+          if_block12 = create_if_block_4$1(ctx2);
           if_block12.c();
           transition_in(if_block12, 1);
-          if_block12.m(div42, if_block12_anchor);
+          if_block12.m(div48, div44);
         }
       } else if (if_block12) {
         group_outros();
@@ -44531,7 +45988,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.directHitType === "condition"
+        ctx2[0].system.hasDirectHit
       ) {
         if (if_block13) {
           if_block13.p(ctx2, dirty);
@@ -44540,10 +45997,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block13, 1);
           }
         } else {
-          if_block13 = create_if_block_1$4(ctx2);
+          if_block13 = create_if_block_3$1(ctx2);
           if_block13.c();
           transition_in(if_block13, 1);
-          if_block13.m(div42, if_block13_anchor);
+          if_block13.m(div48, if_block13_anchor);
         }
       } else if (if_block13) {
         group_outros();
@@ -44554,7 +46011,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasDirectHit
+        ctx2[0].system.directHitType === "damage"
       ) {
         if (if_block14) {
           if (dirty & /*$item*/
@@ -44562,15 +46019,60 @@ function create_fragment$j(ctx) {
             transition_in(if_block14, 1);
           }
         } else {
-          if_block14 = create_if_block$5();
+          if_block14 = create_if_block_2$3();
           if_block14.c();
           transition_in(if_block14, 1);
-          if_block14.m(div42, null);
+          if_block14.m(div48, if_block14_anchor);
         }
       } else if (if_block14) {
         group_outros();
         transition_out(if_block14, 1, 1, () => {
           if_block14 = null;
+        });
+        check_outros();
+      }
+      if (
+        /*$item*/
+        ctx2[0].system.directHitType === "condition"
+      ) {
+        if (if_block15) {
+          if_block15.p(ctx2, dirty);
+          if (dirty & /*$item*/
+          1) {
+            transition_in(if_block15, 1);
+          }
+        } else {
+          if_block15 = create_if_block_1$4(ctx2);
+          if_block15.c();
+          transition_in(if_block15, 1);
+          if_block15.m(div48, if_block15_anchor);
+        }
+      } else if (if_block15) {
+        group_outros();
+        transition_out(if_block15, 1, 1, () => {
+          if_block15 = null;
+        });
+        check_outros();
+      }
+      if (
+        /*$item*/
+        ctx2[0].system.hasDirectHit
+      ) {
+        if (if_block16) {
+          if (dirty & /*$item*/
+          1) {
+            transition_in(if_block16, 1);
+          }
+        } else {
+          if_block16 = create_if_block$5();
+          if_block16.c();
+          transition_in(if_block16, 1);
+          if_block16.m(div48, null);
+        }
+      } else if (if_block16) {
+        group_outros();
+        transition_out(if_block16, 1, 1, () => {
+          if_block16 = null;
         });
         check_outros();
       }
@@ -44582,31 +46084,35 @@ function create_fragment$j(ctx) {
       transition_in(doccheckbox0.$$.fragment, local);
       transition_in(if_block0);
       transition_in(doccheckbox1.$$.fragment, local);
-      transition_in(doccheckbox2.$$.fragment, local);
       transition_in(if_block1);
-      transition_in(doccheckbox3.$$.fragment, local);
+      transition_in(doccheckbox2.$$.fragment, local);
       transition_in(if_block2);
-      transition_in(doccheckbox4.$$.fragment, local);
+      transition_in(doccheckbox3.$$.fragment, local);
       transition_in(if_block3);
-      transition_in(doccheckbox5.$$.fragment, local);
+      transition_in(doccheckbox4.$$.fragment, local);
       transition_in(if_block4);
-      transition_in(doccheckbox6.$$.fragment, local);
+      transition_in(doccheckbox5.$$.fragment, local);
       transition_in(if_block5);
-      transition_in(doccheckbox7.$$.fragment, local);
+      transition_in(doccheckbox6.$$.fragment, local);
       transition_in(if_block6);
-      transition_in(doccheckbox8.$$.fragment, local);
+      transition_in(doccheckbox7.$$.fragment, local);
       transition_in(if_block7);
-      transition_in(doccheckbox9.$$.fragment, local);
+      transition_in(doccheckbox8.$$.fragment, local);
       transition_in(if_block8);
+      transition_in(doccheckbox9.$$.fragment, local);
       transition_in(doccheckbox10.$$.fragment, local);
       transition_in(if_block9);
-      transition_in(doccheckbox11.$$.fragment, local);
       transition_in(if_block10);
-      transition_in(doccheckbox12.$$.fragment, local);
+      transition_in(doccheckbox11.$$.fragment, local);
       transition_in(if_block11);
+      transition_in(doccheckbox12.$$.fragment, local);
       transition_in(if_block12);
+      transition_in(doccheckbox13.$$.fragment, local);
+      transition_in(doccheckbox14.$$.fragment, local);
       transition_in(if_block13);
       transition_in(if_block14);
+      transition_in(if_block15);
+      transition_in(if_block16);
       current = true;
     },
     o(local) {
@@ -44614,81 +46120,91 @@ function create_fragment$j(ctx) {
       transition_out(doccheckbox0.$$.fragment, local);
       transition_out(if_block0);
       transition_out(doccheckbox1.$$.fragment, local);
-      transition_out(doccheckbox2.$$.fragment, local);
       transition_out(if_block1);
-      transition_out(doccheckbox3.$$.fragment, local);
+      transition_out(doccheckbox2.$$.fragment, local);
       transition_out(if_block2);
-      transition_out(doccheckbox4.$$.fragment, local);
+      transition_out(doccheckbox3.$$.fragment, local);
       transition_out(if_block3);
-      transition_out(doccheckbox5.$$.fragment, local);
+      transition_out(doccheckbox4.$$.fragment, local);
       transition_out(if_block4);
-      transition_out(doccheckbox6.$$.fragment, local);
+      transition_out(doccheckbox5.$$.fragment, local);
       transition_out(if_block5);
-      transition_out(doccheckbox7.$$.fragment, local);
+      transition_out(doccheckbox6.$$.fragment, local);
       transition_out(if_block6);
-      transition_out(doccheckbox8.$$.fragment, local);
+      transition_out(doccheckbox7.$$.fragment, local);
       transition_out(if_block7);
-      transition_out(doccheckbox9.$$.fragment, local);
+      transition_out(doccheckbox8.$$.fragment, local);
       transition_out(if_block8);
+      transition_out(doccheckbox9.$$.fragment, local);
       transition_out(doccheckbox10.$$.fragment, local);
       transition_out(if_block9);
-      transition_out(doccheckbox11.$$.fragment, local);
       transition_out(if_block10);
-      transition_out(doccheckbox12.$$.fragment, local);
+      transition_out(doccheckbox11.$$.fragment, local);
       transition_out(if_block11);
+      transition_out(doccheckbox12.$$.fragment, local);
       transition_out(if_block12);
+      transition_out(doccheckbox13.$$.fragment, local);
+      transition_out(doccheckbox14.$$.fragment, local);
       transition_out(if_block13);
       transition_out(if_block14);
+      transition_out(if_block15);
+      transition_out(if_block16);
       current = false;
     },
     d(detaching) {
       if (detaching) {
-        detach(div43);
+        detach(div49);
       }
       destroy_component(docselect);
       destroy_component(doccheckbox0);
       if (if_block0)
         if_block0.d();
       destroy_component(doccheckbox1);
-      destroy_component(doccheckbox2);
       if (if_block1)
         if_block1.d();
-      destroy_component(doccheckbox3);
+      destroy_component(doccheckbox2);
       if (if_block2)
         if_block2.d();
-      destroy_component(doccheckbox4);
+      destroy_component(doccheckbox3);
       if (if_block3)
         if_block3.d();
-      destroy_component(doccheckbox5);
+      destroy_component(doccheckbox4);
       if (if_block4)
         if_block4.d();
-      destroy_component(doccheckbox6);
+      destroy_component(doccheckbox5);
       if (if_block5)
         if_block5.d();
-      destroy_component(doccheckbox7);
+      destroy_component(doccheckbox6);
       if (if_block6)
         if_block6.d();
-      destroy_component(doccheckbox8);
+      destroy_component(doccheckbox7);
       if (if_block7)
         if_block7.d();
-      destroy_component(doccheckbox9);
+      destroy_component(doccheckbox8);
       if (if_block8)
         if_block8.d();
+      destroy_component(doccheckbox9);
       destroy_component(doccheckbox10);
       if (if_block9)
         if_block9.d();
-      destroy_component(doccheckbox11);
       if (if_block10)
         if_block10.d();
-      destroy_component(doccheckbox12);
+      destroy_component(doccheckbox11);
       if (if_block11)
         if_block11.d();
+      destroy_component(doccheckbox12);
       if (if_block12)
         if_block12.d();
+      destroy_component(doccheckbox13);
+      destroy_component(doccheckbox14);
       if (if_block13)
         if_block13.d();
       if (if_block14)
         if_block14.d();
+      if (if_block15)
+        if_block15.d();
+      if (if_block16)
+        if_block16.d();
     }
   };
 }
@@ -44705,7 +46221,6 @@ function instance$f($$self, $$props, $$invalidate) {
   const schemaFieldEntries = Object.entries(schemaFields);
   const schemaFieldKeys = Object.keys(schemaFields).filter((key) => schemaFields[key] instanceof SchemaField2);
   const schemaFieldObjects = schemaFieldEntries.filter(([key, value]) => value instanceof SchemaField2).map(([key, value]) => ({ key, value }));
-  const baseEffectTypeOptions = getBaseEffectTypeOptions();
   const CROptions = getCROptions();
   const limitationOptions = getLimitationOptions();
   const limitationUnitsOptions = getLimitationUnits();
@@ -44719,22 +46234,23 @@ function instance$f($$self, $$props, $$invalidate) {
   const directHitOptions = getDirectHitOptions();
   const typeOptions = getTypeOptions();
   const directHitConditionOptions = getDefaultStatusEffects().map((effect) => ({ value: effect.id, label: effect.name }));
+  const baseEffectHealingTypeOptions = getBaseEffectHealingTypeOptions();
   const costOptions = [
     {
       value: 1,
-      label: localize("FF15.Types.Item.Types.Options.Cost.1")
+      label: localize$1("Types.Item.Types.Options.Cost.1")
     },
     {
       value: 2,
-      label: localize("FF15.Types.Item.Types.Options.Cost.2")
+      label: localize$1("Types.Item.Types.Options.Cost.2")
     },
     {
       value: 3,
-      label: localize("FF15.Types.Item.Types.Options.Cost.3")
+      label: localize$1("Types.Item.Types.Options.Cost.3")
     },
     {
       value: 4,
-      label: localize("FF15.Types.Item.Types.Options.Cost.4")
+      label: localize$1("Types.Item.Types.Options.Cost.4")
     }
   ];
   console.log(schemaFieldObjects);
@@ -44746,12 +46262,17 @@ function instance$f($$self, $$props, $$invalidate) {
       }
     }
   };
-  $$invalidate(1, checkOptions = schemaFieldKeys.map((key) => ({ value: key, label: key.toUpperCase() })));
+  $$invalidate(1, checkOptions = [
+    ...schemaFieldKeys.map((key) => ({ value: key, label: key.toUpperCase() })),
+    {
+      value: "critical",
+      label: localize$1("Types.Item.Types.Options.Check.critical")
+    }
+  ]);
   return [
     $item,
     checkOptions,
     item,
-    baseEffectTypeOptions,
     CROptions,
     limitationOptions,
     limitationUnitsOptions,
@@ -44765,6 +46286,7 @@ function instance$f($$self, $$props, $$invalidate) {
     directHitOptions,
     typeOptions,
     directHitConditionOptions,
+    baseEffectHealingTypeOptions,
     costOptions
   ];
 }
@@ -45279,8 +46801,7 @@ function create_fragment$i(ctx) {
   );
   let if_block0 = (
     /*checkboxValue*/
-    ctx[4] && /*localList*/
-    ctx[3].length > 0 && create_if_block_2$2(ctx)
+    ctx[4] && create_if_block_2$2(ctx)
   );
   let if_block1 = (
     /*checkboxValue*/
@@ -45399,8 +46920,7 @@ function create_fragment$i(ctx) {
       }
       if (
         /*checkboxValue*/
-        ctx2[4] && /*localList*/
-        ctx2[3].length > 0
+        ctx2[4]
       ) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
@@ -45778,10 +47298,15 @@ function create_each_block(ctx) {
   let div;
   let tag_1;
   let current;
-  tag_1 = new Tag({ props: { tag: (
-    /*tag*/
-    ctx[6]
-  ) } });
+  tag_1 = new Tag({
+    props: {
+      class: "badge round",
+      tag: (
+        /*tag*/
+        ctx[6]
+      )
+    }
+  });
   return {
     c() {
       div = element("div");
@@ -46015,7 +47540,7 @@ function create_if_block_1$2(ctx) {
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("Threshold")}`;
+      label.textContent = `${localize$1("Threshold")}`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(label, "for", "procTrigger");
@@ -46157,6 +47682,7 @@ function create_fragment$g(ctx) {
   let itembucket2;
   let itembucket3;
   let itembucket4;
+  let itembucket5;
   let div4;
   let div2;
   let div3;
@@ -46165,31 +47691,37 @@ function create_fragment$g(ctx) {
   let current;
   itembucket0 = new ItemBucket({
     props: {
-      title: localize("FF15.Requires"),
+      title: localize$1("Requires"),
       key: "requires"
     }
   });
   itembucket1 = new ItemBucket({
     props: {
-      title: localize("FF15.Target") + " " + localize("Effects"),
-      key: "grants"
+      title: localize$1("Removes"),
+      key: "removes"
     }
   });
   itembucket2 = new ItemBucket({
     props: {
-      title: localize("FF15.Enabled") + " " + localize("Traits"),
-      key: "enables"
+      title: localize$1("Target") + " " + localize$1("Effects"),
+      key: "grants"
     }
   });
   itembucket3 = new ItemBucket({
     props: {
-      title: localize("FF15.Combos"),
-      key: "combos"
+      title: localize$1("Source") + " " + localize$1("Effects"),
+      key: "sourceGrants"
     }
   });
   itembucket4 = new ItemBucket({
     props: {
-      title: localize("FF15.ProcTriggers"),
+      title: localize$1("Enabled") + " " + localize$1("Traits"),
+      key: "enables"
+    }
+  });
+  itembucket5 = new ItemBucket({
+    props: {
+      title: localize$1("ProcTriggers"),
       key: "procs",
       $$slots: { default: [create_default_slot$7] },
       $$scope: { ctx }
@@ -46215,6 +47747,7 @@ function create_fragment$g(ctx) {
       create_component(itembucket2.$$.fragment);
       create_component(itembucket3.$$.fragment);
       create_component(itembucket4.$$.fragment);
+      create_component(itembucket5.$$.fragment);
       div4 = element("div");
       div2 = element("div");
       div2.innerHTML = `<h2 class="left">Tags</h2>`;
@@ -46241,6 +47774,7 @@ function create_fragment$g(ctx) {
       mount_component(itembucket2, div0, null);
       mount_component(itembucket3, div0, null);
       mount_component(itembucket4, div0, null);
+      mount_component(itembucket5, div0, null);
       append(div6, div4);
       append(div4, div2);
       append(div4, div3);
@@ -46251,12 +47785,12 @@ function create_fragment$g(ctx) {
       current = true;
     },
     p(ctx2, [dirty]) {
-      const itembucket4_changes = {};
+      const itembucket5_changes = {};
       if (dirty & /*$$scope, $item*/
       5) {
-        itembucket4_changes.$$scope = { dirty, ctx: ctx2 };
+        itembucket5_changes.$$scope = { dirty, ctx: ctx2 };
       }
-      itembucket4.$set(itembucket4_changes);
+      itembucket5.$set(itembucket5_changes);
       if (
         /*$item*/
         ctx2[0].system.hasTags
@@ -46288,6 +47822,7 @@ function create_fragment$g(ctx) {
       transition_in(itembucket2.$$.fragment, local);
       transition_in(itembucket3.$$.fragment, local);
       transition_in(itembucket4.$$.fragment, local);
+      transition_in(itembucket5.$$.fragment, local);
       transition_in(doccheckbox.$$.fragment, local);
       transition_in(if_block);
       current = true;
@@ -46298,6 +47833,7 @@ function create_fragment$g(ctx) {
       transition_out(itembucket2.$$.fragment, local);
       transition_out(itembucket3.$$.fragment, local);
       transition_out(itembucket4.$$.fragment, local);
+      transition_out(itembucket5.$$.fragment, local);
       transition_out(doccheckbox.$$.fragment, local);
       transition_out(if_block);
       current = false;
@@ -46311,6 +47847,7 @@ function create_fragment$g(ctx) {
       destroy_component(itembucket2);
       destroy_component(itembucket3);
       destroy_component(itembucket4);
+      destroy_component(itembucket5);
       destroy_component(doccheckbox);
       if (if_block)
         if_block.d();
@@ -46443,7 +47980,7 @@ function create_fragment$f(ctx) {
 }
 __name(create_fragment$f, "create_fragment$f");
 function instance$b($$self, $$props, $$invalidate) {
-  let activeTab2 = "description";
+  let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     {
       label: localize(`${SYSTEM_CODE}.ChatText`),
@@ -46466,6 +48003,10 @@ function instance$b($$self, $$props, $$invalidate) {
     $$invalidate(0, activeTab2);
   }
   __name(tabs_1_activeTab_binding, "tabs_1_activeTab_binding");
+  $$self.$$set = ($$props2) => {
+    if ("activeTab" in $$props2)
+      $$invalidate(0, activeTab2 = $$props2.activeTab);
+  };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
 __name(instance$b, "instance$b");
@@ -46475,7 +48016,7 @@ let Tabs_1$4 = class Tabs_1 extends SvelteComponent {
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$b, create_fragment$f, safe_not_equal, {});
+    init$1(this, options, instance$b, create_fragment$f, safe_not_equal, { activeTab: 0 });
   }
 };
 function create_fragment$e(ctx) {
@@ -47180,7 +48721,7 @@ function create_fragment$9(ctx) {
 }
 __name(create_fragment$9, "create_fragment$9");
 function instance$6($$self, $$props, $$invalidate) {
-  let activeTab2 = "description";
+  let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     {
       label: localize(`${SYSTEM_CODE}.Description`),
@@ -47198,6 +48739,10 @@ function instance$6($$self, $$props, $$invalidate) {
     $$invalidate(0, activeTab2);
   }
   __name(tabs_1_activeTab_binding, "tabs_1_activeTab_binding");
+  $$self.$$set = ($$props2) => {
+    if ("activeTab" in $$props2)
+      $$invalidate(0, activeTab2 = $$props2.activeTab);
+  };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
 __name(instance$6, "instance$6");
@@ -47207,7 +48752,7 @@ let Tabs_1$3 = class Tabs_12 extends SvelteComponent {
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$6, create_fragment$9, safe_not_equal, {});
+    init$1(this, options, instance$6, create_fragment$9, safe_not_equal, { activeTab: 0 });
   }
 };
 function create_fragment$8(ctx) {
@@ -47830,7 +49375,7 @@ function create_fragment$6(ctx) {
 }
 __name(create_fragment$6, "create_fragment$6");
 function instance$4($$self, $$props, $$invalidate) {
-  let activeTab2 = "description";
+  let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     // { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
     {
@@ -47849,6 +49394,10 @@ function instance$4($$self, $$props, $$invalidate) {
     $$invalidate(0, activeTab2);
   }
   __name(tabs_1_activeTab_binding, "tabs_1_activeTab_binding");
+  $$self.$$set = ($$props2) => {
+    if ("activeTab" in $$props2)
+      $$invalidate(0, activeTab2 = $$props2.activeTab);
+  };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
 __name(instance$4, "instance$4");
@@ -47858,7 +49407,7 @@ let Tabs_1$2 = class Tabs_13 extends SvelteComponent {
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$4, create_fragment$6, safe_not_equal, {});
+    init$1(this, options, instance$4, create_fragment$6, safe_not_equal, { activeTab: 0 });
   }
 };
 function create_fragment$5(ctx) {
@@ -48162,7 +49711,7 @@ function create_if_block_1(ctx) {
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("FF15.Types.Item.Types.Options.DamageDiceReroll.label")}`;
+      label.textContent = `${localize$1("Types.Item.Types.Options.DamageDiceReroll.label")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "damageDiceReroll");
@@ -48240,8 +49789,8 @@ function create_if_block(ctx) {
 }
 __name(create_if_block, "create_if_block");
 function create_fragment$4(ctx) {
-  let div19;
-  let div18;
+  let div22;
+  let div21;
   let h30;
   let div2;
   let div0;
@@ -48261,12 +49810,17 @@ function create_fragment$4(ctx) {
   let doccheckbox2;
   let div14;
   let div12;
+  let h34;
   let div13;
   let doccheckbox3;
   let div17;
   let div15;
   let div16;
   let doccheckbox4;
+  let div20;
+  let div18;
+  let div19;
+  let doccheckbox5;
   let current;
   docselect = new DocSelect({
     props: {
@@ -48312,6 +49866,12 @@ function create_fragment$4(ctx) {
   );
   doccheckbox3 = new DocCheckbox({
     props: {
+      name: "sacrificesMovement",
+      valuePath: "system.sacrificesMovement"
+    }
+  });
+  doccheckbox4 = new DocCheckbox({
+    props: {
       name: "hasDamageDiceReroll",
       valuePath: "system.hasDamageDiceReroll"
     }
@@ -48320,7 +49880,7 @@ function create_fragment$4(ctx) {
     /*$item*/
     ctx[0].system.hasDamageDiceReroll && create_if_block_1(ctx)
   );
-  doccheckbox4 = new DocCheckbox({
+  doccheckbox5 = new DocCheckbox({
     props: {
       name: "hasTags",
       valuePath: "system.hasTags"
@@ -48332,8 +49892,8 @@ function create_fragment$4(ctx) {
   );
   return {
     c() {
-      div19 = element("div");
-      div18 = element("div");
+      div22 = element("div");
+      div21 = element("div");
       h30 = element("h3");
       h30.textContent = "General";
       div2 = element("div");
@@ -48364,16 +49924,22 @@ function create_fragment$4(ctx) {
         if_block2.c();
       div14 = element("div");
       div12 = element("div");
-      div12.innerHTML = `<h3 class="left">Reroll Damage Dice</h3>`;
+      h34 = element("h3");
+      h34.textContent = `${localize$1("Types.Item.Types.Options.SacrificesMovement.label")}`;
       div13 = element("div");
       create_component(doccheckbox3.$$.fragment);
-      if (if_block3)
-        if_block3.c();
       div17 = element("div");
       div15 = element("div");
-      div15.innerHTML = `<h3 class="left">Tags</h3>`;
+      div15.innerHTML = `<h3 class="left">Reroll Damage Dice</h3>`;
       div16 = element("div");
       create_component(doccheckbox4.$$.fragment);
+      if (if_block3)
+        if_block3.c();
+      div20 = element("div");
+      div18 = element("div");
+      div18.innerHTML = `<h3 class="left">Tags</h3>`;
+      div19 = element("div");
+      create_component(doccheckbox5.$$.fragment);
       if (if_block4)
         if_block4.c();
       attr(h30, "class", "left");
@@ -48389,53 +49955,63 @@ function create_fragment$4(ctx) {
       attr(div9, "class", "flex4");
       attr(div10, "class", "flex0 right");
       attr(div11, "class", "flexrow justify-vertical");
+      attr(h34, "class", "left tooltip");
+      attr(h34, "data-tooltip", localize$1("Types.Item.Types.Options.SacrificesMovement.description"));
       attr(div12, "class", "flex4");
       attr(div13, "class", "flex0 right");
       attr(div14, "class", "flexrow justify-vertical");
       attr(div15, "class", "flex4");
       attr(div16, "class", "flex0 right");
-      attr(div17, "class", "flexrow sheet-row justify-vertical");
-      attr(div18, "class", "flexcol flex3 left high bigbottom");
-      attr(div19, "class", "item-sheet details overflow svelte-FF15-7hc7it");
+      attr(div17, "class", "flexrow justify-vertical");
+      attr(div18, "class", "flex4");
+      attr(div19, "class", "flex0 right");
+      attr(div20, "class", "flexrow sheet-row justify-vertical");
+      attr(div21, "class", "flexcol flex3 left high bigbottom");
+      attr(div22, "class", "item-sheet details overflow svelte-FF15-7hc7it");
     },
     m(target, anchor) {
-      insert(target, div19, anchor);
-      append(div19, div18);
-      append(div18, h30);
-      append(div18, div2);
+      insert(target, div22, anchor);
+      append(div22, div21);
+      append(div21, h30);
+      append(div21, div2);
       append(div2, div0);
       append(div2, div1);
       mount_component(docselect, div1, null);
-      append(div18, div5);
+      append(div21, div5);
       append(div5, div3);
       append(div5, div4);
       mount_component(doccheckbox0, div4, null);
       if (if_block0)
-        if_block0.m(div18, null);
-      append(div18, div8);
+        if_block0.m(div21, null);
+      append(div21, div8);
       append(div8, div6);
       append(div8, div7);
       mount_component(doccheckbox1, div7, null);
       if (if_block1)
-        if_block1.m(div18, null);
-      append(div18, div11);
+        if_block1.m(div21, null);
+      append(div21, div11);
       append(div11, div9);
       append(div11, div10);
       mount_component(doccheckbox2, div10, null);
       if (if_block2)
-        if_block2.m(div18, null);
-      append(div18, div14);
+        if_block2.m(div21, null);
+      append(div21, div14);
       append(div14, div12);
+      append(div12, h34);
       append(div14, div13);
       mount_component(doccheckbox3, div13, null);
-      if (if_block3)
-        if_block3.m(div18, null);
-      append(div18, div17);
+      append(div21, div17);
       append(div17, div15);
       append(div17, div16);
       mount_component(doccheckbox4, div16, null);
+      if (if_block3)
+        if_block3.m(div21, null);
+      append(div21, div20);
+      append(div20, div18);
+      append(div20, div19);
+      mount_component(doccheckbox5, div19, null);
       if (if_block4)
-        if_block4.m(div18, null);
+        if_block4.m(div21, null);
       current = true;
     },
     p(ctx2, [dirty]) {
@@ -48453,7 +50029,7 @@ function create_fragment$4(ctx) {
           if_block0 = create_if_block_4(ctx2);
           if_block0.c();
           transition_in(if_block0, 1);
-          if_block0.m(div18, div8);
+          if_block0.m(div21, div8);
         }
       } else if (if_block0) {
         group_outros();
@@ -48475,7 +50051,7 @@ function create_fragment$4(ctx) {
           if_block1 = create_if_block_3();
           if_block1.c();
           transition_in(if_block1, 1);
-          if_block1.m(div18, div11);
+          if_block1.m(div21, div11);
         }
       } else if (if_block1) {
         group_outros();
@@ -48498,7 +50074,7 @@ function create_fragment$4(ctx) {
           if_block2 = create_if_block_2(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
-          if_block2.m(div18, div14);
+          if_block2.m(div21, div14);
         }
       } else if (if_block2) {
         group_outros();
@@ -48521,7 +50097,7 @@ function create_fragment$4(ctx) {
           if_block3 = create_if_block_1(ctx2);
           if_block3.c();
           transition_in(if_block3, 1);
-          if_block3.m(div18, div17);
+          if_block3.m(div21, div20);
         }
       } else if (if_block3) {
         group_outros();
@@ -48543,7 +50119,7 @@ function create_fragment$4(ctx) {
           if_block4 = create_if_block();
           if_block4.c();
           transition_in(if_block4, 1);
-          if_block4.m(div18, null);
+          if_block4.m(div21, null);
         }
       } else if (if_block4) {
         group_outros();
@@ -48564,8 +50140,9 @@ function create_fragment$4(ctx) {
       transition_in(doccheckbox2.$$.fragment, local);
       transition_in(if_block2);
       transition_in(doccheckbox3.$$.fragment, local);
-      transition_in(if_block3);
       transition_in(doccheckbox4.$$.fragment, local);
+      transition_in(if_block3);
+      transition_in(doccheckbox5.$$.fragment, local);
       transition_in(if_block4);
       current = true;
     },
@@ -48578,14 +50155,15 @@ function create_fragment$4(ctx) {
       transition_out(doccheckbox2.$$.fragment, local);
       transition_out(if_block2);
       transition_out(doccheckbox3.$$.fragment, local);
-      transition_out(if_block3);
       transition_out(doccheckbox4.$$.fragment, local);
+      transition_out(if_block3);
+      transition_out(doccheckbox5.$$.fragment, local);
       transition_out(if_block4);
       current = false;
     },
     d(detaching) {
       if (detaching) {
-        detach(div19);
+        detach(div22);
       }
       destroy_component(docselect);
       destroy_component(doccheckbox0);
@@ -48598,9 +50176,10 @@ function create_fragment$4(ctx) {
       if (if_block2)
         if_block2.d();
       destroy_component(doccheckbox3);
+      destroy_component(doccheckbox4);
       if (if_block3)
         if_block3.d();
-      destroy_component(doccheckbox4);
+      destroy_component(doccheckbox5);
       if (if_block4)
         if_block4.d();
     }
@@ -48619,37 +50198,37 @@ function instance$3($$self, $$props, $$invalidate) {
   const typeOptions = [
     {
       value: "Buff",
-      label: localize("FF15.Types.Item.Types.Options.TraitType.Buff")
+      label: localize$1("Types.Item.Types.Options.TraitType.Buff")
     },
     {
       value: "Debuff",
-      label: localize("FF15.Types.Item.Types.Options.TraitType.Debuff")
+      label: localize$1("Types.Item.Types.Options.TraitType.Debuff")
     },
     {
       value: "Trait",
-      label: localize("FF15.Types.Item.Types.Options.TraitType.Trait")
+      label: localize$1("Types.Item.Types.Options.TraitType.Trait")
     }
   ];
   const modOptions = [
     {
       value: "All Checks",
-      label: localize("FF15.Types.Item.Types.Options.ModType.Allchecks")
+      label: localize$1("Types.Item.Types.Options.ModType.Allchecks")
     },
     {
       value: "All Damage",
-      label: localize("FF15.Types.Item.Types.Options.ModType.AllDamage")
+      label: localize$1("Types.Item.Types.Options.ModType.AllDamage")
     },
     {
       value: "Bonus Dice",
-      label: localize("FF15.Types.Item.Types.Options.ModType.BonusDice")
+      label: localize$1("Types.Item.Types.Options.ModType.BonusDice")
     },
     {
       value: "Movement",
-      label: localize("FF15.Types.Item.Types.Options.ModType.Movement")
+      label: localize$1("Types.Item.Types.Options.ModType.Movement")
     },
     {
       value: "DOT",
-      label: localize("FF15.Types.Item.Types.Options.ModType.DOT")
+      label: localize$1("Types.Item.Types.Options.ModType.DOT")
     }
   ];
   const operatorOptions = [{ value: "+", label: "+" }, { value: "-", label: "-" }];
@@ -48783,7 +50362,7 @@ function create_fragment$3(ctx) {
 }
 __name(create_fragment$3, "create_fragment$3");
 function instance$2($$self, $$props, $$invalidate) {
-  let activeTab2 = "description";
+  let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     {
       label: localize(`${SYSTEM_CODE}.Description`),
@@ -48806,6 +50385,10 @@ function instance$2($$self, $$props, $$invalidate) {
     $$invalidate(0, activeTab2);
   }
   __name(tabs_1_activeTab_binding, "tabs_1_activeTab_binding");
+  $$self.$$set = ($$props2) => {
+    if ("activeTab" in $$props2)
+      $$invalidate(0, activeTab2 = $$props2.activeTab);
+  };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
 __name(instance$2, "instance$2");
@@ -48815,7 +50398,7 @@ let Tabs_1$1 = class Tabs_14 extends SvelteComponent {
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$2, create_fragment$3, safe_not_equal, {});
+    init$1(this, options, instance$2, create_fragment$3, safe_not_equal, { activeTab: 0 });
   }
 };
 function create_fragment$2(ctx) {
@@ -48957,7 +50540,7 @@ function create_fragment$1(ctx) {
 }
 __name(create_fragment$1, "create_fragment$1");
 function instance$1($$self, $$props, $$invalidate) {
-  let activeTab2 = "description";
+  let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     {
       label: localize(`${SYSTEM_CODE}.Description`),
@@ -48975,6 +50558,10 @@ function instance$1($$self, $$props, $$invalidate) {
     $$invalidate(0, activeTab2);
   }
   __name(tabs_1_activeTab_binding, "tabs_1_activeTab_binding");
+  $$self.$$set = ($$props2) => {
+    if ("activeTab" in $$props2)
+      $$invalidate(0, activeTab2 = $$props2.activeTab);
+  };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
 __name(instance$1, "instance$1");
@@ -48984,7 +50571,7 @@ class Tabs_15 extends SvelteComponent {
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$1, create_fragment$1, safe_not_equal, {});
+    init$1(this, options, instance$1, create_fragment$1, safe_not_equal, { activeTab: 0 });
   }
 }
 function create_default_slot(ctx) {
@@ -49487,15 +51074,15 @@ class FFCombatTracker extends CombatTracker {
         if (actor.system.actionState?.available) {
           for (const action of actor.system.actionState.available.sort()) {
             if (!getTypeOptions().some((e) => e.value === action)) {
-              turn.actions += `<badge data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="custom-action">${action[0]?.capitalize()}</badge>`;
+              turn.actions += `<div data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge custom-action">${action[0]?.capitalize()}</div>`;
             } else {
-              turn.actions += `<badge data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="${action}">${action[0]?.capitalize()}</badge>`;
+              turn.actions += `<div data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge ${action}">${action[0]?.capitalize()}</div>`;
             }
           }
         }
         if (actor.system.actionState?.used) {
           for (const action of actor.system.actionState.used.sort()) {
-            turn.actions += `<badge class="used">${action.type[0].capitalize()}</badge>`;
+            turn.actions += `<div class="action-slot-badge used">${action.type[0].capitalize()}</div>`;
           }
         }
       }
@@ -49655,4 +51242,99 @@ hooks.targetToken();
 hooks.updateCombat();
 hooks.updateCombatant();
 hooks.deleteCombat();
+let totalDistance = 0;
+Hooks.on("preUpdateToken", async (tokenDocument, update2, options, userId) => {
+  console.log("preUpdateToken", tokenDocument, update2, options);
+  if (options.isUndo) {
+    const currentMovement = getTokenMovement$1(tokenDocument.id);
+    const lastSegmentDistance = canvas.controls.ruler?.totalDistance || 0;
+    if (currentMovement > 0) {
+      addTokenMovement(tokenDocument.id, -Math.abs(lastSegmentDistance));
+      console.log("Undo movement:", {
+        tokenId: tokenDocument.id,
+        subtractedDistance: lastSegmentDistance,
+        newTotal: getTokenMovement$1(tokenDocument.id)
+      });
+    }
+    return;
+  }
+  if (!arrowKeysPressed) {
+    const availableMovement = tokenDocument.actor.system.attributes.secondary.spd.val;
+    const currentMovement = getTokenMovement$1(tokenDocument.id);
+    if (game.combat?.started) {
+      const currentCombatant = game.combat.combatant;
+      const isCurrentTurn = currentCombatant?.token?.id === tokenDocument.id;
+      if (!isCurrentTurn) {
+        ui.notifications.warn("You can only move on your turn.");
+        delete update2.x;
+        delete update2.y;
+        return;
+      }
+    }
+    const measureDistance = canvas.controls.ruler?.totalDistance || 0;
+    console.log("Movement Check:", {
+      tokenId: tokenDocument.id,
+      measureDistance,
+      currentMovement,
+      availableMovement,
+      update: update2
+    });
+    if (measureDistance === 0)
+      return;
+    console.log("Detailed Movement Check:", {
+      tokenId: tokenDocument.id,
+      measureDistance: Number(measureDistance),
+      currentMovement: Number(currentMovement),
+      availableMovement: Number(availableMovement),
+      wouldBeTotal: Number(currentMovement) + Number(measureDistance),
+      update: update2
+    });
+    if (game.combat?.started && Number(currentMovement) + Number(measureDistance) > Number(availableMovement)) {
+      const remainingMovement = Math.max(0, Number(availableMovement) - Number(currentMovement));
+      ui.notifications.warn(`You don't have sufficient movement for that distance. You can still move ${remainingMovement} grid squares.`);
+      delete update2.x;
+      delete update2.y;
+    } else if (game.combat?.started) {
+      addTokenMovement(tokenDocument.id, Number(measureDistance));
+      console.log("After adding movement:", {
+        tokenId: tokenDocument.id,
+        addedDistance: Number(measureDistance),
+        newTotal: Number(getTokenMovement$1(tokenDocument.id))
+      });
+    }
+  } else {
+    console.log("Disable arrow keys movement");
+    delete update2.x;
+    delete update2.y;
+  }
+});
+let arrowKeysPressed = false;
+document.addEventListener("keydown", (event) => {
+  if (!game.combat?.started)
+    return;
+  console.log("keyup event", event.key);
+  if (event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "a" || event.key === "d") {
+    arrowKeysPressed = true;
+  } else if (event.code === "Space") {
+    const tool = game.activeTool;
+    if (tool != "select")
+      return;
+    if (canvas.controls.ruler.segments?.length) {
+      const path = canvas.grid.measurePath(canvas.controls.ruler.segments);
+      totalDistance = parseInt(path.distance);
+    }
+    console.log("keyup space totalDistance", totalDistance);
+  }
+});
+document.addEventListener("mouseup", (event) => {
+  arrowKeysPressed = false;
+});
+document.addEventListener("keyup", (event) => {
+  if (!game.combat?.started)
+    return;
+  console.log("keyup event", event.key);
+  if (event.key === "ArrowUp" || event.key === "ArrowDown" || event.key === "ArrowLeft" || event.key === "ArrowRight" || event.key === "a" || event.key === "d") {
+    arrowKeysPressed = false;
+  }
+});
 //# sourceMappingURL=index.js.map
