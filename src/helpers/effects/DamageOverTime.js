@@ -18,41 +18,26 @@ export default class DamageOverTime {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
-    game.system.log.o("[DOT] Processing event:", event);
-    const { change, effect } = event;
+    const { change, effect, isMovingForward = true } = event;
     const currentHP = this.actor.system.points.HP.val;
-    const dotDamage = parseInt(change.value) || 0;
+    const dotDamage = (parseInt(change.value) || 0) * (isMovingForward ? 1 : -1);
     
-    game.system.log.o("[DOT] Current state:", {
-      actorName: this.actor.name,
-      currentHP,
-      dotDamage,
-      change
-    });
-    
-    if (dotDamage <= 0) {
-      game.system.log.o("[DOT] No damage to apply");
-      return;
-    }
+    if (dotDamage === 0) return;
 
     const newHP = Math.max(0, currentHP - dotDamage);
     game.system.log.o("[DOT] Applying damage:", {
-      actorName: this.actor.name,
-      currentHP,
-      newHP,
-      damage: dotDamage
+      actor: this.actor.name,
+      damage: dotDamage,
+      newHP
     });
 
     await this.actor.update({ "system.points.HP.val": newHP });
 
-    // Check if actor should be KO'd
-    if (this.actor.system.points.HP.val === 0 && !this.actor.statuses.has('ko')) {
-      game.system.log.o("[DOT] Actor at 0 HP and not KO'd, applying KO status");
+    if (isMovingForward && this.actor.system.points.HP.val === 0 && !this.actor.statuses.has('ko')) {
       await this.actor.toggleStatusEffect("ko");
-      game.system.log.o("[DOT] KO status applied");
     }
 
-    // Create a chat message using RollChat template
+    // Create chat message with correct props for RollChat
     await ChatMessage.create({
       user: game.user.id,
       speaker: ChatMessage.getSpeaker({ actor: this.actor }),
@@ -67,10 +52,10 @@ export default class DamageOverTime {
             },
             item: {
               name: effect.name,
-              img: effect.icon,
+              img: effect.img || effect.icon, // Support both v11 and v12
               type: "effect",
               system: {
-                description: `${this.actor.name} takes ${dotDamage} damage from ${effect.name}`,
+                description: `${this.actor.name} ${isMovingForward ? 'takes' : 'recovers'} ${Math.abs(dotDamage)} damage ${isMovingForward ? 'from' : 'due to reversing'} ${effect.name}`,
                 formula: dotDamage.toString()
               }
             }
@@ -87,88 +72,109 @@ export default class DamageOverTime {
    * @param {object} options - Update options
    */
   async updateCombat(combat, changed, options) {
-    game.system.log.o("[DOT updateCombat] Starting method for actor:", {
-      name: this.actor.name,
-      type: this.actor.type,
-      id: this.actor.id
-    });
+    // Only process if turn or round changed
+    if (!("turn" in changed || "round" in changed) || changed.turn === null) {
+      game.system.log.o("[DOT] Skipping - no turn/round change:", { changed });
+      return;
+    }
 
-    // Determine if we're moving forward or backward in turns
-    const isMovingForward = changed.round > combat.previous.round || 
-      (changed.round === combat.previous.round && changed.turn > combat.previous.turn);
-    
-    game.system.log.o("[DOT updateCombat] Turn direction:", {
-      currentRound: changed.round,
-      previousRound: combat.previous.round,
-      currentTurn: changed.turn,
-      previousTurn: combat.previous.turn,
-      isMovingForward
-    });
-
-    // Get the previous turn's state
+    // Only process for the previous combatant
     const previousCombatant = combat.turns[combat.previous?.turn];
-    const nextCombatant = combat.turns[combat.previous?.turn + 1];
-    
-    // When moving backwards, we need to flip our logic
-    const wasAdventurerStepEnd = isMovingForward
-      ? previousCombatant?.actor?.type === "PC" && nextCombatant?.actor?.type === "NPC"
-      : previousCombatant?.actor?.type === "NPC" && nextCombatant?.actor?.type === "PC";
-    
-    const wasEnemyStepEnd = isMovingForward
-      ? previousCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC")
-      : previousCombatant?.actor?.type === "PC" && (!nextCombatant || nextCombatant?.actor?.type === "NPC");
+    if (!previousCombatant || previousCombatant.actor.id !== this.actor.id) {
+      game.system.log.o("[DOT] Skipping - not previous combatant:", { 
+        actor: this.actor.name,
+        previousCombatant: previousCombatant?.actor?.name,
+        previousTurn: combat.previous?.turn,
+        currentTurn: combat.turn
+      });
+      return;
+    }
 
-    game.system.log.o("[DOT updateCombat] Combat state:", {
-      wasAdventurerStepEnd,
-      wasEnemyStepEnd,
-      previousCombatant: previousCombatant?.actor?.name,
-      nextCombatant: nextCombatant?.actor?.name,
-      isMovingForward
+    const isMovingForward = options.direction === 1;
+    const nextTurn = combat.previous?.turn + 1;
+    const isLastTurn = nextTurn === combat.turns.length;
+    const nextCombatant = isLastTurn ? combat.turns[0] : combat.turns[nextTurn];
+    
+    game.system.log.o("[DOT] Checking phase:", {
+      actor: this.actor.name,
+      direction: isMovingForward ? "forward" : "backward",
+      previousType: previousCombatant?.actor?.type,
+      nextType: nextCombatant?.actor?.type,
+      nextTurn,
+      totalTurns: combat.turns.length,
+      isLastTurn,
+      isWrapping: isLastTurn
     });
 
-    // Process DOT effects at the end of each step
-    const effects = this.actor.effects;
-    game.system.log.o("[DOT updateCombat] Found effects:", effects.size);
+    // Find the last PC and NPC in the turn order
+    const lastPC = [...combat.turns].reverse().find(t => t.actor?.type === "PC");
+    const lastNPC = [...combat.turns].reverse().find(t => t.actor?.type === "NPC");
 
-    for (const effect of effects) {
-      game.system.log.o("[DOT updateCombat] Processing effect:", {
-        name: effect.name,
-        disabled: effect.disabled,
-        changes: effect.changes
+    // Check if this actor is the last of their type
+    const isLastOfType = 
+      (this.actor.type === "PC" && lastPC?.actor?.id === this.actor.id) ||
+      (this.actor.type === "NPC" && lastNPC?.actor?.id === this.actor.id);
+
+    // Check if this is a phase transition
+    const nextType = nextCombatant?.actor?.type;
+    const isPhaseTransition = 
+      (this.actor.type === "PC" && nextType === "NPC") ||
+      (this.actor.type === "NPC" && nextType === "PC") ||
+      (isLastTurn && isLastOfType); // Also consider end of round as phase transition
+
+    game.system.log.o("[DOT] Phase check:", {
+      actor: this.actor.name,
+      actorType: this.actor.type,
+      nextType,
+      isPhaseTransition,
+      isLastOfType,
+      isLastTurn
+    });
+
+    // Only process if this is a phase transition
+    if (!isPhaseTransition) {
+      game.system.log.o("[DOT] Skipping - not a phase transition:", {
+        actor: this.actor.name,
+        direction: isMovingForward ? "forward" : "backward",
+        actorType: this.actor.type,
+        nextType,
+        isLastOfType
       });
+      return;
+    }
 
-      if (!effect.disabled) {
-        // At adventurer step end, process DOTs on PCs
-        if (wasAdventurerStepEnd && this.actor.type === "PC") {
-          game.system.log.o("[DOT updateCombat] Processing PC DOT at adventurer step end");
-          for (const change of effect.changes) {
-            game.system.log.o("[DOT updateCombat] Checking change:", {
-              key: change.key,
-              mode: change.mode,
-              value: change.value
-            });
+    // Check for relevant DOT effects
+    const relevantEffects = this.actor.effects.filter(e => 
+      !e.disabled && e.changes.some(c => c.key === "DamageOverTime" && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
+    );
 
-            if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-              game.system.log.o("[DOT updateCombat] Calling DOT hook");
-              await Hooks.callAll('FF15.DamageOverTime', { actor: this.actor, change, effect });
-            }
-          }
-        }
-        // At enemy step end, process DOTs on NPCs
-        else if (wasEnemyStepEnd && this.actor.type === "NPC") {
-          game.system.log.o("[DOT updateCombat] Processing NPC DOT at enemy step end");
-          for (const change of effect.changes) {
-            game.system.log.o("[DOT updateCombat] Checking change:", {
-              key: change.key,
-              mode: change.mode,
-              value: change.value
-            });
+    if (relevantEffects.length === 0) {
+      game.system.log.o("[DOT] Skipping - no relevant effects:", {
+        actor: this.actor.name,
+        effectCount: this.actor.effects.size
+      });
+      return;
+    }
 
-            if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-              game.system.log.o("[DOT updateCombat] Calling DOT hook");
-              await Hooks.callAll('FF15.DamageOverTime', { actor: this.actor, change, effect });
-            }
-          }
+    game.system.log.o("[DOT] Processing combat update:", {
+      actor: this.actor.name,
+      direction: isMovingForward ? "forward" : "backward",
+      phase: {
+        currentType: this.actor.type,
+        nextType
+      }
+    });
+
+    // Process each relevant effect
+    for (const effect of relevantEffects) {
+      for (const change of effect.changes) {
+        if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
+          await Hooks.callAll('FF15.DamageOverTime', { 
+            actor: this.actor, 
+            change, 
+            effect,
+            isMovingForward 
+          });
         }
       }
     }
