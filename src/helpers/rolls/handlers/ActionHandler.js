@@ -24,6 +24,7 @@ export default class ActionHandler {
     try {
       this.options = options;  // Store options for use in other methods
       const { targets, hasTargets, targetIds } = this._getActionTargets();
+      const limiterType = this._checkAbilityLimiter();
 
       let roll;
       let isCritical = false;
@@ -59,20 +60,23 @@ export default class ActionHandler {
         }
       }
 
-      // Handle healing if the action has healing effects
-      if (item.system.baseEffectHealing) {
-        await this._handleHealing(item, this.actor, isCritical);
-      }
+      // If we have a DamageOnly limiter, skip all non-damage effects
+      if (limiterType !== 'DamageOnly') {
+        // Handle healing if the action has healing effects
+        if (item.system.baseEffectHealing) {
+          await this._handleHealing(item, this.actor, isCritical);
+        }
 
-      // Handle MP restoration if the action has MP restoration effects (self only)
-      if (item.system.hasBaseEffectRestoreMP && item.system.baseEffectRestoreMP) {
-        // game.system.log.o('[MP:RESTORE] Attempting MP restoration');
-        await this._handleMPRestoration(item);
-      }
+        // Handle MP restoration if the action has MP restoration effects (self only)
+        if (item.system.hasBaseEffectRestoreMP && item.system.baseEffectRestoreMP) {
+          // game.system.log.o('[MP:RESTORE] Attempting MP restoration');
+          await this._handleMPRestoration(item);
+        }
 
-      // Handle barrier if the action has barrier effects
-      if (item.system.hasBaseEffectBarrier && item.system.baseEffectBP) {
-        await this._handleBarrier(item);
+        // Handle barrier if the action has barrier effects
+        if (item.system.hasBaseEffectBarrier && item.system.baseEffectBP) {
+          await this._handleBarrier(item);
+        }
       }
 
       return {
@@ -589,5 +593,21 @@ export default class ActionHandler {
       game.system.log.e('[BARRIER] Error applying barrier points:', error);
       throw error;
     }
+  }
+
+  /**
+   * @internal
+   * Check if there are any ability limiters active on the actor
+   * @return {string|null} The type of limitation, if any
+   */
+  _checkAbilityLimiter() {
+    const limiterEffect = this.actor.effects.find(e => 
+      e.changes.some(c => c.key === 'AbilitiesLimiter')
+    );
+    
+    if (!limiterEffect) return null;
+    
+    const limiterChange = limiterEffect.changes.find(c => c.key === 'AbilitiesLimiter');
+    return limiterChange?.value || null;
   }
 } 
