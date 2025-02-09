@@ -542,13 +542,30 @@ export default class ActionHandler {
    * @return {Promise<void>} A promise that resolves when barrier is applied
    */
   async _handleBarrier(item) {
-    if (!item.system.baseEffectBP) return;
+    game.system.log.o('[BARRIER] Starting barrier handling:', {
+      itemName: item.name,
+      hasBarrier: item.system.hasBaseEffectBarrier,
+      barrierAmount: item.system.baseEffectBP,
+      itemSystem: item.system
+    });
+
+    if (!item.system.baseEffectBP) {
+      game.system.log.o('[BARRIER] No barrier points to handle');
+      return;
+    }
 
     const barrierAmount = item.system.baseEffectBP;
+    game.system.log.o('[BARRIER] Actor data before update:', {
+      actorName: this.actor.name,
+      actorId: this.actor.id,
+      points: this.actor.system.points,
+      BP: this.actor.system.points?.BP
+    });
+
     const currentBP = this.actor.system.points.BP.val;
     const newBP = currentBP + barrierAmount;
 
-    game.system.log.o('[BARRIER] Applying barrier points:', {
+    game.system.log.o('[BARRIER] Calculating barrier points:', {
       itemName: item.name,
       actorName: this.actor.name,
       currentBP,
@@ -556,7 +573,21 @@ export default class ActionHandler {
       newBP
     });
 
-    // Update the actor's BP
-    await this.actor.update({ "system.points.BP.val": newBP });
+    try {
+      // Update the actor's BP
+      await this.actor.update({ "system.points.BP.val": newBP });
+      game.system.log.o('[BARRIER] Successfully applied barrier points');
+
+      // Verify the update
+      const updatedBP = this.actor.system.points.BP.val;
+      game.system.log.o('[BARRIER] Verification after update:', {
+        expectedBP: newBP,
+        actualBP: updatedBP,
+        success: updatedBP === newBP
+      });
+    } catch (error) {
+      game.system.log.e('[BARRIER] Error applying barrier points:', error);
+      throw error;
+    }
   }
 } 
