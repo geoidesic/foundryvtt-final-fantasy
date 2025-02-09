@@ -312,7 +312,100 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
    * @return {Promise<Array>} Array of created items
    */
   async _onDropFolder(event, data) {
-    ui.notifications.error("Dropping folders onto the actor sheet is not supported yet. Instead, create a Job item (which does support folder drops) and then drop the Job item onto the actor sheet.");
+    game.system.log.o('[DROP FOLDER] Starting folder drop:', {
+      event,
+      data
+    });
+
+    const actor = this.reactive.document;
+    if (!actor.isOwner) {
+      game.system.log.w('[DROP FOLDER] Not owner, exiting');
+      return [];
+    }
+
+    /* eslint-disable-next-line new-cap */
+    const folder = await Folder.implementation.fromDropData(data);
+    game.system.log.o('[DROP FOLDER] Retrieved folder:', {
+      folder,
+      name: folder?.name,
+      contents: folder?.contents,
+      children: folder?.children
+    });
+
+    if (!folder) {
+      game.system.log.w('[DROP FOLDER] No folder found');
+      return [];
+    }
+
+    // Process folder contents
+    const items = [];
+    let foundJob = false;
+
+    // Helper function to process items in a folder
+    const processItems = async (contents) => {
+      game.system.log.o('[DROP FOLDER] Processing contents:', {
+        count: contents?.length,
+        items: contents?.map(i => ({ name: i.name, type: i.type }))
+      });
+
+      if (!contents?.length) return;
+
+      // First pass - look for jobs
+      if (!foundJob) {
+        for (const item of contents) {
+          if (item.type === 'job') {
+            game.system.log.o('[DROP FOLDER] Found job:', item.name);
+            await this._onDropJob(event, { uuid: item.uuid });
+            foundJob = true;
+            break;
+          }
+        }
+      }
+
+      // Second pass - handle non-job items
+      for (const item of contents) {
+        if (item.type !== 'job') {
+          game.system.log.o('[DROP FOLDER] Processing non-job item:', {
+            name: item.name,
+            type: item.type
+          });
+          items.push(item);
+        }
+      }
+    };
+
+    // Process main folder contents
+    if (folder.contents?.length) {
+      game.system.log.o('[DROP FOLDER] Processing main folder contents');
+      await processItems(folder.contents);
+    }
+
+    // Process any subfolders
+    if (folder.children?.length) {
+      game.system.log.o('[DROP FOLDER] Found subfolders:', folder.children.length);
+      for (const child of folder.children) {
+        game.system.log.o('[DROP FOLDER] Processing subfolder:', {
+          name: child.name,
+          entries: child.entries?.length
+        });
+        if (child.entries?.length) {
+          await processItems(child.entries);
+        }
+      }
+    }
+
+    // Create all non-job items
+    if (items.length) {
+      game.system.log.o('[DROP FOLDER] Creating items:', {
+        count: items.length,
+        items: items.map(i => ({ name: i.name, type: i.type }))
+      });
+      for (const item of items) {
+        await this._onDropItem(event, item, true);
+      }
+    }
+
+    return items;
   }
 
   /**
