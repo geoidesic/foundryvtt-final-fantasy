@@ -2,6 +2,7 @@
 import { onMount, getContext } from 'svelte';
 import { SYSTEM_ID } from '~/src/helpers/constants';
 import { ucfirst, localize } from '~/src/helpers/util';
+import FolderProcessor from '~/src/helpers/FolderProcessor';
 import DocCheckbox from '~/src/components/atoms/controls/DocCheckbox.svelte'
 import Tag from "~/src/components/atoms/Tag.svelte";
 
@@ -51,135 +52,6 @@ async function updateLocalList() {
   }
 }
 
-// Process a single item and add it to the lists if valid
-async function processItem(item, list, isJob, sourceContext = {}) {
-  if (!item) return;
-
-  game.system.log.o("ItemBucket:processItem", "Processing item:", { 
-    item, 
-    uuid: item.uuid,
-    type: item.type,
-    list: list.map(x => x.uuid),
-    sourceContext
-  });
-
-  // Skip if item already exists in list
-  const existingInList = list.some(existing => existing.uuid === item.uuid);
-  
-  if (preventDuplicates && existingInList) {
-    game.system.log.w(`${item.name} is already in the list.`);
-    return;
-  }
-
-  // Check if it's a non-compendium item and warning is enabled
-  if (warnOnCompendiumDrops && !item.uuid.startsWith('Compendium.')) {
-    const confirmed = await Dialog.confirm({
-      title: "Non-Compendium Item",
-      content: `<p>Warning: You are adding an item from the game world rather than from a compendium. If this item is deleted from the game, it could cause inconsistencies.</p><p>Are you sure you want to add this item?</p>`,
-      yes: () => true,
-      no: () => false,
-      defaultYes: false
-    });
-    
-    if (!confirmed) return;
-  }
-
-  // Add item to list
-  game.system.log.o("ItemBucket:processItem", "Adding item to list:", { uuid: item.uuid });
-  list.push({ uuid: item.uuid });
-
-  // If this is a job and we're dropping an action with enabled traits
-  if (isJob && item.type === 'action' && item.system.enables?.value) {
-    // Get all enabled traits from the action
-    const enabledTraits = item.system.enables.list || [];
-    
-    game.system.log.o("ItemBucket:processItem", "Processing enabled traits:", enabledTraits);
-    
-    // Add each enabled trait that isn't already in the list
-    for (const trait of enabledTraits) {
-      const traitExists = list.some(existing => existing.uuid === trait.uuid);
-      game.system.log.o("ItemBucket:processItem", "Checking trait:", { trait, exists: traitExists });
-      
-      if (!traitExists) {
-        // Verify the trait exists before adding it
-        const traitItem = await fromUuid(trait.uuid);
-        if (traitItem) {
-          game.system.log.o("ItemBucket:processItem", "Adding verified trait to list:", trait.uuid);
-          list.push({ uuid: trait.uuid });
-        } else {
-          game.system.log.w("ItemBucket:processItem", `Failed to find trait with UUID: ${trait.uuid}`, {
-            sourceAction: {
-              name: item.name,
-              id: item._id,
-              uuid: item.uuid
-            },
-            sourceFolder: sourceContext,
-            invalidTrait: trait
-          });
-        }
-      }
-    }
-  }
-}
-
-// Recursively process a folder and its contents
-async function processFolder(folder, list, isJob) {
-  const folderContext = {
-    name: folder.name,
-    id: folder._id,
-    uuid: folder.uuid
-  };
-
-  game.system.log.o("ItemBucket:processFolder", "Processing folder:", {
-    folder: folderContext,
-    contents: folder?.contents,
-    children: folder?.children,
-    entries: folder?.children?.[0]?.entries
-  });
-
-  if (!folder) return;
-
-  // Process each child folder
-  if (folder.children?.length) {
-    game.system.log.o("ItemBucket:processFolder", "Processing child folders:", folder.children);
-    for (const child of folder.children) {
-      game.system.log.o("ItemBucket:processFolder", "Processing child:", child);
-      
-      // Process entries in this child folder
-      if (child.entries?.length) {
-        game.system.log.o("ItemBucket:processFolder", "Processing entries:", child.entries);
-        for (const entry of child.entries) {
-          game.system.log.o("ItemBucket:processFolder", "Processing entry:", entry);
-          const item = await fromUuid(entry.uuid);
-          await processItem(item, list, isJob, folderContext);
-        }
-      }
-
-      // If this child has nested folders, process them
-      if (child.children?.length) {
-        const subFolder = await fromUuid(child.folder.uuid);
-        await processFolder(subFolder, list, isJob);
-      }
-    }
-  }
-
-  // Process any direct contents (for non-compendium folders)
-  if (folder.contents?.length) {
-    game.system.log.o("ItemBucket:processFolder", "Processing folder contents:", folder.contents);
-    for (const content of folder.contents) {
-      if (content.type === "Folder") {
-        game.system.log.o("ItemBucket:processFolder", "Found nested folder:", content);
-        const subFolder = await fromUuid(content.uuid);
-        await processFolder(subFolder, list, isJob);
-      } else {
-        game.system.log.o("ItemBucket:processFolder", "Processing item from folder:", content);
-        const item = await fromUuid(content.uuid);
-        await processItem(item, list, isJob, folderContext);
-      }
-    }
-  }
-}
-
 async function onDrop(event) {
   event.preventDefault();
   const data = JSON.parse(event.dataTransfer.getData("text/plain"));
@@ -200,7 +72,11 @@ async function onDrop(event) {
     game.system.log.o("ItemBucket:onDrop", "Handling folder drop");
     const folder = await fromUuid(data.uuid);
     game.system.log.o("ItemBucket:onDrop", "Retrieved folder:", folder);
-    await processFolder(folder, list, isJob);
+
+    await FolderProcessor.processFolder(folder, list, isJob, {
+      preventDuplicates,
+      warnOnCompendiumDrops
+    });
 
     game.system.log.o("ItemBucket:onDrop", "Final list after folder processing:", list.map(x => x.uuid));
     await $item.update({ [`system.${key}.list`]: list });
@@ -209,7 +85,10 @@ async function onDrop(event) {
 
   // Handle single item drops
   const droppedItem = await Item.implementation.fromDropData(data);
-  await processItem(droppedItem, list, isJob);
+  await FolderProcessor.processItem(droppedItem, list, isJob, {
+    preventDuplicates,
+    warnOnCompendiumDrops
+  });
   
   game.system.log.o("ItemBucket:onDrop", "Final list after item processing:", list.map(x => x.uuid));
   await $item.update({ [`system.${key}.list`]: list });

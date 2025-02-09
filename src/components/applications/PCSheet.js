@@ -312,19 +312,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
    * @return {Promise<Array>} Array of created items
    */
   async _onDropFolder(event, data) {
-    const actor = this.reactive.document;
-
-    /* eslint-disable-next-line new-cap */
-    const folder = await Folder.implementation.fromDropData(data);
-    if (!folder && data.documentName !== "Item" && !actor.isOwner) {
-      return [];
-    }
-
-    if (folder.contents.length) {
-      for (const item of folder.contents) {
-        await this._onDropItem(event, item, true);
-      }
-    }
+    ui.notifications.error("Dropping folders onto the actor sheet is not supported yet. Instead, create a Job item (which does support folder drops) and then drop the Job item onto the actor sheet.");
   }
 
   /**
