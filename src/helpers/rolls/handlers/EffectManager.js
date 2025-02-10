@@ -23,18 +23,126 @@ export default class EffectManager {
 
     // Handle target effects
     if (item.system.grants?.value && hasTargets) {
-      await this._handleTargetEffects(item, targets);
+      await this._applyEffectsFromList(item, item.system.grants.list, targets);
     }
 
     // Handle source effects
     if (item.system.sourceGrants?.list?.length) {
-      await this._handleSourceEffects(item);
+      await this._applyEffectsFromList(item, item.system.sourceGrants.list, [{ actor: this.actor }]);
     }
 
     // Process enabler effects regardless of roll success
     if (item.system.enables?.list?.length > 0) {
       await this._handleEnablerEffects(item);
     }
+  }
+
+  /**
+   * Apply effects from a list to specified targets
+   * @private
+   * @param {Item} sourceItem - The item granting the effects
+   * @param {Array} effectList - List of effect references to process
+   * @param {Array} targets - Array of targets to apply effects to
+   */
+  async _applyEffectsFromList(sourceItem, effectList, targets) {
+    if (!effectList?.length || !targets?.length) return;
+
+    game.system.log.o("[EFFECTS] Processing effects from:", {
+      sourceItem: sourceItem?.name,
+      sourceItemUUID: sourceItem?.uuid,
+      actor: this.actor?.name
+    });
+
+    for (const target of targets) {
+      const targetActor = target.actor;
+      if (!targetActor) continue;
+
+      try {
+        const effectData = await this._prepareEffectData(sourceItem, effectList, targetActor);
+        if (effectData.length) {
+          await targetActor.createEmbeddedDocuments('ActiveEffect', effectData);
+        }
+      } catch (error) {
+        game.system.log.e("Error applying effects to target", error);
+        ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
+      }
+    }
+  }
+
+  /**
+   * Prepare effect data from effect items
+   * @private
+   * @param {Item} sourceItem - The item granting the effects
+   * @param {Array} effectList - List of effect references to process
+   * @param {Actor} targetActor - The actor to check against for existing effects
+   * @return {Promise<Array>} Array of prepared effect data
+   */
+  async _prepareEffectData(sourceItem, effectList, targetActor) {
+    // Get all effects from the grants list
+    const effectPromises = effectList.flatMap(async (grantRef) => {
+      const effectItem = await fromUuid(grantRef.uuid);
+      if (!effectItem) return [];
+
+      // Get all effects from the effect item
+      return effectItem.effects.map(effect => {
+        // Check if effect already exists
+        const existingEffect = targetActor.effects.find(e =>
+          e.name === effect.name &&
+          e.origin === sourceItem.uuid
+        );
+
+        // Skip if effect already exists
+        if (existingEffect) return null;
+
+        // Handle status effects
+        if (effect.statuses?.size) {
+          return this._handleStatusEffect(effect, targetActor);
+        }
+
+        // For non-status effects, prepare clean data
+        return this._prepareCleanEffectData(effect, effectItem, sourceItem);
+      });
+    });
+
+    // Wait for all effect data to be prepared and flatten the array
+    return (await Promise.all(effectPromises)).flat().filter(Boolean);
+  }
+
+  /**
+   * Handle status effect application
+   * @private
+   * @param {ActiveEffect} effect - The effect to process
+   * @param {Actor} targetActor - The actor to apply the status to
+   * @return {null} Always returns null as statuses are handled directly
+   */
+  _handleStatusEffect(effect, targetActor) {
+    const statuses = Array.from(effect.statuses);
+    // Only toggle statuses that aren't already active
+    const statusesToToggle = statuses.filter(status => !targetActor.statuses.has(status));
+    if (statusesToToggle.length) {
+      targetActor.toggleStatusEffect(statusesToToggle[0]);
+    }
+    return null;
+  }
+
+  /**
+   * Prepare clean effect data for creation
+   * @private
+   * @param {ActiveEffect} effect - The effect to clean
+   * @param {Item} effectItem - The item containing the effect
+   * @param {Item} sourceItem - The item granting the effect
+   * @return {Object} Clean effect data
+   */
+  _prepareCleanEffectData(effect, effectItem, sourceItem) {
+    return {
+      name: effect.name,
+      img: effect.img,
+      changes: foundry.utils.deepClone(effect.changes),
+      duration: effectItem.system.duration,
+      disabled: false,
+      flags: foundry.utils.deepClone(effect.flags),
+      origin: sourceItem.uuid,
+    };
   }
 
   /**
@@ -51,158 +159,6 @@ export default class EffectManager {
     }
     game.system.log.o('[ABILITY:ENABLER] Enabled effects:', allEnabledEffects);
     return allEnabledEffects;
-  }
-
-  /**
-   * Handle target effects
-   * @private
-   */
-  async _handleTargetEffects(item, targets) {
-
-    if (!item.system.grants?.list?.length) return;
-    
-    game.system.log.o("[STACKING EFFECTS] Source actor using this item:", {
-      actor: this.actor?.name,
-      itemName: item?.name,
-      itemUUID: item?.uuid,
-    });
-    
-    for (const target of targets) {
-      const targetActor = target.actor;
-      if (!targetActor) continue;
-
-      try {
-        // Get all effects from the grants list
-        const effectPromises = item.system.grants.list.flatMap(async (grantRef) => {
-          const effectItem = await fromUuid(grantRef.uuid);
-          if (!effectItem) {
-            return [];
-          }
-
-          // Get all effects from the effect item
-          return effectItem.effects.map(effect => {
-            // Check if effect already exists on target
-            const existingEffect = targetActor.effects.find(e =>
-              e.name === effect.name &&
-              e.origin === item.uuid
-            );
-
-            // Skip if effect already exists
-            if (existingEffect) {
-              return null;
-            }
-
-            // If the effect has statuses, toggle them instead of creating a new effect
-            if (effect.statuses?.size) {
-              const statuses = Array.from(effect.statuses);
-              // Only toggle statuses that aren't already active
-              const statusesToToggle = statuses.filter(status => !targetActor.statuses.has(status));
-              if (statusesToToggle.length) {
-                targetActor.toggleStatusEffect(statusesToToggle[0]);
-              }
-              return null;
-            }
-
-            // For non-status effects, clean up the data to only include valid ActiveEffect fields
-            const cleanData = {
-              name: effect.name,
-              img: effect.img,
-              changes: foundry.utils.deepClone(effect.changes),
-              duration: effectItem.system.duration,
-              disabled: false,
-              flags: foundry.utils.deepClone(effect.flags),
-              origin: item.uuid,
-            };
-
-            return cleanData;
-          });
-        });
-
-        // Wait for all effect data to be prepared and flatten the array
-        const effectData = (await Promise.all(effectPromises)).flat().filter(Boolean);
-
-        if (effectData.length) {
-          // Create all non-status effects at once
-          await targetActor.createEmbeddedDocuments('ActiveEffect', effectData);
-        }
-      } catch (error) {
-        game.system.log.e("Error applying effects to target", error);
-        ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
-      }
-    }
-  }
-
-  /**
-   * Handle effects that should be applied to the source actor
-   * @private
-   */
-  async _handleSourceEffects(item) {
-    if (!item.system.sourceGrants?.list?.length) return;
-    
-    game.system.log.o("[SOURCE EFFECTS] Source actor using this item:", {
-      actor: this.actor?.name,
-      itemName: item?.name,
-      itemUUID: item?.uuid,
-    });
-
-    try {
-      // Get all effects from the sourceGrants list
-      const effectPromises = item.system.sourceGrants.list.flatMap(async (grantRef) => {
-        const effectItem = await fromUuid(grantRef.uuid);
-        if (!effectItem) {
-          return [];
-        }
-
-        // Get all effects from the effect item
-        return effectItem.effects.map(effect => {
-          // Check if effect already exists on source
-          const existingEffect = this.actor.effects.find(e =>
-            e.name === effect.name &&
-            e.origin === item.uuid
-          );
-
-          // Skip if effect already exists
-          if (existingEffect) {
-            return null;
-          }
-
-          // If the effect has statuses, toggle them instead of creating a new effect
-          if (effect.statuses?.size) {
-            const statuses = Array.from(effect.statuses);
-            // Only toggle statuses that aren't already active
-            const statusesToToggle = statuses.filter(status => !this.actor.statuses.has(status));
-            if (statusesToToggle.length) {
-              this.actor.toggleStatusEffect(statusesToToggle[0]);
-            }
-            return null;
-          }
-
-          // For non-status effects, clean up the data to only include valid ActiveEffect fields
-          const cleanData = {
-            name: effect.name,
-            img: effect.img,
-            changes: foundry.utils.deepClone(effect.changes),
-            duration: effectItem.system.duration,
-            disabled: false,
-            flags: foundry.utils.deepClone(effect.flags),
-            origin: item.uuid,
-          };
-
-          return cleanData;
-        });
-      });
-
-      // Wait for all effect data to be prepared and flatten the array
-      const effectData = (await Promise.all(effectPromises)).flat().filter(Boolean);
-
-      if (effectData.length) {
-        // Create all non-status effects at once
-        await this.actor.createEmbeddedDocuments('ActiveEffect', effectData);
-      }
-    } catch (error) {
-      game.system.log.e("Error applying effects to source", error);
-      ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: this.actor.name }));
-    }
   }
 
   /**

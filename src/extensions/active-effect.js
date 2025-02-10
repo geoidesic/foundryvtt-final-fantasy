@@ -39,7 +39,7 @@ export default class FFActiveEffect extends ActiveEffect {
   }
 
   /**
-   * Sets the combat duration for the effect
+   * Sets the combat duration for the effect from the origin of the item
    * @param {object} effectData - The effect data
    * @return {Promise<void>} Returns a promise that resolves when the duration is set
    */
