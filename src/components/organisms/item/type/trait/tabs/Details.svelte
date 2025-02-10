@@ -1,20 +1,18 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "~/src/helpers/util";
-  import { getLimitationOptions, getDurationQualifierOptions, getDurationOptions, getDurationUnits, getLimitationUnits, getDamageDiceRerollOptions } from "~/src/helpers/constants"
+  import { getLimitationOptions, getLimitationUnits, getDamageDiceRerollOptions } from "~/src/helpers/constants"
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
   import TagInput from "~/src/components/molecules/TagInput.svelte";
+  import DurationComponent from "~/src/components/molecules/Item/Duration.svelte";
 
   const item = getContext("#doc");
 
   const limitationOptions = getLimitationOptions();
   const limitationUnitsOptions = getLimitationUnits();
   const damageDiceRerollOptions = getDamageDiceRerollOptions();
-  const durationOptions = getDurationOptions();
-  const durationUnitsOptions = getDurationUnits();
-  const durationQualifierOptions = getDurationQualifierOptions();
 
   const typeOptions = [
     { value: "Buff", label: localize("Types.Item.Types.Options.TraitType.Buff") },
@@ -57,29 +55,7 @@
         .flex2.right
           DocSelect.right(id="limitationUnits" name="limitationUnits" options="{limitationUnitsOptions}" valuePath="system.limitationUnits")
 
-    .flexrow.justify-vertical
-      .flex4
-        h3.left Duration
-      .flex0.right
-        DocCheckbox( name="hasDuration" valuePath="system.hasDuration")
-
-    +if("$item.system.hasDuration")
-      .flexrow.sheet-row.justify-vertical.wide.px-sm
-        .flex2.left Amount
-        .flex2.center Qualifier
-        .flex2.right Units
-      .flexrow.sheet-row.justify-vertical.wide.px-sm
-        .flex2.left
-          label(for="duration.turns") Turns
-        .flex2.center
-        .flex2.right
-          DocInput.right(id="duration.turns" name="duration.turns" type="number" valuePath="system.duration.turns")
-      .flexrow.sheet-row.justify-vertical.wide.px-sm
-        .flex2.left
-          label(for="duration.rounds") Rounds
-        .flex2.right
-          DocInput.right(id="duration.rounds" name="duration.rounds" type="number" valuePath="system.duration.rounds")
-
+    DurationComponent
       
     .flexrow.justify-vertical
       .flex4

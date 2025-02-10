@@ -6,12 +6,14 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import Effects from "~/src/components/organisms/item/shared/EffectsTab.svelte";
   import Description from "~/src/components/organisms/item/shared/DescriptionTab.svelte";
+  import Details from "~/src/components/organisms/item/type/effect/tabs/Details.svelte";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
 
   export let activeTab = "description";
   // Tabs
   const tabs = [
     { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
+    { label: localize(`${SYSTEM_CODE}.Details`), id: "details", component: Details },
     { label: localize(`${SYSTEM_CODE}.Effects`), id: "effects", component: Effects },
   ];
 </script>
