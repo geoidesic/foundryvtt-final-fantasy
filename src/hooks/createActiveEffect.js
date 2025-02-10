@@ -1,6 +1,6 @@
 /**
- * @why The purpose of this listener is to use Action durations
- * to set the duration of the associated target or enabled ActiveEffect.
+ * @why The purpose of this listener is to ensure combat durations are set correctly
+ * when an active effect is created.
  */
 /**
  * Hook that runs when an active effect is created
@@ -8,35 +8,20 @@
  */
 export default function createActiveEffect() {
   Hooks.on("createActiveEffect", async (activeEffect, data) => {
-    const origin = fromUuidSync(activeEffect.origin);
-    game.system.log.o('createActiveEffect', { origin });
+    game.system.log.o('[CREATE ACTIVE EFFECT] Processing effect:', {
+      name: activeEffect.name,
+      duration: activeEffect.duration,
+      origin: activeEffect.origin
+    });
+
+    // Skip if already has a properly configured duration
+    if (activeEffect.duration?.rounds || activeEffect.duration?.turns) {
+      game.system.log.o('[CREATE ACTIVE EFFECT] Effect already has duration configured:', activeEffect.duration);
+      return;
+    }
     
-    // Only process effects that have duration
-    if (!origin?.system?.hasDuration) return;
-
-    const duration = origin.system.duration;
-    const durationUnits = origin.system.durationUnits;
-    let effectDuration = {};
-
-    // Set up duration based on unit type
-    if (durationUnits === 'turn') {
-      effectDuration = {
-        turns: duration,
-        startTime: game.time.worldTime,
-        combat: game.combat?.id
-      };
-    } else if (durationUnits === 'round') {
-      effectDuration = {
-        rounds: duration,
-        startTime: game.time.worldTime,
-        combat: game.combat?.id
-      };
-    }
-
-    // Only update if we have duration data
-    if (Object.keys(effectDuration).length > 0) {
-      await activeEffect.update({ duration: effectDuration });
-    }
+    // Use the consolidated duration handling
+    await FFActiveEffect.setCombatDuration(activeEffect);
   });
 }
 

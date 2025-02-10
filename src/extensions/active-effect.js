@@ -44,17 +44,38 @@ export default class FFActiveEffect extends ActiveEffect {
    * @return {Promise<void>} Returns a promise that resolves when the duration is set
    */
   static async setCombatDuration(effectData) {
-    // Get the origin item
-    const originItem = await fromUuid(effectData.origin);
-    if (!originItem?.system?.duration) return;
-    
-    // effectData.duration = {
-    //   startRound: game.combat?.round ?? 0,
-    //   startTurn: game.combat?.turn ?? 0
-    // }
-    
-    effectData.duration = originItem.system.duration;
+    // First try to get duration from the Effect Item itself
+    const effectItem = await fromUuid(effectData.uuid?.split('.').slice(0, -2).join('.'));
+    let duration = effectItem?.system?.duration;
+    let durationUnits = effectItem?.system?.durationUnits;
 
+    // If no duration on Effect Item, try the source item
+    if (!duration) {
+      const sourceItem = await fromUuid(effectData.origin);
+      duration = sourceItem?.system?.duration;
+      durationUnits = sourceItem?.system?.durationUnits;
+    }
+
+    if (!duration) return;
+
+    // Set up duration based on unit type
+    if (durationUnits === 'turns') {
+      effectData.duration = {
+        turns: duration,
+        startTime: game.time.worldTime,
+        startRound: game.combat?.round ?? 0,
+        startTurn: game.combat?.turn ?? 0,
+        combat: game.combat?.id
+      };
+    } else if (durationUnits === 'rounds') {
+      effectData.duration = {
+        rounds: duration,
+        startTime: game.time.worldTime,
+        startRound: game.combat?.round ?? 0,
+        startTurn: game.combat?.turn ?? 0,
+        combat: game.combat?.id
+      };
+    }
   }
 
   /**

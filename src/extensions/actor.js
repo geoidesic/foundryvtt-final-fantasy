@@ -179,11 +179,6 @@ export default class FF15Actor extends Actor {
           }
       }
 
-      // If we get here, either:
-      // 1. No matching effects exist
-      // 2. Matching effects exist but stacking is allowed (anySource)
-      // 3. Matching effects exist but were deleted (replaces)
-      // 4. Matching effects exist but from different sources (differentSource)
       const effectData = {
         ...effect.toObject(),
         disabled: false,
@@ -222,11 +217,6 @@ export default class FF15Actor extends Actor {
     if (!effectsToCreate.length) {
       game.system.log.p("[ADD LINKED EFFECTS] No effects to add");
       return [];
-    }
-
-    // Set combat duration for each effect
-    for (const effectData of effectsToCreate) {
-      await FFActiveEffect.setCombatDuration(effectData);
     }
 
     game.system.log.p("[ADD LINKED EFFECTS] Creating effects on actor:", this.name, effectsToCreate);
