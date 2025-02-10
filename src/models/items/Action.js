@@ -50,9 +50,6 @@ export class ActionModel extends FFItemDataModel {
       hasLimitation: new BooleanField({ required: false, initial: false }),
       limitation: new NumberField({  required: false, initial: 0, integer: true, min: 0, max: 3 }),
       limitationUnits: new StringField({ required: false, initial: "phase" }),
-      hasDuration: new BooleanField({ required: false, initial: false }),
-      duration: new NumberField({  required: false, initial: 0, integer: true, min: 0, max: 3 }),
-      durationUnits: new StringField({ required: false, initial: "phase" }),
       uses: new NumberField({ required: false, initial: 0, integer: true, min: 0 }),
       type: new StringField({ 
         required: false, 

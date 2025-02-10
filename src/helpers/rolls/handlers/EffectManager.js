@@ -150,121 +150,103 @@ export default class EffectManager {
    * @private
    */
   async _handleEnablerEffects(item) {
-    game.system.log.o('[ABILITY:ENABLER] Processing enabler effects for:', item.name);
-    let allEnabledEffects = [];
-    for (const enablesItemRef of item.system.enables.list) {
-      game.system.log.o('[ABILITY:ENABLER] Processing enabler item ref:', enablesItemRef);
-      const effects = await this._handleSingleItemEffectEnabling(item, enablesItemRef);
-      allEnabledEffects = allEnabledEffects.concat(effects);
+    if (!item.system.enables?.list?.length) return [];
+
+    const enabledEffects = [];
+    for (const enableRef of item.system.enables.list) {
+      const effects = await this._processEnablerRef(item, enableRef);
+      enabledEffects.push(...effects);
     }
-    game.system.log.o('[ABILITY:ENABLER] Enabled effects:', allEnabledEffects);
-    return allEnabledEffects;
+
+    game.system.log.o('[ABILITY:ENABLER] Enabled effects:', enabledEffects);
+    return enabledEffects;
   }
 
   /**
-   * Handle single item effect enabling
+   * Process a single enabler reference
    * @private
+   * @param {Item} sourceItem - The item triggering the enabler
+   * @param {Object} enableRef - The reference to the item to enable
+   * @return {Promise<Array>} Array of enabled effect UUIDs
    */
-  async _handleSingleItemEffectEnabling(item, enablesItemRef) {
-    // Get the compendium item for reference
-    const compendiumItem = await fromUuid(enablesItemRef.uuid);
-    if (!compendiumItem) {
-      game.system.log.w("[ENABLE] Could not find compendium item for uuid:", enablesItemRef.uuid);
+  async _processEnablerRef(sourceItem, enableRef) {
+    // Find and validate items
+    const { compendiumItem, actorItem } = await this._findEnablerItems(enableRef);
+    if (!actorItem || !actorItem.hasEffects) return [];
+
+    // Check usage limits
+    if (!await this.actor.actorItemHasRemainingUses(actorItem)) {
+      game.system.log.w("[ENABLE]", `${actorItem.name} has no remaining uses`);
       return [];
     }
 
-    game.system.log.o('[ENABLE] Found compendium item:', { 
-      name: compendiumItem.name, 
-      type: compendiumItem.type,
-      hasEffects: compendiumItem.hasEffects,
-      effects: compendiumItem.effects.map(e => ({
-        name: e.name,
-        flags: foundry.utils.deepClone(e.flags),
-        rawFlags: foundry.utils.deepClone(e.flags?.[SYSTEM_ID]),
-        stackable: e.getFlag(SYSTEM_ID, 'stackable'),
-        toObject: foundry.utils.deepClone(e.toObject())
-      }))
-    });
+    // Handle special case for traits
+    if (actorItem.type === 'trait') {
+      const canEnableTrait = await this._validateTraitEnabling(actorItem);
+      if (!canEnableTrait) return [];
+    }
 
-    // Find actor's version of the item by matching name and type
+    // Apply effects
+    const effectsEnabled = await this.actor.addLinkedEffects(actorItem);
+    
+    // Handle chat message if needed
+    if (effectsEnabled.length && sourceItem.name !== actorItem.name) {
+      await this.DefaultChat.handle(actorItem);
+    }
+
+    return effectsEnabled;
+  }
+
+  /**
+   * Find and validate compendium and actor items for an enabler reference
+   * @private
+   * @param {Object} enableRef - The reference to the item to enable
+   * @return {Promise<Object>} Object containing compendium and actor items
+   */
+  async _findEnablerItems(enableRef) {
+    const compendiumItem = await fromUuid(enableRef.uuid);
+    if (!compendiumItem) {
+      game.system.log.w("[ENABLE] Could not find compendium item:", enableRef.uuid);
+      return { compendiumItem: null, actorItem: null };
+    }
+
     const actorItem = this.actor.items.find(item => 
       item.name === compendiumItem.name && 
       item.type === compendiumItem.type
     );
 
     if (!actorItem) {
-      game.system.log.w("[ENABLE] Could not find matching actor item for:", compendiumItem.name);
-      return [];
-    }
-    if (!actorItem.hasEffects) {
-      game.system.log.w("[ENABLE] Actor item has no effects:", actorItem.name, actorItem);
-      return [];
-    }
-    game.system.log.o("[ENABLE] Actor item :", {
-      item: actorItem,
-      effects: actorItem.effects.map(e => ({
-        name: e.name,
-        flags: foundry.utils.deepClone(e.flags),
-        rawFlags: foundry.utils.deepClone(e.flags?.[SYSTEM_ID]),
-        stackable: e.getFlag(SYSTEM_ID, 'stackable'),
-        toObject: foundry.utils.deepClone(e.toObject())
-      }))
-    });
-
-    // Check if we've hit the usage limit using the actor's version of the item
-    const hasRemainingUses = await this.actor.actorItemHasRemainingUses(actorItem);
-
-    if (!hasRemainingUses) {
-      game.system.log.w("[ENABLE]", `${actorItem.name} has been used ${actorItem.currentUses} times, reaching its usage limit of ${actorItem.maxUses}`);
-      return [];
+      game.system.log.w("[ENABLE] Could not find matching actor item:", compendiumItem.name);
+      return { compendiumItem, actorItem: null };
     }
 
-    // Add effects and get their UUIDs
-    game.system.log.o('[ENABLE] Adding linked effects for:', actorItem.name);
-    const effectsEnabled = await this.actor.addLinkedEffects(actorItem);
+    return { compendiumItem, actorItem };
+  }
 
-    // If we added any effects, create chat message
-    if (effectsEnabled.length) {
-      game.system.log.o('[ENABLE] Effects added:', effectsEnabled);
-      //- if the enabler effect item has the same name as the triggering item, don't send a default chat message
-      if (item.name !== actorItem.name) {
-        await this.DefaultChat.handle(actorItem);
-      }
+  /**
+   * Validate if a trait can be enabled
+   * @private
+   * @param {Item} trait - The trait item to validate
+   * @return {Promise<boolean>} Whether the trait can be enabled
+   */
+  async _validateTraitEnabling(trait) {
+    if (!trait.system.sacrificesMovement) return true;
+
+    const tokenId = this.actor.token?.id;
+    if (!tokenId) return true;
+
+    if (getTokenMovement(tokenId) > 0) {
+      ui.notifications.warn(`Cannot enable ${trait.name} after moving.`);
+      return false;
     }
 
-    if (actorItem.type === 'trait' && actorItem.system.sacrificesMovement) {
-      const tokenId = this.actor.token?.id;
-      if (tokenId && getTokenMovement(tokenId) > 0) {
-        ui.notifications.warn(`Cannot enable ${actorItem.name} after moving.`);
-        return [];
-      } else {
-        // game.system.log.o('[FOCUS] Pre-toggle state:', {
-        //   hasFocus: this.actor.statuses.has('focus'),
-        //   hasMoved: this.actor.system.hasMoved,
-        //   actionState: this.actor.system.actionState,
-        //   hasSecondarySlot: this.actor.system.actionState.available.includes('secondary'),
-        //   hasSecondaryDuplicate: this.actor.hasSpecificDuplicate(this.actor.system.actionState.available, 'secondary'),
-        //   inCombat: !!game.combat
-        // });
-
-        if (!game.combat) {
-          ui.notifications.warn("Focus can only be toggled during combat.");
-          return [];
-        }
-
-        await this.actor.toggleStatusEffect("focus");
-
-        // game.system.log.o('[FOCUS] Post-toggle state:', {
-        //   hasFocus: this.actor.statuses.has('focus'),
-        //   hasMoved: this.actor.system.hasMoved,
-        //   actionState: this.actor.system.actionState,
-        //   hasSecondarySlot: this.actor.system.actionState.available.includes('secondary'),
-        //   hasSecondaryDuplicate: this.actor.hasSpecificDuplicate(this.actor.system.actionState.available, 'secondary')
-        // });
-      }
+    if (!game.combat) {
+      ui.notifications.warn("Focus can only be toggled during combat.");
+      return false;
     }
 
-    return effectsEnabled;
+    await this.actor.toggleStatusEffect("focus");
+    return true;
   }
 
   /**

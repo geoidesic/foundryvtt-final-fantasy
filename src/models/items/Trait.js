@@ -31,11 +31,6 @@ export class TraitModel extends FFItemDataModel {
       tags: new ArrayField(
         new StringField({ required: false, initial: '' })
       ),
-      hasDuration: new BooleanField({ required: false, initial: false }),
-      duration: new SchemaField({
-        turns: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
-        rounds: new NumberField({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
-      }),
       sacrificesMovement: new BooleanField({ required: false, initial: false }),
     };
   }

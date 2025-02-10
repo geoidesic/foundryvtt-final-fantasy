@@ -2,7 +2,7 @@
   import { onMount, getContext } from "svelte";
   import { localize } from "~/src/helpers/util";
   import { 
-    getRangeOptions, getDurationOptions, getDurationUnits, 
+    getRangeOptions, getDurationOptions, getDurationTypeOptions, getDurationUnits, getDurationQualifierOptions,
     getLimitationOptions, getLimitationUnits, getAspectedOptions, 
     getTargetOptions, getHeavyshotOptions, getTriggerOptions, 
     getDirectHitOptions, getTypeOptions, getBaseEffectHealingTypeOptions
@@ -40,10 +40,13 @@
   const triggerOptions = getTriggerOptions();
   const targetOptions = getTargetOptions();
   const aspectedOptions = getAspectedOptions();
-  const directHitOptions = getDirectHitOptions();
   const typeOptions = getTypeOptions();
   const directHitConditionOptions = getDefaultStatusEffects().map((effect) => ({ value: effect.id, label: effect.name }));
   const baseEffectHealingTypeOptions = getBaseEffectHealingTypeOptions();
+  const durationQualifierOptions = getDurationQualifierOptions();
+  const durationTypeOptions = getDurationTypeOptions();
+  const directHitOptions = getDirectHitOptions();
+
   const costOptions = [
     { value: 1, label: localize("Types.Item.Types.Options.Cost.1") },
     { value: 2, label: localize("Types.Item.Types.Options.Cost.2") },
@@ -211,22 +214,48 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left Duration
+          +if("$item.system.hasDuration")
+            h2.left Duration
+            +else
+              h3.left Duration
         .flex0.right
           DocCheckbox( name="hasDuration" valuePath="system.hasDuration")
 
       +if("$item.system.hasDuration")
-        .flexrow.sheet-row.justify-vertical.wide
-          .flex2.left
-            DocSelect.left(id="duration" name="duration" type="number" options="{durationOptions}" valuePath="system.duration")
-          .flex2.right
-            DocSelect.right(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
+        .subsection
+          .flexrow.sheet-row.justify-vertical.wide.px-sm
+            .flex1
+              label(for="durationType") {localize("Types.Item.Types.Options.DurationType.label")}
+            .flex1
+              DocSelect.left(id="durationType" name="durationType" options="{durationTypeOptions}" valuePath="system.durationType")
+          +if("$item.system.durationType === 'hasAmount' || $item.system.durationType === 'hasQualifier'")
+            .flexrow.sheet-row.justify-vertical.wide.px-sm.bg-black.pa-sm
+              .flex3.left
+                +if("$item.system.durationType === 'hasAmount'")
+                  label(for="durationAmount") {localize("Types.Item.Types.Options.DurationAmount.label")}
+                +if("$item.system.durationType === 'hasQualifier'")
+                  label(for="durationQualifier") {localize("Types.Item.Types.Options.DurationQualifier.label")}
+              .flex1.right Units
+            .flexrow.sheet-row.justify-vertical.wide.px-sm.border
+              .flex3.left.nowrap
+                +if("$item.system.durationType === 'hasAmount'")
+                  DocSelect.left.wide(id="durationAmount" name="durationAmount" type="number" options="{durationOptions}" valuePath="system.durationAmount")
+                +if("$item.system.durationType === 'hasQualifier'")
+                  DocSelect.left.wide(id="durationQualifier" name="durationQualifier" options="{durationQualifierOptions}" valuePath="system.durationQualifier")
+              .flex1.right
+                DocSelect.right.wide(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
 
       .flexrow.justify-vertical
         .flex4
           h3.left Aspected
         .flex0.right
           DocCheckbox( name="hasAspected" valuePath="system.hasAspected")
+      +if("$item.system.hasAspected")
+        .flexrow.sheet-row.justify-vertical.wide
+          .flex1
+            label(for="aspected") Aspected
+          .flex4.right.wide
+            DocSelect.wide.right(id="aspected" name="aspected" type="number" options="{aspectedOptions}" valuePath="system.aspected")
 
       .flexrow.justify-vertical
         .flex4
@@ -241,12 +270,6 @@
           .flex4.right.wide
             DocSelect.wide.right(id="trigger" name="trigger" type="number" options="{triggerOptions}" valuePath="system.trigger")
     
-      +if("$item.system.hasAspected")
-        .flexrow.sheet-row.justify-vertical.wide
-          .flex1
-            label(for="aspected") Aspected
-          .flex4.right.wide
-            DocSelect.wide.right(id="aspected" name="aspected" type="number" options="{aspectedOptions}" valuePath="system.aspected")
       
 
       .flexrow.justify-vertical
@@ -321,6 +344,8 @@
 
 <style lang="sass">
     @use '../../../../../../styles/_mixins' as mixins
+    label
+      color: var(--color-highlight)
     .details
       max-height: calc(100% - 15px) //- prevents the scrolling area's content from being hidden below the fold
 

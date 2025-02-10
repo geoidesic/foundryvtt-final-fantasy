@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { localize } from "~/src/helpers/util";
-  import { getLimitationOptions, getDurationOptions, getDurationUnits, getLimitationUnits, getDamageDiceRerollOptions } from "~/src/helpers/constants"
+  import { getLimitationOptions, getDurationQualifierOptions, getDurationOptions, getDurationUnits, getLimitationUnits, getDamageDiceRerollOptions } from "~/src/helpers/constants"
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
   import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
@@ -14,6 +14,7 @@
   const damageDiceRerollOptions = getDamageDiceRerollOptions();
   const durationOptions = getDurationOptions();
   const durationUnitsOptions = getDurationUnits();
+  const durationQualifierOptions = getDurationQualifierOptions();
 
   const typeOptions = [
     { value: "Buff", label: localize("Types.Item.Types.Options.TraitType.Buff") },
@@ -64,8 +65,13 @@
 
     +if("$item.system.hasDuration")
       .flexrow.sheet-row.justify-vertical.wide.px-sm
+        .flex2.left Amount
+        .flex2.center Qualifier
+        .flex2.right Units
+      .flexrow.sheet-row.justify-vertical.wide.px-sm
         .flex2.left
           label(for="duration.turns") Turns
+        .flex2.center
         .flex2.right
           DocInput.right(id="duration.turns" name="duration.turns" type="number" valuePath="system.duration.turns")
       .flexrow.sheet-row.justify-vertical.wide.px-sm

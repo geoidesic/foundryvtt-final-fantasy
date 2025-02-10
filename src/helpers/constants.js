@@ -28,6 +28,20 @@ export const getDurationOptions = () => [
   { value: 1, label: game.i18n.localize("FF15.one") },
   { value: 2, label: game.i18n.localize("FF15.two") },
   { value: 3, label: game.i18n.localize("FF15.three") },
+  { value: 4, label: game.i18n.localize("FF15.four") },
+];
+
+export const getDurationTypeOptions = () => [
+  { value: "hasQualifier", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationType.hasQualifier") },
+  { value: "hasAmount", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationType.hasAmount") },
+];
+
+export const getDurationQualifierOptions = () => [
+  { value: "endOfThis", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.endOfThis") },
+  { value: "endOfNext", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.endOfNext") },
+  { value: "startOfNext", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.startOfNext") },
+  { value: "untilDamage", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.untilDamage") },
+  { value: "nextAbility", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.nextAbility") },
 ];
 
 export const getDurationUnits = () => [

@@ -17,6 +17,7 @@
     "one": "1",
     "two": "2",
     "three": "3",
+    "four": "4",
     "Abilities": "Abilities",
     "Action": "Action",
     "Bookmark": "Bookmark",
@@ -140,6 +141,18 @@
         "Effect": "Effect",
         "Trigger": "Trigger",
         "Size": "Size",
+        "Duration": {
+          "Label": "Duration",
+          "DurationQualifier": "Duration Qualifier",
+          "DurationUnits": "Duration Units",
+          "Options": {
+            "endOfThis": "Until the end of this",
+            "endOfNext": "Until the end of your next",
+            "startOfNext": "Until the start of your next",
+            "untilDamage": "Until you take damage",
+            "nextAbility": "Until the next time you use an ability"
+          }
+        },
         "Types": {
           "action": {
             "Label": "Action",
@@ -296,6 +309,23 @@
               "turn": "Turn",
               "phase": "Phase",
               "round": "Round"
+            },
+            "DurationQualifier": {
+              "label": "Duration Qualifier",
+              "endOfThis": "Until the end of this",
+              "endOfNext": "Until the end of your next",
+              "startOfNext": "Until the start of your next",
+              "untilDamage": "Until you take damage",
+              "nextAbility": "Until the next time you use an ability"
+            },
+            "DurationAmount": {
+              "label": "Duration Amount",
+              "description": "The amount of time the effect will last."
+            },
+            "DurationType": {
+              "label": "Duration Type",
+              "hasQualifier": "Has Qualifier",
+              "hasAmount": "Has Amount"
             }
           }
         }
