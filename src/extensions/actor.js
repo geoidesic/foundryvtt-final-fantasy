@@ -187,27 +187,29 @@ export default class FF15Actor extends Actor {
       const effectData = {
         ...effect.toObject(),
         disabled: false,
+        // Maintain the original effect's origin
+        origin: effect.origin || item.uuid,
         flags: {
           ...effect.flags,
           [SYSTEM_ID]: {
+            ...effect.flags?.[SYSTEM_ID],  // Preserve existing system flags
             overlay: effect.getFlag(SYSTEM_ID, 'overlay'),
             stackable: effect.getFlag(SYSTEM_ID, 'stackable'),
-            origin: {
-              actor: {
-                uuid: this.uuid,
-                name: this.name,
-                img: this.img
-              },
-              effect: {
-                uuid: effect.uuid
-              }
-            },
+            // Track who enabled this effect
             transferredBy: {
               actor: {
                 uuid: this.uuid,
                 name: this.name,
                 img: this.img
+              },
+              item: {
+                uuid: item.uuid,
+                name: item.name
               }
+            },
+            // Maintain effect origin info needed by CombatSlotManager
+            originEffect: {
+              uuid: effect.uuid
             }
           }
         }

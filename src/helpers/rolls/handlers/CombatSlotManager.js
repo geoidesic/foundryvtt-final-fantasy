@@ -92,21 +92,23 @@ export default class CombatSlotManager {
             origin: enablerEffectForThisSlot.origin
           });
 
-          const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, 'origin.effect.uuid').split('.').slice(0, -2).join('.');
-          const originItem = fromUuidSync(originItemUuid);
-          if (originItem) {
-            game.system.log.o('[SLOT:USAGE] Found origin item:', {
-              name: originItem.name,
-              currentUses: originItem.system.uses,
-              maxUses: originItem.system.maxUses
-            });
+          const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, 'originEffect.uuid')?.split('.').slice(0, -2).join('.');
+          if (originItemUuid) {
+            const originItem = fromUuidSync(originItemUuid);
+            if (originItem) {
+              game.system.log.o('[SLOT:USAGE] Found origin item:', {
+                name: originItem.name,
+                currentUses: originItem.system.uses,
+                maxUses: originItem.system.maxUses
+              });
 
-            const uses = (originItem.system.uses || 0) + 1;
-            await originItem.update({ system: { uses } });
+              const uses = (originItem.system.uses || 0) + 1;
+              await originItem.update({ system: { uses } });
+            }
+
+            game.system.log.o('[SLOT:USAGE] Removing enabler effect:', enablerEffectForThisSlot.name);
+            await enablerEffectForThisSlot.delete();
           }
-
-          game.system.log.o('[SLOT:USAGE] Removing enabler effect:', enablerEffectForThisSlot.name);
-          await enablerEffectForThisSlot.delete();
         }
       }
     }
