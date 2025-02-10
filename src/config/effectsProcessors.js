@@ -46,4 +46,15 @@ export function setupEffectsProcessors() {
     await processor.process(event);
   });
 
+  // Add hook for damage-based duration effects
+  Hooks.on('FF15.onDamage', async (event) => {
+    const processor = new effects.DurationManager(event.actor);
+    await processor.onDamage(event);
+  });
+
+  // Add hook for ability-use-based duration effects
+  Hooks.on('FF15.onAbilityUse', async (event) => {
+    const processor = new effects.DurationManager(event.actor);
+    await processor.onAbilityUse(event.item);
+  });
 }

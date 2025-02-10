@@ -7,6 +7,7 @@ import EnableCombatTurnSlot from './EnableCombatTurnSlot.js';
 import DamageOverTime from './DamageOverTime.js';
 import ProcTrigger from './ProcTrigger.js';
 import LucidDreaming from './LucidDreaming.js';
+import DurationManager from './DurationManager.js';
 
 /**
  * Collection of custom effect processors
@@ -20,5 +21,6 @@ export default {
   EnableCombatTurnSlot,
   DamageOverTime,
   ProcTrigger,
-  LucidDreaming
+  LucidDreaming,
+  DurationManager
 };

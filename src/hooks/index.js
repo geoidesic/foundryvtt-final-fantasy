@@ -16,6 +16,7 @@ import preCreateCombatant from './preCreateCombatant.js';
 import updateActiveEffect from './updateActiveEffect.js';
 import ready from './ready.js';
 import init from './init.js';
+import effects from '~/src/helpers/effects';
 
 // Export effects as an object
 export default {
@@ -36,6 +37,8 @@ export default {
   updateActiveEffect,
   ready,
   init,
+  onDamage,
+  onAbilityUse
 };
 
 export { 
@@ -57,3 +60,30 @@ export {
   ready,
   init,
 };
+
+/**
+ * Hook that runs when damage is applied
+ */
+function onDamage() {
+  Hooks.on("FF15.onDamage", async (event) => {
+    const actor = event.actor;
+    if (!actor) return;
+
+    const durationManager = new effects.DurationManager(actor);
+    await durationManager.onDamage(event);
+  });
+}
+
+/**
+ * Hook that runs when an ability is used
+ */
+function onAbilityUse() {
+  Hooks.on("FF15.onAbilityUse", async (event) => {
+    const actor = event.actor;
+    const item = event.item;
+    if (!actor || !item) return;
+
+    const durationManager = new effects.DurationManager(actor);
+    await durationManager.onAbilityUse(item);
+  });
+}

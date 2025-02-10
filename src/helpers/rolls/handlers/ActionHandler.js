@@ -1,6 +1,7 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 import { generateRandomElementId } from "~/src/helpers/util";
 import DefaultChat from "~/src/helpers/rolls/handlers/DefaultChatHandler";
+import { Hooks } from "~/src/helpers/hooks";
 
 /**
  * Handles all action-related operations
@@ -25,6 +26,9 @@ export default class ActionHandler {
       this.options = options;  // Store options for use in other methods
       const { targets, hasTargets, targetIds } = this._getActionTargets();
       const limiterType = this._checkAbilityLimiter();
+
+      // Call the ability use hook
+      await Hooks.callAll('FF15.onAbilityUse', { actor: this.actor, item });
 
       let roll;
       let isCritical = false;

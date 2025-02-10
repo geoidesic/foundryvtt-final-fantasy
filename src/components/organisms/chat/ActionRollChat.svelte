@@ -277,6 +277,9 @@
 
     await token.actor.update({ "system.points.HP.val": newHP });
 
+    // Call the damage hook
+    await Hooks.callAll('FF15.onDamage', { actor: token.actor, damage: remainingDamage });
+
     game.system.log.o('[KO CHECK] After HP update:', {
       updatedCurrentHP: token.actor.system.points.HP.val,
       hasKoStatus: token.actor.statuses.has('ko')

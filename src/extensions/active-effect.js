@@ -48,33 +48,65 @@ export default class FFActiveEffect extends ActiveEffect {
     const effectItem = await fromUuid(effectData.uuid?.split('.').slice(0, -2).join('.'));
     let duration = effectItem?.system?.duration;
     let durationUnits = effectItem?.system?.durationUnits;
+    let durationType = effectItem?.system?.durationType;
+    let durationQualifier = effectItem?.system?.durationQualifier;
 
     // If no duration on Effect Item, try the source item
     if (!duration) {
       const sourceItem = await fromUuid(effectData.origin);
       duration = sourceItem?.system?.duration;
       durationUnits = sourceItem?.system?.durationUnits;
+      durationType = sourceItem?.system?.durationType;
+      durationQualifier = sourceItem?.system?.durationQualifier;
     }
 
-    if (!duration) return;
+    if (!durationType) return;
 
-    // Set up duration based on unit type
-    if (durationUnits === 'turns') {
+    // Base duration data that's common to all types
+    const baseDurationData = {
+      startTime: game.time.worldTime,
+      startRound: game.combat?.round ?? 0,
+      startTurn: game.combat?.turn ?? 0,
+      combat: game.combat?.id
+    };
+
+    // Handle different duration types
+    if (durationType === 'hasAmount' && duration) {
+      // Handle numeric duration in rounds/turns
       effectData.duration = {
-        turns: duration,
-        startTime: game.time.worldTime,
-        startRound: game.combat?.round ?? 0,
-        startTurn: game.combat?.turn ?? 0,
-        combat: game.combat?.id
+        ...baseDurationData,
+        [durationUnits === 'turns' ? 'turns' : 'rounds']: duration
       };
-    } else if (durationUnits === 'rounds') {
+    } else if (durationType === 'hasQualifier' && durationQualifier) {
+      // Handle special timing conditions
       effectData.duration = {
-        rounds: duration,
-        startTime: game.time.worldTime,
-        startRound: game.combat?.round ?? 0,
-        startTurn: game.combat?.turn ?? 0,
-        combat: game.combat?.id
+        ...baseDurationData,
+        type: durationQualifier,
+        [durationUnits === 'turns' ? 'turns' : 'rounds']: 1  // Default to 1 for qualifiers that need a duration
       };
+
+      // Add any qualifier-specific data
+      switch (durationQualifier) {
+        case 'endOfThis':
+          // Duration until end of current turn/round
+          break;
+        case 'endOfNext':
+          // Duration until end of next turn/round
+          effectData.duration[durationUnits === 'turns' ? 'turns' : 'rounds'] = 2;
+          break;
+        case 'startOfNext':
+          // Duration until start of next turn/round
+          effectData.duration[durationUnits === 'turns' ? 'turns' : 'rounds'] = 1;
+          break;
+        case 'untilDamage':
+          // Special flag for damage-based duration
+          effectData.duration.requiresDamage = true;
+          break;
+        case 'nextAbility':
+          // Special flag for ability-based duration
+          effectData.duration.requiresAbility = true;
+          break;
+      }
     }
   }
 
