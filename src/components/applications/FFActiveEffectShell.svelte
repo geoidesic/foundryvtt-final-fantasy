@@ -7,6 +7,7 @@
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import Tabs from "~/src/components/molecules/Tabs.svelte";
   import Config from "~/src/components/tabs/activeEffect/Config.svelte";
+  import Duration from "~/src/components/tabs/activeEffect/Duration.svelte";
   
   export let elementRoot = void 0;
   export let doc;
@@ -23,6 +24,12 @@
       id: "config", 
       component: Config,
       img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/cog.webp'
+    },
+    {
+      label: localize('FF15.Duration.Title'),
+      id: "duration",
+      component: Duration,
+      img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/duration.webp'
     },
     { 
       label: localize('EFFECT.Changes'), 

@@ -121,6 +121,26 @@
       "Label": {
         "Statuses": "Statuses",
         "SelectTag": "Select Tag"
+      },
+      "Duration": {
+        "Title": "Duration",
+        "Type": "Duration Type",
+        "Amount": "Duration Amount",
+        "StartRound": "Starting Round",
+        "StartTurn": "Starting Turn",
+        "StartTime": "Starting Time",
+        "Rounds": "Rounds",
+        "Turns": "Turns",
+        "Types": {
+          "None": "None",
+          "Rounds": "Rounds",
+          "Turns": "Turns",
+          "EndOfThis": "End of Current Round/Turn",
+          "EndOfNext": "End of Next Round/Turn",
+          "StartOfNext": "Start of Next Round/Turn",
+          "UntilDamage": "Until Damaged",
+          "NextAbility": "Until Next Ability"
+        }
       }
     },
     "Errors": {
@@ -146,6 +166,9 @@
           "DurationQualifier": "Duration Qualifier",
           "DurationUnits": "Duration Units",
           "Options": {
+            "None": "None",
+            "Rounds": "Rounds",
+            "Turns": "Turns",
             "endOfThis": "Until the end of this",
             "endOfNext": "Until the end of your next",
             "startOfNext": "Until the start of your next",
@@ -309,14 +332,6 @@
               "turn": "Turn",
               "phase": "Phase",
               "round": "Round"
-            },
-            "DurationQualifier": {
-              "label": "Duration Qualifier",
-              "endOfThis": "Until the end of this",
-              "endOfNext": "Until the end of your next",
-              "startOfNext": "Until the start of your next",
-              "untilDamage": "Until you take damage",
-              "nextAbility": "Until the next time you use an ability"
             },
             "DurationAmount": {
               "label": "Duration Amount",

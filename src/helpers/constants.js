@@ -31,17 +31,21 @@ export const getDurationOptions = () => [
   { value: 4, label: game.i18n.localize("FF15.four") },
 ];
 
-export const getDurationTypeOptions = () => [
-  { value: "hasQualifier", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationType.hasQualifier") },
-  { value: "hasAmount", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationType.hasAmount") },
-];
+export function getDurationTypeOptions() {
+  return [
+    { value: "none", label: game.i18n.localize("FF15.Types.Item.Duration.Options.None") },
+    { value: "rounds", label: game.i18n.localize("FF15.Types.Item.Duration.Options.Rounds") },
+    { value: "turns", label: game.i18n.localize("FF15.Types.Item.Duration.Options.Turns") },
+    ...getDurationQualifierOptions()
+  ];
+}
 
 export const getDurationQualifierOptions = () => [
-  { value: "endOfThis", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.endOfThis") },
-  { value: "endOfNext", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.endOfNext") },
-  { value: "startOfNext", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.startOfNext") },
-  { value: "untilDamage", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.untilDamage") },
-  { value: "nextAbility", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationQualifier.nextAbility") },
+  { value: "endOfThis", label: game.i18n.localize("FF15.Types.Item.Duration.Options.endOfThis") },
+  { value: "endOfNext", label: game.i18n.localize("FF15.Types.Item.Duration.Options.endOfNext") },
+  { value: "startOfNext", label: game.i18n.localize("FF15.Types.Item.Duration.Options.startOfNext") },
+  { value: "untilDamage", label: game.i18n.localize("FF15.Types.Item.Duration.Options.untilDamage") },
+  { value: "nextAbility", label: game.i18n.localize("FF15.Types.Item.Duration.Options.nextAbility") },
 ];
 
 export const getDurationUnits = () => [

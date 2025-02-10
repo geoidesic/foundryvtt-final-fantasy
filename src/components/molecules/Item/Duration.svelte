@@ -48,8 +48,9 @@ onMount(async () => {
               DocSelect.left.wide(id="durationAmount" name="durationAmount" type="number" options="{durationOptions}" valuePath="system.durationAmount")
             +if("$item.system.durationType === 'hasQualifier'")
               DocSelect.left.wide(id="durationQualifier" name="durationQualifier" options="{durationQualifierOptions}" valuePath="system.durationQualifier")
-          .flex1.right
-            DocSelect.right.wide(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
+          +if("$item.system.durationType === 'hasQualifier' && ($item.system.durationQualifier !== 'untilDamage' && $item.system.durationQualifier !== 'nextAbility')")
+            .flex1.right
+              DocSelect.right.wide(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
 
 </template>
 <style lang="sass">
