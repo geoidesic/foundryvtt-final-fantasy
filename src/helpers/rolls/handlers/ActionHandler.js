@@ -1,7 +1,6 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 import { generateRandomElementId } from "~/src/helpers/util";
 import DefaultChat from "~/src/helpers/rolls/handlers/DefaultChatHandler";
-import { Hooks } from "~/src/helpers/hooks";
 
 /**
  * Handles all action-related operations
