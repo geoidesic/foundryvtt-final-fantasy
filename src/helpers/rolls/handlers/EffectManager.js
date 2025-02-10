@@ -180,10 +180,10 @@ export default class EffectManager {
       return [];
     }
 
-    // Handle special case for traits
-    if (actorItem.type === 'trait') {
-      const canEnableTrait = await this._validateTraitEnabling(actorItem);
-      if (!canEnableTrait) return [];
+    // Handle special case for traits that sacrifice movement
+    if (actorItem.type === 'trait' && actorItem.system.sacrificesMovement) {
+      const canSacrificeMovement = await this._handleMovementSacrifice(actorItem);
+      if (!canSacrificeMovement) return [];
     }
 
     // Apply effects
@@ -224,19 +224,17 @@ export default class EffectManager {
   }
 
   /**
-   * Validate if a trait can be enabled
+   * Handle the movement sacrifice mechanic for traits
    * @private
-   * @param {Item} trait - The trait item to validate
-   * @return {Promise<boolean>} Whether the trait can be enabled
+   * @param {Item} item - The item that sacrifices movement
+   * @return {Promise<boolean>} Whether the movement can be sacrificed
    */
-  async _validateTraitEnabling(trait) {
-    if (!trait.system.sacrificesMovement) return true;
-
+  async _handleMovementSacrifice(item) {
     const tokenId = this.actor.token?.id;
     if (!tokenId) return true;
 
     if (getTokenMovement(tokenId) > 0) {
-      ui.notifications.warn(`Cannot enable ${trait.name} after moving.`);
+      ui.notifications.warn(`Cannot enable ${item.name} after moving.`);
       return false;
     }
 
