@@ -58,6 +58,9 @@ export default class RollCalcActor extends RollCalc {
    * @param {Item} item - The ability item
    */
   ability(type, item) {
+    console.log("[FF15] | [ABILITY CHAIN] Starting ability chain", {
+      // Add relevant details
+    });
     this._routeAbility(item);
   }
 

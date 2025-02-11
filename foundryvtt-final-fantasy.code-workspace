@@ -4,7 +4,7 @@
 			"path": "."
 		},
 		{
-			"path": "../FoundryVTT-12/resources/app"
+			"path": "../FoundryVTT-12"
 		}
 	],
 	"settings": {}

@@ -120,16 +120,22 @@ export default class DurationManager {
 
   /**
    * Process duration updates when an ability is used
-   * @param {Item} item - The ability item being used
+   * @param {object} event - The ability use event containing item and isNewAbilityUse
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
-  async onAbilityUse(item) {
+  async onAbilityUse(event) {
+    console.log("[FF15] | [DURATION MANAGER] onAbilityUse entry point", {
+      itemName: event.item?.name,
+      isNewAbilityUse: event.isNewAbilityUse,
+      stack: new Error().stack
+    });
     game.system.log.o('[DURATION MANAGER] onAbilityUse called:', {
-      itemName: item?.name,
-      itemType: item?.type,
-      itemSystem: item?.system,
+      itemName: event.item?.name,
+      itemType: event.item?.type,
+      isNewAbilityUse: event.isNewAbilityUse,
+      itemSystem: event.item?.system,
       actorName: this.actor?.name,
-      itemUuid: item?.uuid,
+      itemUuid: event.item?.uuid,
       actorEffects: this.actor.effects.map(e => ({
         name: e.name,
         duration: e.duration,
@@ -140,6 +146,12 @@ export default class DurationManager {
         flags: e.flags
       }))
     });
+
+    // Only process nextAbility effects for new ability uses
+    if (!event.isNewAbilityUse) {
+      game.system.log.o('[DURATION MANAGER] Skipping nextAbility check - not a new ability use');
+      return;
+    }
 
     // Get all effects that end on next ability
     const effects = this.actor.effects.filter(e => {
@@ -174,9 +186,9 @@ export default class DurationManager {
         effectName: effect.name,
         effectOriginUuid: effectOrigin?.uuid,
         effectOriginName: effectOrigin?.name,
-        abilityUuid: item?.uuid,
-        abilityName: item?.name,
-        isSourceAbility: effectOrigin?.uuid === item?.uuid || effectOrigin?.name === item?.name,
+        abilityUuid: event.item?.uuid,
+        abilityName: event.item?.name,
+        isSourceAbility: effectOrigin?.uuid === event.item?.uuid || effectOrigin?.name === event.item?.name,
         effectOriginItem: effectOrigin,
         systemDuration: effect.system?.duration,
         coreDuration: effect.duration,
@@ -184,10 +196,10 @@ export default class DurationManager {
       });
 
       // Check both UUID and name since compendium items will have different UUIDs
-      if (effectOrigin?.uuid === item.uuid || effectOrigin?.name === item?.name) {
+      if (effectOrigin?.uuid === event.item.uuid || effectOrigin?.name === event.item?.name) {
         game.system.log.o('[DURATION MANAGER] Skipping effect deletion because ability is the source:', {
           effectName: effect.name,
-          abilityName: item.name,
+          abilityName: event.item.name,
           systemDuration: effect.system?.duration,
           coreDuration: effect.duration,
           effectOrigin: effect.origin
@@ -201,7 +213,7 @@ export default class DurationManager {
         coreDuration: effect.duration,
         origin: effect.origin,
         effectUuid: effect.uuid,
-        abilityUuid: item?.uuid,
+        abilityUuid: event.item?.uuid,
         effectOriginUuid: effectOrigin?.uuid
       });
       await effect.delete();

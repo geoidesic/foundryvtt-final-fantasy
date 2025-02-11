@@ -21,6 +21,12 @@ export default class ActionHandler {
    * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
    */
   async handle(item, options = {}) {
+    console.log("[FF15] | [ACTION HANDLER] Starting handle", {
+      itemName: item?.name,
+      options,
+      stack: new Error().stack // This will show us the call stack
+    });
+
     try {
       this.options = options;  // Store options for use in other methods
       const { targets, hasTargets, targetIds } = this._getActionTargets();
@@ -80,7 +86,17 @@ export default class ActionHandler {
       }
 
       // Call the ability use hook after all processing is complete
-      await Hooks.callAll('FF15.onAbilityUse', { actor: this.actor, item });
+      await Hooks.callAll('FF15.onAbilityUse', { 
+        actor: this.actor, 
+        item,
+        isNewAbilityUse: true
+      });
+
+      console.log("[FF15] | [ACTION HANDLER] Calling ability use hook", {
+        itemName: item?.name,
+        isNewAbilityUse: true,
+        stack: new Error().stack
+      });
 
       return {
         handledSuccessfully: true,

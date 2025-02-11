@@ -61,6 +61,8 @@ export {
   init,
 };
 
+console.log("[FF15] | [HOOKS] Setting up hooks");
+
 /**
  * Hook that runs when damage is applied
  */
@@ -78,12 +80,12 @@ function onDamage() {
  * Hook that runs when an ability is used
  */
 function onAbilityUse() {
+  console.log("[FF15] | [HOOKS] Registering onAbilityUse hook");
   Hooks.on("FF15.onAbilityUse", async (event) => {
-    const actor = event.actor;
-    const item = event.item;
-    if (!actor || !item) return;
-
-    const durationManager = new effects.DurationManager(actor);
-    await durationManager.onAbilityUse(item);
+    console.log("[FF15] | [ABILITY USE HOOK] Hook triggered", {
+      itemName: event.item?.name,
+      isNewAbilityUse: event.isNewAbilityUse,
+      stack: new Error().stack
+    });
   });
 }

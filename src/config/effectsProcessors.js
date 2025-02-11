@@ -54,7 +54,12 @@ export function setupEffectsProcessors() {
 
   // Add hook for ability-use-based duration effects
   Hooks.on('FF15.onAbilityUse', async (event) => {
+    console.log("[FF15] | [EFFECTS PROCESSOR] Handling onAbilityUse hook", {
+      event,
+      itemName: event.item?.name,
+      isNewAbilityUse: event.isNewAbilityUse
+    });
     const processor = new effects.DurationManager(event.actor);
-    await processor.onAbilityUse(event.item);
+    await processor.onAbilityUse(event);
   });
 }
