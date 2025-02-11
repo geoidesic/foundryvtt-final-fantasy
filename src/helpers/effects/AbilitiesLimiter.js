@@ -32,6 +32,16 @@ export default class AbilitiesLimiter {
       effect: damageOnlyEffect
     });
 
+    // Add detailed logging at the start
+    console.log("[FF15] | [ABILITIES LIMITER] Starting process with effect state:", {
+      effectName: damageOnlyEffect?.name,
+      effectChanges: damageOnlyEffect?.changes,
+      effectOrigin: damageOnlyEffect?.origin,
+      effectFlags: damageOnlyEffect?.flags,
+      effectDuration: damageOnlyEffect?.duration,
+      effectDisabled: damageOnlyEffect?.disabled
+    });
+
     // If we have the effect, validate and modify the event to only include damage
     if (event.item?.system) {
       game.system.log.o('[ABILITIES LIMITER] Processing item:', {
@@ -147,12 +157,30 @@ export default class AbilitiesLimiter {
         effectDisabled: damageOnlyEffect.disabled
       });
 
+      // Add before the delete attempt
+      console.log("[FF15] | [ABILITIES LIMITER] About to delete effect:", {
+        effectName: damageOnlyEffect.name,
+        effectId: damageOnlyEffect.id,
+        effectDuration: damageOnlyEffect.duration,
+        effectChanges: damageOnlyEffect.changes,
+        deleteResult: await damageOnlyEffect.delete()
+      });
+
       try {
         await damageOnlyEffect.delete();
         game.system.log.o('[ABILITIES LIMITER] Successfully deleted effect');
       } catch (error) {
         game.system.log.e('[ABILITIES LIMITER] Failed to delete effect:', error);
       }
+
+      // Add after the delete attempt
+      console.log("[FF15] | [ABILITIES LIMITER] After delete attempt:", {
+        effectStillExists: this.actor.effects.has(damageOnlyEffect.id),
+        remainingEffects: this.actor.effects.map(e => ({
+          name: e.name,
+          id: e.id
+        }))
+      });
     }
 
     return true;

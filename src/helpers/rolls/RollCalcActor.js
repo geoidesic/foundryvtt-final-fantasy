@@ -76,6 +76,12 @@ export default class RollCalcActor extends RollCalc {
    * @param {Object} [options={}] - Additional options
    */
   async abilityAction(item, options = {}) {
+    console.log("[FF15] | [ROLL CALC] abilityAction call stack:", {
+      stack: new Error().stack,
+      itemName: item?.name,
+      options
+    });
+
     try {
       // Early return if guards fail
       if (!(await this.GuardManager.handleGuards(item, [

@@ -20,6 +20,12 @@ export default class EffectManager {
    * @return {Promise<void>} Returns a promise that resolves when all effects are handled
    */
   async handleEffects(item, result) {
+    console.log("[FF15] | [EFFECT MANAGER] handleEffects call stack:", {
+      stack: new Error().stack,
+      itemName: item?.name,
+      result
+    });
+
     game.system.log.o('[EFFECT MANAGER] Starting handleEffects:', {
       itemName: item?.name,
       itemType: item?.type,
@@ -181,10 +187,10 @@ export default class EffectManager {
       sourceItemSystem: sourceItem.system
     });
 
-    // Get duration data from the effect item first, then fall back to source item
-    const durationType = effectItem.system.durationType || sourceItem.system.durationType;
-    const durationUnits = effectItem.system.durationUnits || sourceItem.system.durationUnits;
-    const durationQualifier = effectItem.system.durationQualifier || sourceItem.system.durationQualifier;
+    // Get durations array from source item (the granting item) first, then fall back to effect item
+    const durations = sourceItem.system.durations || effectItem.system.durations || [];
+    // Use the first applicable duration
+    const duration = durations[0] || { type: 'none' };
 
     // Prepare the duration data
     const durationData = {
@@ -195,23 +201,23 @@ export default class EffectManager {
     };
 
     // Add duration-specific data based on type
-    if (durationType === 'hasAmount' && effectItem.system.duration) {
-      durationData.type = durationUnits || 'rounds';
-      durationData[durationUnits === 'turns' ? 'turns' : 'rounds'] = effectItem.system.duration;
-    } else if (durationType === 'hasQualifier' && durationQualifier) {
-      durationData.type = durationQualifier;
-      if (durationQualifier === 'nextAbility') {
+    if (duration.type === 'hasAmount' && duration.amount) {
+      durationData.type = duration.units || 'rounds';
+      durationData[duration.units === 'turns' ? 'turns' : 'rounds'] = duration.amount;
+    } else if (duration.type === 'hasQualifier' && duration.qualifier) {
+      durationData.type = duration.qualifier;
+      if (duration.qualifier === 'nextAbility') {
         durationData.requiresAbility = true;
-      } else if (durationQualifier === 'untilDamage') {
+      } else if (duration.qualifier === 'untilDamage') {
         durationData.requiresDamage = true;
       }
     }
 
     game.system.log.o('[EFFECT MANAGER] Prepared duration data:', {
       effectName: effect.name,
-      durationType,
-      durationUnits,
-      durationQualifier,
+      durationType: duration.type,
+      durationUnits: duration.units,
+      durationQualifier: duration.qualifier,
       durationData
     });
 

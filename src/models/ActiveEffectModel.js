@@ -16,22 +16,6 @@ export default class FFEffectModel extends foundry.abstract.TypeDataModel {
       tags: new ArrayField(
         new StringField({ required: false, initial: '' })
       ),
-      duration: new foundry.data.fields.SchemaField({
-        type: new StringField({
-          required: true,
-          initial: "none",
-          choices: [
-            "none",
-            "rounds",
-            "turns",
-            "endOfThis",
-            "endOfNext", 
-            "startOfNext",
-            "untilDamage",
-            "nextAbility"
-          ]
-        })
-      })
     }
   }
 
