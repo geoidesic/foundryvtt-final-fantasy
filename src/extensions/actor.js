@@ -1,5 +1,6 @@
 import FFActiveEffect from "./active-effect";
 import { activeEffectModes, SYSTEM_ID, ACTIVE_EFFECT_MODES } from "~/src/helpers/constants"
+import * as effectProcessors from '../helpers/effects/index.js';
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -244,12 +245,20 @@ export default class FF15Actor extends Actor {
    * @return {Promise<void>} Returns a promise that resolves when hooks are processed
    */
   async _processEffectHooks(effect) {
+    game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", effect);
+
     for (const change of effect.changes) {
       const matchingMode = activeEffectModes.find(e => e.value === change.mode);
       if (matchingMode) {
+        if (!effectProcessors[change.key]) {
+          ui.notifications.error(`No effect processor found for key: ${change.key}`);
+          return;
+        }    
         game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", change.key);
         await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
-      } 
+      } else {
+        game.system.log.w("[PROCESS EFFECT HOOKS] No matching mode found for change:", change);
+      }
     }
   }
 

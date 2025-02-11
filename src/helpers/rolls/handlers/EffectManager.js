@@ -20,11 +20,7 @@ export default class EffectManager {
    * @return {Promise<void>} Returns a promise that resolves when all effects are handled
    */
   async handleEffects(item, result) {
-    console.log("[FF15] | [EFFECT MANAGER] handleEffects call stack:", {
-      stack: new Error().stack,
-      itemName: item?.name,
-      result
-    });
+    console.log("[FF15] | [EFFECT MANAGER] handleEffects call stack:", item, result);
 
     game.system.log.o('[EFFECT MANAGER] Starting handleEffects:', {
       itemName: item?.name,
@@ -39,7 +35,9 @@ export default class EffectManager {
       }))
     });
 
-    // Check with AbilitiesLimiter first
+
+
+    // Check with AbilitiesLimiter
     const abilitiesLimiter = new AbilitiesLimiter(this.actor);
     const shouldProceed = await abilitiesLimiter.process({ item });
 
@@ -52,13 +50,24 @@ export default class EffectManager {
     const { hasTargets, targets } = result;
 
     // Handle target effects
+    console.log("[FF15] | [EFFECT MANAGER] Target effects check:", {
+      itemName: item?.name,
+      shouldProceed,
+      hasGrants: item.system.grants?.value,
+      grantsList: item.system.grants?.list,
+      hasTargets,
+      targets: targets
+    });
+
     if (shouldProceed && item.system.grants?.value && hasTargets) {
       game.system.log.o('[EFFECT MANAGER] Processing target effects:', {
         itemName: item.name,
         grants: item.system.grants,
         targets: targets.map(t => t.actor?.name)
       });
-      await this._applyEffectsFromList(item, item.system.grants.list, targets);
+      // Convert Set to Array if needed
+      const targetArray = targets instanceof Set ? Array.from(targets) : targets;
+      await this._applyEffectsFromList(item, item.system.grants.list, targetArray);
     }
 
     // Handle source effects
@@ -90,9 +99,17 @@ export default class EffectManager {
    * @param {Array} targets - Array of targets to apply effects to
    */
   async _applyEffectsFromList(sourceItem, effectList, targets) {
-    if (!effectList?.length || !targets?.length) return;
+    if (!effectList?.length || !targets?.length) {
+      if (!effectList?.length) {
+        game.system.log.w("[EFFECT MANAGER] No effects to apply");
+      }
+      if (!targets?.length) {
+        game.system.log.w("[EFFECT MANAGER] No targets to apply effects to");
+      }
+      return;
+    }
 
-    game.system.log.o("[EFFECTS] Processing effects from:", {
+    game.system.log.o("[EFFECT MANAGER] Processing effects from:", {
       sourceItem: sourceItem?.name,
       sourceItemUUID: sourceItem?.uuid,
       actor: this.actor?.name,
