@@ -1,5 +1,5 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
-import DefaultChat  from "~/src/helpers/rolls/handlers/ActionHandler";
+import ActionHandler  from "~/src/helpers/rolls/handlers/ActionHandler";
 import AbilitiesLimiter from "~/src/helpers/effects/AbilitiesLimiter";
 /**
  * Handles all effect-related operations
@@ -10,7 +10,7 @@ export default class EffectManager {
    */
   constructor(actor) {
     this.actor = actor;
-    this.DefaultChat = new DefaultChat(actor);
+    this.ActionHandler = new ActionHandler(actor);
   }
 
   /**
@@ -272,7 +272,7 @@ export default class EffectManager {
     
     // Handle chat message if needed
     if (effectsEnabled.length && sourceItem.name !== actorItem.name) {
-      await this.DefaultChat.handle(actorItem);
+      await this.ActionHandler.handle(actorItem);
     }
 
     return effectsEnabled;
