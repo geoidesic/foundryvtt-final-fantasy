@@ -48,14 +48,15 @@ onMount(async () => {
               DocSelect.left.wide(id="durationAmount" name="durationAmount" type="number" options="{durationOptions}" valuePath="system.durationAmount")
             +if("$item.system.durationType === 'hasQualifier'")
               DocSelect.left.wide(id="durationQualifier" name="durationQualifier" options="{durationQualifierOptions}" valuePath="system.durationQualifier")
-          +if("$item.system.durationType === 'hasQualifier' && ($item.system.durationQualifier !== 'untilDamage' && $item.system.durationQualifier !== 'nextAbility')")
+          +if("$item.system.durationType === 'hasAmount' || ($item.system.durationType === 'hasQualifier' && $item.system.durationAmount > 0)")
             .flex1.right
               DocSelect.right.wide(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
 
 </template>
 <style lang="sass">
     @use '../../../styles/_mixins' as mixins
-    
+    label
+      color: var(--color-gold)
     .subsection
       +mixins.inset(0.5rem)
       margin-bottom: 0.5rem

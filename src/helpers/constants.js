@@ -33,10 +33,8 @@ export const getDurationOptions = () => [
 
 export function getDurationTypeOptions() {
   return [
-    { value: "none", label: game.i18n.localize("FF15.Types.Item.Duration.Options.None") },
-    { value: "rounds", label: game.i18n.localize("FF15.Types.Item.Duration.Options.Rounds") },
-    { value: "turns", label: game.i18n.localize("FF15.Types.Item.Duration.Options.Turns") },
-    ...getDurationQualifierOptions()
+    { value: "hasAmount", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationType.hasAmount") },
+    { value: "hasQualifier", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationType.hasQualifier") },
   ];
 }
 
