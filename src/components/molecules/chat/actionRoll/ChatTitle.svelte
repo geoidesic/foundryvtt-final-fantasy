@@ -43,6 +43,7 @@
   });
 
   $: showProfileImage = game.settings.get(SYSTEM_ID, "showChatProfileImages");
+  $: tagsColumnClass = item?.system?.tags?.length > 1 ? "flex4" : item?.system?.tags?.length > 0 ? "flex2" : "flex1";
 </script>
 
 <template lang="pug">
@@ -73,7 +74,7 @@
           role="button"
           aria-label="Open {FFMessage.item.name} item sheet"
         ) {FFMessage.item.name}
-      .flex4
+      div(class="{tagsColumnClass}")
         .flexcol
           .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
           +if("item?.system?.tags?.length > 0") 
