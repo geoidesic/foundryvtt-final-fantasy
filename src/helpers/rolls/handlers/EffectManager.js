@@ -1,5 +1,6 @@
 import { SYSTEM_ID } from "~/src/helpers/constants";
 import DefaultChat  from "~/src/helpers/rolls/handlers/ActionHandler";
+import AbilitiesLimiter from "~/src/helpers/effects/AbilitiesLimiter";
 /**
  * Handles all effect-related operations
  */
@@ -19,20 +20,58 @@ export default class EffectManager {
    * @return {Promise<void>} Returns a promise that resolves when all effects are handled
    */
   async handleEffects(item, result) {
+    game.system.log.o('[EFFECT MANAGER] Starting handleEffects:', {
+      itemName: item?.name,
+      itemType: item?.type,
+      itemSystem: item?.system,
+      resultData: result,
+      actorEffects: this.actor.effects.map(e => ({
+        name: e.name,
+        changes: e.changes,
+        flags: e.flags,
+        disabled: e.disabled
+      }))
+    });
+
+    // Check with AbilitiesLimiter first
+    const abilitiesLimiter = new AbilitiesLimiter(this.actor);
+    const shouldProceed = await abilitiesLimiter.process({ item });
+
+    game.system.log.o('[EFFECT MANAGER] AbilitiesLimiter check result:', {
+      itemName: item?.name,
+      shouldProceed,
+      hasEnablerEffects: item.system.enables?.list?.length > 0
+    });
+
     const { hasTargets, targets } = result;
 
     // Handle target effects
-    if (item.system.grants?.value && hasTargets) {
+    if (shouldProceed && item.system.grants?.value && hasTargets) {
+      game.system.log.o('[EFFECT MANAGER] Processing target effects:', {
+        itemName: item.name,
+        grants: item.system.grants,
+        targets: targets.map(t => t.actor?.name)
+      });
       await this._applyEffectsFromList(item, item.system.grants.list, targets);
     }
 
     // Handle source effects
-    if (item.system.sourceGrants?.list?.length) {
+    if (shouldProceed && item.system.sourceGrants?.list?.length) {
+      game.system.log.o('[EFFECT MANAGER] Processing source effects:', {
+        itemName: item.name,
+        sourceGrants: item.system.sourceGrants,
+        actor: this.actor.name
+      });
       await this._applyEffectsFromList(item, item.system.sourceGrants.list, [{ actor: this.actor }]);
     }
 
     // Process enabler effects regardless of roll success
-    if (item.system.enables?.list?.length > 0) {
+    if (shouldProceed && item.system.enables?.list?.length > 0) {
+      game.system.log.o('[EFFECT MANAGER] Processing enabler effects:', {
+        itemName: item.name,
+        enables: item.system.enables,
+        actor: this.actor.name
+      });
       await this._handleEnablerEffects(item);
     }
   }
@@ -50,7 +89,9 @@ export default class EffectManager {
     game.system.log.o("[EFFECTS] Processing effects from:", {
       sourceItem: sourceItem?.name,
       sourceItemUUID: sourceItem?.uuid,
-      actor: this.actor?.name
+      actor: this.actor?.name,
+      effectList,
+      targets: targets.map(t => t.actor?.name)
     });
 
     for (const target of targets) {
@@ -134,11 +175,51 @@ export default class EffectManager {
    * @return {Object} Clean effect data
    */
   _prepareCleanEffectData(effect, effectItem, sourceItem) {
+    game.system.log.o('[EFFECT MANAGER] Preparing clean effect data:', {
+      effectName: effect.name,
+      effectItemSystem: effectItem.system,
+      sourceItemSystem: sourceItem.system
+    });
+
+    // Get duration data from the effect item first, then fall back to source item
+    const durationType = effectItem.system.durationType || sourceItem.system.durationType;
+    const durationUnits = effectItem.system.durationUnits || sourceItem.system.durationUnits;
+    const durationQualifier = effectItem.system.durationQualifier || sourceItem.system.durationQualifier;
+
+    // Prepare the duration data
+    const durationData = {
+      startTime: game.time.worldTime,
+      startRound: game.combat?.round ?? 0,
+      startTurn: game.combat?.turn ?? 0,
+      combat: game.combat?.id
+    };
+
+    // Add duration-specific data based on type
+    if (durationType === 'hasAmount' && effectItem.system.duration) {
+      durationData.type = durationUnits || 'rounds';
+      durationData[durationUnits === 'turns' ? 'turns' : 'rounds'] = effectItem.system.duration;
+    } else if (durationType === 'hasQualifier' && durationQualifier) {
+      durationData.type = durationQualifier;
+      if (durationQualifier === 'nextAbility') {
+        durationData.requiresAbility = true;
+      } else if (durationQualifier === 'untilDamage') {
+        durationData.requiresDamage = true;
+      }
+    }
+
+    game.system.log.o('[EFFECT MANAGER] Prepared duration data:', {
+      effectName: effect.name,
+      durationType,
+      durationUnits,
+      durationQualifier,
+      durationData
+    });
+
     return {
       name: effect.name,
       img: effect.img,
       changes: foundry.utils.deepClone(effect.changes),
-      duration: effectItem.system.duration,
+      duration: durationData,
       disabled: false,
       flags: foundry.utils.deepClone(effect.flags),
       origin: sourceItem.uuid,

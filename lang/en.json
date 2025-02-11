@@ -561,7 +561,8 @@
       }
     },
     "Warnings": {
-      "RequiredEffectNotActive": "Cannot use this action - requires {name} to be active"
+      "RequiredEffectNotActive": "Cannot use this action - requires {name} to be active",
+      "NextAbilityDamageOnly": "Only the damage effects were applied, because 'Next Ability Does Damage Only' is active."
     }
   }
 }

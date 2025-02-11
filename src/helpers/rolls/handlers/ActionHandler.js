@@ -26,9 +26,6 @@ export default class ActionHandler {
       const { targets, hasTargets, targetIds } = this._getActionTargets();
       const limiterType = this._checkAbilityLimiter();
 
-      // Call the ability use hook
-      await Hooks.callAll('FF15.onAbilityUse', { actor: this.actor, item });
-
       let roll;
       let isCritical = false;
       let d20Result = null;
@@ -81,6 +78,9 @@ export default class ActionHandler {
           await this._handleBarrier(item);
         }
       }
+
+      // Call the ability use hook after all processing is complete
+      await Hooks.callAll('FF15.onAbilityUse', { actor: this.actor, item });
 
       return {
         handledSuccessfully: true,
@@ -445,35 +445,21 @@ export default class ActionHandler {
    * @return {Promise<void>} A promise that resolves when MP cost is handled
    */
   async _handleCostMP(item) {
-    game.system.log.o('[MP:COST] Starting MP cost handling:', {
-      itemName: item.name,
-      hasCostMP: item.system.hasCostMP,
-      costMP: item.system.costMP,
-      itemSystem: item.system
-    });
+    
 
     if (!item.system.hasCostMP || !item.system.costMP) {
-      game.system.log.o('[MP:COST] No MP cost to handle');
       return;
     }
 
     const cost = item.system.costMP;
     const currentMP = this.actor.system.points.MP.val;
 
-    game.system.log.o('[MP:COST] Deducting MP cost:', {
-      itemName: item.name,
-      cost,
-      currentMP,
-      newMP: currentMP - cost,
-      actorMP: this.actor.system.points.MP
-    });
 
     try {
       // Update the actor's MP
       await this.actor.update({
         'system.points.MP.val': currentMP - cost
       });
-      game.system.log.o('[MP:COST] Successfully deducted MP cost');
     } catch (error) {
       game.system.log.e('[MP:COST] Error deducting MP cost:', error);
       throw error;
@@ -487,55 +473,26 @@ export default class ActionHandler {
    * @return {Promise<void>} A promise that resolves when MP restoration is complete
    */
   async _handleMPRestoration(item) {
-    game.system.log.o('[MP:RESTORE] Starting MP restoration check:', {
-      itemName: item.name,
-      hasRestoreMP: item.system.hasBaseEffectRestoreMP,
-      restoreMP: item.system.baseEffectRestoreMP,
-      itemSystem: item.system
-    });
-
+   
     if (!item.system.baseEffectRestoreMP) {
-      game.system.log.o('[MP:RESTORE] No MP restoration to handle');
       return;
     }
-
-    game.system.log.o('[MP:RESTORE] Rolling MP restoration:', {
-      formula: item.system.baseEffectRestoreMP
-    });
 
     // Convert formula to string if it's a number
     const formula = String(item.system.baseEffectRestoreMP);
     const mpRoll = await new Roll(formula).evaluate();
     const mpAmount = mpRoll.total;
 
-    game.system.log.o('[MP:RESTORE] MP roll result:', {
-      roll: mpRoll,
-      total: mpAmount
-    });
-
-    game.system.log.o('[MP:RESTORE] Actor MP data:', {
-      actor: this.actor.name,
-      points: this.actor.system.points,
-      MP: this.actor.system.points?.MP
-    });
 
     // Calculate new MP value, not exceeding max MP
     const currentMP = this.actor.system.points.MP.val;
     const maxMP = this.actor.system.points.MP.max;
     const newMP = Math.min(currentMP + mpAmount, maxMP);
 
-    game.system.log.o('[MP:RESTORE] MP calculation:', {
-      currentMP,
-      maxMP,
-      mpAmount,
-      newMP,
-      mpRestored: newMP - currentMP
-    });
 
     try {
       // Update the actor's MP
       await this.actor.update({ "system.points.MP.val": newMP });
-      game.system.log.o('[MP:RESTORE] Successfully restored MP');
     } catch (error) {
       game.system.log.e('[MP:RESTORE] Error restoring MP:', error);
       throw error;
@@ -549,49 +506,27 @@ export default class ActionHandler {
    * @return {Promise<void>} A promise that resolves when barrier is applied
    */
   async _handleBarrier(item) {
-    game.system.log.o('[BARRIER] Starting barrier handling:', {
-      itemName: item.name,
-      hasBarrier: item.system.hasBaseEffectBarrier,
-      barrierAmount: item.system.baseEffectBP,
-      itemSystem: item.system
-    });
+   
 
     if (!item.system.baseEffectBP) {
-      game.system.log.o('[BARRIER] No barrier points to handle');
       return;
     }
 
     const barrierAmount = item.system.baseEffectBP;
-    game.system.log.o('[BARRIER] Actor data before update:', {
-      actorName: this.actor.name,
-      actorId: this.actor.id,
-      points: this.actor.system.points,
-      BP: this.actor.system.points?.BP
-    });
+   
 
     const currentBP = this.actor.system.points.BP.val;
     const newBP = currentBP + barrierAmount;
 
-    game.system.log.o('[BARRIER] Calculating barrier points:', {
-      itemName: item.name,
-      actorName: this.actor.name,
-      currentBP,
-      barrierAmount,
-      newBP
-    });
+   
 
     try {
       // Update the actor's BP
       await this.actor.update({ "system.points.BP.val": newBP });
-      game.system.log.o('[BARRIER] Successfully applied barrier points');
 
       // Verify the update
       const updatedBP = this.actor.system.points.BP.val;
-      game.system.log.o('[BARRIER] Verification after update:', {
-        expectedBP: newBP,
-        actualBP: updatedBP,
-        success: updatedBP === newBP
-      });
+     
     } catch (error) {
       game.system.log.e('[BARRIER] Error applying barrier points:', error);
       throw error;

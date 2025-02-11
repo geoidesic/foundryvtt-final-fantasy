@@ -17,48 +17,27 @@ export default class PrimaryBaseDamageBuff {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
-    const { DamageResults, item } = event;
-    game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Processing primary base damage buff effect', {
-      DamageResults,
-      actorEffects: this.actor.effects,
-      item
-    });
-    
-    // Only apply the buff if the ability is primary
-    if (!item?.system?.type || item.system.type !== 'primary') {
-      game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Skipping - not a primary ability', {
-        itemType: item?.system?.type
-      });
-      return;
-    }
-    
-    for (const effect of this.actor.effects) {
-      const origin = fromUuidSync(effect.origin);
-      game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Processing effect:', {
-        effect,
-        origin,
-        changes: effect.changes
-      });
-      
+
+    // Get all effects on the actor
+    const effects = this.actor.effects.filter(e => !e.disabled);
+
+
+
+    // Process each effect
+    for (const effect of effects) {
+      const origin = await fromUuid(effect.origin);
+
+
+
+      // Process each change
       for (const change of effect.changes) {
-        game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Checking change:', {
-          key: change.key,
-          mode: change.mode,
-          value: change.value,
-          matches: change.key === 'PrimaryBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
-        });
         
         if(change.key === 'PrimaryBaseDamageBuff' && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          for (const [tokenId, targetData] of DamageResults) {
+          for (const [tokenId, targetData] of event.DamageResults) {
             const oldDamage = targetData.damage;
             targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
             targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
-            game.system.log.o('[PRIMARY BASE DAMAGE BUFF] Applied damage buff:', {
-              tokenId,
-              oldDamage,
-              newDamage: targetData.damage,
-              addedValue: change.value
-            });
+            
           }
         }
       }
