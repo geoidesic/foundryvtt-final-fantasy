@@ -27,7 +27,9 @@
     if (preventDefault) return;
     
     if (handleOwnUpdates) {
-      const updateObj = { [formatDotpath(valuePath)]: inputValue }
+      const updateObj = {};
+      foundry.utils.setProperty(updateObj, valuePath, inputValue);
+
       game.system.log.b('DocSelect:updateObj', updateObj);
       await $doc.update(updateObj);
       game.system.log.b($doc)

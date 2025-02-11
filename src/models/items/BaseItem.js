@@ -1,6 +1,6 @@
 import { FFTypeDataModel } from "~/src/models/BaseModel";
 
-const { HTMLField, BooleanField, StringField, NumberField } = foundry.data.fields;
+const { HTMLField, BooleanField, StringField, NumberField, ArrayField, SchemaField } = foundry.data.fields;
 
 /**
  * Base data model for all item types
@@ -17,11 +17,12 @@ export class FFItemDataModel extends FFTypeDataModel {
       description: new HTMLField(),
       favourite: new BooleanField({ initial: false }),
       effectActionsLocked: new BooleanField({ initial: false }),
-      hasDuration: new BooleanField({ required: false, initial: false }),
-      durationUnits: new StringField({ required: false, initial: "phase" }),
-      durationType: new StringField({ required: false, initial: "turns" }),
-      durationQualifier: new StringField({ required: false, initial: "" }),
-      durationAmount: new NumberField({ required: false, initial: 0, integer: true, min: 0 }),
+      durations: new ArrayField(new SchemaField({
+        type: new StringField({ required: false }),
+        amount: new NumberField({ required: false, integer: true }),
+        units: new StringField({ required: false }),
+        qualifier: new StringField({ required: false })
+      }), { initial: [] }),
     };
   }
 }

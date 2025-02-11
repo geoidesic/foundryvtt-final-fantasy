@@ -24,63 +24,71 @@ export default class DurationManager {
       actorName: this.actor?.name
     });
 
-    // Get all effects with special duration types
     const effects = this.actor.effects.filter(e => 
-      e.duration?.type && !e.disabled
+      e.system?.durations?.length > 0 && !e.disabled
     );
 
-    game.system.log.o('[DURATION MANAGER] Found effects with duration type:', effects.map(e => ({
+    game.system.log.o('[DURATION MANAGER] Found effects with multiple durations:', effects.map(e => ({
       name: e.name,
-      duration: e.duration,
+      durations: e.system?.durations,
       disabled: e.disabled,
       origin: e.origin
     })));
 
     for (const effect of effects) {
-      const durationType = effect.duration.type;
-      const durationUnits = effect.duration.turns ? 'turns' : 'rounds';
-      const currentRound = combat.round;
-      const currentTurn = combat.turn;
-      const startRound = effect.duration.startRound;
-      const startTurn = effect.duration.startTurn;
+      const durations = effect.system.durations;
+      let shouldDelete = false;
 
-      game.system.log.o('[DURATION MANAGER] Processing effect:', {
-        name: effect.name,
-        durationType,
-        durationUnits,
-        currentRound,
-        currentTurn,
-        startRound,
-        startTurn
-      });
+      for (const duration of durations) {
+        const durationType = duration.type;
+        const durationUnits = duration.units;
+        const currentRound = combat.round;
+        const currentTurn = combat.turn;
+        const startRound = effect.duration.startRound;
+        const startTurn = effect.duration.startTurn;
 
-      switch (durationType) {
-        case 'endOfThis':
-          // If we've moved past the starting round/turn
-          if ((durationUnits === 'rounds' && currentRound > startRound) ||
-              (durationUnits === 'turns' && (currentRound > startRound || currentTurn > startTurn))) {
-            game.system.log.o('[DURATION MANAGER] Deleting endOfThis effect:', effect.name);
-            await effect.delete();
-          }
-          break;
+        game.system.log.o('[DURATION MANAGER] Processing duration:', {
+          name: effect.name,
+          durationType,
+          durationUnits,
+          currentRound,
+          currentTurn,
+          startRound,
+          startTurn
+        });
 
-        case 'endOfNext':
-          // If we've moved past the next round/turn
-          if ((durationUnits === 'rounds' && currentRound > startRound + 1) ||
-              (durationUnits === 'turns' && currentRound > startRound && currentTurn > startTurn)) {
-            game.system.log.o('[DURATION MANAGER] Deleting endOfNext effect:', effect.name);
-            await effect.delete();
-          }
-          break;
+        switch (durationType) {
+          case 'endOfThis':
+            if ((durationUnits === 'rounds' && currentRound > startRound) ||
+                (durationUnits === 'turns' && (currentRound > startRound || currentTurn > startTurn))) {
+              shouldDelete = true;
+            }
+            break;
 
-        case 'startOfNext':
-          // If we've reached the start of the next round/turn
-          if ((durationUnits === 'rounds' && currentRound > startRound) ||
-              (durationUnits === 'turns' && (currentRound > startRound || currentTurn > startTurn))) {
-            game.system.log.o('[DURATION MANAGER] Deleting startOfNext effect:', effect.name);
-            await effect.delete();
-          }
-          break;
+          case 'endOfNext':
+            if ((durationUnits === 'rounds' && currentRound > startRound + 1) ||
+                (durationUnits === 'turns' && currentRound > startRound && currentTurn > startTurn)) {
+              shouldDelete = true;
+            }
+            break;
+
+          case 'startOfNext':
+            if ((durationUnits === 'rounds' && currentRound > startRound) ||
+                (durationUnits === 'turns' && (currentRound > startRound || currentTurn > startTurn))) {
+              shouldDelete = true;
+            }
+            break;
+        }
+
+        if (shouldDelete) break;
+      }
+
+      if (shouldDelete) {
+        game.system.log.o('[DURATION MANAGER] Deleting effect:', {
+          name: effect.name,
+          origin: effect.origin
+        });
+        await effect.delete();
       }
     }
   }
@@ -96,14 +104,13 @@ export default class DurationManager {
       actorName: this.actor?.name
     });
 
-    // Get all effects that end on damage
     const effects = this.actor.effects.filter(e => 
-      e.duration?.requiresDamage && !e.disabled
+      e.system?.durations?.some(d => d.type === 'untilDamage') && !e.disabled
     );
 
-    game.system.log.o('[DURATION MANAGER] Found effects with requiresDamage:', effects.map(e => ({
+    game.system.log.o('[DURATION MANAGER] Found effects with untilDamage duration:', effects.map(e => ({
       name: e.name,
-      duration: e.duration,
+      durations: e.system?.durations,
       disabled: e.disabled,
       origin: e.origin
     })));
@@ -111,7 +118,6 @@ export default class DurationManager {
     for (const effect of effects) {
       game.system.log.o('[DURATION MANAGER] Deleting effect:', {
         name: effect.name,
-        duration: effect.duration,
         origin: effect.origin
       });
       await effect.delete();
@@ -138,7 +144,7 @@ export default class DurationManager {
       itemUuid: event.item?.uuid,
       actorEffects: this.actor.effects.map(e => ({
         name: e.name,
-        duration: e.duration,
+        durations: e.system?.durations,
         disabled: e.disabled,
         origin: e.origin,
         requiresAbility: e.duration?.requiresAbility,
@@ -147,31 +153,18 @@ export default class DurationManager {
       }))
     });
 
-    // Only process nextAbility effects for new ability uses
     if (!event.isNewAbilityUse) {
       game.system.log.o('[DURATION MANAGER] Skipping nextAbility check - not a new ability use');
       return;
     }
 
-    // Get all effects that end on next ability
-    const effects = this.actor.effects.filter(e => {
-      const hasNextAbilityDuration = e.system?.duration?.type === 'nextAbility' && !e.disabled;
-      game.system.log.o('[DURATION MANAGER] Checking effect for nextAbility duration:', {
-        effectName: e.name,
-        hasNextAbilityDuration,
-        systemDuration: e.system?.duration,
-        coreDuration: e.duration,
-        disabled: e.disabled,
-        flags: e.flags,
-        rawEffect: e
-      });
-      return hasNextAbilityDuration;
-    });
+    const effects = this.actor.effects.filter(e => 
+      e.system?.durations?.some(d => d.type === 'nextAbility') && !e.disabled
+    );
 
     game.system.log.o('[DURATION MANAGER] Found effects with nextAbility duration:', effects.map(e => ({
       name: e.name,
-      systemDuration: e.system?.duration,
-      coreDuration: e.duration,
+      durations: e.system?.durations,
       disabled: e.disabled,
       origin: e.origin,
       effectUuid: e.uuid,
@@ -180,27 +173,13 @@ export default class DurationManager {
     })));
 
     for (const effect of effects) {
-      // Don't process the effect if the ability being used is the one that created it
       const effectOrigin = await fromUuid(effect.origin);
-      game.system.log.o('[DURATION MANAGER] Comparing effect origin with ability:', {
-        effectName: effect.name,
-        effectOriginUuid: effectOrigin?.uuid,
-        effectOriginName: effectOrigin?.name,
-        abilityUuid: event.item?.uuid,
-        abilityName: event.item?.name,
-        isSourceAbility: effectOrigin?.uuid === event.item?.uuid || effectOrigin?.name === event.item?.name,
-        effectOriginItem: effectOrigin,
-        systemDuration: effect.system?.duration,
-        coreDuration: effect.duration,
-        effectOrigin: effect.origin
-      });
-
-      // Check both UUID and name since compendium items will have different UUIDs
+      
       if (effectOrigin?.uuid === event.item.uuid || effectOrigin?.name === event.item?.name) {
         game.system.log.o('[DURATION MANAGER] Skipping effect deletion because ability is the source:', {
           effectName: effect.name,
           abilityName: event.item.name,
-          systemDuration: effect.system?.duration,
+          systemDuration: effect.system?.durations,
           coreDuration: effect.duration,
           effectOrigin: effect.origin
         });
@@ -209,7 +188,7 @@ export default class DurationManager {
 
       game.system.log.o('[DURATION MANAGER] Deleting effect:', {
         name: effect.name,
-        systemDuration: effect.system?.duration,
+        systemDuration: effect.system?.durations,
         coreDuration: effect.duration,
         origin: effect.origin,
         effectUuid: effect.uuid,

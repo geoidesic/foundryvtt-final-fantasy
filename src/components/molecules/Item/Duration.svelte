@@ -1,8 +1,8 @@
 <script>
 import { localize } from "~/src/helpers/util";
-import { getContext, onMount } from "svelte";
+import { getContext } from "svelte";
 import { getDurationQualifierOptions, getDurationTypeOptions, getDurationOptions, getDurationUnits } from "~/src/helpers/constants"
-import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
+import ArraySelect from "~/src/components/atoms/controls/ArraySelect.svelte";
 import DocCheckbox from "~/src/components/atoms/controls/DocCheckbox.svelte";
 
 const item = getContext("#doc");
@@ -12,52 +12,112 @@ const durationQualifierOptions = getDurationQualifierOptions();
 const durationOptions = getDurationOptions();
 const durationUnitsOptions = getDurationUnits();
 
-onMount(async () => {
-  console.log('');
-});
+async function addDuration() {
+  const existingDurations = [...$item.system.durations || []];
+  existingDurations.push({
+    type: null,
+    amount: null,
+    units: "rounds",
+    qualifier: ""
+  });
+  await $item.update({ system: { durations: existingDurations } });
+  game.system.log.pink(`Added duration: ${existingDurations}`, $item);
+}
+
+function removeDuration(index) {
+  const existingDurations = [...$item.system.durations];
+  existingDurations.splice(index, 1);
+  $item.update({ system: { durations: existingDurations } });
+}
+
+$: durations = $item.system.durations;
+
+async function updateDuration(index, field, value) {
+  const updatedDurations = [...durations];
+  updatedDurations[index] = { ...updatedDurations[index], [field]: value };
+  await $item.update({ "system.durations": updatedDurations });
+}
 </script>
+
 <template lang="pug">
 .duration
   .flexrow.justify-vertical
     .flex4
-      +if("$item.system.hasDuration")
-        h2.left Duration
-        +else
-          h3.left Duration
+      h2.left Duration
     .flex0.right
-      DocCheckbox( name="hasDuration" valuePath="system.hasDuration")
+      button.small.gold(on:click="{addDuration}")
+        i.fas.fa-plus
 
-  +if("$item.system.hasDuration")
-    .subsection
-      .flexrow.sheet-row.justify-vertical.wide.px-sm
-        .flex1
-          label(for="durationType") {localize("Types.Item.Types.Options.DurationType.label")}
-        .flex1
-          DocSelect.left(id="durationType" name="durationType" options="{durationTypeOptions}" valuePath="system.durationType")
-      +if("$item.system.durationType === 'hasAmount' || $item.system.durationType === 'hasQualifier'")
-        .flexrow.sheet-row.justify-vertical.wide.px-sm.bg-black.pa-sm
-          .flex3.left
-            +if("$item.system.durationType === 'hasAmount'")
-              label(for="durationAmount") {localize("Types.Item.Types.Options.DurationAmount.label")}
-            +if("$item.system.durationType === 'hasQualifier'")
-              label(for="durationQualifier") {localize("Types.Item.Types.Options.DurationQualifier.label")}
-          .flex1.right Units
-        .flexrow.sheet-row.justify-vertical.wide.px-sm.border
-          .flex3.left.nowrap
-            +if("$item.system.durationType === 'hasAmount'")
-              DocSelect.left.wide(id="durationAmount" name="durationAmount" type="number" options="{durationOptions}" valuePath="system.durationAmount")
-            +if("$item.system.durationType === 'hasQualifier'")
-              DocSelect.left.wide(id="durationQualifier" name="durationQualifier" options="{durationQualifierOptions}" valuePath="system.durationQualifier")
-          +if("$item.system.durationType === 'hasAmount' || ($item.system.durationType === 'hasQualifier' && $item.system.durationAmount > 0)")
-            .flex1.right
-              DocSelect.right.wide(id="durationUnits" name="durationUnits" options="{durationUnitsOptions}" valuePath="system.durationUnits")
+  +if('durations && durations.length > 0')
+    +each('durations as duration, i')
+      .subsection
+        .flexrow.justify-vertical.wide
+          .flex4
+            h3.left Duration {i + 1}
+          .flex0.right
+            button.small.gold(on:click!="{() => removeDuration(i)}")
+              i.fas.fa-times
+        .flexrow.sheet-row.justify-vertical.wide.px-sm
+          .flex1
+            label(for="{`durationType${i}`}") {localize('Types.Item.Types.Options.DurationType.label')}
+          .flex1
+            ArraySelect.left(
+              id="{`durationType${i}`}" 
+              options="{durationTypeOptions}" 
+              value="{duration.type}"
+              on:change!="{(e) => updateDuration(i, 'type', e.detail.value)}"
+            )
+        +if('duration.type === "hasAmount" || duration.type === "hasQualifier"')
+          .flexrow.sheet-row.justify-vertical.wide.px-sm.bg-black.pa-sm
+            .flex3.left
+              +if('duration.type === "hasAmount"')
+                label(for="{`durationAmount${i}`}") {localize('Types.Item.Types.Options.DurationAmount.label')}
+              +if('duration.type === "hasQualifier"')
+                label(for="{`durationQualifier${i}`}") {localize('Types.Item.Types.Options.DurationQualifier.label')}
+            .flex1.right Units
+          .flexrow.sheet-row.justify-vertical.wide.px-sm.border
+            +if('duration.type === "hasAmount"')
+              .flex3.left.nowrap
+                ArraySelect.left.wide(
+                  id="{`durationAmount${i}`}"
+                  options="{durationOptions}"
+                  value="{duration.amount}"
+                  on:change!="{(e) => updateDuration(i, 'amount', e.detail.value)}"
+                )
+            +if('duration.type === "hasQualifier"')
+              .flex2.left.nowrap
+                ArraySelect.left.wide(
+                  id="{`durationQualifier${i}`}"
+                  options="{durationQualifierOptions}"
+                  value="{duration.qualifier}"
+                  on:change!="{(e) => updateDuration(i, 'qualifier', e.detail.value)}"
+                )
+            +if('duration.type === "hasAmount" || (duration.qualifier && (duration.type === "hasQualifier" && duration.qualifier !== "untilDamage" && duration.qualifier !== "nextAbility"))')
+              .flex2.right
+                ArraySelect.right.wide(
+                  id="{`durationUnits${i}`}"
+                  options="{durationUnitsOptions}"
+                  value="{duration.units}"
+                  on:change!="{(e) => updateDuration(i, 'units', e.detail.value)}"
+                )
 
 </template>
+
 <style lang="sass">
-    @use '../../../styles/_mixins' as mixins
-    label
-      color: var(--color-gold)
-    .subsection
-      +mixins.inset(0.5rem)
-      margin-bottom: 0.5rem
+@use '../../../styles/_mixins' as mixins
+label
+  color: var(--color-gold)
+.subsection
+  +mixins.inset(0.5rem)
+  margin-bottom: 0.5rem
+button.small
+  padding: 0 3px 0 5px
+  line-height: 1.7
+  min-height: 1.5rem
+  min-width: 1.5rem
+  display: flex
+  align-items: center
+  justify-content: center
+  i
+    font-size: 0.8rem
 </style>

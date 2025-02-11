@@ -1,7 +1,7 @@
-import { FFTypeDataModel } from '~/src/models/baseModel';
+import { FFTypeDataModel } from '~/src/models/BaseModel';
 
 const {
-  HTMLField, SchemaField, NumberField, BooleanField
+  HTMLField, SchemaField, NumberField, BooleanField, ArrayField, StringField
 } = foundry.data.fields;
 
 /**
