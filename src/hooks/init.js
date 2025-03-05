@@ -13,17 +13,17 @@ import FFCombatTracker from '~/src//extensions/combat-tracker.js'
 import hooks from "~/src/hooks";
 import systemconfig from "~/src/helpers/systemconfig.ts"
 
+
 /**
  * Hook that runs during system initialization
  * @return {void}
- */
+*/
 export default function init() {
-
+  
   Hooks.once("init", async (a, b, c) => {
-
-    CONFIG.ui.combat = FFCombatTracker;
+    game.FF15 = game.system;
     game.system.log = log;
-    log.level = log.VERBOSE;
+    game.system.log.level = log.VERBOSE;
     game.system.log.i(`Starting System ${SYSTEM_ID}`);
   
     // CONFIG.debug.hooks = true;
@@ -36,6 +36,9 @@ export default function init() {
     game.system.log.d(game.system.id)
     game.system.log.d(game.system.config)
   
+
+    CONFIG.ui.combat = FFCombatTracker;
+    
     //- Regiser Sheets
     Actors.registerSheet("foundryvtt-final-fantasy", FF15PCSheet, {
       makeDefault: true,
