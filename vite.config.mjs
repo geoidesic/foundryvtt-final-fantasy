@@ -57,7 +57,11 @@ export default () => {
     css: {
       // Creates a standard configuration for PostCSS with autoprefixer & postcss-preset-env.
       postcss: postcssConfig({ compress: s_COMPRESS, sourceMap: s_SOURCEMAPS }),
-      url: false
+      url: false,
+      // Extract CSS into a separate file during build
+      extract: {
+        filename: 'style.css'
+      }
     },
 
     // About server options:
@@ -91,10 +95,15 @@ export default () => {
         output: {
           entryFileNames: "index.js",
           format: "es",
-          assetFileNames: '[name].[ext]'
+          assetFileNames: (assetInfo) => {
+            // Keep the asset filenames as they are, but ensure CSS is named style.css
+            if (assetInfo.name === 'style.css') {
+              return 'style.css';
+            }
+            return '[name].[ext]';
+          }
         },
         external: (id) => id.startsWith("/systems/foundryvtt-final-fantasy/assets/"), // Correctly return `true/false`.
-
       }
     },
     

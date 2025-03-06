@@ -1,3 +1,9 @@
+/**
+ * This script is used to modify the system.json file.
+ * It is used to remove the styles line from the system.json file.
+ * It is also used to restore the styles line to the system.json file.
+ * The reason for this is that the styles.css file is needed by the build version but not the dev version.
+ */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -13,6 +19,7 @@ function removeStyles() {
     
     // Remove the styles property if it exists
     delete jsonData.styles;
+
     
     // Write back the formatted JSON
     fs.writeFileSync(systemJsonPath, JSON.stringify(jsonData, null, 2) + '\n', 'utf8');
