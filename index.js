@@ -186,28 +186,28 @@ class FFActiveEffect extends ActiveEffect {
    * @return {Promise<void>} Returns a promise that resolves when the duration is updated
    */
   async updateCombatDuration() {
-    game.GAS.log.o("[ACTIVE EFFECT] Starting updateCombatDuration for:", {
+    game.system.log.o("[ACTIVE EFFECT] Starting updateCombatDuration for:", {
       name: this.name,
       origin: this.origin,
       duration: this.duration
     });
     const originUuid = this.origin;
     if (!originUuid) {
-      game.GAS.log.w("[ACTIVE EFFECT] No origin UUID found");
+      game.system.log.w("[ACTIVE EFFECT] No origin UUID found");
       return;
     }
     const originItem = await fromUuid(originUuid);
     if (!originItem) {
-      game.GAS.log.w("[ACTIVE EFFECT] No origin item found for UUID:", originUuid);
+      game.system.log.w("[ACTIVE EFFECT] No origin item found for UUID:", originUuid);
       return;
     }
-    game.GAS.log.o("[ACTIVE EFFECT] Found origin item:", {
+    game.system.log.o("[ACTIVE EFFECT] Found origin item:", {
       name: originItem.name,
       system: originItem.system
     });
     const duration = originItem.system.duration;
     if (!duration) {
-      game.GAS.log.w("[ACTIVE EFFECT] No duration found on origin item");
+      game.system.log.w("[ACTIVE EFFECT] No duration found on origin item");
       return;
     }
     const effectData = {
@@ -219,17 +219,17 @@ class FFActiveEffect extends ActiveEffect {
     if (originItem.system.durationUnits === "rounds") {
       effectData.duration.rounds = originItem.system.duration;
       effectData.duration.turns = 0;
-      game.GAS.log.o("[ACTIVE EFFECT] Setting rounds duration:", effectData.duration);
+      game.system.log.o("[ACTIVE EFFECT] Setting rounds duration:", effectData.duration);
     } else if (originItem.system.durationUnits === "turns") {
       effectData.duration.turns = originItem.system.duration;
       effectData.duration.rounds = 0;
-      game.GAS.log.o("[ACTIVE EFFECT] Setting turns duration:", effectData.duration);
+      game.system.log.o("[ACTIVE EFFECT] Setting turns duration:", effectData.duration);
     }
-    game.GAS.log.o("[ACTIVE EFFECT] Updating effect with duration:", effectData);
+    game.system.log.o("[ACTIVE EFFECT] Updating effect with duration:", effectData);
     await this.update(effectData);
   }
   async delete(options = {}) {
-    game.GAS.log.o("[ACTIVE EFFECT] Starting effect deletion:", {
+    game.system.log.o("[ACTIVE EFFECT] Starting effect deletion:", {
       effectName: this.name,
       effectId: this.id,
       effectDuration: this.duration,
@@ -240,13 +240,13 @@ class FFActiveEffect extends ActiveEffect {
     });
     try {
       const result = await super.delete(options);
-      game.GAS.log.o("[ACTIVE EFFECT] Effect deletion completed:", {
+      game.system.log.o("[ACTIVE EFFECT] Effect deletion completed:", {
         effectName: this.name,
         result
       });
       return result;
     } catch (error) {
-      game.GAS.log.e("[ACTIVE EFFECT] Effect deletion failed:", {
+      game.system.log.e("[ACTIVE EFFECT] Effect deletion failed:", {
         effectName: this.name,
         error
       });
@@ -302,19 +302,19 @@ class AbilityBaseDamageBuff {
    */
   async process(event) {
     const { DamageResults } = event;
-    game.GAS.log.o("[ABILITY DAMAGE BUFF] Processing ability base damage buff effect", {
+    game.system.log.o("[ABILITY DAMAGE BUFF] Processing ability base damage buff effect", {
       DamageResults,
       actorEffects: this.actor.effects
     });
     for (const effect of this.actor.effects) {
       const origin = fromUuidSync(effect.origin);
-      game.GAS.log.o("[ABILITY DAMAGE BUFF] Processing effect:", {
+      game.system.log.o("[ABILITY DAMAGE BUFF] Processing effect:", {
         effect,
         origin,
         changes: effect.changes
       });
       for (const change of effect.changes) {
-        game.GAS.log.o("[ABILITY DAMAGE BUFF] Checking change:", {
+        game.system.log.o("[ABILITY DAMAGE BUFF] Checking change:", {
           key: change.key,
           mode: change.mode,
           value: change.value,
@@ -325,7 +325,7 @@ class AbilityBaseDamageBuff {
             const oldDamage = targetData.damage;
             targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
             targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
-            game.GAS.log.o("[ABILITY DAMAGE BUFF] Applied damage buff:", {
+            game.system.log.o("[ABILITY DAMAGE BUFF] Applied damage buff:", {
               tokenId,
               oldDamage,
               newDamage: targetData.damage,
@@ -353,10 +353,10 @@ class DamageDiceReroll {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
-    game.GAS.log.o("[DAMAGE DICE REROLL] Processing damage dice reroll effect");
+    game.system.log.o("[DAMAGE DICE REROLL] Processing damage dice reroll effect");
     const { DamageResults, isCritical } = event;
     if (!DamageResults || !DamageResults.size) {
-      game.GAS.log.w("[DAMAGE DICE REROLL] No damage results found");
+      game.system.log.w("[DAMAGE DICE REROLL] No damage results found");
       return;
     }
     for (const effect of this.actor.effects) {
@@ -366,7 +366,7 @@ class DamageDiceReroll {
       for (const change of effect.changes) {
         if (change.key === "DamageDiceReroll" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
           for (const [targetId, targetData] of DamageResults) {
-            game.GAS.log.o("[DAMAGE DICE REROLL] Target data:", {
+            game.system.log.o("[DAMAGE DICE REROLL] Target data:", {
               targetId,
               targetData
             });
@@ -377,7 +377,7 @@ class DamageDiceReroll {
               continue;
             const additionalDice = Number(change.value) || 1;
             const newNumDice = numDice + additionalDice;
-            game.GAS.log.o("[DAMAGE DICE REROLL] New number of dice:", {
+            game.system.log.o("[DAMAGE DICE REROLL] New number of dice:", {
               newNumDice
             });
             const kh = numDice;
@@ -418,8 +418,8 @@ class TransferEffectToAllies {
         (e) => e.getFlag(SYSTEM_ID, "transferredBy.actor.uuid") === this.actor.uuid && e.name === effect.name
       ));
     }, []);
-    game.GAS.log.p("[EFFECT] Removing transferredEffects", transferredEffects);
-    game.GAS.log.p("[EFFECT] Removing transferred effects for", effect.name);
+    game.system.log.p("[EFFECT] Removing transferredEffects", transferredEffects);
+    game.system.log.p("[EFFECT] Removing transferred effects for", effect.name);
     for (const transferredEffect of transferredEffects) {
       await transferredEffect.delete();
     }
@@ -430,22 +430,22 @@ class TransferEffectToAllies {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
-    game.GAS.log.p("[TRANSFER] Starting effect transfer process", event);
+    game.system.log.p("[TRANSFER] Starting effect transfer process", event);
     const { effect } = event;
-    game.GAS.log.p("[TRANSFER] Source actor:", this.actor.name);
-    game.GAS.log.p("[TRANSFER] Effect:", effect);
+    game.system.log.p("[TRANSFER] Source actor:", this.actor.name);
+    game.system.log.p("[TRANSFER] Effect:", effect);
     const stackingBehavior = effect.getFlag(SYSTEM_ID, "stackable") || "differentSource";
     for (const token of this.actor.allyTokens) {
-      game.GAS.log.p("[TRANSFER] Processing token:", token.name);
+      game.system.log.p("[TRANSFER] Processing token:", token.name);
       if (!token.actor) {
-        game.GAS.log.p("[TRANSFER] No actor for token, skipping");
+        game.system.log.p("[TRANSFER] No actor for token, skipping");
         continue;
       }
       if (stackingBehavior === "replaces") {
         const existingEffects = token.actor.effects.filter((e) => e.name === effect.name);
-        game.GAS.log.p("[TRANSFER] Found existing effects to replace:", existingEffects.length);
+        game.system.log.p("[TRANSFER] Found existing effects to replace:", existingEffects.length);
         for (const existingEffect of existingEffects) {
-          game.GAS.log.p("[TRANSFER] Removing existing effect for replacement:", existingEffect.name);
+          game.system.log.p("[TRANSFER] Removing existing effect for replacement:", existingEffect.name);
           await existingEffect.delete();
         }
       }
@@ -457,8 +457,8 @@ class TransferEffectToAllies {
         origin: effect.origin,
         disabled: false
       };
-      game.GAS.log.p("[TRANSFER] Original effect flags:", effect.flags);
-      game.GAS.log.p("[TRANSFER] Cloned effect flags:", effectData.flags);
+      game.system.log.p("[TRANSFER] Original effect flags:", effect.flags);
+      game.system.log.p("[TRANSFER] Cloned effect flags:", effectData.flags);
       effectData.flags[SYSTEM_ID] = {
         ...effectData.flags[SYSTEM_ID],
         transferredBy: {
@@ -469,12 +469,12 @@ class TransferEffectToAllies {
           }
         }
       };
-      game.GAS.log.p("[TRANSFER] Final effect flags after origin update:", effectData.flags);
+      game.system.log.p("[TRANSFER] Final effect flags after origin update:", effectData.flags);
       try {
         await token.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
-        game.GAS.log.p("[TRANSFER] Successfully created effect on", token.name, effectData, token.actor);
+        game.system.log.p("[TRANSFER] Successfully created effect on", token.name, effectData, token.actor);
       } catch (error) {
-        game.GAS.log.e("[TRANSFER] Error creating effect:", error);
+        game.system.log.e("[TRANSFER] Error creating effect:", error);
       }
     }
   }
@@ -532,7 +532,7 @@ class DamageOverTime {
     if (dotDamage === 0)
       return;
     const newHP = Math.max(0, currentHP - dotDamage);
-    game.GAS.log.o("[DOT] Applying damage:", {
+    game.system.log.o("[DOT] Applying damage:", {
       actor: this.actor.name,
       damage: dotDamage,
       newHP
@@ -576,12 +576,12 @@ class DamageOverTime {
    */
   async updateCombat(combat, changed, options) {
     if (!("turn" in changed || "round" in changed) || changed.turn === null) {
-      game.GAS.log.o("[DOT] Skipping - no turn/round change:", { changed });
+      game.system.log.o("[DOT] Skipping - no turn/round change:", { changed });
       return;
     }
     const previousCombatant = combat.turns[combat.previous?.turn];
     if (!previousCombatant || previousCombatant.actor.id !== this.actor.id) {
-      game.GAS.log.o("[DOT] Skipping - not previous combatant:", {
+      game.system.log.o("[DOT] Skipping - not previous combatant:", {
         actor: this.actor.name,
         previousCombatant: previousCombatant?.actor?.name,
         previousTurn: combat.previous?.turn,
@@ -593,7 +593,7 @@ class DamageOverTime {
     const nextTurn = combat.previous?.turn + 1;
     const isLastTurn = nextTurn === combat.turns.length;
     const nextCombatant = isLastTurn ? combat.turns[0] : combat.turns[nextTurn];
-    game.GAS.log.o("[DOT] Checking phase:", {
+    game.system.log.o("[DOT] Checking phase:", {
       actor: this.actor.name,
       direction: isMovingForward ? "forward" : "backward",
       previousType: previousCombatant?.actor?.type,
@@ -608,7 +608,7 @@ class DamageOverTime {
     const isLastOfType = this.actor.type === "PC" && lastPC?.actor?.id === this.actor.id || this.actor.type === "NPC" && lastNPC?.actor?.id === this.actor.id;
     const nextType = nextCombatant?.actor?.type;
     const isPhaseTransition = this.actor.type === "PC" && nextType === "NPC" || this.actor.type === "NPC" && nextType === "PC" || isLastTurn && isLastOfType;
-    game.GAS.log.o("[DOT] Phase check:", {
+    game.system.log.o("[DOT] Phase check:", {
       actor: this.actor.name,
       actorType: this.actor.type,
       nextType,
@@ -617,7 +617,7 @@ class DamageOverTime {
       isLastTurn
     });
     if (!isPhaseTransition) {
-      game.GAS.log.o("[DOT] Skipping - not a phase transition:", {
+      game.system.log.o("[DOT] Skipping - not a phase transition:", {
         actor: this.actor.name,
         direction: isMovingForward ? "forward" : "backward",
         actorType: this.actor.type,
@@ -630,13 +630,13 @@ class DamageOverTime {
       (e) => !e.disabled && e.changes.some((c) => c.key === "DamageOverTime" && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
     );
     if (relevantEffects.length === 0) {
-      game.GAS.log.o("[DOT] Skipping - no relevant effects:", {
+      game.system.log.o("[DOT] Skipping - no relevant effects:", {
         actor: this.actor.name,
         effectCount: this.actor.effects.size
       });
       return;
     }
-    game.GAS.log.o("[DOT] Processing combat update:", {
+    game.system.log.o("[DOT] Processing combat update:", {
       actor: this.actor.name,
       direction: isMovingForward ? "forward" : "backward",
       phase: {
@@ -674,41 +674,41 @@ let ProcTrigger$1 = class ProcTrigger {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async process(event) {
-    game.GAS.log.o("[PROC] Starting proc trigger process:", event);
+    game.system.log.o("[PROC] Starting proc trigger process:", event);
     const { item, roll } = event;
     if (!item.system.procs?.list?.length) {
-      game.GAS.log.o("[PROC] No procs in list, returning");
+      game.system.log.o("[PROC] No procs in list, returning");
       return;
     }
     let d20Result;
     if (item.system.hasCR && roll) {
       const d20Term = roll.terms[0];
       d20Result = d20Term.modifiers.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results[0].result;
-      game.GAS.log.o("[PROC] Using existing roll d20 result:", d20Result);
+      game.system.log.o("[PROC] Using existing roll d20 result:", d20Result);
     } else {
       const procRoll = await new Roll("1d20").evaluate();
       d20Result = procRoll.terms[0].results[0].result;
-      game.GAS.log.o("[PROC] Made new roll d20 result:", d20Result);
+      game.system.log.o("[PROC] Made new roll d20 result:", d20Result);
     }
     if (!item.system.procTrigger || d20Result < item.system.procTrigger) {
-      game.GAS.log.o("[PROC] Roll did not meet proc trigger threshold:", {
+      game.system.log.o("[PROC] Roll did not meet proc trigger threshold:", {
         procTrigger: item.system.procTrigger,
         d20Result
       });
       return;
     }
-    game.GAS.log.o("[PROC] Processing proc effects");
+    game.system.log.o("[PROC] Processing proc effects");
     for (const procRef of item.system.procs.list) {
-      game.GAS.log.o("[PROC] Processing proc ref:", procRef);
+      game.system.log.o("[PROC] Processing proc ref:", procRef);
       const procItem = await fromUuid(procRef.uuid);
       if (!procItem) {
-        game.GAS.log.o("[PROC] Could not find proc item:", procRef.uuid);
+        game.system.log.o("[PROC] Could not find proc item:", procRef.uuid);
         continue;
       }
-      game.GAS.log.o("[PROC] Found proc item:", procItem);
-      game.GAS.log.o("[PROC] Adding proc effect to actor:", procItem.name);
+      game.system.log.o("[PROC] Found proc item:", procItem);
+      game.system.log.o("[PROC] Adding proc effect to actor:", procItem.name);
       const addedEffects = await this.actor.addLinkedEffects(procItem);
-      game.GAS.log.o("[PROC] Added effects:", addedEffects);
+      game.system.log.o("[PROC] Added effects:", addedEffects);
       await ChatMessage.create({
         user: game.user.id,
         speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
@@ -789,7 +789,7 @@ class DurationManager {
   async updateCombat(combat, changed) {
     if (!("turn" in changed || "round" in changed))
       return;
-    game.GAS.log.o("[DURATION MANAGER] updateCombat called:", {
+    game.system.log.o("[DURATION MANAGER] updateCombat called:", {
       combat,
       changed,
       actorName: this.actor?.name
@@ -807,7 +807,7 @@ class DurationManager {
         const currentTurn = combat.turn;
         const startRound = effect.duration.startRound;
         const startTurn = effect.duration.startTurn;
-        game.GAS.log.o("[DURATION MANAGER] Processing duration:", {
+        game.system.log.o("[DURATION MANAGER] Processing duration:", {
           name: effect.name,
           durationType,
           durationUnits,
@@ -837,7 +837,7 @@ class DurationManager {
           break;
       }
       if (shouldDelete) {
-        game.GAS.log.o("[DURATION MANAGER] Deleting effect:", {
+        game.system.log.o("[DURATION MANAGER] Deleting effect:", {
           name: effect.name,
           origin: effect.origin
         });
@@ -851,7 +851,7 @@ class DurationManager {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async onDamage(event) {
-    game.GAS.log.o("[DURATION MANAGER] onDamage called:", {
+    game.system.log.o("[DURATION MANAGER] onDamage called:", {
       event,
       actorName: this.actor?.name
     });
@@ -860,7 +860,7 @@ class DurationManager {
       const durations = await this.getDurationRules(effect);
       if (!durations?.some((d) => d.type === "untilDamage"))
         continue;
-      game.GAS.log.o("[DURATION MANAGER] Deleting effect:", {
+      game.system.log.o("[DURATION MANAGER] Deleting effect:", {
         name: effect.name,
         origin: effect.origin
       });
@@ -903,7 +903,7 @@ class DurationManager {
       }))
     });
     if (!event.isNewAbilityUse) {
-      game.GAS.log.o("[DURATION MANAGER] Skipping nextAbility check - not a new ability use");
+      game.system.log.o("[DURATION MANAGER] Skipping nextAbility check - not a new ability use");
       return;
     }
     const effects2 = this.actor.effects.filter((e) => !e.disabled);
@@ -913,10 +913,10 @@ class DurationManager {
         continue;
       const effectOrigin = await fromUuid(effect.origin);
       if (effectOrigin?.uuid === event.item.uuid || effectOrigin?.name === event.item?.name) {
-        game.GAS.log.o("[DURATION MANAGER] Skipping effect deletion because ability is the source");
+        game.system.log.o("[DURATION MANAGER] Skipping effect deletion because ability is the source");
         continue;
       }
-      game.GAS.log.o("[DURATION MANAGER] Deleting effect:", {
+      game.system.log.o("[DURATION MANAGER] Deleting effect:", {
         name: effect.name,
         systemDuration: effect.system?.durations,
         coreDuration: effect.duration,
@@ -1011,11 +1011,11 @@ class FF15Actor extends Actor {
    * @return {boolean} Whether the item has remaining uses
    */
   async actorItemHasRemainingUses(item) {
-    game.GAS.log.p("[USES] Checking remaining uses for:", item);
-    game.GAS.log.p("[USES] Checking remaining uses item name:", item.name);
-    game.GAS.log.p("[USES] hasLimitation:", item.system.hasLimitation);
-    game.GAS.log.p("[USES] currentUses:", item.currentUses);
-    game.GAS.log.p("[USES] usesRemaining:", item.usesRemaining);
+    game.system.log.p("[USES] Checking remaining uses for:", item);
+    game.system.log.p("[USES] Checking remaining uses item name:", item.name);
+    game.system.log.p("[USES] hasLimitation:", item.system.hasLimitation);
+    game.system.log.p("[USES] currentUses:", item.currentUses);
+    game.system.log.p("[USES] usesRemaining:", item.usesRemaining);
     if (!item.system.hasLimitation) {
       return true;
     }
@@ -1052,18 +1052,18 @@ class FF15Actor extends Actor {
    */
   async addLinkedEffects(item) {
     if (!item.hasEffects) {
-      game.GAS.log.p("[ADD LINKED EFFECTS] Item has no effects:", item);
+      game.system.log.p("[ADD LINKED EFFECTS] Item has no effects:", item);
       return [];
     }
     const effectsToCreate = [];
     for (const effect of item.effects) {
-      game.GAS.log.p("[ADD LINKED EFFECTS] Processing effect:", {
+      game.system.log.p("[ADD LINKED EFFECTS] Processing effect:", {
         name: effect.name,
         system: effect.system,
         flags: effect.flags,
         origin: effect.origin
       });
-      game.GAS.log.p("[ADD LINKED EFFECTS] Effect flags detail:", {
+      game.system.log.p("[ADD LINKED EFFECTS] Effect flags detail:", {
         rawFlags: effect.flags,
         systemFlags: effect.flags?.[SYSTEM_ID],
         stackableFlag: effect.getFlag(SYSTEM_ID, "stackable"),
@@ -1074,9 +1074,9 @@ class FF15Actor extends Actor {
       switch (stackingBehavior) {
         case "replaces":
           const existingEffects = this.effects.filter((e) => e.name === effect.name);
-          game.GAS.log.p("[ADD LINKED EFFECTS] Found existing effects to replace:", existingEffects.length);
+          game.system.log.p("[ADD LINKED EFFECTS] Found existing effects to replace:", existingEffects.length);
           for (const existingEffect of existingEffects) {
-            game.GAS.log.p("[ADD LINKED EFFECTS] Removing existing effect for replacement:", existingEffect.name);
+            game.system.log.p("[ADD LINKED EFFECTS] Removing existing effect for replacement:", existingEffect.name);
             await existingEffect.delete();
           }
           break;
@@ -1085,7 +1085,7 @@ class FF15Actor extends Actor {
         case "differentSource":
         default:
           if (sourceActors.has(this.uuid)) {
-            game.GAS.log.p("[ADD LINKED EFFECTS] Effect already exists from this source:", {
+            game.system.log.p("[ADD LINKED EFFECTS] Effect already exists from this source:", {
               name: effect.name,
               source: this.uuid,
               existingSources: Array.from(sourceActors)
@@ -1124,21 +1124,21 @@ class FF15Actor extends Actor {
           }
         }
       };
-      game.GAS.log.p("[ADD LINKED EFFECTS] Prepared effect data for creation:", effectData);
+      game.system.log.p("[ADD LINKED EFFECTS] Prepared effect data for creation:", effectData);
       effectsToCreate.push(effectData);
     }
     if (!effectsToCreate.length) {
-      game.GAS.log.p("[ADD LINKED EFFECTS] No effects to add");
+      game.system.log.p("[ADD LINKED EFFECTS] No effects to add");
       return [];
     }
-    game.GAS.log.p("[ADD LINKED EFFECTS] Creating effects on actor:", this.name, effectsToCreate);
+    game.system.log.p("[ADD LINKED EFFECTS] Creating effects on actor:", this.name, effectsToCreate);
     const created = await this.createEmbeddedDocuments("ActiveEffect", effectsToCreate);
     for (const effect of created) {
       if (!effect.isSuppressed) {
         await this._processEffectHooks(effect);
       }
     }
-    game.GAS.log.p("[ADD LINKED EFFECTS] Created effects:", created.map((e) => ({
+    game.system.log.p("[ADD LINKED EFFECTS] Created effects:", created.map((e) => ({
       name: e.name,
       system: e.system,
       flags: e.flags,
@@ -1152,7 +1152,7 @@ class FF15Actor extends Actor {
    * @return {Promise<void>} Returns a promise that resolves when hooks are processed
    */
   async _processEffectHooks(effect) {
-    game.GAS.log.g("[PROCESS EFFECT HOOKS] Processing effect:", effect);
+    game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", effect);
     for (const change of effect.changes) {
       const matchingMode = activeEffectModes.find((e) => e.value === change.mode);
       if (matchingMode) {
@@ -1160,10 +1160,10 @@ class FF15Actor extends Actor {
           ui.notifications.error(`No effect processor found for key: ${change.key}`);
           return;
         }
-        game.GAS.log.g("[PROCESS EFFECT HOOKS] Processing effect:", change.key);
+        game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", change.key);
         await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
       } else {
-        game.GAS.log.w("[PROCESS EFFECT HOOKS] No matching mode found for change:", change);
+        game.system.log.w("[PROCESS EFFECT HOOKS] No matching mode found for change:", change);
       }
     }
   }
@@ -1203,7 +1203,7 @@ class FF15Actor extends Actor {
       const movementSacrificingTraits = this.items.filter(
         (item) => item.type === "trait" && item.system.sacrificesMovement
       );
-      game.GAS.log.o("[TOGGLE STATUS] Found movement sacrificing traits:", {
+      game.system.log.o("[TOGGLE STATUS] Found movement sacrificing traits:", {
         traits: movementSacrificingTraits.map((t) => ({
           name: t.name,
           type: t.type,
@@ -1290,8 +1290,8 @@ class FF15Actor extends Actor {
    * @return {Promise<void>} Returns a promise that resolves when items are deleted
    */
   async deleteAllItems(type) {
-    game.GAS.log.d(type);
-    game.GAS.log.d(typeof type);
+    game.system.log.d(type);
+    game.system.log.d(typeof type);
     for (const item of this.items) {
       if (Array.isArray(type) && type.includes(item.type) || !type || type === "all" || item.type === type) {
         await item.delete();
@@ -1303,7 +1303,7 @@ class FF15Actor extends Actor {
    * @return {Promise<void>} Returns a promise that resolves when setup is complete
    */
   async _preCreate() {
-    game.GAS.log.d("preCreate", this);
+    game.system.log.d("preCreate", this);
     if (this.type === "PC") {
       const prototypeToken = { disposition: 1, actorLink: true };
       this.updateSource({ prototypeToken });
@@ -3500,7 +3500,7 @@ class RollGuards {
       }
       return true;
     } catch (error) {
-      game.GAS.log.e("Error in targetsMatchActionIntent:", error);
+      game.system.log.e("Error in targetsMatchActionIntent:", error);
       return false;
     } finally {
       if (target !== "self" && originalTargets.size > 0) {
@@ -3588,28 +3588,28 @@ class RollGuards {
       return true;
     const { actionState } = this.actor.system;
     const actionType = item.system.type || "primary";
-    game.GAS.log.cyan("[SLOT:USAGE] Checking available action slot:", actionType);
+    game.system.log.cyan("[SLOT:USAGE] Checking available action slot:", actionType);
     const enablerSlots = actionState.available.filter(
       (slot) => slot !== "primary" && slot !== "secondary"
     );
-    game.GAS.log.cyan("[SLOT:USAGE] Enabler slots:", enablerSlots);
+    game.system.log.cyan("[SLOT:USAGE] Enabler slots:", enablerSlots);
     if (item.system.tags?.some((tag) => enablerSlots.includes(tag))) {
       return true;
     }
-    game.GAS.log.cyan("[SLOT:USAGE] No enabler slots match:", item.system.tags);
+    game.system.log.cyan("[SLOT:USAGE] No enabler slots match:", item.system.tags);
     if (actionState.available.includes(actionType)) {
       return true;
     }
-    game.GAS.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
+    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
     if (actionType === "secondary" && actionState.available.filter((slot) => slot === "secondary" || slot === "primary").length) {
       return true;
     }
-    game.GAS.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
+    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
     if (await this.hasEnablers(item)) {
       const enabledEffects = this.actor.effects.filter(
         (effect) => effect.system.tags?.includes("enabler")
       );
-      game.GAS.log.cyan("[SLOT:USAGE] Enabled effects:", enabledEffects);
+      game.system.log.cyan("[SLOT:USAGE] Enabled effects:", enabledEffects);
       if (enabledEffects?.length) {
         const enabledEffectsLinkedToEnablerSlots = enabledEffects.filter(
           (effect) => enablerSlots.some((slot) => {
@@ -6398,19 +6398,19 @@ function instance$1d($$self, $$props, $$invalidate) {
         await $doc.update({ system: { tags } });
       } else {
         const currentTags = resolveDotpath($doc, path);
-        game.GAS.log.g("currentTags", currentTags);
+        game.system.log.g("currentTags", currentTags);
         const type = Array.isArray(currentTags) ? "array" : currentTags instanceof Set ? "set" : "object";
-        game.GAS.log.g("type", type);
+        game.system.log.g("type", type);
         let tags;
         if (type === "array") {
           tags = currentTags.filter((t) => t !== tag2);
           await $doc.update({ [path]: tags });
         } else if (type === "set") {
           tags = new Set([...currentTags].filter((t) => t !== tag2));
-          game.GAS.log.g("tags", tags);
+          game.system.log.g("tags", tags);
           await $doc.update({ [path]: tags });
         } else {
-          game.GAS.log.g("currentTags NOT IMPLEMENTED", currentTags);
+          game.system.log.g("currentTags NOT IMPLEMENTED", currentTags);
         }
       }
     }
@@ -7150,81 +7150,81 @@ function instance$1b($$self, $$props, $$invalidate) {
   const message = getContext("message");
   component_subscribe($$self, message, (value) => $$invalidate(8, $message = value));
   async function applyToTarget() {
-    game.GAS.log.d("applyToTarget");
-    game.GAS.log.d("messageId", messageId);
+    game.system.log.d("applyToTarget");
+    game.system.log.d("messageId", messageId);
     const item = FFMessage.item;
     const itemToUpdate = game.actors.get(FFMessage.actor._id).items.get(FFMessage.item._id);
-    game.GAS.log.d("FFMessage", FFMessage);
-    game.GAS.log.d("item", item);
+    game.system.log.d("FFMessage", FFMessage);
+    game.system.log.d("item", item);
     const itemQuantity = Number(itemToUpdate.system.quantity);
     if (itemQuantity <= 0) {
       ui.notifications.error("The actor doesn't have sufficient quantity of this item to apply.");
       return;
     }
     const effects2 = item.effects;
-    game.GAS.log.d("effects", effects2);
+    game.system.log.d("effects", effects2);
     const customChanges = [];
     const customMode = activeEffectModes.find((x) => x.label === "custom").value;
-    game.GAS.log.d("customMode", customMode);
+    game.system.log.d("customMode", customMode);
     for (const effect of effects2) {
       const changes = effect.changes;
       for (const change of changes) {
         const mode = change.mode;
-        game.GAS.log.d("mode", mode);
+        game.system.log.d("mode", mode);
         if (mode === customMode) {
           customChanges.push(change);
         }
       }
     }
-    game.GAS.log.d("customChanges", customChanges);
+    game.system.log.d("customChanges", customChanges);
     for (const change of customChanges) {
       const key = change.key;
       const value = Number(change.value);
       for (const target of $mappedGameTargets) {
         const targetActor = fromUuidSync(target.actorUuid);
         const oldValue = Number(resolveDotpath(targetActor, key));
-        game.GAS.log.d("oldValue", oldValue);
+        game.system.log.d("oldValue", oldValue);
         let newValue = oldValue + value;
-        game.GAS.log.d("proposed nuewValue", value);
+        game.system.log.d("proposed nuewValue", value);
         const keyIsVal = key.endsWith(".val");
         if (keyIsVal) {
           const keyMin = key.replace(".val", ".min");
           const keyMax = key.replace(".val", ".max");
           const min = resolveDotpath(targetActor, keyMin);
           const max = resolveDotpath(targetActor, keyMax);
-          game.GAS.log.d("min", min);
-          game.GAS.log.d("max", max);
+          game.system.log.d("min", min);
+          game.system.log.d("max", max);
           if (min !== void 0 && newValue < min) {
-            game.GAS.log.d("min matched");
+            game.system.log.d("min matched");
             newValue = min;
           }
           if (max !== void 0 && newValue > max) {
-            game.GAS.log.d("max matched");
+            game.system.log.d("max matched");
             newValue = max;
           }
         }
-        game.GAS.log.d("value", value);
-        game.GAS.log.d("newValue", newValue);
-        game.GAS.log.d("before update", resolveDotpath(targetActor, key));
+        game.system.log.d("value", value);
+        game.system.log.d("newValue", newValue);
+        game.system.log.d("before update", resolveDotpath(targetActor, key));
         await targetActor.update({ [key]: newValue });
-        game.GAS.log.d("after update", resolveDotpath(targetActor, key));
+        game.system.log.d("after update", resolveDotpath(targetActor, key));
         const actor = await fromUuid(target.actorUuid);
-        game.GAS.log.d("actor var", resolveDotpath(actor, key));
+        game.system.log.d("actor var", resolveDotpath(actor, key));
       }
     }
     await itemToUpdate.update({
       "system.quantity": itemToUpdate.system.quantity - 1
     });
-    game.GAS.log.d("Updated item ", itemToUpdate);
+    game.system.log.d("Updated item ", itemToUpdate);
     await $message.update({
       flags: { [SYSTEM_ID]: { data: { applied: true } } }
     });
-    game.GAS.log.d("message ", game.messages.get(messageId));
+    game.system.log.d("message ", game.messages.get(messageId));
   }
   __name(applyToTarget, "applyToTarget");
   onMount(async () => {
-    game.GAS.log.d("EquipmentChat mounted");
-    game.GAS.log.d("FFMessage", FFMessage);
+    game.system.log.d("EquipmentChat mounted");
+    game.system.log.d("FFMessage", FFMessage);
   });
   $$self.$$set = ($$props2) => {
     if ("FFMessage" in $$props2)
@@ -9867,18 +9867,18 @@ function instance$15($$self, $$props, $$invalidate) {
   let roll = 0;
   let hasTargets = false;
   function log2() {
-    game.GAS.log.b("RollChat roll", roll);
-    game.GAS.log.b("RollChat penalty", penalty);
-    game.GAS.log.b("RollChat totalRoll", totalRoll);
-    game.GAS.log.b("RollChat totalDamage", totalDamage);
-    game.GAS.log.b("RollChat hasTargets", hasTargets);
-    game.GAS.log.b("RollChat item?.system?.hasDirectHit", item?.system?.hasDirectHit);
-    game.GAS.log.b("RollChat item?.system?.directHitDamage", item?.system?.directHitDamage);
-    game.GAS.log.b("RollChat item?.currentUses", item?.currentUses);
-    game.GAS.log.b("RollChat $message", $message);
-    game.GAS.log.b("RollChat FFMessage", FFMessage);
-    game.GAS.log.b("RollChat FFMessage.isCritical", FFMessage.isCritical);
-    game.GAS.log.b("RollChat item", item);
+    game.system.log.b("RollChat roll", roll);
+    game.system.log.b("RollChat penalty", penalty);
+    game.system.log.b("RollChat totalRoll", totalRoll);
+    game.system.log.b("RollChat totalDamage", totalDamage);
+    game.system.log.b("RollChat hasTargets", hasTargets);
+    game.system.log.b("RollChat item?.system?.hasDirectHit", item?.system?.hasDirectHit);
+    game.system.log.b("RollChat item?.system?.directHitDamage", item?.system?.directHitDamage);
+    game.system.log.b("RollChat item?.currentUses", item?.currentUses);
+    game.system.log.b("RollChat $message", $message);
+    game.system.log.b("RollChat FFMessage", FFMessage);
+    game.system.log.b("RollChat FFMessage.isCritical", FFMessage.isCritical);
+    game.system.log.b("RollChat item", item);
   }
   __name(log2, "log");
   function getDamageResults(passedTargets) {
@@ -9955,7 +9955,7 @@ function instance$15($$self, $$props, $$invalidate) {
       await initializeStores();
       isMounted = true;
     }
-    game.GAS.log.o("[ACTION ROLL CHAT] Mounted targetTokens", targetTokens);
+    game.system.log.o("[ACTION ROLL CHAT] Mounted targetTokens", targetTokens);
   });
   async function applyResult(target) {
     if (isApplyDisabled(target))
@@ -9992,12 +9992,12 @@ function instance$15($$self, $$props, $$invalidate) {
       }
     }
     const totalDamage2 = baseDamage + directHitDamage;
-    game.GAS.log.o("[DAMAGE] Calculating total:", { baseDamage, directHitDamage, totalDamage: totalDamage2 });
+    game.system.log.o("[DAMAGE] Calculating total:", { baseDamage, directHitDamage, totalDamage: totalDamage2 });
     createDamageText(token, totalDamage2);
     const currentBP = token.actor.system.points.BP.val;
     let remainingDamage = totalDamage2;
     let newBP = currentBP;
-    game.GAS.log.o("[BARRIER] Before damage application:", { currentBP, totalDamage: totalDamage2, remainingDamage });
+    game.system.log.o("[BARRIER] Before damage application:", { currentBP, totalDamage: totalDamage2, remainingDamage });
     if (currentBP > 0) {
       if (currentBP >= totalDamage2) {
         newBP = currentBP - totalDamage2;
@@ -10006,25 +10006,25 @@ function instance$15($$self, $$props, $$invalidate) {
         remainingDamage = totalDamage2 - currentBP;
         newBP = 0;
       }
-      game.GAS.log.o("[BARRIER] After barrier calculation:", { newBP, remainingDamage });
+      game.system.log.o("[BARRIER] After barrier calculation:", { newBP, remainingDamage });
       await token.actor.update({ "system.points.BP.val": newBP });
     }
     const currentHP = token.actor.system.points.HP.val;
     const newHP = Math.max(currentHP - remainingDamage, 0);
-    game.GAS.log.o("[KO CHECK] Before HP update:", { currentHP, remainingDamage, newHP });
+    game.system.log.o("[KO CHECK] Before HP update:", { currentHP, remainingDamage, newHP });
     await token.actor.update({ "system.points.HP.val": newHP });
     await Hooks.callAll("FF15.onDamage", {
       actor: token.actor,
       damage: remainingDamage
     });
-    game.GAS.log.o("[KO CHECK] After HP update:", {
+    game.system.log.o("[KO CHECK] After HP update:", {
       updatedCurrentHP: token.actor.system.points.HP.val,
       hasKoStatus: token.actor.statuses.has("ko")
     });
     if (token.actor.system.points.HP.val === 0 && !token.actor.statuses.has("ko")) {
-      game.GAS.log.o("[KO CHECK] Applying KO status");
+      game.system.log.o("[KO CHECK] Applying KO status");
       await token.actor.toggleStatusEffect("ko");
-      game.GAS.log.o("[KO CHECK] KO status applied");
+      game.system.log.o("[KO CHECK] KO status applied");
     }
     newDamageResults[target.id] = {
       ...newDamageResults[target.id],
@@ -10577,8 +10577,8 @@ function instance$14($$self, $$props, $$invalidate) {
   let { overlayMargin = "2px 0 0 0" } = $$props;
   let { title = "" } = $$props;
   const message = getContext("message");
-  game.GAS.log.d("ChatTitle - message context:", message);
-  game.GAS.log.d("ChatTitle - data prop:", data);
+  game.system.log.d("ChatTitle - message context:", message);
+  game.system.log.d("ChatTitle - data prop:", data);
   $$self.$$set = ($$props2) => {
     if ("data" in $$props2)
       $$invalidate(0, data = $$props2.data);
@@ -11362,7 +11362,7 @@ function preDeleteChatMessage() {
     if (state?.damageResults) {
       const hasAppliedDamage = Object.values(state.damageResults).some((result) => result.applied);
       if (hasAppliedDamage) {
-        game.GAS.log.w("[SLOT:RESTORE] Message has applied damage results, not restoring slot");
+        game.system.log.w("[SLOT:RESTORE] Message has applied damage results, not restoring slot");
         return;
       }
     }
@@ -11381,7 +11381,7 @@ function preDeleteChatMessage() {
           [`flags.${SYSTEM_ID}.state.mpRestored`]: true
         });
       } catch (error) {
-        game.GAS.log.e("[MP:RESTORE] Error restoring MP cost:", error);
+        game.system.log.e("[MP:RESTORE] Error restoring MP cost:", error);
       }
     }
     if (usedAction) {
@@ -25509,7 +25509,7 @@ function create_default_slot$h(ctx) {
     c() {
       main = element("main");
       div1 = element("div");
-      div1.innerHTML = `<div class="texture svelte-FF15-1ivrb2r"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
+      div1.innerHTML = `<div class="texture svelte-FF15-eou7jl"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
       p0 = element("p");
       p0.textContent = `${localize("FF15.Welcome.To")} ${localize(`${SYSTEM_CODE}.Title`)}!`;
       h10 = element("h1");
@@ -25534,13 +25534,13 @@ function create_default_slot$h(ctx) {
       span1.textContent = `${localize("FF15.Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
       div5 = element("div");
-      div5.innerHTML = `<img class="pt-sm white svelte-FF15-1ivrb2r" src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
+      div5.innerHTML = `<img class="pt-sm white svelte-FF15-eou7jl" src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
       div6 = element("div");
       h4 = element("h4");
       h4.textContent = `${localize(`${SYSTEM_CODE}.Title`)} ${localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
       a2 = element("a");
       a2.textContent = "Round Table Games ©2024";
-      attr(div1, "class", "logo-background svelte-FF15-1ivrb2r");
+      attr(div1, "class", "logo-background svelte-FF15-eou7jl");
       attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
       attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
       attr(input, "type", "checkbox");
@@ -25549,12 +25549,12 @@ function create_default_slot$h(ctx) {
       attr(div3, "class", "flex");
       attr(div4, "class", "flexrow inset justify-vertical mb-sm");
       attr(div4, "data-tooltip", localize("FF15.Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-FF15-1ivrb2r");
+      attr(main, "class", "svelte-FF15-eou7jl");
       attr(div5, "class", "flex2 right");
       attr(a2, "href", "https://www.round-table.games");
-      attr(a2, "class", "svelte-FF15-1ivrb2r");
+      attr(a2, "class", "svelte-FF15-eou7jl");
       attr(div6, "class", "flex2 left pt-sm");
-      attr(footer, "class", "svelte-FF15-1ivrb2r");
+      attr(footer, "class", "svelte-FF15-eou7jl");
     },
     m(target, anchor) {
       insert(target, main, anchor);
@@ -25716,7 +25716,7 @@ function instance$Y($$self, $$props, $$invalidate) {
     }
     if ($$self.$$.dirty & /*dontShowWelcome*/
     2) {
-      game.GAS.log.d("dontShowWelcome", dontShowWelcome2);
+      game.system.log.d("dontShowWelcome", dontShowWelcome2);
     }
   };
   return [
@@ -28595,7 +28595,7 @@ function setupModels() {
 }
 __name(setupModels, "setupModels");
 function setupEffectsProcessors() {
-  game.GAS.log.o("[EFFECTS] Setting up effect processors");
+  game.system.log.o("[EFFECTS] Setting up effect processors");
   Hooks.on("FF15.processAdditionalBaseDamageFromItem", async (event) => {
     let processor = new effects.PrimaryBaseDamageBuff(event.actor);
     await processor.process(event);
@@ -28607,7 +28607,7 @@ function setupEffectsProcessors() {
     processor.process(event);
   });
   Hooks.on("FF15.EnableCombatTurnSlot", async (event) => {
-    game.GAS.log.o("[EFFECTS] EnableCombatTurnSlot hook triggered:", event);
+    game.system.log.o("[EFFECTS] EnableCombatTurnSlot hook triggered:", event);
     const processor = new effects.EnableCombatTurnSlot(event.actor);
     await processor.process(event);
   });
@@ -28974,9 +28974,9 @@ function instance$X($$self, $$props, $$invalidate) {
     if (handleOwnUpdates) {
       const updateObj = {};
       foundry.utils.setProperty(updateObj, valuePath, inputValue);
-      game.GAS.log.b("DocSelect:updateObj", updateObj);
+      game.system.log.b("DocSelect:updateObj", updateObj);
       await $doc.update(updateObj);
-      game.GAS.log.b($doc);
+      game.system.log.b($doc);
       if (callback)
         await callback(inputValue);
     } else {
@@ -29748,7 +29748,7 @@ function instance$W($$self, $$props, $$invalidate) {
   component_subscribe($$self, doc, (value) => $$invalidate(31, $doc = value));
   const updateDebounce = Timing.debounce(update2, 500);
   function handleKeyDown(event, index) {
-    game.GAS.log.d("DocInput keydown: " + event.key);
+    game.system.log.d("DocInput keydown: " + event.key);
     if (!updateOnBlur && event.key === "Enter") {
       event.preventDefault();
       inputElement.blur();
@@ -29758,7 +29758,7 @@ function instance$W($$self, $$props, $$invalidate) {
   }
   __name(handleKeyDown, "handleKeyDown");
   function handleBlur(event, index) {
-    game.GAS.log.d("DocInput blurring");
+    game.system.log.d("DocInput blurring");
     if (!alwaysEditable) {
       $$invalidate(0, editable = false);
       $$invalidate(21, enabled = false);
@@ -30337,7 +30337,7 @@ function instance$V($$self, $$props, $$invalidate) {
     if (buttonAnimation) {
       $$invalidate(1, buttonAnimation = "");
     }
-    game.GAS.log.b("mouse leave");
+    game.system.log.b("mouse leave");
   }
   __name(handleMouseLeave, "handleMouseLeave");
   function handleSelectChange(event, index) {
@@ -30362,16 +30362,16 @@ function instance$V($$self, $$props, $$invalidate) {
     }
     for (const change of pendingChanges) {
       if (!change.key || (change.mode < 0 || change.mode > 5) || !change.value) {
-        game.GAS.log.b(pendingChanges);
+        game.system.log.b(pendingChanges);
         ui.notifications.warn("Please complete all fields");
         $$invalidate(1, buttonAnimation = "error-shake hover-disabled ");
         return;
       }
       change.priority = 1;
     }
-    game.GAS.log.g("Saving...", pendingChanges);
+    game.system.log.g("Saving...", pendingChanges);
     $doc.update({ changes: pendingChanges });
-    game.GAS.log.g("Changes saved");
+    game.system.log.g("Changes saved");
     $$invalidate(1, buttonAnimation = "success-glow hover-disabled");
   }
   __name(save, "save");
@@ -30860,7 +30860,7 @@ function instance$U($$self, $$props, $$invalidate) {
   let { activeTab: activeTab2 = void 0 } = $$props;
   onMount(() => {
     $$invalidate(0, activeTab2 = tabs[0].id);
-    game.GAS.log.d("Tabs", tabs);
+    game.system.log.d("Tabs", tabs);
   });
   const click_handler2 = /* @__PURE__ */ __name((tab) => $$invalidate(0, activeTab2 = tab.id), "click_handler");
   $$self.$$set = ($$new_props) => {
@@ -31047,12 +31047,12 @@ function instance$T($$self, $$props, $$invalidate) {
   const doc = document2 || getContext("#doc");
   component_subscribe($$self, doc, (value) => $$invalidate(3, $doc = value));
   const update2 = /* @__PURE__ */ __name(async () => {
-    game.GAS.log.d("DocCheckBox internal default update method");
+    game.system.log.d("DocCheckBox internal default update method");
     if (preventDefault)
       return;
     await $doc.update({ [valuePath]: Boolean(inputValue) });
-    game.GAS.log.d("valuePath", valuePath);
-    game.GAS.log.d($doc);
+    game.system.log.d("valuePath", valuePath);
+    game.system.log.d($doc);
   }, "update");
   onMount(() => {
     $$invalidate(1, inputValue = resolveDotpath($doc, valuePath));
@@ -33730,7 +33730,7 @@ class FFActiveEffectSheet extends SvelteApplication {
       }
     });
     this.reactive.document = object;
-    game.GAS.log.d("isEditing", this.reactive.document.system.isEditing);
+    game.system.log.d("isEditing", this.reactive.document.system.isEditing);
   }
   /**
    * Default Application options
@@ -33819,16 +33819,16 @@ function createFilterQuery(properties, { caseSensitive = false, store } = {}) {
     const current = get_store_value(store);
     if (typeof current === "string") {
       keyword = Strings.normalize(current);
-      game.GAS.log.d("keyword", keyword);
+      game.system.log.d("keyword", keyword);
       regex = new RegExp(RegExp.escape(keyword), caseSensitive ? "" : "i");
-      game.GAS.log.d("keyword", regex);
+      game.system.log.d("keyword", regex);
     } else {
       store.set(keyword);
     }
   }
   function filterQuery(data) {
     if (keyword === "" || !regex) {
-      game.GAS.log.d("No keyword or regex, returning true");
+      game.system.log.d("No keyword or regex, returning true");
       return true;
     }
     if (isIterable(properties)) {
@@ -33866,14 +33866,14 @@ function createFilterQuery(properties, { caseSensitive = false, store } = {}) {
     return storeKeyword.subscribe(handler);
   };
   filterQuery.set = (value) => {
-    game.GAS.log.d("value", value);
+    game.system.log.d("value", value);
     if (Array.isArray(value)) {
       const pattern = value.map((v) => RegExp.escape(Strings.normalize(v))).join("|");
       keyword = value.join(", ");
       regex = new RegExp(pattern, caseSensitive ? "" : "i");
     } else if (typeof value === "string") {
       keyword = Strings.normalize(value);
-      game.GAS.log.d("keyword", keyword);
+      game.system.log.d("keyword", keyword);
       regex = new RegExp(RegExp.escape(keyword), caseSensitive ? "" : "i");
     } else if (typeof value === "boolean") {
       keyword = value.toString();
@@ -34091,7 +34091,7 @@ class ActionHandler {
         message
       };
     } catch (error) {
-      game.GAS.log.e("Error in action handler", error);
+      game.system.log.e("Error in action handler", error);
       ui.notifications.error(
         game.i18n.format("FF15.Errors.ActionHandlingFailed", { target: this.actor.name })
       );
@@ -34124,9 +34124,9 @@ class ActionHandler {
         targetActor
       } = this._getTargetCRValue(item, targets);
       isSuccess = this._evaluateSuccess({ roll, crValue, isCritical });
-      game.GAS.log.o("[ABILITY:ROLL] CR check isSuccess:", isSuccess);
+      game.system.log.o("[ABILITY:ROLL] CR check isSuccess:", isSuccess);
       messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
-      game.GAS.log.o("[ABILITY:ROLL] CR check:", {
+      game.system.log.o("[ABILITY:ROLL] CR check:", {
         itemName: item.name,
         rollTotal: roll.total,
         CR: item.system.CR,
@@ -34152,7 +34152,7 @@ class ActionHandler {
       return;
     const healingRoll = await new Roll(item.system.baseEffectHealing).evaluate();
     const healingAmount = healingRoll.total;
-    game.GAS.log.o("[HEALING] Applying healing:", {
+    game.system.log.o("[HEALING] Applying healing:", {
       itemName: item.name,
       targetName: targetActor.name,
       healingAmount,
@@ -34161,7 +34161,7 @@ class ActionHandler {
     const currentHP = targetActor.system.points.HP.val;
     const maxHP = targetActor.system.points.HP.max;
     const newHP = Math.min(currentHP + healingAmount, maxHP);
-    game.GAS.log.o("[HEALING] HP values:", {
+    game.system.log.o("[HEALING] HP values:", {
       currentHP,
       maxHP,
       newHP,
@@ -34275,7 +34275,7 @@ class ActionHandler {
     const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
     const roll = await new Roll(rollFormula, rollData).evaluate();
     const { isCritical, d20Result } = await this._handleCriticalHit(roll, item);
-    game.GAS.log.o("[ABILITY:ROLL] Roll result:", {
+    game.system.log.o("[ABILITY:ROLL] Roll result:", {
       itemName: item.name,
       rollTotal: roll.total,
       isCritical,
@@ -34305,12 +34305,12 @@ class ActionHandler {
   async _handleCriticalHit(roll, item) {
     const d20Term = roll.terms?.[0];
     if (!d20Term) {
-      game.GAS.log.w("[CRITICAL] No d20 term found in roll:", roll);
+      game.system.log.w("[CRITICAL] No d20 term found in roll:", roll);
       return { isCritical: false, d20Result: 0 };
     }
     const d20Result = d20Term.modifiers?.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results?.[0]?.result ?? 0;
     const isCritical = d20Result === 20;
-    game.GAS.log.d("[CRITICAL] Critical hit check:", {
+    game.system.log.d("[CRITICAL] Critical hit check:", {
       d20Result,
       isCritical,
       itemName: item.name,
@@ -34333,13 +34333,13 @@ class ActionHandler {
     if (!formulaFields.length) {
       formulaFields = ["directHitDamage", "baseEffectDamage"];
     }
-    game.GAS.log.o("[CRITICAL] Doubling damage/healing for critical hit:", {
+    game.system.log.o("[CRITICAL] Doubling damage/healing for critical hit:", {
       itemName: item.name,
       formulaFields
     });
     for (const field of formulaFields) {
       const formula = item.system?.[field];
-      game.GAS.log.o("[CRITICAL] Formula:", {
+      game.system.log.o("[CRITICAL] Formula:", {
         field,
         formula
       });
@@ -34347,7 +34347,7 @@ class ActionHandler {
         const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
           return `${parseInt(count, 10) * 2}d${sides}`;
         });
-        game.GAS.log.o("[CRITICAL] Modified formula:", {
+        game.system.log.o("[CRITICAL] Modified formula:", {
           field,
           formula,
           modifiedFormula
@@ -34385,7 +34385,7 @@ class ActionHandler {
         "system.points.MP.val": currentMP - cost
       });
     } catch (error) {
-      game.GAS.log.e("[MP:COST] Error deducting MP cost:", error);
+      game.system.log.e("[MP:COST] Error deducting MP cost:", error);
       throw error;
     }
   }
@@ -34408,7 +34408,7 @@ class ActionHandler {
     try {
       await this.actor.update({ "system.points.MP.val": newMP });
     } catch (error) {
-      game.GAS.log.e("[MP:RESTORE] Error restoring MP:", error);
+      game.system.log.e("[MP:RESTORE] Error restoring MP:", error);
       throw error;
     }
   }
@@ -34429,7 +34429,7 @@ class ActionHandler {
       await this.actor.update({ "system.points.BP.val": newBP });
       const updatedBP = this.actor.system.points.BP.val;
     } catch (error) {
-      game.GAS.log.e("[BARRIER] Error applying barrier points:", error);
+      game.system.log.e("[BARRIER] Error applying barrier points:", error);
       throw error;
     }
   }
@@ -34519,7 +34519,7 @@ class AbilitiesLimiter {
     );
     if (!damageOnlyEffect)
       return true;
-    game.GAS.log.o("[ABILITIES LIMITER] Found Next Ability Does Damage Only effect:", {
+    game.system.log.o("[ABILITIES LIMITER] Found Next Ability Does Damage Only effect:", {
       event,
       effect: damageOnlyEffect
     });
@@ -34532,7 +34532,7 @@ class AbilitiesLimiter {
       effectDisabled: damageOnlyEffect?.disabled
     });
     if (event.item?.system) {
-      game.GAS.log.o("[ABILITIES LIMITER] Processing item:", {
+      game.system.log.o("[ABILITIES LIMITER] Processing item:", {
         itemName: event.item.name,
         itemType: event.item.type,
         itemSystem: event.item.system,
@@ -34545,7 +34545,7 @@ class AbilitiesLimiter {
       const hasNonDamageEffects = this._hasNonDamageEffects(event.item.system);
       const hasSourceEffects = this._hasSourceEffects(event.item.system);
       const hasEnablerEffects = this._hasEnablerEffects(event.item.system);
-      game.GAS.log.o("[ABILITIES LIMITER] Effect checks:", {
+      game.system.log.o("[ABILITIES LIMITER] Effect checks:", {
         itemName: event.item.name,
         hasNonDamageEffects,
         hasSourceEffects,
@@ -34564,7 +34564,7 @@ class AbilitiesLimiter {
         }
       });
       if (hasSourceEffects) {
-        game.GAS.log.o("[ABILITIES LIMITER] Ability has source effects, preventing use:", {
+        game.system.log.o("[ABILITIES LIMITER] Ability has source effects, preventing use:", {
           itemName: event.item.name,
           hasSourceEffects
         });
@@ -34572,7 +34572,7 @@ class AbilitiesLimiter {
         return false;
       }
       if (hasEnablerEffects) {
-        game.GAS.log.o("[ABILITIES LIMITER] Ability has enabler effects, preventing use:", {
+        game.system.log.o("[ABILITIES LIMITER] Ability has enabler effects, preventing use:", {
           itemName: event.item.name,
           hasEnablerEffects
         });
@@ -34580,7 +34580,7 @@ class AbilitiesLimiter {
         return false;
       }
       if (hasNonDamageEffects) {
-        game.GAS.log.o("[ABILITIES LIMITER] Ability has non-damage effects:", {
+        game.system.log.o("[ABILITIES LIMITER] Ability has non-damage effects:", {
           itemName: event.item.name,
           system: event.item.system
         });
@@ -34604,7 +34604,7 @@ class AbilitiesLimiter {
         event.item.system.directHitRestoreMP = null;
         event.item.system.grants = { list: [], value: false };
         event.item.system.procs = { list: [], value: false };
-        game.GAS.log.o("[ABILITIES LIMITER] Modified ability to only do damage:", {
+        game.system.log.o("[ABILITIES LIMITER] Modified ability to only do damage:", {
           itemName: event.item.name,
           originalHealing: originalBaseEffectHealing,
           originalBarrier: originalBaseEffectBarrier,
@@ -34618,7 +34618,7 @@ class AbilitiesLimiter {
         });
         ui.notifications.warn(game.i18n.format("FF15.Warnings.NextAbilityDamageOnly"));
       }
-      game.GAS.log.o("[ABILITIES LIMITER] Attempting to delete effect:", {
+      game.system.log.o("[ABILITIES LIMITER] Attempting to delete effect:", {
         effectName: damageOnlyEffect.name,
         effectId: damageOnlyEffect.id,
         effectDuration: damageOnlyEffect.duration,
@@ -34635,9 +34635,9 @@ class AbilitiesLimiter {
       });
       try {
         await damageOnlyEffect.delete();
-        game.GAS.log.o("[ABILITIES LIMITER] Successfully deleted effect");
+        game.system.log.o("[ABILITIES LIMITER] Successfully deleted effect");
       } catch (error) {
-        game.GAS.log.e("[ABILITIES LIMITER] Failed to delete effect:", error);
+        game.system.log.e("[ABILITIES LIMITER] Failed to delete effect:", error);
       }
       console.log("[FF15] | [ABILITIES LIMITER] After delete attempt:", {
         effectStillExists: this.actor.effects.has(damageOnlyEffect.id),
@@ -34705,7 +34705,7 @@ class EffectManager {
    */
   async handleEffects(item, result) {
     console.log("[FF15] | [EFFECT MANAGER] handleEffects call stack:", item, result);
-    game.GAS.log.o("[EFFECT MANAGER] Starting handleEffects:", {
+    game.system.log.o("[EFFECT MANAGER] Starting handleEffects:", {
       itemName: item?.name,
       itemType: item?.type,
       itemSystem: item?.system,
@@ -34719,7 +34719,7 @@ class EffectManager {
     });
     const abilitiesLimiter = new AbilitiesLimiter(this.actor);
     const shouldProceed = await abilitiesLimiter.process({ item });
-    game.GAS.log.o("[EFFECT MANAGER] AbilitiesLimiter check result:", {
+    game.system.log.o("[EFFECT MANAGER] AbilitiesLimiter check result:", {
       itemName: item?.name,
       shouldProceed,
       hasEnablerEffects: item.system.enables?.list?.length > 0
@@ -34734,7 +34734,7 @@ class EffectManager {
       targets
     });
     if (shouldProceed && item.system.grants?.value && hasTargets) {
-      game.GAS.log.o("[EFFECT MANAGER] Processing target effects:", {
+      game.system.log.o("[EFFECT MANAGER] Processing target effects:", {
         itemName: item.name,
         grants: item.system.grants,
         targets: targets.map((t) => t.actor?.name)
@@ -34743,7 +34743,7 @@ class EffectManager {
       await this._applyEffectsFromList(item, item.system.grants.list, targetArray);
     }
     if (shouldProceed && item.system.sourceGrants?.list?.length) {
-      game.GAS.log.o("[EFFECT MANAGER] Processing source effects:", {
+      game.system.log.o("[EFFECT MANAGER] Processing source effects:", {
         itemName: item.name,
         sourceGrants: item.system.sourceGrants,
         actor: this.actor.name
@@ -34751,7 +34751,7 @@ class EffectManager {
       await this._applyEffectsFromList(item, item.system.sourceGrants.list, [{ actor: this.actor }]);
     }
     if (shouldProceed && item.system.enables?.list?.length > 0) {
-      game.GAS.log.o("[EFFECT MANAGER] Processing enabler effects:", {
+      game.system.log.o("[EFFECT MANAGER] Processing enabler effects:", {
         itemName: item.name,
         enables: item.system.enables,
         actor: this.actor.name
@@ -34769,14 +34769,14 @@ class EffectManager {
   async _applyEffectsFromList(sourceItem, effectList, targets) {
     if (!effectList?.length || !targets?.length) {
       if (!effectList?.length) {
-        game.GAS.log.w("[EFFECT MANAGER] No effects to apply");
+        game.system.log.w("[EFFECT MANAGER] No effects to apply");
       }
       if (!targets?.length) {
-        game.GAS.log.w("[EFFECT MANAGER] No targets to apply effects to");
+        game.system.log.w("[EFFECT MANAGER] No targets to apply effects to");
       }
       return;
     }
-    game.GAS.log.o("[EFFECT MANAGER] Processing effects from:", {
+    game.system.log.o("[EFFECT MANAGER] Processing effects from:", {
       sourceItem: sourceItem?.name,
       sourceItemUUID: sourceItem?.uuid,
       actor: this.actor?.name,
@@ -34793,7 +34793,7 @@ class EffectManager {
           await targetActor.createEmbeddedDocuments("ActiveEffect", effectData);
         }
       } catch (error) {
-        game.GAS.log.e("Error applying effects to target", error);
+        game.system.log.e("Error applying effects to target", error);
         ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
       }
     }
@@ -34849,7 +34849,7 @@ class EffectManager {
    * @return {Object} Clean effect data
    */
   _prepareCleanEffectData(effect, effectItem, sourceItem) {
-    game.GAS.log.o("[EFFECT MANAGER] Preparing clean effect data:", {
+    game.system.log.o("[EFFECT MANAGER] Preparing clean effect data:", {
       effectName: effect.name,
       effectItemSystem: effectItem.system,
       sourceItemSystem: sourceItem.system
@@ -34873,7 +34873,7 @@ class EffectManager {
         durationData.requiresDamage = true;
       }
     }
-    game.GAS.log.o("[EFFECT MANAGER] Prepared duration data:", {
+    game.system.log.o("[EFFECT MANAGER] Prepared duration data:", {
       effectName: effect.name,
       durationType: duration.type,
       durationUnits: duration.units,
@@ -34902,7 +34902,7 @@ class EffectManager {
       const effects2 = await this._processEnablerRef(item, enableRef);
       enabledEffects.push(...effects2);
     }
-    game.GAS.log.o("[ABILITY:ENABLER] Enabled effects:", enabledEffects);
+    game.system.log.o("[ABILITY:ENABLER] Enabled effects:", enabledEffects);
     return enabledEffects;
   }
   /**
@@ -34917,7 +34917,7 @@ class EffectManager {
     if (!actorItem || !actorItem.hasEffects)
       return [];
     if (!await this.actor.actorItemHasRemainingUses(actorItem)) {
-      game.GAS.log.w("[ENABLE]", `${actorItem.name} has no remaining uses`);
+      game.system.log.w("[ENABLE]", `${actorItem.name} has no remaining uses`);
       return [];
     }
     if (actorItem.type === "trait" && actorItem.system.sacrificesMovement) {
@@ -34940,14 +34940,14 @@ class EffectManager {
   async _findEnablerItems(enableRef) {
     const compendiumItem = await fromUuid(enableRef.uuid);
     if (!compendiumItem) {
-      game.GAS.log.w("[ENABLE] Could not find compendium item:", enableRef.uuid);
+      game.system.log.w("[ENABLE] Could not find compendium item:", enableRef.uuid);
       return { compendiumItem: null, actorItem: null };
     }
     const actorItem = this.actor.items.find(
       (item) => item.name === compendiumItem.name && item.type === compendiumItem.type
     );
     if (!actorItem) {
-      game.GAS.log.w("[ENABLE] Could not find matching actor item:", compendiumItem.name);
+      game.system.log.w("[ENABLE] Could not find matching actor item:", compendiumItem.name);
       return { compendiumItem, actorItem: null };
     }
     return { compendiumItem, actorItem };
@@ -35020,7 +35020,7 @@ class CombatSlotManager {
     if (state?.damageResults) {
       const hasAppliedDamage = Object.values(state.damageResults).some((result2) => result2.applied);
       if (hasAppliedDamage) {
-        game.GAS.log.w("[SLOT:USAGE] Message already has applied damage results, skipping slot update");
+        game.system.log.w("[SLOT:USAGE] Message already has applied damage results, skipping slot update");
         return;
       }
     }
@@ -35031,7 +35031,7 @@ class CombatSlotManager {
       return;
     }
     let slotToUse;
-    game.GAS.log.o("[SLOT:USAGE] Checking slots:", {
+    game.system.log.o("[SLOT:USAGE] Checking slots:", {
       itemName: item.name,
       actionType,
       itemTags: item.system.tags,
@@ -35040,10 +35040,10 @@ class CombatSlotManager {
     });
     if (this.actor.system.actionState.available.includes(actionType)) {
       slotToUse = actionType;
-      game.GAS.log.o("[SLOT:USAGE] Using default action type slot:", actionType);
+      game.system.log.o("[SLOT:USAGE] Using default action type slot:", actionType);
     } else if (actionType === "secondary" && this.actor.system.actionState.available.includes("primary")) {
       slotToUse = "primary";
-      game.GAS.log.o("[SLOT:USAGE] Using primary slot for secondary action");
+      game.system.log.o("[SLOT:USAGE] Using primary slot for secondary action");
     }
     if (!slotToUse && item.system.tags?.length) {
       const customSlots = this.actor.system.actionState.available.filter(
@@ -35054,7 +35054,7 @@ class CombatSlotManager {
       );
       if (matchingSlot) {
         slotToUse = matchingSlot;
-        game.GAS.log.o("[SLOT:USAGE] Found matching slot:", {
+        game.system.log.o("[SLOT:USAGE] Found matching slot:", {
           slot: matchingSlot,
           itemName: item.name,
           itemTags: item.system.tags
@@ -35065,7 +35065,7 @@ class CombatSlotManager {
           )
         );
         if (enablerEffectForThisSlot) {
-          game.GAS.log.o("[SLOT:USAGE] Found enabler effect:", {
+          game.system.log.o("[SLOT:USAGE] Found enabler effect:", {
             effectName: enablerEffectForThisSlot.name,
             changes: enablerEffectForThisSlot.changes,
             origin: enablerEffectForThisSlot.origin
@@ -35074,7 +35074,7 @@ class CombatSlotManager {
           if (originItemUuid) {
             const originItem = fromUuidSync(originItemUuid);
             if (originItem) {
-              game.GAS.log.o("[SLOT:USAGE] Found origin item:", {
+              game.system.log.o("[SLOT:USAGE] Found origin item:", {
                 name: originItem.name,
                 currentUses: originItem.system.uses,
                 maxUses: originItem.system.maxUses
@@ -35082,14 +35082,14 @@ class CombatSlotManager {
               const uses = (originItem.system.uses || 0) + 1;
               await originItem.update({ system: { uses } });
             }
-            game.GAS.log.o("[SLOT:USAGE] Removing enabler effect:", enablerEffectForThisSlot.name);
+            game.system.log.o("[SLOT:USAGE] Removing enabler effect:", enablerEffectForThisSlot.name);
             await enablerEffectForThisSlot.delete();
           }
         }
       }
     }
     if (!slotToUse) {
-      game.GAS.log.w("[SLOT:USAGE] No slot found to use for:", item.name);
+      game.system.log.w("[SLOT:USAGE] No slot found to use for:", item.name);
       return;
     }
     const newAvailable = [...this.actor.system.actionState.available];
@@ -35101,7 +35101,7 @@ class CombatSlotManager {
       type: slotToUse,
       messageId: message?.id
     }];
-    game.GAS.log.o("[SLOT:USAGE] Updating action state:", {
+    game.system.log.o("[SLOT:USAGE] Updating action state:", {
       oldAvailable: this.actor.system.actionState.available,
       newAvailable,
       oldUsed: this.actor.system.actionState.used,
@@ -35137,17 +35137,17 @@ class GuardManager {
     for (const methodName of guardMethodNames) {
       const guardMethod = this.RG[methodName];
       if (!guardMethod) {
-        game.GAS.log.w(`[GUARD] Guard method ${methodName} not found`);
+        game.system.log.w(`[GUARD] Guard method ${methodName} not found`);
         continue;
       }
       try {
         const result = await guardMethod.call(this.RG, item);
         if (!result) {
-          game.GAS.log.d(`[GUARD] ${methodName} check failed for ${item.name}`);
+          game.system.log.d(`[GUARD] ${methodName} check failed for ${item.name}`);
           return false;
         }
       } catch (error) {
-        game.GAS.log.e(`[GUARD] Error in ${methodName} check:`, error);
+        game.system.log.e(`[GUARD] Error in ${methodName} check:`, error);
         return false;
       }
     }
@@ -35249,7 +35249,7 @@ class RollCalcActor extends RollCalc {
       await this.EffectManager.handleEffects(item, result);
       await this.CombatSlotManager.markSlotUsed(item, result);
     } catch (error) {
-      game.GAS.log.e("Error in ability action", error);
+      game.system.log.e("Error in ability action", error);
       ui.notifications.error(game.i18n.format("FF15.Errors.AbilityActionFailed", { target: this.params.actor.name }));
     }
   }
@@ -36448,7 +36448,7 @@ function instance$K($$self, $$props, $$invalidate) {
   }
   __name(resetAllUses, "resetAllUses");
   function toggleLock(event) {
-    game.GAS.log.d("a");
+    game.system.log.d("a");
     event.stopPropagation();
     event.preventDefault();
     $doc.update(
@@ -36484,7 +36484,7 @@ function instance$K($$self, $$props, $$invalidate) {
           for (let grantedItem of grantedItems) {
             const matchingItems = actorItems.filter((x) => x.name === grantedItem.name && x.type === grantedItem.type);
             for (let item of matchingItems) {
-              game.GAS.log.d("Deleting item:", item);
+              game.system.log.d("Deleting item:", item);
               await item.delete();
             }
           }
@@ -40181,13 +40181,13 @@ function create_fragment$C(ctx) {
 __name(create_fragment$C, "create_fragment$C");
 function editItem$2(item) {
   item.sheet.render(true);
-  game.GAS.log.d("editItem");
-  game.GAS.log.d(item);
+  game.system.log.d("editItem");
+  game.system.log.d(item);
 }
 __name(editItem$2, "editItem$2");
 function addQuantity(item) {
-  game.GAS.log.d("addQuantity");
-  game.GAS.log.d(item);
+  game.system.log.d("addQuantity");
+  game.system.log.d(item);
   const quantity = item.system.quantity + 1;
   item.update({ system: { quantity } });
 }
@@ -40221,11 +40221,11 @@ function instance$v($$self, $$props, $$invalidate) {
   });
   component_subscribe($$self, wildcard, (value) => $$invalidate(12, $wildcard = value));
   function duplicateItem(item) {
-    game.GAS.log.d("duplicateItem");
-    game.GAS.log.d(item);
+    game.system.log.d("duplicateItem");
+    game.system.log.d(item);
     const itemData = item.toObject();
     delete itemData._id;
-    game.GAS.log.d("itemData", itemData);
+    game.system.log.d("itemData", itemData);
     $Actor.sheet._onDropItemCreate(itemData);
   }
   __name(duplicateItem, "duplicateItem");
@@ -40251,7 +40251,7 @@ function instance$v($$self, $$props, $$invalidate) {
   }
   __name(useItem, "useItem");
   function toggleLock(event) {
-    game.GAS.log.d("a");
+    game.system.log.d("a");
     event.stopPropagation();
     event.preventDefault();
     $doc.update(
@@ -40879,7 +40879,7 @@ function create_fragment$B(ctx) {
 }
 __name(create_fragment$B, "create_fragment$B");
 function editItem$1(index, item) {
-  game.GAS.log.d(item);
+  game.system.log.d(item);
   item.sheet.render(true);
 }
 __name(editItem$1, "editItem$1");
@@ -40900,7 +40900,7 @@ function instance$u($$self, $$props, $$invalidate) {
   $$self.$$.on_destroy.push(() => $$unsubscribe_wildcard());
   let { sheet } = $$props;
   function resetEffectList() {
-    game.GAS.log.d("resetEffectList");
+    game.system.log.d("resetEffectList");
     filterDoc = new TJSDocument($doc);
     $$subscribe_wildcard($$invalidate(2, wildcard = filterDoc.embedded.create(ActiveEffect, wildcardConfig)));
   }
@@ -40942,7 +40942,7 @@ function instance$u($$self, $$props, $$invalidate) {
   }
   __name(removeAllEffects, "removeAllEffects");
   function isPassiveEffectFromItem(item) {
-    game.GAS.log.d("isPassiveEffectFromItem item", item);
+    game.system.log.d("isPassiveEffectFromItem item", item);
     if (item instanceof ActiveEffect) {
       const origin = getEffectOrigin(item, true);
       const parent = item.parent;
@@ -40967,7 +40967,7 @@ function instance$u($$self, $$props, $$invalidate) {
   }
   __name(toggleLock, "toggleLock");
   async function openActiveEffectEditor() {
-    game.GAS.log.d("openActiveEffectEditor");
+    game.system.log.d("openActiveEffectEditor");
     const effect = await ActiveEffect.create(
       {
         label: $doc.name,
@@ -40981,20 +40981,20 @@ function instance$u($$self, $$props, $$invalidate) {
       },
       { parent: $doc }
     );
-    game.GAS.log.d("effect", effect);
+    game.system.log.d("effect", effect);
   }
   __name(openActiveEffectEditor, "openActiveEffectEditor");
   onMount(() => {
     Hooks.on("createActiveEffect", resetEffectList);
     Hooks.on("deleteActiveEffect", resetEffectList);
-    game.GAS.log.d("EffectsTab mounted");
-    game.GAS.log.d(ActiveEffects);
+    game.system.log.d("EffectsTab mounted");
+    game.system.log.d(ActiveEffects);
   });
   onDestroy(() => {
     Hooks.off("createActiveEffect", resetEffectList);
     Hooks.off("deleteActiveEffect", resetEffectList);
-    game.GAS.log.d("EffectsTab onDestroy");
-    game.GAS.log.d(ActiveEffects);
+    game.system.log.d("EffectsTab onDestroy");
+    game.system.log.d(ActiveEffects);
   });
   $$self.$$set = ($$props2) => {
     if ("sheet" in $$props2)
@@ -41254,7 +41254,7 @@ function instance$t($$self, $$props, $$invalidate) {
   ];
   let stylesApp;
   onMount(async () => {
-    game.GAS.log.d($documentStore);
+    game.system.log.d($documentStore);
   });
   function applicationshell_elementRoot_binding(value) {
     elementRoot = value;
@@ -41425,7 +41425,7 @@ class SvelteDocumentSheet extends SvelteApplication {
       }
     });
     this.reactive.document = object;
-    game.GAS.log.d("isEditing", this.reactive.document.system.isEditing);
+    game.system.log.d("isEditing", this.reactive.document.system.isEditing);
   }
   /**
    * Default Application options
@@ -41599,7 +41599,7 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
    * @return {Promise<void>} Returns a promise that resolves when the edit mode is toggled
    */
   async _onToggleEdit(event) {
-    game.GAS.log.p("[TOGGLE EDIT] _onToggleEdit event", event);
+    game.system.log.p("[TOGGLE EDIT] _onToggleEdit event", event);
     if (event?.event) {
       event.event.preventDefault();
     }
@@ -41775,30 +41775,30 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
    * @return {Promise<Array>} Array of created items
    */
   async _onDropFolder(event, data) {
-    game.GAS.log.o("[DROP FOLDER] Starting folder drop:", {
+    game.system.log.o("[DROP FOLDER] Starting folder drop:", {
       event,
       data
     });
     const actor = this.reactive.document;
     if (!actor.isOwner) {
-      game.GAS.log.w("[DROP FOLDER] Not owner, exiting");
+      game.system.log.w("[DROP FOLDER] Not owner, exiting");
       return [];
     }
     const folder = await Folder.implementation.fromDropData(data);
-    game.GAS.log.o("[DROP FOLDER] Retrieved folder:", {
+    game.system.log.o("[DROP FOLDER] Retrieved folder:", {
       folder,
       name: folder?.name,
       contents: folder?.contents,
       children: folder?.children
     });
     if (!folder) {
-      game.GAS.log.w("[DROP FOLDER] No folder found");
+      game.system.log.w("[DROP FOLDER] No folder found");
       return [];
     }
     const items = [];
     let foundJob = false;
     const processItems = /* @__PURE__ */ __name(async (contents) => {
-      game.GAS.log.o("[DROP FOLDER] Processing contents:", {
+      game.system.log.o("[DROP FOLDER] Processing contents:", {
         count: contents?.length,
         items: contents?.map((i) => ({ name: i.name, type: i.type }))
       });
@@ -41807,7 +41807,7 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
       if (!foundJob) {
         for (const item of contents) {
           if (item.type === "job") {
-            game.GAS.log.o("[DROP FOLDER] Found job:", item.name);
+            game.system.log.o("[DROP FOLDER] Found job:", item.name);
             await this._onDropJob(event, { uuid: item.uuid });
             foundJob = true;
             break;
@@ -41816,7 +41816,7 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
       }
       for (const item of contents) {
         if (item.type !== "job") {
-          game.GAS.log.o("[DROP FOLDER] Processing non-job item:", {
+          game.system.log.o("[DROP FOLDER] Processing non-job item:", {
             name: item.name,
             type: item.type
           });
@@ -41825,13 +41825,13 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
       }
     }, "processItems");
     if (folder.contents?.length) {
-      game.GAS.log.o("[DROP FOLDER] Processing main folder contents");
+      game.system.log.o("[DROP FOLDER] Processing main folder contents");
       await processItems(folder.contents);
     }
     if (folder.children?.length) {
-      game.GAS.log.o("[DROP FOLDER] Found subfolders:", folder.children.length);
+      game.system.log.o("[DROP FOLDER] Found subfolders:", folder.children.length);
       for (const child of folder.children) {
-        game.GAS.log.o("[DROP FOLDER] Processing subfolder:", {
+        game.system.log.o("[DROP FOLDER] Processing subfolder:", {
           name: child.name,
           entries: child.entries?.length
         });
@@ -41841,7 +41841,7 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
       }
     }
     if (items.length) {
-      game.GAS.log.o("[DROP FOLDER] Creating items:", {
+      game.system.log.o("[DROP FOLDER] Creating items:", {
         count: items.length,
         items: items.map((i) => ({ name: i.name, type: i.type }))
       });
@@ -41867,19 +41867,19 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
     const grantItems = [];
     const failedUuids = [];
     const existingUuids = new Set(actor.items.map((item) => item.uuid));
-    game.GAS.log.d("_onDropJob: Job grants:", grants);
+    game.system.log.d("_onDropJob: Job grants:", grants);
     for (const grantObject of grants.list) {
-      game.GAS.log.d("_onDropJob: Processing grant:", grantObject);
+      game.system.log.d("_onDropJob: Processing grant:", grantObject);
       let grantItem;
       if (grantObject.uuid.startsWith("Item.")) {
         grantItem = game.items.get(grantObject.uuid.replace("Item.", ""));
-        game.GAS.log.d("_onDropJob: Attempting to find world item:", grantItem);
+        game.system.log.d("_onDropJob: Attempting to find world item:", grantItem);
       } else {
         grantItem = await fromUuid(grantObject.uuid);
-        game.GAS.log.d("_onDropJob: Attempting to find compendium item:", grantItem);
+        game.system.log.d("_onDropJob: Attempting to find compendium item:", grantItem);
       }
       if (!grantItem) {
-        game.GAS.log.w(`_onDropJob: Failed to find item with UUID: ${grantObject.uuid}`);
+        game.system.log.w(`_onDropJob: Failed to find item with UUID: ${grantObject.uuid}`);
         failedUuids.push(grantObject.uuid);
         continue;
       }
@@ -41889,7 +41889,7 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
       }
     }
     if (failedUuids.length > 0) {
-      game.GAS.log.g("ItemBucket:_onDropJob: Failed Uuids:", failedUuids);
+      game.system.log.g("ItemBucket:_onDropJob: Failed Uuids:", failedUuids);
       const confirmed = await Dialog.confirm({
         title: "Missing Items Found",
         content: `
@@ -42736,8 +42736,8 @@ function create_fragment$y(ctx) {
 __name(create_fragment$y, "create_fragment$y");
 function editItem(item) {
   item.sheet.render(true);
-  game.GAS.log.d("editItem");
-  game.GAS.log.d(item);
+  game.system.log.d("editItem");
+  game.system.log.d(item);
 }
 __name(editItem, "editItem");
 function showItemSheet$1(item) {
@@ -42782,11 +42782,11 @@ function instance$r($$self, $$props, $$invalidate) {
   });
   component_subscribe($$self, wildcard, (value) => $$invalidate(17, $wildcard = value));
   function duplicateItem(item) {
-    game.GAS.log.d("duplicateItem");
-    game.GAS.log.d(item);
+    game.system.log.d("duplicateItem");
+    game.system.log.d(item);
     const itemData = item.toObject();
     delete itemData._id;
-    game.GAS.log.d("itemData", itemData);
+    game.system.log.d("itemData", itemData);
     $Actor.sheet._onDropItemCreate(itemData);
   }
   __name(duplicateItem, "duplicateItem");
@@ -42813,7 +42813,7 @@ function instance$r($$self, $$props, $$invalidate) {
   }
   __name(removeAllItems, "removeAllItems");
   function toggleLock(event) {
-    game.GAS.log.d("a");
+    game.system.log.d("a");
     event.stopPropagation();
     event.preventDefault();
     $doc.update(
@@ -42864,7 +42864,7 @@ function instance$r($$self, $$props, $$invalidate) {
   }
   __name(deleteJob, "deleteJob");
   onMount(async () => {
-    game.GAS.log.d("items", $doc.items);
+    game.system.log.d("items", $doc.items);
   });
   const badgeType = /* @__PURE__ */ __name((item) => {
     return item.system.uses >= item.system.limitation ? "danger" : "success";
@@ -43403,7 +43403,7 @@ function instance$n($$self, $$props, $$invalidate) {
     });
   }, "onSizeChange");
   const onclick = /* @__PURE__ */ __name(async (key, code) => {
-    game.GAS.log.d("actor", $actor);
+    game.system.log.d("actor", $actor);
     const attributeValue = $actor.system.attributes[key][code].val;
     const rollFormula = `1d20 + ${attributeValue}`;
     const attributeName = code.toUpperCase();
@@ -44436,7 +44436,7 @@ function instance$j($$self, $$props, $$invalidate) {
   ];
   let stylesApp;
   onMount(async () => {
-    game.GAS.log.d($documentStore);
+    game.system.log.d($documentStore);
   });
   function applicationshell_elementRoot_binding(value) {
     elementRoot = value;
@@ -46036,7 +46036,7 @@ function instance$g($$self, $$props, $$invalidate) {
       qualifier: ""
     });
     await $item.update({ system: { durations: existingDurations } });
-    game.GAS.log.pink(`Added duration: ${existingDurations}`, $item);
+    game.system.log.pink(`Added duration: ${existingDurations}`, $item);
   }
   __name(addDuration, "addDuration");
   function removeDuration(index) {
@@ -48344,8 +48344,8 @@ function instance$f($$self, $$props, $$invalidate) {
   let $item;
   const item = getContext("#doc");
   component_subscribe($$self, item, (value) => $$invalidate(0, $item = value));
-  game.GAS.log.d("Details", item.system);
-  game.GAS.log.d("PCModel", PCModel.schema.fields.attributes.fields.primary.fields);
+  game.system.log.d("Details", item.system);
+  game.system.log.d("PCModel", PCModel.schema.fields.attributes.fields.primary.fields);
   const { HTMLField: HTMLField2, SchemaField: SchemaField2, NumberField: NumberField2, StringField: StringField2, FilePathField, ArrayField: ArrayField2, BooleanField: BooleanField2 } = foundry.data.fields;
   const schemaFields = PCModel.schema.fields.attributes.fields.primary.fields;
   const schemaFieldEntries = Object.entries(schemaFields);
@@ -48449,7 +48449,7 @@ class FolderProcessor {
     if (!item)
       return false;
     const { preventDuplicates = true, warnOnCompendiumDrops = true } = options;
-    game.GAS.log.o("[FOLDER PROCESSOR] Processing item:", {
+    game.system.log.o("[FOLDER PROCESSOR] Processing item:", {
       item,
       uuid: item.uuid,
       type: item.type,
@@ -48458,7 +48458,7 @@ class FolderProcessor {
     });
     const existingInList = list.some((existing) => existing.uuid === item.uuid);
     if (preventDuplicates && existingInList) {
-      game.GAS.log.w(`${item.name} is already in the list.`);
+      game.system.log.w(`${item.name} is already in the list.`);
       return false;
     }
     if (warnOnCompendiumDrops && !item.uuid.startsWith("Compendium.")) {
@@ -48472,21 +48472,21 @@ class FolderProcessor {
       if (!confirmed)
         return false;
     }
-    game.GAS.log.o("[FOLDER PROCESSOR] Adding item to list:", { uuid: item.uuid });
+    game.system.log.o("[FOLDER PROCESSOR] Adding item to list:", { uuid: item.uuid });
     list.push({ uuid: item.uuid });
     if (isJob && item.type === "action" && item.system.enables?.value) {
       const enabledTraits = item.system.enables.list || [];
-      game.GAS.log.o("[FOLDER PROCESSOR] Processing enabled traits:", enabledTraits);
+      game.system.log.o("[FOLDER PROCESSOR] Processing enabled traits:", enabledTraits);
       for (const trait of enabledTraits) {
         const traitExists = list.some((existing) => existing.uuid === trait.uuid);
-        game.GAS.log.o("[FOLDER PROCESSOR] Checking trait:", { trait, exists: traitExists });
+        game.system.log.o("[FOLDER PROCESSOR] Checking trait:", { trait, exists: traitExists });
         if (!traitExists) {
           const traitItem = await fromUuid(trait.uuid);
           if (traitItem) {
-            game.GAS.log.o("[FOLDER PROCESSOR] Adding verified trait to list:", trait.uuid);
+            game.system.log.o("[FOLDER PROCESSOR] Adding verified trait to list:", trait.uuid);
             list.push({ uuid: trait.uuid });
           } else {
-            game.GAS.log.w("[FOLDER PROCESSOR] Failed to find trait with UUID:", {
+            game.system.log.w("[FOLDER PROCESSOR] Failed to find trait with UUID:", {
               uuid: trait.uuid,
               sourceAction: {
                 name: item.name,
@@ -48516,7 +48516,7 @@ class FolderProcessor {
       id: folder._id,
       uuid: folder.uuid
     };
-    game.GAS.log.o("[FOLDER PROCESSOR] Processing folder:", {
+    game.system.log.o("[FOLDER PROCESSOR] Processing folder:", {
       folder: folderContext,
       contents: folder?.contents,
       children: folder?.children,
@@ -48525,13 +48525,13 @@ class FolderProcessor {
     if (!folder)
       return;
     if (folder.children?.length) {
-      game.GAS.log.o("[FOLDER PROCESSOR] Processing child folders:", folder.children);
+      game.system.log.o("[FOLDER PROCESSOR] Processing child folders:", folder.children);
       for (const child of folder.children) {
-        game.GAS.log.o("[FOLDER PROCESSOR] Processing child:", child);
+        game.system.log.o("[FOLDER PROCESSOR] Processing child:", child);
         if (child.entries?.length) {
-          game.GAS.log.o("[FOLDER PROCESSOR] Processing entries:", child.entries);
+          game.system.log.o("[FOLDER PROCESSOR] Processing entries:", child.entries);
           for (const entry of child.entries) {
-            game.GAS.log.o("[FOLDER PROCESSOR] Processing entry:", entry);
+            game.system.log.o("[FOLDER PROCESSOR] Processing entry:", entry);
             const item = await fromUuid(entry.uuid);
             await this.processItem(item, list, isJob, options, folderContext);
           }
@@ -48543,14 +48543,14 @@ class FolderProcessor {
       }
     }
     if (folder.contents?.length) {
-      game.GAS.log.o("[FOLDER PROCESSOR] Processing folder contents:", folder.contents);
+      game.system.log.o("[FOLDER PROCESSOR] Processing folder contents:", folder.contents);
       for (const content of folder.contents) {
         if (content.type === "Folder") {
-          game.GAS.log.o("[FOLDER PROCESSOR] Found nested folder:", content);
+          game.system.log.o("[FOLDER PROCESSOR] Found nested folder:", content);
           const subFolder = await fromUuid(content.uuid);
           await this.processFolder(subFolder, list, isJob, options);
         } else {
-          game.GAS.log.o("[FOLDER PROCESSOR] Processing item from folder:", content);
+          game.system.log.o("[FOLDER PROCESSOR] Processing item from folder:", content);
           const item = await fromUuid(content.uuid);
           await this.processItem(item, list, isJob, options, folderContext);
         }
@@ -48579,7 +48579,7 @@ class FolderProcessor {
         groups.other.push(resolvedItem);
       }
     }
-    game.GAS.log.o("[FOLDER PROCESSOR] Grouped items:", {
+    game.system.log.o("[FOLDER PROCESSOR] Grouped items:", {
       jobs: groups.job.length,
       other: groups.other.length
     });
@@ -49354,22 +49354,22 @@ function instance$e($$self, $$props, $$invalidate) {
   async function onDrop(event) {
     event.preventDefault();
     const data = JSON.parse(event.dataTransfer.getData("text/plain"));
-    game.GAS.log.o("ItemBucket:onDrop", "Drop data:", data);
+    game.system.log.o("ItemBucket:onDrop", "Drop data:", data);
     const list = [...$item.system[key].list];
     const isJob = $item.type === "job";
-    game.GAS.log.o("ItemBucket:onDrop", "Current state:", { key, list: list.map((x) => x.uuid), isJob });
+    game.system.log.o("ItemBucket:onDrop", "Current state:", { key, list: list.map((x) => x.uuid), isJob });
     if (data.type === "Folder") {
-      game.GAS.log.o("ItemBucket:onDrop", "Handling folder drop");
+      game.system.log.o("ItemBucket:onDrop", "Handling folder drop");
       const folder = await fromUuid(data.uuid);
-      game.GAS.log.o("ItemBucket:onDrop", "Retrieved folder:", folder);
+      game.system.log.o("ItemBucket:onDrop", "Retrieved folder:", folder);
       await FolderProcessor.processFolder(folder, list, isJob, { preventDuplicates, warnOnCompendiumDrops });
-      game.GAS.log.o("ItemBucket:onDrop", "Final list after folder processing:", list.map((x) => x.uuid));
+      game.system.log.o("ItemBucket:onDrop", "Final list after folder processing:", list.map((x) => x.uuid));
       await $item.update({ [`system.${key}.list`]: list });
       return;
     }
     const droppedItem = await Item.implementation.fromDropData(data);
     await FolderProcessor.processItem(droppedItem, list, isJob, { preventDuplicates, warnOnCompendiumDrops });
-    game.GAS.log.o("ItemBucket:onDrop", "Final list after item processing:", list.map((x) => x.uuid));
+    game.system.log.o("ItemBucket:onDrop", "Final list after item processing:", list.map((x) => x.uuid));
     await $item.update({ [`system.${key}.list`]: list });
   }
   __name(onDrop, "onDrop");
@@ -50547,7 +50547,7 @@ function instance$9($$self, $$props, $$invalidate) {
   const item = getContext("#doc");
   component_subscribe($$self, item, (value) => $$invalidate(4, $item = value));
   onMount(async () => {
-    game.GAS.log.d("EquipmentTabs item", item);
+    game.system.log.d("EquipmentTabs item", item);
   });
   function tabs_1_activeTab_binding(value) {
     activeTab2 = value;
@@ -53047,7 +53047,7 @@ function instance($$self, $$props, $$invalidate) {
   }
   __name(_launchStandardProfileEditor, "_launchStandardProfileEditor");
   onMount(() => {
-    game.GAS.log.d("ItemSheetShell mounted", $documentStore);
+    game.system.log.d("ItemSheetShell mounted", $documentStore);
   });
   function switch_instance1_activeTab_binding(value) {
     activeTab2 = value;
@@ -53263,18 +53263,17 @@ const systemconfig = {
 };
 function init() {
   Hooks.once("init", async (a, b, c) => {
-    CONFIG.ui.combat = FFCombatTracker;
-    game.GAS.log = log$1;
-    console.log("log", log$1);
-    alert("o");
-    game.GAS.log.level = log$1.VERBOSE;
-    game.GAS.log.i(`Starting System ${SYSTEM_ID}`);
+    game.FF15 = game.system;
+    game.system.log = log$1;
+    game.system.log.level = log$1.VERBOSE;
+    game.system.log.i(`Starting System ${SYSTEM_ID}`);
     registerSettings();
     setupModels();
     setupEffectsProcessors();
     game.system.config = systemconfig;
-    game.GAS.log.d(game.system.id);
-    game.GAS.log.d(game.system.config);
+    game.system.log.d(game.system.id);
+    game.system.log.d(game.system.config);
+    CONFIG.ui.combat = FFCombatTracker;
     Actors.registerSheet("foundryvtt-final-fantasy", FF15ActorSheet$1, {
       makeDefault: true,
       types: ["PC"]
