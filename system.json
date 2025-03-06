@@ -104,8 +104,8 @@
       "flags": {}
     }
   ],
-  "manifest": "https://github.com/geoidesic/geoidesic/foundryvtt-final-fantasy/releases/download/latest/system.json",
-  "download": "https://github.com/geoidesic/geoidesic/foundryvtt-final-fantasy/releases/download/latest/titan.zip",
+  "manifest": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/system.json",
+  "download": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/titan.zip",
   "license": "LICENSE.txt",
   "socket": true
 }
