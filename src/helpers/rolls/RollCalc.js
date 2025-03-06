@@ -29,7 +29,7 @@ export default class RollCalc {
     this.subscribe = this.store.subscribe;
     this.set = this.store.set;
     this.update = this.store.update;
-    this.RG = new CONFIG.FF15.RollGuards(this.params.actor);
+    this.RG = new CONFIG.FFXIV.RollGuards(this.params.actor);
   }
 
   /**

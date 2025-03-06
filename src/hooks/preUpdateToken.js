@@ -9,7 +9,7 @@ export default function preUpdateToken() {
     if (actor.statuses.has('focus') && (update.x || update.y)) {
       delete update.x;
       delete update.y;
-      ui.notifications.warn(game.i18n.localize("FF15.Errors.CannotMoveWhileFocused"))
+      ui.notifications.warn(game.i18n.localize("FFXIV.Errors.CannotMoveWhileFocused"))
     }
   
     //- indicate that the actor has moved

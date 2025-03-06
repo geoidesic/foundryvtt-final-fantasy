@@ -148,7 +148,7 @@ export function slugify(str) {
  * @return {boolean} Whether the item's parent is an actor
  */
 export function isParentActor(item) {
-  return item?.parent?.constructor?.name === 'FF15Actor';
+  return item?.parent?.constructor?.name === 'FFXIVActor';
 }
 
 /**

@@ -98,8 +98,8 @@
 
   async function removeAllItems() {
     const okToDelete = await Dialog.confirm({
-      title: localize("FF15.Types.Actor.Abilities.confirmDeleteAllTitle"),
-      content: localize("FF15.Types.Actor.Abilities.confirmDeleteAll"),
+      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAllTitle"),
+      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {  
         await $Actor.deleteAllItems(["trait", "action"]);
       },
@@ -144,8 +144,8 @@
 
     //- confirm by Dialog
     const okToDelete = await Dialog.confirm({
-      title: localize("FF15.Types.Actor.Abilities.confirmDeleteJobTitle"),
-      content: localize("FF15.Types.Actor.Abilities.confirmDeleteJob"),
+      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJobTitle"),
+      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJob"),
       yes: async () => {
         //- get the job by uuid
         const job = await fromUuid($doc.system.job.uuid);
@@ -193,7 +193,7 @@
       .padded
         //- add in the job item if it exists
         +if("$Actor.system.job?.name")
-          h1.left.gold {localize('FF15.Job')}
+          h1.left.gold {localize('FFXIV.Job')}
           table.borderless
             tr
               th.img.shrink(scope="col")
@@ -208,8 +208,8 @@
         table.borderless
           tr
             th.img.shrink(scope="col")
-            th.left.expand.ml-sm(scope="col") {localize('FF15.Name')}
-            th.fixed(scope="col") {localize('FF15.Type')}
+            th.left.expand.ml-sm(scope="col") {localize('FFXIV.Name')}
+            th.fixed(scope="col") {localize('FFXIV.Type')}
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
@@ -231,11 +231,11 @@
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
               td.min.buttons.right
                 +if("!$doc.system.inventoryLocked")
-                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
                     i.left.fa.fa-edit
-                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
                     i.left.fa.fa-copy
-                  button.stealth( data-tooltip="{localize('FF15.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
                     i.left.fa.fa-trash
             
       +if("hasItems")

@@ -6,9 +6,9 @@ import { setupModels } from '~/src/config/models';
 import { setupEffectsProcessors } from '~/src/config/effectsProcessors';
 
 import FFActiveEffectSheet from "~/src/components/applications/FFActiveEffectSheet";
-import FF15PCSheet from "~/src/components/applications/PCSheet";
-import FF15NPCSheet from "~/src/components/applications/NPCSheet";
-import FF15ItemSheet from "~/src/components/applications/ItemSheet";
+import FFXIVPCSheet from "~/src/components/applications/PCSheet";
+import FFXIVNPCSheet from "~/src/components/applications/NPCSheet";
+import FFXIVItemSheet from "~/src/components/applications/ItemSheet";
 import FFCombatTracker from '~/src//extensions/combat-tracker.js'
 import hooks from "~/src/hooks";
 import systemconfig from "~/src/helpers/systemconfig.ts"
@@ -21,7 +21,7 @@ import systemconfig from "~/src/helpers/systemconfig.ts"
 export default function init() {
   
   Hooks.once("init", async (a, b, c) => {
-    game.FF15 = game.system;
+    game.FFXIV = game.system;
     game.system.log = log;
     game.system.log.level = log.VERBOSE;
     game.system.log.i(`Starting System ${SYSTEM_ID}`);
@@ -40,15 +40,15 @@ export default function init() {
     CONFIG.ui.combat = FFCombatTracker;
     
     //- Regiser Sheets
-    Actors.registerSheet("foundryvtt-final-fantasy", FF15PCSheet, {
+    Actors.registerSheet("foundryvtt-final-fantasy", FFXIVPCSheet, {
       makeDefault: true,
       types: ["PC"]
     });
-    Actors.registerSheet("foundryvtt-final-fantasy", FF15NPCSheet, {
+    Actors.registerSheet("foundryvtt-final-fantasy", FFXIVNPCSheet, {
       makeDefault: true,
       types: ["NPC"]
     });
-    Items.registerSheet("foundryvtt-final-fantasy", FF15ItemSheet, {
+    Items.registerSheet("foundryvtt-final-fantasy", FFXIVItemSheet, {
       makeDefault: true,
     });
 

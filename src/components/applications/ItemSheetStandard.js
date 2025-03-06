@@ -1,8 +1,8 @@
 /**
- * Standard item sheet implementation for FF15
- * @extends {FF15ItemSheet}
+ * Standard item sheet implementation for FFXIV
+ * @extends {FFXIVItemSheet}
  */
-export default class FF15ItemSheetStandard extends FF15ItemSheet {
+export default class FFXIVItemSheetStandard extends FFXIVItemSheet {
   /**
    * Creates a new instance of the item sheet
    * @param {...any} args - Constructor arguments

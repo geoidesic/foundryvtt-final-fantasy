@@ -129,7 +129,7 @@
 <style lang='sass'>
   @use '../../styles/_mixins' as mixins
 
-  :global(.FF15.window-app .window-content)
+  :global(.FFXIV.window-app .window-content)
     display: block
 
   .profile-wrap

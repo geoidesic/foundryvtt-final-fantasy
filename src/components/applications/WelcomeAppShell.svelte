@@ -38,20 +38,20 @@
       .logo-background
         .texture
         img(src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
-      p {localize('FF15.Welcome.To')} {localize(`${SYSTEM_CODE}.Title`)}!
-      h1 {localize('FF15.Welcome.Introduction')}
+      p {localize('FFXIV.Welcome.To')} {localize(`${SYSTEM_CODE}.Title`)}!
+      h1 {localize('FFXIV.Welcome.Introduction')}
       p  
         a(href="https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html") {localize(`${SYSTEM_CODE}.Title`)}
         | &nbsp;{localize(`${SYSTEM_CODE}.Welcome.Released`) }
       h1 Help
       p
-        span {localize('FF15.Welcome.Issues')}
-        a(href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues") {localize('FF15.Welcome.Github')}
-      .flexrow.inset.justify-vertical.mb-sm(data-tooltip="{localize('FF15.Setting.DontShowWelcome.Hint')}")
+        span {localize('FFXIV.Welcome.Issues')}
+        a(href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues") {localize('FFXIV.Welcome.Github')}
+      .flexrow.inset.justify-vertical.mb-sm(data-tooltip="{localize('FFXIV.Setting.DontShowWelcome.Hint')}")
         .flex0
-          input(type="checkbox" on:change="{handleChange}" label="{localize('FF15.Setting.DontShowWelcome.Name')}" bind:checked="{dontShowWelcome}") 
+          input(type="checkbox" on:change="{handleChange}" label="{localize('FFXIV.Setting.DontShowWelcome.Name')}" bind:checked="{dontShowWelcome}") 
         .flex
-          span {localize('FF15.Setting.DontShowWelcome.Name')}
+          span {localize('FFXIV.Setting.DontShowWelcome.Name')}
     footer
       .flex2.right
         img.pt-sm.white(src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;")

@@ -8,7 +8,7 @@ import { generateRandomElementId } from "~/src/helpers/util";
  * Actor sheet implementation for Non-Player Characters
  * @extends {SvelteDocumentSheet}
  */
-export default class FF15ActorSheet extends SvelteDocumentSheet {
+export default class FFXIVActorSheet extends SvelteDocumentSheet {
 
   /**
    * Default Application options
@@ -65,7 +65,7 @@ export default class FF15ActorSheet extends SvelteDocumentSheet {
     const canEdit = game.user.isGM || (this.reactive.document.isOwner);
     if (canEdit) {
       buttons.unshift({
-        label: localize("FF15.Types.Actor.HeaderButtons.Edit"),
+        label: localize("FFXIV.Types.Actor.HeaderButtons.Edit"),
         class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
         icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
         // onclick: (ev) => this._onToggleEdit(ev),

@@ -103,7 +103,7 @@
 <template lang="pug">
 .effects&attributes($$restProps)
   +if("ActiveEffects.length > 0")
-    h2.font-cinzel {localize('FF15.Effects')}
+    h2.font-cinzel {localize('FFXIV.Effects')}
     .px-xs
       table.borderless.low-contrast
         +each("ActiveEffects as item, index")
@@ -118,7 +118,7 @@
                 tabindex="0"
               ) {localize(item.name)}
   +if("!ActiveEffects.length")
-    p(style="margin-top: -2px; margin-bottom: 0px;") {localize("FF15.NoEffects")}
+    p(style="margin-top: -2px; margin-bottom: 0px;") {localize("FFXIV.NoEffects")}
 </template>
 
 <style lang="sass">

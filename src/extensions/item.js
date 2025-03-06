@@ -2,7 +2,7 @@
  * Extend the base Item document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Item}
  */
-export default class FF15Item extends Item {
+export default class FFXIVItem extends Item {
   /**
    * Whether the item has a limitation on its usage
    * @return {boolean} True if the item has a limitation

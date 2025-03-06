@@ -26,7 +26,7 @@
       img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/cog.webp'
     },
     {
-      label: localize('FF15.Duration.Title'),
+      label: localize('FFXIV.Duration.Title'),
       id: "duration",
       component: Duration,
       img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/duration.webp'

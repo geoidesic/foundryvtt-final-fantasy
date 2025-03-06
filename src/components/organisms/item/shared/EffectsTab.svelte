@@ -223,7 +223,7 @@
                   src="{effect.getFlag(SYSTEM_ID, 'transferredBy.actor.img')}" 
                   alt="avatar for effect origin"
                   data-tooltip="{effect.getFlag(SYSTEM_ID, 'transferredBy.actor.name')}"
-                  data-tooltip-class="FF15-tooltip"
+                  data-tooltip-class="FFXIV-tooltip"
                 )
                 +else
                   span.no-wrap {localize('Unknown')}

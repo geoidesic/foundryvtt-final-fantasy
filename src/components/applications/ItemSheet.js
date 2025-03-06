@@ -4,10 +4,10 @@ import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import { generateRandomElementId } from "~/src/helpers/util";
 
 /**
- * Base class for FF15 item sheets
+ * Base class for FFXIV item sheets
  * @extends {SvelteDocumentSheet}
  */
-export default class FF15ItemSheet extends SvelteDocumentSheet {
+export default class FFXIVItemSheet extends SvelteDocumentSheet {
 
   /**
    * Default Application options

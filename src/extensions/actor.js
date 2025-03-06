@@ -6,10 +6,10 @@ import * as effectProcessors from '../helpers/effects/index.js';
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
-export default class FF15Actor extends Actor {
+export default class FFXIVActor extends Actor {
 
   /**
-   * Creates a new FF15 actor
+   * Creates a new FFXIV actor
    * @param {object} data - The actor data
    * @param {object} context - The initialization context
    */
@@ -255,7 +255,7 @@ export default class FF15Actor extends Actor {
           return;
         }    
         game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", change.key);
-        await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
+        await Hooks.callAll(`FFXIV.${change.key}`, { actor: this, change, effect });
       } else {
         game.system.log.w("[PROCESS EFFECT HOOKS] No matching mode found for change:", change);
       }

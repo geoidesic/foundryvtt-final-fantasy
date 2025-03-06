@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 const SYSTEM_ID = "foundryvtt-final-fantasy";
-const SYSTEM_CODE = "FF15";
+const SYSTEM_CODE = "FFXIV";
 const LOG_PREFIX = `${SYSTEM_CODE} |`;
 const LOG_PREFIX_COLOR = `%c[${SYSTEM_CODE}] |`;
 const ASSET_PATH = `systems/${SYSTEM_ID}/assets`;
@@ -20,116 +20,116 @@ const LOG_STYLES = {
   t: "color: teal;"
 };
 const getDamageDiceRerollOptions = /* @__PURE__ */ __name(() => [
-  { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.one") },
-  { value: 2, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.two") },
-  { value: 3, label: game.i18n.localize("FF15.Types.Item.Types.Options.DamageDiceReroll.three") }
+  { value: 1, label: game.i18n.localize("FFXIV.Types.Item.Types.Options.DamageDiceReroll.one") },
+  { value: 2, label: game.i18n.localize("FFXIV.Types.Item.Types.Options.DamageDiceReroll.two") },
+  { value: 3, label: game.i18n.localize("FFXIV.Types.Item.Types.Options.DamageDiceReroll.three") }
 ], "getDamageDiceRerollOptions");
 const getDurationOptions = /* @__PURE__ */ __name(() => [
-  { value: 1, label: game.i18n.localize("FF15.one") },
-  { value: 2, label: game.i18n.localize("FF15.two") },
-  { value: 3, label: game.i18n.localize("FF15.three") },
-  { value: 4, label: game.i18n.localize("FF15.four") }
+  { value: 1, label: game.i18n.localize("FFXIV.one") },
+  { value: 2, label: game.i18n.localize("FFXIV.two") },
+  { value: 3, label: game.i18n.localize("FFXIV.three") },
+  { value: 4, label: game.i18n.localize("FFXIV.four") }
 ], "getDurationOptions");
 function getDurationTypeOptions() {
   return [
-    { value: "hasAmount", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationType.hasAmount") },
-    { value: "hasQualifier", label: game.i18n.localize("FF15.Types.Item.Types.Options.DurationType.hasQualifier") }
+    { value: "hasAmount", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.DurationType.hasAmount") },
+    { value: "hasQualifier", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.DurationType.hasQualifier") }
   ];
 }
 __name(getDurationTypeOptions, "getDurationTypeOptions");
 const getDurationQualifierOptions = /* @__PURE__ */ __name(() => [
-  { value: "endOfThis", label: game.i18n.localize("FF15.Types.Item.Duration.Options.endOfThis") },
-  { value: "endOfNext", label: game.i18n.localize("FF15.Types.Item.Duration.Options.endOfNext") },
-  { value: "startOfNext", label: game.i18n.localize("FF15.Types.Item.Duration.Options.startOfNext") },
-  { value: "untilDamage", label: game.i18n.localize("FF15.Types.Item.Duration.Options.untilDamage") },
-  { value: "nextAbility", label: game.i18n.localize("FF15.Types.Item.Duration.Options.nextAbility") }
+  { value: "endOfThis", label: game.i18n.localize("FFXIV.Types.Item.Duration.Options.endOfThis") },
+  { value: "endOfNext", label: game.i18n.localize("FFXIV.Types.Item.Duration.Options.endOfNext") },
+  { value: "startOfNext", label: game.i18n.localize("FFXIV.Types.Item.Duration.Options.startOfNext") },
+  { value: "untilDamage", label: game.i18n.localize("FFXIV.Types.Item.Duration.Options.untilDamage") },
+  { value: "nextAbility", label: game.i18n.localize("FFXIV.Types.Item.Duration.Options.nextAbility") }
 ], "getDurationQualifierOptions");
 const getDurationUnits = /* @__PURE__ */ __name(() => [
-  { value: "phase", label: game.i18n.localize("FF15.Phase") },
-  { value: "turn", label: game.i18n.localize("FF15.Turn") },
-  { value: "round", label: game.i18n.localize("FF15.Round") }
+  { value: "phase", label: game.i18n.localize("FFXIV.Phase") },
+  { value: "turn", label: game.i18n.localize("FFXIV.Turn") },
+  { value: "round", label: game.i18n.localize("FFXIV.Round") }
 ], "getDurationUnits");
 const getLimitationOptions = /* @__PURE__ */ __name(() => [
-  { value: 1, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.once") },
-  { value: 2, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.twice") },
-  { value: 3, label: game.i18n.localize("FF15.Types.Item.Types.Options.Limitation.thrice") }
+  { value: 1, label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Limitation.once") },
+  { value: 2, label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Limitation.twice") },
+  { value: 3, label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Limitation.thrice") }
 ], "getLimitationOptions");
 const getLimitationUnits = /* @__PURE__ */ __name(() => [
-  { value: "phase", label: game.i18n.localize("FF15.Phase") },
-  { value: "turn", label: game.i18n.localize("FF15.Turn") }
+  { value: "phase", label: game.i18n.localize("FFXIV.Phase") },
+  { value: "turn", label: game.i18n.localize("FFXIV.Turn") }
 ], "getLimitationUnits");
 const getTypeOptions = /* @__PURE__ */ __name(() => [
-  { value: "primary", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.primary") },
-  { value: "secondary", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.secondary") },
-  { value: "reaction", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.reaction") },
-  { value: "limit", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.limit") },
-  { value: "combo", label: game.i18n.localize("FF15.Types.Item.Types.Options.Type.combo") }
+  { value: "primary", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Type.primary") },
+  { value: "secondary", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Type.secondary") },
+  { value: "reaction", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Type.reaction") },
+  { value: "limit", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Type.limit") },
+  { value: "combo", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Type.combo") }
 ], "getTypeOptions");
 const getBaseEffectHealingTypeOptions = /* @__PURE__ */ __name(() => [
-  { value: "self", label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectHealingType.self") },
-  { value: "target", label: game.i18n.localize("FF15.Types.Item.Types.Options.BaseEffectHealingType.target") }
+  { value: "self", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.BaseEffectHealingType.self") },
+  { value: "target", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.BaseEffectHealingType.target") }
 ], "getBaseEffectHealingTypeOptions");
 const getSizeOptions = /* @__PURE__ */ __name(() => [
-  { value: "small", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.small") },
-  { value: "medium", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.medium") },
-  { value: "large", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.large") },
-  { value: "huge", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.huge") },
-  { value: "gargantuan", label: game.i18n.localize("FF15.Types.Item.Types.Options.Size.gargantuan") }
+  { value: "small", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Size.small") },
+  { value: "medium", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Size.medium") },
+  { value: "large", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Size.large") },
+  { value: "huge", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Size.huge") },
+  { value: "gargantuan", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Size.gargantuan") }
 ], "getSizeOptions");
 const getRangeOptions = /* @__PURE__ */ __name(() => [
-  { value: "1sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.1sq") },
-  { value: "5sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5sq") },
-  { value: "10sq", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.10sq") },
-  { value: "3x3a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.3x3a") },
-  { value: "3x3aa", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.3x3aa") },
-  { value: "5x5a", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5a") },
-  { value: "5x5e", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5e") },
-  { value: "5x5i", label: game.i18n.localize("FF15.Types.Item.Types.Options.Range.5x5i") }
+  { value: "1sq", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Range.1sq") },
+  { value: "5sq", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Range.5sq") },
+  { value: "10sq", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Range.10sq") },
+  { value: "3x3a", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Range.3x3a") },
+  { value: "3x3aa", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Range.3x3aa") },
+  { value: "5x5a", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Range.5x5a") },
+  { value: "5x5e", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Range.5x5e") },
+  { value: "5x5i", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Range.5x5i") }
 ], "getRangeOptions");
 const getCROptions = /* @__PURE__ */ __name(() => [
-  { value: "def", label: game.i18n.localize("FF15.Types.Item.Types.Options.CR.def") },
-  { value: "mag", label: game.i18n.localize("FF15.Types.Item.Types.Options.CR.mag") },
-  // { value: "vig", label: game.i18n.localize("FF15.Types.Item.Types.Options.CR.vig") },
-  // { value: "spd", label: game.i18n.localize("FF15.Types.Item.Types.Options.CR.spd") },
-  { value: "heal", label: game.i18n.localize("FF15.Types.Item.Types.Options.CR.heal") },
-  { value: "other", label: game.i18n.localize("FF15.Other") },
-  { value: "none", label: game.i18n.localize("FF15.None") }
-  // { value: "special", label: game.i18n.localize("FF15.Types.Item.Types.Options.CR.special") },
+  { value: "def", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.CR.def") },
+  { value: "mag", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.CR.mag") },
+  // { value: "vig", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.CR.vig") },
+  // { value: "spd", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.CR.spd") },
+  { value: "heal", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.CR.heal") },
+  { value: "other", label: game.i18n.localize("FFXIV.Other") },
+  { value: "none", label: game.i18n.localize("FFXIV.None") }
+  // { value: "special", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.CR.special") },
 ], "getCROptions");
 const getTargetOptions = /* @__PURE__ */ __name(() => [
-  { value: "self", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.self") },
-  { value: "single", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.single") },
-  { value: "enemy", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.enemy") },
-  { value: "all", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.all") },
-  { value: "allallies", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.allallies") },
-  { value: "ally", label: game.i18n.localize("FF15.Types.Item.Types.Options.Target.ally") }
+  { value: "self", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Target.self") },
+  { value: "single", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Target.single") },
+  { value: "enemy", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Target.enemy") },
+  { value: "all", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Target.all") },
+  { value: "allallies", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Target.allallies") },
+  { value: "ally", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Target.ally") }
 ], "getTargetOptions");
 const getAspectedOptions = /* @__PURE__ */ __name(() => [
-  { value: "earth", label: game.i18n.localize("FF15.Types.Item.Types.Options.Aspected.earth") },
-  { value: "lightning", label: game.i18n.localize("FF15.Types.Item.Types.Options.Aspected.lightning") },
-  { value: "wind", label: game.i18n.localize("FF15.Types.Item.Types.Options.Aspected.wind") },
-  { value: "ice", label: game.i18n.localize("FF15.Types.Item.Types.Options.Aspected.ice") }
+  { value: "earth", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.earth") },
+  { value: "lightning", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.lightning") },
+  { value: "wind", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.wind") },
+  { value: "ice", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.ice") }
 ], "getAspectedOptions");
 const getTriggerOptions = /* @__PURE__ */ __name(() => [
-  { value: "any", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.any") },
-  { value: "ability", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.ability") },
-  { value: "beforeresolve", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.beforeresolve") },
-  { value: "nearby", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.nearby") },
-  { value: "move", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.move") },
-  { value: "beforedamage", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.beforedamage") },
-  { value: "endturn", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.endturn") },
-  { value: "startturn", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.startturn") },
-  { value: "invoke", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
-  { value: "adjacentinvoke", label: game.i18n.localize("FF15.Types.Item.Types.Options.Trigger.adjacentinvoke") }
+  { value: "any", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.any") },
+  { value: "ability", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.ability") },
+  { value: "beforeresolve", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.beforeresolve") },
+  { value: "nearby", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.nearby") },
+  { value: "move", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.move") },
+  { value: "beforedamage", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.beforedamage") },
+  { value: "endturn", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.endturn") },
+  { value: "startturn", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.startturn") },
+  { value: "invoke", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.invoke") },
+  { value: "adjacentinvoke", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.adjacentinvoke") }
 ], "getTriggerOptions");
 const getHeavyshotOptions = /* @__PURE__ */ __name(() => [
-  { value: "straignt", label: game.i18n.localize("FF15.Types.Item.Types.Options.Heavyshot.straignt") },
-  { value: "spread", label: game.i18n.localize("FF15.Types.Item.Types.Options.Heavyshot.spread") }
+  { value: "straignt", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Heavyshot.straignt") },
+  { value: "spread", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Heavyshot.spread") }
 ], "getHeavyshotOptions");
 const getDirectHitOptions = /* @__PURE__ */ __name(() => [
-  { value: "damage", label: game.i18n.localize("FF15.Types.Item.Types.Options.DirectHit.damage") },
-  { value: "markers", label: game.i18n.localize("FF15.Types.Item.Types.Options.DirectHit.markers") },
-  { value: "condition", label: game.i18n.localize("FF15.Types.Item.Types.Options.DirectHit.condition") }
+  { value: "damage", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.DirectHit.damage") },
+  { value: "markers", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.DirectHit.markers") },
+  { value: "condition", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.DirectHit.condition") }
 ], "getDirectHitOptions");
 const ACTIVE_EFFECT_MODES = {
   CUSTOM: 0,
@@ -152,7 +152,7 @@ class FFActiveEffect extends ActiveEffect {
     __name(this, "FFActiveEffect");
   }
   /**
-   * Creates a new FF15 active effect
+   * Creates a new FFXIV active effect
    * @param {object} data - The effect data
    * @param {object} context - The initialization context
    */
@@ -647,7 +647,7 @@ class DamageOverTime {
     for (const effect of relevantEffects) {
       for (const change of effect.changes) {
         if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          await Hooks.callAll("FF15.DamageOverTime", {
+          await Hooks.callAll("FFXIV.DamageOverTime", {
             actor: this.actor,
             change,
             effect,
@@ -771,7 +771,7 @@ class DurationManager {
    */
   async getDurationRules(effect) {
     const originItem = await fromUuid(effect.origin);
-    console.log("[FF15] | [DURATION MANAGER] Getting duration rules:", {
+    console.log("[FFXIV] | [DURATION MANAGER] Getting duration rules:", {
       effectName: effect.name,
       originUuid: effect.origin,
       originItem,
@@ -873,7 +873,7 @@ class DurationManager {
    * @return {Promise<void>} A promise that resolves when processing is complete
    */
   async onAbilityUse(event) {
-    console.log("[FF15] | [DURATION MANAGER] Full effect details:", {
+    console.log("[FFXIV] | [DURATION MANAGER] Full effect details:", {
       effects: this.actor.effects.map((e) => ({
         name: e.name,
         durations: e.system?.durations,
@@ -885,7 +885,7 @@ class DurationManager {
         changes: e.changes
       }))
     });
-    console.log("[FF15] | [DURATION MANAGER] onAbilityUse called:", {
+    console.log("[FFXIV] | [DURATION MANAGER] onAbilityUse called:", {
       itemName: event.item?.name,
       itemType: event.item?.type,
       isNewAbilityUse: event.isNewAbilityUse,
@@ -944,12 +944,12 @@ const effectProcessors = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
   __proto__: null,
   default: effects
 }, Symbol.toStringTag, { value: "Module" }));
-class FF15Actor extends Actor {
+class FFXIVActor extends Actor {
   static {
-    __name(this, "FF15Actor");
+    __name(this, "FFXIVActor");
   }
   /**
-   * Creates a new FF15 actor
+   * Creates a new FFXIV actor
    * @param {object} data - The actor data
    * @param {object} context - The initialization context
    */
@@ -1161,7 +1161,7 @@ class FF15Actor extends Actor {
           return;
         }
         game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", change.key);
-        await Hooks.callAll(`FF15.${change.key}`, { actor: this, change, effect });
+        await Hooks.callAll(`FFXIV.${change.key}`, { actor: this, change, effect });
       } else {
         game.system.log.w("[PROCESS EFFECT HOOKS] No matching mode found for change:", change);
       }
@@ -1318,9 +1318,9 @@ class FF15Actor extends Actor {
     console.log("_onDrop in the actor.js", event);
   }
 }
-class FF15Item extends Item {
+class FFXIVItem extends Item {
   static {
-    __name(this, "FF15Item");
+    __name(this, "FFXIVItem");
   }
   /**
    * Whether the item has a limitation on its usage
@@ -1519,7 +1519,7 @@ function localize$1(string) {
 }
 __name(localize$1, "localize$1");
 function isParentActor(item) {
-  return item?.parent?.constructor?.name === "FF15Actor";
+  return item?.parent?.constructor?.name === "FFXIVActor";
 }
 __name(isParentActor, "isParentActor");
 function ucfirst(str) {
@@ -2854,7 +2854,7 @@ function create_each_block$j(ctx) {
       i_1 = element("i");
       attr(i_1, "class", i_1_class_value = /*icon*/
       ctx[1] + " " + /*star*/
-      (ctx[15].active ? "active" : "") + " svelte-FF15-qjrcij");
+      (ctx[15].active ? "active" : "") + " svelte-FFXIV-qjrcij");
       attr(i_1, "role", "button");
       attr(i_1, "tabindex", "0");
       set_style(
@@ -2884,7 +2884,7 @@ function create_each_block$j(ctx) {
       if (dirty & /*icon, stars*/
       18 && i_1_class_value !== (i_1_class_value = /*icon*/
       ctx[1] + " " + /*star*/
-      (ctx[15].active ? "active" : "") + " svelte-FF15-qjrcij")) {
+      (ctx[15].active ? "active" : "") + " svelte-FFXIV-qjrcij")) {
         attr(i_1, "class", i_1_class_value);
       }
       if (dirty & /*activeColor*/
@@ -2942,9 +2942,9 @@ function create_fragment$1n(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "stars svelte-FF15-qjrcij");
+      attr(div0, "class", "stars svelte-FFXIV-qjrcij");
       attr(div0, "id", "star-rating-group");
-      attr(div1, "class", "star-rating svelte-FF15-qjrcij");
+      attr(div1, "class", "star-rating svelte-FFXIV-qjrcij");
       attr(div1, "role", "group");
       attr(div1, "aria-label", div1_aria_label_value = /*label*/
       ctx[2] || "Rating");
@@ -3183,7 +3183,7 @@ function create_fragment$1m(ctx) {
       attr(div2, "class", "flexcol");
       attr(div3, "class", "flex1");
       attr(div4, "class", "flexrow gap-15");
-      attr(form, "class", "modifier-dialog svelte-FF15-paczb8");
+      attr(form, "class", "modifier-dialog svelte-FFXIV-paczb8");
     },
     m(target, anchor) {
       insert(target, form, anchor);
@@ -3560,7 +3560,7 @@ class RollGuards {
         await effect.delete();
       }
     }
-    Hooks.call("FF15.processTargetRollAdditionalModifiers", { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
+    Hooks.call("FFXIV.processTargetRollAdditionalModifiers", { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
     return true;
   }
   /**
@@ -3656,7 +3656,7 @@ class RollGuards {
         }
       }
       if (!hasActiveEffect) {
-        ui.notifications.warn(game.i18n.format("FF15.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
+        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
         return false;
       }
     }
@@ -6267,7 +6267,7 @@ function create_if_block$w(ctx) {
     c() {
       div = element("div");
       div.innerHTML = `<i class="fas fa-xmark"></i>`;
-      attr(div, "class", "remove right svelte-FF15-1y0mhim");
+      attr(div, "class", "remove right svelte-FFXIV-1y0mhim");
       attr(div, "aria-label", "Remove tag");
       attr(div, "role", "button");
     },
@@ -6323,7 +6323,7 @@ function create_fragment$1l(ctx) {
         if_block.c();
       attr(div0, "class", "label");
       set_attributes(div1, div_data_1);
-      toggle_class(div1, "svelte-FF15-1y0mhim", true);
+      toggle_class(div1, "svelte-FFXIV-1y0mhim", true);
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -6361,7 +6361,7 @@ function create_fragment$1l(ctx) {
         16 && /*$$restProps*/
         ctx2[4]
       ]));
-      toggle_class(div1, "svelte-FF15-1y0mhim", true);
+      toggle_class(div1, "svelte-FFXIV-1y0mhim", true);
     },
     i: noop,
     o: noop,
@@ -6509,32 +6509,32 @@ function create_if_block$v(ctx) {
       if (if_block1)
         if_block1.c();
       img = element("img");
-      attr(div0, "class", "texture svelte-FF15-zy8isi");
+      attr(div0, "class", "texture svelte-FFXIV-zy8isi");
       attr(div1, "class", "flex4 link pointer");
       attr(div1, "role", "button");
       attr(div1, "aria-label", div1_aria_label_value = "Open " + /*FFMessage*/
       ctx[0].actor.name + "'s character sheet");
       attr(div2, "class", "flexrow");
       attr(div3, "class", "col");
-      attr(div4, "class", "col font-cinzel smaller pointer item-name nooverflow svelte-FF15-zy8isi");
+      attr(div4, "class", "col font-cinzel smaller pointer item-name nooverflow svelte-FFXIV-zy8isi");
       attr(div4, "role", "button");
       attr(div4, "aria-label", div4_aria_label_value = "Open " + /*FFMessage*/
       ctx[0].item.name + " item sheet");
       attr(div5, "class", div5_class_value = "flex3 flexcol nooverflow " + /*showProfileImage*/
       (ctx[3] ? "text" : ""));
-      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-FF15-zy8isi");
+      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-FFXIV-zy8isi");
       attr(div7, "class", "flexcol");
       attr(div8, "class", div8_class_value = null_to_empty(
         /*tagsColumnClass*/
         ctx[2]
-      ) + " svelte-FF15-zy8isi");
-      attr(img, "class", "icon right item svelte-FF15-zy8isi");
+      ) + " svelte-FFXIV-zy8isi");
+      attr(img, "class", "icon right item svelte-FFXIV-zy8isi");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[0].item.img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*FFMessage*/
       ctx[0].item.name);
-      attr(div9, "class", "flexrow title svelte-FF15-zy8isi");
+      attr(div9, "class", "flexrow title svelte-FFXIV-zy8isi");
       attr(div9, "role", "button");
       attr(div9, "aria-label", "Toggle description");
     },
@@ -6652,7 +6652,7 @@ function create_if_block$v(ctx) {
       4 && div8_class_value !== (div8_class_value = null_to_empty(
         /*tagsColumnClass*/
         ctx2[2]
-      ) + " svelte-FF15-zy8isi")) {
+      ) + " svelte-FFXIV-zy8isi")) {
         attr(div8, "class", div8_class_value);
       }
       if (!current || dirty & /*FFMessage*/
@@ -6702,7 +6702,7 @@ function create_if_block_2$e(ctx) {
     c() {
       div = element("div");
       img = element("img");
-      attr(img, "class", "icon avatar svelte-FF15-zy8isi");
+      attr(img, "class", "icon avatar svelte-FFXIV-zy8isi");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[0].actor.img))
         attr(img, "src", img_src_value);
@@ -6906,7 +6906,7 @@ function create_fragment$1k(ctx) {
       div = element("div");
       if (if_block)
         if_block.c();
-      attr(div, "class", "chat-title svelte-FF15-zy8isi");
+      attr(div, "class", "chat-title svelte-FFXIV-zy8isi");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -7033,7 +7033,7 @@ function create_fragment$1j(ctx) {
   let div2;
   let button;
   let div0;
-  let t_value = window.game.i18n.format(`FF15.Chat.Buttons.${/*applied*/
+  let t_value = window.game.i18n.format(`FFXIV.Chat.Buttons.${/*applied*/
   ctx[1] ? "AppliedTo" : "ApplyItemToTarget"}`, [
     /*FFMessage*/
     ctx[0].item.name,
@@ -7067,11 +7067,11 @@ function create_fragment$1j(ctx) {
       attr(div0, "class", "flex3 pa-sm");
       attr(div1, "class", "flex0");
       attr(button, "class", button_class_value = "short wide stealth gold rowimgbezelbutton flexrow " + /*buttonCss*/
-      ctx[2] + " svelte-FF15-vsw1te");
-      attr(div2, "class", "flex4 buttons svelte-FF15-vsw1te");
+      ctx[2] + " svelte-FFXIV-vsw1te");
+      attr(div2, "class", "flex4 buttons svelte-FFXIV-vsw1te");
       attr(div3, "class", "flexrow justify-vertical mt-sm");
-      attr(div4, "class", "chat svelte-FF15-vsw1te");
-      attr(div5, "class", "FF15");
+      attr(div4, "class", "chat svelte-FFXIV-vsw1te");
+      attr(div5, "class", "FFXIV");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -7102,7 +7102,7 @@ function create_fragment$1j(ctx) {
         ctx2[0].item.sheet;
       chattitle.$set(chattitle_changes);
       if ((!current || dirty & /*applied, FFMessage*/
-      3) && t_value !== (t_value = window.game.i18n.format(`FF15.Chat.Buttons.${/*applied*/
+      3) && t_value !== (t_value = window.game.i18n.format(`FFXIV.Chat.Buttons.${/*applied*/
       ctx2[1] ? "AppliedTo" : "ApplyItemToTarget"}`, [
         /*FFMessage*/
         ctx2[0].item.name,
@@ -7112,7 +7112,7 @@ function create_fragment$1j(ctx) {
         set_data(t, t_value);
       if (!current || dirty & /*buttonCss*/
       4 && button_class_value !== (button_class_value = "short wide stealth gold rowimgbezelbutton flexrow " + /*buttonCss*/
-      ctx2[2] + " svelte-FF15-vsw1te")) {
+      ctx2[2] + " svelte-FFXIV-vsw1te")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -7304,9 +7304,9 @@ function create_fragment$1i(ctx) {
       attr(div0, "class", "flex4 inset");
       attr(div0, "id", "chat-description");
       attr(div1, "class", div1_class_value = "flexrow " + /*showDescription*/
-      (ctx[1] ? "visible" : "") + " svelte-FF15-v5diha");
+      (ctx[1] ? "visible" : "") + " svelte-FFXIV-v5diha");
       attr(div2, "class", div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[1] ? "expanded" : "") + " svelte-FF15-v5diha");
+      (ctx[1] ? "expanded" : "") + " svelte-FFXIV-v5diha");
       attr(div3, "class", "chat");
     },
     m(target, anchor) {
@@ -7325,12 +7325,12 @@ function create_fragment$1i(ctx) {
         div0.innerHTML = raw_value;
       if (!current || dirty & /*showDescription*/
       2 && div1_class_value !== (div1_class_value = "flexrow " + /*showDescription*/
-      (ctx2[1] ? "visible" : "") + " svelte-FF15-v5diha")) {
+      (ctx2[1] ? "visible" : "") + " svelte-FFXIV-v5diha")) {
         attr(div1, "class", div1_class_value);
       }
       if (!current || dirty & /*showDescription*/
       2 && div2_class_value !== (div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[1] ? "expanded" : "") + " svelte-FF15-v5diha")) {
+      (ctx2[1] ? "expanded" : "") + " svelte-FFXIV-v5diha")) {
         attr(div2, "class", div2_class_value);
       }
     },
@@ -7464,9 +7464,9 @@ function create_fragment$1h(ctx) {
       path0 = svg_element("path");
       path1 = svg_element("path");
       attr(path0, "d", "M81.3438 77.9688C81.1465 78.3361 81.0124 78.7302 80.8125 79.0938C81.1317 78.9786 81.4026 78.8896 81.7188 78.7812C81.5892 78.5192 81.4693 78.1846 81.3438 77.9688Z");
-      attr(path0, "class", "svelte-FF15-6fk7cz");
+      attr(path0, "class", "svelte-FFXIV-6fk7cz");
       attr(path1, "d", "M105.562-0.09375L101.594 2.9375L101.562 9.40625C100.176 11.8292 96.6661 18.0195 94.4375 21.25C91.9565 24.844 85.5632 31.5625 85.5625 31.5625C85.5625 31.5625 86.2142 39.4735 85.5312 44.1875C84.9762 48.0195 83.0215 57.3338 81.6875 60.9688C80.0565 65.4144 78.969 68.6598 76.75 73.375C74.2739 74.1356 71.1542 75.7678 68.7188 77.0938C65.8498 78.6567 61.6277 82.2972 58.4688 84.2812C54.9897 86.4662 52.005 88.4043 48.25 90.6562C44.578 92.8583 40.7035 94.9483 37.1875 96.7812C33.9525 98.4692 31.748 99.4527 28.375 100.844C24.968 102.249 21.2595 103.187 17.6875 104.312C16.1979 104.781 14.8079 105.122 12.5 105.781L2.71875 105.812L0.21875 109.656L0 110L0.03125 114L99.0938 114L110 102.438L110 64.9375L110 0L105.562-0.09375ZM101.5 22.8438L101.375 69.1875C99.4872 69.1884 95.5264 69.1648 93.0625 69.5312C90.3515 69.9343 87.4145 70.324 84.8438 70.75C84.815 70.7548 84.779 70.7761 84.75 70.7812C84.7015 70.9048 84.674 71.0658 84.625 71.1875C84.5719 71.0159 84.5813 71.0035 84.5312 70.8438C84.5989 70.8305 84.6833 70.7931 84.75 70.7812C86.8489 65.4361 88.5838 58.421 89.9688 53.8125C91.1018 50.0435 91.6521 45.5913 91.9688 42.1562C92.2438 39.1772 91.8747 33.1875 91.875 33.1875C91.875 33.1875 96.4028 29.0543 97.5938 27.6562C98.8107 26.2262 100.412 24.2097 101.5 22.8438ZM94.6562 76.6562C97.516 76.6333 100.082 76.748 101.344 76.8125L101.281 99L95.1562 105.562L60.5625 105.656C62.7372 103.386 66.1864 99.8114 68.5625 97C69.5049 95.8849 70.4357 94.7502 71.375 93.625C71.6949 93.637 71.897 93.6024 72.1562 93.625C74.5343 93.832 78.4323 94.0907 81.1562 94.8438C83.7372 95.5577 88.5 98.1562 88.5 98.1562L90.2188 96.5C90.2188 96.5 88.273 93.0432 87.5 90.1562C86.749 87.3533 86.8763 80.8318 86.4062 77.9688C86.3789 77.8025 86.2852 77.5255 86.25 77.3438C88.6428 76.8397 91.7965 76.6792 94.6562 76.6562ZM81.3438 77.9688C81.4694 78.1846 81.5892 78.5192 81.7188 78.7812C81.9761 79.3017 82.2442 79.7392 82.4375 80.4062C82.7985 81.6513 82.6952 85.5942 83.0312 87.2812C83.4852 89.5562 84.2812 91.8438 84.2812 91.8438C84.2812 91.8438 81.3383 90.2571 79.7812 89.9688C79.1209 89.8468 76.606 89.2347 74.8438 89C75.4858 88.0766 76.1973 87.1987 76.75 86.2188C77.9875 84.0246 79.4247 81.6174 80.8125 79.0938C81.0124 78.7302 81.1465 78.3361 81.3438 77.9688ZM70.7188 83.9062C70.0811 84.8651 69.4293 85.9537 68.8125 86.7812C66.3415 90.0943 62.1708 94.7322 59.25 97.6562C56.9022 100.007 53.0594 103.512 50.6875 105.688L34.0625 105.719C36.1231 105.042 38.1655 104.468 40.125 103.594C43.643 102.024 47.9697 99.7545 51.7188 97.5312C55.5907 95.2352 60.3202 92.1225 63.375 89.8125C65.3525 88.3175 68.236 85.6926 70.7188 83.9062Z");
-      attr(path1, "class", "svelte-FF15-6fk7cz");
+      attr(path1, "class", "svelte-FFXIV-6fk7cz");
       set_style(
         g,
         "fill",
@@ -7486,7 +7486,7 @@ function create_fragment$1h(ctx) {
         ctx[1]
       );
       set_svg_attributes(svg, svg_data);
-      toggle_class(svg, "svelte-FF15-6fk7cz", true);
+      toggle_class(svg, "svelte-FFXIV-6fk7cz", true);
     },
     m(target, anchor) {
       insert(target, svg, anchor);
@@ -7538,7 +7538,7 @@ function create_fragment$1h(ctx) {
         ctx2[5] === "both" ? "-1" : "1") + ") rotate(" + /*rotation*/
         ctx2[3] + "deg);") && { style: svg_style_value }
       ]));
-      toggle_class(svg, "svelte-FF15-6fk7cz", true);
+      toggle_class(svg, "svelte-FFXIV-6fk7cz", true);
     },
     i: noop,
     o: noop,
@@ -7670,7 +7670,7 @@ function create_if_block$u(ctx) {
       ctx[1]))
         attr(img_1, "src", img_1_src_value);
       attr(img_1, "alt", "avatar");
-      attr(img_1, "class", "svelte-FF15-13e0b37");
+      attr(img_1, "class", "svelte-FFXIV-13e0b37");
     },
     m(target, anchor) {
       insert(target, img_1, anchor);
@@ -7805,7 +7805,7 @@ function create_fragment$1g(ctx) {
       create_component(corner2.$$.fragment);
       create_component(corner3.$$.fragment);
       set_attributes(div0, div_data);
-      toggle_class(div0, "svelte-FF15-13e0b37", true);
+      toggle_class(div0, "svelte-FFXIV-13e0b37", true);
       attr(div1, "class", div1_class_value = "atom " + /*$$restProps*/
       (ctx[5]?.class?.includes("high") ? "high" : ""));
     },
@@ -7884,7 +7884,7 @@ function create_fragment$1g(ctx) {
       set_attributes(div0, div_data = get_spread_update(div0_levels, [{ class: "frame" }, dirty & /*$$restProps*/
       32 && /*$$restProps*/
       ctx2[5]]));
-      toggle_class(div0, "svelte-FF15-13e0b37", true);
+      toggle_class(div0, "svelte-FFXIV-13e0b37", true);
       if (!current || dirty & /*$$restProps*/
       32 && div1_class_value !== (div1_class_value = "atom " + /*$$restProps*/
       (ctx2[5]?.class?.includes("high") ? "high" : ""))) {
@@ -8418,10 +8418,10 @@ function create_fragment$1f(ctx) {
       if (if_block8)
         if_block8.c();
       attr(li, "class", "bg-gold white border-gold");
-      attr(ol, "class", "properties-list svelte-FF15-1j7mfxl");
-      attr(div0, "class", "flexcol flex1 left svelte-FF15-1j7mfxl");
-      attr(div1, "class", "flexrow svelte-FF15-1j7mfxl");
-      attr(div2, "class", "flexcol description-tab svelte-FF15-1j7mfxl");
+      attr(ol, "class", "properties-list svelte-FFXIV-1j7mfxl");
+      attr(div0, "class", "flexcol flex1 left svelte-FFXIV-1j7mfxl");
+      attr(div1, "class", "flexrow svelte-FFXIV-1j7mfxl");
+      attr(div2, "class", "flexcol description-tab svelte-FFXIV-1j7mfxl");
       attr(div3, "class", "item-header");
     },
     m(target, anchor) {
@@ -8704,7 +8704,7 @@ function create_fragment$1e(ctx) {
       attr(path1, "stroke", "none");
       attr(path1, "d", "M145.391006,328.313843 C145.749557,333.124908 145.836517,337.974457 146.512604,342.740479 C149.844406,366.228180 157.764481,388.064362 172.454330,406.796448 C207.885147,451.976837 253.545258,473.913361 311.208374,462.542816 C394.724213,446.074402 448.898895,358.338837 413.354034,272.423553 C383.390564,199.999008 304.321991,171.473511 237.636749,195.441040 C182.528870,215.247513 146.276688,267.715546 145.391006,328.313843 z");
       set_svg_attributes(svg, svg_data);
-      toggle_class(svg, "svelte-FF15-y040ka", true);
+      toggle_class(svg, "svelte-FFXIV-y040ka", true);
     },
     m(target, anchor) {
       insert(target, svg, anchor);
@@ -8765,7 +8765,7 @@ function create_fragment$1e(ctx) {
           ctx2[0]
         ) }
       ]));
-      toggle_class(svg, "svelte-FF15-y040ka", true);
+      toggle_class(svg, "svelte-FFXIV-y040ka", true);
     },
     i: noop,
     o: noop,
@@ -8877,8 +8877,8 @@ function create_if_block$s(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "target-list svelte-FF15-1uhww5r");
-      attr(div1, "class", "action-result svelte-FF15-1uhww5r");
+      attr(div0, "class", "target-list svelte-FFXIV-1uhww5r");
+      attr(div1, "class", "action-result svelte-FFXIV-1uhww5r");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -9045,11 +9045,11 @@ function create_if_block_1$h(ctx) {
       div12 = element("div");
       button1 = element("button");
       i1 = element("i");
-      attr(div0, "class", "texture svelte-FF15-1uhww5r");
-      attr(div1, "class", "flex0 target-info pointer svelte-FF15-1uhww5r");
-      attr(div2, "class", "col target-name font-cinzel smaller svelte-FF15-1uhww5r");
+      attr(div0, "class", "texture svelte-FFXIV-1uhww5r");
+      attr(div1, "class", "flex0 target-info pointer svelte-FFXIV-1uhww5r");
+      attr(div2, "class", "col target-name font-cinzel smaller svelte-FFXIV-1uhww5r");
       attr(div3, "class", "flex1 left font-cinzel");
-      attr(div3, "data-tooltip-class", "FF15-tooltip");
+      attr(div3, "data-tooltip-class", "FFXIV-tooltip");
       attr(div3, "data-tooltip", "Defense");
       attr(div4, "class", "flex1 m1-xs left");
       attr(div5, "class", "flex1 relative right");
@@ -9064,7 +9064,7 @@ function create_if_block_1$h(ctx) {
       ) ? "bg-silver" : "bg-gold"));
       set_style(div10, "min-height", "2.6rem");
       attr(i0, "class", "fa-solid fa-check");
-      attr(button0, "class", "stealth apply-trait svelte-FF15-1uhww5r");
+      attr(button0, "class", "stealth apply-trait svelte-FFXIV-1uhww5r");
       button0.disabled = button0_disabled_value = /*isApplyDisabled*/
       ctx[2](
         /*target*/
@@ -9072,7 +9072,7 @@ function create_if_block_1$h(ctx) {
       );
       attr(div11, "class", "flex1");
       attr(i1, "class", "fa-solid fa-refresh");
-      attr(button1, "class", "stealth apply-trait svelte-FF15-1uhww5r");
+      attr(button1, "class", "stealth apply-trait svelte-FFXIV-1uhww5r");
       button1.disabled = button1_disabled_value = !/*isApplyDisabled*/
       ctx[2](
         /*target*/
@@ -9082,9 +9082,9 @@ function create_if_block_1$h(ctx) {
       attr(div13, "class", "flexcol");
       attr(div14, "class", "flex0");
       attr(div15, "class", div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FF15-1uhww5r");
-      attr(div16, "class", "background svelte-FF15-1uhww5r");
-      attr(div17, "class", "leatherbook svelte-FF15-1uhww5r");
+      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FFXIV-1uhww5r");
+      attr(div16, "class", "background svelte-FFXIV-1uhww5r");
+      attr(div17, "class", "leatherbook svelte-FFXIV-1uhww5r");
     },
     m(target, anchor) {
       insert(target, div17, anchor);
@@ -9236,7 +9236,7 @@ function create_if_block_1$h(ctx) {
       }
       if (!current || dirty[0] & /*targetTokens*/
       8 && div15_class_value !== (div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FF15-1uhww5r")) {
+      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FFXIV-1uhww5r")) {
         attr(div15, "class", div15_class_value);
       }
     },
@@ -9276,7 +9276,7 @@ function create_if_block_5$2(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "target-img clickable svelte-FF15-1uhww5r");
+      attr(img, "class", "target-img clickable svelte-FFXIV-1uhww5r");
       if (!src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
         ctx[33]
@@ -9340,7 +9340,7 @@ function create_else_block$6(ctx) {
       (ctx[14](
         /*target*/
         ctx[33]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FF15-1uhww5r");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-1uhww5r");
       attr(i, "data-tooltip", i_data_tooltip_value = /*isHit*/
       ctx[14](
         /*target*/
@@ -9356,7 +9356,7 @@ function create_else_block$6(ctx) {
       (ctx2[14](
         /*target*/
         ctx2[33]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FF15-1uhww5r")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-1uhww5r")) {
         attr(i, "class", i_class_value);
       }
       if (dirty[0] & /*targetTokens*/
@@ -9404,13 +9404,13 @@ function create_if_block_4$5(ctx) {
       (ctx[14](
         /*target*/
         ctx[33]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FF15-1uhww5r");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-1uhww5r");
       attr(i, "data-tooltip", localize$1("CriticalSuccess"));
-      attr(div0, "class", "overlay svelte-FF15-1uhww5r");
+      attr(div0, "class", "overlay svelte-FFXIV-1uhww5r");
       set_style(div0, "margin", "0");
       set_style(div0, "font-size", "1rem");
       set_style(div0, "color", "#fff");
-      attr(div1, "class", "critical svelte-FF15-1uhww5r");
+      attr(div1, "class", "critical svelte-FFXIV-1uhww5r");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -9425,7 +9425,7 @@ function create_if_block_4$5(ctx) {
       (ctx2[14](
         /*target*/
         ctx2[33]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FF15-1uhww5r")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-1uhww5r")) {
         attr(i, "class", i_class_value);
       }
     },
@@ -9471,7 +9471,7 @@ function create_if_block_3$8(ctx) {
       attr(div0, "class", "flex3 left font-cinzel smaller");
       attr(div1, "class", "flex1 right no-wrap");
       attr(div2, "class", "flex1 formula flexrow justify-vertical active");
-      attr(div2, "data-tooltip-class", "FF15-tooltip");
+      attr(div2, "data-tooltip-class", "FFXIV-tooltip");
       attr(div2, "data-tooltip", div2_data_tooltip_value = /*displayDamageFormula*/
       ctx[7](
         /*target*/
@@ -9538,7 +9538,7 @@ function create_if_block_2$c(ctx) {
       attr(div0, "class", "flex3 left font-cinzel even-smaller");
       attr(div1, "class", "flex1 right no-wrap");
       attr(div2, "class", "flex1 formula flexrow justify-vertical smaller");
-      attr(div2, "data-tooltip-class", "FF15-tooltip");
+      attr(div2, "data-tooltip-class", "FFXIV-tooltip");
       attr(div2, "data-tooltip", div2_data_tooltip_value = /*displayDirectHitDisplayFormula*/
       ctx[5](
         /*target*/
@@ -9703,12 +9703,12 @@ function create_fragment$1d(ctx) {
       attr(div0, "class", "pointer");
       attr(div0, "role", "button");
       html_tag.a = html_anchor;
-      attr(div1, "class", "flex4 inset svelte-FF15-1uhww5r");
+      attr(div1, "class", "flex4 inset svelte-FFXIV-1uhww5r");
       attr(div1, "id", "chat-description");
       attr(div2, "class", div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx[4] ? "visible" : "") + " svelte-FF15-1uhww5r");
+      (ctx[4] ? "visible" : "") + " svelte-FFXIV-1uhww5r");
       attr(div3, "class", div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[4] ? "expanded" : "") + " svelte-FF15-1uhww5r");
+      (ctx[4] ? "expanded" : "") + " svelte-FFXIV-1uhww5r");
       attr(div4, "class", "chat");
     },
     m(target, anchor) {
@@ -9740,12 +9740,12 @@ function create_fragment$1d(ctx) {
     p(ctx2, dirty) {
       if (!current || dirty[0] & /*showDescription*/
       16 && div2_class_value !== (div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx2[4] ? "visible" : "") + " svelte-FF15-1uhww5r")) {
+      (ctx2[4] ? "visible" : "") + " svelte-FFXIV-1uhww5r")) {
         attr(div2, "class", div2_class_value);
       }
       if (!current || dirty[0] & /*showDescription*/
       16 && div3_class_value !== (div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[4] ? "expanded" : "") + " svelte-FF15-1uhww5r")) {
+      (ctx2[4] ? "expanded" : "") + " svelte-FFXIV-1uhww5r")) {
         attr(div3, "class", div3_class_value);
       }
       if (
@@ -9909,8 +9909,8 @@ function instance$15($$self, $$props, $$invalidate) {
       DamageResults.set(id, damageResult);
     }
     if (DamageResults.size > 0) {
-      Hooks.callAll("FF15.processAdditionalBaseDamageFromItem", { item, actor, DamageResults });
-      Hooks.callAll("FF15.DamageDiceReroll", {
+      Hooks.callAll("FFXIV.processAdditionalBaseDamageFromItem", { item, actor, DamageResults });
+      Hooks.callAll("FFXIV.DamageDiceReroll", {
         item,
         actor,
         DamageResults,
@@ -10013,7 +10013,7 @@ function instance$15($$self, $$props, $$invalidate) {
     const newHP = Math.max(currentHP - remainingDamage, 0);
     game.system.log.o("[KO CHECK] Before HP update:", { currentHP, remainingDamage, newHP });
     await token.actor.update({ "system.points.HP.val": newHP });
-    await Hooks.callAll("FF15.onDamage", {
+    await Hooks.callAll("FFXIV.onDamage", {
       actor: token.actor,
       damage: remainingDamage
     });
@@ -10203,13 +10203,13 @@ function create_if_block_2$b(ctx) {
     c() {
       div = element("div");
       img = element("img");
-      attr(img, "class", "actor-img svelte-FF15-84n429");
+      attr(img, "class", "actor-img svelte-FFXIV-84n429");
       if (!src_url_equal(img.src, img_src_value = /*data*/
       ctx[0].actor.img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*data*/
       ctx[0].actor.name);
-      attr(div, "class", "portrait left svelte-FF15-84n429");
+      attr(div, "class", "portrait left svelte-FFXIV-84n429");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -10260,7 +10260,7 @@ function create_if_block$r(ctx) {
       rightImage_slot_or_fallback.c();
       if (if_block)
         if_block.c();
-      attr(div, "class", "portrait right svelte-FF15-84n429");
+      attr(div, "class", "portrait right svelte-FFXIV-84n429");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -10344,7 +10344,7 @@ function fallback_block(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "actor-img svelte-FF15-84n429");
+      attr(img, "class", "actor-img svelte-FFXIV-84n429");
       if (!src_url_equal(img.src, img_src_value = /*data*/
       ctx[0].item?.img || /*data*/
       ctx[0].actor.img))
@@ -10388,7 +10388,7 @@ function create_if_block_1$g(ctx) {
         /*overlayValue*/
         ctx[1]
       );
-      attr(div, "class", "overlay svelte-FF15-84n429");
+      attr(div, "class", "overlay svelte-FFXIV-84n429");
       set_style(
         div,
         "margin",
@@ -10483,9 +10483,9 @@ function create_fragment$1c(ctx) {
       );
       if (if_block1)
         if_block1.c();
-      attr(div0, "class", "flavor svelte-FF15-84n429");
-      attr(div1, "class", "flex4 title-block font-cinzel svelte-FF15-84n429");
-      attr(div2, "class", "chat-title flexrow justify-vertical mx-sm svelte-FF15-84n429");
+      attr(div0, "class", "flavor svelte-FFXIV-84n429");
+      attr(div1, "class", "flex4 title-block font-cinzel svelte-FFXIV-84n429");
+      attr(div2, "class", "chat-title flexrow justify-vertical mx-sm svelte-FFXIV-84n429");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -11478,7 +11478,7 @@ function preUpdateToken() {
     if (actor.statuses.has("focus") && (update2.x || update2.y)) {
       delete update2.x;
       delete update2.y;
-      ui.notifications.warn(game.i18n.localize("FF15.Errors.CannotMoveWhileFocused"));
+      ui.notifications.warn(game.i18n.localize("FFXIV.Errors.CannotMoveWhileFocused"));
     }
     if (update2.x || update2.y) {
       actor.update({ system: { hasMoved: true } });
@@ -22770,7 +22770,7 @@ function create_if_block$o(ctx) {
         /*label*/
         ctx[3]
       );
-      attr(span, "class", "svelte-FF15-acci");
+      attr(span, "class", "svelte-FFXIV-acci");
       toggle_class(
         span,
         "has-icon",
@@ -22829,7 +22829,7 @@ function create_fragment$19(ctx) {
         if_block.c();
       html_tag.a = html_anchor;
       attr(a, "class", a_class_value = "header-button " + /*button*/
-      ctx[0].class + " svelte-FF15-acci");
+      ctx[0].class + " svelte-FFXIV-acci");
       attr(
         a,
         "aria-label",
@@ -22911,7 +22911,7 @@ function create_fragment$19(ctx) {
       }
       if (dirty & /*button*/
       1 && a_class_value !== (a_class_value = "header-button " + /*button*/
-      ctx2[0].class + " svelte-FF15-acci")) {
+      ctx2[0].class + " svelte-FFXIV-acci")) {
         attr(a, "class", a_class_value);
       }
       if (dirty & /*label*/
@@ -23075,7 +23075,7 @@ function create_if_block$n(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "tjs-app-icon keep-minimized svelte-FF15-5lh4qo");
+      attr(img, "class", "tjs-app-icon keep-minimized svelte-FFXIV-5lh4qo");
       if (!src_url_equal(img.src, img_src_value = /*$storeHeaderIcon*/
       ctx[6]))
         attr(img, "src", img_src_value);
@@ -23345,15 +23345,15 @@ function create_key_block(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(h4, "class", "window-title svelte-FF15-5lh4qo");
+      attr(h4, "class", "window-title svelte-FFXIV-5lh4qo");
       set_style(
         h4,
         "display",
         /*displayHeaderTitle*/
         ctx[4]
       );
-      attr(span, "class", "tjs-window-header-spacer keep-minimized svelte-FF15-5lh4qo");
-      attr(header, "class", "window-header flexrow svelte-FF15-5lh4qo");
+      attr(span, "class", "tjs-window-header-spacer keep-minimized svelte-FFXIV-5lh4qo");
+      attr(header, "class", "window-header flexrow svelte-FFXIV-5lh4qo");
     },
     m(target, anchor) {
       insert(target, header, anchor);
@@ -23764,8 +23764,8 @@ function create_fragment$17(ctx) {
   return {
     c() {
       div = element("div");
-      div.innerHTML = `<i class="fas fa-arrows-alt-h svelte-FF15-gtiiil"></i>`;
-      attr(div, "class", "window-resizable-handle svelte-FF15-gtiiil");
+      div.innerHTML = `<i class="fas fa-arrows-alt-h svelte-FFXIV-gtiiil"></i>`;
+      attr(div, "class", "window-resizable-handle svelte-FFXIV-gtiiil");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -23975,7 +23975,7 @@ function create_fragment$16(ctx) {
   return {
     c() {
       div = element("div");
-      attr(div, "class", "tjs-focus-wrap svelte-FF15-kjcljd");
+      attr(div, "class", "tjs-focus-wrap svelte-FFXIV-kjcljd");
       attr(div, "tabindex", "0");
     },
     m(target, anchor) {
@@ -24122,12 +24122,12 @@ function create_else_block$4(ctx) {
       create_component(resizablehandle.$$.fragment);
       t2 = space();
       create_component(tjsfocuswrap.$$.fragment);
-      attr(section, "class", "window-content svelte-FF15-90z1oq");
+      attr(section, "class", "window-content svelte-FFXIV-90z1oq");
       attr(section, "tabindex", "-1");
       attr(div, "id", div_id_value = /*application*/
       ctx[10].id);
       attr(div, "class", div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FF15-90z1oq");
+      ctx[10].options.classes.join(" ") + " svelte-FFXIV-90z1oq");
       attr(div, "data-appid", div_data_appid_value = /*application*/
       ctx[10].appId);
       attr(div, "role", "application");
@@ -24262,7 +24262,7 @@ function create_else_block$4(ctx) {
       }
       if (!current || dirty[0] & /*application*/
       1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
-      ctx2[10].options.classes.join(" ") + " svelte-FF15-90z1oq")) {
+      ctx2[10].options.classes.join(" ") + " svelte-FFXIV-90z1oq")) {
         attr(div, "class", div_class_value);
       }
       if (!current || dirty[0] & /*application*/
@@ -24380,12 +24380,12 @@ function create_if_block$m(ctx) {
       create_component(resizablehandle.$$.fragment);
       t2 = space();
       create_component(tjsfocuswrap.$$.fragment);
-      attr(section, "class", "window-content svelte-FF15-90z1oq");
+      attr(section, "class", "window-content svelte-FFXIV-90z1oq");
       attr(section, "tabindex", "-1");
       attr(div, "id", div_id_value = /*application*/
       ctx[10].id);
       attr(div, "class", div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FF15-90z1oq");
+      ctx[10].options.classes.join(" ") + " svelte-FFXIV-90z1oq");
       attr(div, "data-appid", div_data_appid_value = /*application*/
       ctx[10].appId);
       attr(div, "role", "application");
@@ -24517,7 +24517,7 @@ function create_if_block$m(ctx) {
       }
       if (!current || dirty[0] & /*application*/
       1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FF15-90z1oq")) {
+      ctx[10].options.classes.join(" ") + " svelte-FFXIV-90z1oq")) {
         attr(div, "class", div_class_value);
       }
       if (!current || dirty[0] & /*application*/
@@ -25509,11 +25509,11 @@ function create_default_slot$h(ctx) {
     c() {
       main = element("main");
       div1 = element("div");
-      div1.innerHTML = `<div class="texture svelte-FF15-eou7jl"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
+      div1.innerHTML = `<div class="texture svelte-FFXIV-eou7jl"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
       p0 = element("p");
-      p0.textContent = `${localize("FF15.Welcome.To")} ${localize(`${SYSTEM_CODE}.Title`)}!`;
+      p0.textContent = `${localize("FFXIV.Welcome.To")} ${localize(`${SYSTEM_CODE}.Title`)}!`;
       h10 = element("h1");
-      h10.textContent = `${localize("FF15.Welcome.Introduction")}`;
+      h10.textContent = `${localize("FFXIV.Welcome.Introduction")}`;
       p1 = element("p");
       a0 = element("a");
       a0.textContent = `${localize(`${SYSTEM_CODE}.Title`)}`;
@@ -25523,38 +25523,38 @@ function create_default_slot$h(ctx) {
       h11.textContent = "Help";
       p2 = element("p");
       span0 = element("span");
-      span0.textContent = `${localize("FF15.Welcome.Issues")}`;
+      span0.textContent = `${localize("FFXIV.Welcome.Issues")}`;
       a1 = element("a");
-      a1.textContent = `${localize("FF15.Welcome.Github")}`;
+      a1.textContent = `${localize("FFXIV.Welcome.Github")}`;
       div4 = element("div");
       div2 = element("div");
       input = element("input");
       div3 = element("div");
       span1 = element("span");
-      span1.textContent = `${localize("FF15.Setting.DontShowWelcome.Name")}`;
+      span1.textContent = `${localize("FFXIV.Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
       div5 = element("div");
-      div5.innerHTML = `<img class="pt-sm white svelte-FF15-eou7jl" src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
+      div5.innerHTML = `<img class="pt-sm white svelte-FFXIV-eou7jl" src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
       div6 = element("div");
       h4 = element("h4");
       h4.textContent = `${localize(`${SYSTEM_CODE}.Title`)} ${localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
       a2 = element("a");
       a2.textContent = "Round Table Games ©2024";
-      attr(div1, "class", "logo-background svelte-FF15-eou7jl");
+      attr(div1, "class", "logo-background svelte-FFXIV-eou7jl");
       attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
       attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
       attr(input, "type", "checkbox");
-      attr(input, "label", localize("FF15.Setting.DontShowWelcome.Name"));
+      attr(input, "label", localize("FFXIV.Setting.DontShowWelcome.Name"));
       attr(div2, "class", "flex0");
       attr(div3, "class", "flex");
       attr(div4, "class", "flexrow inset justify-vertical mb-sm");
-      attr(div4, "data-tooltip", localize("FF15.Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-FF15-eou7jl");
+      attr(div4, "data-tooltip", localize("FFXIV.Setting.DontShowWelcome.Hint"));
+      attr(main, "class", "svelte-FFXIV-eou7jl");
       attr(div5, "class", "flex2 right");
       attr(a2, "href", "https://www.round-table.games");
-      attr(a2, "class", "svelte-FF15-eou7jl");
+      attr(a2, "class", "svelte-FFXIV-eou7jl");
       attr(div6, "class", "flex2 left pt-sm");
-      attr(footer, "class", "svelte-FF15-eou7jl");
+      attr(footer, "class", "svelte-FFXIV-eou7jl");
     },
     m(target, anchor) {
       insert(target, main, anchor);
@@ -28213,49 +28213,49 @@ class FFActorDataModel extends FFTypeDataModel {
         primary: new SchemaField$5({
           str: new SchemaField$5({
             //- @deprecated: I think `label` is in the wrong place? Should maybe just be in the svelte template as it is a constant, not data
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.str.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.str.Label') }),
             val: new NumberField$6({ required: true, integer: true, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, initial: 0 })
           }),
           dex: new SchemaField$5({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.dex.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.dex.Label') }),
             val: new NumberField$6({ required: true, integer: true, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, initial: 0 })
           }),
           vit: new SchemaField$5({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vit.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.vit.Label') }),
             val: new NumberField$6({ required: true, integer: true, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, initial: 0 })
           }),
           int: new SchemaField$5({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.ing.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.ing.Label') }),
             val: new NumberField$6({ required: true, integer: true, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, initial: 0 })
           }),
           mnd: new SchemaField$5({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mnd.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.mnd.Label') }),
             val: new NumberField$6({ required: true, integer: true, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, initial: 0 })
           })
         }),
         secondary: new SchemaField$5({
           def: new SchemaField$5({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.def.Label') }),
             val: new NumberField$6({ required: true, integer: true, min: 0, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, min: 0, initial: 0 })
           }),
           mag: new SchemaField$5({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.mag.Label') }),
             val: new NumberField$6({ required: true, integer: true, min: 0, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, min: 0, initial: 0 })
           }),
           vig: new SchemaField$5({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.vig.Label') }),
             val: new NumberField$6({ required: true, integer: true, min: 0, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, min: 0, initial: 0 })
           }),
           spd: new SchemaField$5({
-            // label: new StringField({ initial: localize('FF15.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
+            // label: new StringField({ initial: localize('FFXIV.Types.Actor.Types.PC.Attributes.Primary.spd.Label') }),
             val: new NumberField$6({ required: true, integer: true, min: 0, initial: 0 }),
             mod: new NumberField$6({ required: true, integer: true, min: 0, initial: 0 })
           })
@@ -28596,43 +28596,43 @@ function setupModels() {
 __name(setupModels, "setupModels");
 function setupEffectsProcessors() {
   game.system.log.o("[EFFECTS] Setting up effect processors");
-  Hooks.on("FF15.processAdditionalBaseDamageFromItem", async (event) => {
+  Hooks.on("FFXIV.processAdditionalBaseDamageFromItem", async (event) => {
     let processor = new effects.PrimaryBaseDamageBuff(event.actor);
     await processor.process(event);
     processor = new effects.AbilityBaseDamageBuff(event.actor);
     await processor.process(event);
   });
-  Hooks.on("FF15.DamageDiceReroll", (event) => {
+  Hooks.on("FFXIV.DamageDiceReroll", (event) => {
     const processor = new effects.DamageDiceReroll(event.actor);
     processor.process(event);
   });
-  Hooks.on("FF15.EnableCombatTurnSlot", async (event) => {
+  Hooks.on("FFXIV.EnableCombatTurnSlot", async (event) => {
     game.system.log.o("[EFFECTS] EnableCombatTurnSlot hook triggered:", event);
     const processor = new effects.EnableCombatTurnSlot(event.actor);
     await processor.process(event);
   });
-  Hooks.on("FF15.TransferEffectToAllies", async (event) => {
+  Hooks.on("FFXIV.TransferEffectToAllies", async (event) => {
     const processor = new effects.TransferEffectToAllies(event.actor);
     await processor.process(event);
   });
-  Hooks.on("FF15.TransferEffectToAlliesDelete", async (event) => {
+  Hooks.on("FFXIV.TransferEffectToAlliesDelete", async (event) => {
     const processor = new effects.TransferEffectToAllies(event.actor);
     await processor.delete(event);
   });
-  Hooks.on("FF15.DamageOverTime", async (event) => {
+  Hooks.on("FFXIV.DamageOverTime", async (event) => {
     const processor = new effects.DamageOverTime(event.actor);
     await processor.process(event);
   });
-  Hooks.on("FF15.ProcTrigger", async (event) => {
+  Hooks.on("FFXIV.ProcTrigger", async (event) => {
     const processor = new effects.ProcTrigger(event.actor);
     await processor.process(event);
   });
-  Hooks.on("FF15.onDamage", async (event) => {
+  Hooks.on("FFXIV.onDamage", async (event) => {
     const processor = new effects.DurationManager(event.actor);
     await processor.onDamage(event);
   });
-  Hooks.on("FF15.onAbilityUse", async (event) => {
-    console.log("[FF15] | [EFFECTS PROCESSOR] Handling onAbilityUse hook", {
+  Hooks.on("FFXIV.onAbilityUse", async (event) => {
+    console.log("[FFXIV] | [EFFECTS PROCESSOR] Handling onAbilityUse hook", {
       event,
       itemName: event.item?.name,
       isNewAbilityUse: event.isNewAbilityUse
@@ -28810,7 +28810,7 @@ function create_fragment$13(ctx) {
           /*select_change_handler*/
           ctx[14].call(select)
         ));
-      toggle_class(select, "svelte-FF15-76qduf", true);
+      toggle_class(select, "svelte-FFXIV-76qduf", true);
     },
     m(target, anchor) {
       insert(target, select, anchor);
@@ -28916,7 +28916,7 @@ function create_fragment$13(ctx) {
           ctx2[2]
         );
       }
-      toggle_class(select, "svelte-FF15-76qduf", true);
+      toggle_class(select, "svelte-FFXIV-76qduf", true);
     },
     i(local) {
       if (current)
@@ -29151,10 +29151,10 @@ function create_if_block_3$7(ctx) {
       div0 = element("div");
       input = element("input");
       set_attributes(input, input_data);
-      toggle_class(input, "svelte-FF15-12ghg75", true);
-      attr(div0, "class", "flex5 wide svelte-FF15-12ghg75");
+      toggle_class(input, "svelte-FFXIV-12ghg75", true);
+      attr(div0, "class", "flex5 wide svelte-FFXIV-12ghg75");
       attr(div1, "class", div1_class_value = "flexrow gap-15 " + /*fullWidth*/
-      (ctx[8] ? "wide" : "") + " svelte-FF15-12ghg75");
+      (ctx[8] ? "wide" : "") + " svelte-FFXIV-12ghg75");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -29230,10 +29230,10 @@ function create_if_block_3$7(ctx) {
       if ("value" in input_data) {
         input.value = input_data.value;
       }
-      toggle_class(input, "svelte-FF15-12ghg75", true);
+      toggle_class(input, "svelte-FFXIV-12ghg75", true);
       if (dirty[0] & /*fullWidth*/
       256 && div1_class_value !== (div1_class_value = "flexrow gap-15 " + /*fullWidth*/
-      (ctx[8] ? "wide" : "") + " svelte-FF15-12ghg75")) {
+      (ctx[8] ? "wide" : "") + " svelte-FFXIV-12ghg75")) {
         attr(div1, "class", div1_class_value);
       }
     },
@@ -29268,7 +29268,7 @@ function create_if_block_4$4(ctx) {
       attr(label_1, "class", "bold gold");
       attr(label_1, "for", label_1_for_value = /*inputElement*/
       ctx[10]?.id);
-      attr(div, "class", "flex1 wide svelte-FF15-12ghg75");
+      attr(div, "class", "flex1 wide svelte-FFXIV-12ghg75");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -29328,10 +29328,10 @@ function create_if_block$k(ctx) {
         if_block0.c();
       if_block0_anchor = empty();
       if_block1.c();
-      attr(div, "class", "flexrow gap-15 wide doc-input svelte-FF15-12ghg75");
+      attr(div, "class", "flexrow gap-15 wide doc-input svelte-FFXIV-12ghg75");
       attr(button, "class", button_class_value = "stealth " + /*$$props*/
       (ctx[19]?.class?.includes("widebutton") ? "wide" : " " + /*$$props*/
-      ctx[19]?.class?.includes("left") ? "left" : " ") + " svelte-FF15-12ghg75");
+      ctx[19]?.class?.includes("left") ? "left" : " ") + " svelte-FFXIV-12ghg75");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -29378,7 +29378,7 @@ function create_if_block$k(ctx) {
       if (dirty[0] & /*$$props*/
       524288 && button_class_value !== (button_class_value = "stealth " + /*$$props*/
       (ctx[19]?.class?.includes("widebutton") ? "wide" : " " + /*$$props*/
-      ctx[19]?.class?.includes("left") ? "left" : " ") + " svelte-FF15-12ghg75")) {
+      ctx[19]?.class?.includes("left") ? "left" : " ") + " svelte-FFXIV-12ghg75")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -29413,7 +29413,7 @@ function create_if_block_2$a(ctx) {
       attr(label_1, "class", "bold gold");
       attr(label_1, "for", label_1_for_value = /*inputElement*/
       ctx[10]?.id);
-      attr(div, "class", "flex1 wide svelte-FF15-12ghg75");
+      attr(div, "class", "flex1 wide svelte-FFXIV-12ghg75");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -29463,7 +29463,7 @@ function create_else_block$3(ctx) {
       t = text(t_value);
       attr(div, "class", div_class_value = "output " + /*pulseClass*/
       ctx[11] + " " + /*textClasses*/
-      ctx[6] + " svelte-FF15-12ghg75");
+      ctx[6] + " svelte-FFXIV-12ghg75");
       toggle_class(
         div,
         "empty",
@@ -29489,7 +29489,7 @@ function create_else_block$3(ctx) {
       if (dirty[0] & /*pulseClass, textClasses*/
       2112 && div_class_value !== (div_class_value = "output " + /*pulseClass*/
       ctx2[11] + " " + /*textClasses*/
-      ctx2[6] + " svelte-FF15-12ghg75")) {
+      ctx2[6] + " svelte-FFXIV-12ghg75")) {
         attr(div, "class", div_class_value);
       }
       if (dirty[0] & /*pulseClass, textClasses, isEmpty*/
@@ -29545,8 +29545,8 @@ function create_if_block_1$f(ctx) {
       div = element("div");
       input = element("input");
       set_attributes(input, input_data);
-      toggle_class(input, "svelte-FF15-12ghg75", true);
-      attr(div, "class", "flex5 wide svelte-FF15-12ghg75");
+      toggle_class(input, "svelte-FFXIV-12ghg75", true);
+      attr(div, "class", "flex5 wide svelte-FFXIV-12ghg75");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -29614,7 +29614,7 @@ function create_if_block_1$f(ctx) {
       if ("value" in input_data) {
         input.value = input_data.value;
       }
-      toggle_class(input, "svelte-FF15-12ghg75", true);
+      toggle_class(input, "svelte-FFXIV-12ghg75", true);
     },
     d(detaching) {
       if (detaching) {
@@ -30092,7 +30092,7 @@ function create_each_block$e(ctx) {
       attr(td1, "class", "shrink");
       attr(button, "class", "stealth");
       attr(td3, "class", "buttons");
-      attr(tr, "class", "svelte-FF15-9qqs1");
+      attr(tr, "class", "svelte-FFXIV-9qqs1");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -30206,13 +30206,13 @@ function create_fragment$11(ctx) {
       attr(button0, "class", "stealth");
       attr(th3, "class", "buttons");
       attr(th3, "scope", "col");
-      attr(tr, "class", "gold svelte-FF15-9qqs1");
-      attr(table, "class", "borderless svelte-FF15-9qqs1");
+      attr(tr, "class", "gold svelte-FFXIV-9qqs1");
+      attr(table, "class", "borderless svelte-FFXIV-9qqs1");
       attr(button1, "class", button1_class_value = "glossy-button gold-light hover-shine " + /*buttonAnimation*/
-      ctx[1] + " svelte-FF15-9qqs1");
+      ctx[1] + " svelte-FFXIV-9qqs1");
       attr(div0, "class", "flexrow mt-sm");
       attr(div1, "class", "flexcol flex3 left high wide mb-md");
-      attr(div2, "class", "item-sheet details overflow wide inset mt-sm svelte-FF15-9qqs1");
+      attr(div2, "class", "item-sheet details overflow wide inset mt-sm svelte-FFXIV-9qqs1");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -30288,7 +30288,7 @@ function create_fragment$11(ctx) {
       }
       if (!current || dirty & /*buttonAnimation*/
       2 && button1_class_value !== (button1_class_value = "glossy-button gold-light hover-shine " + /*buttonAnimation*/
-      ctx2[1] + " svelte-FF15-9qqs1")) {
+      ctx2[1] + " svelte-FFXIV-9qqs1")) {
         attr(button1, "class", button1_class_value);
       }
     },
@@ -30429,7 +30429,7 @@ function create_if_block_2$9(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "tab-icon svelte-FF15-cf8qmp");
+      attr(img, "class", "tab-icon svelte-FFXIV-cf8qmp");
       if (!src_url_equal(img.src, img_src_value = /*tab*/
       ctx[5].img))
         attr(img, "src", img_src_value);
@@ -30525,7 +30525,7 @@ function create_each_block_1$3(ctx) {
         if_block.c();
       attr(button, "class", button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-FF15-cf8qmp");
+      ctx[0] ? "active" : "") + " svelte-FFXIV-cf8qmp");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -30552,7 +30552,7 @@ function create_each_block_1$3(ctx) {
       if (dirty & /*tabs, activeTab*/
       3 && button_class_value !== (button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-FF15-cf8qmp")) {
+      ctx[0] ? "active" : "") + " svelte-FFXIV-cf8qmp")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -30752,11 +30752,11 @@ function create_fragment$10(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "tabs-list svelte-FF15-cf8qmp");
+      attr(div0, "class", "tabs-list svelte-FFXIV-cf8qmp");
       attr(div1, "class", div1_class_value = null_to_empty(`tab-content ${/*$$props*/
       ctx[3]?.class?.includes("small") ? "tab-content--small" : ""} ${/*$$props*/
-      ctx[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-FF15-cf8qmp");
-      attr(div2, "class", "tabs svelte-FF15-cf8qmp");
+      ctx[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-FFXIV-cf8qmp");
+      attr(div2, "class", "tabs svelte-FFXIV-cf8qmp");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -30825,7 +30825,7 @@ function create_fragment$10(ctx) {
       if (!current || dirty & /*$$props*/
       8 && div1_class_value !== (div1_class_value = null_to_empty(`tab-content ${/*$$props*/
       ctx2[3]?.class?.includes("small") ? "tab-content--small" : ""} ${/*$$props*/
-      ctx2[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-FF15-cf8qmp")) {
+      ctx2[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-FFXIV-cf8qmp")) {
         attr(div1, "class", div1_class_value);
       }
     },
@@ -30951,7 +30951,7 @@ function create_fragment$$(ctx) {
       attr(div, "class", div_class_value = null_to_empty(
         /*$$props*/
         ctx[6].class
-      ) + " svelte-FF15-8l8ndv");
+      ) + " svelte-FFXIV-8l8ndv");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -31017,7 +31017,7 @@ function create_fragment$$(ctx) {
       64 && div_class_value !== (div_class_value = null_to_empty(
         /*$$props*/
         ctx2[6].class
-      ) + " svelte-FF15-8l8ndv")) {
+      ) + " svelte-FFXIV-8l8ndv")) {
         attr(div, "class", div_class_value);
       }
     },
@@ -31349,7 +31349,7 @@ function create_fragment$_(ctx) {
       button.textContent = `${localize(`EDITOR.${/*revealed*/
       ctx[2] ? "Hide" : "Reveal"}`)}`;
       attr(button, "type", "button");
-      attr(button, "class", "reveal svelte-FF15-1e62bm0");
+      attr(button, "class", "reveal svelte-FFXIV-1e62bm0");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -31647,7 +31647,7 @@ function create_if_block_1$d(ctx) {
     c() {
       a = element("a");
       a.innerHTML = `<i class="fas fa-edit"></i>`;
-      attr(a, "class", "editor-edit svelte-FF15-yxbnoz");
+      attr(a, "class", "editor-edit svelte-FFXIV-yxbnoz");
       attr(a, "role", "button");
       attr(a, "tabindex", "-1");
     },
@@ -31679,7 +31679,7 @@ function create_else_block$2(ctx) {
   return {
     c() {
       div = element("div");
-      attr(div, "class", "editor-enriched svelte-FF15-yxbnoz");
+      attr(div, "class", "editor-enriched svelte-FFXIV-yxbnoz");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -31705,7 +31705,7 @@ function create_if_block$h(ctx) {
   return {
     c() {
       div = element("div");
-      attr(div, "class", "editor-content svelte-FF15-yxbnoz");
+      attr(div, "class", "editor-content svelte-FFXIV-yxbnoz");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -31757,7 +31757,7 @@ function create_fragment$Z(ctx) {
       ) ? (
         /*options*/
         ctx[0].classes.join(" ")
-      ) : "") + " svelte-FF15-yxbnoz");
+      ) : "") + " svelte-FFXIV-yxbnoz");
       attr(div, "role", "textbox");
       attr(div, "tabindex", "0");
       toggle_class(
@@ -31853,7 +31853,7 @@ function create_fragment$Z(ctx) {
       ) ? (
         /*options*/
         ctx2[0].classes.join(" ")
-      ) : "") + " svelte-FF15-yxbnoz")) {
+      ) : "") + " svelte-FFXIV-yxbnoz")) {
         attr(div, "class", div_class_value);
       }
       if (applyStyles_action && is_function(applyStyles_action.update) && dirty & /*options*/
@@ -32598,7 +32598,7 @@ function create_fragment$X(ctx) {
       }
       option.__value = "";
       set_input_value(option, option.__value);
-      attr(select, "class", "tag-select svelte-FF15-sprb3l");
+      attr(select, "class", "tag-select svelte-FFXIV-sprb3l");
       if (
         /*selectedTag*/
         ctx[2] === void 0
@@ -32608,7 +32608,7 @@ function create_fragment$X(ctx) {
           ctx[8].call(select)
         ));
       attr(div0, "class", "flexcol");
-      attr(div1, "class", "flexrow gap-4 mt-sm wrap justify-vertical svelte-FF15-sprb3l");
+      attr(div1, "class", "flexrow gap-4 mt-sm wrap justify-vertical svelte-FFXIV-sprb3l");
     },
     m(target, anchor) {
       insert(target, div0, anchor);
@@ -33002,13 +33002,13 @@ function create_fragment$W(ctx) {
       attr(h1, "class", "center");
       attr(div0, "class", "flex4");
       attr(div1, "class", "flexrow justify-vertical");
-      attr(label0, "class", "gold svelte-FF15-16c3i1w");
+      attr(label0, "class", "gold svelte-FFXIV-16c3i1w");
       attr(label0, "for", "name");
       attr(div2, "class", "flex1");
       attr(div3, "class", "flex4 right");
       attr(div4, "class", "flexrow justify-vertical");
       attr(div5, "class", "flex0");
-      attr(label1, "class", "gold svelte-FF15-16c3i1w");
+      attr(label1, "class", "gold svelte-FFXIV-16c3i1w");
       attr(label1, "for", "transfer");
       attr(div6, "class", "flex4");
       attr(div7, "class", "flex0 right");
@@ -33016,7 +33016,7 @@ function create_fragment$W(ctx) {
       attr(p0, "class", "caption");
       attr(div9, "class", "flex4");
       attr(div10, "class", "flexrow justify-vertical");
-      attr(label2, "class", "gold svelte-FF15-16c3i1w");
+      attr(label2, "class", "gold svelte-FFXIV-16c3i1w");
       attr(label2, "for", "overlay");
       attr(div11, "class", "flex4");
       attr(div12, "class", "flex0 right");
@@ -33024,7 +33024,7 @@ function create_fragment$W(ctx) {
       attr(p1, "class", "caption");
       attr(div14, "class", "flex4");
       attr(div15, "class", "flexrow justify-vertical");
-      attr(label3, "class", "gold svelte-FF15-16c3i1w");
+      attr(label3, "class", "gold svelte-FFXIV-16c3i1w");
       attr(label3, "for", "stackable");
       attr(div16, "class", "flex4");
       attr(div17, "class", "flex4 right");
@@ -33032,7 +33032,7 @@ function create_fragment$W(ctx) {
       attr(p2, "class", "caption");
       attr(div19, "class", "flex4");
       attr(div20, "class", "flexrow justify-vertical");
-      attr(label4, "class", "gold svelte-FF15-16c3i1w");
+      attr(label4, "class", "gold svelte-FFXIV-16c3i1w");
       attr(label4, "for", "suspended");
       attr(div21, "class", "flex4");
       attr(div22, "class", "flex0 right");
@@ -33040,14 +33040,14 @@ function create_fragment$W(ctx) {
       attr(p3, "class", "caption");
       attr(div24, "class", "flex4");
       attr(div25, "class", "flexrow justify-vertical");
-      attr(label5, "class", "gold svelte-FF15-16c3i1w");
+      attr(label5, "class", "gold svelte-FFXIV-16c3i1w");
       attr(label5, "for", "statuses");
       attr(div26, "class", "flex4");
       attr(div27, "class", "flexrow justify-vertical");
       attr(div28, "class", "flex2 left");
       attr(div29, "class", "flexcol sheet-row justify-vertical");
       attr(div30, "class", "flex0 mt-sm");
-      attr(label6, "class", "gold svelte-FF15-16c3i1w");
+      attr(label6, "class", "gold svelte-FFXIV-16c3i1w");
       attr(label6, "for", "description");
       attr(div31, "class", "flex4");
       attr(div32, "class", "flexrow justify-vertical");
@@ -33055,7 +33055,7 @@ function create_fragment$W(ctx) {
       attr(div34, "class", "flexcol sheet-row justify-vertical high");
       attr(div35, "class", "flex1 mb-xl");
       attr(div36, "class", "flexcol flex3 left high wide mb-md");
-      attr(div37, "class", "item-sheet details overflow wide inset mt-sm high svelte-FF15-16c3i1w");
+      attr(div37, "class", "item-sheet details overflow wide inset mt-sm high svelte-FFXIV-16c3i1w");
     },
     m(target, anchor) {
       insert(target, div37, anchor);
@@ -33320,37 +33320,37 @@ function create_fragment$V(ctx) {
       create_component(docinput4.$$.fragment);
       attr(h3, "class", "left");
       attr(label0, "for", "durationType");
-      attr(label0, "class", "svelte-FF15-qerul5");
+      attr(label0, "class", "svelte-FFXIV-qerul5");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
       attr(label1, "for", "startTime");
-      attr(label1, "class", "svelte-FF15-qerul5");
+      attr(label1, "class", "svelte-FFXIV-qerul5");
       attr(div3, "class", "flex1");
       attr(div4, "class", "flex4 right wide");
       attr(div5, "class", "flexrow sheet-row justify-vertical wide");
       attr(label2, "for", "turns");
-      attr(label2, "class", "svelte-FF15-qerul5");
+      attr(label2, "class", "svelte-FFXIV-qerul5");
       attr(div6, "class", "flex1");
       attr(div7, "class", "flex4 right wide");
       attr(div8, "class", "flexrow sheet-row justify-vertical wide");
       attr(label3, "for", "rounds");
-      attr(label3, "class", "svelte-FF15-qerul5");
+      attr(label3, "class", "svelte-FFXIV-qerul5");
       attr(div9, "class", "flex1");
       attr(div10, "class", "flex4 right wide");
       attr(div11, "class", "flexrow sheet-row justify-vertical wide");
       attr(label4, "for", "startRound");
-      attr(label4, "class", "svelte-FF15-qerul5");
+      attr(label4, "class", "svelte-FFXIV-qerul5");
       attr(div12, "class", "flex1");
       attr(div13, "class", "flex4 right wide");
       attr(div14, "class", "flexrow sheet-row justify-vertical wide");
       attr(label5, "for", "startTurn");
-      attr(label5, "class", "svelte-FF15-qerul5");
+      attr(label5, "class", "svelte-FFXIV-qerul5");
       attr(div15, "class", "flex1");
       attr(div16, "class", "flex4 right wide");
       attr(div17, "class", "flexrow sheet-row justify-vertical wide");
       attr(div18, "class", "flexcol flex3 left high wide");
-      attr(div19, "class", "item-sheet details overflow svelte-FF15-qerul5");
+      attr(div19, "class", "item-sheet details overflow svelte-FFXIV-qerul5");
     },
     m(target, anchor) {
       insert(target, div19, anchor);
@@ -33534,7 +33534,7 @@ function create_default_slot$g(ctx) {
       section = element("section");
       div0 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "flex1 portrait-frame svelte-FF15-maqqt9");
+      attr(div0, "class", "flex1 portrait-frame svelte-FFXIV-maqqt9");
       attr(section, "class", "mt-sm high");
       attr(div1, "class", "flex4 wide mr-sm high");
       attr(div2, "class", "flexrow gap-15 wide high nooverflow nowrap");
@@ -33648,7 +33648,7 @@ function instance$M($$self, $$props, $$invalidate) {
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/cog.webp"
     },
     {
-      label: localize("FF15.Duration.Title"),
+      label: localize("FFXIV.Duration.Title"),
       id: "duration",
       component: Duration$1,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/duration.webp"
@@ -33804,7 +33804,7 @@ class FFActiveEffectSheet extends SvelteApplication {
    */
   #handleDocUpdate(doc) {
     if (doc) {
-      this.reactive.title = `${game.i18n.localize("FF15.EFFECT.ConfigTitle")}: ${doc.name || ""}`;
+      this.reactive.title = `${game.i18n.localize("FFXIV.EFFECT.ConfigTitle")}: ${doc.name || ""}`;
     }
   }
 }
@@ -33898,7 +33898,7 @@ class RollCalc {
     this.subscribe = this.store.subscribe;
     this.set = this.store.set;
     this.update = this.store.update;
-    this.RG = new CONFIG.FF15.RollGuards(this.params.actor);
+    this.RG = new CONFIG.FFXIV.RollGuards(this.params.actor);
   }
   /**
    * Send the roll to chat
@@ -34034,7 +34034,7 @@ class ActionHandler {
    * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
    */
   async handle(item, options = {}) {
-    console.log("[FF15] | [ACTION HANDLER] Starting handle", {
+    console.log("[FFXIV] | [ACTION HANDLER] Starting handle", {
       itemName: item?.name,
       options,
       stack: new Error().stack
@@ -34070,12 +34070,12 @@ class ActionHandler {
           await this._handleBarrier(item);
         }
       }
-      await Hooks.callAll("FF15.onAbilityUse", {
+      await Hooks.callAll("FFXIV.onAbilityUse", {
         actor: this.actor,
         item,
         isNewAbilityUse: true
       });
-      console.log("[FF15] | [ACTION HANDLER] Calling ability use hook", {
+      console.log("[FFXIV] | [ACTION HANDLER] Calling ability use hook", {
         itemName: item?.name,
         isNewAbilityUse: true,
         stack: new Error().stack
@@ -34093,7 +34093,7 @@ class ActionHandler {
     } catch (error) {
       game.system.log.e("Error in action handler", error);
       ui.notifications.error(
-        game.i18n.format("FF15.Errors.ActionHandlingFailed", { target: this.actor.name })
+        game.i18n.format("FFXIV.Errors.ActionHandlingFailed", { target: this.actor.name })
       );
       return { handledSuccessfully: false };
     }
@@ -34467,12 +34467,12 @@ class AttributeHandler {
     const { key, code } = options;
     const attributeValue = this.actor.system.attributes[key][code].val;
     const rollFormula = `1d20 + ${attributeValue}`;
-    const attributeName = game.i18n.localize(`FF15.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
+    const attributeName = game.i18n.localize(`FFXIV.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
     const roll = await new Roll(rollFormula).evaluate({ async: true });
     const isCritical = roll.total === 20;
     const messageData = {
       speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-      flavor: `${attributeName} ${game.i18n.localize("FF15.Check")}`,
+      flavor: `${attributeName} ${game.i18n.localize("FFXIV.Check")}`,
       type: CONST.CHAT_MESSAGE_TYPES.ROLL,
       roll,
       flags: {
@@ -34484,7 +34484,7 @@ class AttributeHandler {
               name: this.actor.name,
               img: this.actor.img
             },
-            flavor: `${attributeName} ${game.i18n.localize("FF15.Check")}`,
+            flavor: `${attributeName} ${game.i18n.localize("FFXIV.Check")}`,
             key,
             code,
             modifier: attributeValue,
@@ -34523,7 +34523,7 @@ class AbilitiesLimiter {
       event,
       effect: damageOnlyEffect
     });
-    console.log("[FF15] | [ABILITIES LIMITER] Starting process with effect state:", {
+    console.log("[FFXIV] | [ABILITIES LIMITER] Starting process with effect state:", {
       effectName: damageOnlyEffect?.name,
       effectChanges: damageOnlyEffect?.changes,
       effectOrigin: damageOnlyEffect?.origin,
@@ -34568,7 +34568,7 @@ class AbilitiesLimiter {
           itemName: event.item.name,
           hasSourceEffects
         });
-        ui.notifications.warn(game.i18n.format("FF15.Warnings.NextAbilityDamageOnly"));
+        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.NextAbilityDamageOnly"));
         return false;
       }
       if (hasEnablerEffects) {
@@ -34576,7 +34576,7 @@ class AbilitiesLimiter {
           itemName: event.item.name,
           hasEnablerEffects
         });
-        ui.notifications.warn(game.i18n.format("FF15.Warnings.NextAbilityDamageOnly"));
+        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.NextAbilityDamageOnly"));
         return false;
       }
       if (hasNonDamageEffects) {
@@ -34585,7 +34585,7 @@ class AbilitiesLimiter {
           system: event.item.system
         });
         if (!this._hasDamageComponent(event.item.system)) {
-          ui.notifications.warn(game.i18n.format("FF15.Warnings.NextAbilityDamageOnly"));
+          ui.notifications.warn(game.i18n.format("FFXIV.Warnings.NextAbilityDamageOnly"));
           return false;
         }
         const originalBaseEffectHealing = event.item.system.baseEffectHealing;
@@ -34616,7 +34616,7 @@ class AbilitiesLimiter {
           originalProcsList,
           modifiedSystem: event.item.system
         });
-        ui.notifications.warn(game.i18n.format("FF15.Warnings.NextAbilityDamageOnly"));
+        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.NextAbilityDamageOnly"));
       }
       game.system.log.o("[ABILITIES LIMITER] Attempting to delete effect:", {
         effectName: damageOnlyEffect.name,
@@ -34626,7 +34626,7 @@ class AbilitiesLimiter {
         effectChanges: damageOnlyEffect.changes,
         effectDisabled: damageOnlyEffect.disabled
       });
-      console.log("[FF15] | [ABILITIES LIMITER] About to delete effect:", {
+      console.log("[FFXIV] | [ABILITIES LIMITER] About to delete effect:", {
         effectName: damageOnlyEffect.name,
         effectId: damageOnlyEffect.id,
         effectDuration: damageOnlyEffect.duration,
@@ -34639,7 +34639,7 @@ class AbilitiesLimiter {
       } catch (error) {
         game.system.log.e("[ABILITIES LIMITER] Failed to delete effect:", error);
       }
-      console.log("[FF15] | [ABILITIES LIMITER] After delete attempt:", {
+      console.log("[FFXIV] | [ABILITIES LIMITER] After delete attempt:", {
         effectStillExists: this.actor.effects.has(damageOnlyEffect.id),
         remainingEffects: this.actor.effects.map((e) => ({
           name: e.name,
@@ -34704,7 +34704,7 @@ class EffectManager {
    * @return {Promise<void>} Returns a promise that resolves when all effects are handled
    */
   async handleEffects(item, result) {
-    console.log("[FF15] | [EFFECT MANAGER] handleEffects call stack:", item, result);
+    console.log("[FFXIV] | [EFFECT MANAGER] handleEffects call stack:", item, result);
     game.system.log.o("[EFFECT MANAGER] Starting handleEffects:", {
       itemName: item?.name,
       itemType: item?.type,
@@ -34725,7 +34725,7 @@ class EffectManager {
       hasEnablerEffects: item.system.enables?.list?.length > 0
     });
     const { hasTargets, targets } = result;
-    console.log("[FF15] | [EFFECT MANAGER] Target effects check:", {
+    console.log("[FFXIV] | [EFFECT MANAGER] Target effects check:", {
       itemName: item?.name,
       shouldProceed,
       hasGrants: item.system.grants?.value,
@@ -34794,7 +34794,7 @@ class EffectManager {
         }
       } catch (error) {
         game.system.log.e("Error applying effects to target", error);
-        ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
+        ui.notifications.error(game.i18n.format("FFXIV.Errors.EffectApplicationFailed", { target: targetActor.name }));
       }
     }
   }
@@ -35197,7 +35197,7 @@ class RollCalcActor extends RollCalc {
    * @param {Item} item - The ability item
    */
   ability(type, item) {
-    console.log("[FF15] | [ABILITY CHAIN] Starting ability chain", {
+    console.log("[FFXIV] | [ABILITY CHAIN] Starting ability chain", {
       // Add relevant details
     });
     this._routeAbility(item);
@@ -35213,7 +35213,7 @@ class RollCalcActor extends RollCalc {
    * @param {Object} [options={}] - Additional options
    */
   async abilityAction(item, options = {}) {
-    console.log("[FF15] | [ROLL CALC] abilityAction call stack:", {
+    console.log("[FFXIV] | [ROLL CALC] abilityAction call stack:", {
       stack: new Error().stack,
       itemName: item?.name,
       options
@@ -35239,7 +35239,7 @@ class RollCalcActor extends RollCalc {
         return;
       }
       if (item.system.procTrigger) {
-        Hooks.callAll("FF15.ProcTrigger", {
+        Hooks.callAll("FFXIV.ProcTrigger", {
           actor: this.params.actor,
           item,
           roll: result.roll,
@@ -35250,7 +35250,7 @@ class RollCalcActor extends RollCalc {
       await this.CombatSlotManager.markSlotUsed(item, result);
     } catch (error) {
       game.system.log.e("Error in ability action", error);
-      ui.notifications.error(game.i18n.format("FF15.Errors.AbilityActionFailed", { target: this.params.actor.name }));
+      ui.notifications.error(game.i18n.format("FFXIV.Errors.AbilityActionFailed", { target: this.params.actor.name }));
     }
   }
   /**
@@ -35287,7 +35287,7 @@ function create_fragment$T(ctx) {
       if (default_slot)
         default_slot.c();
       attr(div, "class", div_class_value = "badge " + /*badgeClasses*/
-      ctx[0] + " svelte-FF15-qkzukj");
+      ctx[0] + " svelte-FFXIV-qkzukj");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -35322,7 +35322,7 @@ function create_fragment$T(ctx) {
       }
       if (!current || dirty & /*badgeClasses*/
       1 && div_class_value !== (div_class_value = "badge " + /*badgeClasses*/
-      ctx2[0] + " svelte-FF15-qkzukj")) {
+      ctx2[0] + " svelte-FFXIV-qkzukj")) {
         attr(div, "class", div_class_value);
       }
     },
@@ -35414,7 +35414,7 @@ function create_if_block_4$3(ctx) {
   return {
     c() {
       h1 = element("h1");
-      h1.textContent = `${localize("FF15.Job")}`;
+      h1.textContent = `${localize("FFXIV.Job")}`;
       table = element("table");
       tr = element("tr");
       th0 = element("th");
@@ -35427,7 +35427,7 @@ function create_if_block_4$3(ctx) {
       button = element("button");
       button.innerHTML = `<i class="fa-solid fa-trash"></i>`;
       attr(h1, "class", "left gold");
-      attr(img, "class", "icon svelte-FF15-1g13pt8");
+      attr(img, "class", "icon svelte-FFXIV-1g13pt8");
       if (!src_url_equal(img.src, img_src_value = /*$Actor*/
       ctx[0].system.job?.img))
         attr(img, "src", img_src_value);
@@ -35534,9 +35534,9 @@ function create_if_block_3$6(ctx) {
     c() {
       div = element("div");
       create_component(badge.$$.fragment);
-      attr(div, "class", "flex0 right ml-sm pt-s svelte-FF15-1g13pt8");
-      attr(div, "data-tooltip-class", "FF15-tooltip");
-      attr(div, "data-tooltip", localize("FF15.Types.Item.Types.action.UsesRemaining"));
+      attr(div, "class", "flex0 right ml-sm pt-s svelte-FFXIV-1g13pt8");
+      attr(div, "data-tooltip-class", "FFXIV-tooltip");
+      attr(div, "data-tooltip", localize("FFXIV.Types.Item.Types.action.UsesRemaining"));
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -35739,20 +35739,20 @@ function create_if_block_1$c(ctx) {
   return {
     c() {
       button0 = element("button");
-      button0.innerHTML = `<i class="left fa fa-edit svelte-FF15-1g13pt8" role="button"></i>`;
+      button0.innerHTML = `<i class="left fa fa-edit svelte-FFXIV-1g13pt8" role="button"></i>`;
       button1 = element("button");
-      button1.innerHTML = `<i class="left fa fa-copy svelte-FF15-1g13pt8" role="button"></i>`;
+      button1.innerHTML = `<i class="left fa fa-copy svelte-FFXIV-1g13pt8" role="button"></i>`;
       button2 = element("button");
-      button2.innerHTML = `<i class="left fa fa-trash svelte-FF15-1g13pt8" role="button"></i>`;
-      attr(button0, "class", "stealth svelte-FF15-1g13pt8");
-      attr(button0, "data-tooltip-class", "FF15-tooltip");
-      attr(button0, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Edit"));
-      attr(button1, "class", "stealth svelte-FF15-1g13pt8");
-      attr(button1, "data-tooltip-class", "FF15-tooltip");
-      attr(button1, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Duplicate"));
-      attr(button2, "class", "stealth svelte-FF15-1g13pt8");
-      attr(button2, "data-tooltip-class", "FF15-tooltip");
-      attr(button2, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Delete"));
+      button2.innerHTML = `<i class="left fa fa-trash svelte-FFXIV-1g13pt8" role="button"></i>`;
+      attr(button0, "class", "stealth svelte-FFXIV-1g13pt8");
+      attr(button0, "data-tooltip-class", "FFXIV-tooltip");
+      attr(button0, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Edit"));
+      attr(button1, "class", "stealth svelte-FFXIV-1g13pt8");
+      attr(button1, "data-tooltip-class", "FFXIV-tooltip");
+      attr(button1, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Duplicate"));
+      attr(button2, "class", "stealth svelte-FFXIV-1g13pt8");
+      attr(button2, "data-tooltip-class", "FFXIV-tooltip");
+      attr(button2, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Delete"));
     },
     m(target, anchor) {
       insert(target, button0, anchor);
@@ -35881,41 +35881,41 @@ function create_each_block$b(ctx) {
       td4 = element("td");
       if (if_block2)
         if_block2.c();
-      attr(img, "class", "icon svelte-FF15-1g13pt8");
+      attr(img, "class", "icon svelte-FFXIV-1g13pt8");
       if (!src_url_equal(img.src, img_src_value = /*item*/
       ctx[22].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
       ctx[22].name);
-      attr(td0, "class", "img svelte-FF15-1g13pt8");
-      attr(td0, "data-tooltip-class", "FF15-tooltip");
-      attr(td0, "data-tooltip", localize("FF15.Use"));
+      attr(td0, "class", "img svelte-FFXIV-1g13pt8");
+      attr(td0, "data-tooltip-class", "FFXIV-tooltip");
+      attr(td0, "data-tooltip", localize("FFXIV.Use"));
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[22].system.isMagic ? "pulse" : "") + " svelte-FF15-1g13pt8");
+      (ctx[22].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1g13pt8");
       attr(a, "role", "button");
-      attr(div0, "class", "flex3 left svelte-FF15-1g13pt8");
-      attr(div0, "data-tooltip-class", "FF15-tooltip wordy");
+      attr(div0, "class", "flex3 left svelte-FFXIV-1g13pt8");
+      attr(div0, "data-tooltip-class", "FFXIV-tooltip wordy");
       attr(div0, "data-tooltip", div0_data_tooltip_value = /*item*/
       ctx[22].system.description);
-      attr(div1, "class", "flexrow svelte-FF15-1g13pt8");
-      attr(td1, "class", "left text ellipsis svelte-FF15-1g13pt8");
-      attr(td2, "class", "right no-wrap svelte-FF15-1g13pt8");
+      attr(div1, "class", "flexrow svelte-FFXIV-1g13pt8");
+      attr(td1, "class", "left text ellipsis svelte-FFXIV-1g13pt8");
+      attr(td2, "class", "right no-wrap svelte-FFXIV-1g13pt8");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[22].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1g13pt8");
+      (ctx[22].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1g13pt8");
       attr(i, "role", "button");
-      attr(button, "class", "stealth svelte-FF15-1g13pt8");
-      attr(td3, "class", "shrink svelte-FF15-1g13pt8");
-      attr(td3, "data-tooltip-class", "FF15-tooltip");
-      attr(td3, "data-tooltip", localize("FF15.Bookmark"));
-      attr(td4, "class", "min buttons right svelte-FF15-1g13pt8");
+      attr(button, "class", "stealth svelte-FFXIV-1g13pt8");
+      attr(td3, "class", "shrink svelte-FFXIV-1g13pt8");
+      attr(td3, "data-tooltip-class", "FFXIV-tooltip");
+      attr(td3, "data-tooltip", localize("FFXIV.Bookmark"));
+      attr(td4, "class", "min buttons right svelte-FFXIV-1g13pt8");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*actionTypeClass*/
         ctx[17](
           /*item*/
           ctx[22]
         )
-      ) + " svelte-FF15-1g13pt8");
+      ) + " svelte-FFXIV-1g13pt8");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -35999,7 +35999,7 @@ function create_each_block$b(ctx) {
         set_data(t, t_value);
       if (!current || dirty & /*items*/
       32 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[22].system.isMagic ? "pulse" : "") + " svelte-FF15-1g13pt8")) {
+      (ctx[22].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1g13pt8")) {
         attr(a, "class", a_class_value);
       }
       if (!current || dirty & /*items*/
@@ -36055,7 +36055,7 @@ function create_each_block$b(ctx) {
       }
       if (!current || dirty & /*items*/
       32 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[22].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1g13pt8")) {
+      (ctx[22].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1g13pt8")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -36078,7 +36078,7 @@ function create_each_block$b(ctx) {
           /*item*/
           ctx[22]
         )
-      ) + " svelte-FF15-1g13pt8")) {
+      ) + " svelte-FFXIV-1g13pt8")) {
         attr(tr, "class", tr_class_value);
       }
     },
@@ -36201,12 +36201,12 @@ function create_fragment$S(ctx) {
       if (if_block0)
         if_block0.c();
       h1 = element("h1");
-      h1.textContent = `${localize("FF15.Abilities")}`;
+      h1.textContent = `${localize("FFXIV.Abilities")}`;
       table = element("table");
       tr = element("tr");
       th0 = element("th");
       th1 = element("th");
-      th1.textContent = `${localize("FF15.Name")}`;
+      th1.textContent = `${localize("FFXIV.Name")}`;
       th2 = element("th");
       th2.textContent = "Tags";
       th3 = element("th");
@@ -36225,17 +36225,17 @@ function create_fragment$S(ctx) {
       attr(th2, "scope", "col");
       attr(th2, "colspan", "1");
       attr(i, "class", i_class_value = "fa " + /*faLockCSS*/
-      ctx[3] + " svelte-FF15-1g13pt8");
+      ctx[3] + " svelte-FFXIV-1g13pt8");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[4] + " svelte-FF15-1g13pt8");
+      ctx[4] + " svelte-FFXIV-1g13pt8");
       attr(th3, "class", th3_class_value = "buttons " + /*lockCSS*/
-      ctx[4] + " svelte-FF15-1g13pt8");
+      ctx[4] + " svelte-FFXIV-1g13pt8");
       attr(th3, "scope", "col");
       attr(th3, "colspan", "2");
       attr(tr, "class", "gold");
-      attr(table, "class", "borderless even svelte-FF15-1g13pt8");
-      attr(div0, "class", "padded svelte-FF15-1g13pt8");
-      attr(div1, "class", "panel overflow containerx svelte-FF15-1g13pt8");
+      attr(table, "class", "borderless even svelte-FFXIV-1g13pt8");
+      attr(div0, "class", "padded svelte-FFXIV-1g13pt8");
+      attr(div1, "class", "panel overflow containerx svelte-FFXIV-1g13pt8");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -36287,17 +36287,17 @@ function create_fragment$S(ctx) {
       }
       if (!current || dirty & /*faLockCSS*/
       8 && i_class_value !== (i_class_value = "fa " + /*faLockCSS*/
-      ctx2[3] + " svelte-FF15-1g13pt8")) {
+      ctx2[3] + " svelte-FFXIV-1g13pt8")) {
         attr(i, "class", i_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       16 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[4] + " svelte-FF15-1g13pt8")) {
+      ctx2[4] + " svelte-FFXIV-1g13pt8")) {
         attr(button, "class", button_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       16 && th3_class_value !== (th3_class_value = "buttons " + /*lockCSS*/
-      ctx2[4] + " svelte-FF15-1g13pt8")) {
+      ctx2[4] + " svelte-FFXIV-1g13pt8")) {
         attr(th3, "class", th3_class_value);
       }
       if (dirty & /*actionTypeClass, items, deleteItem, duplicateItem, editItem, $doc, badgeType, game, showItemSheet, RollCalc*/
@@ -36430,8 +36430,8 @@ function instance$K($$self, $$props, $$invalidate) {
   __name(deleteItem, "deleteItem");
   async function removeAllItems() {
     await Dialog.confirm({
-      title: localize("FF15.Types.Actor.Abilities.confirmDeleteAllTitle"),
-      content: localize("FF15.Types.Actor.Abilities.confirmDeleteAll"),
+      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAllTitle"),
+      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {
         await $Actor.deleteAllItems(["trait", "action"]);
       },
@@ -36468,8 +36468,8 @@ function instance$K($$self, $$props, $$invalidate) {
       return;
     }
     await Dialog.confirm({
-      title: localize("FF15.Types.Actor.Abilities.confirmDeleteJobTitle"),
-      content: localize("FF15.Types.Actor.Abilities.confirmDeleteJob"),
+      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJobTitle"),
+      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJob"),
       yes: async () => {
         const job = await fromUuid($doc.system.job.uuid);
         const grants = job?.system?.grants;
@@ -36580,7 +36580,7 @@ function create_if_block$f(ctx) {
       div = element("div");
       button = element("button");
       button.innerHTML = `<i class="fas fa-dice"></i>`;
-      attr(button, "class", "wide stealth flex dice svelte-FF15-3qeig2");
+      attr(button, "class", "wide stealth flex dice svelte-FFXIV-3qeig2");
       attr(div, "class", "flex0");
     },
     m(target, anchor) {
@@ -36660,15 +36660,15 @@ function create_fragment$R(ctx) {
         /*value*/
         ctx[4]
       );
-      attr(div0, "class", "flex2 header svelte-FF15-3qeig2");
-      attr(div1, "class", "flex0 header svelte-FF15-3qeig2");
+      attr(div0, "class", "flex2 header svelte-FFXIV-3qeig2");
+      attr(div1, "class", "flex0 header svelte-FFXIV-3qeig2");
       attr(button, "class", button_class_value = "left wide tall stealth flexrow " + /*disabled*/
-      ctx[5] + " svelte-FF15-3qeig2");
+      ctx[5] + " svelte-FFXIV-3qeig2");
       attr(button, "data-tooltip", button_data_tooltip_value = /*isEditing*/
       ctx[3] ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : void 0);
       attr(div2, "class", "flex3 left");
-      attr(div3, "class", "underscore flexrow justify-vertical svelte-FF15-3qeig2");
-      attr(div4, "class", "attribute svelte-FF15-3qeig2");
+      attr(div3, "class", "underscore flexrow justify-vertical svelte-FFXIV-3qeig2");
+      attr(div4, "class", "attribute svelte-FFXIV-3qeig2");
     },
     m(target, anchor) {
       insert(target, div4, anchor);
@@ -36738,7 +36738,7 @@ function create_fragment$R(ctx) {
         );
       if (dirty & /*disabled*/
       32 && button_class_value !== (button_class_value = "left wide tall stealth flexrow " + /*disabled*/
-      ctx2[5] + " svelte-FF15-3qeig2")) {
+      ctx2[5] + " svelte-FFXIV-3qeig2")) {
         attr(button, "class", button_class_value);
       }
       if (dirty & /*isEditing*/
@@ -37102,8 +37102,8 @@ function create_fragment$P(ctx) {
       div0 = element("div");
       div0.textContent = "Primary Attributes";
       create_component(attributecol.$$.fragment);
-      attr(div0, "class", "flexrow header underscore mb-md svelte-FF15-1noexin");
-      attr(div1, "class", "molecule svelte-FF15-1noexin");
+      attr(div0, "class", "flexrow header underscore mb-md svelte-FFXIV-1noexin");
+      attr(div1, "class", "molecule svelte-FFXIV-1noexin");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -37187,8 +37187,8 @@ function create_fragment$O(ctx) {
       div0 = element("div");
       div0.textContent = "Secondary Attributes";
       create_component(attributecol.$$.fragment);
-      attr(div0, "class", "flexrow header underscore mb-md svelte-FF15-9f9n3s");
-      attr(div1, "class", "molecule svelte-FF15-9f9n3s");
+      attr(div0, "class", "flexrow header underscore mb-md svelte-FFXIV-9f9n3s");
+      attr(div1, "class", "molecule svelte-FFXIV-9f9n3s");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -37266,7 +37266,7 @@ function create_fragment$N(ctx) {
       create_component(secondaryattributes.$$.fragment);
       attr(div0, "class", "flex");
       attr(div1, "class", "flex");
-      attr(div2, "class", "molecule flexrow svelte-FF15-xanq5m");
+      attr(div2, "class", "molecule flexrow svelte-FFXIV-xanq5m");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -37346,10 +37346,10 @@ function create_fragment$M(ctx) {
       div1 = element("div");
       div0 = element("div");
       button = element("button");
-      button.innerHTML = `<img class="rest-icon svelte-FF15-1ab4iud" src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="${localize("FF15.TitleBlock.Rest")}"/>`;
+      button.innerHTML = `<img class="rest-icon svelte-FFXIV-1ab4iud" src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="${localize("FFXIV.TitleBlock.Rest")}"/>`;
       div4 = element("div");
       div2 = element("div");
-      div2.textContent = `${localize("FF15.LV")} `;
+      div2.textContent = `${localize("FFXIV.LV")} `;
       div3 = element("div");
       t2 = text(
         /*level*/
@@ -37366,18 +37366,18 @@ function create_fragment$M(ctx) {
         ctx[2]
       );
       attr(button, "class", "stealth");
-      attr(button, "data-tooltip", localize("FF15.TitleBlock.Rest"));
-      attr(button, "aria-label", localize("FF15.TitleBlock.Rest"));
+      attr(button, "data-tooltip", localize("FFXIV.TitleBlock.Rest"));
+      attr(button, "aria-label", localize("FFXIV.TitleBlock.Rest"));
       attr(div0, "class", "left mt-xxs");
-      attr(div1, "class", "flex1 rest-button svelte-FF15-1ab4iud");
+      attr(div1, "class", "flex1 rest-button svelte-FFXIV-1ab4iud");
       attr(div2, "class", "scaleup");
       attr(div3, "class", "scaleup");
-      attr(div4, "class", "flex4 nowrap font-inter lvcontainer glow svelte-FF15-1ab4iud");
+      attr(div4, "class", "flex4 nowrap font-inter lvcontainer glow svelte-FFXIV-1ab4iud");
       attr(div5, "class", "flexrow no-wrap");
       attr(div6, "class", "flex4 no-wrap");
-      attr(div7, "class", "flex4 no-wrap font-cinzel job svelte-FF15-1ab4iud");
+      attr(div7, "class", "flex4 no-wrap font-cinzel job svelte-FFXIV-1ab4iud");
       attr(div8, "class", "flexrow");
-      attr(div9, "class", "px-sm panel pt-xs containerx wide svelte-FF15-1ab4iud");
+      attr(div9, "class", "px-sm panel pt-xs containerx wide svelte-FFXIV-1ab4iud");
     },
     m(target, anchor) {
       insert(target, div9, anchor);
@@ -37450,7 +37450,7 @@ function instance$E($$self, $$props, $$invalidate) {
   async function rest(event) {
     await Dialog.confirm({
       title: "",
-      content: localize("FF15.TitleBlock.ConfirmRest"),
+      content: localize("FFXIV.TitleBlock.ConfirmRest"),
       yes: async () => {
         await $actor.update({
           system: {
@@ -37461,7 +37461,7 @@ function instance$E($$self, $$props, $$invalidate) {
             BP: { val: $actor.system.points.BP.max }
           }
         });
-        ui.notifications.info(localize("FF15.TitleBlock.PointsRestored"));
+        ui.notifications.info(localize("FFXIV.TitleBlock.PointsRestored"));
       },
       no: () => {
       }
@@ -37535,11 +37535,11 @@ function create_fragment$L(ctx) {
       create_component(attributeblock.$$.fragment);
       div2 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-FF15-89vfdl");
+      attr(div0, "class", "texture svelte-FFXIV-89vfdl");
       attr(div1, "class", "flex2");
-      attr(div2, "class", "flex1 portrait-frame svelte-FF15-89vfdl");
+      attr(div2, "class", "flex1 portrait-frame svelte-FFXIV-89vfdl");
       attr(div3, "class", "flexrow panel borderless");
-      attr(div4, "class", "flexcol background svelte-FF15-89vfdl");
+      attr(div4, "class", "flexcol background svelte-FFXIV-89vfdl");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -37680,10 +37680,10 @@ function create_fragment$K(ctx) {
     c() {
       div13 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-FF15-rxqier"><div class="header svelte-FF15-rxqier">HP</div></div><div class="sub-header svelte-FF15-rxqier"><div class="header svelte-FF15-rxqier">(Hit Points)</div></div>`;
+      div4.innerHTML = `<div class="header svelte-FFXIV-rxqier"><div class="header svelte-FFXIV-rxqier">HP</div></div><div class="sub-header svelte-FFXIV-rxqier"><div class="header svelte-FFXIV-rxqier">(Hit Points)</div></div>`;
       div9 = element("div");
       div6 = element("div");
-      div6.innerHTML = `<div class="header svelte-FF15-rxqier">Max</div>`;
+      div6.innerHTML = `<div class="header svelte-FFXIV-rxqier">Max</div>`;
       div8 = element("div");
       div7 = element("div");
       create_component(docinput0.$$.fragment);
@@ -37692,14 +37692,14 @@ function create_fragment$K(ctx) {
       div10 = element("div");
       create_component(docinput1.$$.fragment);
       attr(div4, "class", "flex3");
-      attr(div6, "class", "flex sub-header svelte-FF15-rxqier");
-      attr(div7, "class", "header svelte-FF15-rxqier");
-      attr(div8, "class", "flex max header svelte-FF15-rxqier");
+      attr(div6, "class", "flex sub-header svelte-FFXIV-rxqier");
+      attr(div7, "class", "header svelte-FFXIV-rxqier");
+      attr(div8, "class", "flex max header svelte-FFXIV-rxqier");
       attr(div9, "class", "flex2");
-      attr(div10, "class", "header svelte-FF15-rxqier");
-      attr(div11, "class", "header val svelte-FF15-rxqier");
+      attr(div10, "class", "header svelte-FFXIV-rxqier");
+      attr(div11, "class", "header val svelte-FFXIV-rxqier");
       attr(div12, "class", "flex2 left");
-      attr(div13, "class", "hp flexrow justify-vertical svelte-FF15-rxqier");
+      attr(div13, "class", "hp flexrow justify-vertical svelte-FFXIV-rxqier");
     },
     m(target, anchor) {
       insert(target, div13, anchor);
@@ -37806,10 +37806,10 @@ function create_fragment$J(ctx) {
     c() {
       div13 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-FF15-rxqifo"><div class="header svelte-FF15-rxqifo">MP</div></div><div class="sub-header svelte-FF15-rxqifo"><div class="header svelte-FF15-rxqifo">(Magic Points)</div></div>`;
+      div4.innerHTML = `<div class="header svelte-FFXIV-rxqifo"><div class="header svelte-FFXIV-rxqifo">MP</div></div><div class="sub-header svelte-FFXIV-rxqifo"><div class="header svelte-FFXIV-rxqifo">(Magic Points)</div></div>`;
       div9 = element("div");
       div6 = element("div");
-      div6.innerHTML = `<div class="header svelte-FF15-rxqifo">Max</div>`;
+      div6.innerHTML = `<div class="header svelte-FFXIV-rxqifo">Max</div>`;
       div8 = element("div");
       div7 = element("div");
       create_component(docinput0.$$.fragment);
@@ -37818,14 +37818,14 @@ function create_fragment$J(ctx) {
       div10 = element("div");
       create_component(docinput1.$$.fragment);
       attr(div4, "class", "flex3");
-      attr(div6, "class", "flex sub-header svelte-FF15-rxqifo");
-      attr(div7, "class", "header svelte-FF15-rxqifo");
-      attr(div8, "class", "flex max header svelte-FF15-rxqifo");
+      attr(div6, "class", "flex sub-header svelte-FFXIV-rxqifo");
+      attr(div7, "class", "header svelte-FFXIV-rxqifo");
+      attr(div8, "class", "flex max header svelte-FFXIV-rxqifo");
       attr(div9, "class", "flex2");
-      attr(div10, "class", "header svelte-FF15-rxqifo");
-      attr(div11, "class", "header val svelte-FF15-rxqifo");
+      attr(div10, "class", "header svelte-FFXIV-rxqifo");
+      attr(div11, "class", "header val svelte-FFXIV-rxqifo");
       attr(div12, "class", "flex2 left");
-      attr(div13, "class", "mp flexrow justify-vertical svelte-FF15-rxqifo");
+      attr(div13, "class", "mp flexrow justify-vertical svelte-FFXIV-rxqifo");
     },
     m(target, anchor) {
       insert(target, div13, anchor);
@@ -37916,16 +37916,16 @@ function create_fragment$I(ctx) {
     c() {
       div8 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-FF15-rxqik9"><div class="header svelte-FF15-rxqik9">BP</div></div><div class="sub-header svelte-FF15-rxqik9"><div class="header svelte-FF15-rxqik9">(Barrier Points)</div></div>`;
+      div4.innerHTML = `<div class="header svelte-FFXIV-rxqik9"><div class="header svelte-FFXIV-rxqik9">BP</div></div><div class="sub-header svelte-FFXIV-rxqik9"><div class="header svelte-FFXIV-rxqik9">(Barrier Points)</div></div>`;
       div7 = element("div");
       div6 = element("div");
       div5 = element("div");
       create_component(docinput.$$.fragment);
       attr(div4, "class", "flex3");
-      attr(div5, "class", "header svelte-FF15-rxqik9");
-      attr(div6, "class", "header val svelte-FF15-rxqik9");
+      attr(div5, "class", "header svelte-FFXIV-rxqik9");
+      attr(div6, "class", "header val svelte-FFXIV-rxqik9");
       attr(div7, "class", "flex2 left");
-      attr(div8, "class", "bp flexrow justify-vertical svelte-FF15-rxqik9");
+      attr(div8, "class", "bp flexrow justify-vertical svelte-FFXIV-rxqik9");
     },
     m(target, anchor) {
       insert(target, div8, anchor);
@@ -38004,10 +38004,10 @@ function create_fragment$H(ctx) {
       create_component(mp.$$.fragment);
       div2 = element("div");
       create_component(bp.$$.fragment);
-      attr(div0, "class", "flex hp pa-md svelte-FF15-1bm9vzb");
-      attr(div1, "class", "flex mp pa-md svelte-FF15-1bm9vzb");
-      attr(div2, "class", "flex bp pa-md svelte-FF15-1bm9vzb");
-      attr(div3, "class", "flexrow section svelte-FF15-1bm9vzb");
+      attr(div0, "class", "flex hp pa-md svelte-FFXIV-1bm9vzb");
+      attr(div1, "class", "flex mp pa-md svelte-FFXIV-1bm9vzb");
+      attr(div2, "class", "flex bp pa-md svelte-FFXIV-1bm9vzb");
+      attr(div3, "class", "flexrow section svelte-FFXIV-1bm9vzb");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -38078,7 +38078,7 @@ function create_if_block_1$b(ctx) {
   return {
     c() {
       h2 = element("h2");
-      h2.textContent = `${localize("FF15.Effects")}`;
+      h2.textContent = `${localize("FFXIV.Effects")}`;
       div = element("div");
       table = element("table");
       for (let i = 0; i < each_blocks.length; i += 1) {
@@ -38239,7 +38239,7 @@ function create_if_block$e(ctx) {
   return {
     c() {
       p = element("p");
-      p.textContent = `${localize("FF15.NoEffects")}`;
+      p.textContent = `${localize("FFXIV.NoEffects")}`;
       set_style(p, "margin-top", "-2px");
       set_style(p, "margin-bottom", "0px");
     },
@@ -38271,7 +38271,7 @@ function create_fragment$G(ctx) {
       if_block0_anchor = empty();
       if (if_block1)
         if_block1.c();
-      attr(div, "class", "effects svelte-FF15-1fqib39");
+      attr(div, "class", "effects svelte-FFXIV-1fqib39");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -38436,16 +38436,16 @@ function create_if_block$d(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(h2, "class", "font-cinzel svelte-FF15-1i7v647");
-      attr(th0, "class", "img shrink svelte-FF15-1i7v647");
+      attr(h2, "class", "font-cinzel svelte-FFXIV-1i7v647");
+      attr(th0, "class", "img shrink svelte-FFXIV-1i7v647");
       attr(th0, "scope", "col");
-      attr(th1, "class", "left expand svelte-FF15-1i7v647");
+      attr(th1, "class", "left expand svelte-FFXIV-1i7v647");
       attr(th1, "scope", "col");
-      attr(th2, "class", "shrink svelte-FF15-1i7v647");
+      attr(th2, "class", "shrink svelte-FFXIV-1i7v647");
       attr(th2, "scope", "col");
-      attr(tr, "class", "svelte-FF15-1i7v647");
-      attr(table, "class", "borderless low-contrast svelte-FF15-1i7v647");
-      attr(div, "class", "pa-xs svelte-FF15-1i7v647");
+      attr(tr, "class", "svelte-FFXIV-1i7v647");
+      attr(table, "class", "borderless low-contrast svelte-FFXIV-1i7v647");
+      attr(div, "class", "pa-xs svelte-FFXIV-1i7v647");
     },
     m(target, anchor) {
       insert(target, h2, anchor);
@@ -38538,7 +38538,7 @@ function create_if_block_3$5(ctx) {
   return {
     c() {
       th = element("th");
-      attr(th, "class", "svelte-FF15-1i7v647");
+      attr(th, "class", "svelte-FFXIV-1i7v647");
     },
     m(target, anchor) {
       insert(target, th, anchor);
@@ -38563,7 +38563,7 @@ function create_if_block_1$a(ctx) {
       td = element("td");
       if (if_block)
         if_block.c();
-      attr(td, "class", "left svelte-FF15-1i7v647");
+      attr(td, "class", "left svelte-FFXIV-1i7v647");
     },
     m(target, anchor) {
       insert(target, td, anchor);
@@ -38742,23 +38742,23 @@ function create_each_block$8(ctx) {
       td2 = element("td");
       button = element("button");
       i = element("i");
-      attr(img, "class", "icon svelte-FF15-1i7v647");
+      attr(img, "class", "icon svelte-FFXIV-1i7v647");
       if (!src_url_equal(img.src, img_src_value = /*item*/
       ctx[20].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
       ctx[20].name);
-      attr(td0, "class", "img svelte-FF15-1i7v647");
+      attr(td0, "class", "img svelte-FFXIV-1i7v647");
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "ml-sm stealth link " + /*item*/
-      (ctx[20].system.isMagic ? "pulse" : "") + " svelte-FF15-1i7v647");
+      (ctx[20].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1i7v647");
       attr(a, "role", "button");
-      attr(td1, "class", "left clip svelte-FF15-1i7v647");
+      attr(td1, "class", "left clip svelte-FFXIV-1i7v647");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[20].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1i7v647");
-      attr(button, "class", "stealth svelte-FF15-1i7v647");
-      attr(td2, "class", "svelte-FF15-1i7v647");
-      attr(tr, "class", "svelte-FF15-1i7v647");
+      (ctx[20].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1i7v647");
+      attr(button, "class", "stealth svelte-FFXIV-1i7v647");
+      attr(td2, "class", "svelte-FFXIV-1i7v647");
+      attr(tr, "class", "svelte-FFXIV-1i7v647");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -38830,7 +38830,7 @@ function create_each_block$8(ctx) {
         set_data(t, t_value);
       if (!current || dirty & /*items*/
       4 && a_class_value !== (a_class_value = "ml-sm stealth link " + /*item*/
-      (ctx[20].system.isMagic ? "pulse" : "") + " svelte-FF15-1i7v647")) {
+      (ctx[20].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1i7v647")) {
         attr(a, "class", a_class_value);
       }
       if (
@@ -38858,7 +38858,7 @@ function create_each_block$8(ctx) {
       }
       if (!current || dirty & /*items*/
       4 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[20].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1i7v647")) {
+      (ctx[20].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1i7v647")) {
         attr(i, "class", i_class_value);
       }
     },
@@ -38907,7 +38907,7 @@ function create_fragment$F(ctx) {
       if (if_block)
         if_block.c();
       set_attributes(div, div_data);
-      toggle_class(div, "svelte-FF15-1i7v647", true);
+      toggle_class(div, "svelte-FFXIV-1i7v647", true);
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -38946,7 +38946,7 @@ function create_fragment$F(ctx) {
         512 && /*$$restProps*/
         ctx2[9]
       ]));
-      toggle_class(div, "svelte-FF15-1i7v647", true);
+      toggle_class(div, "svelte-FFXIV-1i7v647", true);
     },
     i(local) {
       if (current)
@@ -39107,12 +39107,12 @@ function create_if_block_1$9(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-FF15-43aj1a");
-      attr(div1, "class", "portrait-frame pr-xs wide svelte-FF15-43aj1a");
+      attr(div0, "class", "texture svelte-FFXIV-43aj1a");
+      attr(div1, "class", "portrait-frame pr-xs wide svelte-FFXIV-43aj1a");
       attr(div2, "class", "flex2 wide");
       attr(div3, "class", "flexrow panel borderless wide");
-      attr(div4, "class", "background svelte-FF15-43aj1a");
-      attr(div5, "class", "flexcol navy svelte-FF15-43aj1a");
+      attr(div4, "class", "background svelte-FFXIV-43aj1a");
+      attr(div5, "class", "flexcol navy svelte-FFXIV-43aj1a");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -39280,12 +39280,12 @@ function create_if_block$c(ctx) {
       div3 = element("div");
       div2 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-FF15-43aj1a");
+      attr(div0, "class", "texture svelte-FFXIV-43aj1a");
       attr(div1, "class", "flexrow panel borderless wide");
-      attr(div2, "class", "portrait-frame pr-xs svelte-FF15-43aj1a");
+      attr(div2, "class", "portrait-frame pr-xs svelte-FFXIV-43aj1a");
       attr(div3, "class", "flex2 gold");
-      attr(div4, "class", "background svelte-FF15-43aj1a");
-      attr(div5, "class", "flexcol burgundy svelte-FF15-43aj1a");
+      attr(div4, "class", "background svelte-FFXIV-43aj1a");
+      attr(div5, "class", "flexcol burgundy svelte-FFXIV-43aj1a");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -39447,18 +39447,18 @@ function create_fragment$E(ctx) {
       div8 = element("div");
       create_component(portraitframe1.$$.fragment);
       attr(div0, "class", "flex3");
-      attr(div1, "class", "texture svelte-FF15-43aj1a");
-      attr(div2, "class", "portrait-frame pr-xs wide svelte-FF15-43aj1a");
+      attr(div1, "class", "texture svelte-FFXIV-43aj1a");
+      attr(div2, "class", "portrait-frame pr-xs wide svelte-FFXIV-43aj1a");
       attr(div3, "class", "flex2 wide");
       attr(div4, "class", "flexrow panel borderless wide");
-      attr(div5, "class", "background svelte-FF15-43aj1a");
-      attr(div6, "class", "flexcol purple svelte-FF15-43aj1a");
-      attr(div7, "class", "texture svelte-FF15-43aj1a");
-      attr(div8, "class", "portrait-frame pr-xs svelte-FF15-43aj1a");
+      attr(div5, "class", "background svelte-FFXIV-43aj1a");
+      attr(div6, "class", "flexcol purple svelte-FFXIV-43aj1a");
+      attr(div7, "class", "texture svelte-FFXIV-43aj1a");
+      attr(div8, "class", "portrait-frame pr-xs svelte-FFXIV-43aj1a");
       attr(div9, "class", "flex2 gold");
       attr(div10, "class", "flexrow panel borderless wide");
-      attr(div11, "class", "background svelte-FF15-43aj1a");
-      attr(div12, "class", "flexcol teal svelte-FF15-43aj1a");
+      attr(div11, "class", "background svelte-FFXIV-43aj1a");
+      attr(div12, "class", "flexcol teal svelte-FFXIV-43aj1a");
       attr(div13, "class", "flex2");
       attr(div14, "class", "flexrow high");
       attr(div15, "class", "panel overflow");
@@ -39739,11 +39739,11 @@ function create_if_block$b(ctx) {
       button2 = element("button");
       button2.innerHTML = `<i class="left fa fa-trash"></i>`;
       attr(button0, "class", "stealth");
-      attr(button0, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Edit"));
+      attr(button0, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Edit"));
       attr(button1, "class", "stealth");
-      attr(button1, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Duplicate"));
+      attr(button1, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Duplicate"));
       attr(button2, "class", "stealth");
-      attr(button2, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Delete"));
+      attr(button2, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Delete"));
     },
     m(target, anchor) {
       insert(target, button0, anchor);
@@ -39868,19 +39868,19 @@ function create_each_block$7(ctx) {
       attr(img, "alt", img_alt_value = /*item*/
       ctx[16].name);
       attr(td0, "class", "img");
-      attr(td0, "data-tooltip", localize("FF15.Use"));
+      attr(td0, "data-tooltip", localize("FFXIV.Use"));
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FF15-1xqs78");
+      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1xqs78");
       attr(a, "role", "button");
       attr(td1, "class", "left");
-      attr(td1, "data-tooltip", localize("FF15.View"));
-      attr(button0, "class", "stealth clickable wide svelte-FF15-1xqs78");
+      attr(td1, "data-tooltip", localize("FFXIV.View"));
+      attr(button0, "class", "stealth clickable wide svelte-FFXIV-1xqs78");
       attr(button0, "data-tooltip", "Left click + / Right Click -");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1xqs78");
+      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1xqs78");
       attr(button1, "class", "stealth");
-      attr(td3, "data-tooltip", localize("FF15.Bookmark"));
+      attr(td3, "data-tooltip", localize("FFXIV.Bookmark"));
       attr(td4, "class", "min buttons right");
     },
     m(target, anchor) {
@@ -39976,7 +39976,7 @@ function create_each_block$7(ctx) {
         set_data(t0, t0_value);
       if (dirty & /*items*/
       8 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FF15-1xqs78")) {
+      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1xqs78")) {
         attr(a, "class", a_class_value);
       }
       if (dirty & /*items*/
@@ -39985,7 +39985,7 @@ function create_each_block$7(ctx) {
         set_data(t1, t1_value);
       if (dirty & /*items*/
       8 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1xqs78")) {
+      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1xqs78")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -40046,16 +40046,16 @@ function create_fragment$C(ctx) {
       div1 = element("div");
       div0 = element("div");
       h1 = element("h1");
-      h1.textContent = `${localize("FF15.Inventory")}`;
+      h1.textContent = `${localize("FFXIV.Inventory")}`;
       table = element("table");
       tr = element("tr");
       th0 = element("th");
       th1 = element("th");
-      th1.textContent = `${localize("FF15.Name")}`;
+      th1.textContent = `${localize("FFXIV.Name")}`;
       th2 = element("th");
-      th2.textContent = `${localize("FF15.Quantity")}`;
+      th2.textContent = `${localize("FFXIV.Quantity")}`;
       th3 = element("th");
-      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FF15-1xqs78"></i>`;
+      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FFXIV-1xqs78"></i>`;
       th4 = element("th");
       button0 = element("button");
       i1 = element("i");
@@ -40074,19 +40074,19 @@ function create_fragment$C(ctx) {
       attr(th3, "class", "shrink");
       attr(th3, "scope", "col");
       attr(i1, "class", i1_class_value = "fa " + /*faLockCSS*/
-      ctx[1] + " svelte-FF15-1xqs78");
+      ctx[1] + " svelte-FFXIV-1xqs78");
       attr(button0, "class", button0_class_value = "stealth " + /*lockCSS*/
-      ctx[2] + " svelte-FF15-1xqs78");
+      ctx[2] + " svelte-FFXIV-1xqs78");
       attr(th4, "class", th4_class_value = null_to_empty(
         /*lockCSS*/
         ctx[2]
-      ) + " svelte-FF15-1xqs78");
+      ) + " svelte-FFXIV-1xqs78");
       attr(th4, "scope", "col");
       attr(tr, "class", "gold");
       attr(table, "class", "borderless");
-      attr(div0, "class", "padded svelte-FF15-1xqs78");
+      attr(div0, "class", "padded svelte-FFXIV-1xqs78");
       attr(button1, "class", "mt-sm glossy-button gold-light hover-shine");
-      attr(div1, "class", "panel overflow containerx svelte-FF15-1xqs78");
+      attr(div1, "class", "panel overflow containerx svelte-FFXIV-1xqs78");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -40128,19 +40128,19 @@ function create_fragment$C(ctx) {
     p(ctx2, [dirty]) {
       if (dirty & /*faLockCSS*/
       2 && i1_class_value !== (i1_class_value = "fa " + /*faLockCSS*/
-      ctx2[1] + " svelte-FF15-1xqs78")) {
+      ctx2[1] + " svelte-FFXIV-1xqs78")) {
         attr(i1, "class", i1_class_value);
       }
       if (dirty & /*lockCSS*/
       4 && button0_class_value !== (button0_class_value = "stealth " + /*lockCSS*/
-      ctx2[2] + " svelte-FF15-1xqs78")) {
+      ctx2[2] + " svelte-FFXIV-1xqs78")) {
         attr(button0, "class", button0_class_value);
       }
       if (dirty & /*lockCSS*/
       4 && th4_class_value !== (th4_class_value = null_to_empty(
         /*lockCSS*/
         ctx2[2]
-      ) + " svelte-FF15-1xqs78")) {
+      ) + " svelte-FFXIV-1xqs78")) {
         attr(th4, "class", th4_class_value);
       }
       if (dirty & /*deleteItem, items, duplicateItem, editItem, $doc, addQuantity, removeQuantity, showItemSheet, useItem*/
@@ -40417,7 +40417,7 @@ function create_if_block_3$4(ctx) {
       attr(img, "alt", "avatar for effect origin");
       attr(img, "data-tooltip", img_data_tooltip_value = /*effect*/
       ctx[33].getFlag(SYSTEM_ID, "transferredBy.actor.name"));
-      attr(img, "data-tooltip-class", "FF15-tooltip");
+      attr(img, "data-tooltip-class", "FFXIV-tooltip");
     },
     m(target, anchor) {
       insert(target, img, anchor);
@@ -40559,7 +40559,7 @@ function create_each_block$6(ctx) {
       attr(tr, "class", tr_class_value = null_to_empty(
         /*effect*/
         ctx[33].disabled ? "disabled" : ""
-      ) + " svelte-FF15-1af8azc");
+      ) + " svelte-FFXIV-1af8azc");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -40625,7 +40625,7 @@ function create_each_block$6(ctx) {
       2 && tr_class_value !== (tr_class_value = null_to_empty(
         /*effect*/
         ctx2[33].disabled ? "disabled" : ""
-      ) + " svelte-FF15-1af8azc")) {
+      ) + " svelte-FFXIV-1af8azc")) {
         attr(tr, "class", tr_class_value);
       }
     },
@@ -40751,11 +40751,11 @@ function create_fragment$B(ctx) {
       attr(th1, "class", "left expand ml-sm");
       attr(th1, "scope", "col");
       attr(i, "class", i_class_value = "fa " + /*faLockCSS*/
-      ctx[3] + " svelte-FF15-1af8azc");
+      ctx[3] + " svelte-FFXIV-1af8azc");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[4] + " svelte-FF15-1af8azc");
+      ctx[4] + " svelte-FFXIV-1af8azc");
       attr(th2, "class", th2_class_value = "buttons " + /*lockCSS*/
-      ctx[4] + " svelte-FF15-1af8azc");
+      ctx[4] + " svelte-FFXIV-1af8azc");
       attr(th2, "scope", "col");
       attr(tr, "class", "gold");
       attr(table, "class", "borderless even");
@@ -40810,17 +40810,17 @@ function create_fragment$B(ctx) {
       }
       if (dirty[0] & /*faLockCSS*/
       8 && i_class_value !== (i_class_value = "fa " + /*faLockCSS*/
-      ctx2[3] + " svelte-FF15-1af8azc")) {
+      ctx2[3] + " svelte-FFXIV-1af8azc")) {
         attr(i, "class", i_class_value);
       }
       if (dirty[0] & /*lockCSS*/
       16 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[4] + " svelte-FF15-1af8azc")) {
+      ctx2[4] + " svelte-FFXIV-1af8azc")) {
         attr(button, "class", button_class_value);
       }
       if (dirty[0] & /*lockCSS*/
       16 && th2_class_value !== (th2_class_value = "buttons " + /*lockCSS*/
-      ctx2[4] + " svelte-FF15-1af8azc")) {
+      ctx2[4] + " svelte-FFXIV-1af8azc")) {
         attr(th2, "class", th2_class_value);
       }
       if (dirty[0] & /*ActiveEffects, deleteItem, $doc, showDelete, parentIsActor*/
@@ -41222,31 +41222,31 @@ function instance$t($$self, $$props, $$invalidate) {
   component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(10, $headerButtonNoLabel = value));
   const defaultTabs = [
     {
-      label: localize("FF15.Tabs.Attributes"),
+      label: localize("FFXIV.Tabs.Attributes"),
       id: "attributes",
       component: Attributes$1,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp"
     },
     {
-      label: localize("FF15.Tabs.Abilities"),
+      label: localize("FFXIV.Tabs.Abilities"),
       id: "abilities",
       component: Abilities$1,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp"
     },
     {
-      label: localize("FF15.Tabs.Inventory"),
+      label: localize("FFXIV.Tabs.Inventory"),
       id: "inventory",
       component: Inventory,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp"
     },
     {
-      label: localize("FF15.Tabs.Profile"),
+      label: localize("FFXIV.Tabs.Profile"),
       id: "profile",
       component: Profile,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp"
     },
     {
-      label: localize("FF15.Tabs.Effects"),
+      label: localize("FFXIV.Tabs.Effects"),
       id: "effect",
       component: EffectsTab,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp"
@@ -41526,9 +41526,9 @@ class SvelteDocumentSheet extends SvelteApplication {
     return this;
   }
 }
-let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
+let FFXIVActorSheet$1 = class FFXIVActorSheet extends SvelteDocumentSheet {
   static {
-    __name(this, "FF15ActorSheet");
+    __name(this, "FFXIVActorSheet");
   }
   /**
    * Default Application options
@@ -41582,7 +41582,7 @@ let FF15ActorSheet$1 = class FF15ActorSheet extends SvelteDocumentSheet {
     const canEdit = game.user.isGM || this.reactive.document.isOwner;
     if (canEdit) {
       buttons.unshift({
-        label: localize("FF15.Types.Actor.HeaderButtons.Edit"),
+        label: localize("FFXIV.Types.Actor.HeaderButtons.Edit"),
         class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
         icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
         // onclick: (ev) => this._onToggleEdit(ev),
@@ -42002,7 +42002,7 @@ function create_if_block_3$3(ctx) {
   return {
     c() {
       h1 = element("h1");
-      h1.textContent = `${localize("FF15.Job")}`;
+      h1.textContent = `${localize("FFXIV.Job")}`;
       table = element("table");
       tr = element("tr");
       th0 = element("th");
@@ -42201,11 +42201,11 @@ function create_if_block_1$7(ctx) {
       button2 = element("button");
       button2.innerHTML = `<i class="left fa fa-trash"></i>`;
       attr(button0, "class", "stealth");
-      attr(button0, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Edit"));
+      attr(button0, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Edit"));
       attr(button1, "class", "stealth");
-      attr(button1, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Duplicate"));
+      attr(button1, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Duplicate"));
       attr(button2, "class", "stealth");
-      attr(button2, "data-tooltip", localize("FF15.Types.Actor.ActionButtons.Delete"));
+      attr(button2, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Delete"));
     },
     m(target, anchor) {
       insert(target, button0, anchor);
@@ -42337,11 +42337,11 @@ function create_each_block$5(ctx) {
       ctx[23].name);
       attr(td0, "class", "img");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-FF15-1omalaq");
+      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1omalaq");
       attr(a, "role", "button");
       attr(td1, "class", "left");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1omalaq");
+      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1omalaq");
       attr(button, "class", "stealth");
       attr(td4, "class", "min buttons right");
     },
@@ -42407,7 +42407,7 @@ function create_each_block$5(ctx) {
         set_data(t0, t0_value);
       if (!current || dirty & /*items*/
       64 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-FF15-1omalaq")) {
+      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1omalaq")) {
         attr(a, "class", a_class_value);
       }
       if (
@@ -42442,7 +42442,7 @@ function create_each_block$5(ctx) {
         set_data(t1, t1_value);
       if (!current || dirty & /*items*/
       64 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FF15-1omalaq")) {
+      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1omalaq")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -42566,11 +42566,11 @@ function create_fragment$y(ctx) {
       tr = element("tr");
       th0 = element("th");
       th1 = element("th");
-      th1.textContent = `${localize("FF15.Name")}`;
+      th1.textContent = `${localize("FFXIV.Name")}`;
       th2 = element("th");
-      th2.textContent = `${localize("FF15.Type")}`;
+      th2.textContent = `${localize("FFXIV.Type")}`;
       th3 = element("th");
-      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FF15-1omalaq"></i>`;
+      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FFXIV-1omalaq"></i>`;
       th4 = element("th");
       button = element("button");
       i1 = element("i");
@@ -42589,15 +42589,15 @@ function create_fragment$y(ctx) {
       attr(th3, "class", "shrink");
       attr(th3, "scope", "col");
       attr(i1, "class", i1_class_value = "fa " + /*faLockCSS*/
-      ctx[4] + " svelte-FF15-1omalaq");
+      ctx[4] + " svelte-FFXIV-1omalaq");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[5] + " svelte-FF15-1omalaq");
+      ctx[5] + " svelte-FFXIV-1omalaq");
       attr(th4, "class", th4_class_value = "buttons " + /*lockCSS*/
-      ctx[5] + " svelte-FF15-1omalaq");
+      ctx[5] + " svelte-FFXIV-1omalaq");
       attr(th4, "scope", "col");
       attr(table, "class", "borderless");
-      attr(div0, "class", "padded svelte-FF15-1omalaq");
-      attr(div1, "class", "panel overflow containerx svelte-FF15-1omalaq");
+      attr(div0, "class", "padded svelte-FFXIV-1omalaq");
+      attr(div1, "class", "panel overflow containerx svelte-FFXIV-1omalaq");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -42650,17 +42650,17 @@ function create_fragment$y(ctx) {
       }
       if (!current || dirty & /*faLockCSS*/
       16 && i1_class_value !== (i1_class_value = "fa " + /*faLockCSS*/
-      ctx2[4] + " svelte-FF15-1omalaq")) {
+      ctx2[4] + " svelte-FFXIV-1omalaq")) {
         attr(i1, "class", i1_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       32 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[5] + " svelte-FF15-1omalaq")) {
+      ctx2[5] + " svelte-FFXIV-1omalaq")) {
         attr(button, "class", button_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       32 && th4_class_value !== (th4_class_value = "buttons " + /*lockCSS*/
-      ctx2[5] + " svelte-FF15-1omalaq")) {
+      ctx2[5] + " svelte-FFXIV-1omalaq")) {
         attr(th4, "class", th4_class_value);
       }
       if (dirty & /*deleteItem, items, duplicateItem, editItem, $doc, badgeType, remaining, combat, showItemSheet*/
@@ -42802,8 +42802,8 @@ function instance$r($$self, $$props, $$invalidate) {
   __name(deleteItem, "deleteItem");
   async function removeAllItems() {
     await Dialog.confirm({
-      title: localize("FF15.Types.Actor.Abilities.confirmDeleteAllTitle"),
-      content: localize("FF15.Types.Actor.Abilities.confirmDeleteAll"),
+      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAllTitle"),
+      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {
         await $Actor.deleteAllItems(["trait", "action"]);
       },
@@ -42833,8 +42833,8 @@ function instance$r($$self, $$props, $$invalidate) {
       return;
     }
     await Dialog.confirm({
-      title: localize("FF15.Types.Actor.Abilities.confirmDeleteJobTitle"),
-      content: localize("FF15.Types.Actor.Abilities.confirmDeleteJob"),
+      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJobTitle"),
+      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJob"),
       yes: async () => {
         const job = await fromUuid($doc.system.job.uuid);
         const grants = job.system.grants;
@@ -43149,7 +43149,7 @@ function create_fragment$w(ctx) {
       div0 = element("div");
       create_component(attributecol.$$.fragment);
       attr(div0, "class", "flexrow mb-md");
-      attr(div1, "class", "molecule svelte-FF15-1x6bbhr");
+      attr(div1, "class", "molecule svelte-FFXIV-1x6bbhr");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -43233,7 +43233,7 @@ function create_fragment$v(ctx) {
       div0 = element("div");
       create_component(attributecol.$$.fragment);
       attr(div0, "class", "flexrow mb-md");
-      attr(div1, "class", "molecule svelte-FF15-3bnbep");
+      attr(div1, "class", "molecule svelte-FFXIV-3bnbep");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -43341,7 +43341,7 @@ function create_fragment$u(ctx) {
       attr(div3, "class", "flex");
       attr(div4, "class", "flex");
       attr(div5, "class", "flexrow");
-      attr(div6, "class", "molecule svelte-FF15-xanq5m");
+      attr(div6, "class", "molecule svelte-FFXIV-xanq5m");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -43457,10 +43457,10 @@ function create_fragment$t(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(attributeblock.$$.fragment);
-      attr(div0, "class", "texture svelte-FF15-1j11oxv");
+      attr(div0, "class", "texture svelte-FFXIV-1j11oxv");
       attr(div1, "class", "flex2");
       attr(div2, "class", "flexrow panel borderless");
-      attr(div3, "class", "flexcol background svelte-FF15-1j11oxv");
+      attr(div3, "class", "flexcol background svelte-FFXIV-1j11oxv");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -43521,8 +43521,8 @@ function create_fragment$s(ctx) {
       div1 = element("div");
       div0 = element("div");
       create_component(hp.$$.fragment);
-      attr(div0, "class", "flex hp pa-md svelte-FF15-w11pgv");
-      attr(div1, "class", "flexrow section svelte-FF15-w11pgv");
+      attr(div0, "class", "flex hp pa-md svelte-FFXIV-w11pgv");
+      attr(div1, "class", "flexrow section svelte-FFXIV-w11pgv");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -43582,7 +43582,7 @@ function create_fragment$r(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "portrait-frame svelte-FF15-1cb780d");
+      attr(div, "class", "portrait-frame svelte-FFXIV-1cb780d");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -43788,12 +43788,12 @@ function create_fragment$q(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-FF15-1l2lk3v");
-      attr(div1, "class", "portrait-frame pr-xs wide svelte-FF15-1l2lk3v");
+      attr(div0, "class", "texture svelte-FFXIV-1l2lk3v");
+      attr(div1, "class", "portrait-frame pr-xs wide svelte-FFXIV-1l2lk3v");
       attr(div2, "class", "flex2 wide");
       attr(div3, "class", "flexrow panel borderless wide");
-      attr(div4, "class", "background svelte-FF15-1l2lk3v");
-      attr(div5, "class", "navy svelte-FF15-1l2lk3v");
+      attr(div4, "class", "background svelte-FFXIV-1l2lk3v");
+      attr(div5, "class", "navy svelte-FFXIV-1l2lk3v");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -44073,15 +44073,15 @@ function create_fragment$p(ctx) {
       div13 = element("div");
       div12 = element("div");
       create_component(portraitframe1.$$.fragment);
-      attr(div0, "class", "texture svelte-FF15-73oti1");
+      attr(div0, "class", "texture svelte-FFXIV-73oti1");
       attr(div1, "class", "flex1");
       attr(div1, "style", div1_style_value = /*smallwindow*/
       ctx[1] ? "min-width: 120px;" : "");
-      attr(div2, "class", "portrait-frame pr-xs wide svelte-FF15-73oti1");
+      attr(div2, "class", "portrait-frame pr-xs wide svelte-FFXIV-73oti1");
       attr(div3, "class", "flex2 wide");
       attr(div4, "class", "flexrow panel borderless wide");
-      attr(div5, "class", "background svelte-FF15-73oti1");
-      attr(div6, "class", "purple svelte-FF15-73oti1");
+      attr(div5, "class", "background svelte-FFXIV-73oti1");
+      attr(div6, "class", "purple svelte-FFXIV-73oti1");
       attr(div7, "class", "flexcol");
       attr(div8, "class", div8_class_value = /*smallwindow*/
       ctx[1] ? "flex2" : "flex3");
@@ -44089,12 +44089,12 @@ function create_fragment$p(ctx) {
       ctx[0] ? "flex2" : "flex3");
       set_style(div9, "min-width", "250px");
       attr(div10, "class", "flexrow");
-      attr(div11, "class", "texture svelte-FF15-73oti1");
-      attr(div12, "class", "portrait-frame pr-xs svelte-FF15-73oti1");
+      attr(div11, "class", "texture svelte-FFXIV-73oti1");
+      attr(div12, "class", "portrait-frame pr-xs svelte-FFXIV-73oti1");
       attr(div13, "class", "flex2 gold");
       attr(div14, "class", "flexrow panel borderless wide");
-      attr(div15, "class", "background svelte-FF15-73oti1");
-      attr(div16, "class", "flexcol teal svelte-FF15-73oti1");
+      attr(div15, "class", "background svelte-FFXIV-73oti1");
+      attr(div16, "class", "flexcol teal svelte-FFXIV-73oti1");
       attr(div17, "class", "panel overflow");
     },
     m(target, anchor) {
@@ -44414,21 +44414,21 @@ function instance$j($$self, $$props, $$invalidate) {
   component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(10, $headerButtonNoLabel = value));
   const defaultTabs = [
     {
-      label: localize("FF15.Tabs.Attributes"),
+      label: localize("FFXIV.Tabs.Attributes"),
       id: "attributes",
       component: Attributes2,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp"
     },
     {
-      label: localize("FF15.Tabs.Abilities"),
+      label: localize("FFXIV.Tabs.Abilities"),
       id: "abilities",
       component: Abilities2,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp"
     },
-    // { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
-    // { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
+    // { label: localize("FFXIV.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
+    // { label: localize("FFXIV.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
     {
-      label: localize("FF15.Tabs.Effects"),
+      label: localize("FFXIV.Tabs.Effects"),
       id: "effect",
       component: EffectsTab,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp"
@@ -44497,9 +44497,9 @@ class NPCSheetShell extends SvelteComponent {
     flush();
   }
 }
-class FF15ActorSheet2 extends SvelteDocumentSheet {
+class FFXIVActorSheet2 extends SvelteDocumentSheet {
   static {
-    __name(this, "FF15ActorSheet");
+    __name(this, "FFXIVActorSheet");
   }
   /**
    * Default Application options
@@ -44553,7 +44553,7 @@ class FF15ActorSheet2 extends SvelteDocumentSheet {
     const canEdit = game.user.isGM || this.reactive.document.isOwner;
     if (canEdit) {
       buttons.unshift({
-        label: localize("FF15.Types.Actor.HeaderButtons.Edit"),
+        label: localize("FFXIV.Types.Actor.HeaderButtons.Edit"),
         class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
         icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
         // onclick: (ev) => this._onToggleEdit(ev),
@@ -44845,7 +44845,7 @@ function create_fragment$n(ctx) {
       div0 = element("div");
       create_component(prosemirror.$$.fragment);
       attr(div0, "class", "flexcol flex3 left high");
-      attr(div1, "class", "item-sheet details overflow high svelte-FF15-1hen0dc");
+      attr(div1, "class", "item-sheet details overflow high svelte-FFXIV-1hen0dc");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -45051,7 +45051,7 @@ function create_fragment$m(ctx) {
       option_1.selected = option_1_selected_value = !/*value*/
       ctx[1];
       set_attributes(select, select_data);
-      toggle_class(select, "svelte-FF15-76qduf", true);
+      toggle_class(select, "svelte-FFXIV-76qduf", true);
     },
     m(target, anchor) {
       insert(target, select, anchor);
@@ -45135,7 +45135,7 @@ function create_fragment$m(ctx) {
       if (dirty & /*$$restProps, disabled*/
       20 && "value" in select_data)
         (select_data.multiple ? select_options : select_option)(select, select_data.value);
-      toggle_class(select, "svelte-FF15-76qduf", true);
+      toggle_class(select, "svelte-FFXIV-76qduf", true);
     },
     i(local) {
       if (current)
@@ -45509,7 +45509,7 @@ function create_if_block_6$1(ctx) {
       label.textContent = `${localize$1("Types.Item.Types.Options.DurationAmount.label")}`;
       attr(label, "for", `durationAmount${/*i*/
       ctx[17]}`);
-      attr(label, "class", "svelte-FF15-sihn49");
+      attr(label, "class", "svelte-FFXIV-sihn49");
     },
     m(target, anchor) {
       insert(target, label, anchor);
@@ -45530,7 +45530,7 @@ function create_if_block_5$1(ctx) {
       label.textContent = `${localize$1("Types.Item.Types.Options.DurationQualifier.label")}`;
       attr(label, "for", `durationQualifier${/*i*/
       ctx[17]}`);
-      attr(label, "class", "svelte-FF15-sihn49");
+      attr(label, "class", "svelte-FFXIV-sihn49");
     },
     m(target, anchor) {
       insert(target, label, anchor);
@@ -45820,7 +45820,7 @@ function create_each_block$2(ctx) {
       ctx[17] + 1}`;
       div1 = element("div");
       button = element("button");
-      button.innerHTML = `<i class="fas fa-times svelte-FF15-sihn49"></i>`;
+      button.innerHTML = `<i class="fas fa-times svelte-FFXIV-sihn49"></i>`;
       div5 = element("div");
       div3 = element("div");
       label = element("label");
@@ -45831,16 +45831,16 @@ function create_each_block$2(ctx) {
         if_block.c();
       attr(h3, "class", "left");
       attr(div0, "class", "flex4");
-      attr(button, "class", "small gold svelte-FF15-sihn49");
+      attr(button, "class", "small gold svelte-FFXIV-sihn49");
       attr(div1, "class", "flex0 right");
       attr(div2, "class", "flexrow justify-vertical wide");
       attr(label, "for", `durationType${/*i*/
       ctx[17]}`);
-      attr(label, "class", "svelte-FF15-sihn49");
+      attr(label, "class", "svelte-FFXIV-sihn49");
       attr(div3, "class", "flex1");
       attr(div4, "class", "flex1");
       attr(div5, "class", "flexrow sheet-row justify-vertical wide px-sm");
-      attr(div6, "class", "subsection svelte-FF15-sihn49");
+      attr(div6, "class", "subsection svelte-FFXIV-sihn49");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -45942,11 +45942,11 @@ function create_fragment$l(ctx) {
       div0.innerHTML = `<h2 class="left">Duration</h2>`;
       div1 = element("div");
       button = element("button");
-      button.innerHTML = `<i class="fas fa-plus svelte-FF15-sihn49"></i>`;
+      button.innerHTML = `<i class="fas fa-plus svelte-FFXIV-sihn49"></i>`;
       if (if_block)
         if_block.c();
       attr(div0, "class", "flex4");
-      attr(button, "class", "small gold svelte-FF15-sihn49");
+      attr(button, "class", "small gold svelte-FFXIV-sihn49");
       attr(div1, "class", "flex0 right");
       attr(div2, "class", "flexrow justify-vertical");
       attr(div3, "class", "duration");
@@ -46245,7 +46245,7 @@ function create_if_block_13(ctx) {
       attr(div9, "class", "flex4");
       attr(div10, "class", "flex0 right");
       attr(div11, "class", "flexrow justify-vertical");
-      attr(div12, "class", "subsection svelte-FF15-mf8ncy");
+      attr(div12, "class", "subsection svelte-FFXIV-mf8ncy");
     },
     m(target, anchor) {
       insert(target, div12, anchor);
@@ -46431,7 +46431,7 @@ function create_if_block_17(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectBP" class="svelte-FF15-mf8ncy">Barrier Points</label>`;
+      div0.innerHTML = `<label for="baseEffectBP" class="svelte-FFXIV-mf8ncy">Barrier Points</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
@@ -46481,7 +46481,7 @@ function create_if_block_16(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectDamage" class="svelte-FF15-mf8ncy">Damage</label>`;
+      div0.innerHTML = `<label for="baseEffectDamage" class="svelte-FFXIV-mf8ncy">Damage</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
@@ -46547,12 +46547,12 @@ function create_if_block_15(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectHealing" class="svelte-FF15-mf8ncy">Type</label>`;
+      div0.innerHTML = `<label for="baseEffectHealing" class="svelte-FFXIV-mf8ncy">Type</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       div5 = element("div");
       div3 = element("div");
-      div3.innerHTML = `<label for="baseEffectHealing" class="svelte-FF15-mf8ncy">Amount</label>`;
+      div3.innerHTML = `<label for="baseEffectHealing" class="svelte-FFXIV-mf8ncy">Amount</label>`;
       div4 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
@@ -46614,7 +46614,7 @@ function create_if_block_14(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectRestoreMP" class="svelte-FF15-mf8ncy">Restore MP</label>`;
+      div0.innerHTML = `<label for="baseEffectRestoreMP" class="svelte-FFXIV-mf8ncy">Restore MP</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
@@ -46675,7 +46675,7 @@ function create_if_block_12(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "target");
-      attr(label, "class", "svelte-FF15-mf8ncy");
+      attr(label, "class", "svelte-FFXIV-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -46736,7 +46736,7 @@ function create_if_block_11(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "rangeType");
-      attr(label, "class", "svelte-FF15-mf8ncy");
+      attr(label, "class", "svelte-FFXIV-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -46791,7 +46791,7 @@ function create_if_block_10(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="checkAttribute" class="svelte-FF15-mf8ncy">Check Attribute</label>`;
+      div0.innerHTML = `<label for="checkAttribute" class="svelte-FFXIV-mf8ncy">Check Attribute</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(div0, "class", "flex2");
@@ -46860,7 +46860,7 @@ function create_if_block_9(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "CR");
-      attr(label, "class", "svelte-FF15-mf8ncy");
+      attr(label, "class", "svelte-FFXIV-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -46990,7 +46990,7 @@ function create_if_block_7(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="aspected" class="svelte-FF15-mf8ncy">Aspected</label>`;
+      div0.innerHTML = `<label for="aspected" class="svelte-FFXIV-mf8ncy">Aspected</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(div0, "class", "flex1");
@@ -47053,7 +47053,7 @@ function create_if_block_6(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "trigger");
-      attr(label, "class", "svelte-FF15-mf8ncy");
+      attr(label, "class", "svelte-FFXIV-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -47109,7 +47109,7 @@ function create_if_block_5(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="cost" class="svelte-FF15-mf8ncy">MP</label>`;
+      div0.innerHTML = `<label for="cost" class="svelte-FFXIV-mf8ncy">MP</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(div0, "class", "flex1");
@@ -47171,7 +47171,7 @@ function create_if_block_4(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "heavierShot");
-      attr(label, "class", "svelte-FF15-mf8ncy");
+      attr(label, "class", "svelte-FFXIV-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -47232,7 +47232,7 @@ function create_if_block_3$1(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "directHitType");
-      attr(label, "class", "svelte-FF15-mf8ncy");
+      attr(label, "class", "svelte-FFXIV-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -47282,7 +47282,7 @@ function create_if_block_2$3(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="directHitDamage" class="svelte-FF15-mf8ncy">Damage</label>`;
+      div0.innerHTML = `<label for="directHitDamage" class="svelte-FFXIV-mf8ncy">Damage</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex2");
@@ -47337,7 +47337,7 @@ function create_if_block_1$4(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="directHitCondition" class="svelte-FF15-mf8ncy">Condition</label>`;
+      div0.innerHTML = `<label for="directHitCondition" class="svelte-FFXIV-mf8ncy">Condition</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(div0, "class", "flex2");
@@ -47750,7 +47750,7 @@ function create_fragment$k(ctx) {
         if_block14.c();
       attr(h30, "class", "left");
       attr(label, "for", "type");
-      attr(label, "class", "svelte-FF15-mf8ncy");
+      attr(label, "class", "svelte-FFXIV-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -47795,7 +47795,7 @@ function create_fragment$k(ctx) {
       attr(div37, "class", "flex0 right");
       attr(div38, "class", "flexrow justify-vertical");
       attr(div39, "class", "flexcol flex3 left high wide");
-      attr(div40, "class", "item-sheet details overflow wide svelte-FF15-mf8ncy");
+      attr(div40, "class", "item-sheet details overflow wide svelte-FFXIV-mf8ncy");
     },
     m(target, anchor) {
       insert(target, div40, anchor);
@@ -48641,19 +48641,19 @@ function create_if_block_2$2(ctx) {
         each_blocks_1[i].c();
       }
       th3 = element("th");
-      th3.innerHTML = `<button class="stealth svelte-FF15-1wb0kvt"></button>`;
+      th3.innerHTML = `<button class="stealth svelte-FFXIV-1wb0kvt"></button>`;
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(th0, "class", "img expand svelte-FF15-1wb0kvt");
+      attr(th0, "class", "img expand svelte-FFXIV-1wb0kvt");
       attr(th0, "scope", "col");
-      attr(th1, "class", "left expand no-wrap svelte-FF15-1wb0kvt");
+      attr(th1, "class", "left expand no-wrap svelte-FFXIV-1wb0kvt");
       attr(th1, "scope", "col");
-      attr(th2, "class", "left shrink svelte-FF15-1wb0kvt");
+      attr(th2, "class", "left shrink svelte-FFXIV-1wb0kvt");
       attr(th2, "scope", "col");
-      attr(th3, "class", "buttons svelte-FF15-1wb0kvt");
-      attr(tr, "class", "svelte-FF15-1wb0kvt");
-      attr(table, "class", "standard-list small-text borderless svelte-FF15-1wb0kvt");
+      attr(th3, "class", "buttons svelte-FFXIV-1wb0kvt");
+      attr(tr, "class", "svelte-FFXIV-1wb0kvt");
+      attr(table, "class", "standard-list small-text borderless svelte-FFXIV-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, table, anchor);
@@ -48740,7 +48740,7 @@ function create_each_block_2(ctx) {
     c() {
       th = element("th");
       t = text(t_value);
-      attr(th, "class", "left fixed svelte-FF15-1wb0kvt");
+      attr(th, "class", "left fixed svelte-FFXIV-1wb0kvt");
       attr(th, "scope", "col");
     },
     m(target, anchor) {
@@ -48779,7 +48779,7 @@ function create_each_block_1(ctx) {
     c() {
       td = element("td");
       t = text(t_value);
-      attr(td, "class", "left svelte-FF15-1wb0kvt");
+      attr(td, "class", "left svelte-FFXIV-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, td, anchor);
@@ -48880,22 +48880,22 @@ function create_each_block$1(ctx) {
       td3 = element("td");
       button = element("button");
       button.innerHTML = `<i class="left fa fa-trash pointer"></i>`;
-      attr(img, "class", "icon nopointer svelte-FF15-1wb0kvt");
+      attr(img, "class", "icon nopointer svelte-FFXIV-1wb0kvt");
       if (!src_url_equal(img.src, img_src_value = /*item*/
       ctx[11].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
       ctx[11].name);
-      attr(td0, "class", "img svelte-FF15-1wb0kvt");
+      attr(td0, "class", "img svelte-FFXIV-1wb0kvt");
       attr(td1, "class", td1_class_value = "left pointer no-wrap " + /*item*/
-      (ctx[11].isMissing ? "missing-text" : "") + " svelte-FF15-1wb0kvt");
-      attr(td2, "class", "left svelte-FF15-1wb0kvt");
-      attr(button, "class", "stealth svelte-FF15-1wb0kvt");
-      attr(td3, "class", "buttons right svelte-FF15-1wb0kvt");
+      (ctx[11].isMissing ? "missing-text" : "") + " svelte-FFXIV-1wb0kvt");
+      attr(td2, "class", "left svelte-FFXIV-1wb0kvt");
+      attr(button, "class", "stealth svelte-FFXIV-1wb0kvt");
+      attr(td3, "class", "buttons right svelte-FFXIV-1wb0kvt");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*item*/
         ctx[11].isMissing ? "missing-item" : ""
-      ) + " svelte-FF15-1wb0kvt");
+      ) + " svelte-FFXIV-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -48944,7 +48944,7 @@ function create_each_block$1(ctx) {
         set_data(t0, t0_value);
       if (dirty & /*localList*/
       8 && td1_class_value !== (td1_class_value = "left pointer no-wrap " + /*item*/
-      (ctx[11].isMissing ? "missing-text" : "") + " svelte-FF15-1wb0kvt")) {
+      (ctx[11].isMissing ? "missing-text" : "") + " svelte-FFXIV-1wb0kvt")) {
         attr(td1, "class", td1_class_value);
       }
       if (dirty & /*localList*/
@@ -48979,7 +48979,7 @@ function create_each_block$1(ctx) {
       8 && tr_class_value !== (tr_class_value = null_to_empty(
         /*item*/
         ctx[11].isMissing ? "missing-item" : ""
-      ) + " svelte-FF15-1wb0kvt")) {
+      ) + " svelte-FFXIV-1wb0kvt")) {
         attr(tr, "class", tr_class_value);
       }
     },
@@ -49002,7 +49002,7 @@ function create_if_block_1$3(ctx) {
     c() {
       button = element("button");
       button.textContent = "- Remove All";
-      attr(button, "class", "mt-sm glossy-button gold-light hover-shine svelte-FF15-1wb0kvt");
+      attr(button, "class", "mt-sm glossy-button gold-light hover-shine svelte-FFXIV-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -49033,7 +49033,7 @@ function create_if_block$4(ctx) {
     c() {
       div = element("div");
       div.innerHTML = `<p class="empty-list-text">Drop items here to add them to the list.</p>`;
-      attr(div, "class", "empty-list svelte-FF15-1wb0kvt");
+      attr(div, "class", "empty-list svelte-FFXIV-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -49126,7 +49126,7 @@ function create_fragment$j(ctx) {
       attr(div1, "class", "flex0 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical");
       attr(div3, "class", div3_class_value = "item-bucket " + /*activeClass*/
-      ctx[6] + " svelte-FF15-1wb0kvt");
+      ctx[6] + " svelte-FFXIV-1wb0kvt");
       attr(div3, "role", "application");
       attr(div3, "aria-dropeffect", "link");
     },
@@ -49253,7 +49253,7 @@ function create_fragment$j(ctx) {
       }
       if (!current || dirty & /*activeClass*/
       64 && div3_class_value !== (div3_class_value = "item-bucket " + /*activeClass*/
-      ctx2[6] + " svelte-FF15-1wb0kvt")) {
+      ctx2[6] + " svelte-FFXIV-1wb0kvt")) {
         attr(div3, "class", div3_class_value);
       }
     },
@@ -49946,7 +49946,7 @@ function create_fragment$h(ctx) {
       attr(div3, "class", "flex0 right");
       attr(div4, "class", "flexrow sheet-row justify-vertical px-sm");
       attr(div5, "class", "pb-lg");
-      attr(div6, "class", "item-sheet details overflow high svelte-FF15-z5zfiu");
+      attr(div6, "class", "item-sheet details overflow high svelte-FFXIV-z5zfiu");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -50128,7 +50128,7 @@ function create_fragment$g(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FF15-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -50314,11 +50314,11 @@ function create_fragment$e(ctx) {
       div4 = element("div");
       div3 = element("div");
       h3 = element("h3");
-      h3.textContent = `${localize("FF15.General")}`;
+      h3.textContent = `${localize("FFXIV.General")}`;
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("FF15.Action")} ${localize("FF15.Type")}`;
+      label.textContent = `${localize("FFXIV.Action")} ${localize("FFXIV.Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       if (if_block)
@@ -50329,7 +50329,7 @@ function create_fragment$e(ctx) {
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
       attr(div3, "class", "flexcol flex3 left high wide");
-      attr(div4, "class", "item-sheet details svelte-FF15-1kd5sxn");
+      attr(div4, "class", "item-sheet details svelte-FFXIV-1kd5sxn");
     },
     m(target, anchor) {
       insert(target, div4, anchor);
@@ -50489,7 +50489,7 @@ function create_fragment$d(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FF15-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -50617,10 +50617,10 @@ function create_fragment$c(ctx) {
       li1 = element("li");
       t2 = text("LV ");
       t3 = text(t3_value);
-      attr(ol, "class", "properties-list svelte-FF15-1j7mfxl");
-      attr(div0, "class", "flexcol flex1 left svelte-FF15-1j7mfxl");
-      attr(div1, "class", "flexrow svelte-FF15-1j7mfxl");
-      attr(div2, "class", "flexcol description-tab svelte-FF15-1j7mfxl");
+      attr(ol, "class", "properties-list svelte-FFXIV-1j7mfxl");
+      attr(div0, "class", "flexcol flex1 left svelte-FFXIV-1j7mfxl");
+      attr(div1, "class", "flexrow svelte-FFXIV-1j7mfxl");
+      attr(div2, "class", "flexcol description-tab svelte-FFXIV-1j7mfxl");
       attr(div3, "class", "item-header");
     },
     m(target, anchor) {
@@ -50735,7 +50735,7 @@ function create_fragment$b(ctx) {
       attr(div6, "class", "flex0 pa-sm");
       attr(div7, "class", "flex3 left high");
       attr(div8, "class", "flexcol");
-      attr(div9, "class", "item-sheet details overflow high svelte-FF15-9bf1m7");
+      attr(div9, "class", "item-sheet details overflow high svelte-FFXIV-9bf1m7");
     },
     m(target, anchor) {
       insert(target, div9, anchor);
@@ -50869,7 +50869,7 @@ function create_fragment$a(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FF15-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -51234,7 +51234,7 @@ function create_fragment$8(ctx) {
       attr(div11, "class", "flexrow sheet-row justify-vertical");
       attr(div12, "class", "flexcol flex3 left prose editor-inset high");
       attr(div13, "class", "flexcol flex3 left high wide");
-      attr(div14, "class", "item-sheet details overflow wide svelte-FF15-uu8jyd");
+      attr(div14, "class", "item-sheet details overflow wide svelte-FFXIV-uu8jyd");
     },
     m(target, anchor) {
       insert(target, div14, anchor);
@@ -51386,41 +51386,41 @@ function instance$5($$self, $$props, $$invalidate) {
   const targetOptions = [
     {
       value: "single",
-      label: localize("FF15.Types.Item.Types.Options.Target.single")
+      label: localize("FFXIV.Types.Item.Types.Options.Target.single")
     },
     {
       value: "enemy",
-      label: localize("FF15.Types.Item.Types.Options.Target.enemy")
+      label: localize("FFXIV.Types.Item.Types.Options.Target.enemy")
     },
     {
       value: "all",
-      label: localize("FF15.Types.Item.Types.Options.Target.all")
+      label: localize("FFXIV.Types.Item.Types.Options.Target.all")
     },
     {
       value: "ally",
-      label: localize("FF15.Types.Item.Types.Options.Target.ally")
+      label: localize("FFXIV.Types.Item.Types.Options.Target.ally")
     }
   ];
   const triggerOptions = [
     {
       value: "any",
-      label: localize("FF15.Types.Item.Types.Options.Trigger.any")
+      label: localize("FFXIV.Types.Item.Types.Options.Trigger.any")
     },
     {
       value: "ability",
-      label: localize("FF15.Types.Item.Types.Options.Trigger.ability")
+      label: localize("FFXIV.Types.Item.Types.Options.Trigger.ability")
     },
     {
       value: "move",
-      label: localize("FF15.Types.Item.Types.Options.Trigger.move")
+      label: localize("FFXIV.Types.Item.Types.Options.Trigger.move")
     },
     {
       value: "turn",
-      label: localize("FF15.Types.Item.Types.Options.Trigger.turn")
+      label: localize("FFXIV.Types.Item.Types.Options.Trigger.turn")
     },
     {
       value: "invoke",
-      label: localize("FF15.Types.Item.Types.Options.Trigger.invoke")
+      label: localize("FFXIV.Types.Item.Types.Options.Trigger.invoke")
     }
   ];
   const rangeOptions = getRangeOptions();
@@ -51523,7 +51523,7 @@ function create_fragment$7(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FF15-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -52050,7 +52050,7 @@ function create_fragment$5(ctx) {
       attr(div16, "class", "flex0 right");
       attr(div17, "class", "flexrow sheet-row justify-vertical");
       attr(div18, "class", "flexcol flex3 left high bigbottom");
-      attr(div19, "class", "item-sheet details overflow svelte-FF15-7hc7it");
+      attr(div19, "class", "item-sheet details overflow svelte-FFXIV-7hc7it");
     },
     m(target, anchor) {
       insert(target, div19, anchor);
@@ -52378,7 +52378,7 @@ function create_fragment$4(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FF15-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -52491,7 +52491,7 @@ function create_fragment$2(ctx) {
     c() {
       div = element("div");
       create_component(durationcomponent.$$.fragment);
-      attr(div, "class", "item-sheet details overflow svelte-FF15-7hc7it");
+      attr(div, "class", "item-sheet details overflow svelte-FFXIV-7hc7it");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -52601,7 +52601,7 @@ function create_fragment$1(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FF15-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -52778,7 +52778,7 @@ function create_default_slot(ctx) {
       section = element("section");
       if (switch_instance1)
         create_component(switch_instance1.$$.fragment);
-      attr(img, "class", "profile svelte-FF15-1dnncaq");
+      attr(img, "class", "profile svelte-FFXIV-1dnncaq");
       if (!src_url_equal(img.src, img_src_value = /*$documentStore*/
       ctx[2]?.img))
         attr(img, "src", img_src_value);
@@ -52790,7 +52790,7 @@ function create_default_slot(ctx) {
       attr(div0, "class", "flex0");
       set_style(table, "text-align", "center");
       attr(div2, "class", "flexcol");
-      attr(div3, "class", "flex1 profile-wrap svelte-FF15-1dnncaq");
+      attr(div3, "class", "flex1 profile-wrap svelte-FFXIV-1dnncaq");
       attr(div4, "class", "left wide");
       attr(header, "class", "wide");
       attr(section, "class", "mt-sm high");
@@ -53108,9 +53108,9 @@ class ItemSheetShell extends SvelteComponent {
     flush();
   }
 }
-class FF15ItemSheet extends SvelteDocumentSheet {
+class FFXIVItemSheet extends SvelteDocumentSheet {
   static {
-    __name(this, "FF15ItemSheet");
+    __name(this, "FFXIVItemSheet");
   }
   /**
    * Default Application options
@@ -53175,9 +53175,9 @@ class FFCombatTracker extends CombatTracker {
         if (actor.system.actionState?.available) {
           for (const action of actor.system.actionState.available.sort()) {
             if (!getTypeOptions().some((e) => e.value === action)) {
-              turn.actions += `<div data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge custom-action">${action[0]?.capitalize()}</div>`;
+              turn.actions += `<div data-tooltip="${game.i18n.localize(`FFXIV.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge custom-action">${action[0]?.capitalize()}</div>`;
             } else {
-              turn.actions += `<div data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge ${action}">${action[0]?.capitalize()}</div>`;
+              turn.actions += `<div data-tooltip="${game.i18n.localize(`FFXIV.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge ${action}">${action[0]?.capitalize()}</div>`;
             }
           }
         }
@@ -53263,7 +53263,7 @@ const systemconfig = {
 };
 function init() {
   Hooks.once("init", async (a, b, c) => {
-    game.FF15 = game.system;
+    game.FFXIV = game.system;
     game.system.log = log$1;
     game.system.log.level = log$1.VERBOSE;
     game.system.log.i(`Starting System ${SYSTEM_ID}`);
@@ -53274,15 +53274,15 @@ function init() {
     game.system.log.d(game.system.id);
     game.system.log.d(game.system.config);
     CONFIG.ui.combat = FFCombatTracker;
-    Actors.registerSheet("foundryvtt-final-fantasy", FF15ActorSheet$1, {
+    Actors.registerSheet("foundryvtt-final-fantasy", FFXIVActorSheet$1, {
       makeDefault: true,
       types: ["PC"]
     });
-    Actors.registerSheet("foundryvtt-final-fantasy", FF15ActorSheet2, {
+    Actors.registerSheet("foundryvtt-final-fantasy", FFXIVActorSheet2, {
       makeDefault: true,
       types: ["NPC"]
     });
-    Items.registerSheet("foundryvtt-final-fantasy", FF15ItemSheet, {
+    Items.registerSheet("foundryvtt-final-fantasy", FFXIVItemSheet, {
       makeDefault: true
     });
     DocumentSheetConfig.registerSheet(ActiveEffect, "foundryvtt-final-fantasy", FFActiveEffectSheet, {
@@ -53317,9 +53317,9 @@ const hooks = {
   onDamage,
   onAbilityUse
 };
-console.log("[FF15] | [HOOKS] Setting up hooks");
+console.log("[FFXIV] | [HOOKS] Setting up hooks");
 function onDamage() {
-  Hooks.on("FF15.onDamage", async (event) => {
+  Hooks.on("FFXIV.onDamage", async (event) => {
     const actor = event.actor;
     if (!actor)
       return;
@@ -53329,9 +53329,9 @@ function onDamage() {
 }
 __name(onDamage, "onDamage");
 function onAbilityUse() {
-  console.log("[FF15] | [HOOKS] Registering onAbilityUse hook");
-  Hooks.on("FF15.onAbilityUse", async (event) => {
-    console.log("[FF15] | [ABILITY USE HOOK] Hook triggered", {
+  console.log("[FFXIV] | [HOOKS] Registering onAbilityUse hook");
+  Hooks.on("FFXIV.onAbilityUse", async (event) => {
+    console.log("[FFXIV] | [ABILITY USE HOOK] Hook triggered", {
       itemName: event.item?.name,
       isNewAbilityUse: event.isNewAbilityUse,
       stack: new Error().stack
@@ -53339,14 +53339,14 @@ function onAbilityUse() {
   });
 }
 __name(onAbilityUse, "onAbilityUse");
-CONFIG.Actor.documentClass = FF15Actor;
-CONFIG.Item.documentClass = FF15Item;
+CONFIG.Actor.documentClass = FFXIVActor;
+CONFIG.Item.documentClass = FFXIVItem;
 CONFIG.Combat.documentClass = FFCombat;
 CONFIG.Combatant.documentClass = FFCombatants;
 CONFIG.Token.objectClass = FFToken;
 CONFIG.ActiveEffect.documentClass = FFActiveEffect;
 CONFIG.ActiveEffect.dataModels.base = FFEffectModel;
-CONFIG.FF15 = {
+CONFIG.FFXIV = {
   RollGuards
 };
 CONFIG.time.roundTime = 6;

@@ -58,7 +58,7 @@ export default class RollCalcActor extends RollCalc {
    * @param {Item} item - The ability item
    */
   ability(type, item) {
-    console.log("[FF15] | [ABILITY CHAIN] Starting ability chain", {
+    console.log("[FFXIV] | [ABILITY CHAIN] Starting ability chain", {
       // Add relevant details
     });
     this._routeAbility(item);
@@ -76,7 +76,7 @@ export default class RollCalcActor extends RollCalc {
    * @param {Object} [options={}] - Additional options
    */
   async abilityAction(item, options = {}) {
-    console.log("[FF15] | [ROLL CALC] abilityAction call stack:", {
+    console.log("[FFXIV] | [ROLL CALC] abilityAction call stack:", {
       stack: new Error().stack,
       itemName: item?.name,
       options
@@ -104,7 +104,7 @@ export default class RollCalcActor extends RollCalc {
 
       // Handle proc triggers
       if (item.system.procTrigger) {
-        Hooks.callAll('FF15.ProcTrigger', {
+        Hooks.callAll('FFXIV.ProcTrigger', {
           actor: this.params.actor,
           item,
           roll: result.roll,
@@ -120,7 +120,7 @@ export default class RollCalcActor extends RollCalc {
 
     } catch (error) {
       game.system.log.e("Error in ability action", error);
-      ui.notifications.error(game.i18n.format("FF15.Errors.AbilityActionFailed", { target: this.params.actor.name }));
+      ui.notifications.error(game.i18n.format("FFXIV.Errors.AbilityActionFailed", { target: this.params.actor.name }));
     }
   }
 

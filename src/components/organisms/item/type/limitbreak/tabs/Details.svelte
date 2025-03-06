@@ -23,17 +23,17 @@
     .map(([key, value]) => ({ key, value }));
 
   const targetOptions = [
-    { value: "single", label: localize("FF15.Types.Item.Types.Options.Target.single") },
-    { value: "enemy", label: localize("FF15.Types.Item.Types.Options.Target.enemy") },
-    { value: "all", label: localize("FF15.Types.Item.Types.Options.Target.all") },
-    { value: "ally", label: localize("FF15.Types.Item.Types.Options.Target.ally") },
+    { value: "single", label: localize("FFXIV.Types.Item.Types.Options.Target.single") },
+    { value: "enemy", label: localize("FFXIV.Types.Item.Types.Options.Target.enemy") },
+    { value: "all", label: localize("FFXIV.Types.Item.Types.Options.Target.all") },
+    { value: "ally", label: localize("FFXIV.Types.Item.Types.Options.Target.ally") },
   ];
   const triggerOptions = [
-    { value: "any", label: localize("FF15.Types.Item.Types.Options.Trigger.any") },
-    { value: "ability", label: localize("FF15.Types.Item.Types.Options.Trigger.ability") },
-    { value: "move", label: localize("FF15.Types.Item.Types.Options.Trigger.move") },
-    { value: "turn", label: localize("FF15.Types.Item.Types.Options.Trigger.turn") },
-    { value: "invoke", label: localize("FF15.Types.Item.Types.Options.Trigger.invoke") },
+    { value: "any", label: localize("FFXIV.Types.Item.Types.Options.Trigger.any") },
+    { value: "ability", label: localize("FFXIV.Types.Item.Types.Options.Trigger.ability") },
+    { value: "move", label: localize("FFXIV.Types.Item.Types.Options.Trigger.move") },
+    { value: "turn", label: localize("FFXIV.Types.Item.Types.Options.Trigger.turn") },
+    { value: "invoke", label: localize("FFXIV.Types.Item.Types.Options.Trigger.invoke") },
   ];
 
 

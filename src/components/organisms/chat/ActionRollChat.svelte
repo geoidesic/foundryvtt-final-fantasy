@@ -115,8 +115,8 @@
      *  to occur.
     */
     if (DamageResults.size > 0) {
-      Hooks.callAll('FF15.processAdditionalBaseDamageFromItem', {item, actor, DamageResults});
-      Hooks.callAll('FF15.DamageDiceReroll', {
+      Hooks.callAll('FFXIV.processAdditionalBaseDamageFromItem', {item, actor, DamageResults});
+      Hooks.callAll('FFXIV.DamageDiceReroll', {
         item, 
         actor, 
         DamageResults, 
@@ -278,7 +278,7 @@
     await token.actor.update({ "system.points.HP.val": newHP });
 
     // Call the damage hook
-    await Hooks.callAll('FF15.onDamage', { actor: token.actor, damage: remainingDamage });
+    await Hooks.callAll('FFXIV.onDamage', { actor: token.actor, damage: remainingDamage });
 
     game.system.log.o('[KO CHECK] After HP update:', {
       updatedCurrentHP: token.actor.system.points.HP.val,
@@ -441,7 +441,7 @@
                       .flex1.flexcol.thin-border
                         .col.target-name.font-cinzel.smaller {target.name}
                         .col.flexrow.justify-vertical.no-wrap
-                          .flex1.left.font-cinzel(data-tooltip-class="FF15-tooltip" data-tooltip="Defense") DEF 
+                          .flex1.left.font-cinzel(data-tooltip-class="FFXIV-tooltip" data-tooltip="Defense") DEF 
                           .flex1.m1-xs.left {getDefenseValue(target)}
                           .flex1.relative.right
                             +if("FFMessage?.isCritical")
@@ -454,11 +454,11 @@
                   
                   .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
                     +if("item?.system?.baseEffectDamage")
-                      .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDamageFormula(target)}")
+                      .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FFXIV-tooltip" data-tooltip="{displayDamageFormula(target)}")
                         .flex3.left.font-cinzel.smaller Damage 
                         .flex1.right.no-wrap {displayDamage(target)}
                     +if("item?.system?.hasDirectHit")
-                      .flex1.formula.flexrow.justify-vertical.smaller(data-tooltip-class="FF15-tooltip" data-tooltip="{displayDirectHitDisplayFormula(target)}")
+                      .flex1.formula.flexrow.justify-vertical.smaller(data-tooltip-class="FFXIV-tooltip" data-tooltip="{displayDirectHitDisplayFormula(target)}")
                         .flex3.left.font-cinzel.even-smaller Direct Hit 
                         .flex1.right.no-wrap {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
                   .flex0
@@ -480,13 +480,13 @@
 .inset
   +mixins.inset
 
-:global(.FF15 #chat-description)
+:global(.FFXIV #chat-description)
   background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
   color: var(--color-text-dark)
   padding: 0.2rem 0.5rem
   margin-top: 0.2rem
 
-:global(.FF15 #chat-description p)
+:global(.FFXIV #chat-description p)
   font-size: 0.7rem
   line-height: 1.2rem
   font-family: "Trirong", serif

@@ -169,7 +169,7 @@ export default class DamageOverTime {
     for (const effect of relevantEffects) {
       for (const change of effect.changes) {
         if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          await Hooks.callAll('FF15.DamageOverTime', { 
+          await Hooks.callAll('FFXIV.DamageOverTime', { 
             actor: this.actor, 
             change, 
             effect,

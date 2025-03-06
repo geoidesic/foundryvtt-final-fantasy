@@ -112,12 +112,12 @@
   
   .description-wrapper
     +mixins.description-wrapper
-  :global(.FF15 #chat-description)
+  :global(.FFXIV #chat-description)
     background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
     color: var(--color-text-dark)
     padding: 0.2rem 0.5rem
     margin-top: 0.2rem
-  :global(.FF15 #chat-description p)
+  :global(.FFXIV #chat-description p)
     font-size: 0.7rem
     line-height: 1.2rem
     font-family: "Trirong", serif

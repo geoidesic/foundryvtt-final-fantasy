@@ -61,13 +61,13 @@ export {
   init,
 };
 
-console.log("[FF15] | [HOOKS] Setting up hooks");
+console.log("[FFXIV] | [HOOKS] Setting up hooks");
 
 /**
  * Hook that runs when damage is applied
  */
 function onDamage() {
-  Hooks.on("FF15.onDamage", async (event) => {
+  Hooks.on("FFXIV.onDamage", async (event) => {
     const actor = event.actor;
     if (!actor) return;
 
@@ -80,9 +80,9 @@ function onDamage() {
  * Hook that runs when an ability is used
  */
 function onAbilityUse() {
-  console.log("[FF15] | [HOOKS] Registering onAbilityUse hook");
-  Hooks.on("FF15.onAbilityUse", async (event) => {
-    console.log("[FF15] | [ABILITY USE HOOK] Hook triggered", {
+  console.log("[FFXIV] | [HOOKS] Registering onAbilityUse hook");
+  Hooks.on("FFXIV.onAbilityUse", async (event) => {
+    console.log("[FFXIV] | [ABILITY USE HOOK] Hook triggered", {
       itemName: event.item?.name,
       isNewAbilityUse: event.isNewAbilityUse,
       stack: new Error().stack

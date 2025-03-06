@@ -1,13 +1,13 @@
 import { SYSTEM_ID } from "~/src/helpers/constants.js";
 
 /**
- * Extension of the ActiveEffect class for FF15
+ * Extension of the ActiveEffect class for FFXIV
  * @extends {ActiveEffect}
  */
 export default class FFActiveEffect extends ActiveEffect {
 
   /**
-   * Creates a new FF15 active effect
+   * Creates a new FFXIV active effect
    * @param {object} data - The effect data
    * @param {object} context - The initialization context
    */

@@ -33,7 +33,7 @@ export default class AbilitiesLimiter {
     });
 
     // Add detailed logging at the start
-    console.log("[FF15] | [ABILITIES LIMITER] Starting process with effect state:", {
+    console.log("[FFXIV] | [ABILITIES LIMITER] Starting process with effect state:", {
       effectName: damageOnlyEffect?.name,
       effectChanges: damageOnlyEffect?.changes,
       effectOrigin: damageOnlyEffect?.origin,
@@ -85,7 +85,7 @@ export default class AbilitiesLimiter {
           itemName: event.item.name,
           hasSourceEffects
         });
-        ui.notifications.warn(game.i18n.format('FF15.Warnings.NextAbilityDamageOnly'));
+        ui.notifications.warn(game.i18n.format('FFXIV.Warnings.NextAbilityDamageOnly'));
         return false;
       }
 
@@ -95,7 +95,7 @@ export default class AbilitiesLimiter {
           itemName: event.item.name,
           hasEnablerEffects
         });
-        ui.notifications.warn(game.i18n.format('FF15.Warnings.NextAbilityDamageOnly'));
+        ui.notifications.warn(game.i18n.format('FFXIV.Warnings.NextAbilityDamageOnly'));
         return false;
       }
 
@@ -107,7 +107,7 @@ export default class AbilitiesLimiter {
 
         // If the ability has no damage component at all, prevent its use
         if (!this._hasDamageComponent(event.item.system)) {
-          ui.notifications.warn(game.i18n.format('FF15.Warnings.NextAbilityDamageOnly'));
+          ui.notifications.warn(game.i18n.format('FFXIV.Warnings.NextAbilityDamageOnly'));
           return false;
         }
 
@@ -144,7 +144,7 @@ export default class AbilitiesLimiter {
           modifiedSystem: event.item.system
         });
 
-        ui.notifications.warn(game.i18n.format('FF15.Warnings.NextAbilityDamageOnly'));
+        ui.notifications.warn(game.i18n.format('FFXIV.Warnings.NextAbilityDamageOnly'));
       }
 
       // Remove the effect since it's been used
@@ -158,7 +158,7 @@ export default class AbilitiesLimiter {
       });
 
       // Add before the delete attempt
-      console.log("[FF15] | [ABILITIES LIMITER] About to delete effect:", {
+      console.log("[FFXIV] | [ABILITIES LIMITER] About to delete effect:", {
         effectName: damageOnlyEffect.name,
         effectId: damageOnlyEffect.id,
         effectDuration: damageOnlyEffect.duration,
@@ -174,7 +174,7 @@ export default class AbilitiesLimiter {
       }
 
       // Add after the delete attempt
-      console.log("[FF15] | [ABILITIES LIMITER] After delete attempt:", {
+      console.log("[FFXIV] | [ABILITIES LIMITER] After delete attempt:", {
         effectStillExists: this.actor.effects.has(damageOnlyEffect.id),
         remainingEffects: this.actor.effects.map(e => ({
           name: e.name,

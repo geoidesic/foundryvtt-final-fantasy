@@ -25,7 +25,7 @@
   "packs": [
     {
       "name": "jobs",
-      "label": "FF15 Jobs",
+      "label": "FFXIV Jobs",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -33,7 +33,7 @@
     },
     {
       "name": "abilities",
-      "label": "FF15 Abilities",
+      "label": "FFXIV Abilities",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -41,7 +41,7 @@
     },
     {
       "name": "effect",
-      "label": "FF15 Effects",
+      "label": "FFXIV Effects",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -49,7 +49,7 @@
     },
     {
       "name": "equipment",
-      "label": "FF15 Equipment",
+      "label": "FFXIV Equipment",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -57,7 +57,7 @@
     },
     {
       "name": "traits",
-      "label": "FF15 Traits",
+      "label": "FFXIV Traits",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -65,7 +65,7 @@
     },
     {
       "name": "actions",
-      "label": "FF15 Actions",
+      "label": "FFXIV Actions",
       "type": "Item",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -73,7 +73,7 @@
     },
     {
       "name": "actors",
-      "label": "FF15 Pregenerated Characters",
+      "label": "FFXIV Pregenerated Characters",
       "type": "Actor",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -81,7 +81,7 @@
     },
     {
       "name": "rolltables",
-      "label": "FF15 Roll Tables",
+      "label": "FFXIV Roll Tables",
       "type": "RollTable",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -89,7 +89,7 @@
     },
     {
       "name": "rules",
-      "label": "FF15 Rules",
+      "label": "FFXIV Rules",
       "type": "JournalEntry",
       "ownership": {
         "PLAYER": "OBSERVER"
@@ -107,8 +107,5 @@
   "manifest": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/system.json",
   "download": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/titan.zip",
   "license": "LICENSE.txt",
-  "socket": true,
-  "styles": [
-    "style.css"
-  ]
+  "socket": true
 }

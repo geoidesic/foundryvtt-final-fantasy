@@ -255,7 +255,7 @@ export default class RollGuards {
       }
     }
 
-    Hooks.call('FF15.processTargetRollAdditionalModifiers', { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
+    Hooks.call('FFXIV.processTargetRollAdditionalModifiers', { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
     return true;
   }
 
@@ -374,7 +374,7 @@ export default class RollGuards {
       }
 
       if (!hasActiveEffect) {
-        ui.notifications.warn(game.i18n.format("FF15.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
+        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
         return false;
       }
     }

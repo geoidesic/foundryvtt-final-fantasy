@@ -124,13 +124,13 @@
 </script>
 
 <template lang="pug">
-.FF15
+.FFXIV
   .chat
     ChatTitle(sheet="{FFMessage.item.sheet}")
     .flexrow.justify-vertical.mt-sm
       .flex4.buttons
         button.short.wide.stealth.gold.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
-          .flex3.pa-sm {window.game.i18n.format(`FF15.Chat.Buttons.${applied ? 'AppliedTo' : 'ApplyItemToTarget'}`, [FFMessage.item.name, FFMessage.actor.name])}
+          .flex3.pa-sm {window.game.i18n.format(`FFXIV.Chat.Buttons.${applied ? 'AppliedTo' : 'ApplyItemToTarget'}`, [FFMessage.item.name, FFMessage.actor.name])}
           .flex0
             i.fa.fa-crosshairs.mr-sm.right.mt-sm.gold
 

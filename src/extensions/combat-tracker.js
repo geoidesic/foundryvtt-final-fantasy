@@ -59,9 +59,9 @@ export default class FFCombatTracker extends CombatTracker {
           for (const action of actor.system.actionState.available.sort()) {
             //- if action is custom, i.e. not in getTypeOptions, then use the class name: custom-action
             if (!getTypeOptions().some(e => e.value === action)) {  
-              turn.actions += `<div data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge custom-action">${action[0]?.capitalize()}</div>`
+              turn.actions += `<div data-tooltip="${game.i18n.localize(`FFXIV.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge custom-action">${action[0]?.capitalize()}</div>`
             } else {
-              turn.actions += `<div data-tooltip="${game.i18n.localize(`FF15.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge ${action}">${action[0]?.capitalize()}</div>`
+              turn.actions += `<div data-tooltip="${game.i18n.localize(`FFXIV.Types.Item.Types.Options.Type.${action}`)}" class="action-slot-badge ${action}">${action[0]?.capitalize()}</div>`
             }
           }
         }

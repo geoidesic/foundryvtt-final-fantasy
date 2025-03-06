@@ -20,7 +20,7 @@ export default class EffectManager {
    * @return {Promise<void>} Returns a promise that resolves when all effects are handled
    */
   async handleEffects(item, result) {
-    console.log("[FF15] | [EFFECT MANAGER] handleEffects call stack:", item, result);
+    console.log("[FFXIV] | [EFFECT MANAGER] handleEffects call stack:", item, result);
 
     game.system.log.o('[EFFECT MANAGER] Starting handleEffects:', {
       itemName: item?.name,
@@ -50,7 +50,7 @@ export default class EffectManager {
     const { hasTargets, targets } = result;
 
     // Handle target effects
-    console.log("[FF15] | [EFFECT MANAGER] Target effects check:", {
+    console.log("[FFXIV] | [EFFECT MANAGER] Target effects check:", {
       itemName: item?.name,
       shouldProceed,
       hasGrants: item.system.grants?.value,
@@ -128,7 +128,7 @@ export default class EffectManager {
         }
       } catch (error) {
         game.system.log.e("Error applying effects to target", error);
-        ui.notifications.error(game.i18n.format("FF15.Errors.EffectApplicationFailed", { target: targetActor.name }));
+        ui.notifications.error(game.i18n.format("FFXIV.Errors.EffectApplicationFailed", { target: targetActor.name }));
       }
     }
   }

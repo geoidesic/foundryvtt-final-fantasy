@@ -21,7 +21,7 @@ export default class ActionHandler {
    * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
    */
   async handle(item, options = {}) {
-    console.log("[FF15] | [ACTION HANDLER] Starting handle", {
+    console.log("[FFXIV] | [ACTION HANDLER] Starting handle", {
       itemName: item?.name,
       options,
       stack: new Error().stack // This will show us the call stack
@@ -86,13 +86,13 @@ export default class ActionHandler {
       }
 
       // Call the ability use hook after all processing is complete
-      await Hooks.callAll('FF15.onAbilityUse', { 
+      await Hooks.callAll('FFXIV.onAbilityUse', { 
         actor: this.actor, 
         item,
         isNewAbilityUse: true
       });
 
-      console.log("[FF15] | [ACTION HANDLER] Calling ability use hook", {
+      console.log("[FFXIV] | [ACTION HANDLER] Calling ability use hook", {
         itemName: item?.name,
         isNewAbilityUse: true,
         stack: new Error().stack
@@ -111,7 +111,7 @@ export default class ActionHandler {
     } catch (error) {
       game.system.log.e("Error in action handler", error);
       ui.notifications.error(
-        game.i18n.format("FF15.Errors.ActionHandlingFailed", { target: this.actor.name })
+        game.i18n.format("FFXIV.Errors.ActionHandlingFailed", { target: this.actor.name })
       );
       return { handledSuccessfully: false };
     }

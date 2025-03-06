@@ -21,10 +21,10 @@
 <template lang="pug">
   .item-sheet.details
     .flexcol.flex3.left.high.wide
-      h3.left {localize("FF15.General")}
+      h3.left {localize("FFXIV.General")}
       .flexrow.sheet-row.justify-vertical.wide
         .flex1
-          label(for="type") {localize("FF15.Action")} {localize("FF15.Type")}
+          label(for="type") {localize("FFXIV.Action")} {localize("FFXIV.Type")}
         .flex4.right.wide
           DocSelect.wide.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
       

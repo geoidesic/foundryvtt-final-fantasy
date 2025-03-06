@@ -29,11 +29,11 @@
 
   // Tabs
   const defaultTabs = [
-    { label: localize("FF15.Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp' },
-    { label: localize("FF15.Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp' },
-    // { label: localize("FF15.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
-    // { label: localize("FF15.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
-    { label: localize("FF15.Tabs.Effects"), id: "effect", component: Effects, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp' }
+    { label: localize("FFXIV.Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp' },
+    { label: localize("FFXIV.Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp' },
+    // { label: localize("FFXIV.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
+    // { label: localize("FFXIV.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
+    { label: localize("FFXIV.Tabs.Effects"), id: "effect", component: Effects, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp' }
   ];
 
   // set the sheet color

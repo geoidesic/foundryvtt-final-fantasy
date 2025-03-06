@@ -5,7 +5,7 @@ import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
 import FFActiveEffectShell from './FFActiveEffectShell.svelte';
 
 /**
- * Sheet class for handling Active Effects in the FF15 system
+ * Sheet class for handling Active Effects in the FFXIV system
  * @extends {ActiveEffectConfig}
  */
 export default class FFActiveEffectSheet extends SvelteApplication {
@@ -109,7 +109,7 @@ export default class FFActiveEffectSheet extends SvelteApplication {
     */
    #handleDocUpdate(doc) {
       if (doc) {
-         this.reactive.title = `${game.i18n.localize("FF15.EFFECT.ConfigTitle")}: ${doc.name || ''}`;
+         this.reactive.title = `${game.i18n.localize("FFXIV.EFFECT.ConfigTitle")}: ${doc.name || ''}`;
       }
    }
 }
