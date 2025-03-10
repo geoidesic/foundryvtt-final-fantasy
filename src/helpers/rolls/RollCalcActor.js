@@ -1,9 +1,7 @@
 import { SYSTEM_ID } from "~/src/helpers/constants.js"
 import RollCalc from "./RollCalc.js"
-import ActionHandler from "./handlers/ActionHandler.js";
 import AttributeHandler from "./handlers/AttributeHandler.js";
 import EffectManager from "./handlers/EffectManager.js";
-import CombatSlotManager from "./handlers/CombatSlotManager.js";
 import GuardManager from "./handlers/GuardManager.js";
 import DefaultChat from "~/src/helpers/rolls/handlers/DefaultChatHandler.js";
 
@@ -18,10 +16,8 @@ export default class RollCalcActor extends RollCalc {
   constructor(params) {
     super(params);
     this.params = params;
-    this.ActionHandler = new ActionHandler(params.actor);
     this.AttributeHandler = new AttributeHandler(params.actor);
     this.EffectManager = new EffectManager(params.actor);
-    this.CombatSlotManager = new CombatSlotManager(params.actor);
     this.GuardManager = new GuardManager(params.actor);
     this.DefaultChat = new DefaultChat(params.actor);
   }
@@ -85,38 +81,15 @@ export default class RollCalcActor extends RollCalc {
     try {
       // Early return if guards fail
       if (!(await this.GuardManager.handleGuards(item, [
-        'isAction', 'hasNoUnappliedDamage', 'isActorsTurn', 
-        'isReaction', 'targetsMatchActionIntent', 'hasRequiredEffects',
-        'hasAvailableActionSlot', 'hasRemainingUses','meetsMPCost', 'hasModifiers',
-        
+       'hasModifiers',  
       ]))) {
         return;
       }
 
-      // Get the modifiers from the guard
-      const extraModifiers = this.GuardManager.RG.shuttle.hasModifiers.extraModifiers;
-
-      // Handle the action
-      const result = await this.ActionHandler.handle(item, { ...options, extraModifiers });
-      if (!result.handledSuccessfully) {
-        return;
-      }
-
-      // Handle proc triggers
-      if (item.system.procTrigger) {
-        Hooks.callAll('FFXIV.ProcTrigger', {
-          actor: this.params.actor,
-          item,
-          roll: result.roll,
-          targets: result.targets
-        });
-      }
-
       // Handle effects
-      await this.EffectManager.handleEffects(item, result);
+      await this.EffectManager.handleEffects(); //- e.g.
 
-      // Mark slot as used
-      await this.CombatSlotManager.markSlotUsed(item, result);
+      this.defaultChat(item);
 
     } catch (error) {
       game.system.log.e("Error in ability action", error);
