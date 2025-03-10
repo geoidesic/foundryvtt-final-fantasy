@@ -1,7 +1,7 @@
 import { Timing } from "@typhonjs-fvtt/runtime/util";
 
 /**
- * Hook that runs when the combat tracker is rendered
+ * Implements FF rules for turn order steps
  * @return {void}
  */
 export default function renderCombatTracker() {

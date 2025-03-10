@@ -44,11 +44,7 @@ hooks.init();
 hooks.ready();
 hooks.canvasReady(); //- custom token HUD and status effects
 hooks.renderCombatTracker();
-hooks.preDeleteChatMessage();
-hooks.preUpdateToken();
-// hooks.renderActiveEffectConfig(); @deprecated
 hooks.renderChatMessage();
-hooks.targetToken();
 hooks.updateCombat();
 hooks.updateCombatant();
 hooks.deleteCombat();

@@ -1,5 +1,4 @@
 // Import effects directly
-import updateCombat from './updateCombat.js';
 import renderChatMessage from './renderChatMessage.js';
 import renderCombatTracker from './renderCombatTracker.js';
 import updateCombatant from './updateCombatant.js';
@@ -13,19 +12,15 @@ export default {
   renderChatMessage,
   renderCombatTracker,
   updateCombatant,
-  updateCombat,
   canvasReady,
   ready,
   init,
-  onDamage,
-  onAbilityUse
 };
 
 export { 
   renderChatMessage, 
   renderCombatTracker,
   updateCombatant,
-  updateCombat,
   canvasReady,
   ready,
   init,
