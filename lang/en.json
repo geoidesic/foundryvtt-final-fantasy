@@ -23,6 +23,7 @@
     "Bookmark": "Bookmark",
     "ChatText": "Chat Text",
     "Check": "Check",
+    "Collapse": "Collapse details",
     "Combos": "Combos",
     "CriticalSuccess": "Critical Success!",
     "Config": "Configuration",
@@ -33,6 +34,7 @@
     "DirectHitMissed": "Direct Hit Missed",
     "Effects": "Effects",
     "Enabled": "Enabled",
+    "Expand": "Expand details",
     "Favourite": "Favourite",
     "General": "General",
     "Grants": "Grants",
@@ -475,10 +477,6 @@
       "confirmBeforeDeletingActorItem": {
         "Name": "Confirm inventory item deletion",
         "Hint": "If checked, players and GMs will need to confirm deletion of inventory items from actor sheets, else they will be deleted immediately when the trash icon is clicked."
-      },
-      "combatStartSound": {
-        "Name": "Sound file for combat start",
-        "Hint": "If blank, no sound will be played. If set, the sound will be played when combat starts."
       },
       "chatMessageSound": {
         "Name": "Sound file for new chat message",
