@@ -96,8 +96,8 @@ export default () => {
           entryFileNames: "index.js",
           format: "es",
           assetFileNames: (assetInfo) => {
-            // Keep the asset filenames as they are, but ensure CSS is named style.css
-            if (assetInfo.name === 'style.css') {
+            // Force CSS files to be named style.css
+            if (assetInfo.name === 'style.css' || assetInfo.name.endsWith('.css')) {
               return 'style.css';
             }
             return '[name].[ext]';

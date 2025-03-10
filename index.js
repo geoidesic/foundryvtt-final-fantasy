@@ -239,6 +239,7 @@ class EffectManager {
   }
   /**
    * Handle all effects for an action
+   * @override
    * @param {Item} item - The item being used
    * @param {Object} result - The result from the action handler
    * @return {Promise<void>} Returns a promise that resolves when all effects are handled
@@ -4697,7 +4698,7 @@ class Tag extends SvelteComponent {
 }
 function get_each_context$j(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[13] = list[i];
+  child_ctx[14] = list[i];
   return child_ctx;
 }
 __name(get_each_context$j, "get_each_context$j");
@@ -4710,16 +4711,18 @@ function create_if_block$w(ctx) {
   let div1;
   let t0_value = (
     /*FFMessage*/
-    ctx[0].actor.name + ""
+    ctx[1].actor.name + ""
   );
   let t0;
   let div1_aria_label_value;
   let div4;
+  let a;
   let t1_value = (
     /*FFMessage*/
-    ctx[0].item.name + ""
+    ctx[1].item.name + ""
   );
   let t1;
+  let a_aria_label_value;
   let div4_aria_label_value;
   let div5_class_value;
   let div8;
@@ -4727,24 +4730,32 @@ function create_if_block$w(ctx) {
   let div6;
   let t2_value = (
     /*FFMessage*/
-    ctx[0].item.type + ""
+    ctx[1].item.type + ""
   );
   let t2;
   let div8_class_value;
-  let img;
-  let img_src_value;
-  let img_alt_value;
   let current;
   let mounted;
   let dispose;
   let if_block0 = (
     /*showProfileImage*/
-    ctx[3] && create_if_block_2$e(ctx)
+    ctx[4] && create_if_block_3$a(ctx)
   );
   let if_block1 = (
     /*item*/
-    ctx[1]?.system?.tags?.length > 0 && create_if_block_1$j(ctx)
+    ctx[2]?.system?.tags?.length > 0 && create_if_block_2$e(ctx)
   );
+  function select_block_type(ctx2, dirty) {
+    if (
+      /*showDescription*/
+      ctx2[0]
+    )
+      return create_if_block_1$j;
+    return create_else_block$8;
+  }
+  __name(select_block_type, "select_block_type");
+  let current_block_type = select_block_type(ctx);
+  let if_block2 = current_block_type(ctx);
   return {
     c() {
       div9 = element("div");
@@ -4757,6 +4768,7 @@ function create_if_block$w(ctx) {
       div1 = element("div");
       t0 = text(t0_value);
       div4 = element("div");
+      a = element("a");
       t1 = text(t1_value);
       div8 = element("div");
       div7 = element("div");
@@ -4764,33 +4776,31 @@ function create_if_block$w(ctx) {
       t2 = text(t2_value);
       if (if_block1)
         if_block1.c();
-      img = element("img");
-      attr(div0, "class", "texture svelte-FFXIV-zy8isi");
-      attr(div1, "class", "flex4 link pointer");
+      if_block2.c();
+      attr(div0, "class", "texture svelte-FFXIV-1ouu4ln");
+      attr(div1, "class", "flex4 link actor-name svelte-FFXIV-1ouu4ln");
       attr(div1, "role", "button");
       attr(div1, "aria-label", div1_aria_label_value = "Open " + /*FFMessage*/
-      ctx[0].actor.name + "'s character sheet");
+      ctx[1].actor.name + "'s character sheet");
       attr(div2, "class", "flexrow");
       attr(div3, "class", "col");
-      attr(div4, "class", "col font-cinzel smaller pointer item-name nooverflow svelte-FFXIV-zy8isi");
+      attr(a, "role", "button");
+      attr(a, "aria-label", a_aria_label_value = "Open " + /*FFMessage*/
+      ctx[1].item.name + " item sheet");
+      attr(a, "class", "svelte-FFXIV-1ouu4ln");
+      attr(div4, "class", "col font-cinzel smaller item-name no-overflow svelte-FFXIV-1ouu4ln");
       attr(div4, "role", "button");
       attr(div4, "aria-label", div4_aria_label_value = "Open " + /*FFMessage*/
-      ctx[0].item.name + " item sheet");
-      attr(div5, "class", div5_class_value = "flex3 flexcol nooverflow " + /*showProfileImage*/
-      (ctx[3] ? "text" : ""));
-      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-FFXIV-zy8isi");
+      ctx[1].item.name + " item sheet");
+      attr(div5, "class", div5_class_value = "flex3 flexcol no-overflow " + /*showProfileImage*/
+      (ctx[4] ? "text" : ""));
+      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-FFXIV-1ouu4ln");
       attr(div7, "class", "flexcol");
       attr(div8, "class", div8_class_value = null_to_empty(
         /*tagsColumnClass*/
-        ctx[2]
-      ) + " svelte-FFXIV-zy8isi");
-      attr(img, "class", "icon right item svelte-FFXIV-zy8isi");
-      if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
-      ctx[0].item.img))
-        attr(img, "src", img_src_value);
-      attr(img, "alt", img_alt_value = /*FFMessage*/
-      ctx[0].item.name);
-      attr(div9, "class", "flexrow title svelte-FFXIV-zy8isi");
+        ctx[3]
+      ) + " svelte-FFXIV-1ouu4ln");
+      attr(div9, "class", "flexrow title svelte-FFXIV-1ouu4ln");
       attr(div9, "role", "button");
       attr(div9, "aria-label", "Toggle description");
     },
@@ -4805,14 +4815,15 @@ function create_if_block$w(ctx) {
       append(div2, div1);
       append(div1, t0);
       append(div5, div4);
-      append(div4, t1);
+      append(div4, a);
+      append(a, t1);
       append(div9, div8);
       append(div8, div7);
       append(div7, div6);
       append(div6, t2);
       if (if_block1)
         if_block1.m(div7, null);
-      append(div9, img);
+      if_block2.m(div9, null);
       current = true;
       if (!mounted) {
         dispose = [
@@ -4820,19 +4831,19 @@ function create_if_block$w(ctx) {
             div1,
             "click",
             /*openActorSheet*/
-            ctx[6]
+            ctx[7]
           ),
           listen(
-            div4,
+            a,
             "click",
             /*click_handler*/
-            ctx[9]
+            ctx[10]
           ),
           listen(
             div9,
             "click",
             /*handleTitleClick*/
-            ctx[7]
+            ctx[8]
           )
         ];
         mounted = true;
@@ -4841,12 +4852,12 @@ function create_if_block$w(ctx) {
     p(ctx2, dirty) {
       if (
         /*showProfileImage*/
-        ctx2[3]
+        ctx2[4]
       ) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_2$e(ctx2);
+          if_block0 = create_if_block_3$a(ctx2);
           if_block0.c();
           if_block0.m(div9, div5);
         }
@@ -4855,44 +4866,49 @@ function create_if_block$w(ctx) {
         if_block0 = null;
       }
       if ((!current || dirty & /*FFMessage*/
-      1) && t0_value !== (t0_value = /*FFMessage*/
-      ctx2[0].actor.name + ""))
+      2) && t0_value !== (t0_value = /*FFMessage*/
+      ctx2[1].actor.name + ""))
         set_data(t0, t0_value);
       if (!current || dirty & /*FFMessage*/
-      1 && div1_aria_label_value !== (div1_aria_label_value = "Open " + /*FFMessage*/
-      ctx2[0].actor.name + "'s character sheet")) {
+      2 && div1_aria_label_value !== (div1_aria_label_value = "Open " + /*FFMessage*/
+      ctx2[1].actor.name + "'s character sheet")) {
         attr(div1, "aria-label", div1_aria_label_value);
       }
       if ((!current || dirty & /*FFMessage*/
-      1) && t1_value !== (t1_value = /*FFMessage*/
-      ctx2[0].item.name + ""))
+      2) && t1_value !== (t1_value = /*FFMessage*/
+      ctx2[1].item.name + ""))
         set_data(t1, t1_value);
       if (!current || dirty & /*FFMessage*/
-      1 && div4_aria_label_value !== (div4_aria_label_value = "Open " + /*FFMessage*/
-      ctx2[0].item.name + " item sheet")) {
+      2 && a_aria_label_value !== (a_aria_label_value = "Open " + /*FFMessage*/
+      ctx2[1].item.name + " item sheet")) {
+        attr(a, "aria-label", a_aria_label_value);
+      }
+      if (!current || dirty & /*FFMessage*/
+      2 && div4_aria_label_value !== (div4_aria_label_value = "Open " + /*FFMessage*/
+      ctx2[1].item.name + " item sheet")) {
         attr(div4, "aria-label", div4_aria_label_value);
       }
       if (!current || dirty & /*showProfileImage*/
-      8 && div5_class_value !== (div5_class_value = "flex3 flexcol nooverflow " + /*showProfileImage*/
-      (ctx2[3] ? "text" : ""))) {
+      16 && div5_class_value !== (div5_class_value = "flex3 flexcol no-overflow " + /*showProfileImage*/
+      (ctx2[4] ? "text" : ""))) {
         attr(div5, "class", div5_class_value);
       }
       if ((!current || dirty & /*FFMessage*/
-      1) && t2_value !== (t2_value = /*FFMessage*/
-      ctx2[0].item.type + ""))
+      2) && t2_value !== (t2_value = /*FFMessage*/
+      ctx2[1].item.type + ""))
         set_data(t2, t2_value);
       if (
         /*item*/
-        ctx2[1]?.system?.tags?.length > 0
+        ctx2[2]?.system?.tags?.length > 0
       ) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
           if (dirty & /*item*/
-          2) {
+          4) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_1$j(ctx2);
+          if_block1 = create_if_block_2$e(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div7, null);
@@ -4905,21 +4921,21 @@ function create_if_block$w(ctx) {
         check_outros();
       }
       if (!current || dirty & /*tagsColumnClass*/
-      4 && div8_class_value !== (div8_class_value = null_to_empty(
+      8 && div8_class_value !== (div8_class_value = null_to_empty(
         /*tagsColumnClass*/
-        ctx2[2]
-      ) + " svelte-FFXIV-zy8isi")) {
+        ctx2[3]
+      ) + " svelte-FFXIV-1ouu4ln")) {
         attr(div8, "class", div8_class_value);
       }
-      if (!current || dirty & /*FFMessage*/
-      1 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
-      ctx2[0].item.img)) {
-        attr(img, "src", img_src_value);
-      }
-      if (!current || dirty & /*FFMessage*/
-      1 && img_alt_value !== (img_alt_value = /*FFMessage*/
-      ctx2[0].item.name)) {
-        attr(img, "alt", img_alt_value);
+      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block2) {
+        if_block2.p(ctx2, dirty);
+      } else {
+        if_block2.d(1);
+        if_block2 = current_block_type(ctx2);
+        if (if_block2) {
+          if_block2.c();
+          if_block2.m(div9, null);
+        }
       }
     },
     i(local) {
@@ -4940,13 +4956,14 @@ function create_if_block$w(ctx) {
         if_block0.d();
       if (if_block1)
         if_block1.d();
+      if_block2.d();
       mounted = false;
       run_all(dispose);
     }
   };
 }
 __name(create_if_block$w, "create_if_block$w");
-function create_if_block_2$e(ctx) {
+function create_if_block_3$a(ctx) {
   let div;
   let img;
   let img_src_value;
@@ -4958,16 +4975,16 @@ function create_if_block_2$e(ctx) {
     c() {
       div = element("div");
       img = element("img");
-      attr(img, "class", "icon avatar svelte-FFXIV-zy8isi");
+      attr(img, "class", "icon avatar svelte-FFXIV-1ouu4ln");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
-      ctx[0].actor.img))
+      ctx[1].actor.img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*FFMessage*/
-      ctx[0].actor.name);
+      ctx[1].actor.name);
       attr(div, "class", "flex1");
       attr(div, "role", "button");
       attr(div, "aria-label", div_aria_label_value = "Open " + /*FFMessage*/
-      ctx[0].actor.name + "'s character sheet");
+      ctx[1].actor.name + "'s character sheet");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -4977,25 +4994,25 @@ function create_if_block_2$e(ctx) {
           div,
           "click",
           /*openActorSheet*/
-          ctx[6]
+          ctx[7]
         );
         mounted = true;
       }
     },
     p(ctx2, dirty) {
       if (dirty & /*FFMessage*/
-      1 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
-      ctx2[0].actor.img)) {
+      2 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx2[1].actor.img)) {
         attr(img, "src", img_src_value);
       }
       if (dirty & /*FFMessage*/
-      1 && img_alt_value !== (img_alt_value = /*FFMessage*/
-      ctx2[0].actor.name)) {
+      2 && img_alt_value !== (img_alt_value = /*FFMessage*/
+      ctx2[1].actor.name)) {
         attr(img, "alt", img_alt_value);
       }
       if (dirty & /*FFMessage*/
-      1 && div_aria_label_value !== (div_aria_label_value = "Open " + /*FFMessage*/
-      ctx2[0].actor.name + "'s character sheet")) {
+      2 && div_aria_label_value !== (div_aria_label_value = "Open " + /*FFMessage*/
+      ctx2[1].actor.name + "'s character sheet")) {
         attr(div, "aria-label", div_aria_label_value);
       }
     },
@@ -5008,14 +5025,14 @@ function create_if_block_2$e(ctx) {
     }
   };
 }
-__name(create_if_block_2$e, "create_if_block_2$e");
-function create_if_block_1$j(ctx) {
+__name(create_if_block_3$a, "create_if_block_3$a");
+function create_if_block_2$e(ctx) {
   let div1;
   let div0;
   let current;
   let each_value = ensure_array_like(
     /*item*/
-    ctx[1]?.system?.tags
+    ctx[2]?.system?.tags
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
@@ -5049,10 +5066,10 @@ function create_if_block_1$j(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty & /*item*/
-      2) {
+      4) {
         each_value = ensure_array_like(
           /*item*/
-          ctx2[1]?.system?.tags
+          ctx2[2]?.system?.tags
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
@@ -5097,7 +5114,7 @@ function create_if_block_1$j(ctx) {
     }
   };
 }
-__name(create_if_block_1$j, "create_if_block_1$j");
+__name(create_if_block_2$e, "create_if_block_2$e");
 function create_each_block$j(ctx) {
   let div;
   let tag_1;
@@ -5107,7 +5124,7 @@ function create_each_block$j(ctx) {
       class: "badge smaller round low",
       tag: (
         /*tag*/
-        ctx[13]
+        ctx[14]
       ),
       remover: false
     }
@@ -5126,9 +5143,9 @@ function create_each_block$j(ctx) {
     p(ctx2, dirty) {
       const tag_1_changes = {};
       if (dirty & /*item*/
-      2)
+      4)
         tag_1_changes.tag = /*tag*/
-        ctx2[13];
+        ctx2[14];
       tag_1.$set(tag_1_changes);
     },
     i(local) {
@@ -5150,19 +5167,95 @@ function create_each_block$j(ctx) {
   };
 }
 __name(create_each_block$j, "create_each_block$j");
+function create_else_block$8(ctx) {
+  let img;
+  let img_src_value;
+  let img_alt_value;
+  return {
+    c() {
+      img = element("img");
+      attr(img, "class", "icon right item pointer svelte-FFXIV-1ouu4ln");
+      if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx[1].item.img))
+        attr(img, "src", img_src_value);
+      attr(img, "alt", img_alt_value = /*FFMessage*/
+      ctx[1].item.name);
+      attr(img, "data-tooltip", localize$1("Expand"));
+    },
+    m(target, anchor) {
+      insert(target, img, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*FFMessage*/
+      2 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx2[1].item.img)) {
+        attr(img, "src", img_src_value);
+      }
+      if (dirty & /*FFMessage*/
+      2 && img_alt_value !== (img_alt_value = /*FFMessage*/
+      ctx2[1].item.name)) {
+        attr(img, "alt", img_alt_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(img);
+      }
+    }
+  };
+}
+__name(create_else_block$8, "create_else_block$8");
+function create_if_block_1$j(ctx) {
+  let img;
+  let img_src_value;
+  let img_alt_value;
+  return {
+    c() {
+      img = element("img");
+      attr(img, "class", "icon right item pointer svelte-FFXIV-1ouu4ln");
+      if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx[1].item.img))
+        attr(img, "src", img_src_value);
+      attr(img, "alt", img_alt_value = /*FFMessage*/
+      ctx[1].item.name);
+      attr(img, "data-tooltip", localize$1("Collapse"));
+    },
+    m(target, anchor) {
+      insert(target, img, anchor);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*FFMessage*/
+      2 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx2[1].item.img)) {
+        attr(img, "src", img_src_value);
+      }
+      if (dirty & /*FFMessage*/
+      2 && img_alt_value !== (img_alt_value = /*FFMessage*/
+      ctx2[1].item.name)) {
+        attr(img, "alt", img_alt_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(img);
+      }
+    }
+  };
+}
+__name(create_if_block_1$j, "create_if_block_1$j");
 function create_fragment$1m(ctx) {
   let div;
   let current;
   let if_block = (
     /*FFMessage*/
-    ctx[0] && create_if_block$w(ctx)
+    ctx[1] && create_if_block$w(ctx)
   );
   return {
     c() {
       div = element("div");
       if (if_block)
         if_block.c();
-      attr(div, "class", "chat-title svelte-FFXIV-zy8isi");
+      attr(div, "class", "chat-title svelte-FFXIV-1ouu4ln");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -5173,12 +5266,12 @@ function create_fragment$1m(ctx) {
     p(ctx2, [dirty]) {
       if (
         /*FFMessage*/
-        ctx2[0]
+        ctx2[1]
       ) {
         if (if_block) {
           if_block.p(ctx2, dirty);
           if (dirty & /*FFMessage*/
-          1) {
+          2) {
             transition_in(if_block, 1);
           }
         } else {
@@ -5219,9 +5312,10 @@ function instance$1e($$self, $$props, $$invalidate) {
   let showProfileImage;
   let tagsColumnClass;
   let $message;
+  let { showDescription = false } = $$props;
   const dispatch2 = createEventDispatcher();
   const message = getContext("message");
-  component_subscribe($$self, message, (value) => $$invalidate(8, $message = value));
+  component_subscribe($$self, message, (value) => $$invalidate(9, $message = value));
   let FFMessage;
   let actor;
   let item = {};
@@ -5238,27 +5332,32 @@ function instance$1e($$self, $$props, $$invalidate) {
   }, "handleTitleClick");
   onMount(async () => {
     if (FFMessage?.item?.uuid) {
-      $$invalidate(1, item = await fromUuid(FFMessage.item.uuid));
+      $$invalidate(2, item = await fromUuid(FFMessage.item.uuid));
     }
   });
   const click_handler2 = /* @__PURE__ */ __name((e) => openItemSheet(e, FFMessage.item.uuid), "click_handler");
+  $$self.$$set = ($$props2) => {
+    if ("showDescription" in $$props2)
+      $$invalidate(0, showDescription = $$props2.showDescription);
+  };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$message, FFMessage*/
-    257) {
+    514) {
       if ($message) {
-        $$invalidate(0, FFMessage = $message.getFlag(SYSTEM_ID, "data"));
+        $$invalidate(1, FFMessage = $message.getFlag(SYSTEM_ID, "data"));
         if (FFMessage?.actor?._id) {
           actor = game.actors.get(FFMessage.actor._id);
         }
       }
     }
     if ($$self.$$.dirty & /*item*/
-    2) {
-      $$invalidate(2, tagsColumnClass = item?.system?.tags?.length > 1 ? "flex4" : item?.system?.tags?.length > 0 ? "flex2" : "flex1");
+    4) {
+      $$invalidate(3, tagsColumnClass = item?.system?.tags?.length > 1 ? "flex4" : item?.system?.tags?.length > 0 ? "flex2" : "flex1");
     }
   };
-  $$invalidate(3, showProfileImage = game.settings.get(SYSTEM_ID, "showChatProfileImages"));
+  $$invalidate(4, showProfileImage = game.settings.get(SYSTEM_ID, "showChatProfileImages"));
   return [
+    showDescription,
     FFMessage,
     item,
     tagsColumnClass,
@@ -5278,7 +5377,7 @@ let ChatTitle$1 = class ChatTitle extends SvelteComponent {
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$1e, create_fragment$1m, safe_not_equal, {});
+    init$1(this, options, instance$1e, create_fragment$1m, safe_not_equal, { showDescription: 0 });
   }
 };
 function create_fragment$1l(ctx) {
@@ -5544,7 +5643,14 @@ function create_fragment$1k(ctx) {
   let div1_class_value;
   let div2_class_value;
   let current;
-  chattitle = new ChatTitle$1({});
+  chattitle = new ChatTitle$1({
+    props: {
+      showDescription: (
+        /*showDescription*/
+        ctx[1]
+      )
+    }
+  });
   chattitle.$on(
     "toggleDescription",
     /*handleToggleDescription*/
@@ -5575,6 +5681,12 @@ function create_fragment$1k(ctx) {
       current = true;
     },
     p(ctx2, [dirty]) {
+      const chattitle_changes = {};
+      if (dirty & /*showDescription*/
+      2)
+        chattitle_changes.showDescription = /*showDescription*/
+        ctx2[1];
+      chattitle.$set(chattitle_changes);
       if ((!current || dirty & /*FFMessage*/
       1) && raw_value !== (raw_value = /*FFMessage*/
       ctx2[0].item.system.description + ""))
@@ -31651,7 +31763,7 @@ function create_default_slot$g(ctx) {
       attr(div0, "class", "flex1 portrait-frame svelte-FFXIV-maqqt9");
       attr(section, "class", "mt-sm high");
       attr(div1, "class", "flex4 wide mr-sm high");
-      attr(div2, "class", "flexrow gap-15 wide high nooverflow nowrap");
+      attr(div2, "class", "flexrow gap-15 wide high no-overflow nowrap");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -49527,7 +49639,7 @@ function create_default_slot(ctx) {
       attr(header, "class", "wide");
       attr(section, "class", "mt-sm high");
       attr(div5, "class", "flex4 wide mr-sm high");
-      attr(div6, "class", "flexrow gap-15 wide high nooverflow nowrap");
+      attr(div6, "class", "flexrow gap-15 wide high no-overflow nowrap");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -51124,438 +51236,6 @@ class RollCalc {
     this.playMessageSound();
   }
 }
-class ActionHandler {
-  static {
-    __name(this, "ActionHandler");
-  }
-  /**
-   * @param {Actor} actor - The actor this handler is for
-   */
-  constructor(actor) {
-    this.actor = actor;
-    this.DefaultChat = new DefaultChatHandler(actor);
-  }
-  /**
-   * Handle an action ability
-   * @param {Item} item - The action item
-   * @param {Object} [options={}] - Additional options
-   * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
-   */
-  async handle(item, options = {}) {
-    console.log("[FFXIV] | [ACTION HANDLER] Starting handle", {
-      itemName: item?.name,
-      options,
-      stack: new Error().stack
-      // This will show us the call stack
-    });
-    try {
-      this.options = options;
-      const { targets, hasTargets, targetIds } = this._getActionTargets();
-      const limiterType = this._checkAbilityLimiter();
-      let roll;
-      let isCritical = false;
-      let d20Result = null;
-      let isSuccess;
-      let message;
-      await this._handleCostMP(item);
-      if (item.system.hasCR) {
-        ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
-      } else {
-        if (item.system.hasBaseEffectDamage || item.system.hasBaseEffectHealing || item.system.hasBaseEffectRestoreMP) {
-          message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
-        } else {
-          this.DefaultChat.handle(item);
-        }
-      }
-      if (limiterType !== "DamageOnly") {
-        if (item.system.baseEffectHealing) {
-          await this._handleHealing(item, this.actor, isCritical);
-        }
-        if (item.system.hasBaseEffectRestoreMP && item.system.baseEffectRestoreMP) {
-          await this._handleMPRestoration(item);
-        }
-        if (item.system.hasBaseEffectBarrier && item.system.baseEffectBP) {
-          await this._handleBarrier(item);
-        }
-      }
-      await Hooks.callAll("FFXIV.onAbilityUse", {
-        actor: this.actor,
-        item,
-        isNewAbilityUse: true
-      });
-      console.log("[FFXIV] | [ACTION HANDLER] Calling ability use hook", {
-        itemName: item?.name,
-        isNewAbilityUse: true,
-        stack: new Error().stack
-      });
-      return {
-        handledSuccessfully: true,
-        isCritical,
-        roll,
-        d20Result,
-        hasTargets,
-        targets,
-        isSuccess,
-        message
-      };
-    } catch (error) {
-      game.system.log.e("Error in action handler", error);
-      ui.notifications.error(
-        game.i18n.format("FFXIV.Errors.ActionHandlingFailed", { target: this.actor.name })
-      );
-      return { handledSuccessfully: false };
-    }
-  }
-  /**
-   * @internal
-   * Retrieves targets from the user and checks if they exist.
-   */
-  _getActionTargets() {
-    const targets = game.user.targets;
-    const hasTargets = targets.size > 0;
-    const targetIds = Array.from(targets).map((target) => target.id);
-    return { targets, hasTargets, targetIds };
-  }
-  /**
-   * @internal
-   * Creates and returns the final message, roll, and critical data if an item uses CR checks.
-   */
-  async _rollWithCR(item, targets, hasTargets, targetIds) {
-    const { roll, isCritical, d20Result } = await this._handleRollWithModifiers(item);
-    let isSuccess = false;
-    const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
-    messageData.flags[SYSTEM_ID].data.isCritical = isCritical;
-    messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
-    if (hasTargets) {
-      const {
-        crValue,
-        targetActor
-      } = this._getTargetCRValue(item, targets);
-      isSuccess = this._evaluateSuccess({ roll, crValue, isCritical });
-      game.system.log.o("[ABILITY:ROLL] CR check isSuccess:", isSuccess);
-      messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
-      game.system.log.o("[ABILITY:ROLL] CR check:", {
-        itemName: item.name,
-        rollTotal: roll.total,
-        CR: item.system.CR,
-        crValue,
-        isSuccess,
-        isCritical,
-        d20Result
-      });
-    }
-    const message = await roll.toMessage(messageData);
-    return { message, roll, isCritical, d20Result, isSuccess };
-  }
-  /**
-   * @internal
-   * Handle healing from an action
-   * @param {Item} item - The action item
-   * @param {Actor} targetActor - The actor to heal
-   * @param {boolean} isCritical - Whether this was a critical hit
-   * @return {Promise<void>} A promise that resolves when healing is complete
-   */
-  async _handleHealing(item, targetActor, isCritical = false) {
-    if (!item.system.baseEffectHealing)
-      return;
-    const healingRoll = await new Roll(item.system.baseEffectHealing).evaluate();
-    const healingAmount = healingRoll.total;
-    game.system.log.o("[HEALING] Applying healing:", {
-      itemName: item.name,
-      targetName: targetActor.name,
-      healingAmount,
-      isCritical
-    });
-    const currentHP = targetActor.system.points.HP.val;
-    const maxHP = targetActor.system.points.HP.max;
-    const newHP = Math.min(currentHP + healingAmount, maxHP);
-    game.system.log.o("[HEALING] HP values:", {
-      currentHP,
-      maxHP,
-      newHP,
-      healingApplied: newHP - currentHP
-    });
-    await targetActor.update({ "system.points.HP.val": newHP });
-  }
-  /**
-   * @internal
-   * Retrieves the CR value from the first target if available.
-   */
-  _getTargetCRValue(item, targets) {
-    const target = targets.values().next().value;
-    const targetActor = target?.actor;
-    let crValue = 0;
-    if (targetActor) {
-      if (targetActor.type === "npc") {
-        crValue = targetActor.system.attributes[item.system.CR]?.val || 0;
-      } else {
-        crValue = targetActor.system.attributes.secondary[item.system.CR]?.val || 0;
-      }
-    }
-    return { crValue, targetActor };
-  }
-  /**
-   * @internal
-   * Evaluates if a roll is successful based on CR and critical.
-   */
-  _evaluateSuccess({ roll, crValue, isCritical }) {
-    return isCritical || roll.total >= crValue;
-  }
-  /**
-   * @internal
-   * Create message data for an action
-   */
-  _createActionMessageData(item, hasTargets, targets, roll = null, isCritical = false) {
-    const messageData = {
-      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-      flavor: `${item.name}`,
-      rolls: roll ? [roll] : void 0,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "ActionRollChat",
-            actor: this._buildActorData(this.actor),
-            item: this._buildItemData(item),
-            hasTargets,
-            targets,
-            isSuccess: false,
-            isCritical: false,
-            d20Result: null
-          },
-          state: {
-            damageResults: false,
-            initialised: false,
-            mpCost: item.system.hasCostMP ? item.system.costMP : 0,
-            mpRestored: false
-          },
-          css: `leather ${isCritical ? "crit" : ""}`
-        }
-      }
-    };
-    if (roll) {
-      messageData.flags[SYSTEM_ID].data.roll = roll.total;
-    }
-    return messageData;
-  }
-  /**
-   * @internal
-   * Builds a minimal data object for the actor to embed in a chat flag.
-   */
-  _buildActorData(actor) {
-    return {
-      _id: actor._id,
-      uuid: actor.uuid,
-      name: actor.name,
-      img: actor.img
-    };
-  }
-  /**
-   * @internal
-   * Builds a minimal data object for the item to embed in a chat flag.
-   */
-  _buildItemData(item) {
-    return {
-      _id: item._id,
-      uuid: item.uuid,
-      name: item.name,
-      img: item.img,
-      type: item.type,
-      system: {
-        baseEffectHealing: item.system?.baseEffectHealing,
-        baseEffectDamage: item.system?.baseEffectDamage,
-        baseEffectRestoreMP: item.system?.baseEffectRestoreMP,
-        baseEffectBP: item.system?.baseEffectBP,
-        hasBaseEffectBarrier: item.system?.hasBaseEffectBarrier,
-        directHitDamage: item.system?.directHitDamage,
-        hasDirectHit: item.system?.hasDirectHit,
-        CR: item.system?.CR,
-        isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
-      }
-    };
-  }
-  /**
-   * @internal
-   * Handle roll with modifiers
-   */
-  async _handleRollWithModifiers(item) {
-    const formula = this._constructRollFormulaFromModifiers(item);
-    const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
-    const roll = await new Roll(rollFormula, rollData).evaluate();
-    const { isCritical, d20Result } = await this._handleCriticalHit(roll, item);
-    game.system.log.o("[ABILITY:ROLL] Roll result:", {
-      itemName: item.name,
-      rollTotal: roll.total,
-      isCritical,
-      d20Result
-    });
-    return { roll, isCritical, d20Result };
-  }
-  /**
-   * @internal
-   * Constructs the roll formula by reading actor's extra modifiers.
-   */
-  _constructRollFormulaFromModifiers(item) {
-    let [diceCount, diceType] = [1, 20];
-    let formula = "";
-    const { bonusDice, penalty } = this.options?.extraModifiers || {};
-    if (bonusDice) {
-      diceCount += parseInt(bonusDice, 10);
-      diceType = "20kh1";
-    }
-    formula = `${diceCount}d${diceType}${penalty ? ` - ${penalty}` : ""}`;
-    return formula;
-  }
-  /**
-   * @internal
-   * Handle critical hit detection and processing
-   */
-  async _handleCriticalHit(roll, item) {
-    const d20Term = roll.terms?.[0];
-    if (!d20Term) {
-      game.system.log.w("[CRITICAL] No d20 term found in roll:", roll);
-      return { isCritical: false, d20Result: 0 };
-    }
-    const d20Result = d20Term.modifiers?.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results?.[0]?.result ?? 0;
-    const isCritical = d20Result === 20;
-    game.system.log.d("[CRITICAL] Critical hit check:", {
-      d20Result,
-      isCritical,
-      itemName: item.name,
-      isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
-    });
-    if (isCritical) {
-      this._doubleCriticalDamageIfNeeded(item);
-    }
-    return { isCritical, d20Result };
-  }
-  /**
-   * @internal
-   * Doubles relevant "dice" fields if item is a critical hit.
-   */
-  _doubleCriticalDamageIfNeeded(item) {
-    let formulaFields = [];
-    if (Boolean(item?.system?.baseEffectHealing)) {
-      formulaFields.push("baseEffectHealing");
-    }
-    if (!formulaFields.length) {
-      formulaFields = ["directHitDamage", "baseEffectDamage"];
-    }
-    game.system.log.o("[CRITICAL] Doubling damage/healing for critical hit:", {
-      itemName: item.name,
-      formulaFields
-    });
-    for (const field of formulaFields) {
-      const formula = item.system?.[field];
-      game.system.log.o("[CRITICAL] Formula:", {
-        field,
-        formula
-      });
-      if (formula) {
-        const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
-          return `${parseInt(count, 10) * 2}d${sides}`;
-        });
-        game.system.log.o("[CRITICAL] Modified formula:", {
-          field,
-          formula,
-          modifiedFormula
-        });
-        item.system[field] = modifiedFormula;
-      }
-    }
-  }
-  /**
-   * @internal
-   * Handle attribute check
-   */
-  async _handleAttributeCheck(item, rollFormula, rollData = {}) {
-    if (item.system.hasCheck) {
-      const attrVal = this.actor.system.attributes.primary[item.system.checkAttribute]?.val || 0;
-      rollData[item.system.checkAttribute] = attrVal;
-      rollFormula += ` + @${item.system.checkAttribute}`;
-    }
-    return { rollFormula, rollData };
-  }
-  /**
-   * @internal
-   * Handle MP cost for an action
-   * @param {Item} item - The action item
-   * @return {Promise<void>} A promise that resolves when MP cost is handled
-   */
-  async _handleCostMP(item) {
-    if (!item.system.hasCostMP || !item.system.costMP) {
-      return;
-    }
-    const cost = item.system.costMP;
-    const currentMP = this.actor.system.points.MP.val;
-    try {
-      await this.actor.update({
-        "system.points.MP.val": currentMP - cost
-      });
-    } catch (error) {
-      game.system.log.e("[MP:COST] Error deducting MP cost:", error);
-      throw error;
-    }
-  }
-  /**
-   * @internal
-   * Handle MP restoration from an action (self only)
-   * @param {Item} item - The action item
-   * @return {Promise<void>} A promise that resolves when MP restoration is complete
-   */
-  async _handleMPRestoration(item) {
-    if (!item.system.baseEffectRestoreMP) {
-      return;
-    }
-    const formula = String(item.system.baseEffectRestoreMP);
-    const mpRoll = await new Roll(formula).evaluate();
-    const mpAmount = mpRoll.total;
-    const currentMP = this.actor.system.points.MP.val;
-    const maxMP = this.actor.system.points.MP.max;
-    const newMP = Math.min(currentMP + mpAmount, maxMP);
-    try {
-      await this.actor.update({ "system.points.MP.val": newMP });
-    } catch (error) {
-      game.system.log.e("[MP:RESTORE] Error restoring MP:", error);
-      throw error;
-    }
-  }
-  /**
-   * @internal
-   * Handle barrier points from an action
-   * @param {Item} item - The action item
-   * @return {Promise<void>} A promise that resolves when barrier is applied
-   */
-  async _handleBarrier(item) {
-    if (!item.system.baseEffectBP) {
-      return;
-    }
-    const barrierAmount = item.system.baseEffectBP;
-    const currentBP = this.actor.system.points.BP.val;
-    const newBP = currentBP + barrierAmount;
-    try {
-      await this.actor.update({ "system.points.BP.val": newBP });
-      const updatedBP = this.actor.system.points.BP.val;
-    } catch (error) {
-      game.system.log.e("[BARRIER] Error applying barrier points:", error);
-      throw error;
-    }
-  }
-  /**
-   * @internal
-   * Check if there are any ability limiters active on the actor
-   * @return {string|null} The type of limitation, if any
-   */
-  _checkAbilityLimiter() {
-    const limiterEffect = this.actor.effects.find(
-      (e) => e.changes.some((c) => c.key === "AbilitiesLimiter")
-    );
-    if (!limiterEffect)
-      return null;
-    const limiterChange = limiterEffect.changes.find((c) => c.key === "AbilitiesLimiter");
-    return limiterChange?.value || null;
-  }
-}
 class AttributeHandler {
   static {
     __name(this, "AttributeHandler");
@@ -51605,124 +51285,6 @@ class AttributeHandler {
     await roll.toMessage(messageData);
   }
 }
-class CombatSlotManager {
-  static {
-    __name(this, "CombatSlotManager");
-  }
-  /**
-   * @param {Actor} actor - The actor this handler is for
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Mark a slot as used in the combat tracker
-   * @param {Item} item - The item being used
-   * @param {Object} result - The result from the action handler
-   * @return {Promise<void>} Returns a promise that resolves when the slot is marked
-   */
-  async markSlotUsed(item, result) {
-    const { message } = result;
-    const actionType = item.system.type || "primary";
-    const state = message?.flags?.[SYSTEM_ID]?.state;
-    if (state?.damageResults) {
-      const hasAppliedDamage = Object.values(state.damageResults).some((result2) => result2.applied);
-      if (hasAppliedDamage) {
-        game.system.log.w("[SLOT:USAGE] Message already has applied damage results, skipping slot update");
-        return;
-      }
-    }
-    if (item.system.type === "reaction") {
-      await this.actor.update({
-        "system.actionState.usedReaction": true
-      });
-      return;
-    }
-    let slotToUse;
-    game.system.log.o("[SLOT:USAGE] Checking slots:", {
-      itemName: item.name,
-      actionType,
-      itemTags: item.system.tags,
-      itemSystem: item.system,
-      requires: item.system.requires
-    });
-    if (this.actor.system.actionState.available.includes(actionType)) {
-      slotToUse = actionType;
-      game.system.log.o("[SLOT:USAGE] Using default action type slot:", actionType);
-    } else if (actionType === "secondary" && this.actor.system.actionState.available.includes("primary")) {
-      slotToUse = "primary";
-      game.system.log.o("[SLOT:USAGE] Using primary slot for secondary action");
-    }
-    if (!slotToUse && item.system.tags?.length) {
-      const customSlots = this.actor.system.actionState.available.filter(
-        (slot) => slot !== "primary" && slot !== "secondary"
-      );
-      const matchingSlot = customSlots.find(
-        (slot) => item.system.tags.includes(slot)
-      );
-      if (matchingSlot) {
-        slotToUse = matchingSlot;
-        game.system.log.o("[SLOT:USAGE] Found matching slot:", {
-          slot: matchingSlot,
-          itemName: item.name,
-          itemTags: item.system.tags
-        });
-        const enablerEffectForThisSlot = this.actor.enablerEffects.find(
-          (effect) => effect.changes.some(
-            (change) => change.value === matchingSlot
-          )
-        );
-        if (enablerEffectForThisSlot) {
-          game.system.log.o("[SLOT:USAGE] Found enabler effect:", {
-            effectName: enablerEffectForThisSlot.name,
-            changes: enablerEffectForThisSlot.changes,
-            origin: enablerEffectForThisSlot.origin
-          });
-          const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, "originEffect.uuid")?.split(".").slice(0, -2).join(".");
-          if (originItemUuid) {
-            const originItem = fromUuidSync(originItemUuid);
-            if (originItem) {
-              game.system.log.o("[SLOT:USAGE] Found origin item:", {
-                name: originItem.name,
-                currentUses: originItem.system.uses,
-                maxUses: originItem.system.maxUses
-              });
-              const uses = (originItem.system.uses || 0) + 1;
-              await originItem.update({ system: { uses } });
-            }
-            game.system.log.o("[SLOT:USAGE] Removing enabler effect:", enablerEffectForThisSlot.name);
-            await enablerEffectForThisSlot.delete();
-          }
-        }
-      }
-    }
-    if (!slotToUse) {
-      game.system.log.w("[SLOT:USAGE] No slot found to use for:", item.name);
-      return;
-    }
-    const newAvailable = [...this.actor.system.actionState.available];
-    const indexToRemove = newAvailable.findIndex((slot) => slot === slotToUse);
-    if (indexToRemove !== -1) {
-      newAvailable.splice(indexToRemove, 1);
-    }
-    const newUsed = [...this.actor.system.actionState.used, {
-      type: slotToUse,
-      messageId: message?.id
-    }];
-    game.system.log.o("[SLOT:USAGE] Updating action state:", {
-      oldAvailable: this.actor.system.actionState.available,
-      newAvailable,
-      oldUsed: this.actor.system.actionState.used,
-      newUsed,
-      itemName: item.name,
-      slotUsed: slotToUse
-    });
-    await this.actor.update({
-      "system.actionState.available": newAvailable,
-      "system.actionState.used": newUsed
-    });
-  }
-}
 class GuardManager {
   static {
     __name(this, "GuardManager");
@@ -51769,10 +51331,8 @@ class RollCalcActor extends RollCalc {
   constructor(params) {
     super(params);
     this.params = params;
-    this.ActionHandler = new ActionHandler(params.actor);
     this.AttributeHandler = new AttributeHandler(params.actor);
     this.EffectManager = new EffectManager(params.actor);
-    this.CombatSlotManager = new CombatSlotManager(params.actor);
     this.GuardManager = new GuardManager(params.actor);
     this.DefaultChat = new DefaultChatHandler(params.actor);
   }
@@ -51828,34 +51388,12 @@ class RollCalcActor extends RollCalc {
     });
     try {
       if (!await this.GuardManager.handleGuards(item, [
-        "isAction",
-        "hasNoUnappliedDamage",
-        "isActorsTurn",
-        "isReaction",
-        "targetsMatchActionIntent",
-        "hasRequiredEffects",
-        "hasAvailableActionSlot",
-        "hasRemainingUses",
-        "meetsMPCost",
         "hasModifiers"
       ])) {
         return;
       }
-      const extraModifiers = this.GuardManager.RG.shuttle.hasModifiers.extraModifiers;
-      const result = await this.ActionHandler.handle(item, { ...options, extraModifiers });
-      if (!result.handledSuccessfully) {
-        return;
-      }
-      if (item.system.procTrigger) {
-        Hooks.callAll("FFXIV.ProcTrigger", {
-          actor: this.params.actor,
-          item,
-          roll: result.roll,
-          targets: result.targets
-        });
-      }
-      await this.EffectManager.handleEffects(item, result);
-      await this.CombatSlotManager.markSlotUsed(item, result);
+      await this.EffectManager.handleEffects();
+      this.defaultChat(item);
     } catch (error) {
       game.system.log.e("Error in ability action", error);
       ui.notifications.error(game.i18n.format("FFXIV.Errors.AbilityActionFailed", { target: this.params.actor.name }));
@@ -51877,6 +51415,7 @@ class RollCalcActor extends RollCalc {
 CONFIG.FFXIV = {
   RollGuards,
   RollCalcActor,
+  RollCalc,
   EffectManager
 };
 CONFIG.Actor.documentClass = FFXIVActor;
@@ -51895,8 +51434,5 @@ hooks.ready();
 hooks.canvasReady();
 hooks.renderCombatTracker();
 hooks.renderChatMessage();
-hooks.updateCombat();
 hooks.updateCombatant();
-hooks.deleteCombat();
-hooks.updateActiveEffect();
 //# sourceMappingURL=index.js.map
