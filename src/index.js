@@ -11,7 +11,7 @@ import FFCombatant from './extensions/combatant.js'
 import hooks from "~/src/hooks";
 import RollGuards from "~/src/helpers/rolls/RollGuards";
 import RollCalcActor from "~/src/helpers/rolls/RollCalcActor";
-
+import RollCalc from "~/src/helpers/rolls/RollCalc";
 
 /* eslint-disable-next-line no-unused-vars */
 import { setupDSN } from "~/src/helpers/dsnSetup.js"; //- Dice-so-nice setup
@@ -23,6 +23,7 @@ import { setupDSN } from "~/src/helpers/dsnSetup.js"; //- Dice-so-nice setup
 CONFIG.FFXIV = {
   RollGuards: RollGuards,
   RollCalcActor: RollCalcActor,
+  RollCalc: RollCalc,
   EffectManager: EffectManager
 }
 
