@@ -11,10 +11,12 @@ const yaml = true;
 
 const packs = await fs.readdir(path.join(MODULE_ID, 'src', 'packs'));
 for (const pack of packs) {
-  if (pack === '.gitattributes') continue;
+  const packPath = path.join(MODULE_ID, 'src', 'packs', pack);
+  const stat = await fs.stat(packPath);
+  if (pack === '.gitattributes' || !stat.isDirectory()) continue; // Skip non-directory entries
   console.log('Packing ' + pack);
   await compilePack(
-    path.join(MODULE_ID, 'src', 'packs', pack),
+    packPath,
     path.join(MODULE_ID, 'packs', pack),
     { yaml }
   );
