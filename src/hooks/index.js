@@ -2,13 +2,8 @@
 import updateCombat from './updateCombat.js';
 import renderChatMessage from './renderChatMessage.js';
 import renderCombatTracker from './renderCombatTracker.js';
-import preDeleteChatMessage from './preDeleteChatMessage.js';
-import targetToken from './targetToken.js';
-import deleteCombat from './deleteCombat.js';
 import updateCombatant from './updateCombatant.js';
-import preUpdateToken from './preUpdateToken.js';
 import canvasReady from './canvasReady.js';
-import updateActiveEffect from './updateActiveEffect.js';
 import ready from './ready.js';
 import init from './init.js';
 import effects from '~/src/helpers/effects';
@@ -17,14 +12,9 @@ import effects from '~/src/helpers/effects';
 export default {
   renderChatMessage,
   renderCombatTracker,
-  preDeleteChatMessage,
-  targetToken,
-  deleteCombat,
   updateCombatant,
   updateCombat,
-  preUpdateToken,
   canvasReady,
-  updateActiveEffect,
   ready,
   init,
   onDamage,
@@ -34,14 +24,9 @@ export default {
 export { 
   renderChatMessage, 
   renderCombatTracker,
-  preDeleteChatMessage,
-  targetToken,
-  deleteCombat,
   updateCombatant,
   updateCombat,
-  preUpdateToken,
   canvasReady,
-  updateActiveEffect,
   ready,
   init,
 };
