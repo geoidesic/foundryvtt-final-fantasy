@@ -1,7 +1,10 @@
 <script>
   import { getContext, onMount, createEventDispatcher } from "svelte";
+  import { localize } from "~/src/helpers/util";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import Tag from "~/src/components/atoms/Tag.svelte";
+
+  export let showDescription = false;
 
   const dispatch = createEventDispatcher();
   const message = getContext("message");
@@ -61,19 +64,23 @@
             src="{FFMessage.actor.img}" 
             alt="{FFMessage.actor.name}"
           )
-      .flex3.flexcol.nooverflow(class="{showProfileImage ? 'text' : ''}")
+      .flex3.flexcol.no-overflow(class="{showProfileImage ? 'text' : ''}")
         .col 
           .flexrow
-            .flex4.link.pointer(
+            .flex4.link.actor-name(
               on:click!="{openActorSheet}" 
               role="button"
               aria-label="Open {FFMessage.actor.name}'s character sheet"
             ) {FFMessage.actor.name}
-        .col.font-cinzel.smaller.pointer.item-name.nooverflow(
-          on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}" 
+        .col.font-cinzel.smaller.item-name.no-overflow(
           role="button"
           aria-label="Open {FFMessage.item.name} item sheet"
-        ) {FFMessage.item.name}
+        ) 
+          a(
+            on:click!="{(e) => openItemSheet(e, FFMessage.item.uuid)}"
+            role="button"
+            aria-label="Open {FFMessage.item.name} item sheet"
+          ) {FFMessage.item.name}
       div(class="{tagsColumnClass}")
         .flexcol
           .flex1.mr-xl-h.right.type-label.smaller.gold {FFMessage.item.type}
@@ -83,18 +90,35 @@
                 +each("item?.system?.tags as tag")
                   .flex0.right
                     Tag.badge.smaller.round.low({tag} remover="{false}")
-      img.icon.right.item(src="{FFMessage.item.img}" alt="{FFMessage.item.name}")
+      //- using if / else here makes the tooltip work reactively, otherwise it doesn't update while it's being hovered over
+      +if("showDescription")
+        img.icon.right.item.pointer(
+          src="{FFMessage.item.img}" alt="{FFMessage.item.name}"
+          data-tooltip="{localize('Collapse')}"
+        )
+        +else
+          img.icon.right.item.pointer(
+            src="{FFMessage.item.img}" alt="{FFMessage.item.name}"
+            data-tooltip="{localize('Expand')}"
+          )
 </template>
 
 <style lang="sass">
 @use '../../../../styles/_mixins' as mixins
 .chat-title
+  .actor-name
+    &:hover
+      text-decoration: underline
+      cursor: pointer
   .item-name
     overflow: hidden
     text-overflow: ellipsis
     line-height: 1rem
     max-height: 1rem
     white-space: nowrap
+    a
+      &:hover
+        text-decoration: underline
   .type-label
     text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.1)
     font-weight: 600
@@ -111,8 +135,6 @@
     position: relative
     padding: 0.2rem
     overflow: hidden
-    cursor: pointer
     
-    +mixins.texture-background(var(--message-color))
     +mixins.texture-texture($intensity: 0.05, $bgSize: 53%)
 </style>

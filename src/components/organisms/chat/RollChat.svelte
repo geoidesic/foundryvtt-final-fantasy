@@ -101,7 +101,7 @@
 
 <template lang="pug">
 .chat
-  ChatTitle(on:toggleDescription="{handleToggleDescription}")
+  ChatTitle(on:toggleDescription="{handleToggleDescription}" showDescription="{showDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")
     .flexrow(class="{showDescription ? 'visible' : ''}")
       .flex4#chat-description.inset {@html FFMessage.item.system.description} 
