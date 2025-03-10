@@ -1,6 +1,6 @@
 {
   "id": "foundryvtt-final-fantasy",
-  "title": "Final Fantasy 15 RPG",
+  "title": "Final Fantasy XIV RPG",
   "description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV",
   "authors": [
     {
@@ -25,75 +25,49 @@
   "packs": [
     {
       "name": "jobs",
-      "label": "FFXIV Jobs",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
+      "label": "Jobs",
+      "type": "Item"
     },
     {
       "name": "abilities",
-      "label": "FFXIV Abilities",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
-    },
-    {
-      "name": "effect",
-      "label": "FFXIV Effects",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
-    },
-    {
-      "name": "equipment",
-      "label": "FFXIV Equipment",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
+      "label": "Abilities",
+      "type": "Item"
     },
     {
       "name": "traits",
-      "label": "FFXIV Traits",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
+      "label": "Traits",
+      "type": "Item"
     },
     {
-      "name": "actions",
-      "label": "FFXIV Actions",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
-    },
-    {
-      "name": "actors",
-      "label": "FFXIV Pregenerated Characters",
-      "type": "Actor",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
-    },
-    {
-      "name": "rolltables",
-      "label": "FFXIV Roll Tables",
-      "type": "RollTable",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
+      "name": "equipment",
+      "label": "Equipment",
+      "type": "Item"
     },
     {
       "name": "rules",
-      "label": "FFXIV Rules",
-      "type": "JournalEntry",
-      "ownership": {
-        "PLAYER": "OBSERVER"
-      }
+      "label": "Rules",
+      "type": "JournalEntry"
+    },
+    {
+      "name": "effect",
+      "label": "Effects",
+      "type": "Item"
+    }
+  ],
+  "packFolders": [
+    {
+      "name": "Final Fantasy XIV System",
+      "color": "#ed1c25",
+      "sorting": "m",
+      "packs": [
+        "rules",
+        "abilities",
+        "jobs",
+        "equipment",
+        "traits",
+        "actors",
+        "effect"
+      ]
     }
   ],
   "languages": [
@@ -105,7 +79,10 @@
     }
   ],
   "manifest": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/system.json",
-  "download": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/titan.zip",
+  "download": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/module.zip",
   "license": "LICENSE.txt",
-  "socket": true
+  "socket": true,
+  "system": [
+    "style.css"
+  ]
 }
