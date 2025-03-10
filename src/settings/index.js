@@ -13,7 +13,6 @@ export function registerSettings() {
   dontShowWelcome();
   applicationWindowHeaderIconsOnly()
   confirmBeforeDeletingActorItem()
-  combatStartSound()
   chatMessageSound()
   showStatusEffectNames()
   manualInitiative()
@@ -167,28 +166,6 @@ function confirmBeforeDeletingActorItem() {
       config: true,
       default: true,
       type: Boolean
-    }
-  });
-}
-
-/**
- * Configures the sound played when combat starts.
- * Allows users to set a custom sound effect that plays when
- * a new combat encounter begins.
- * @return {void}
- */
-function combatStartSound() {
-  gameSettings.register({
-    namespace: SYSTEM_ID,
-    key: 'combatStartSound',
-    options: {
-      name: localize('Setting.combatStartSound.Name'),
-      hint: localize('Setting.combatStartSound.Hint'),
-      scope: 'user',
-      config: true,
-      default: 'sounds/drums.wav',
-      type: String,
-      filePicker: "any",
     }
   });
 }

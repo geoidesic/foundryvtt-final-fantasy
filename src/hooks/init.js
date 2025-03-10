@@ -3,7 +3,6 @@ import { log } from "~/src/helpers/util"
 
 import { registerSettings } from "~/src/settings"
 import { setupModels } from '~/src/config/models';
-import { setupEffectsProcessors } from '~/src/config/effectsProcessors';
 
 import FFActiveEffectSheet from "~/src/components/applications/FFActiveEffectSheet";
 import FFXIVPCSheet from "~/src/components/applications/PCSheet";
@@ -26,11 +25,8 @@ export default function init() {
     game.system.log.level = log.VERBOSE;
     game.system.log.i(`Starting System ${SYSTEM_ID}`);
   
-    // CONFIG.debug.hooks = true;
-  
     registerSettings();
     setupModels();
-    setupEffectsProcessors();
   
     game.system.config = systemconfig;
     game.system.log.d(game.system.id)
@@ -67,7 +63,7 @@ export default function init() {
     //   makeDefault: true,
     // });
   
-    Hooks.call("gff15.initIsComplete");
+    Hooks.call("FFXIV.initIsComplete");
   
     // Override the default combat tracker behavior
     hooks.renderCombatTracker();

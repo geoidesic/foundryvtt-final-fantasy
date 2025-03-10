@@ -1,7 +1,9 @@
 import { SYSTEM_ID } from "~/src/helpers/constants"
 
 /**
- * Hook that runs when the active effect config is rendered
+ * Add's the isOverlay checkbox to the active effect sheet
+ * @deprecated this was a first attempt at a solution to the problem of overlay effects
+ * Since then, there's now an ActiveEffect extension that handles this
  * @return {void}
  */
 export default function renderActiveEffectConfig() {
