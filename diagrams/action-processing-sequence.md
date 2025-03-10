@@ -23,8 +23,8 @@ sequenceDiagram
 
 Note: 
 - RCA represents RollCalcActor
-- EM represents EffectManager
 - AH represents ActionHandler
+- EM represents EffectManager
 - H represents Hooks
 - DM represents DurationManager
 - E represents Effect
