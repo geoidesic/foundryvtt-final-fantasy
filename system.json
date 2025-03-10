@@ -84,5 +84,8 @@
   "socket": true,
   "system": [
     "style.css"
+  ],
+  "styles": [
+    "style.css"
   ]
 }

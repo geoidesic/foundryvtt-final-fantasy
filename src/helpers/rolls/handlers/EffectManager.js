@@ -1,6 +1,4 @@
-import { SYSTEM_ID } from "~/src/helpers/constants";
 import DefaultChatHandler  from "~/src/helpers/rolls/handlers/DefaultChatHandler";
-import AbilitiesLimiter from "~/src/helpers/effects/AbilitiesLimiter";
 /**
  * Handles all effect-related operations
  */
@@ -14,86 +12,8 @@ export default class EffectManager {
   }
 
   /**
-   * Handle all effects for an action
-   * @param {Item} item - The item being used
-   * @param {Object} result - The result from the action handler
-   * @return {Promise<void>} Returns a promise that resolves when all effects are handled
-   */
-  async handleEffects(item, result) {
-    console.log("[FFXIV] | [EFFECT MANAGER] handleEffects call stack:", item, result);
-
-    game.system.log.o('[EFFECT MANAGER] Starting handleEffects:', {
-      itemName: item?.name,
-      itemType: item?.type,
-      itemSystem: item?.system,
-      resultData: result,
-      actorEffects: this.actor.effects.map(e => ({
-        name: e.name,
-        changes: e.changes,
-        flags: e.flags,
-        disabled: e.disabled
-      }))
-    });
-
-
-
-    // Check with AbilitiesLimiter
-    const abilitiesLimiter = new AbilitiesLimiter(this.actor);
-    const shouldProceed = await abilitiesLimiter.process({ item });
-
-    game.system.log.o('[EFFECT MANAGER] AbilitiesLimiter check result:', {
-      itemName: item?.name,
-      shouldProceed,
-      hasEnablerEffects: item.system.enables?.list?.length > 0
-    });
-
-    const { hasTargets, targets } = result;
-
-    // Handle target effects
-    console.log("[FFXIV] | [EFFECT MANAGER] Target effects check:", {
-      itemName: item?.name,
-      shouldProceed,
-      hasGrants: item.system.grants?.value,
-      grantsList: item.system.grants?.list,
-      hasTargets,
-      targets: targets
-    });
-
-    if (shouldProceed && item.system.grants?.value && hasTargets) {
-      game.system.log.o('[EFFECT MANAGER] Processing target effects:', {
-        itemName: item.name,
-        grants: item.system.grants,
-        targets: targets.map(t => t.actor?.name)
-      });
-      // Convert Set to Array if needed
-      const targetArray = targets instanceof Set ? Array.from(targets) : targets;
-      await this._applyEffectsFromList(item, item.system.grants.list, targetArray);
-    }
-
-    // Handle source effects
-    if (shouldProceed && item.system.sourceGrants?.list?.length) {
-      game.system.log.o('[EFFECT MANAGER] Processing source effects:', {
-        itemName: item.name,
-        sourceGrants: item.system.sourceGrants,
-        actor: this.actor.name
-      });
-      await this._applyEffectsFromList(item, item.system.sourceGrants.list, [{ actor: this.actor }]);
-    }
-
-    // Process enabler effects regardless of roll success
-    if (shouldProceed && item.system.enables?.list?.length > 0) {
-      game.system.log.o('[EFFECT MANAGER] Processing enabler effects:', {
-        itemName: item.name,
-        enables: item.system.enables,
-        actor: this.actor.name
-      });
-      await this._handleEnablerEffects(item);
-    }
-  }
-
-  /**
    * Apply effects from a list to specified targets
-   * @private
+   * @protected
    * @param {Item} sourceItem - The item granting the effects
    * @param {Array} effectList - List of effect references to process
    * @param {Array} targets - Array of targets to apply effects to
@@ -134,8 +54,18 @@ export default class EffectManager {
   }
 
   /**
+   * Handle all effects for an action
+   * @param {Item} item - The item being used
+   * @param {Object} result - The result from the action handler
+   * @return {Promise<void>} Returns a promise that resolves when all effects are handled
+   */
+    async handleEffects(item, result) {
+
+    }
+
+  /**
    * Prepare effect data from effect items
-   * @private
+   * @protected
    * @param {Item} sourceItem - The item granting the effects
    * @param {Array} effectList - List of effect references to process
    * @param {Actor} targetActor - The actor to check against for existing effects
@@ -174,7 +104,7 @@ export default class EffectManager {
 
   /**
    * Handle status effect application
-   * @private
+   * @protected
    * @param {ActiveEffect} effect - The effect to process
    * @param {Actor} targetActor - The actor to apply the status to
    * @return {null} Always returns null as statuses are handled directly
@@ -191,7 +121,7 @@ export default class EffectManager {
 
   /**
    * Prepare clean effect data for creation
-   * @private
+   * @protected
    * @param {ActiveEffect} effect - The effect to clean
    * @param {Item} effectItem - The item containing the effect
    * @param {Item} sourceItem - The item granting the effect
@@ -251,7 +181,7 @@ export default class EffectManager {
 
   /**
    * Handle enabler effects for an action
-   * @private
+   * @protected
    */
   async _handleEnablerEffects(item) {
     if (!item.system.enables?.list?.length) return [];
@@ -268,42 +198,18 @@ export default class EffectManager {
 
   /**
    * Process a single enabler reference
-   * @private
+   * @protected
    * @param {Item} sourceItem - The item triggering the enabler
    * @param {Object} enableRef - The reference to the item to enable
    * @return {Promise<Array>} Array of enabled effect UUIDs
    */
   async _processEnablerRef(sourceItem, enableRef) {
-    // Find and validate items
-    const { compendiumItem, actorItem } = await this._findEnablerItems(enableRef);
-    if (!actorItem || !actorItem.hasEffects) return [];
-
-    // Check usage limits
-    if (!await this.actor.actorItemHasRemainingUses(actorItem)) {
-      game.system.log.w("[ENABLE]", `${actorItem.name} has no remaining uses`);
-      return [];
-    }
-
-    // Handle special case for traits that sacrifice movement
-    if (actorItem.type === 'trait' && actorItem.system.sacrificesMovement) {
-      const canSacrificeMovement = await this._handleMovementSacrifice(actorItem);
-      if (!canSacrificeMovement) return [];
-    }
-
-    // Apply effects
-    const effectsEnabled = await this.actor.addLinkedEffects(actorItem);
     
-    // Handle chat message if needed
-    if (effectsEnabled.length && sourceItem.name !== actorItem.name) {
-      await this.DefaultChatHandler.handle(actorItem);
-    }
-
-    return effectsEnabled;
   }
 
   /**
    * Find and validate compendium and actor items for an enabler reference
-   * @private
+   * @protected
    * @param {Object} enableRef - The reference to the item to enable
    * @return {Promise<Object>} Object containing compendium and actor items
    */
@@ -328,32 +234,8 @@ export default class EffectManager {
   }
 
   /**
-   * Handle the movement sacrifice mechanic for traits
-   * @private
-   * @param {Item} item - The item that sacrifices movement
-   * @return {Promise<boolean>} Whether the movement can be sacrificed
-   */
-  async _handleMovementSacrifice(item) {
-    const tokenId = this.actor.token?.id;
-    if (!tokenId) return true;
-
-    if (getTokenMovement(tokenId) > 0) {
-      ui.notifications.warn(`Cannot enable ${item.name} after moving.`);
-      return false;
-    }
-
-    if (!game.combat) {
-      ui.notifications.warn("Focus can only be toggled during combat.");
-      return false;
-    }
-
-    await this.actor.toggleStatusEffect("focus");
-    return true;
-  }
-
-  /**
    * Check if item should be disabled by tags
-   * @private
+   * @protected
    */
   async _shouldDisableByTags(item, origin) {
     const itemTags = item?.system?.tags || [];
@@ -363,9 +245,9 @@ export default class EffectManager {
 
   /**
    * Check if item should be disabled by requirements
-   * @private
+   * @protected
    */
-  async _shouldDisableByRequirements(item, origin, effect) {
+  async _shouldDisableByRequirements(item, effect) {
     if (!item.hasRequires) return false;
     const requiresList = item.system.requires.list || [];
     // Get all required items first

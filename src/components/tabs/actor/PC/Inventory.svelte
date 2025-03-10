@@ -11,7 +11,6 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
-  import RollCalcActor from "~/src/helpers/rolls/RollCalcActor";
 
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
@@ -84,7 +83,7 @@
   }
 
   function useItem(item) {
-    const result = new RollCalcActor({ actor: $Actor }).equipment(item);
+    const result = new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).equipment(item);
   }
   
   function toggleLock(event) {

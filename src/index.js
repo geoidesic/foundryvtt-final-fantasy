@@ -1,5 +1,6 @@
 import './styles/Main.sass';
 
+import EffectManager from "~/src/helpers/rolls/handlers/EffectManager.js";
 import FFXIVActor from '~/src/extensions/actor.js'
 import FFXIVItem from '~/src/extensions/item.js'
 import FFActiveEffect from "~/src/extensions/active-effect.js"
@@ -9,16 +10,20 @@ import FFCombat from './extensions/combat.js'
 import FFCombatant from './extensions/combatant.js'
 import hooks from "~/src/hooks";
 import RollGuards from "~/src/helpers/rolls/RollGuards";
+import RollCalcActor from "~/src/helpers/rolls/RollCalcActor";
+
 
 /* eslint-disable-next-line no-unused-vars */
-import { setupDSN } from "~/src/helpers/dsnSetup.js";
+import { setupDSN } from "~/src/helpers/dsnSetup.js"; //- Dice-so-nice setup
 
 //- debug hooks
 // CONFIG.debug.hooks = true;
 
 
 CONFIG.FFXIV = {
-  RollGuards: RollGuards
+  RollGuards: RollGuards,
+  RollCalcActor: RollCalcActor,
+  EffectManager: EffectManager
 }
 
 

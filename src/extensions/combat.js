@@ -1,4 +1,3 @@
-import { resetActionState, resetUses } from '~/src/helpers/util.js';
 
 /**
  * Extended Combat class for Final Fantasy system
@@ -38,40 +37,6 @@ export default class FFCombat extends Combat {
     return currentCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
   }
 
-  /**
-   * Reset abilities and states, action slots, and effects for all combatants
-   * @return {Promise<void>} Returns a promise that resolves when all combatants have been reset
-   */
-  async resetCombatantAbilities() {
-    // Conditions that should persist through combat reset
-    const persistentConditions = ['ko', 'dead', 'comatose', 'brink'];
-
-    const combatants = this.combatants.contents;
-    // For each combatant
-    for (const combatant of combatants) {
-      const actor = combatant.actor;
-      if (!actor) continue;
-
-      // Get all items that have limitations
-      const items = actor.items.filter(i => i.system.hasLimitation);
-      await resetUses(items);
-
-      // Disable or delete all status effects except persistent conditions
-      for (const effect of actor.effects) {
-       
-        if (effect.isTransferred) {
-          await effect.update({ disabled: true });
-        } else {
-          // Skip effects that apply persistent conditions
-          if (effect.statuses?.some(status => persistentConditions.includes(status))) {
-            continue;
-          }
-          await effect.delete();
-        }
-      }
-      await resetActionState(actor, true);
-    }
-  }
 
   /**
    * Return the Array of combatants sorted into initiative order

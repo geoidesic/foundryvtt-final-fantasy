@@ -11,14 +11,13 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
-  import RollCalcActor from "~/src/helpers/rolls/RollCalcActor";
   import Badge from "~/src/components/atoms/Badge.svelte";
   import Tag from "~/src/components/atoms/Tag.svelte";
 
   export let sheet;
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
-  const RollCalc = new RollCalcActor({ actor: $Actor });
+  const RollCalc = new CONFIG.FFXIV.RollCalcActor({ actor: $Actor });
   const typeSearch = createFilterQuery("type");
   typeSearch.set(["trait", "action"]); // Updated to filter for both types
   const input = {

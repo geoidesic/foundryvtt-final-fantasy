@@ -147,803 +147,265 @@ const activeEffectModes = [
   { value: ACTIVE_EFFECT_MODES.DOWNGRADE, label: "downgrade" },
   { value: ACTIVE_EFFECT_MODES.UPGRADE, label: "upgrade" }
 ];
-class FFActiveEffect extends ActiveEffect {
+class DefaultChatHandler {
   static {
-    __name(this, "FFActiveEffect");
+    __name(this, "DefaultChatHandler");
   }
   /**
-   * Creates a new FFXIV active effect
-   * @param {object} data - The effect data
-   * @param {object} context - The initialization context
-   */
-  constructor(data, context) {
-    super(data, context);
-  }
-  /**
-   * Gets whether the effect is temporary
-   * @return {boolean} Returns true if the effect is temporary
-   */
-  get isTemporary() {
-    if (this.getFlag(SYSTEM_ID, "overlay"))
-      return true;
-    return super.isTemporary;
-  }
-  /**
-   * Check if the effect is transferred from an item 
-   * (i.e. a passive effect from an item owned by that actor, 
-   * rather than an active effect transferred as a result of an action 
-   * by another actor)
-   * @return {boolean} Whether the effect is transferred from an item
-   */
-  get isTransferred() {
-    const origin = fromUuidSync(this.origin);
-    if (!origin?.transferredEffects?.length)
-      return false;
-    return Array.isArray(origin.transferredEffects) && origin.transferredEffects.length > 0;
-  }
-  /**
-   * Updates the combat duration
-   * @return {Promise<void>} Returns a promise that resolves when the duration is updated
-   */
-  async updateCombatDuration() {
-    game.system.log.o("[ACTIVE EFFECT] Starting updateCombatDuration for:", {
-      name: this.name,
-      origin: this.origin,
-      duration: this.duration
-    });
-    const originUuid = this.origin;
-    if (!originUuid) {
-      game.system.log.w("[ACTIVE EFFECT] No origin UUID found");
-      return;
-    }
-    const originItem = await fromUuid(originUuid);
-    if (!originItem) {
-      game.system.log.w("[ACTIVE EFFECT] No origin item found for UUID:", originUuid);
-      return;
-    }
-    game.system.log.o("[ACTIVE EFFECT] Found origin item:", {
-      name: originItem.name,
-      system: originItem.system
-    });
-    const duration = originItem.system.duration;
-    if (!duration) {
-      game.system.log.w("[ACTIVE EFFECT] No duration found on origin item");
-      return;
-    }
-    const effectData = {
-      duration: {
-        startRound: game.combat?.round ?? 0,
-        startTurn: game.combat?.turn ?? 0
-      }
-    };
-    if (originItem.system.durationUnits === "rounds") {
-      effectData.duration.rounds = originItem.system.duration;
-      effectData.duration.turns = 0;
-      game.system.log.o("[ACTIVE EFFECT] Setting rounds duration:", effectData.duration);
-    } else if (originItem.system.durationUnits === "turns") {
-      effectData.duration.turns = originItem.system.duration;
-      effectData.duration.rounds = 0;
-      game.system.log.o("[ACTIVE EFFECT] Setting turns duration:", effectData.duration);
-    }
-    game.system.log.o("[ACTIVE EFFECT] Updating effect with duration:", effectData);
-    await this.update(effectData);
-  }
-  async delete(options = {}) {
-    game.system.log.o("[ACTIVE EFFECT] Starting effect deletion:", {
-      effectName: this.name,
-      effectId: this.id,
-      effectDuration: this.duration,
-      effectFlags: this.flags,
-      effectChanges: this.changes,
-      effectDisabled: this.disabled,
-      options
-    });
-    try {
-      const result = await super.delete(options);
-      game.system.log.o("[ACTIVE EFFECT] Effect deletion completed:", {
-        effectName: this.name,
-        result
-      });
-      return result;
-    } catch (error) {
-      game.system.log.e("[ACTIVE EFFECT] Effect deletion failed:", {
-        effectName: this.name,
-        error
-      });
-      throw error;
-    }
-  }
-}
-class PrimaryBaseDamageBuff {
-  static {
-    __name(this, "PrimaryBaseDamageBuff");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
+   * @param {Actor} actor - The actor this handler is for
    */
   constructor(actor) {
     this.actor = actor;
   }
   /**
-   * Process the primary base damage buff effect
-   * @param {object} event - The event containing damage results
-   * @return {Promise<void>} A promise that resolves when processing is complete
+   * @param {Item} item - The item to create a chat message for
    */
-  async process(event) {
-    const effects2 = this.actor.effects.filter((e) => !e.disabled);
-    for (const effect of effects2) {
-      const origin = await fromUuid(effect.origin);
-      for (const change of effect.changes) {
-        if (change.key === "PrimaryBaseDamageBuff" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          for (const [tokenId, targetData] of event.DamageResults) {
-            targetData.damage;
-            targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
-            targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
-          }
-        }
-      }
-    }
-  }
-}
-class AbilityBaseDamageBuff {
-  static {
-    __name(this, "AbilityBaseDamageBuff");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the primary base damage buff effect
-   * @param {object} event - The event containing damage results
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    const { DamageResults } = event;
-    game.system.log.o("[ABILITY DAMAGE BUFF] Processing ability base damage buff effect", {
-      DamageResults,
-      actorEffects: this.actor.effects
-    });
-    for (const effect of this.actor.effects) {
-      const origin = fromUuidSync(effect.origin);
-      game.system.log.o("[ABILITY DAMAGE BUFF] Processing effect:", {
-        effect,
-        origin,
-        changes: effect.changes
-      });
-      for (const change of effect.changes) {
-        game.system.log.o("[ABILITY DAMAGE BUFF] Checking change:", {
-          key: change.key,
-          mode: change.mode,
-          value: change.value,
-          matches: change.key === "AbilityBaseDamageBuff" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
-        });
-        if (change.key === "AbilityBaseDamageBuff" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          for (const [tokenId, targetData] of DamageResults) {
-            const oldDamage = targetData.damage;
-            targetData.damage = parseInt(targetData.damage) + parseInt(change.value);
-            targetData.baseDamageFormula += ` + ${origin.name} (${change.value})`;
-            game.system.log.o("[ABILITY DAMAGE BUFF] Applied damage buff:", {
-              tokenId,
-              oldDamage,
-              newDamage: targetData.damage,
-              addedValue: change.value
-            });
-          }
-        }
-      }
-    }
-  }
-}
-class DamageDiceReroll {
-  static {
-    __name(this, "DamageDiceReroll");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the damage dice reroll effect
-   * @param {object} event - The event containing damage results
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    game.system.log.o("[DAMAGE DICE REROLL] Processing damage dice reroll effect");
-    const { DamageResults, isCritical } = event;
-    if (!DamageResults || !DamageResults.size) {
-      game.system.log.w("[DAMAGE DICE REROLL] No damage results found");
-      return;
-    }
-    for (const effect of this.actor.effects) {
-      if (effect.disabled || effect.isSuppressed)
-        continue;
-      fromUuidSync(effect.origin);
-      for (const change of effect.changes) {
-        if (change.key === "DamageDiceReroll" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          for (const [targetId, targetData] of DamageResults) {
-            game.system.log.o("[DAMAGE DICE REROLL] Target data:", {
-              targetId,
-              targetData
-            });
-            if (!targetData.directHit)
-              continue;
-            const [numDice, dieType] = targetData.directHit.split("d").map(Number);
-            if (!numDice || !dieType)
-              continue;
-            const additionalDice = Number(change.value) || 1;
-            const newNumDice = numDice + additionalDice;
-            game.system.log.o("[DAMAGE DICE REROLL] New number of dice:", {
-              newNumDice
-            });
-            const kh = numDice;
-            targetData.directHit = `${newNumDice}d${dieType}kh${kh}`;
-            targetData.directHitFormula = targetData.directHit;
-            const parts = [];
-            parts.push(`1D${dieType}`);
-            if (isCritical) {
-              parts.push("CRITICAL");
-            }
-            parts.push(effect.name.toUpperCase());
-            targetData.directHitDisplayFormula = `(${parts.join(" + ")})`;
-          }
-        }
-      }
-    }
-  }
-}
-class TransferEffectToAllies {
-  static {
-    __name(this, "TransferEffectToAllies");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Delete transferred effects from allies
-   * @param {object} event - The event containing effect data
-   * @return {Promise<void>} Returns a promise that resolves when the effects have been deleted
-   */
-  async delete(event) {
-    const { effect } = event;
-    const transferredEffects = game.actors.reduce((acc, actor) => {
-      return acc.concat(actor.effects.filter(
-        (e) => e.getFlag(SYSTEM_ID, "transferredBy.actor.uuid") === this.actor.uuid && e.name === effect.name
-      ));
-    }, []);
-    game.system.log.p("[EFFECT] Removing transferredEffects", transferredEffects);
-    game.system.log.p("[EFFECT] Removing transferred effects for", effect.name);
-    for (const transferredEffect of transferredEffects) {
-      await transferredEffect.delete();
-    }
-  }
-  /**
-   * Process the transfer effect to allies
-   * @param {object} event - The event containing effect data
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    game.system.log.p("[TRANSFER] Starting effect transfer process", event);
-    const { effect } = event;
-    game.system.log.p("[TRANSFER] Source actor:", this.actor.name);
-    game.system.log.p("[TRANSFER] Effect:", effect);
-    const stackingBehavior = effect.getFlag(SYSTEM_ID, "stackable") || "differentSource";
-    for (const token of this.actor.allyTokens) {
-      game.system.log.p("[TRANSFER] Processing token:", token.name);
-      if (!token.actor) {
-        game.system.log.p("[TRANSFER] No actor for token, skipping");
-        continue;
-      }
-      if (stackingBehavior === "replaces") {
-        const existingEffects = token.actor.effects.filter((e) => e.name === effect.name);
-        game.system.log.p("[TRANSFER] Found existing effects to replace:", existingEffects.length);
-        for (const existingEffect of existingEffects) {
-          game.system.log.p("[TRANSFER] Removing existing effect for replacement:", existingEffect.name);
-          await existingEffect.delete();
-        }
-      }
-      const effectData = {
-        name: effect.name,
-        img: effect.img,
-        changes: foundry.utils.deepClone(effect.changes),
-        flags: foundry.utils.deepClone(effect.flags),
-        origin: effect.origin,
-        disabled: false
-      };
-      game.system.log.p("[TRANSFER] Original effect flags:", effect.flags);
-      game.system.log.p("[TRANSFER] Cloned effect flags:", effectData.flags);
-      effectData.flags[SYSTEM_ID] = {
-        ...effectData.flags[SYSTEM_ID],
-        transferredBy: {
-          actor: {
-            uuid: this.actor.uuid,
-            name: this.actor.name,
-            img: this.actor.img
-          }
-        }
-      };
-      game.system.log.p("[TRANSFER] Final effect flags after origin update:", effectData.flags);
-      try {
-        await token.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
-        game.system.log.p("[TRANSFER] Successfully created effect on", token.name, effectData, token.actor);
-      } catch (error) {
-        game.system.log.e("[TRANSFER] Error creating effect:", error);
-      }
-    }
-  }
-}
-class EnableCombatTurnSlot {
-  static {
-    __name(this, "EnableCombatTurnSlot");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the effect
-   * @param {object} event - The event object containing actor, change, and effect
-   * @return {Promise<void>} Returns a promise that resolves when the effect has been processed
-   */
-  async process(event) {
-    const { actor, change } = event;
-    const { value } = change;
-    const current = actor.system.actionState.available;
-    if (!Array.isArray(current)) {
-      return;
-    }
-    if (!current.includes(value)) {
-      const updated = [...current, value];
-      actor.system.actionState.available = updated;
-      await actor.update({
-        "system.actionState.available": updated
-      });
-    }
-  }
-}
-class DamageOverTime {
-  static {
-    __name(this, "DamageOverTime");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the damage over time effect
-   * @param {object} event - The event containing damage results
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async process(event) {
-    const { change, effect, isMovingForward = true } = event;
-    const currentHP = this.actor.system.points.HP.val;
-    const dotDamage = (parseInt(change.value) || 0) * (isMovingForward ? 1 : -1);
-    if (dotDamage === 0)
-      return;
-    const newHP = Math.max(0, currentHP - dotDamage);
-    game.system.log.o("[DOT] Applying damage:", {
-      actor: this.actor.name,
-      damage: dotDamage,
-      newHP
-    });
-    await this.actor.update({ "system.points.HP.val": newHP });
-    if (isMovingForward && this.actor.system.points.HP.val === 0 && !this.actor.statuses.has("ko")) {
-      await this.actor.toggleStatusEffect("ko");
-    }
-    await ChatMessage.create({
+  handle(item) {
+    ChatMessage.create({
       user: game.user.id,
-      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
       flags: {
         [SYSTEM_ID]: {
           data: {
             chatTemplate: "RollChat",
             actor: {
-              _id: this.actor.id,
+              _id: this.actor._id,
               name: this.actor.name,
               img: this.actor.img
             },
             item: {
-              name: effect.name,
-              img: effect.img || effect.icon,
-              // Support both v11 and v12
-              type: "effect",
-              system: {
-                description: `${this.actor.name} ${isMovingForward ? "takes" : "recovers"} ${Math.abs(dotDamage)} damage ${isMovingForward ? "from" : "due to reversing"} ${effect.name}`,
-                formula: dotDamage.toString()
-              }
+              _id: item._id,
+              uuid: item.uuid,
+              name: item.name,
+              img: item.img,
+              type: item.type,
+              system: item.system
             }
           }
         }
       }
     });
   }
-  /**
-   * Handle DOT effects during combat updates
-   * @param {Combat} combat - The combat being updated
-   * @param {object} changed - The changes made to the combat
-   * @param {object} options - Update options
-   */
-  async updateCombat(combat, changed, options) {
-    if (!("turn" in changed || "round" in changed) || changed.turn === null) {
-      game.system.log.o("[DOT] Skipping - no turn/round change:", { changed });
-      return;
-    }
-    const previousCombatant = combat.turns[combat.previous?.turn];
-    if (!previousCombatant || previousCombatant.actor.id !== this.actor.id) {
-      game.system.log.o("[DOT] Skipping - not previous combatant:", {
-        actor: this.actor.name,
-        previousCombatant: previousCombatant?.actor?.name,
-        previousTurn: combat.previous?.turn,
-        currentTurn: combat.turn
-      });
-      return;
-    }
-    const isMovingForward = options.direction === 1;
-    const nextTurn = combat.previous?.turn + 1;
-    const isLastTurn = nextTurn === combat.turns.length;
-    const nextCombatant = isLastTurn ? combat.turns[0] : combat.turns[nextTurn];
-    game.system.log.o("[DOT] Checking phase:", {
-      actor: this.actor.name,
-      direction: isMovingForward ? "forward" : "backward",
-      previousType: previousCombatant?.actor?.type,
-      nextType: nextCombatant?.actor?.type,
-      nextTurn,
-      totalTurns: combat.turns.length,
-      isLastTurn,
-      isWrapping: isLastTurn
-    });
-    const lastPC = [...combat.turns].reverse().find((t) => t.actor?.type === "PC");
-    const lastNPC = [...combat.turns].reverse().find((t) => t.actor?.type === "NPC");
-    const isLastOfType = this.actor.type === "PC" && lastPC?.actor?.id === this.actor.id || this.actor.type === "NPC" && lastNPC?.actor?.id === this.actor.id;
-    const nextType = nextCombatant?.actor?.type;
-    const isPhaseTransition = this.actor.type === "PC" && nextType === "NPC" || this.actor.type === "NPC" && nextType === "PC" || isLastTurn && isLastOfType;
-    game.system.log.o("[DOT] Phase check:", {
-      actor: this.actor.name,
-      actorType: this.actor.type,
-      nextType,
-      isPhaseTransition,
-      isLastOfType,
-      isLastTurn
-    });
-    if (!isPhaseTransition) {
-      game.system.log.o("[DOT] Skipping - not a phase transition:", {
-        actor: this.actor.name,
-        direction: isMovingForward ? "forward" : "backward",
-        actorType: this.actor.type,
-        nextType,
-        isLastOfType
-      });
-      return;
-    }
-    const relevantEffects = this.actor.effects.filter(
-      (e) => !e.disabled && e.changes.some((c) => c.key === "DamageOverTime" && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
-    );
-    if (relevantEffects.length === 0) {
-      game.system.log.o("[DOT] Skipping - no relevant effects:", {
-        actor: this.actor.name,
-        effectCount: this.actor.effects.size
-      });
-      return;
-    }
-    game.system.log.o("[DOT] Processing combat update:", {
-      actor: this.actor.name,
-      direction: isMovingForward ? "forward" : "backward",
-      phase: {
-        currentType: this.actor.type,
-        nextType
-      }
-    });
-    for (const effect of relevantEffects) {
-      for (const change of effect.changes) {
-        if (change.key === "DamageOverTime" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-          await Hooks.callAll("FFXIV.DamageOverTime", {
-            actor: this.actor,
-            change,
-            effect,
-            isMovingForward
-          });
-        }
-      }
-    }
-  }
 }
-let ProcTrigger$1 = class ProcTrigger {
+class EffectManager {
   static {
-    __name(this, "ProcTrigger");
+    __name(this, "EffectManager");
   }
   /**
-   * @param {Actor} actor - The actor this effect is applied to
+   * @param {Actor} actor - The actor this handler is for
    */
   constructor(actor) {
     this.actor = actor;
+    this.DefaultChatHandler = new DefaultChatHandler(actor);
   }
   /**
-   * Process the proc trigger effect
-   * @param {object} event - The event containing item and roll data
-   * @return {Promise<void>} A promise that resolves when processing is complete
+   * Apply effects from a list to specified targets
+   * @protected
+   * @param {Item} sourceItem - The item granting the effects
+   * @param {Array} effectList - List of effect references to process
+   * @param {Array} targets - Array of targets to apply effects to
    */
-  async process(event) {
-    game.system.log.o("[PROC] Starting proc trigger process:", event);
-    const { item, roll } = event;
-    if (!item.system.procs?.list?.length) {
-      game.system.log.o("[PROC] No procs in list, returning");
+  async _applyEffectsFromList(sourceItem, effectList, targets) {
+    if (!effectList?.length || !targets?.length) {
+      if (!effectList?.length) {
+        game.system.log.w("[EFFECT MANAGER] No effects to apply");
+      }
+      if (!targets?.length) {
+        game.system.log.w("[EFFECT MANAGER] No targets to apply effects to");
+      }
       return;
     }
-    let d20Result;
-    if (item.system.hasCR && roll) {
-      const d20Term = roll.terms[0];
-      d20Result = d20Term.modifiers.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results[0].result;
-      game.system.log.o("[PROC] Using existing roll d20 result:", d20Result);
-    } else {
-      const procRoll = await new Roll("1d20").evaluate();
-      d20Result = procRoll.terms[0].results[0].result;
-      game.system.log.o("[PROC] Made new roll d20 result:", d20Result);
-    }
-    if (!item.system.procTrigger || d20Result < item.system.procTrigger) {
-      game.system.log.o("[PROC] Roll did not meet proc trigger threshold:", {
-        procTrigger: item.system.procTrigger,
-        d20Result
-      });
-      return;
-    }
-    game.system.log.o("[PROC] Processing proc effects");
-    for (const procRef of item.system.procs.list) {
-      game.system.log.o("[PROC] Processing proc ref:", procRef);
-      const procItem = await fromUuid(procRef.uuid);
-      if (!procItem) {
-        game.system.log.o("[PROC] Could not find proc item:", procRef.uuid);
+    game.system.log.o("[EFFECT MANAGER] Processing effects from:", {
+      sourceItem: sourceItem?.name,
+      sourceItemUUID: sourceItem?.uuid,
+      actor: this.actor?.name,
+      effectList,
+      targets: targets.map((t) => t.actor?.name)
+    });
+    for (const target of targets) {
+      const targetActor = target.actor;
+      if (!targetActor)
         continue;
-      }
-      game.system.log.o("[PROC] Found proc item:", procItem);
-      game.system.log.o("[PROC] Adding proc effect to actor:", procItem.name);
-      const addedEffects = await this.actor.addLinkedEffects(procItem);
-      game.system.log.o("[PROC] Added effects:", addedEffects);
-      await ChatMessage.create({
-        user: game.user.id,
-        speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-        flags: {
-          [SYSTEM_ID]: {
-            data: {
-              chatTemplate: "RollChat",
-              actor: {
-                _id: this.actor._id,
-                name: this.actor.name,
-                img: this.actor.img
-              },
-              item: {
-                _id: procItem._id,
-                uuid: procItem.uuid,
-                name: procItem.name,
-                img: procItem.img,
-                type: procItem.type,
-                system: procItem.system
-              }
-            }
-          }
+      try {
+        const effectData = await this._prepareEffectData(sourceItem, effectList, targetActor);
+        if (effectData.length) {
+          await targetActor.createEmbeddedDocuments("ActiveEffect", effectData);
         }
-      });
+      } catch (error) {
+        game.system.log.e("Error applying effects to target", error);
+        ui.notifications.error(game.i18n.format("FFXIV.Errors.EffectApplicationFailed", { target: targetActor.name }));
+      }
     }
   }
-};
-class ProcTrigger2 {
-  static {
-    __name(this, "ProcTrigger");
+  /**
+   * Handle all effects for an action
+   * @param {Item} item - The item being used
+   * @param {Object} result - The result from the action handler
+   * @return {Promise<void>} Returns a promise that resolves when all effects are handled
+   */
+  async handleEffects(item, result) {
   }
   /**
-   * @param {Actor} actor - The actor this effect is applied to
+   * Prepare effect data from effect items
+   * @protected
+   * @param {Item} sourceItem - The item granting the effects
+   * @param {Array} effectList - List of effect references to process
+   * @param {Actor} targetActor - The actor to check against for existing effects
+   * @return {Promise<Array>} Array of prepared effect data
    */
-  constructor(actor) {
-    this.actor = actor;
+  async _prepareEffectData(sourceItem, effectList, targetActor) {
+    const effectPromises = effectList.flatMap(async (grantRef) => {
+      const effectItem = await fromUuid(grantRef.uuid);
+      if (!effectItem)
+        return [];
+      return effectItem.effects.map((effect) => {
+        const existingEffect = targetActor.effects.find(
+          (e) => e.name === effect.name && e.origin === sourceItem.uuid
+        );
+        if (existingEffect)
+          return null;
+        if (effect.statuses?.size) {
+          return this._handleStatusEffect(effect, targetActor);
+        }
+        return this._prepareCleanEffectData(effect, effectItem, sourceItem);
+      });
+    });
+    return (await Promise.all(effectPromises)).flat().filter(Boolean);
   }
   /**
-   * Process the proc trigger effect
-   * @param {object} event - The event containing item and roll data
-   * @return {Promise<void>} A promise that resolves when processing is complete
+   * Handle status effect application
+   * @protected
+   * @param {ActiveEffect} effect - The effect to process
+   * @param {Actor} targetActor - The actor to apply the status to
+   * @return {null} Always returns null as statuses are handled directly
    */
-  async process(event) {
-  }
-}
-class DurationManager {
-  static {
-    __name(this, "DurationManager");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
+  _handleStatusEffect(effect, targetActor) {
+    const statuses = Array.from(effect.statuses);
+    const statusesToToggle = statuses.filter((status) => !targetActor.statuses.has(status));
+    if (statusesToToggle.length) {
+      targetActor.toggleStatusEffect(statusesToToggle[0]);
+    }
+    return null;
   }
   /**
-   * Get duration rules for an effect from its origin item
-   * @param {ActiveEffect} effect - The effect to get duration rules for
-   * @return {Promise<Array>} The duration rules array
+   * Prepare clean effect data for creation
+   * @protected
+   * @param {ActiveEffect} effect - The effect to clean
+   * @param {Item} effectItem - The item containing the effect
+   * @param {Item} sourceItem - The item granting the effect
+   * @return {Object} Clean effect data
    */
-  async getDurationRules(effect) {
-    const originItem = await fromUuid(effect.origin);
-    console.log("[FFXIV] | [DURATION MANAGER] Getting duration rules:", {
+  _prepareCleanEffectData(effect, effectItem, sourceItem) {
+    game.system.log.o("[EFFECT MANAGER] Preparing clean effect data:", {
       effectName: effect.name,
-      originUuid: effect.origin,
-      originItem,
-      originDurations: originItem?.system?.durations,
-      effectDurations: effect.system?.durations
+      effectItemSystem: effectItem.system,
+      sourceItemSystem: sourceItem.system
     });
-    return originItem?.system?.durations || effect.system?.durations || [];
-  }
-  /**
-   * Process duration updates when combat updates
-   * @param {Combat} combat - The combat instance
-   * @param {object} changed - What changed in the combat
-   * @return {Promise<void>} A promise that resolves when processing is complete
-   */
-  async updateCombat(combat, changed) {
-    if (!("turn" in changed || "round" in changed))
-      return;
-    game.system.log.o("[DURATION MANAGER] updateCombat called:", {
-      combat,
-      changed,
-      actorName: this.actor?.name
-    });
-    const effects2 = this.actor.effects.filter((e) => !e.disabled);
-    for (const effect of effects2) {
-      const durations = await this.getDurationRules(effect);
-      if (!durations?.length)
-        continue;
-      let shouldDelete = false;
-      for (const duration of durations) {
-        const durationType = duration.type;
-        const durationUnits = duration.units;
-        const currentRound = combat.round;
-        const currentTurn = combat.turn;
-        const startRound = effect.duration.startRound;
-        const startTurn = effect.duration.startTurn;
-        game.system.log.o("[DURATION MANAGER] Processing duration:", {
-          name: effect.name,
-          durationType,
-          durationUnits,
-          currentRound,
-          currentTurn,
-          startRound,
-          startTurn
-        });
-        switch (durationType) {
-          case "endOfThis":
-            if (durationUnits === "rounds" && currentRound > startRound || durationUnits === "turns" && (currentRound > startRound || currentTurn > startTurn)) {
-              shouldDelete = true;
-            }
-            break;
-          case "endOfNext":
-            if (durationUnits === "rounds" && currentRound > startRound + 1 || durationUnits === "turns" && currentRound > startRound && currentTurn > startTurn) {
-              shouldDelete = true;
-            }
-            break;
-          case "startOfNext":
-            if (durationUnits === "rounds" && currentRound > startRound || durationUnits === "turns" && (currentRound > startRound || currentTurn > startTurn)) {
-              shouldDelete = true;
-            }
-            break;
-        }
-        if (shouldDelete)
-          break;
-      }
-      if (shouldDelete) {
-        game.system.log.o("[DURATION MANAGER] Deleting effect:", {
-          name: effect.name,
-          origin: effect.origin
-        });
-        await effect.delete();
+    const durations = sourceItem.system.durations || effectItem.system.durations || [];
+    const duration = durations[0] || { type: "none" };
+    const durationData = {
+      startTime: game.time.worldTime,
+      startRound: game.combat?.round ?? 0,
+      startTurn: game.combat?.turn ?? 0,
+      combat: game.combat?.id
+    };
+    if (duration.type === "hasAmount" && duration.amount) {
+      durationData.type = duration.units || "rounds";
+      durationData[duration.units === "turns" ? "turns" : "rounds"] = duration.amount;
+    } else if (duration.type === "hasQualifier" && duration.qualifier) {
+      durationData.type = duration.qualifier;
+      if (duration.qualifier === "nextAbility") {
+        durationData.requiresAbility = true;
+      } else if (duration.qualifier === "untilDamage") {
+        durationData.requiresDamage = true;
       }
     }
+    game.system.log.o("[EFFECT MANAGER] Prepared duration data:", {
+      effectName: effect.name,
+      durationType: duration.type,
+      durationUnits: duration.units,
+      durationQualifier: duration.qualifier,
+      durationData
+    });
+    return {
+      name: effect.name,
+      img: effect.img,
+      changes: foundry.utils.deepClone(effect.changes),
+      duration: durationData,
+      disabled: false,
+      flags: foundry.utils.deepClone(effect.flags),
+      origin: sourceItem.uuid
+    };
   }
   /**
-   * Process duration updates when damage is applied
-   * @param {object} event - The damage event
-   * @return {Promise<void>} A promise that resolves when processing is complete
+   * Handle enabler effects for an action
+   * @protected
    */
-  async onDamage(event) {
-    game.system.log.o("[DURATION MANAGER] onDamage called:", {
-      event,
-      actorName: this.actor?.name
-    });
-    const effects2 = this.actor.effects.filter((e) => !e.disabled);
-    for (const effect of effects2) {
-      const durations = await this.getDurationRules(effect);
-      if (!durations?.some((d) => d.type === "untilDamage"))
-        continue;
-      game.system.log.o("[DURATION MANAGER] Deleting effect:", {
-        name: effect.name,
-        origin: effect.origin
-      });
-      await effect.delete();
+  async _handleEnablerEffects(item) {
+    if (!item.system.enables?.list?.length)
+      return [];
+    const enabledEffects = [];
+    for (const enableRef of item.system.enables.list) {
+      const effects = await this._processEnablerRef(item, enableRef);
+      enabledEffects.push(...effects);
     }
+    game.system.log.o("[ABILITY:ENABLER] Enabled effects:", enabledEffects);
+    return enabledEffects;
   }
   /**
-   * Process duration updates when an ability is used
-   * @param {object} event - The ability use event containing item and isNewAbilityUse
-   * @return {Promise<void>} A promise that resolves when processing is complete
+   * Process a single enabler reference
+   * @protected
+   * @param {Item} sourceItem - The item triggering the enabler
+   * @param {Object} enableRef - The reference to the item to enable
+   * @return {Promise<Array>} Array of enabled effect UUIDs
    */
-  async onAbilityUse(event) {
-    console.log("[FFXIV] | [DURATION MANAGER] Full effect details:", {
-      effects: this.actor.effects.map((e) => ({
-        name: e.name,
-        durations: e.system?.durations,
-        origin: e.origin,
-        disabled: e.disabled,
-        uuid: e.uuid,
-        duration: e.duration,
-        flags: e.flags,
-        changes: e.changes
-      }))
-    });
-    console.log("[FFXIV] | [DURATION MANAGER] onAbilityUse called:", {
-      itemName: event.item?.name,
-      itemType: event.item?.type,
-      isNewAbilityUse: event.isNewAbilityUse,
-      itemSystem: event.item?.system,
-      actorName: this.actor?.name,
-      itemUuid: event.item?.uuid,
-      actorEffects: this.actor.effects.map((e) => ({
-        name: e.name,
-        durations: e.system?.durations,
-        disabled: e.disabled,
-        origin: e.origin,
-        requiresAbility: e.duration?.requiresAbility,
-        type: e.duration?.type,
-        flags: e.flags
-      }))
-    });
-    if (!event.isNewAbilityUse) {
-      game.system.log.o("[DURATION MANAGER] Skipping nextAbility check - not a new ability use");
-      return;
+  async _processEnablerRef(sourceItem, enableRef) {
+  }
+  /**
+   * Find and validate compendium and actor items for an enabler reference
+   * @protected
+   * @param {Object} enableRef - The reference to the item to enable
+   * @return {Promise<Object>} Object containing compendium and actor items
+   */
+  async _findEnablerItems(enableRef) {
+    const compendiumItem = await fromUuid(enableRef.uuid);
+    if (!compendiumItem) {
+      game.system.log.w("[ENABLE] Could not find compendium item:", enableRef.uuid);
+      return { compendiumItem: null, actorItem: null };
     }
-    const effects2 = this.actor.effects.filter((e) => !e.disabled);
-    for (const effect of effects2) {
-      const durations = await this.getDurationRules(effect);
-      if (!durations?.some((d) => d.qualifier === "nextAbility"))
-        continue;
-      const effectOrigin = await fromUuid(effect.origin);
-      if (effectOrigin?.uuid === event.item.uuid || effectOrigin?.name === event.item?.name) {
-        game.system.log.o("[DURATION MANAGER] Skipping effect deletion because ability is the source");
-        continue;
-      }
-      game.system.log.o("[DURATION MANAGER] Deleting effect:", {
-        name: effect.name,
-        systemDuration: effect.system?.durations,
-        coreDuration: effect.duration,
-        origin: effect.origin,
-        effectUuid: effect.uuid,
-        abilityUuid: event.item?.uuid,
-        effectOriginUuid: effectOrigin?.uuid
-      });
-      await effect.delete();
+    const actorItem = this.actor.items.find(
+      (item) => item.name === compendiumItem.name && item.type === compendiumItem.type
+    );
+    if (!actorItem) {
+      game.system.log.w("[ENABLE] Could not find matching actor item:", compendiumItem.name);
+      return { compendiumItem, actorItem: null };
     }
+    return { compendiumItem, actorItem };
+  }
+  /**
+   * Check if item should be disabled by tags
+   * @protected
+   */
+  async _shouldDisableByTags(item, origin) {
+    const itemTags = item?.system?.tags || [];
+    const shouldDisable = origin?.system?.tags?.some((tag) => itemTags.includes(tag)) || false;
+    return shouldDisable;
+  }
+  /**
+   * Check if item should be disabled by requirements
+   * @protected
+   */
+  async _shouldDisableByRequirements(item, effect) {
+    if (!item.hasRequires)
+      return false;
+    const requiresList = item.system.requires.list || [];
+    const requiredItems = await Promise.all(requiresList.map((req) => fromUuid(req.uuid)));
+    const shouldDisable = requiredItems.some((requiredItem) => {
+      return requiredItem?.name === effect.name;
+    });
+    return shouldDisable;
   }
 }
-const effects = {
-  PrimaryBaseDamageBuff,
-  AbilityBaseDamageBuff,
-  DamageDiceReroll,
-  TransferEffectToAllies,
-  EnableCombatTurnSlot,
-  DamageOverTime,
-  ProcTrigger: ProcTrigger$1,
-  LucidDreaming: ProcTrigger2,
-  DurationManager
-};
-const effectProcessors = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-  __proto__: null,
-  default: effects
-}, Symbol.toStringTag, { value: "Module" }));
 class FFXIVActor extends Actor {
   static {
     __name(this, "FFXIVActor");
@@ -986,17 +448,6 @@ class FFXIVActor extends Actor {
     );
   }
   /**
-   * Gets effects that enable combat turn slots
-   * @return {Array<ActiveEffect>} effects on the actor that have a change with key = EnableCombatTurnSlot mode = custom
-   */
-  get enablerEffects() {
-    return this.effects.filter(
-      (effect) => effect.changes.some(
-        (change) => change.key === "EnableCombatTurnSlot" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM
-      )
-    );
-  }
-  /**
    * Checks for specific duplicates in an array
    * @param {Array} arr - The array to check
    * @param {string} str - The string to look for duplicates
@@ -1022,20 +473,6 @@ class FFXIVActor extends Actor {
     return item.usesRemaining > 0;
   }
   /**
-   * Checks if item tags match enabler effect tags
-   * @param {Item} item - The item to check
-   * @return {boolean} Whether tags match
-   */
-  itemTagsMatchEnablerEffectTags(item) {
-    const itemTags = item.system.tags;
-    for (const effect of this.effects) {
-      if (effect.system.tags?.some((tag) => itemTags.includes(tag))) {
-        return true;
-      }
-    }
-    return false;
-  }
-  /**
    * Get the set of actor UUIDs that have applied an effect with this name
    * @param {ActiveEffect} effect - The effect to check for
    * @return {Set<string>} Set of actor UUIDs that have applied this effect
@@ -1044,128 +481,6 @@ class FFXIVActor extends Actor {
     return new Set(
       this.effects.filter((e) => e.name === effect.name).map((e) => e.getFlag(SYSTEM_ID, "transferredBy.actor.uuid") || this.uuid)
     );
-  }
-  /**
-   * Add effects from an item to this actor
-   * @param {Item} item - The item to add effects from
-   * @return {Array} Array of effect UUIDs that were enabled
-   */
-  async addLinkedEffects(item) {
-    if (!item.hasEffects) {
-      game.system.log.p("[ADD LINKED EFFECTS] Item has no effects:", item);
-      return [];
-    }
-    const effectsToCreate = [];
-    for (const effect of item.effects) {
-      game.system.log.p("[ADD LINKED EFFECTS] Processing effect:", {
-        name: effect.name,
-        system: effect.system,
-        flags: effect.flags,
-        origin: effect.origin
-      });
-      game.system.log.p("[ADD LINKED EFFECTS] Effect flags detail:", {
-        rawFlags: effect.flags,
-        systemFlags: effect.flags?.[SYSTEM_ID],
-        stackableFlag: effect.getFlag(SYSTEM_ID, "stackable"),
-        overlayFlag: effect.getFlag(SYSTEM_ID, "overlay")
-      });
-      const sourceActors = this.getEffectSources(effect);
-      const stackingBehavior = effect.getFlag(SYSTEM_ID, "stackable") || "differentSource";
-      switch (stackingBehavior) {
-        case "replaces":
-          const existingEffects = this.effects.filter((e) => e.name === effect.name);
-          game.system.log.p("[ADD LINKED EFFECTS] Found existing effects to replace:", existingEffects.length);
-          for (const existingEffect of existingEffects) {
-            game.system.log.p("[ADD LINKED EFFECTS] Removing existing effect for replacement:", existingEffect.name);
-            await existingEffect.delete();
-          }
-          break;
-        case "anySource":
-          break;
-        case "differentSource":
-        default:
-          if (sourceActors.has(this.uuid)) {
-            game.system.log.p("[ADD LINKED EFFECTS] Effect already exists from this source:", {
-              name: effect.name,
-              source: this.uuid,
-              existingSources: Array.from(sourceActors)
-            });
-            continue;
-          }
-      }
-      const effectData = {
-        ...effect.toObject(),
-        disabled: false,
-        // Maintain the original effect's origin
-        origin: effect.origin || item.uuid,
-        flags: {
-          ...effect.flags,
-          [SYSTEM_ID]: {
-            ...effect.flags?.[SYSTEM_ID],
-            // Preserve existing system flags
-            overlay: effect.getFlag(SYSTEM_ID, "overlay"),
-            stackable: effect.getFlag(SYSTEM_ID, "stackable"),
-            // Track who enabled this effect
-            transferredBy: {
-              actor: {
-                uuid: this.uuid,
-                name: this.name,
-                img: this.img
-              },
-              item: {
-                uuid: item.uuid,
-                name: item.name
-              }
-            },
-            // Maintain effect origin info needed by CombatSlotManager
-            originEffect: {
-              uuid: effect.uuid
-            }
-          }
-        }
-      };
-      game.system.log.p("[ADD LINKED EFFECTS] Prepared effect data for creation:", effectData);
-      effectsToCreate.push(effectData);
-    }
-    if (!effectsToCreate.length) {
-      game.system.log.p("[ADD LINKED EFFECTS] No effects to add");
-      return [];
-    }
-    game.system.log.p("[ADD LINKED EFFECTS] Creating effects on actor:", this.name, effectsToCreate);
-    const created = await this.createEmbeddedDocuments("ActiveEffect", effectsToCreate);
-    for (const effect of created) {
-      if (!effect.isSuppressed) {
-        await this._processEffectHooks(effect);
-      }
-    }
-    game.system.log.p("[ADD LINKED EFFECTS] Created effects:", created.map((e) => ({
-      name: e.name,
-      system: e.system,
-      flags: e.flags,
-      uuid: e.uuid
-    })));
-    return created.map((e) => e.uuid);
-  }
-  /**
-   * Process effect hooks for an effect
-   * @param {ActiveEffect} effect - The effect to process hooks for
-   * @return {Promise<void>} Returns a promise that resolves when hooks are processed
-   */
-  async _processEffectHooks(effect) {
-    game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", effect);
-    for (const change of effect.changes) {
-      const matchingMode = activeEffectModes.find((e) => e.value === change.mode);
-      if (matchingMode) {
-        if (!effectProcessors[change.key]) {
-          ui.notifications.error(`No effect processor found for key: ${change.key}`);
-          return;
-        }
-        game.system.log.g("[PROCESS EFFECT HOOKS] Processing effect:", change.key);
-        await Hooks.callAll(`FFXIV.${change.key}`, { actor: this, change, effect });
-      } else {
-        game.system.log.w("[PROCESS EFFECT HOOKS] No matching mode found for change:", change);
-      }
-    }
   }
   /**
    * Remove the first duplicate from an array
@@ -1216,53 +531,19 @@ class FFXIVActor extends Actor {
           }))
         }))
       });
-      if (!this.statuses.has("focus") && !this.system.hasMoved && !this.hasSpecificDuplicate(this.system.actionState.available, "secondary")) {
-        for (const trait of movementSacrificingTraits) {
-          const enablerEffects = trait.effects.filter(
-            (e) => e.changes.some((c) => c.key === "EnableCombatTurnSlot" && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
-          );
-          for (const effect of enablerEffects) {
-            for (const change of effect.changes) {
-              if (change.key === "EnableCombatTurnSlot" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-                const value = change.value;
-                if (!this.system.actionState.available.includes(value)) {
-                  const updated = [...this.system.actionState.available, value];
-                  await this.update({
-                    "system.actionState.available": updated
-                  });
-                }
-              }
-            }
-          }
-        }
-        await this.update({ system: { actionState: { available: [...this.system.actionState.available, "secondary"] } } });
-      }
-      if (this.statuses.has("focus") && !this.system.hasMoved && this.hasSpecificDuplicate(this.system.actionState.available, "secondary")) {
-        for (const trait of movementSacrificingTraits) {
-          const enablerEffects = trait.effects.filter(
-            (e) => e.changes.some((c) => c.key === "EnableCombatTurnSlot" && c.mode === ACTIVE_EFFECT_MODES.CUSTOM)
-          );
-          for (const effect of enablerEffects) {
-            for (const change of effect.changes) {
-              if (change.key === "EnableCombatTurnSlot" && change.mode === ACTIVE_EFFECT_MODES.CUSTOM) {
-                const value = change.value;
-                if (this.system.actionState.available.includes(value)) {
-                  const updated = this.system.actionState.available.filter((slot) => slot !== value);
-                  await this.update({
-                    "system.actionState.available": updated
-                  });
-                }
-              }
-            }
-          }
-        }
-        await this.update({ system: { actionState: { available: this.removeFirstDuplicate(this.system.actionState.available, "secondary") } } });
-      }
+      this.handlePluginOverrides();
     }
     if (["ko", "dead", "comatose", "brink", "surprised", "bind", "stun"].includes(statusId)) {
       options = { ...options, overlay: true };
     }
     return super.toggleStatusEffect(statusId, options);
+  }
+  /**
+   * Handles plugin overrides for status effect toggling
+   * @override
+   * @param {Array<Trait>} movementSacrificingTraits - The traits that sacrifice movement
+   */
+  async handlePluginOverrides(movementSacrificingTraits) {
   }
   /** @override */
   prepareData() {
@@ -1372,6 +653,113 @@ class FFXIVItem extends Item {
     return this.effects?.size > 0;
   }
 }
+class FFActiveEffect extends ActiveEffect {
+  static {
+    __name(this, "FFActiveEffect");
+  }
+  /**
+   * Creates a new FFXIV active effect
+   * @param {object} data - The effect data
+   * @param {object} context - The initialization context
+   */
+  constructor(data, context) {
+    super(data, context);
+  }
+  /**
+   * Gets whether the effect is temporary
+   * @return {boolean} Returns true if the effect is temporary
+   */
+  get isTemporary() {
+    if (this.getFlag(SYSTEM_ID, "overlay"))
+      return true;
+    return super.isTemporary;
+  }
+  /**
+   * Check if the effect is transferred from an item 
+   * (i.e. a passive effect from an item owned by that actor, 
+   * rather than an active effect transferred as a result of an action 
+   * by another actor)
+   * @return {boolean} Whether the effect is transferred from an item
+   */
+  get isTransferred() {
+    const origin = fromUuidSync(this.origin);
+    if (!origin?.transferredEffects?.length)
+      return false;
+    return Array.isArray(origin.transferredEffects) && origin.transferredEffects.length > 0;
+  }
+  /**
+   * Updates the combat duration
+   * @return {Promise<void>} Returns a promise that resolves when the duration is updated
+   */
+  async updateCombatDuration() {
+    game.system.log.o("[ACTIVE EFFECT] Starting updateCombatDuration for:", {
+      name: this.name,
+      origin: this.origin,
+      duration: this.duration
+    });
+    const originUuid = this.origin;
+    if (!originUuid) {
+      game.system.log.w("[ACTIVE EFFECT] No origin UUID found");
+      return;
+    }
+    const originItem = await fromUuid(originUuid);
+    if (!originItem) {
+      game.system.log.w("[ACTIVE EFFECT] No origin item found for UUID:", originUuid);
+      return;
+    }
+    game.system.log.o("[ACTIVE EFFECT] Found origin item:", {
+      name: originItem.name,
+      system: originItem.system
+    });
+    const duration = originItem.system.duration;
+    if (!duration) {
+      game.system.log.w("[ACTIVE EFFECT] No duration found on origin item");
+      return;
+    }
+    const effectData = {
+      duration: {
+        startRound: game.combat?.round ?? 0,
+        startTurn: game.combat?.turn ?? 0
+      }
+    };
+    if (originItem.system.durationUnits === "rounds") {
+      effectData.duration.rounds = originItem.system.duration;
+      effectData.duration.turns = 0;
+      game.system.log.o("[ACTIVE EFFECT] Setting rounds duration:", effectData.duration);
+    } else if (originItem.system.durationUnits === "turns") {
+      effectData.duration.turns = originItem.system.duration;
+      effectData.duration.rounds = 0;
+      game.system.log.o("[ACTIVE EFFECT] Setting turns duration:", effectData.duration);
+    }
+    game.system.log.o("[ACTIVE EFFECT] Updating effect with duration:", effectData);
+    await this.update(effectData);
+  }
+  async delete(options = {}) {
+    game.system.log.o("[ACTIVE EFFECT] Starting effect deletion:", {
+      effectName: this.name,
+      effectId: this.id,
+      effectDuration: this.duration,
+      effectFlags: this.flags,
+      effectChanges: this.changes,
+      effectDisabled: this.disabled,
+      options
+    });
+    try {
+      const result = await super.delete(options);
+      game.system.log.o("[ACTIVE EFFECT] Effect deletion completed:", {
+        effectName: this.name,
+        result
+      });
+      return result;
+    } catch (error) {
+      game.system.log.e("[ACTIVE EFFECT] Effect deletion failed:", {
+        effectName: this.name,
+        error
+      });
+      throw error;
+    }
+  }
+}
 const {
   StringField: StringField$8,
   ArrayField: ArrayField$6,
@@ -1422,165 +810,6 @@ class FFToken extends Token {
     return this.document.disposition === -1;
   }
 }
-const log$1 = {
-  ASSERT: 1,
-  ERROR: 2,
-  WARN: 3,
-  INFO: 4,
-  DEBUG: 5,
-  VERBOSE: 6,
-  set level(level) {
-    this.a = level >= this.ASSERT ? console.assert.bind(window.console, LOG_PREFIX) : () => {
-    };
-    this.e = level >= this.ERROR ? console.error.bind(window.console, LOG_PREFIX) : () => {
-    };
-    this.w = level >= this.WARN ? console.warn.bind(window.console, LOG_PREFIX) : () => {
-    };
-    this.i = level >= this.INFO ? console.info.bind(window.console, LOG_PREFIX) : () => {
-    };
-    this.d = level >= this.DEBUG ? console.debug.bind(window.console, LOG_PREFIX) : () => {
-    };
-    this.v = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX) : () => {
-    };
-    this.p = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.p) : () => {
-    };
-    this.g = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.g) : () => {
-    };
-    this.r = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.r) : () => {
-    };
-    this.o = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.o) : () => {
-    };
-    this.b = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.b) : () => {
-    };
-    this.y = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.y) : () => {
-    };
-    this.c = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.c) : () => {
-    };
-    this.m = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.m) : () => {
-    };
-    this.gr = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.gr) : () => {
-    };
-    this.br = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.br) : () => {
-    };
-    this.pi = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.pi) : () => {
-    };
-    this.t = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.t) : () => {
-    };
-    this.purple = this.p;
-    this.green = this.g;
-    this.red = this.r;
-    this.orange = this.o;
-    this.blue = this.b;
-    this.yellow = this.y;
-    this.cyan = this.c;
-    this.magenta = this.m;
-    this.gray = this.gr;
-    this.brown = this.br;
-    this.pink = this.pi;
-    this.teal = this.t;
-    this.loggingLevel = level;
-  },
-  get level() {
-    return this.loggingLevel;
-  }
-};
-async function toggleBookmark(item, callback = () => {
-}) {
-  await item.update({ system: { favourite: !item.system.favourite } });
-  callback();
-}
-__name(toggleBookmark, "toggleBookmark");
-function getEffectOrigin(effect, tryFromUuidSync = false) {
-  if (!game.actors)
-    return null;
-  const origin = effect._source.origin;
-  if (!origin)
-    return null;
-  const split = origin.split(".");
-  let item = void 0;
-  if (split.length == 4) {
-    item = effect.parent.items.get(split[3]);
-  } else {
-    try {
-      item = game.actors?.get(origin) || game.items?.get(origin) || game.packs?.get("effects");
-      if (!item && tryFromUuidSync) {
-        item = fromUuidSync(origin);
-      }
-    } catch (error) {
-      console.warn("getEffectOrigin", effect, origin);
-      throw error;
-    }
-  }
-  return item;
-}
-__name(getEffectOrigin, "getEffectOrigin");
-function localize$1(string) {
-  return game.i18n.localize(`${SYSTEM_CODE}.${string}`);
-}
-__name(localize$1, "localize$1");
-function isParentActor(item) {
-  return item?.parent?.constructor?.name === "FFXIVActor";
-}
-__name(isParentActor, "isParentActor");
-function ucfirst(str) {
-  if (!str)
-    return str;
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
-__name(ucfirst, "ucfirst");
-function generateRandomElementId(length = 8) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return result;
-}
-__name(generateRandomElementId, "generateRandomElementId");
-function getActorOwner(actor) {
-  const owners = getOwners(actor);
-  if (owners.length === 0) {
-    return game.user;
-  }
-  if (owners.length === 1) {
-    return owners[0];
-  }
-  const owner = owners.reduce((owner2, currentOwner) => {
-    if (!currentOwner.isGM) {
-      return currentOwner;
-    }
-    return owner2;
-  }, null);
-  if (!owner) {
-    if (game.user.isGM) {
-      return game.user;
-    }
-  }
-  if (!owner) {
-    return game.users.find((u) => u.isGM);
-  }
-  return owner;
-}
-__name(getActorOwner, "getActorOwner");
-function getOwners(actor) {
-  return game.users.filter((u) => actor.testUserPermission(u, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER));
-}
-__name(getOwners, "getOwners");
-const resetUses = /* @__PURE__ */ __name(async (items) => {
-  for (const item of items) {
-    await item.update({ system: { uses: 0 } });
-  }
-}, "resetUses");
-const resetActionState = /* @__PURE__ */ __name(async (actor) => {
-  const baseActions = ["primary", "secondary"];
-  const extraActions = actor.statuses.has("focus") ? ["secondary"] : [];
-  await actor.update({
-    "system.actionState": {
-      available: [...baseActions, ...extraActions],
-      used: []
-    }
-  });
-}, "resetActionState");
 class FFCombat extends Combat {
   static {
     __name(this, "FFCombat");
@@ -1616,32 +845,6 @@ class FFCombat extends Combat {
     const currentCombatant = this.turns[this.turn];
     const nextCombatant = this.turns[this.turn + 1];
     return currentCombatant?.actor?.type === "NPC" && (!nextCombatant || nextCombatant?.actor?.type === "PC");
-  }
-  /**
-   * Reset abilities and states, action slots, and effects for all combatants
-   * @return {Promise<void>} Returns a promise that resolves when all combatants have been reset
-   */
-  async resetCombatantAbilities() {
-    const persistentConditions = ["ko", "dead", "comatose", "brink"];
-    const combatants = this.combatants.contents;
-    for (const combatant of combatants) {
-      const actor = combatant.actor;
-      if (!actor)
-        continue;
-      const items = actor.items.filter((i) => i.system.hasLimitation);
-      await resetUses(items);
-      for (const effect of actor.effects) {
-        if (effect.isTransferred) {
-          await effect.update({ disabled: true });
-        } else {
-          if (effect.statuses?.some((status) => persistentConditions.includes(status))) {
-            continue;
-          }
-          await effect.delete();
-        }
-      }
-      await resetActionState(actor);
-    }
   }
   /**
    * Return the Array of combatants sorted into initiative order
@@ -1699,209 +902,118 @@ class FFCombatants extends Combatant {
     super(object, options);
   }
 }
-class Hashing {
+class ColourContrastCalculator {
   static {
-    __name(this, "Hashing");
-  }
-  static #regexUuidv = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
-  /**
-   * @hideconstructor
-   */
-  constructor() {
-    throw new Error("Hashing constructor: This is a static class and should not be constructed.");
+    __name(this, "ColourContrastCalculator");
   }
   /**
-   * Provides a solid string hashing algorithm.
-   *
-   * Sourced from: https://stackoverflow.com/a/52171480
-   *
-   * @param {string}   str - String to hash.
-   *
-   * @param {number}   [seed=0] - A seed value altering the hash.
-   *
-   * @returns {number} Hash code.
+   * Creates a new color contrast calculator
+   * @param {string|Color} colour - The color to calculate contrast for
+   * @param {object} options - Configuration options
+   * @param {string} [options.calculationType="contrast"] - Type of calculation to perform
+   * @param {string} [options.outputFormat="hex"] - Format for the output color
    */
-  static hashCode(str, seed = 0) {
-    if (typeof str !== "string") {
-      return 0;
+  constructor(colour, { calculationType = "contrast", outputFormat = "hex" } = {}) {
+    this.colour = colour;
+    this.calculationType = calculationType;
+    this.outputFormat = outputFormat;
+  }
+  /**
+   * Converts a hex color string or Color object to RGB values
+   * @param {string|Color} hex - The hex color string or Color object to convert
+   * @return {number[]} Array of RGB values [r, g, b]
+   */
+  hexToRgb(hex) {
+    if (hex instanceof Color) {
+      return [
+        Math.round(hex.r * 255),
+        Math.round(hex.g * 255),
+        Math.round(hex.b * 255)
+      ];
     }
-    let h1 = 3735928559 ^ seed, h2 = 1103547991 ^ seed;
-    for (let ch, i = 0; i < str.length; i++) {
-      ch = str.charCodeAt(i);
-      h1 = Math.imul(h1 ^ ch, 2654435761);
-      h2 = Math.imul(h2 ^ ch, 1597334677);
+    if (typeof hex === "string") {
+      hex = hex.replace(/^#/, "");
+      const bigint = parseInt(hex, 16);
+      const r = bigint >> 16 & 255;
+      const g = bigint >> 8 & 255;
+      const b = bigint & 255;
+      return [r, g, b];
     }
-    h1 = Math.imul(h1 ^ h1 >>> 16, 2246822507) ^ Math.imul(h2 ^ h2 >>> 13, 3266489909);
-    h2 = Math.imul(h2 ^ h2 >>> 16, 2246822507) ^ Math.imul(h1 ^ h1 >>> 13, 3266489909);
-    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+    console.warn("Invalid color format provided to hexToRgb:", hex);
+    return [0, 0, 0];
   }
   /**
-   * Validates that the given string is formatted as a UUIDv4 string.
-   *
-   * @param {string}   uuid - UUID string to test.
-   *
-   * @returns {boolean} Is UUIDv4 string.
+   * Converts RGB values to a hex color string
+   * @param {number[]} rgb - Array of RGB values
+   * @return {string} Hex color string
    */
-  static isUuidv4(uuid) {
-    return this.#regexUuidv.test(uuid);
+  rgbToHex(rgb) {
+    return `#${rgb.map((val) => (val < 16 ? "0" : "") + val.toString(16)).join("")}`;
   }
   /**
-   * Generates a UUID v4 compliant ID. Please use a complete UUID generation package for guaranteed compliance.
-   *
-   * This code is an evolution of the following Gist.
-   * https://gist.github.com/jed/982883
-   *
-   * There is a public domain / free copy license attached to it that is not a standard OSS license...
-   * https://gist.github.com/jed/982883#file-license-txt
-   *
-   * @returns {string} UUIDv4
+   * Calculates brightness contrast value for RGB color
+   * @param {number[]} rgb - Array of RGB values
+   * @return {number} Brightness contrast value between 0 and 1
    */
-  static uuidv4() {
-    return ("10000000-1000-4000-8000" + -1e11).replace(/[018]/g, (c) => (c ^ (globalThis.crypto ?? globalThis.msCrypto).getRandomValues(
-      new Uint8Array(1)
-    )[0] & 15 >> c / 4).toString(16));
-  }
-}
-class Strings {
-  static {
-    __name(this, "Strings");
+  brightnessContrast(rgb) {
+    return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
   }
   /**
-   * @hideconstructor
+   * Calculates color difference between two RGB colors
+   * @param {number[]} rgb1 - First RGB color array
+   * @param {number[]} rgb2 - Second RGB color array
+   * @return {number} Color difference value
    */
-  constructor() {
-    throw new Error("Strings constructor: This is a static class and should not be constructed.");
+  differenceContrast(rgb1, rgb2) {
+    return Math.sqrt(
+      Math.pow(rgb1[0] - rgb2[0], 2) + Math.pow(rgb1[1] - rgb2[1], 2) + Math.pow(rgb1[2] - rgb2[2], 2)
+    );
   }
   /**
-   * Escape a given input string prefacing special characters with backslashes for use in a regular expression.
-   *
-   * @param {string}   string - An un-escaped input string.
-   *
-   * @returns {string} The escaped string suitable for use in a regular expression.
+   * Calculates the highest contrast color based on calculation type
+   * @return {number[]} RGB values of the highest contrast color
    */
-  static escape(string) {
-    return string.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
-  }
-  /**
-   * Normalizes a string.
-   *
-   * @param {string}   string - A string to normalize for comparisons.
-   *
-   * @returns {string} Cleaned string.
-   *
-   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-   */
-  static normalize(string) {
-    return string.trim().normalize("NFD").replace(/[\x00-\x1F]/gm, "");
-  }
-}
-class Timing {
-  static {
-    __name(this, "Timing");
-  }
-  /**
-   * @hideconstructor
-   */
-  constructor() {
-    throw new Error("Timing constructor: This is a static class and should not be constructed.");
-  }
-  /**
-   * Wraps a callback in a debounced timeout. Delay execution of the callback function until the function has not been
-   * called for the given delay in milliseconds.
-   *
-   * @template Args
-   *
-   * @param {(...args: Args[]) => void} callback - A function to execute once the debounced threshold has been passed.
-   *
-   * @param {number}   delay - An amount of time in milliseconds to delay.
-   *
-   * @returns {(...args: Args[]) => void} A wrapped function that can be called to debounce execution.
-   *
-   * @example
-   * /**
-   *  * Debounce the update invocation by 500ms.
-   *  *\/
-   * const updateDebounced = Timing.debounce(() => doc.update(), 500);
-   *
-   * // Use the function like:
-   * updateDebounced();
-   *
-   * @example
-   * /**
-   *  * Debounce the update invocation by 500ms.
-   *  *
-   *  * \@param {string} value - A value to update.
-   *  *\/
-   * const updateDebounced = Timing.debounce((value) => doc.update(value), 500);
-   *
-   * // Use the function like:
-   * updateDebounced('new value');
-   */
-  static debounce(callback, delay) {
-    if (typeof callback !== "function") {
-      throw new TypeError(`'callback' must be a function.`);
+  calculateHighestContrastColour() {
+    const inputRgb = this.hexToRgb(this.colour);
+    let highestContrastRgb;
+    if (this.calculationType === "brightness") {
+      highestContrastRgb = this.brightnessContrast(inputRgb) >= 0.5 ? [40, 32, 26] : [255, 255, 255];
+    } else if (this.calculationType === "difference") {
+      highestContrastRgb = this.differenceContrast(inputRgb, [40, 32, 26]) >= this.differenceContrast(inputRgb, [255, 255, 255]) ? [40, 32, 26] : [255, 255, 255];
+    } else if (this.calculationType === "contrast") {
+      highestContrastRgb = this.brightnessContrast(inputRgb) >= 0.5 ? [40, 32, 26] : [255, 255, 255];
+    } else {
+      throw new Error("Invalid calculationType");
     }
-    if (!Number.isInteger(delay) || delay < 0) {
-      throw new TypeError(`'delay' must be a positive integer representing milliseconds.`);
-    }
-    let timeoutId;
-    return function(...args) {
-      globalThis.clearTimeout(timeoutId);
-      timeoutId = globalThis.setTimeout(() => {
-        callback.apply(this, args);
-      }, delay);
-    };
+    return highestContrastRgb;
   }
   /**
-   * Creates a double click event handler that distinguishes between single and double clicks. Calls the `single`
-   * callback on a single click and the `double` callback on a double click. The default double click delay to invoke
-   * the `double` callback is 400 milliseconds.
-   *
-   * @param {object}   opts - Optional parameters.
-   *
-   * @param {(event: Event) => void} [opts.single] - Single click callback.
-   *
-   * @param {(event: Event) => void} [opts.double] - Double click callback.
-   *
-   * @param {number}   [opts.delay=400] - Double click delay.
-   *
-   * @returns {(event: Event) => void} The gated double-click handler.
-   *
-   * @example
-   * // Given a button element.
-   * button.addEventListener('click', Timing.doubleClick({
-   *    single: (event) => console.log('Single click: ', event),
-   *    double: (event) => console.log('Double click: ', event)
-   * });
+   * Calculates the contrast color with optional alpha
+   * @param {number} [alpha=1.0] - Alpha value for RGBA output
+   * @return {string} Contrast color in specified output format
    */
-  static doubleClick({ single, double, delay = 400 }) {
-    if (single !== void 0 && typeof single !== "function") {
-      throw new TypeError(`'single' must be a function.`);
+  calculateContrast(alpha = 1) {
+    const highestContrastRgb = this.calculateHighestContrastColour();
+    if (this.outputFormat === "hex") {
+      return this.rgbToHex(highestContrastRgb);
+    } else if (this.outputFormat === "rgb") {
+      return `rgb(${highestContrastRgb[0]}, ${highestContrastRgb[1]}, ${highestContrastRgb[2]})`;
+    } else if (this.outputFormat === "rgba") {
+      return `rgba(${highestContrastRgb[0]}, ${highestContrastRgb[1]}, ${highestContrastRgb[2]}, ${alpha})`;
+    } else {
+      throw new Error("Invalid outputFormat");
     }
-    if (double !== void 0 && typeof double !== "function") {
-      throw new TypeError(`'double' must be a function.`);
-    }
-    if (!Number.isInteger(delay) || delay < 0) {
-      throw new TypeError(`'delay' must be a positive integer representing milliseconds.`);
-    }
-    let clicks = 0;
-    let timeoutId;
-    return (event) => {
-      globalThis.clearTimeout(timeoutId);
-      clicks++;
-      if (clicks === 1) {
-        timeoutId = globalThis.setTimeout(() => {
-          if (typeof single === "function") {
-            single(event);
-          }
-          clicks = 0;
-        }, delay);
-      } else {
-        if (typeof double === "function") {
-          double(event);
-        }
-        clicks = 0;
-      }
+  }
+  /**
+   * Get CSS variables for a color including contrast and RGB values
+   * @return {object} Object containing CSS-ready color values
+   */
+  getCSSVariables() {
+    const rgbValues = this.hexToRgb(this.colour);
+    return {
+      color: this.colour instanceof Color ? this.colour.toString() : this.colour,
+      contrast: this.calculateContrast(),
+      rgb: rgbValues.join(", ")
     };
   }
 }
@@ -2966,266 +2078,214 @@ class SvelteComponent {
   }
 }
 const PUBLIC_VERSION = "4";
-const subscriber_queue = [];
-function readable(value, start) {
-  return {
-    subscribe: writable(value, start).subscribe
-  };
-}
-__name(readable, "readable");
-function writable(value, start = noop) {
-  let stop;
-  const subscribers = /* @__PURE__ */ new Set();
-  function set(new_value) {
-    if (safe_not_equal(value, new_value)) {
-      value = new_value;
-      if (stop) {
-        const run_queue = !subscriber_queue.length;
-        for (const subscriber of subscribers) {
-          subscriber[1]();
-          subscriber_queue.push(subscriber, value);
-        }
-        if (run_queue) {
-          for (let i = 0; i < subscriber_queue.length; i += 2) {
-            subscriber_queue[i][0](subscriber_queue[i + 1]);
-          }
-          subscriber_queue.length = 0;
-        }
-      }
-    }
-  }
-  __name(set, "set");
-  function update2(fn) {
-    set(fn(value));
-  }
-  __name(update2, "update");
-  function subscribe2(run2, invalidate = noop) {
-    const subscriber = [run2, invalidate];
-    subscribers.add(subscriber);
-    if (subscribers.size === 1) {
-      stop = start(set, update2) || noop;
-    }
-    run2(value);
-    return () => {
-      subscribers.delete(subscriber);
-      if (subscribers.size === 0 && stop) {
-        stop();
-        stop = null;
-      }
-    };
-  }
-  __name(subscribe2, "subscribe");
-  return { set, update: update2, subscribe: subscribe2 };
-}
-__name(writable, "writable");
-function derived(stores, fn, initial_value) {
-  const single = !Array.isArray(stores);
-  const stores_array = single ? [stores] : stores;
-  if (!stores_array.every(Boolean)) {
-    throw new Error("derived() expects stores as input, got a falsy value");
-  }
-  const auto = fn.length < 2;
-  return readable(initial_value, (set, update2) => {
-    let started = false;
-    const values = [];
-    let pending = 0;
-    let cleanup = noop;
-    const sync = /* @__PURE__ */ __name(() => {
-      if (pending) {
-        return;
-      }
-      cleanup();
-      const result = fn(single ? values[0] : values, set, update2);
-      if (auto) {
-        set(result);
-      } else {
-        cleanup = is_function(result) ? result : noop;
-      }
-    }, "sync");
-    const unsubscribers = stores_array.map(
-      (store, i) => subscribe(
-        store,
-        (value) => {
-          values[i] = value;
-          pending &= ~(1 << i);
-          if (started) {
-            sync();
-          }
-        },
-        () => {
-          pending |= 1 << i;
-        }
-      )
-    );
-    started = true;
-    sync();
-    return /* @__PURE__ */ __name(function stop() {
-      run_all(unsubscribers);
-      cleanup();
-      started = false;
-    }, "stop");
-  });
-}
-__name(derived, "derived");
-const mappedGameTargets = writable(false);
-const tokenMovement = /* @__PURE__ */ new Map();
-const resetTokenMovement = /* @__PURE__ */ __name((tokenId) => {
-  tokenMovement.set(tokenId, 0);
-}, "resetTokenMovement");
-function updateCombat() {
-  Hooks.on("updateCombat", async (combat, changed, options, userId) => {
-    if (!("turn" in changed || "round" in changed) || changed.turn === null)
-      return;
-    const previousTurn = combat.turns[combat.previous?.turn];
-    if (!previousTurn)
-      return;
-    const actor = previousTurn.actor;
-    if (!actor)
-      return;
-    const turnLimitedItems = actor.items.filter(
-      (i) => i.system.hasLimitation && i.system.limitationUnits === "turn"
-    );
-    await resetUses(turnLimitedItems);
-    await resetActionState(actor);
-    for (const combatant of combat.turns) {
-      const currentActor = combatant.actor;
-      if (!currentActor)
-        continue;
-      await currentActor.update({
-        "system.actionState.usedReaction": false
-      });
-    }
-    await actor.update({ system: { hasMoved: false } });
-    resetTokenMovement(previousTurn.token.id);
-    for (const combatant of combat.turns) {
-      const currentActor = combatant.actor;
-      if (!currentActor)
-        continue;
-      const effectProcessors2 = Object.values(effects).map((EffectClass) => new EffectClass(currentActor)).filter((processor) => typeof processor.updateCombat === "function");
-      for (const processor of effectProcessors2) {
-        await processor.updateCombat(combat, changed, options);
-      }
-    }
-  });
-}
-__name(updateCombat, "updateCombat");
-class ColourContrastCalculator {
-  static {
-    __name(this, "ColourContrastCalculator");
-  }
-  /**
-   * Creates a new color contrast calculator
-   * @param {string|Color} colour - The color to calculate contrast for
-   * @param {object} options - Configuration options
-   * @param {string} [options.calculationType="contrast"] - Type of calculation to perform
-   * @param {string} [options.outputFormat="hex"] - Format for the output color
-   */
-  constructor(colour, { calculationType = "contrast", outputFormat = "hex" } = {}) {
-    this.colour = colour;
-    this.calculationType = calculationType;
-    this.outputFormat = outputFormat;
-  }
-  /**
-   * Converts a hex color string or Color object to RGB values
-   * @param {string|Color} hex - The hex color string or Color object to convert
-   * @return {number[]} Array of RGB values [r, g, b]
-   */
-  hexToRgb(hex) {
-    if (hex instanceof Color) {
-      return [
-        Math.round(hex.r * 255),
-        Math.round(hex.g * 255),
-        Math.round(hex.b * 255)
-      ];
-    }
-    if (typeof hex === "string") {
-      hex = hex.replace(/^#/, "");
-      const bigint = parseInt(hex, 16);
-      const r = bigint >> 16 & 255;
-      const g = bigint >> 8 & 255;
-      const b = bigint & 255;
-      return [r, g, b];
-    }
-    console.warn("Invalid color format provided to hexToRgb:", hex);
-    return [0, 0, 0];
-  }
-  /**
-   * Converts RGB values to a hex color string
-   * @param {number[]} rgb - Array of RGB values
-   * @return {string} Hex color string
-   */
-  rgbToHex(rgb) {
-    return `#${rgb.map((val) => (val < 16 ? "0" : "") + val.toString(16)).join("")}`;
-  }
-  /**
-   * Calculates brightness contrast value for RGB color
-   * @param {number[]} rgb - Array of RGB values
-   * @return {number} Brightness contrast value between 0 and 1
-   */
-  brightnessContrast(rgb) {
-    return (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255;
-  }
-  /**
-   * Calculates color difference between two RGB colors
-   * @param {number[]} rgb1 - First RGB color array
-   * @param {number[]} rgb2 - Second RGB color array
-   * @return {number} Color difference value
-   */
-  differenceContrast(rgb1, rgb2) {
-    return Math.sqrt(
-      Math.pow(rgb1[0] - rgb2[0], 2) + Math.pow(rgb1[1] - rgb2[1], 2) + Math.pow(rgb1[2] - rgb2[2], 2)
-    );
-  }
-  /**
-   * Calculates the highest contrast color based on calculation type
-   * @return {number[]} RGB values of the highest contrast color
-   */
-  calculateHighestContrastColour() {
-    const inputRgb = this.hexToRgb(this.colour);
-    let highestContrastRgb;
-    if (this.calculationType === "brightness") {
-      highestContrastRgb = this.brightnessContrast(inputRgb) >= 0.5 ? [40, 32, 26] : [255, 255, 255];
-    } else if (this.calculationType === "difference") {
-      highestContrastRgb = this.differenceContrast(inputRgb, [40, 32, 26]) >= this.differenceContrast(inputRgb, [255, 255, 255]) ? [40, 32, 26] : [255, 255, 255];
-    } else if (this.calculationType === "contrast") {
-      highestContrastRgb = this.brightnessContrast(inputRgb) >= 0.5 ? [40, 32, 26] : [255, 255, 255];
-    } else {
-      throw new Error("Invalid calculationType");
-    }
-    return highestContrastRgb;
-  }
-  /**
-   * Calculates the contrast color with optional alpha
-   * @param {number} [alpha=1.0] - Alpha value for RGBA output
-   * @return {string} Contrast color in specified output format
-   */
-  calculateContrast(alpha = 1) {
-    const highestContrastRgb = this.calculateHighestContrastColour();
-    if (this.outputFormat === "hex") {
-      return this.rgbToHex(highestContrastRgb);
-    } else if (this.outputFormat === "rgb") {
-      return `rgb(${highestContrastRgb[0]}, ${highestContrastRgb[1]}, ${highestContrastRgb[2]})`;
-    } else if (this.outputFormat === "rgba") {
-      return `rgba(${highestContrastRgb[0]}, ${highestContrastRgb[1]}, ${highestContrastRgb[2]}, ${alpha})`;
-    } else {
-      throw new Error("Invalid outputFormat");
-    }
-  }
-  /**
-   * Get CSS variables for a color including contrast and RGB values
-   * @return {object} Object containing CSS-ready color values
-   */
-  getCSSVariables() {
-    const rgbValues = this.hexToRgb(this.colour);
-    return {
-      color: this.colour instanceof Color ? this.colour.toString() : this.colour,
-      contrast: this.calculateContrast(),
-      rgb: rgbValues.join(", ")
-    };
-  }
-}
 if (typeof window !== "undefined")
   (window.__svelte || (window.__svelte = { v: /* @__PURE__ */ new Set() })).v.add(PUBLIC_VERSION);
+class Hashing {
+  static {
+    __name(this, "Hashing");
+  }
+  static #regexUuidv = /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i;
+  /**
+   * @hideconstructor
+   */
+  constructor() {
+    throw new Error("Hashing constructor: This is a static class and should not be constructed.");
+  }
+  /**
+   * Provides a solid string hashing algorithm.
+   *
+   * Sourced from: https://stackoverflow.com/a/52171480
+   *
+   * @param {string}   str - String to hash.
+   *
+   * @param {number}   [seed=0] - A seed value altering the hash.
+   *
+   * @returns {number} Hash code.
+   */
+  static hashCode(str, seed = 0) {
+    if (typeof str !== "string") {
+      return 0;
+    }
+    let h1 = 3735928559 ^ seed, h2 = 1103547991 ^ seed;
+    for (let ch, i = 0; i < str.length; i++) {
+      ch = str.charCodeAt(i);
+      h1 = Math.imul(h1 ^ ch, 2654435761);
+      h2 = Math.imul(h2 ^ ch, 1597334677);
+    }
+    h1 = Math.imul(h1 ^ h1 >>> 16, 2246822507) ^ Math.imul(h2 ^ h2 >>> 13, 3266489909);
+    h2 = Math.imul(h2 ^ h2 >>> 16, 2246822507) ^ Math.imul(h1 ^ h1 >>> 13, 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+  }
+  /**
+   * Validates that the given string is formatted as a UUIDv4 string.
+   *
+   * @param {string}   uuid - UUID string to test.
+   *
+   * @returns {boolean} Is UUIDv4 string.
+   */
+  static isUuidv4(uuid) {
+    return this.#regexUuidv.test(uuid);
+  }
+  /**
+   * Generates a UUID v4 compliant ID. Please use a complete UUID generation package for guaranteed compliance.
+   *
+   * This code is an evolution of the following Gist.
+   * https://gist.github.com/jed/982883
+   *
+   * There is a public domain / free copy license attached to it that is not a standard OSS license...
+   * https://gist.github.com/jed/982883#file-license-txt
+   *
+   * @returns {string} UUIDv4
+   */
+  static uuidv4() {
+    return ("10000000-1000-4000-8000" + -1e11).replace(/[018]/g, (c) => (c ^ (globalThis.crypto ?? globalThis.msCrypto).getRandomValues(
+      new Uint8Array(1)
+    )[0] & 15 >> c / 4).toString(16));
+  }
+}
+class Strings {
+  static {
+    __name(this, "Strings");
+  }
+  /**
+   * @hideconstructor
+   */
+  constructor() {
+    throw new Error("Strings constructor: This is a static class and should not be constructed.");
+  }
+  /**
+   * Escape a given input string prefacing special characters with backslashes for use in a regular expression.
+   *
+   * @param {string}   string - An un-escaped input string.
+   *
+   * @returns {string} The escaped string suitable for use in a regular expression.
+   */
+  static escape(string) {
+    return string.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+  }
+  /**
+   * Normalizes a string.
+   *
+   * @param {string}   string - A string to normalize for comparisons.
+   *
+   * @returns {string} Cleaned string.
+   *
+   * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
+   */
+  static normalize(string) {
+    return string.trim().normalize("NFD").replace(/[\x00-\x1F]/gm, "");
+  }
+}
+class Timing {
+  static {
+    __name(this, "Timing");
+  }
+  /**
+   * @hideconstructor
+   */
+  constructor() {
+    throw new Error("Timing constructor: This is a static class and should not be constructed.");
+  }
+  /**
+   * Wraps a callback in a debounced timeout. Delay execution of the callback function until the function has not been
+   * called for the given delay in milliseconds.
+   *
+   * @template Args
+   *
+   * @param {(...args: Args[]) => void} callback - A function to execute once the debounced threshold has been passed.
+   *
+   * @param {number}   delay - An amount of time in milliseconds to delay.
+   *
+   * @returns {(...args: Args[]) => void} A wrapped function that can be called to debounce execution.
+   *
+   * @example
+   * /**
+   *  * Debounce the update invocation by 500ms.
+   *  *\/
+   * const updateDebounced = Timing.debounce(() => doc.update(), 500);
+   *
+   * // Use the function like:
+   * updateDebounced();
+   *
+   * @example
+   * /**
+   *  * Debounce the update invocation by 500ms.
+   *  *
+   *  * \@param {string} value - A value to update.
+   *  *\/
+   * const updateDebounced = Timing.debounce((value) => doc.update(value), 500);
+   *
+   * // Use the function like:
+   * updateDebounced('new value');
+   */
+  static debounce(callback, delay) {
+    if (typeof callback !== "function") {
+      throw new TypeError(`'callback' must be a function.`);
+    }
+    if (!Number.isInteger(delay) || delay < 0) {
+      throw new TypeError(`'delay' must be a positive integer representing milliseconds.`);
+    }
+    let timeoutId;
+    return function(...args) {
+      globalThis.clearTimeout(timeoutId);
+      timeoutId = globalThis.setTimeout(() => {
+        callback.apply(this, args);
+      }, delay);
+    };
+  }
+  /**
+   * Creates a double click event handler that distinguishes between single and double clicks. Calls the `single`
+   * callback on a single click and the `double` callback on a double click. The default double click delay to invoke
+   * the `double` callback is 400 milliseconds.
+   *
+   * @param {object}   opts - Optional parameters.
+   *
+   * @param {(event: Event) => void} [opts.single] - Single click callback.
+   *
+   * @param {(event: Event) => void} [opts.double] - Double click callback.
+   *
+   * @param {number}   [opts.delay=400] - Double click delay.
+   *
+   * @returns {(event: Event) => void} The gated double-click handler.
+   *
+   * @example
+   * // Given a button element.
+   * button.addEventListener('click', Timing.doubleClick({
+   *    single: (event) => console.log('Single click: ', event),
+   *    double: (event) => console.log('Double click: ', event)
+   * });
+   */
+  static doubleClick({ single, double, delay = 400 }) {
+    if (single !== void 0 && typeof single !== "function") {
+      throw new TypeError(`'single' must be a function.`);
+    }
+    if (double !== void 0 && typeof double !== "function") {
+      throw new TypeError(`'double' must be a function.`);
+    }
+    if (!Number.isInteger(delay) || delay < 0) {
+      throw new TypeError(`'delay' must be a positive integer representing milliseconds.`);
+    }
+    let clicks = 0;
+    let timeoutId;
+    return (event) => {
+      globalThis.clearTimeout(timeoutId);
+      clicks++;
+      if (clicks === 1) {
+        timeoutId = globalThis.setTimeout(() => {
+          if (typeof single === "function") {
+            single(event);
+          }
+          clicks = 0;
+        }, delay);
+      } else {
+        if (typeof double === "function") {
+          double(event);
+        }
+        clicks = 0;
+      }
+    };
+  }
+}
 const s_TAG_OBJECT = "[object Object]";
 function deepMerge(target = {}, ...sourceObj) {
   if (Object.prototype.toString.call(target) !== s_TAG_OBJECT) {
@@ -3374,6 +2434,107 @@ function _deepMerge(target = {}, ...sourceObj) {
   return target;
 }
 __name(_deepMerge, "_deepMerge");
+const subscriber_queue = [];
+function readable(value, start) {
+  return {
+    subscribe: writable(value, start).subscribe
+  };
+}
+__name(readable, "readable");
+function writable(value, start = noop) {
+  let stop;
+  const subscribers = /* @__PURE__ */ new Set();
+  function set(new_value) {
+    if (safe_not_equal(value, new_value)) {
+      value = new_value;
+      if (stop) {
+        const run_queue = !subscriber_queue.length;
+        for (const subscriber of subscribers) {
+          subscriber[1]();
+          subscriber_queue.push(subscriber, value);
+        }
+        if (run_queue) {
+          for (let i = 0; i < subscriber_queue.length; i += 2) {
+            subscriber_queue[i][0](subscriber_queue[i + 1]);
+          }
+          subscriber_queue.length = 0;
+        }
+      }
+    }
+  }
+  __name(set, "set");
+  function update2(fn) {
+    set(fn(value));
+  }
+  __name(update2, "update");
+  function subscribe2(run2, invalidate = noop) {
+    const subscriber = [run2, invalidate];
+    subscribers.add(subscriber);
+    if (subscribers.size === 1) {
+      stop = start(set, update2) || noop;
+    }
+    run2(value);
+    return () => {
+      subscribers.delete(subscriber);
+      if (subscribers.size === 0 && stop) {
+        stop();
+        stop = null;
+      }
+    };
+  }
+  __name(subscribe2, "subscribe");
+  return { set, update: update2, subscribe: subscribe2 };
+}
+__name(writable, "writable");
+function derived(stores, fn, initial_value) {
+  const single = !Array.isArray(stores);
+  const stores_array = single ? [stores] : stores;
+  if (!stores_array.every(Boolean)) {
+    throw new Error("derived() expects stores as input, got a falsy value");
+  }
+  const auto = fn.length < 2;
+  return readable(initial_value, (set, update2) => {
+    let started = false;
+    const values = [];
+    let pending = 0;
+    let cleanup = noop;
+    const sync = /* @__PURE__ */ __name(() => {
+      if (pending) {
+        return;
+      }
+      cleanup();
+      const result = fn(single ? values[0] : values, set, update2);
+      if (auto) {
+        set(result);
+      } else {
+        cleanup = is_function(result) ? result : noop;
+      }
+    }, "sync");
+    const unsubscribers = stores_array.map(
+      (store, i) => subscribe(
+        store,
+        (value) => {
+          values[i] = value;
+          pending &= ~(1 << i);
+          if (started) {
+            sync();
+          }
+        },
+        () => {
+          pending |= 1 << i;
+        }
+      )
+    );
+    started = true;
+    sync();
+    return /* @__PURE__ */ __name(function stop() {
+      run_all(unsubscribers);
+      cleanup();
+      started = false;
+    }, "stop");
+  });
+}
+__name(derived, "derived");
 function isMinimalWritableStore(store) {
   if (store === null || store === void 0) {
     return false;
@@ -5176,6 +4337,151 @@ class TJSDocument {
     }
   }
 }
+const log$1 = {
+  ASSERT: 1,
+  ERROR: 2,
+  WARN: 3,
+  INFO: 4,
+  DEBUG: 5,
+  VERBOSE: 6,
+  set level(level) {
+    this.a = level >= this.ASSERT ? console.assert.bind(window.console, LOG_PREFIX) : () => {
+    };
+    this.e = level >= this.ERROR ? console.error.bind(window.console, LOG_PREFIX) : () => {
+    };
+    this.w = level >= this.WARN ? console.warn.bind(window.console, LOG_PREFIX) : () => {
+    };
+    this.i = level >= this.INFO ? console.info.bind(window.console, LOG_PREFIX) : () => {
+    };
+    this.d = level >= this.DEBUG ? console.debug.bind(window.console, LOG_PREFIX) : () => {
+    };
+    this.v = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX) : () => {
+    };
+    this.p = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.p) : () => {
+    };
+    this.g = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.g) : () => {
+    };
+    this.r = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.r) : () => {
+    };
+    this.o = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.o) : () => {
+    };
+    this.b = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.b) : () => {
+    };
+    this.y = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.y) : () => {
+    };
+    this.c = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.c) : () => {
+    };
+    this.m = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.m) : () => {
+    };
+    this.gr = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.gr) : () => {
+    };
+    this.br = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.br) : () => {
+    };
+    this.pi = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.pi) : () => {
+    };
+    this.t = level >= this.VERBOSE ? console.log.bind(window.console, LOG_PREFIX_COLOR, LOG_STYLES.t) : () => {
+    };
+    this.purple = this.p;
+    this.green = this.g;
+    this.red = this.r;
+    this.orange = this.o;
+    this.blue = this.b;
+    this.yellow = this.y;
+    this.cyan = this.c;
+    this.magenta = this.m;
+    this.gray = this.gr;
+    this.brown = this.br;
+    this.pink = this.pi;
+    this.teal = this.t;
+    this.loggingLevel = level;
+  },
+  get level() {
+    return this.loggingLevel;
+  }
+};
+async function toggleBookmark(item, callback = () => {
+}) {
+  await item.update({ system: { favourite: !item.system.favourite } });
+  callback();
+}
+__name(toggleBookmark, "toggleBookmark");
+function getEffectOrigin(effect, tryFromUuidSync = false) {
+  if (!game.actors)
+    return null;
+  const origin = effect._source.origin;
+  if (!origin)
+    return null;
+  const split = origin.split(".");
+  let item = void 0;
+  if (split.length == 4) {
+    item = effect.parent.items.get(split[3]);
+  } else {
+    try {
+      item = game.actors?.get(origin) || game.items?.get(origin) || game.packs?.get("effects");
+      if (!item && tryFromUuidSync) {
+        item = fromUuidSync(origin);
+      }
+    } catch (error) {
+      console.warn("getEffectOrigin", effect, origin);
+      throw error;
+    }
+  }
+  return item;
+}
+__name(getEffectOrigin, "getEffectOrigin");
+function localize$1(string) {
+  return game.i18n.localize(`${SYSTEM_CODE}.${string}`);
+}
+__name(localize$1, "localize$1");
+function isParentActor(item) {
+  return item?.parent?.constructor?.name === "FFXIVActor";
+}
+__name(isParentActor, "isParentActor");
+function ucfirst(str) {
+  if (!str)
+    return str;
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+__name(ucfirst, "ucfirst");
+function generateRandomElementId(length = 8) {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
+__name(generateRandomElementId, "generateRandomElementId");
+function getActorOwner(actor) {
+  const owners = getOwners(actor);
+  if (owners.length === 0) {
+    return game.user;
+  }
+  if (owners.length === 1) {
+    return owners[0];
+  }
+  const owner = owners.reduce((owner2, currentOwner) => {
+    if (!currentOwner.isGM) {
+      return currentOwner;
+    }
+    return owner2;
+  }, null);
+  if (!owner) {
+    if (game.user.isGM) {
+      return game.user;
+    }
+  }
+  if (!owner) {
+    return game.users.find((u) => u.isGM);
+  }
+  return owner;
+}
+__name(getActorOwner, "getActorOwner");
+function getOwners(actor) {
+  return game.users.filter((u) => actor.testUserPermission(u, CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER));
+}
+__name(getOwners, "getOwners");
+const mappedGameTargets = writable(false);
 function formatDotpath(path) {
   return path.replace(/\[/g, ".").replace(/]/g, "");
 }
@@ -6111,12 +5417,12 @@ function instance$1d($$self, $$props, $$invalidate) {
       ui.notifications.error("The actor doesn't have sufficient quantity of this item to apply.");
       return;
     }
-    const effects2 = item.effects;
-    game.system.log.d("effects", effects2);
+    const effects = item.effects;
+    game.system.log.d("effects", effects);
     const customChanges = [];
     const customMode = activeEffectModes.find((x) => x.label === "custom").value;
     game.system.log.d("customMode", customMode);
-    for (const effect of effects2) {
+    for (const effect of effects) {
       const changes = effect.changes;
       for (const change of changes) {
         const mode = change.mode;
@@ -10303,73 +9609,42 @@ function renderChatMessage() {
   });
 }
 __name(renderChatMessage, "renderChatMessage");
-function preDeleteChatMessage() {
-  Hooks.on("preDeleteChatMessage", async (message) => {
-    const FFMessage = message.getFlag(SYSTEM_ID, "data");
-    if (!FFMessage || !FFMessage.actor || !FFMessage.item || FFMessage.item.type !== "action")
-      return;
-    const state = message.getFlag(SYSTEM_ID, "state");
-    if (state?.damageResults) {
-      const hasAppliedDamage = Object.values(state.damageResults).some((result) => result.applied);
-      if (hasAppliedDamage) {
-        game.system.log.w("[SLOT:RESTORE] Message has applied damage results, not restoring slot");
-        return;
+function renderCombatTracker() {
+  Hooks.on("renderCombatTracker", (app, html, data) => {
+    const isCombatActive = !!game.combat?.started;
+    const updateDebounced = Timing.debounce(async (combatant, value) => {
+      const newInitiative = parseInt(value, 10);
+      if (!isNaN(newInitiative) && combatant) {
+        await combatant.update({ initiative: newInitiative });
       }
-    }
-    const actor = game.actors.get(FFMessage.actor._id);
-    if (!actor)
-      return;
-    const { actionState } = actor.system;
-    const usedAction = actionState.used.find((u) => u.messageId === message.id);
-    if (state?.mpCost && !state.mpRestored) {
-      const currentMP = actor.system.points.MP.val;
-      try {
-        await actor.update({
-          "system.points.MP.val": currentMP + state.mpCost
+    }, 600);
+    html.find(".combatant").each((index, element2) => {
+      const combatantId = $(element2).data("combatant-id");
+      const combatant = game.combat?.combatants.get(combatantId);
+      if (combatant && !isCombatActive) {
+        const $initiative = $(element2).find(".initiative");
+        $initiative.attr("contenteditable", "true");
+        $initiative.on("input", (event) => {
+          updateDebounced(combatant, $(event.currentTarget).text());
         });
-        await message.update({
-          [`flags.${SYSTEM_ID}.state.mpRestored`]: true
+        $initiative.on("dblclick contextmenu", (event) => {
+          event.stopPropagation();
+          event.preventDefault();
         });
-      } catch (error) {
-        game.system.log.e("[MP:RESTORE] Error restoring MP cost:", error);
+        $initiative.on("blur", async (event) => {
+          const newInitiative = parseInt($(event.currentTarget).text(), 10);
+          if (!isNaN(newInitiative) && combatant) {
+            await combatant.update({ initiative: newInitiative });
+          }
+        });
       }
-    }
-    if (usedAction) {
-      await actor.update({
-        "system.actionState": {
-          available: [...actionState.available, usedAction.type],
-          used: actionState.used.filter((u) => u.messageId !== message.id)
-        }
-      });
-    }
-  });
-}
-__name(preDeleteChatMessage, "preDeleteChatMessage");
-function targetToken() {
-  Hooks.on("targetToken", (User, Token2) => {
-    const targets = game.user.targets.filter((target) => {
-      if (Token2._id === target._id && target == false)
-        return false;
-      return true;
-    }).map((target) => {
-      return {
-        avatar: target.document.texture.src,
-        actorUuid: target.actor.uuid,
-        // map the token actor (not the linked actor)
-        clickedByUserId: User._id,
-        tokenUuid: target.document.uuid
-      };
     });
-    mappedGameTargets.set(targets);
+    if (data.combat?.turns?.length) {
+      Hooks.call("updateCombatant", data.combat.turns[0], {});
+    }
   });
 }
-__name(targetToken, "targetToken");
-function deleteCombat() {
-  Hooks.on("deleteCombat", async (combat) => {
-    await combat.resetCombatantAbilities();
-  });
-}
-__name(deleteCombat, "deleteCombat");
+__name(renderCombatTracker, "renderCombatTracker");
 function updateCombatant() {
   Hooks.on("updateCombatant", async (combatant, updateData) => {
     const combat = combatant.parent;
@@ -10407,20 +9682,6 @@ function updateCombatant() {
   });
 }
 __name(updateCombatant, "updateCombatant");
-function preUpdateToken() {
-  Hooks.on("preUpdateToken", async (tokenDocument, update2) => {
-    const actor = game.actors.get(tokenDocument.actorId);
-    if (actor.statuses.has("focus") && (update2.x || update2.y)) {
-      delete update2.x;
-      delete update2.y;
-      ui.notifications.warn(game.i18n.localize("FFXIV.Errors.CannotMoveWhileFocused"));
-    }
-    if (update2.x || update2.y) {
-      actor.update({ system: { hasMoved: true } });
-    }
-  });
-}
-__name(preUpdateToken, "preUpdateToken");
 function getDefaultStatusEffects() {
   return [
     {
@@ -10612,9 +9873,6 @@ function canvasReady$1() {
   });
 }
 __name(canvasReady$1, "canvasReady$1");
-function updateActiveEffect() {
-}
-__name(updateActiveEffect, "updateActiveEffect");
 function backInOut(t) {
   const s = 1.70158 * 1.525;
   if ((t *= 2) < 1)
@@ -32740,2385 +31998,7 @@ function createFilterQuery(properties, { caseSensitive = false, store } = {}) {
   return filterQuery;
 }
 __name(createFilterQuery, "createFilterQuery");
-class RollCalc {
-  static {
-    __name(this, "RollCalc");
-  }
-  /**
-   * Creates a new RollCalc instance
-   * @param {object} params - The parameters for the roll calculation
-   */
-  constructor(params) {
-    this.params = params;
-    this.store = writable({});
-    this.subscribe = this.store.subscribe;
-    this.set = this.store.set;
-    this.update = this.store.update;
-    this.RG = new CONFIG.FFXIV.RollGuards(this.params.actor);
-  }
-  /**
-   * Send the roll to chat
-   * @return {Promise<void>} Returns a promise that resolves when the message is sent
-   */
-  async send() {
-    if (this.params.rollType) {
-      let message = await this[this.params.rollType](this.params);
-      if (message === false)
-        return;
-      message.sound = "sounds/dice.wav";
-      message.rollType = this.params.rollType;
-      message.applied = false;
-      message = Object.assign({}, this.message, message);
-      await this.createChatMessage(message);
-    }
-  }
-  /**
-   * Perform a dice roll
-   * @param {number} die - The die size
-   * @param {number} noOfDice - Number of dice to roll
-   * @param {number} modifier - Roll modifier
-   * @param {string} keep - Keep modifier
-   * @return {Promise<object>} Returns a promise that resolves with the roll result
-   */
-  async roll(die = 4, noOfDice = 1, modifier = 0, keep = "") {
-    const rollString = `max(${noOfDice}d${die}${keep}${modifier === 0 ? "" : modifier > 0 ? "+" + modifier : modifier},1)`;
-    const roll = new Roll(rollString);
-    if (game.version < 12) {
-      await roll.roll({ async: true });
-    } else {
-      await roll.roll();
-    }
-    if (game.modules.get("dice-so-nice")?.active) {
-      await game.dice3d.showForRoll(roll);
-    }
-    return { roll, die, noOfDice, error: false };
-  }
-  /**
-   * Play a sound for the message
-   * @param {string} soundPath - Path to the sound file
-   * @return {void} Nothing
-   */
-  playMessageSound(soundPath) {
-    const customSound = game.settings.get(SYSTEM_ID, "chatMessageSound").trim();
-    if (!soundPath && customSound !== "") {
-      soundPath = customSound;
-    }
-    if (soundPath) {
-      foundry.audio.AudioHelper.play({ src: soundPath, volume: 1, autoplay: true, loop: false });
-    }
-  }
-  /**
-   * Create a chat message for the roll
-   * @param {object} props - The message properties
-   * @return {Promise<void>} Returns a promise that resolves when the message is created
-   */
-  async createChatMessage(props) {
-    const data = { ...props };
-    const item = props.Item ? props.Item : fromUuidSync(props.itemUuid);
-    const actor = fromUuidSync(props.actorUuid);
-    if (!item) {
-      ui.notifications.error("Item cannot be used from a compendium Actor.");
-      return;
-    }
-    if (!actor) {
-      ui.notifications.error("Actor not found");
-      return;
-    }
-    await ChatMessage.create({
-      user: game.user.id,
-      flags: { [SYSTEM_ID]: { data } },
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor }) : null
-    });
-    this.playMessageSound();
-  }
-}
-class DefaultChatHandler {
-  static {
-    __name(this, "DefaultChatHandler");
-  }
-  /**
-   * @param {Actor} actor - The actor this handler is for
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * @param {Item} item - The item to create a chat message for
-   */
-  handle(item) {
-    ChatMessage.create({
-      user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "RollChat",
-            actor: {
-              _id: this.actor._id,
-              name: this.actor.name,
-              img: this.actor.img
-            },
-            item: {
-              _id: item._id,
-              uuid: item.uuid,
-              name: item.name,
-              img: item.img,
-              type: item.type,
-              system: item.system
-            }
-          }
-        }
-      }
-    });
-  }
-}
-class ActionHandler {
-  static {
-    __name(this, "ActionHandler");
-  }
-  /**
-   * @param {Actor} actor - The actor this handler is for
-   */
-  constructor(actor) {
-    this.actor = actor;
-    this.DefaultChat = new DefaultChatHandler(actor);
-  }
-  /**
-   * Handle an action ability
-   * @param {Item} item - The action item
-   * @param {Object} [options={}] - Additional options
-   * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
-   */
-  async handle(item, options = {}) {
-    console.log("[FFXIV] | [ACTION HANDLER] Starting handle", {
-      itemName: item?.name,
-      options,
-      stack: new Error().stack
-      // This will show us the call stack
-    });
-    try {
-      this.options = options;
-      const { targets, hasTargets, targetIds } = this._getActionTargets();
-      const limiterType = this._checkAbilityLimiter();
-      let roll;
-      let isCritical = false;
-      let d20Result = null;
-      let isSuccess;
-      let message;
-      await this._handleCostMP(item);
-      if (item.system.hasCR) {
-        ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
-      } else {
-        if (item.system.hasBaseEffectDamage || item.system.hasBaseEffectHealing || item.system.hasBaseEffectRestoreMP) {
-          message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
-        } else {
-          this.DefaultChat.handle(item);
-        }
-      }
-      if (limiterType !== "DamageOnly") {
-        if (item.system.baseEffectHealing) {
-          await this._handleHealing(item, this.actor, isCritical);
-        }
-        if (item.system.hasBaseEffectRestoreMP && item.system.baseEffectRestoreMP) {
-          await this._handleMPRestoration(item);
-        }
-        if (item.system.hasBaseEffectBarrier && item.system.baseEffectBP) {
-          await this._handleBarrier(item);
-        }
-      }
-      await Hooks.callAll("FFXIV.onAbilityUse", {
-        actor: this.actor,
-        item,
-        isNewAbilityUse: true
-      });
-      console.log("[FFXIV] | [ACTION HANDLER] Calling ability use hook", {
-        itemName: item?.name,
-        isNewAbilityUse: true,
-        stack: new Error().stack
-      });
-      return {
-        handledSuccessfully: true,
-        isCritical,
-        roll,
-        d20Result,
-        hasTargets,
-        targets,
-        isSuccess,
-        message
-      };
-    } catch (error) {
-      game.system.log.e("Error in action handler", error);
-      ui.notifications.error(
-        game.i18n.format("FFXIV.Errors.ActionHandlingFailed", { target: this.actor.name })
-      );
-      return { handledSuccessfully: false };
-    }
-  }
-  /**
-   * @internal
-   * Retrieves targets from the user and checks if they exist.
-   */
-  _getActionTargets() {
-    const targets = game.user.targets;
-    const hasTargets = targets.size > 0;
-    const targetIds = Array.from(targets).map((target) => target.id);
-    return { targets, hasTargets, targetIds };
-  }
-  /**
-   * @internal
-   * Creates and returns the final message, roll, and critical data if an item uses CR checks.
-   */
-  async _rollWithCR(item, targets, hasTargets, targetIds) {
-    const { roll, isCritical, d20Result } = await this._handleRollWithModifiers(item);
-    let isSuccess = false;
-    const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
-    messageData.flags[SYSTEM_ID].data.isCritical = isCritical;
-    messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
-    if (hasTargets) {
-      const {
-        crValue,
-        targetActor
-      } = this._getTargetCRValue(item, targets);
-      isSuccess = this._evaluateSuccess({ roll, crValue, isCritical });
-      game.system.log.o("[ABILITY:ROLL] CR check isSuccess:", isSuccess);
-      messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
-      game.system.log.o("[ABILITY:ROLL] CR check:", {
-        itemName: item.name,
-        rollTotal: roll.total,
-        CR: item.system.CR,
-        crValue,
-        isSuccess,
-        isCritical,
-        d20Result
-      });
-    }
-    const message = await roll.toMessage(messageData);
-    return { message, roll, isCritical, d20Result, isSuccess };
-  }
-  /**
-   * @internal
-   * Handle healing from an action
-   * @param {Item} item - The action item
-   * @param {Actor} targetActor - The actor to heal
-   * @param {boolean} isCritical - Whether this was a critical hit
-   * @return {Promise<void>} A promise that resolves when healing is complete
-   */
-  async _handleHealing(item, targetActor, isCritical = false) {
-    if (!item.system.baseEffectHealing)
-      return;
-    const healingRoll = await new Roll(item.system.baseEffectHealing).evaluate();
-    const healingAmount = healingRoll.total;
-    game.system.log.o("[HEALING] Applying healing:", {
-      itemName: item.name,
-      targetName: targetActor.name,
-      healingAmount,
-      isCritical
-    });
-    const currentHP = targetActor.system.points.HP.val;
-    const maxHP = targetActor.system.points.HP.max;
-    const newHP = Math.min(currentHP + healingAmount, maxHP);
-    game.system.log.o("[HEALING] HP values:", {
-      currentHP,
-      maxHP,
-      newHP,
-      healingApplied: newHP - currentHP
-    });
-    await targetActor.update({ "system.points.HP.val": newHP });
-  }
-  /**
-   * @internal
-   * Retrieves the CR value from the first target if available.
-   */
-  _getTargetCRValue(item, targets) {
-    const target = targets.values().next().value;
-    const targetActor = target?.actor;
-    let crValue = 0;
-    if (targetActor) {
-      if (targetActor.type === "npc") {
-        crValue = targetActor.system.attributes[item.system.CR]?.val || 0;
-      } else {
-        crValue = targetActor.system.attributes.secondary[item.system.CR]?.val || 0;
-      }
-    }
-    return { crValue, targetActor };
-  }
-  /**
-   * @internal
-   * Evaluates if a roll is successful based on CR and critical.
-   */
-  _evaluateSuccess({ roll, crValue, isCritical }) {
-    return isCritical || roll.total >= crValue;
-  }
-  /**
-   * @internal
-   * Create message data for an action
-   */
-  _createActionMessageData(item, hasTargets, targets, roll = null, isCritical = false) {
-    const messageData = {
-      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-      flavor: `${item.name}`,
-      rolls: roll ? [roll] : void 0,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "ActionRollChat",
-            actor: this._buildActorData(this.actor),
-            item: this._buildItemData(item),
-            hasTargets,
-            targets,
-            isSuccess: false,
-            isCritical: false,
-            d20Result: null
-          },
-          state: {
-            damageResults: false,
-            initialised: false,
-            mpCost: item.system.hasCostMP ? item.system.costMP : 0,
-            mpRestored: false
-          },
-          css: `leather ${isCritical ? "crit" : ""}`
-        }
-      }
-    };
-    if (roll) {
-      messageData.flags[SYSTEM_ID].data.roll = roll.total;
-    }
-    return messageData;
-  }
-  /**
-   * @internal
-   * Builds a minimal data object for the actor to embed in a chat flag.
-   */
-  _buildActorData(actor) {
-    return {
-      _id: actor._id,
-      uuid: actor.uuid,
-      name: actor.name,
-      img: actor.img
-    };
-  }
-  /**
-   * @internal
-   * Builds a minimal data object for the item to embed in a chat flag.
-   */
-  _buildItemData(item) {
-    return {
-      _id: item._id,
-      uuid: item.uuid,
-      name: item.name,
-      img: item.img,
-      type: item.type,
-      system: {
-        baseEffectHealing: item.system?.baseEffectHealing,
-        baseEffectDamage: item.system?.baseEffectDamage,
-        baseEffectRestoreMP: item.system?.baseEffectRestoreMP,
-        baseEffectBP: item.system?.baseEffectBP,
-        hasBaseEffectBarrier: item.system?.hasBaseEffectBarrier,
-        directHitDamage: item.system?.directHitDamage,
-        hasDirectHit: item.system?.hasDirectHit,
-        CR: item.system?.CR,
-        isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
-      }
-    };
-  }
-  /**
-   * @internal
-   * Handle roll with modifiers
-   */
-  async _handleRollWithModifiers(item) {
-    const formula = this._constructRollFormulaFromModifiers(item);
-    const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
-    const roll = await new Roll(rollFormula, rollData).evaluate();
-    const { isCritical, d20Result } = await this._handleCriticalHit(roll, item);
-    game.system.log.o("[ABILITY:ROLL] Roll result:", {
-      itemName: item.name,
-      rollTotal: roll.total,
-      isCritical,
-      d20Result
-    });
-    return { roll, isCritical, d20Result };
-  }
-  /**
-   * @internal
-   * Constructs the roll formula by reading actor's extra modifiers.
-   */
-  _constructRollFormulaFromModifiers(item) {
-    let [diceCount, diceType] = [1, 20];
-    let formula = "";
-    const { bonusDice, penalty } = this.options?.extraModifiers || {};
-    if (bonusDice) {
-      diceCount += parseInt(bonusDice, 10);
-      diceType = "20kh1";
-    }
-    formula = `${diceCount}d${diceType}${penalty ? ` - ${penalty}` : ""}`;
-    return formula;
-  }
-  /**
-   * @internal
-   * Handle critical hit detection and processing
-   */
-  async _handleCriticalHit(roll, item) {
-    const d20Term = roll.terms?.[0];
-    if (!d20Term) {
-      game.system.log.w("[CRITICAL] No d20 term found in roll:", roll);
-      return { isCritical: false, d20Result: 0 };
-    }
-    const d20Result = d20Term.modifiers?.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results?.[0]?.result ?? 0;
-    const isCritical = d20Result === 20;
-    game.system.log.d("[CRITICAL] Critical hit check:", {
-      d20Result,
-      isCritical,
-      itemName: item.name,
-      isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
-    });
-    if (isCritical) {
-      this._doubleCriticalDamageIfNeeded(item);
-    }
-    return { isCritical, d20Result };
-  }
-  /**
-   * @internal
-   * Doubles relevant "dice" fields if item is a critical hit.
-   */
-  _doubleCriticalDamageIfNeeded(item) {
-    let formulaFields = [];
-    if (Boolean(item?.system?.baseEffectHealing)) {
-      formulaFields.push("baseEffectHealing");
-    }
-    if (!formulaFields.length) {
-      formulaFields = ["directHitDamage", "baseEffectDamage"];
-    }
-    game.system.log.o("[CRITICAL] Doubling damage/healing for critical hit:", {
-      itemName: item.name,
-      formulaFields
-    });
-    for (const field of formulaFields) {
-      const formula = item.system?.[field];
-      game.system.log.o("[CRITICAL] Formula:", {
-        field,
-        formula
-      });
-      if (formula) {
-        const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
-          return `${parseInt(count, 10) * 2}d${sides}`;
-        });
-        game.system.log.o("[CRITICAL] Modified formula:", {
-          field,
-          formula,
-          modifiedFormula
-        });
-        item.system[field] = modifiedFormula;
-      }
-    }
-  }
-  /**
-   * @internal
-   * Handle attribute check
-   */
-  async _handleAttributeCheck(item, rollFormula, rollData = {}) {
-    if (item.system.hasCheck) {
-      const attrVal = this.actor.system.attributes.primary[item.system.checkAttribute]?.val || 0;
-      rollData[item.system.checkAttribute] = attrVal;
-      rollFormula += ` + @${item.system.checkAttribute}`;
-    }
-    return { rollFormula, rollData };
-  }
-  /**
-   * @internal
-   * Handle MP cost for an action
-   * @param {Item} item - The action item
-   * @return {Promise<void>} A promise that resolves when MP cost is handled
-   */
-  async _handleCostMP(item) {
-    if (!item.system.hasCostMP || !item.system.costMP) {
-      return;
-    }
-    const cost = item.system.costMP;
-    const currentMP = this.actor.system.points.MP.val;
-    try {
-      await this.actor.update({
-        "system.points.MP.val": currentMP - cost
-      });
-    } catch (error) {
-      game.system.log.e("[MP:COST] Error deducting MP cost:", error);
-      throw error;
-    }
-  }
-  /**
-   * @internal
-   * Handle MP restoration from an action (self only)
-   * @param {Item} item - The action item
-   * @return {Promise<void>} A promise that resolves when MP restoration is complete
-   */
-  async _handleMPRestoration(item) {
-    if (!item.system.baseEffectRestoreMP) {
-      return;
-    }
-    const formula = String(item.system.baseEffectRestoreMP);
-    const mpRoll = await new Roll(formula).evaluate();
-    const mpAmount = mpRoll.total;
-    const currentMP = this.actor.system.points.MP.val;
-    const maxMP = this.actor.system.points.MP.max;
-    const newMP = Math.min(currentMP + mpAmount, maxMP);
-    try {
-      await this.actor.update({ "system.points.MP.val": newMP });
-    } catch (error) {
-      game.system.log.e("[MP:RESTORE] Error restoring MP:", error);
-      throw error;
-    }
-  }
-  /**
-   * @internal
-   * Handle barrier points from an action
-   * @param {Item} item - The action item
-   * @return {Promise<void>} A promise that resolves when barrier is applied
-   */
-  async _handleBarrier(item) {
-    if (!item.system.baseEffectBP) {
-      return;
-    }
-    const barrierAmount = item.system.baseEffectBP;
-    const currentBP = this.actor.system.points.BP.val;
-    const newBP = currentBP + barrierAmount;
-    try {
-      await this.actor.update({ "system.points.BP.val": newBP });
-      const updatedBP = this.actor.system.points.BP.val;
-    } catch (error) {
-      game.system.log.e("[BARRIER] Error applying barrier points:", error);
-      throw error;
-    }
-  }
-  /**
-   * @internal
-   * Check if there are any ability limiters active on the actor
-   * @return {string|null} The type of limitation, if any
-   */
-  _checkAbilityLimiter() {
-    const limiterEffect = this.actor.effects.find(
-      (e) => e.changes.some((c) => c.key === "AbilitiesLimiter")
-    );
-    if (!limiterEffect)
-      return null;
-    const limiterChange = limiterEffect.changes.find((c) => c.key === "AbilitiesLimiter");
-    return limiterChange?.value || null;
-  }
-}
-class AttributeHandler {
-  static {
-    __name(this, "AttributeHandler");
-  }
-  /**
-   * @param {Actor} actor - The actor this handler is for
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Handle an action ability
-   * @param {Object} [options={}] -  options
-   * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
-   */
-  async handle(options = {}) {
-    const { key, code } = options;
-    const attributeValue = this.actor.system.attributes[key][code].val;
-    const rollFormula = `1d20 + ${attributeValue}`;
-    const attributeName = game.i18n.localize(`FFXIV.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
-    const roll = await new Roll(rollFormula).evaluate({ async: true });
-    const isCritical = roll.total === 20;
-    const messageData = {
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
-      flavor: `${attributeName} ${game.i18n.localize("FFXIV.Check")}`,
-      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-      roll,
-      flags: {
-        [SYSTEM_ID]: {
-          data: {
-            chatTemplate: "AttributeRollChat",
-            actor: {
-              _id: this.actor._id,
-              name: this.actor.name,
-              img: this.actor.img
-            },
-            flavor: `${attributeName} ${game.i18n.localize("FFXIV.Check")}`,
-            key,
-            code,
-            modifier: attributeValue,
-            isCritical
-          },
-          css: `attribute-roll ${isCritical ? "crit" : ""}`
-        }
-      }
-    };
-    await roll.toMessage(messageData);
-  }
-}
-class AbilitiesLimiter {
-  static {
-    __name(this, "AbilitiesLimiter");
-  }
-  /**
-   * @param {Actor} actor - The actor this effect is applied to
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Process the primary base damage buff effect
-   * @param {object} event - The event containing damage results
-   * @return {Promise<boolean>} A promise that resolves to true if the ability should be allowed, false otherwise
-   */
-  async process(event) {
-    this.actor.effects.filter((e) => !e.disabled);
-    const damageOnlyEffect = this.actor.effects.find(
-      (e) => e.name === "Next Ability Does Damage Only" && !e.disabled
-    );
-    if (!damageOnlyEffect)
-      return true;
-    game.system.log.o("[ABILITIES LIMITER] Found Next Ability Does Damage Only effect:", {
-      event,
-      effect: damageOnlyEffect
-    });
-    console.log("[FFXIV] | [ABILITIES LIMITER] Starting process with effect state:", {
-      effectName: damageOnlyEffect?.name,
-      effectChanges: damageOnlyEffect?.changes,
-      effectOrigin: damageOnlyEffect?.origin,
-      effectFlags: damageOnlyEffect?.flags,
-      effectDuration: damageOnlyEffect?.duration,
-      effectDisabled: damageOnlyEffect?.disabled
-    });
-    if (event.item?.system) {
-      game.system.log.o("[ABILITIES LIMITER] Processing item:", {
-        itemName: event.item.name,
-        itemType: event.item.type,
-        itemSystem: event.item.system,
-        itemEffects: event.item.effects?.map((e) => ({
-          name: e.name,
-          changes: e.changes,
-          flags: e.flags
-        }))
-      });
-      const hasNonDamageEffects = this._hasNonDamageEffects(event.item.system);
-      const hasSourceEffects = this._hasSourceEffects(event.item.system);
-      const hasEnablerEffects = this._hasEnablerEffects(event.item.system);
-      game.system.log.o("[ABILITIES LIMITER] Effect checks:", {
-        itemName: event.item.name,
-        hasNonDamageEffects,
-        hasSourceEffects,
-        hasEnablerEffects,
-        system: {
-          baseEffectDamage: event.item.system.baseEffectDamage,
-          baseEffectHealing: event.item.system.baseEffectHealing,
-          baseEffectBarrier: event.item.system.baseEffectBarrier,
-          baseEffectRestoreMP: event.item.system.baseEffectRestoreMP,
-          directHitType: event.item.system.directHitType,
-          directHitDamage: event.item.system.directHitDamage,
-          grants: event.item.system.grants,
-          sourceGrants: event.item.system.sourceGrants,
-          enables: event.item.system.enables,
-          procs: event.item.system.procs
-        }
-      });
-      if (hasSourceEffects) {
-        game.system.log.o("[ABILITIES LIMITER] Ability has source effects, preventing use:", {
-          itemName: event.item.name,
-          hasSourceEffects
-        });
-        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.NextAbilityDamageOnly"));
-        return false;
-      }
-      if (hasEnablerEffects) {
-        game.system.log.o("[ABILITIES LIMITER] Ability has enabler effects, preventing use:", {
-          itemName: event.item.name,
-          hasEnablerEffects
-        });
-        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.NextAbilityDamageOnly"));
-        return false;
-      }
-      if (hasNonDamageEffects) {
-        game.system.log.o("[ABILITIES LIMITER] Ability has non-damage effects:", {
-          itemName: event.item.name,
-          system: event.item.system
-        });
-        if (!this._hasDamageComponent(event.item.system)) {
-          ui.notifications.warn(game.i18n.format("FFXIV.Warnings.NextAbilityDamageOnly"));
-          return false;
-        }
-        const originalBaseEffectHealing = event.item.system.baseEffectHealing;
-        const originalBaseEffectBarrier = event.item.system.baseEffectBarrier;
-        const originalBaseEffectRestoreMP = event.item.system.baseEffectRestoreMP;
-        const originalDirectHitHealing = event.item.system.directHitHealing;
-        const originalDirectHitBarrier = event.item.system.directHitBarrier;
-        const originalDirectHitRestoreMP = event.item.system.directHitRestoreMP;
-        const originalGrantsList = [...event.item.system.grants?.list || []];
-        const originalProcsList = [...event.item.system.procs?.list || []];
-        event.item.system.baseEffectHealing = null;
-        event.item.system.baseEffectBarrier = null;
-        event.item.system.baseEffectRestoreMP = null;
-        event.item.system.directHitHealing = null;
-        event.item.system.directHitBarrier = null;
-        event.item.system.directHitRestoreMP = null;
-        event.item.system.grants = { list: [], value: false };
-        event.item.system.procs = { list: [], value: false };
-        game.system.log.o("[ABILITIES LIMITER] Modified ability to only do damage:", {
-          itemName: event.item.name,
-          originalHealing: originalBaseEffectHealing,
-          originalBarrier: originalBaseEffectBarrier,
-          originalRestoreMP: originalBaseEffectRestoreMP,
-          originalDirectHitHealing,
-          originalDirectHitBarrier,
-          originalDirectHitRestoreMP,
-          originalGrantsList,
-          originalProcsList,
-          modifiedSystem: event.item.system
-        });
-        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.NextAbilityDamageOnly"));
-      }
-      game.system.log.o("[ABILITIES LIMITER] Attempting to delete effect:", {
-        effectName: damageOnlyEffect.name,
-        effectId: damageOnlyEffect.id,
-        effectDuration: damageOnlyEffect.duration,
-        effectFlags: damageOnlyEffect.flags,
-        effectChanges: damageOnlyEffect.changes,
-        effectDisabled: damageOnlyEffect.disabled
-      });
-      console.log("[FFXIV] | [ABILITIES LIMITER] About to delete effect:", {
-        effectName: damageOnlyEffect.name,
-        effectId: damageOnlyEffect.id,
-        effectDuration: damageOnlyEffect.duration,
-        effectChanges: damageOnlyEffect.changes,
-        deleteResult: await damageOnlyEffect.delete()
-      });
-      try {
-        await damageOnlyEffect.delete();
-        game.system.log.o("[ABILITIES LIMITER] Successfully deleted effect");
-      } catch (error) {
-        game.system.log.e("[ABILITIES LIMITER] Failed to delete effect:", error);
-      }
-      console.log("[FFXIV] | [ABILITIES LIMITER] After delete attempt:", {
-        effectStillExists: this.actor.effects.has(damageOnlyEffect.id),
-        remainingEffects: this.actor.effects.map((e) => ({
-          name: e.name,
-          id: e.id
-        }))
-      });
-    }
-    return true;
-  }
-  /**
-   * Check if an ability has any non-damage effects
-   * @param {object} system - The ability's system data
-   * @return {boolean} Whether the ability has non-damage effects
-   * @private
-   */
-  _hasNonDamageEffects(system) {
-    return !!(system.baseEffectHealing || system.baseEffectBarrier || system.baseEffectRestoreMP || system.directHitHealing || system.directHitBarrier || system.directHitRestoreMP || (system.grants?.list || []).length > 0 || (system.procs?.list || []).length > 0);
-  }
-  /**
-   * Check if an ability has any source effects
-   * @param {object} system - The ability's system data
-   * @return {boolean} Whether the ability has source effects
-   * @private
-   */
-  _hasSourceEffects(system) {
-    return !!system.sourceGrants?.list?.length;
-  }
-  /**
-   * Check if an ability has any enabler effects
-   * @param {object} system - The ability's system data
-   * @return {boolean} Whether the ability has enabler effects
-   * @private
-   */
-  _hasEnablerEffects(system) {
-    return !!system.enables?.list?.length;
-  }
-  /**
-   * Check if an ability has any damage component
-   * @param {object} system - The ability's system data
-   * @return {boolean} Whether the ability has a damage component
-   * @private
-   */
-  _hasDamageComponent(system) {
-    return !!(system.baseEffectDamage || system.directHitType === "damage" && system.directHitDamage);
-  }
-}
-class EffectManager {
-  static {
-    __name(this, "EffectManager");
-  }
-  /**
-   * @param {Actor} actor - The actor this handler is for
-   */
-  constructor(actor) {
-    this.actor = actor;
-    this.DefaultChatHandler = new DefaultChatHandler(actor);
-  }
-  /**
-   * Handle all effects for an action
-   * @param {Item} item - The item being used
-   * @param {Object} result - The result from the action handler
-   * @return {Promise<void>} Returns a promise that resolves when all effects are handled
-   */
-  async handleEffects(item, result) {
-    console.log("[FFXIV] | [EFFECT MANAGER] handleEffects call stack:", item, result);
-    game.system.log.o("[EFFECT MANAGER] Starting handleEffects:", {
-      itemName: item?.name,
-      itemType: item?.type,
-      itemSystem: item?.system,
-      resultData: result,
-      actorEffects: this.actor.effects.map((e) => ({
-        name: e.name,
-        changes: e.changes,
-        flags: e.flags,
-        disabled: e.disabled
-      }))
-    });
-    const abilitiesLimiter = new AbilitiesLimiter(this.actor);
-    const shouldProceed = await abilitiesLimiter.process({ item });
-    game.system.log.o("[EFFECT MANAGER] AbilitiesLimiter check result:", {
-      itemName: item?.name,
-      shouldProceed,
-      hasEnablerEffects: item.system.enables?.list?.length > 0
-    });
-    const { hasTargets, targets } = result;
-    console.log("[FFXIV] | [EFFECT MANAGER] Target effects check:", {
-      itemName: item?.name,
-      shouldProceed,
-      hasGrants: item.system.grants?.value,
-      grantsList: item.system.grants?.list,
-      hasTargets,
-      targets
-    });
-    if (shouldProceed && item.system.grants?.value && hasTargets) {
-      game.system.log.o("[EFFECT MANAGER] Processing target effects:", {
-        itemName: item.name,
-        grants: item.system.grants,
-        targets: targets.map((t) => t.actor?.name)
-      });
-      const targetArray = targets instanceof Set ? Array.from(targets) : targets;
-      await this._applyEffectsFromList(item, item.system.grants.list, targetArray);
-    }
-    if (shouldProceed && item.system.sourceGrants?.list?.length) {
-      game.system.log.o("[EFFECT MANAGER] Processing source effects:", {
-        itemName: item.name,
-        sourceGrants: item.system.sourceGrants,
-        actor: this.actor.name
-      });
-      await this._applyEffectsFromList(item, item.system.sourceGrants.list, [{ actor: this.actor }]);
-    }
-    if (shouldProceed && item.system.enables?.list?.length > 0) {
-      game.system.log.o("[EFFECT MANAGER] Processing enabler effects:", {
-        itemName: item.name,
-        enables: item.system.enables,
-        actor: this.actor.name
-      });
-      await this._handleEnablerEffects(item);
-    }
-  }
-  /**
-   * Apply effects from a list to specified targets
-   * @private
-   * @param {Item} sourceItem - The item granting the effects
-   * @param {Array} effectList - List of effect references to process
-   * @param {Array} targets - Array of targets to apply effects to
-   */
-  async _applyEffectsFromList(sourceItem, effectList, targets) {
-    if (!effectList?.length || !targets?.length) {
-      if (!effectList?.length) {
-        game.system.log.w("[EFFECT MANAGER] No effects to apply");
-      }
-      if (!targets?.length) {
-        game.system.log.w("[EFFECT MANAGER] No targets to apply effects to");
-      }
-      return;
-    }
-    game.system.log.o("[EFFECT MANAGER] Processing effects from:", {
-      sourceItem: sourceItem?.name,
-      sourceItemUUID: sourceItem?.uuid,
-      actor: this.actor?.name,
-      effectList,
-      targets: targets.map((t) => t.actor?.name)
-    });
-    for (const target of targets) {
-      const targetActor = target.actor;
-      if (!targetActor)
-        continue;
-      try {
-        const effectData = await this._prepareEffectData(sourceItem, effectList, targetActor);
-        if (effectData.length) {
-          await targetActor.createEmbeddedDocuments("ActiveEffect", effectData);
-        }
-      } catch (error) {
-        game.system.log.e("Error applying effects to target", error);
-        ui.notifications.error(game.i18n.format("FFXIV.Errors.EffectApplicationFailed", { target: targetActor.name }));
-      }
-    }
-  }
-  /**
-   * Prepare effect data from effect items
-   * @private
-   * @param {Item} sourceItem - The item granting the effects
-   * @param {Array} effectList - List of effect references to process
-   * @param {Actor} targetActor - The actor to check against for existing effects
-   * @return {Promise<Array>} Array of prepared effect data
-   */
-  async _prepareEffectData(sourceItem, effectList, targetActor) {
-    const effectPromises = effectList.flatMap(async (grantRef) => {
-      const effectItem = await fromUuid(grantRef.uuid);
-      if (!effectItem)
-        return [];
-      return effectItem.effects.map((effect) => {
-        const existingEffect = targetActor.effects.find(
-          (e) => e.name === effect.name && e.origin === sourceItem.uuid
-        );
-        if (existingEffect)
-          return null;
-        if (effect.statuses?.size) {
-          return this._handleStatusEffect(effect, targetActor);
-        }
-        return this._prepareCleanEffectData(effect, effectItem, sourceItem);
-      });
-    });
-    return (await Promise.all(effectPromises)).flat().filter(Boolean);
-  }
-  /**
-   * Handle status effect application
-   * @private
-   * @param {ActiveEffect} effect - The effect to process
-   * @param {Actor} targetActor - The actor to apply the status to
-   * @return {null} Always returns null as statuses are handled directly
-   */
-  _handleStatusEffect(effect, targetActor) {
-    const statuses = Array.from(effect.statuses);
-    const statusesToToggle = statuses.filter((status) => !targetActor.statuses.has(status));
-    if (statusesToToggle.length) {
-      targetActor.toggleStatusEffect(statusesToToggle[0]);
-    }
-    return null;
-  }
-  /**
-   * Prepare clean effect data for creation
-   * @private
-   * @param {ActiveEffect} effect - The effect to clean
-   * @param {Item} effectItem - The item containing the effect
-   * @param {Item} sourceItem - The item granting the effect
-   * @return {Object} Clean effect data
-   */
-  _prepareCleanEffectData(effect, effectItem, sourceItem) {
-    game.system.log.o("[EFFECT MANAGER] Preparing clean effect data:", {
-      effectName: effect.name,
-      effectItemSystem: effectItem.system,
-      sourceItemSystem: sourceItem.system
-    });
-    const durations = sourceItem.system.durations || effectItem.system.durations || [];
-    const duration = durations[0] || { type: "none" };
-    const durationData = {
-      startTime: game.time.worldTime,
-      startRound: game.combat?.round ?? 0,
-      startTurn: game.combat?.turn ?? 0,
-      combat: game.combat?.id
-    };
-    if (duration.type === "hasAmount" && duration.amount) {
-      durationData.type = duration.units || "rounds";
-      durationData[duration.units === "turns" ? "turns" : "rounds"] = duration.amount;
-    } else if (duration.type === "hasQualifier" && duration.qualifier) {
-      durationData.type = duration.qualifier;
-      if (duration.qualifier === "nextAbility") {
-        durationData.requiresAbility = true;
-      } else if (duration.qualifier === "untilDamage") {
-        durationData.requiresDamage = true;
-      }
-    }
-    game.system.log.o("[EFFECT MANAGER] Prepared duration data:", {
-      effectName: effect.name,
-      durationType: duration.type,
-      durationUnits: duration.units,
-      durationQualifier: duration.qualifier,
-      durationData
-    });
-    return {
-      name: effect.name,
-      img: effect.img,
-      changes: foundry.utils.deepClone(effect.changes),
-      duration: durationData,
-      disabled: false,
-      flags: foundry.utils.deepClone(effect.flags),
-      origin: sourceItem.uuid
-    };
-  }
-  /**
-   * Handle enabler effects for an action
-   * @private
-   */
-  async _handleEnablerEffects(item) {
-    if (!item.system.enables?.list?.length)
-      return [];
-    const enabledEffects = [];
-    for (const enableRef of item.system.enables.list) {
-      const effects2 = await this._processEnablerRef(item, enableRef);
-      enabledEffects.push(...effects2);
-    }
-    game.system.log.o("[ABILITY:ENABLER] Enabled effects:", enabledEffects);
-    return enabledEffects;
-  }
-  /**
-   * Process a single enabler reference
-   * @private
-   * @param {Item} sourceItem - The item triggering the enabler
-   * @param {Object} enableRef - The reference to the item to enable
-   * @return {Promise<Array>} Array of enabled effect UUIDs
-   */
-  async _processEnablerRef(sourceItem, enableRef) {
-    const { compendiumItem, actorItem } = await this._findEnablerItems(enableRef);
-    if (!actorItem || !actorItem.hasEffects)
-      return [];
-    if (!await this.actor.actorItemHasRemainingUses(actorItem)) {
-      game.system.log.w("[ENABLE]", `${actorItem.name} has no remaining uses`);
-      return [];
-    }
-    if (actorItem.type === "trait" && actorItem.system.sacrificesMovement) {
-      const canSacrificeMovement = await this._handleMovementSacrifice(actorItem);
-      if (!canSacrificeMovement)
-        return [];
-    }
-    const effectsEnabled = await this.actor.addLinkedEffects(actorItem);
-    if (effectsEnabled.length && sourceItem.name !== actorItem.name) {
-      await this.DefaultChatHandler.handle(actorItem);
-    }
-    return effectsEnabled;
-  }
-  /**
-   * Find and validate compendium and actor items for an enabler reference
-   * @private
-   * @param {Object} enableRef - The reference to the item to enable
-   * @return {Promise<Object>} Object containing compendium and actor items
-   */
-  async _findEnablerItems(enableRef) {
-    const compendiumItem = await fromUuid(enableRef.uuid);
-    if (!compendiumItem) {
-      game.system.log.w("[ENABLE] Could not find compendium item:", enableRef.uuid);
-      return { compendiumItem: null, actorItem: null };
-    }
-    const actorItem = this.actor.items.find(
-      (item) => item.name === compendiumItem.name && item.type === compendiumItem.type
-    );
-    if (!actorItem) {
-      game.system.log.w("[ENABLE] Could not find matching actor item:", compendiumItem.name);
-      return { compendiumItem, actorItem: null };
-    }
-    return { compendiumItem, actorItem };
-  }
-  /**
-   * Handle the movement sacrifice mechanic for traits
-   * @private
-   * @param {Item} item - The item that sacrifices movement
-   * @return {Promise<boolean>} Whether the movement can be sacrificed
-   */
-  async _handleMovementSacrifice(item) {
-    const tokenId = this.actor.token?.id;
-    if (!tokenId)
-      return true;
-    if (getTokenMovement(tokenId) > 0) {
-      ui.notifications.warn(`Cannot enable ${item.name} after moving.`);
-      return false;
-    }
-    if (!game.combat) {
-      ui.notifications.warn("Focus can only be toggled during combat.");
-      return false;
-    }
-    await this.actor.toggleStatusEffect("focus");
-    return true;
-  }
-  /**
-   * Check if item should be disabled by tags
-   * @private
-   */
-  async _shouldDisableByTags(item, origin) {
-    const itemTags = item?.system?.tags || [];
-    const shouldDisable = origin?.system?.tags?.some((tag) => itemTags.includes(tag)) || false;
-    return shouldDisable;
-  }
-  /**
-   * Check if item should be disabled by requirements
-   * @private
-   */
-  async _shouldDisableByRequirements(item, origin, effect) {
-    if (!item.hasRequires)
-      return false;
-    const requiresList = item.system.requires.list || [];
-    const requiredItems = await Promise.all(requiresList.map((req) => fromUuid(req.uuid)));
-    const shouldDisable = requiredItems.some((requiredItem) => {
-      return requiredItem?.name === effect.name;
-    });
-    return shouldDisable;
-  }
-}
-class CombatSlotManager {
-  static {
-    __name(this, "CombatSlotManager");
-  }
-  /**
-   * @param {Actor} actor - The actor this handler is for
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Mark a slot as used in the combat tracker
-   * @param {Item} item - The item being used
-   * @param {Object} result - The result from the action handler
-   * @return {Promise<void>} Returns a promise that resolves when the slot is marked
-   */
-  async markSlotUsed(item, result) {
-    const { message } = result;
-    const actionType = item.system.type || "primary";
-    const state = message?.flags?.[SYSTEM_ID]?.state;
-    if (state?.damageResults) {
-      const hasAppliedDamage = Object.values(state.damageResults).some((result2) => result2.applied);
-      if (hasAppliedDamage) {
-        game.system.log.w("[SLOT:USAGE] Message already has applied damage results, skipping slot update");
-        return;
-      }
-    }
-    if (item.system.type === "reaction") {
-      await this.actor.update({
-        "system.actionState.usedReaction": true
-      });
-      return;
-    }
-    let slotToUse;
-    game.system.log.o("[SLOT:USAGE] Checking slots:", {
-      itemName: item.name,
-      actionType,
-      itemTags: item.system.tags,
-      itemSystem: item.system,
-      requires: item.system.requires
-    });
-    if (this.actor.system.actionState.available.includes(actionType)) {
-      slotToUse = actionType;
-      game.system.log.o("[SLOT:USAGE] Using default action type slot:", actionType);
-    } else if (actionType === "secondary" && this.actor.system.actionState.available.includes("primary")) {
-      slotToUse = "primary";
-      game.system.log.o("[SLOT:USAGE] Using primary slot for secondary action");
-    }
-    if (!slotToUse && item.system.tags?.length) {
-      const customSlots = this.actor.system.actionState.available.filter(
-        (slot) => slot !== "primary" && slot !== "secondary"
-      );
-      const matchingSlot = customSlots.find(
-        (slot) => item.system.tags.includes(slot)
-      );
-      if (matchingSlot) {
-        slotToUse = matchingSlot;
-        game.system.log.o("[SLOT:USAGE] Found matching slot:", {
-          slot: matchingSlot,
-          itemName: item.name,
-          itemTags: item.system.tags
-        });
-        const enablerEffectForThisSlot = this.actor.enablerEffects.find(
-          (effect) => effect.changes.some(
-            (change) => change.value === matchingSlot
-          )
-        );
-        if (enablerEffectForThisSlot) {
-          game.system.log.o("[SLOT:USAGE] Found enabler effect:", {
-            effectName: enablerEffectForThisSlot.name,
-            changes: enablerEffectForThisSlot.changes,
-            origin: enablerEffectForThisSlot.origin
-          });
-          const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, "originEffect.uuid")?.split(".").slice(0, -2).join(".");
-          if (originItemUuid) {
-            const originItem = fromUuidSync(originItemUuid);
-            if (originItem) {
-              game.system.log.o("[SLOT:USAGE] Found origin item:", {
-                name: originItem.name,
-                currentUses: originItem.system.uses,
-                maxUses: originItem.system.maxUses
-              });
-              const uses = (originItem.system.uses || 0) + 1;
-              await originItem.update({ system: { uses } });
-            }
-            game.system.log.o("[SLOT:USAGE] Removing enabler effect:", enablerEffectForThisSlot.name);
-            await enablerEffectForThisSlot.delete();
-          }
-        }
-      }
-    }
-    if (!slotToUse) {
-      game.system.log.w("[SLOT:USAGE] No slot found to use for:", item.name);
-      return;
-    }
-    const newAvailable = [...this.actor.system.actionState.available];
-    const indexToRemove = newAvailable.findIndex((slot) => slot === slotToUse);
-    if (indexToRemove !== -1) {
-      newAvailable.splice(indexToRemove, 1);
-    }
-    const newUsed = [...this.actor.system.actionState.used, {
-      type: slotToUse,
-      messageId: message?.id
-    }];
-    game.system.log.o("[SLOT:USAGE] Updating action state:", {
-      oldAvailable: this.actor.system.actionState.available,
-      newAvailable,
-      oldUsed: this.actor.system.actionState.used,
-      newUsed,
-      itemName: item.name,
-      slotUsed: slotToUse
-    });
-    await this.actor.update({
-      "system.actionState.available": newAvailable,
-      "system.actionState.used": newUsed
-    });
-  }
-}
-function get_each_context$c(ctx, list, i) {
-  const child_ctx = ctx.slice();
-  child_ctx[15] = list[i];
-  child_ctx[17] = i;
-  return child_ctx;
-}
-__name(get_each_context$c, "get_each_context$c");
-function create_if_block$h(ctx) {
-  let label_1;
-  let t;
-  return {
-    c() {
-      label_1 = element("label");
-      t = text(
-        /*label*/
-        ctx[2]
-      );
-      attr(label_1, "for", "star-rating-group");
-    },
-    m(target, anchor) {
-      insert(target, label_1, anchor);
-      append(label_1, t);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*label*/
-      4)
-        set_data(
-          t,
-          /*label*/
-          ctx2[2]
-        );
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(label_1);
-      }
-    }
-  };
-}
-__name(create_if_block$h, "create_if_block$h");
-function create_each_block$c(ctx) {
-  let i_1;
-  let i_1_class_value;
-  let i_1_aria_label_value;
-  let mounted;
-  let dispose;
-  function mouseover_handler() {
-    return (
-      /*mouseover_handler*/
-      ctx[10](
-        /*i*/
-        ctx[17]
-      )
-    );
-  }
-  __name(mouseover_handler, "mouseover_handler");
-  function focus_handler() {
-    return (
-      /*focus_handler*/
-      ctx[11](
-        /*i*/
-        ctx[17]
-      )
-    );
-  }
-  __name(focus_handler, "focus_handler");
-  function click_handler2() {
-    return (
-      /*click_handler*/
-      ctx[12](
-        /*i*/
-        ctx[17]
-      )
-    );
-  }
-  __name(click_handler2, "click_handler");
-  function keydown_handler(...args) {
-    return (
-      /*keydown_handler*/
-      ctx[13](
-        /*i*/
-        ctx[17],
-        ...args
-      )
-    );
-  }
-  __name(keydown_handler, "keydown_handler");
-  return {
-    c() {
-      i_1 = element("i");
-      attr(i_1, "class", i_1_class_value = /*icon*/
-      ctx[1] + " " + /*star*/
-      (ctx[15].active ? "active" : "") + " svelte-FFXIV-qjrcij");
-      attr(i_1, "role", "button");
-      attr(i_1, "tabindex", "0");
-      set_style(
-        i_1,
-        "--active-color",
-        /*activeColor*/
-        ctx[3]
-      );
-      attr(i_1, "aria-label", i_1_aria_label_value = /*i*/
-      ctx[17] + 1 + " of " + /*maxStars*/
-      ctx[0] + " stars");
-    },
-    m(target, anchor) {
-      insert(target, i_1, anchor);
-      if (!mounted) {
-        dispose = [
-          listen(i_1, "mouseover", mouseover_handler),
-          listen(i_1, "focus", focus_handler),
-          listen(i_1, "click", click_handler2),
-          listen(i_1, "keydown", keydown_handler)
-        ];
-        mounted = true;
-      }
-    },
-    p(new_ctx, dirty) {
-      ctx = new_ctx;
-      if (dirty & /*icon, stars*/
-      18 && i_1_class_value !== (i_1_class_value = /*icon*/
-      ctx[1] + " " + /*star*/
-      (ctx[15].active ? "active" : "") + " svelte-FFXIV-qjrcij")) {
-        attr(i_1, "class", i_1_class_value);
-      }
-      if (dirty & /*activeColor*/
-      8) {
-        set_style(
-          i_1,
-          "--active-color",
-          /*activeColor*/
-          ctx[3]
-        );
-      }
-      if (dirty & /*maxStars*/
-      1 && i_1_aria_label_value !== (i_1_aria_label_value = /*i*/
-      ctx[17] + 1 + " of " + /*maxStars*/
-      ctx[0] + " stars")) {
-        attr(i_1, "aria-label", i_1_aria_label_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(i_1);
-      }
-      mounted = false;
-      run_all(dispose);
-    }
-  };
-}
-__name(create_each_block$c, "create_each_block$c");
 function create_fragment$V(ctx) {
-  let div1;
-  let t;
-  let div0;
-  let div1_aria_label_value;
-  let mounted;
-  let dispose;
-  let if_block = (
-    /*label*/
-    ctx[2] && create_if_block$h(ctx)
-  );
-  let each_value = ensure_array_like(
-    /*stars*/
-    ctx[4]
-  );
-  let each_blocks = [];
-  for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$c(get_each_context$c(ctx, each_value, i));
-  }
-  return {
-    c() {
-      div1 = element("div");
-      if (if_block)
-        if_block.c();
-      t = space();
-      div0 = element("div");
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        each_blocks[i].c();
-      }
-      attr(div0, "class", "stars svelte-FFXIV-qjrcij");
-      attr(div0, "id", "star-rating-group");
-      attr(div1, "class", "star-rating svelte-FFXIV-qjrcij");
-      attr(div1, "role", "group");
-      attr(div1, "aria-label", div1_aria_label_value = /*label*/
-      ctx[2] || "Rating");
-    },
-    m(target, anchor) {
-      insert(target, div1, anchor);
-      if (if_block)
-        if_block.m(div1, null);
-      append(div1, t);
-      append(div1, div0);
-      for (let i = 0; i < each_blocks.length; i += 1) {
-        if (each_blocks[i]) {
-          each_blocks[i].m(div0, null);
-        }
-      }
-      if (!mounted) {
-        dispose = listen(
-          div1,
-          "mouseleave",
-          /*handleMouseLeave*/
-          ctx[6]
-        );
-        mounted = true;
-      }
-    },
-    p(ctx2, [dirty]) {
-      if (
-        /*label*/
-        ctx2[2]
-      ) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
-        } else {
-          if_block = create_if_block$h(ctx2);
-          if_block.c();
-          if_block.m(div1, t);
-        }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
-      }
-      if (dirty & /*icon, stars, activeColor, maxStars, handleMouseOver, handleClick*/
-      187) {
-        each_value = ensure_array_like(
-          /*stars*/
-          ctx2[4]
-        );
-        let i;
-        for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$c(ctx2, each_value, i);
-          if (each_blocks[i]) {
-            each_blocks[i].p(child_ctx, dirty);
-          } else {
-            each_blocks[i] = create_each_block$c(child_ctx);
-            each_blocks[i].c();
-            each_blocks[i].m(div0, null);
-          }
-        }
-        for (; i < each_blocks.length; i += 1) {
-          each_blocks[i].d(1);
-        }
-        each_blocks.length = each_value.length;
-      }
-      if (dirty & /*label*/
-      4 && div1_aria_label_value !== (div1_aria_label_value = /*label*/
-      ctx2[2] || "Rating")) {
-        attr(div1, "aria-label", div1_aria_label_value);
-      }
-    },
-    i: noop,
-    o: noop,
-    d(detaching) {
-      if (detaching) {
-        detach(div1);
-      }
-      if (if_block)
-        if_block.d();
-      destroy_each(each_blocks, detaching);
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_fragment$V, "create_fragment$V");
-function instance$N($$self, $$props, $$invalidate) {
-  let stars;
-  let { maxStars = 5 } = $$props;
-  let { icon = "fas fa-star" } = $$props;
-  let { value = 0 } = $$props;
-  let { label = "" } = $$props;
-  let { activeColor = "#ffd700" } = $$props;
-  let hoverValue = 0;
-  const dispatch2 = createEventDispatcher();
-  function handleMouseOver(index) {
-    $$invalidate(9, hoverValue = index + 1);
-  }
-  __name(handleMouseOver, "handleMouseOver");
-  function handleMouseLeave() {
-    $$invalidate(9, hoverValue = 0);
-  }
-  __name(handleMouseLeave, "handleMouseLeave");
-  function handleClick(index) {
-    $$invalidate(8, value = index + 1);
-    dispatch2("change", value);
-  }
-  __name(handleClick, "handleClick");
-  const mouseover_handler = /* @__PURE__ */ __name((i) => handleMouseOver(i), "mouseover_handler");
-  const focus_handler = /* @__PURE__ */ __name((i) => handleMouseOver(i), "focus_handler");
-  const click_handler2 = /* @__PURE__ */ __name((i) => handleClick(i), "click_handler");
-  const keydown_handler = /* @__PURE__ */ __name((i, e) => e.key === "Enter" && handleClick(i), "keydown_handler");
-  $$self.$$set = ($$props2) => {
-    if ("maxStars" in $$props2)
-      $$invalidate(0, maxStars = $$props2.maxStars);
-    if ("icon" in $$props2)
-      $$invalidate(1, icon = $$props2.icon);
-    if ("value" in $$props2)
-      $$invalidate(8, value = $$props2.value);
-    if ("label" in $$props2)
-      $$invalidate(2, label = $$props2.label);
-    if ("activeColor" in $$props2)
-      $$invalidate(3, activeColor = $$props2.activeColor);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*maxStars, hoverValue, value*/
-    769) {
-      $$invalidate(4, stars = Array(maxStars).fill(0).map((_, i) => ({
-        active: hoverValue ? i < hoverValue : i < value
-      })));
-    }
-  };
-  return [
-    maxStars,
-    icon,
-    label,
-    activeColor,
-    stars,
-    handleMouseOver,
-    handleMouseLeave,
-    handleClick,
-    value,
-    hoverValue,
-    mouseover_handler,
-    focus_handler,
-    click_handler2,
-    keydown_handler
-  ];
-}
-__name(instance$N, "instance$N");
-class StarRating extends SvelteComponent {
-  static {
-    __name(this, "StarRating");
-  }
-  constructor(options) {
-    super();
-    init$1(this, options, instance$N, create_fragment$V, safe_not_equal, {
-      maxStars: 0,
-      icon: 1,
-      value: 8,
-      label: 2,
-      activeColor: 3
-    });
-  }
-}
-function create_fragment$U(ctx) {
-  let form;
-  let div4;
-  let div1;
-  let div0;
-  let switch_instance0;
-  let div3;
-  let div2;
-  let switch_instance1;
-  let current;
-  var switch_value = StarRating;
-  function switch_props(ctx2, dirty) {
-    return {
-      props: {
-        label: localize$1("Modifiers.Penalty"),
-        value: (
-          /*penalty*/
-          ctx2[0]
-        ),
-        maxStars: 8,
-        icon: "fas fa-burst",
-        activeColor: "var(--color-negative)"
-      }
-    };
-  }
-  __name(switch_props, "switch_props");
-  if (switch_value) {
-    switch_instance0 = construct_svelte_component(switch_value, switch_props(ctx));
-    switch_instance0.$on(
-      "change",
-      /*change_handler*/
-      ctx[5]
-    );
-  }
-  var switch_value_1 = StarRating;
-  function switch_props_1(ctx2, dirty) {
-    return {
-      props: {
-        label: localize$1("Modifiers.Advantage"),
-        value: (
-          /*bonusDice*/
-          ctx2[1]
-        ),
-        maxStars: 8,
-        icon: "fas fa-dice-d20",
-        activeColor: "var(--ff-border-color)"
-      }
-    };
-  }
-  __name(switch_props_1, "switch_props_1");
-  if (switch_value_1) {
-    switch_instance1 = construct_svelte_component(switch_value_1, switch_props_1(ctx));
-    switch_instance1.$on(
-      "change",
-      /*change_handler_1*/
-      ctx[6]
-    );
-  }
-  return {
-    c() {
-      form = element("form");
-      div4 = element("div");
-      div1 = element("div");
-      div0 = element("div");
-      if (switch_instance0)
-        create_component(switch_instance0.$$.fragment);
-      div3 = element("div");
-      div2 = element("div");
-      if (switch_instance1)
-        create_component(switch_instance1.$$.fragment);
-      attr(div0, "class", "flexcol");
-      attr(div1, "class", "flex1");
-      attr(div2, "class", "flexcol");
-      attr(div3, "class", "flex1");
-      attr(div4, "class", "flexrow gap-15");
-      attr(form, "class", "modifier-dialog svelte-FFXIV-paczb8");
-    },
-    m(target, anchor) {
-      insert(target, form, anchor);
-      append(form, div4);
-      append(div4, div1);
-      append(div1, div0);
-      if (switch_instance0)
-        mount_component(switch_instance0, div0, null);
-      append(div4, div3);
-      append(div3, div2);
-      if (switch_instance1)
-        mount_component(switch_instance1, div2, null);
-      current = true;
-    },
-    p(ctx2, [dirty]) {
-      if (switch_value !== (switch_value = StarRating)) {
-        if (switch_instance0) {
-          group_outros();
-          const old_component = switch_instance0;
-          transition_out(old_component.$$.fragment, 1, 0, () => {
-            destroy_component(old_component, 1);
-          });
-          check_outros();
-        }
-        if (switch_value) {
-          switch_instance0 = construct_svelte_component(switch_value, switch_props(ctx2));
-          switch_instance0.$on(
-            "change",
-            /*change_handler*/
-            ctx2[5]
-          );
-          create_component(switch_instance0.$$.fragment);
-          transition_in(switch_instance0.$$.fragment, 1);
-          mount_component(switch_instance0, div0, null);
-        } else {
-          switch_instance0 = null;
-        }
-      } else if (switch_value) {
-        const switch_instance0_changes = {};
-        if (dirty & /*penalty*/
-        1)
-          switch_instance0_changes.value = /*penalty*/
-          ctx2[0];
-        switch_instance0.$set(switch_instance0_changes);
-      }
-      if (switch_value_1 !== (switch_value_1 = StarRating)) {
-        if (switch_instance1) {
-          group_outros();
-          const old_component = switch_instance1;
-          transition_out(old_component.$$.fragment, 1, 0, () => {
-            destroy_component(old_component, 1);
-          });
-          check_outros();
-        }
-        if (switch_value_1) {
-          switch_instance1 = construct_svelte_component(switch_value_1, switch_props_1(ctx2));
-          switch_instance1.$on(
-            "change",
-            /*change_handler_1*/
-            ctx2[6]
-          );
-          create_component(switch_instance1.$$.fragment);
-          transition_in(switch_instance1.$$.fragment, 1);
-          mount_component(switch_instance1, div2, null);
-        } else {
-          switch_instance1 = null;
-        }
-      } else if (switch_value_1) {
-        const switch_instance1_changes = {};
-        if (dirty & /*bonusDice*/
-        2)
-          switch_instance1_changes.value = /*bonusDice*/
-          ctx2[1];
-        switch_instance1.$set(switch_instance1_changes);
-      }
-    },
-    i(local) {
-      if (current)
-        return;
-      if (switch_instance0)
-        transition_in(switch_instance0.$$.fragment, local);
-      if (switch_instance1)
-        transition_in(switch_instance1.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      if (switch_instance0)
-        transition_out(switch_instance0.$$.fragment, local);
-      if (switch_instance1)
-        transition_out(switch_instance1.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(form);
-      }
-      if (switch_instance0)
-        destroy_component(switch_instance0);
-      if (switch_instance1)
-        destroy_component(switch_instance1);
-    }
-  };
-}
-__name(create_fragment$U, "create_fragment$U");
-function instance$M($$self, $$props, $$invalidate) {
-  let { penalty = 0 } = $$props;
-  let { bonusDice = 0 } = $$props;
-  let { mutuallyExclusive = false } = $$props;
-  function handlePenaltyChange(value) {
-    $$invalidate(0, penalty = value);
-    if (mutuallyExclusive && value > 0)
-      $$invalidate(1, bonusDice = 0);
-  }
-  __name(handlePenaltyChange, "handlePenaltyChange");
-  function handleBonusChange(value) {
-    $$invalidate(1, bonusDice = value);
-    if (mutuallyExclusive && value > 0)
-      $$invalidate(0, penalty = 0);
-  }
-  __name(handleBonusChange, "handleBonusChange");
-  const change_handler = /* @__PURE__ */ __name((e) => handlePenaltyChange(e.detail), "change_handler");
-  const change_handler_1 = /* @__PURE__ */ __name((e) => handleBonusChange(e.detail), "change_handler_1");
-  $$self.$$set = ($$props2) => {
-    if ("penalty" in $$props2)
-      $$invalidate(0, penalty = $$props2.penalty);
-    if ("bonusDice" in $$props2)
-      $$invalidate(1, bonusDice = $$props2.bonusDice);
-    if ("mutuallyExclusive" in $$props2)
-      $$invalidate(4, mutuallyExclusive = $$props2.mutuallyExclusive);
-  };
-  $$self.$$.update = () => {
-    if ($$self.$$.dirty & /*penalty, bonusDice*/
-    3) {
-      if (window._modifierDialogComponent) {
-        window._modifierDialogComponent._state = { penalty, bonusDice };
-      }
-    }
-  };
-  return [
-    penalty,
-    bonusDice,
-    handlePenaltyChange,
-    handleBonusChange,
-    mutuallyExclusive,
-    change_handler,
-    change_handler_1
-  ];
-}
-__name(instance$M, "instance$M");
-class ModifierDialog extends SvelteComponent {
-  static {
-    __name(this, "ModifierDialog");
-  }
-  constructor(options) {
-    super();
-    init$1(this, options, instance$M, create_fragment$U, safe_not_equal, {
-      penalty: 0,
-      bonusDice: 1,
-      mutuallyExclusive: 4
-    });
-  }
-}
-class RollGuards {
-  static {
-    __name(this, "RollGuards");
-  }
-  /** @type {Actor} The actor associated with these roll guards */
-  actor;
-  /** 
-   * Shuttle object used to pass data from guards to roll calculator
-   * @type {Object} 
-   */
-  shuttle = {
-    hasModifiers: {
-      extraModifiers: null
-    }
-  };
-  /**
-   * Create a new RollGuards instance
-   * @param {Actor} actor - The actor to check guards for
-   */
-  constructor(actor) {
-    this.actor = actor;
-  }
-  /**
-   * Dialog to allow extra modifiers to be added to the roll
-   * @param {Item} item - The item being rolled
-   * @return {Promise<Object>} The modifier data from the dialog
-   * @private
-   */
-  async _showModifierDialog(item) {
-    return new Promise((resolve, reject) => {
-      new Dialog({
-        title: "Extra Modifiers",
-        content: `<div id="modifier-dialog-container"></div>`,
-        buttons: {
-          roll: {
-            label: "Roll",
-            callback: (html) => {
-              resolve({
-                penalty: window._modifierDialogComponent?._state?.penalty || 0,
-                bonusDice: window._modifierDialogComponent?._state?.bonusDice || 0,
-                confirmed: true
-              });
-            }
-          },
-          cancel: {
-            label: "Cancel",
-            callback: () => reject(new Error("Dialog cancelled"))
-          }
-        },
-        render: (html) => {
-          const container = html.find("#modifier-dialog-container")[0];
-          window._modifierDialogComponent = new ModifierDialog({
-            target: container,
-            props: {
-              mutuallyExclusive: false
-            }
-          });
-        },
-        close: () => {
-          window._modifierDialogComponent?.$destroy();
-          delete window._modifierDialogComponent;
-          reject(new Error("Dialog closed"));
-        }
-      }).render(true);
-    });
-  }
-  /**
-   * Check if the item is an action
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item is an action
-   */
-  async isAction(item) {
-    return item.type === "action";
-  }
-  /**
-   * Check if there is an active combat
-   * @return {Promise<boolean>} Whether there is an active combat
-   */
-  async isCombat() {
-    return game.combat;
-  }
-  /**
-   * Check if there are valid targets selected
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether there are valid targets
-   */
-  async hasTargets(item) {
-    const targets = game.user.targets;
-    const hasTargets = targets.size > 0;
-    if (!hasTargets) {
-      ui.notifications.warn(`${item.name} has no targets. Please select targets and roll again.`);
-      return false;
-    }
-    return true;
-  }
-  /**
-   * Check if the selected targets match the action's targeting requirements
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether the targets match the requirements
-   */
-  async targetsMatchActionIntent(item) {
-    const target = item.system.target;
-    const targets = game.user.targets;
-    const size = targets.size;
-    const originalTargets = new Set(game.user.targets);
-    let token;
-    try {
-      if (target === "self") {
-        token = this.actor.activeToken;
-        if (!token) {
-          ui.notifications.warn("No token found for self-targeting");
-          return false;
-        }
-        await token.setTarget(true, { user: game.user, releaseOthers: true });
-        return true;
-      }
-      switch (target) {
-        case "single":
-          if (size !== 1) {
-            ui.notifications.warn("This ability requires exactly one target");
-            return false;
-          }
-          token = this.actor.activeToken;
-          if (targets.has(token)) {
-            ui.notifications.warn("This ability cannot target yourself");
-            return false;
-          }
-          break;
-        case "enemy":
-          if (size < 1) {
-            ui.notifications.warn("This ability requires at least one enemy target");
-            return false;
-          }
-          token = this.actor.activeToken;
-          if (targets.has(token)) {
-            ui.notifications.warn("This ability cannot target yourself");
-            return false;
-          }
-          break;
-        case "ally":
-          if (size < 1) {
-            ui.notifications.warn("This ability requires at least one ally target");
-            return false;
-          }
-          break;
-        case "all":
-          if (size < 1) {
-            ui.notifications.warn("This ability requires at least one target");
-            return false;
-          }
-          break;
-      }
-      return true;
-    } catch (error) {
-      game.system.log.e("Error in targetsMatchActionIntent:", error);
-      return false;
-    } finally {
-      if (target !== "self" && originalTargets.size > 0) {
-        game.user.targets.forEach((t) => t.setTarget(false, { user: game.user, releaseOthers: false }));
-        originalTargets.forEach((t) => t.setTarget(true, { user: game.user, releaseOthers: false }));
-      }
-    }
-  }
-  /**
-   * Check if the item has remaining uses available
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item has uses remaining
-   */
-  async hasRemainingUses(item) {
-    if (item.system.hasLimitation && game.combat) {
-      const maxUses = item.system.limitation;
-      const remainingUses = maxUses - (item.system.uses || 0);
-      if (remainingUses <= 0) {
-        ui.notifications.warn(`${item.name} has no remaining uses.`);
-        return false;
-      }
-      const confirmed = await Dialog.confirm({
-        title: "Confirm Ability Use",
-        content: `<p>Use ${item.name}? (${remainingUses} use${remainingUses > 1 ? "s" : ""} remaining)</p>`,
-        yes: () => true,
-        no: () => false,
-        defaultYes: true
-      });
-      if (!confirmed)
-        return false;
-      const systemData = foundry.utils.deepClone(item.system);
-      systemData.uses = (systemData.uses || 0) + 1;
-      await item.update({ system: systemData });
-    }
-    return true;
-  }
-  /**
-   * Check and handle any modifiers for the roll
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether modifiers were successfully handled
-   */
-  async hasModifiers(item) {
-    if (!item.system.hasCR) {
-      return true;
-    }
-    this.shuttle.hasModifiers.extraModifiers = await this._showModifierDialog(item);
-    if (!this.shuttle.hasModifiers.extraModifiers?.confirmed) {
-      for (const effect of this.actor.effects) {
-        if (effect.getFlag(SYSTEM_ID, "pendingDeletion")) {
-          await effect.unsetFlag(SYSTEM_ID, "pendingDeletion");
-        }
-      }
-      return false;
-    }
-    for (const effect of this.actor.effects) {
-      if (effect.getFlag(SYSTEM_ID, "pendingDeletion")) {
-        await effect.delete();
-      }
-    }
-    Hooks.call("FFXIV.processTargetRollAdditionalModifiers", { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
-    return true;
-  }
-  /**
-   * Check if the item has any enablers
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item has enablers
-   */
-  async hasEnablers(item) {
-    if (!game.combat || !item.system.enables?.value) {
-      return false;
-    }
-    const enablesList = item.system.enables.list;
-    if (!enablesList?.length) {
-      return false;
-    }
-    return true;
-  }
-  /**
-   * Check if there is an appropriate action slot available
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether an enabler slot is available
-   */
-  async hasAvailableActionSlot(item) {
-    if (item.system.type === "reaction")
-      return true;
-    const { actionState } = this.actor.system;
-    const actionType = item.system.type || "primary";
-    game.system.log.cyan("[SLOT:USAGE] Checking available action slot:", actionType);
-    const enablerSlots = actionState.available.filter(
-      (slot) => slot !== "primary" && slot !== "secondary"
-    );
-    game.system.log.cyan("[SLOT:USAGE] Enabler slots:", enablerSlots);
-    if (item.system.tags?.some((tag) => enablerSlots.includes(tag))) {
-      return true;
-    }
-    game.system.log.cyan("[SLOT:USAGE] No enabler slots match:", item.system.tags);
-    if (actionState.available.includes(actionType)) {
-      return true;
-    }
-    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
-    if (actionType === "secondary" && actionState.available.filter((slot) => slot === "secondary" || slot === "primary").length) {
-      return true;
-    }
-    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
-    if (await this.hasEnablers(item)) {
-      const enabledEffects = this.actor.effects.filter(
-        (effect) => effect.system.tags?.includes("enabler")
-      );
-      game.system.log.cyan("[SLOT:USAGE] Enabled effects:", enabledEffects);
-      if (enabledEffects?.length) {
-        const enabledEffectsLinkedToEnablerSlots = enabledEffects.filter(
-          (effect) => enablerSlots.some((slot) => {
-            const originItem = fromUuidSync(effect.origin);
-            return originItem?.system.tags?.includes(slot);
-          })
-        );
-        if (enabledEffectsLinkedToEnablerSlots.length) {
-          return true;
-        }
-      }
-    }
-    const msg = localize$1("Types.Item.Types.action.SlotNotAvailable").replace("%s", actionType);
-    ui.notifications.warn(msg);
-    return false;
-  }
-  /**
-   * Check if the item matches any enabler effects
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item matches enabler effects
-   */
-  async matchesEnablerEffect(item) {
-    return this.actor.itemTagsMatchEnablerEffectTags(item);
-  }
-  /**
-   * Check if the actor has all required effects for the item
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether all required effects are present
-   */
-  async hasRequiredEffects(item) {
-    if (!item.system.requires?.value) {
-      return true;
-    }
-    for (const requireRef of item.system.requires.list) {
-      const requiredItem = await fromUuid(requireRef.uuid);
-      if (!requiredItem)
-        continue;
-      let hasActiveEffect = false;
-      for (const effect of this.actor.effects) {
-        if (effect.name === requiredItem.name) {
-          hasActiveEffect = true;
-          await effect.setFlag(SYSTEM_ID, "pendingDeletion", true);
-          break;
-        }
-      }
-      if (!hasActiveEffect) {
-        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
-        return false;
-      }
-    }
-    return true;
-  }
-  /**
-   * Check if it is currently the actor's turn
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether it is the actor's turn
-   */
-  async isActorsTurn(item) {
-    if (!game.combat)
-      return true;
-    const currentCombatant = game.combat.combatant;
-    if (!currentCombatant)
-      return true;
-    if (item.system.type === "reaction")
-      return true;
-    const isCurrentTurn = currentCombatant.actor.id === this.actor.id;
-    if (!isCurrentTurn) {
-      ui.notifications.warn("Cannot use this action outside of your turn.");
-    }
-    return isCurrentTurn;
-  }
-  /**
-   * Check if the item is a reaction
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item is a reaction
-   */
-  async isReaction(item) {
-    if (item.system.type !== "reaction")
-      return true;
-    if (!game.combat)
-      return true;
-    const actionState = this.actor.system.actionState;
-    if (actionState.usedReaction) {
-      ui.notifications.warn("Cannot use multiple reactions in the same turn.");
-      return false;
-    }
-    return true;
-  }
-  /**
-   * Check if there is an available action slot for the item
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether an action slot is available
-   */
-  async hasAvailableSlot(item) {
-    if (item.system.type === "reaction")
-      return true;
-    const actionState = this.actor.system.actionState;
-    const available = actionState.available || [];
-    const actionType = item.system.type;
-    const hasSlot = available.includes(actionType);
-    if (!hasSlot) {
-      ui.notifications.warn(`No ${actionType} action slot available.`);
-    }
-    return hasSlot;
-  }
-  /**
-   * Check if there are any unapplied damage results in chat messages
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether there are no unapplied damage results
-   */
-  async hasNoUnappliedDamage(item) {
-    if (!item.system.baseEffectDamage && !item.system.directHitDamage)
-      return true;
-    const messages = game.messages.filter((m) => {
-      const data = m.flags?.[SYSTEM_ID]?.data;
-      return data?.chatTemplate === "ActionRollChat" && (data?.item?.system?.baseEffectDamage || data?.item?.system?.directHitDamage);
-    });
-    for (const message of messages) {
-      const state = message.flags?.[SYSTEM_ID]?.state;
-      if (!state?.damageResults)
-        continue;
-      const hasUnappliedDamage = Object.values(state.damageResults).some((result) => !result.applied);
-      if (hasUnappliedDamage) {
-        ui.notifications.warn("There are unapplied damage results in chat. Please apply or undo them before making another action roll.");
-        return false;
-      }
-    }
-    return true;
-  }
-  /**
-   * Check if the actor has enough MP to use the action
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether the actor has enough MP
-   */
-  async meetsMPCost(item) {
-    if (!item.system.hasCostMP || !item.system.costMP) {
-      return true;
-    }
-    let currentMP;
-    currentMP = this.actor.system.points.MP.val;
-    const cost = item.system.costMP;
-    if (currentMP < cost) {
-      ui.notifications.warn(`Not enough MP to use ${item.name}. Required: ${cost} MP, Current: ${currentMP} MP`);
-      return false;
-    }
-    return true;
-  }
-}
-class GuardManager {
-  static {
-    __name(this, "GuardManager");
-  }
-  /**
-   * @param {Actor} actor - The actor this handler is for
-   * @param {RollGuards} rollGuards - The RollGuards instance to use for checks
-   */
-  constructor(actor) {
-    this.actor = actor;
-    this.RG = new RollGuards(actor);
-  }
-  /**
-   * Handle guards for an item
-   * @param {Item} item - The item to check guards for
-   * @param {Array<string>} guardMethodNames - Array of guard method names to check
-   * @return {Promise<boolean>} Returns true if all guards pass, false otherwise
-   */
-  async handleGuards(item, guardMethodNames) {
-    for (const methodName of guardMethodNames) {
-      const guardMethod = this.RG[methodName];
-      if (!guardMethod) {
-        game.system.log.w(`[GUARD] Guard method ${methodName} not found`);
-        continue;
-      }
-      try {
-        const result = await guardMethod.call(this.RG, item);
-        if (!result) {
-          game.system.log.d(`[GUARD] ${methodName} check failed for ${item.name}`);
-          return false;
-        }
-      } catch (error) {
-        game.system.log.e(`[GUARD] Error in ${methodName} check:`, error);
-        return false;
-      }
-    }
-    return true;
-  }
-}
-class RollCalcActor extends RollCalc {
-  static {
-    __name(this, "RollCalcActor");
-  }
-  constructor(params) {
-    super(params);
-    this.params = params;
-    this.ActionHandler = new ActionHandler(params.actor);
-    this.AttributeHandler = new AttributeHandler(params.actor);
-    this.EffectManager = new EffectManager(params.actor);
-    this.CombatSlotManager = new CombatSlotManager(params.actor);
-    this.GuardManager = new GuardManager(params.actor);
-    this.DefaultChat = new DefaultChatHandler(params.actor);
-  }
-  /**
-   * @param {Item} item - The item to create a chat message for
-   */
-  defaultChat(item) {
-    this.DefaultChat.handle(item);
-  }
-  /**
-   * @param {Item} item - The equipment item
-   */
-  equipment(item) {
-    this.params.item = item;
-    ChatMessage.create({
-      user: game.user.id,
-      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
-      flags: { [SYSTEM_ID]: { data: { ...this.params, chatTemplate: "EquipmentChat" } } }
-    });
-  }
-  /**
-   * @param {string} key - The attribute key
-   * @param {string} code - The attribute code
-   */
-  attribute(key, code) {
-    this.AttributeHandler.handle({ key, code });
-  }
-  /**
-   * @param {string} type - The type of ability
-   * @param {Item} item - The ability item
-   */
-  ability(type, item) {
-    console.log("[FFXIV] | [ABILITY CHAIN] Starting ability chain", {
-      // Add relevant details
-    });
-    this._routeAbility(item);
-  }
-  /**
-   * @param {Item} item - The trait item
-   */
-  abilityTrait(item) {
-    this.defaultChat(item);
-  }
-  /**
-   * @param {Item} item - The action item
-   * @param {Object} [options={}] - Additional options
-   */
-  async abilityAction(item, options = {}) {
-    console.log("[FFXIV] | [ROLL CALC] abilityAction call stack:", {
-      stack: new Error().stack,
-      itemName: item?.name,
-      options
-    });
-    try {
-      if (!await this.GuardManager.handleGuards(item, [
-        "isAction",
-        "hasNoUnappliedDamage",
-        "isActorsTurn",
-        "isReaction",
-        "targetsMatchActionIntent",
-        "hasRequiredEffects",
-        "hasAvailableActionSlot",
-        "hasRemainingUses",
-        "meetsMPCost",
-        "hasModifiers"
-      ])) {
-        return;
-      }
-      const extraModifiers = this.GuardManager.RG.shuttle.hasModifiers.extraModifiers;
-      const result = await this.ActionHandler.handle(item, { ...options, extraModifiers });
-      if (!result.handledSuccessfully) {
-        return;
-      }
-      if (item.system.procTrigger) {
-        Hooks.callAll("FFXIV.ProcTrigger", {
-          actor: this.params.actor,
-          item,
-          roll: result.roll,
-          targets: result.targets
-        });
-      }
-      await this.EffectManager.handleEffects(item, result);
-      await this.CombatSlotManager.markSlotUsed(item, result);
-    } catch (error) {
-      game.system.log.e("Error in ability action", error);
-      ui.notifications.error(game.i18n.format("FFXIV.Errors.AbilityActionFailed", { target: this.params.actor.name }));
-    }
-  }
-  /**
-   * Route ability to appropriate handler
-   * @param {Item} item - The item to route
-   * @return {Promise<void>} Returns a promise that resolves when the ability has been routed and handled
-   */
-  _routeAbility(item) {
-    if (item.type === "action") {
-      this.abilityAction(item);
-    } else if (item.type === "trait") {
-      this.abilityTrait(item);
-    }
-  }
-}
-function create_fragment$T(ctx) {
   let div;
   let div_class_value;
   let current;
@@ -35197,8 +32077,8 @@ function create_fragment$T(ctx) {
     }
   };
 }
-__name(create_fragment$T, "create_fragment$T");
-function instance$L($$self, $$props, $$invalidate) {
+__name(create_fragment$V, "create_fragment$V");
+function instance$N($$self, $$props, $$invalidate) {
   let badgeClasses;
   let { $$slots: slots = {}, $$scope } = $$props;
   let { type = "" } = $$props;
@@ -35216,23 +32096,23 @@ function instance$L($$self, $$props, $$invalidate) {
   };
   return [badgeClasses, type, $$scope, slots];
 }
-__name(instance$L, "instance$L");
+__name(instance$N, "instance$N");
 class Badge extends SvelteComponent {
   static {
     __name(this, "Badge");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$L, create_fragment$T, safe_not_equal, { type: 1 });
+    init$1(this, options, instance$N, create_fragment$V, safe_not_equal, { type: 1 });
   }
 }
-function get_each_context$b(ctx, list, i) {
+function get_each_context$c(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[22] = list[i];
   child_ctx[24] = i;
   return child_ctx;
 }
-__name(get_each_context$b, "get_each_context$b");
+__name(get_each_context$c, "get_each_context$c");
 function get_each_context_1$1(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[25] = list[i];
@@ -35675,7 +32555,7 @@ function create_if_block_1$c(ctx) {
   };
 }
 __name(create_if_block_1$c, "create_if_block_1$c");
-function create_each_block$b(ctx) {
+function create_each_block$c(ctx) {
   let tr;
   let td0;
   let img;
@@ -35961,8 +32841,8 @@ function create_each_block$b(ctx) {
     }
   };
 }
-__name(create_each_block$b, "create_each_block$b");
-function create_if_block$g(ctx) {
+__name(create_each_block$c, "create_each_block$c");
+function create_if_block$h(ctx) {
   let button0;
   let button1;
   let mounted;
@@ -36008,8 +32888,8 @@ function create_if_block$g(ctx) {
     }
   };
 }
-__name(create_if_block$g, "create_if_block$g");
-function create_fragment$S(ctx) {
+__name(create_if_block$h, "create_if_block$h");
+function create_fragment$U(ctx) {
   let div1;
   let div0;
   let h1;
@@ -36037,14 +32917,14 @@ function create_fragment$S(ctx) {
   );
   let each_blocks = [];
   for (let i2 = 0; i2 < each_value.length; i2 += 1) {
-    each_blocks[i2] = create_each_block$b(get_each_context$b(ctx, each_value, i2));
+    each_blocks[i2] = create_each_block$c(get_each_context$c(ctx, each_value, i2));
   }
   const out = /* @__PURE__ */ __name((i2) => transition_out(each_blocks[i2], 1, 1, () => {
     each_blocks[i2] = null;
   }), "out");
   let if_block1 = (
     /*hasItems*/
-    ctx[2] && create_if_block$g(ctx)
+    ctx[2] && create_if_block$h(ctx)
   );
   return {
     c() {
@@ -36160,12 +33040,12 @@ function create_fragment$S(ctx) {
         );
         let i2;
         for (i2 = 0; i2 < each_value.length; i2 += 1) {
-          const child_ctx = get_each_context$b(ctx2, each_value, i2);
+          const child_ctx = get_each_context$c(ctx2, each_value, i2);
           if (each_blocks[i2]) {
             each_blocks[i2].p(child_ctx, dirty);
             transition_in(each_blocks[i2], 1);
           } else {
-            each_blocks[i2] = create_each_block$b(child_ctx);
+            each_blocks[i2] = create_each_block$c(child_ctx);
             each_blocks[i2].c();
             transition_in(each_blocks[i2], 1);
             each_blocks[i2].m(table, null);
@@ -36184,7 +33064,7 @@ function create_fragment$S(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$g(ctx2);
+          if_block1 = create_if_block$h(ctx2);
           if_block1.c();
           if_block1.m(div1, null);
         }
@@ -36222,7 +33102,7 @@ function create_fragment$S(ctx) {
     }
   };
 }
-__name(create_fragment$S, "create_fragment$S");
+__name(create_fragment$U, "create_fragment$U");
 function editItem$3(item) {
   item.sheet.render(true);
 }
@@ -36231,7 +33111,7 @@ function showItemSheet$4(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$4, "showItemSheet$4");
-function instance$K($$self, $$props, $$invalidate) {
+function instance$M($$self, $$props, $$invalidate) {
   let items;
   let lockCSS;
   let faLockCSS;
@@ -36244,7 +33124,7 @@ function instance$K($$self, $$props, $$invalidate) {
   component_subscribe($$self, Actor2, (value) => $$invalidate(0, $Actor = value));
   const doc = new TJSDocument($Actor);
   component_subscribe($$self, doc, (value) => $$invalidate(1, $doc = value));
-  const RollCalc2 = new RollCalcActor({ actor: $Actor });
+  const RollCalc2 = new CONFIG.FFXIV.RollCalcActor({ actor: $Actor });
   const typeSearch = createFilterQuery("type");
   typeSearch.set(["trait", "action"]);
   onMount(() => {
@@ -36412,17 +33292,17 @@ function instance$K($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$K, "instance$K");
+__name(instance$M, "instance$M");
 let Abilities$1 = class Abilities extends SvelteComponent {
   static {
     __name(this, "Abilities");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$K, create_fragment$S, safe_not_equal, { sheet: 18 });
+    init$1(this, options, instance$M, create_fragment$U, safe_not_equal, { sheet: 18 });
   }
 };
-function create_if_block$f(ctx) {
+function create_if_block$g(ctx) {
   let div;
   let button;
   let mounted;
@@ -36471,8 +33351,8 @@ function create_if_block$f(ctx) {
     }
   };
 }
-__name(create_if_block$f, "create_if_block$f");
-function create_fragment$R(ctx) {
+__name(create_if_block$g, "create_if_block$g");
+function create_fragment$T(ctx) {
   let div4;
   let div3;
   let div2;
@@ -36488,7 +33368,7 @@ function create_fragment$R(ctx) {
   let mounted;
   let dispose;
   let if_block = !/*isEditing*/
-  ctx[3] && create_if_block$f(ctx);
+  ctx[3] && create_if_block$g(ctx);
   return {
     c() {
       div4 = element("div");
@@ -36559,7 +33439,7 @@ function create_fragment$R(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$f(ctx2);
+          if_block = create_if_block$g(ctx2);
           if_block.c();
           if_block.m(div3, div2);
         }
@@ -36612,8 +33492,8 @@ function create_fragment$R(ctx) {
     }
   };
 }
-__name(create_fragment$R, "create_fragment$R");
-function instance$J($$self, $$props, $$invalidate) {
+__name(create_fragment$T, "create_fragment$T");
+function instance$L($$self, $$props, $$invalidate) {
   let label;
   let value;
   let isEditing;
@@ -36710,14 +33590,14 @@ function instance$J($$self, $$props, $$invalidate) {
     $actor
   ];
 }
-__name(instance$J, "instance$J");
+__name(instance$L, "instance$L");
 class Attribute extends SvelteComponent {
   static {
     __name(this, "Attribute");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$J, create_fragment$R, safe_not_equal, {
+    init$1(this, options, instance$L, create_fragment$T, safe_not_equal, {
       code: 0,
       key: 1,
       abbreviateLabel: 12,
@@ -36726,14 +33606,14 @@ class Attribute extends SvelteComponent {
     });
   }
 }
-function get_each_context$a(ctx, list, i) {
+function get_each_context$b(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[5] = list[i].code;
   child_ctx[7] = i;
   return child_ctx;
 }
-__name(get_each_context$a, "get_each_context$a");
-function create_each_block$a(ctx) {
+__name(get_each_context$b, "get_each_context$b");
+function create_each_block$b(ctx) {
   let attribute;
   let current;
   attribute = new Attribute({
@@ -36807,8 +33687,8 @@ function create_each_block$a(ctx) {
     }
   };
 }
-__name(create_each_block$a, "create_each_block$a");
-function create_fragment$Q(ctx) {
+__name(create_each_block$b, "create_each_block$b");
+function create_fragment$S(ctx) {
   let div;
   let current;
   let each_value = ensure_array_like(
@@ -36817,7 +33697,7 @@ function create_fragment$Q(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$a(get_each_context$a(ctx, each_value, i));
+    each_blocks[i] = create_each_block$b(get_each_context$b(ctx, each_value, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -36848,12 +33728,12 @@ function create_fragment$Q(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$a(ctx2, each_value, i);
+          const child_ctx = get_each_context$b(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block$a(child_ctx);
+            each_blocks[i] = create_each_block$b(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(div, null);
@@ -36889,8 +33769,8 @@ function create_fragment$Q(ctx) {
     }
   };
 }
-__name(create_fragment$Q, "create_fragment$Q");
-function instance$I($$self, $$props, $$invalidate) {
+__name(create_fragment$S, "create_fragment$S");
+function instance$K($$self, $$props, $$invalidate) {
   let { data } = $$props;
   let { abbreviateLabel = false } = $$props;
   let { key } = $$props;
@@ -36912,14 +33792,14 @@ function instance$I($$self, $$props, $$invalidate) {
   };
   return [data, abbreviateLabel, key, showSign, onclick];
 }
-__name(instance$I, "instance$I");
+__name(instance$K, "instance$K");
 let AttributeCol$1 = class AttributeCol extends SvelteComponent {
   static {
     __name(this, "AttributeCol");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$I, create_fragment$Q, safe_not_equal, {
+    init$1(this, options, instance$K, create_fragment$S, safe_not_equal, {
       data: 0,
       abbreviateLabel: 1,
       key: 2,
@@ -36928,7 +33808,7 @@ let AttributeCol$1 = class AttributeCol extends SvelteComponent {
     });
   }
 };
-function create_fragment$P(ctx) {
+function create_fragment$R(ctx) {
   let div1;
   let div0;
   let attributecol;
@@ -36989,8 +33869,8 @@ function create_fragment$P(ctx) {
     }
   };
 }
-__name(create_fragment$P, "create_fragment$P");
-function instance$H($$self, $$props, $$invalidate) {
+__name(create_fragment$R, "create_fragment$R");
+function instance$J($$self, $$props, $$invalidate) {
   let { onclick } = $$props;
   let data = [
     { code: "str" },
@@ -37005,17 +33885,17 @@ function instance$H($$self, $$props, $$invalidate) {
   };
   return [onclick, data];
 }
-__name(instance$H, "instance$H");
+__name(instance$J, "instance$J");
 let PrimaryAttributes$1 = class PrimaryAttributes extends SvelteComponent {
   static {
     __name(this, "PrimaryAttributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$H, create_fragment$P, safe_not_equal, { onclick: 0 });
+    init$1(this, options, instance$J, create_fragment$R, safe_not_equal, { onclick: 0 });
   }
 };
-function create_fragment$O(ctx) {
+function create_fragment$Q(ctx) {
   let div1;
   let div0;
   let attributecol;
@@ -37074,8 +33954,8 @@ function create_fragment$O(ctx) {
     }
   };
 }
-__name(create_fragment$O, "create_fragment$O");
-function instance$G($$self, $$props, $$invalidate) {
+__name(create_fragment$Q, "create_fragment$Q");
+function instance$I($$self, $$props, $$invalidate) {
   let { onclick } = $$props;
   let data = [{ code: "def" }, { code: "mag" }, { code: "vig" }, { code: "spd" }];
   $$self.$$set = ($$props2) => {
@@ -37084,17 +33964,17 @@ function instance$G($$self, $$props, $$invalidate) {
   };
   return [onclick, data];
 }
-__name(instance$G, "instance$G");
+__name(instance$I, "instance$I");
 let SecondaryAttributes$1 = class SecondaryAttributes extends SvelteComponent {
   static {
     __name(this, "SecondaryAttributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$G, create_fragment$O, safe_not_equal, { onclick: 0 });
+    init$1(this, options, instance$I, create_fragment$Q, safe_not_equal, { onclick: 0 });
   }
 };
-function create_fragment$N(ctx) {
+function create_fragment$P(ctx) {
   let div2;
   let div0;
   let primaryattributes;
@@ -37150,28 +34030,28 @@ function create_fragment$N(ctx) {
     }
   };
 }
-__name(create_fragment$N, "create_fragment$N");
-function instance$F($$self, $$props, $$invalidate) {
+__name(create_fragment$P, "create_fragment$P");
+function instance$H($$self, $$props, $$invalidate) {
   let $actor;
   const actor = getContext("#doc");
   component_subscribe($$self, actor, (value) => $$invalidate(2, $actor = value));
-  const RollCalc2 = new RollCalcActor({ actor: $actor });
+  const RollCalc2 = new CONFIG.FFXIV.RollCalcActor({ actor: $actor });
   const onclick = /* @__PURE__ */ __name(async (key, code) => {
     await RollCalc2.attribute(key, code);
   }, "onclick");
   return [actor, onclick];
 }
-__name(instance$F, "instance$F");
+__name(instance$H, "instance$H");
 let AttributeBlock$1 = class AttributeBlock extends SvelteComponent {
   static {
     __name(this, "AttributeBlock");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$F, create_fragment$N, safe_not_equal, {});
+    init$1(this, options, instance$H, create_fragment$P, safe_not_equal, {});
   }
 };
-function create_fragment$M(ctx) {
+function create_fragment$O(ctx) {
   let div9;
   let div8;
   let div6;
@@ -37289,8 +34169,8 @@ function create_fragment$M(ctx) {
     }
   };
 }
-__name(create_fragment$M, "create_fragment$M");
-function instance$E($$self, $$props, $$invalidate) {
+__name(create_fragment$O, "create_fragment$O");
+function instance$G($$self, $$props, $$invalidate) {
   let jobName;
   let roleName;
   let level;
@@ -37340,17 +34220,17 @@ function instance$E($$self, $$props, $$invalidate) {
   };
   return [level, roleName, jobName, actor, rest, $actor];
 }
-__name(instance$E, "instance$E");
+__name(instance$G, "instance$G");
 class TitleBlock extends SvelteComponent {
   static {
     __name(this, "TitleBlock");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$E, create_fragment$M, safe_not_equal, {});
+    init$1(this, options, instance$G, create_fragment$O, safe_not_equal, {});
   }
 }
-function create_fragment$L(ctx) {
+function create_fragment$N(ctx) {
   let section;
   let div4;
   let div0;
@@ -37438,8 +34318,8 @@ function create_fragment$L(ctx) {
     }
   };
 }
-__name(create_fragment$L, "create_fragment$L");
-function instance$D($$self, $$props, $$invalidate) {
+__name(create_fragment$N, "create_fragment$N");
+function instance$F($$self, $$props, $$invalidate) {
   let $documentStore;
   const application = getContext("#external").application;
   const documentStore = getContext("#doc");
@@ -37479,17 +34359,17 @@ function instance$D($$self, $$props, $$invalidate) {
   __name(_launchTokenizer, "_launchTokenizer");
   return [$documentStore, documentStore, _editToken];
 }
-__name(instance$D, "instance$D");
+__name(instance$F, "instance$F");
 let AttributeSection$1 = class AttributeSection extends SvelteComponent {
   static {
     __name(this, "AttributeSection");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$D, create_fragment$L, safe_not_equal, {});
+    init$1(this, options, instance$F, create_fragment$N, safe_not_equal, {});
   }
 };
-function create_fragment$K(ctx) {
+function create_fragment$M(ctx) {
   let div13;
   let div4;
   let div9;
@@ -37596,8 +34476,8 @@ function create_fragment$K(ctx) {
     }
   };
 }
-__name(create_fragment$K, "create_fragment$K");
-function instance$C($$self, $$props, $$invalidate) {
+__name(create_fragment$M, "create_fragment$M");
+function instance$E($$self, $$props, $$invalidate) {
   let $actor;
   const actor = getContext("#doc");
   component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
@@ -37605,17 +34485,17 @@ function instance$C($$self, $$props, $$invalidate) {
   });
   return [$actor, actor];
 }
-__name(instance$C, "instance$C");
+__name(instance$E, "instance$E");
 class HP extends SvelteComponent {
   static {
     __name(this, "HP");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$C, create_fragment$K, safe_not_equal, {});
+    init$1(this, options, instance$E, create_fragment$M, safe_not_equal, {});
   }
 }
-function create_fragment$J(ctx) {
+function create_fragment$L(ctx) {
   let div13;
   let div4;
   let div9;
@@ -37722,8 +34602,8 @@ function create_fragment$J(ctx) {
     }
   };
 }
-__name(create_fragment$J, "create_fragment$J");
-function instance$B($$self, $$props, $$invalidate) {
+__name(create_fragment$L, "create_fragment$L");
+function instance$D($$self, $$props, $$invalidate) {
   let $actor;
   const actor = getContext("#doc");
   component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
@@ -37731,17 +34611,17 @@ function instance$B($$self, $$props, $$invalidate) {
   });
   return [$actor, actor];
 }
-__name(instance$B, "instance$B");
+__name(instance$D, "instance$D");
 class MP extends SvelteComponent {
   static {
     __name(this, "MP");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$B, create_fragment$J, safe_not_equal, {});
+    init$1(this, options, instance$D, create_fragment$L, safe_not_equal, {});
   }
 }
-function create_fragment$I(ctx) {
+function create_fragment$K(ctx) {
   let div8;
   let div4;
   let div7;
@@ -37814,8 +34694,8 @@ function create_fragment$I(ctx) {
     }
   };
 }
-__name(create_fragment$I, "create_fragment$I");
-function instance$A($$self, $$props, $$invalidate) {
+__name(create_fragment$K, "create_fragment$K");
+function instance$C($$self, $$props, $$invalidate) {
   let $actor;
   const actor = getContext("#doc");
   component_subscribe($$self, actor, (value) => $$invalidate(0, $actor = value));
@@ -37823,17 +34703,17 @@ function instance$A($$self, $$props, $$invalidate) {
   });
   return [$actor, actor];
 }
-__name(instance$A, "instance$A");
+__name(instance$C, "instance$C");
 class BP extends SvelteComponent {
   static {
     __name(this, "BP");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$A, create_fragment$I, safe_not_equal, {});
+    init$1(this, options, instance$C, create_fragment$K, safe_not_equal, {});
   }
 }
-function create_fragment$H(ctx) {
+function create_fragment$J(ctx) {
   let section;
   let div3;
   let div0;
@@ -37898,23 +34778,23 @@ function create_fragment$H(ctx) {
     }
   };
 }
-__name(create_fragment$H, "create_fragment$H");
+__name(create_fragment$J, "create_fragment$J");
 class PointsSection extends SvelteComponent {
   static {
     __name(this, "PointsSection");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$H, safe_not_equal, {});
+    init$1(this, options, null, create_fragment$J, safe_not_equal, {});
   }
 }
-function get_each_context$9(ctx, list, i) {
+function get_each_context$a(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[20] = list[i];
   child_ctx[22] = i;
   return child_ctx;
 }
-__name(get_each_context$9, "get_each_context$9");
+__name(get_each_context$a, "get_each_context$a");
 function create_if_block_1$b(ctx) {
   let h2;
   let div;
@@ -37925,7 +34805,7 @@ function create_if_block_1$b(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$9(get_each_context$9(ctx, each_value, i));
+    each_blocks[i] = create_each_block$a(get_each_context$a(ctx, each_value, i));
   }
   return {
     c() {
@@ -37959,11 +34839,11 @@ function create_if_block_1$b(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$9(ctx2, each_value, i);
+          const child_ctx = get_each_context$a(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block$9(child_ctx);
+            each_blocks[i] = create_each_block$a(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(table, null);
           }
@@ -37984,7 +34864,7 @@ function create_if_block_1$b(ctx) {
   };
 }
 __name(create_if_block_1$b, "create_if_block_1$b");
-function create_each_block$9(ctx) {
+function create_each_block$a(ctx) {
   let tr;
   let th;
   let img;
@@ -38085,8 +34965,8 @@ function create_each_block$9(ctx) {
     }
   };
 }
-__name(create_each_block$9, "create_each_block$9");
-function create_if_block$e(ctx) {
+__name(create_each_block$a, "create_each_block$a");
+function create_if_block$f(ctx) {
   let p;
   return {
     c() {
@@ -38105,8 +34985,8 @@ function create_if_block$e(ctx) {
     }
   };
 }
-__name(create_if_block$e, "create_if_block$e");
-function create_fragment$G(ctx) {
+__name(create_if_block$f, "create_if_block$f");
+function create_fragment$I(ctx) {
   let div;
   let if_block0_anchor;
   let if_block0 = (
@@ -38114,7 +34994,7 @@ function create_fragment$G(ctx) {
     ctx[0].length > 0 && create_if_block_1$b(ctx)
   );
   let if_block1 = !/*ActiveEffects*/
-  ctx[0].length && create_if_block$e();
+  ctx[0].length && create_if_block$f();
   return {
     c() {
       div = element("div");
@@ -38154,7 +35034,7 @@ function create_fragment$G(ctx) {
         if (if_block1)
           ;
         else {
-          if_block1 = create_if_block$e();
+          if_block1 = create_if_block$f();
           if_block1.c();
           if_block1.m(div, null);
         }
@@ -38176,12 +35056,12 @@ function create_fragment$G(ctx) {
     }
   };
 }
-__name(create_fragment$G, "create_fragment$G");
+__name(create_fragment$I, "create_fragment$I");
 function openItem(index, item) {
   item.sheet.render(true);
 }
 __name(openItem, "openItem");
-function instance$z($$self, $$props, $$invalidate) {
+function instance$B($$self, $$props, $$invalidate) {
   let ActiveEffects;
   let $doc;
   let $wildcard;
@@ -38231,24 +35111,24 @@ function instance$z($$self, $$props, $$invalidate) {
     keydown_handler
   ];
 }
-__name(instance$z, "instance$z");
+__name(instance$B, "instance$B");
 class EffectsSection extends SvelteComponent {
   static {
     __name(this, "EffectsSection");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$z, create_fragment$G, safe_not_equal, {});
+    init$1(this, options, instance$B, create_fragment$I, safe_not_equal, {});
   }
 }
-function get_each_context$8(ctx, list, i) {
+function get_each_context$9(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[20] = list[i];
   child_ctx[22] = i;
   return child_ctx;
 }
-__name(get_each_context$8, "get_each_context$8");
-function create_if_block$d(ctx) {
+__name(get_each_context$9, "get_each_context$9");
+function create_if_block$e(ctx) {
   let h2;
   let div;
   let table;
@@ -38267,7 +35147,7 @@ function create_if_block$d(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$8(get_each_context$8(ctx, each_value, i));
+    each_blocks[i] = create_each_block$9(get_each_context$9(ctx, each_value, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -38340,12 +35220,12 @@ function create_if_block$d(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$8(ctx2, each_value, i);
+          const child_ctx = get_each_context$9(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block$8(child_ctx);
+            each_blocks[i] = create_each_block$9(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(table, null);
@@ -38384,7 +35264,7 @@ function create_if_block$d(ctx) {
     }
   };
 }
-__name(create_if_block$d, "create_if_block$d");
+__name(create_if_block$e, "create_if_block$e");
 function create_if_block_3$5(ctx) {
   let th;
   return {
@@ -38556,7 +35436,7 @@ function create_default_slot$e(ctx) {
   };
 }
 __name(create_default_slot$e, "create_default_slot$e");
-function create_each_block$8(ctx) {
+function create_each_block$9(ctx) {
   let tr;
   let td0;
   let img;
@@ -38735,15 +35615,15 @@ function create_each_block$8(ctx) {
     }
   };
 }
-__name(create_each_block$8, "create_each_block$8");
-function create_fragment$F(ctx) {
+__name(create_each_block$9, "create_each_block$9");
+function create_fragment$H(ctx) {
   let div;
   let show_if = (
     /*$doc*/
     ctx[0].system.hasFavouriteItems()
   );
   let current;
-  let if_block = show_if && create_if_block$d(ctx);
+  let if_block = show_if && create_if_block$e(ctx);
   let div_levels = [
     { class: "favourites" },
     /*$$restProps*/
@@ -38780,7 +35660,7 @@ function create_fragment$F(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$d(ctx2);
+          if_block = create_if_block$e(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div, null);
@@ -38819,12 +35699,12 @@ function create_fragment$F(ctx) {
     }
   };
 }
-__name(create_fragment$F, "create_fragment$F");
+__name(create_fragment$H, "create_fragment$H");
 function showItemSheet$3(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$3, "showItemSheet$3");
-function instance$y($$self, $$props, $$invalidate) {
+function instance$A($$self, $$props, $$invalidate) {
   let items;
   const omit_props_names = [];
   let $$restProps = compute_rest_props($$props, omit_props_names);
@@ -38862,13 +35742,13 @@ function instance$y($$self, $$props, $$invalidate) {
   function useItem(item) {
     switch (item.type) {
       case "action":
-        new RollCalcActor({ actor: $Actor }).ability(item.type, item);
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).ability(item.type, item);
         break;
       case "trait":
-        new RollCalcActor({ actor: $Actor }).ability(item.type, item);
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).ability(item.type, item);
         break;
       case "equipment":
-        new RollCalcActor({ actor: $Actor }).equipment(item);
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).equipment(item);
         break;
       case "effect":
         ui.notifications.warn("Effects cannot be used directly");
@@ -38877,11 +35757,11 @@ function instance$y($$self, $$props, $$invalidate) {
         ui.notifications.warn("Jobs cannot be used directly");
         break;
       case "limitbreak":
-        new RollCalcActor({ actor: $Actor }).ability(item.type, item);
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).ability(item.type, item);
         break;
       default:
         console.warn(`Unhandled item type: ${item.type}`);
-        new RollCalcActor({ actor: $Actor }).send();
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).send();
     }
   }
   __name(useItem, "useItem");
@@ -38923,14 +35803,14 @@ function instance$y($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$y, "instance$y");
+__name(instance$A, "instance$A");
 class Favourites extends SvelteComponent {
   static {
     __name(this, "Favourites");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$y, create_fragment$F, safe_not_equal, {});
+    init$1(this, options, instance$A, create_fragment$H, safe_not_equal, {});
   }
 }
 function create_if_block_1$9(ctx) {
@@ -39106,7 +35986,7 @@ function create_default_slot_2(ctx) {
   };
 }
 __name(create_default_slot_2, "create_default_slot_2");
-function create_if_block$c(ctx) {
+function create_if_block$d(ctx) {
   let div5;
   let div4;
   let div0;
@@ -39167,7 +36047,7 @@ function create_if_block$c(ctx) {
     }
   };
 }
-__name(create_if_block$c, "create_if_block$c");
+__name(create_if_block$d, "create_if_block$d");
 function create_default_slot_1$1(ctx) {
   let favourites;
   let current;
@@ -39226,7 +36106,7 @@ function create_default_slot$d(ctx) {
   };
 }
 __name(create_default_slot$d, "create_default_slot$d");
-function create_fragment$E(ctx) {
+function create_fragment$G(ctx) {
   let div15;
   let div14;
   let div0;
@@ -39264,7 +36144,7 @@ function create_fragment$E(ctx) {
       $$scope: { ctx }
     }
   });
-  let if_block1 = show_if && create_if_block$c(ctx);
+  let if_block1 = show_if && create_if_block$d(ctx);
   portraitframe1 = new PortraitFrame({
     props: {
       size: "40",
@@ -39381,7 +36261,7 @@ function create_fragment$E(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block$c(ctx2);
+          if_block1 = create_if_block$d(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div13, div12);
@@ -39432,8 +36312,8 @@ function create_fragment$E(ctx) {
     }
   };
 }
-__name(create_fragment$E, "create_fragment$E");
-function instance$x($$self, $$props, $$invalidate) {
+__name(create_fragment$G, "create_fragment$G");
+function instance$z($$self, $$props, $$invalidate) {
   let $actor;
   let { sheet } = $$props;
   const actor = getContext("#doc");
@@ -39444,17 +36324,17 @@ function instance$x($$self, $$props, $$invalidate) {
   };
   return [$actor, actor, sheet];
 }
-__name(instance$x, "instance$x");
+__name(instance$z, "instance$z");
 let Attributes$1 = class Attributes extends SvelteComponent {
   static {
     __name(this, "Attributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$x, create_fragment$E, safe_not_equal, { sheet: 2 });
+    init$1(this, options, instance$z, create_fragment$G, safe_not_equal, { sheet: 2 });
   }
 };
-function create_fragment$D(ctx) {
+function create_fragment$F(ctx) {
   let h10;
   let div2;
   let div0;
@@ -39553,30 +36433,30 @@ function create_fragment$D(ctx) {
     }
   };
 }
-__name(create_fragment$D, "create_fragment$D");
-function instance$w($$self) {
+__name(create_fragment$F, "create_fragment$F");
+function instance$y($$self) {
   const proseMirrorClasses = ["left", "small"];
   const proseMirrorClasses2 = ["left"];
   return [proseMirrorClasses, proseMirrorClasses2];
 }
-__name(instance$w, "instance$w");
+__name(instance$y, "instance$y");
 class Profile extends SvelteComponent {
   static {
     __name(this, "Profile");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$w, create_fragment$D, safe_not_equal, {});
+    init$1(this, options, instance$y, create_fragment$F, safe_not_equal, {});
   }
 }
-function get_each_context$7(ctx, list, i) {
+function get_each_context$8(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[16] = list[i];
   child_ctx[18] = i;
   return child_ctx;
 }
-__name(get_each_context$7, "get_each_context$7");
-function create_if_block$b(ctx) {
+__name(get_each_context$8, "get_each_context$8");
+function create_if_block$c(ctx) {
   let button0;
   let button1;
   let button2;
@@ -39665,8 +36545,8 @@ function create_if_block$b(ctx) {
     }
   };
 }
-__name(create_if_block$b, "create_if_block$b");
-function create_each_block$7(ctx) {
+__name(create_if_block$c, "create_if_block$c");
+function create_each_block$8(ctx) {
   let tr;
   let td0;
   let img;
@@ -39695,7 +36575,7 @@ function create_each_block$7(ctx) {
   let mounted;
   let dispose;
   let if_block = !/*$doc*/
-  ctx[0].system.inventoryLocked && create_if_block$b(ctx);
+  ctx[0].system.inventoryLocked && create_if_block$c(ctx);
   return {
     c() {
       tr = element("tr");
@@ -39845,7 +36725,7 @@ function create_each_block$7(ctx) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block$b(ctx);
+          if_block = create_if_block$c(ctx);
           if_block.c();
           if_block.m(td4, null);
         }
@@ -39865,8 +36745,8 @@ function create_each_block$7(ctx) {
     }
   };
 }
-__name(create_each_block$7, "create_each_block$7");
-function create_fragment$C(ctx) {
+__name(create_each_block$8, "create_each_block$8");
+function create_fragment$E(ctx) {
   let div1;
   let div0;
   let h1;
@@ -39891,7 +36771,7 @@ function create_fragment$C(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$7(get_each_context$7(ctx, each_value, i));
+    each_blocks[i] = create_each_block$8(get_each_context$8(ctx, each_value, i));
   }
   return {
     c() {
@@ -40003,11 +36883,11 @@ function create_fragment$C(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$7(ctx2, each_value, i);
+          const child_ctx = get_each_context$8(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block$7(child_ctx);
+            each_blocks[i] = create_each_block$8(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(table, null);
           }
@@ -40030,7 +36910,7 @@ function create_fragment$C(ctx) {
     }
   };
 }
-__name(create_fragment$C, "create_fragment$C");
+__name(create_fragment$E, "create_fragment$E");
 function editItem$2(item) {
   item.sheet.render(true);
   game.system.log.d("editItem");
@@ -40053,7 +36933,7 @@ function showItemSheet$2(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$2, "showItemSheet$2");
-function instance$v($$self, $$props, $$invalidate) {
+function instance$x($$self, $$props, $$invalidate) {
   let items;
   let lockCSS;
   let faLockCSS;
@@ -40099,7 +36979,7 @@ function instance$v($$self, $$props, $$invalidate) {
   }
   __name(deleteItem, "deleteItem");
   function useItem(item) {
-    new RollCalcActor({ actor: $Actor }).equipment(item);
+    new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).equipment(item);
   }
   __name(useItem, "useItem");
   function toggleLock(event) {
@@ -40150,23 +37030,23 @@ function instance$v($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$v, "instance$v");
+__name(instance$x, "instance$x");
 class Inventory extends SvelteComponent {
   static {
     __name(this, "Inventory");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$v, create_fragment$C, safe_not_equal, {});
+    init$1(this, options, instance$x, create_fragment$E, safe_not_equal, {});
   }
 }
-function get_each_context$6(ctx, list, i) {
+function get_each_context$7(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[33] = list[i];
   child_ctx[35] = i;
   return child_ctx;
 }
-__name(get_each_context$6, "get_each_context$6");
+__name(get_each_context$7, "get_each_context$7");
 function create_if_block_4$2(ctx) {
   let th;
   return {
@@ -40362,7 +37242,7 @@ function create_if_block_1$8(ctx) {
   };
 }
 __name(create_if_block_1$8, "create_if_block_1$8");
-function create_each_block$6(ctx) {
+function create_each_block$7(ctx) {
   let tr;
   let td0;
   let img;
@@ -40492,8 +37372,8 @@ function create_each_block$6(ctx) {
     }
   };
 }
-__name(create_each_block$6, "create_each_block$6");
-function create_if_block$a(ctx) {
+__name(create_each_block$7, "create_each_block$7");
+function create_if_block$b(ctx) {
   let div;
   let button0;
   let button1;
@@ -40543,8 +37423,8 @@ function create_if_block$a(ctx) {
     }
   };
 }
-__name(create_if_block$a, "create_if_block$a");
-function create_fragment$B(ctx) {
+__name(create_if_block$b, "create_if_block$b");
+function create_fragment$D(ctx) {
   let div1;
   let div0;
   let h1;
@@ -40570,11 +37450,11 @@ function create_fragment$B(ctx) {
   );
   let each_blocks = [];
   for (let i2 = 0; i2 < each_value.length; i2 += 1) {
-    each_blocks[i2] = create_each_block$6(get_each_context$6(ctx, each_value, i2));
+    each_blocks[i2] = create_each_block$7(get_each_context$7(ctx, each_value, i2));
   }
   let if_block1 = (
     /*showAddRemoveButtons*/
-    ctx[5] && create_if_block$a(ctx)
+    ctx[5] && create_if_block$b(ctx)
   );
   return {
     c() {
@@ -40683,11 +37563,11 @@ function create_fragment$B(ctx) {
         );
         let i2;
         for (i2 = 0; i2 < each_value.length; i2 += 1) {
-          const child_ctx = get_each_context$6(ctx2, each_value, i2);
+          const child_ctx = get_each_context$7(ctx2, each_value, i2);
           if (each_blocks[i2]) {
             each_blocks[i2].p(child_ctx, dirty);
           } else {
-            each_blocks[i2] = create_each_block$6(child_ctx);
+            each_blocks[i2] = create_each_block$7(child_ctx);
             each_blocks[i2].c();
             each_blocks[i2].m(table, null);
           }
@@ -40704,7 +37584,7 @@ function create_fragment$B(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$a(ctx2);
+          if_block1 = create_if_block$b(ctx2);
           if_block1.c();
           if_block1.m(div0, null);
         }
@@ -40729,7 +37609,7 @@ function create_fragment$B(ctx) {
     }
   };
 }
-__name(create_fragment$B, "create_fragment$B");
+__name(create_fragment$D, "create_fragment$D");
 function editItem$1(index, item) {
   game.system.log.d(item);
   item.sheet.render(true);
@@ -40739,7 +37619,7 @@ function getAvatarForVersion(source, version2) {
   return version2 < 12 ? source.icon : source.img;
 }
 __name(getAvatarForVersion, "getAvatarForVersion");
-function instance$u($$self, $$props, $$invalidate) {
+function instance$w($$self, $$props, $$invalidate) {
   let parentIsActor;
   let isActorSheet;
   let isGM;
@@ -40910,14 +37790,14 @@ function instance$u($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$u, "instance$u");
+__name(instance$w, "instance$w");
 class EffectsTab extends SvelteComponent {
   static {
     __name(this, "EffectsTab");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$u, create_fragment$B, safe_not_equal, { sheet: 13, resetEffectList: 14 }, null, [-1, -1]);
+    init$1(this, options, instance$w, create_fragment$D, safe_not_equal, { sheet: 13, resetEffectList: 14 }, null, [-1, -1]);
   }
   get sheet() {
     return this.$$.ctx[13];
@@ -40976,7 +37856,7 @@ function create_default_slot$c(ctx) {
   };
 }
 __name(create_default_slot$c, "create_default_slot$c");
-function create_fragment$A(ctx) {
+function create_fragment$C(ctx) {
   let applicationshell;
   let updating_elementRoot;
   let updating_stylesApp;
@@ -41055,9 +37935,9 @@ function create_fragment$A(ctx) {
     }
   };
 }
-__name(create_fragment$A, "create_fragment$A");
+__name(create_fragment$C, "create_fragment$C");
 let activeTab$1 = "attributes";
-function instance$t($$self, $$props, $$invalidate) {
+function instance$v($$self, $$props, $$invalidate) {
   let tabs;
   let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(9, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
   let $applicationWindowHeaderIconsOnly;
@@ -41143,14 +38023,14 @@ function instance$t($$self, $$props, $$invalidate) {
     applicationshell_stylesApp_binding
   ];
 }
-__name(instance$t, "instance$t");
+__name(instance$v, "instance$v");
 class PCSheetShell extends SvelteComponent {
   static {
     __name(this, "PCSheetShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$t, create_fragment$A, safe_not_equal, { elementRoot: 0, documentStore: 1 });
+    init$1(this, options, instance$v, create_fragment$C, safe_not_equal, { elementRoot: 0, documentStore: 1 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -41167,7 +38047,7 @@ class PCSheetShell extends SvelteComponent {
     flush();
   }
 }
-function create_fragment$z(ctx) {
+function create_fragment$B(ctx) {
   let applicationshell;
   let updating_elementRoot;
   let current;
@@ -41219,8 +38099,8 @@ function create_fragment$z(ctx) {
     }
   };
 }
-__name(create_fragment$z, "create_fragment$z");
-function instance$s($$self, $$props, $$invalidate) {
+__name(create_fragment$B, "create_fragment$B");
+function instance$u($$self, $$props, $$invalidate) {
   let { elementRoot } = $$props;
   function applicationshell_elementRoot_binding(value) {
     elementRoot = value;
@@ -41233,14 +38113,14 @@ function instance$s($$self, $$props, $$invalidate) {
   };
   return [elementRoot, applicationshell_elementRoot_binding];
 }
-__name(instance$s, "instance$s");
+__name(instance$u, "instance$u");
 class DocumentShell extends SvelteComponent {
   static {
     __name(this, "DocumentShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$s, create_fragment$z, safe_not_equal, { elementRoot: 0 });
+    init$1(this, options, instance$u, create_fragment$B, safe_not_equal, { elementRoot: 0 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -41826,13 +38706,13 @@ let FFXIVActorSheet$1 = class FFXIVActorSheet extends SvelteDocumentSheet {
     return actor.updateEmbeddedDocuments("Item", updateData);
   }
 };
-function get_each_context$5(ctx, list, i) {
+function get_each_context$6(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[23] = list[i];
   child_ctx[25] = i;
   return child_ctx;
 }
-__name(get_each_context$5, "get_each_context$5");
+__name(get_each_context$6, "get_each_context$6");
 function create_if_block_3$3(ctx) {
   let h1;
   let table;
@@ -42128,7 +39008,7 @@ function create_if_block_1$7(ctx) {
   };
 }
 __name(create_if_block_1$7, "create_if_block_1$7");
-function create_each_block$5(ctx) {
+function create_each_block$6(ctx) {
   let tr;
   let td0;
   let img;
@@ -42334,8 +39214,8 @@ function create_each_block$5(ctx) {
     }
   };
 }
-__name(create_each_block$5, "create_each_block$5");
-function create_if_block$9(ctx) {
+__name(create_each_block$6, "create_each_block$6");
+function create_if_block$a(ctx) {
   let button;
   let mounted;
   let dispose;
@@ -42367,8 +39247,8 @@ function create_if_block$9(ctx) {
     }
   };
 }
-__name(create_if_block$9, "create_if_block$9");
-function create_fragment$y(ctx) {
+__name(create_if_block$a, "create_if_block$a");
+function create_fragment$A(ctx) {
   let div1;
   let div0;
   let h1;
@@ -42397,14 +39277,14 @@ function create_fragment$y(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$5(get_each_context$5(ctx, each_value, i));
+    each_blocks[i] = create_each_block$6(get_each_context$6(ctx, each_value, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
   }), "out");
   let if_block1 = (
     /*hasItems*/
-    ctx[3] && create_if_block$9(ctx)
+    ctx[3] && create_if_block$a(ctx)
   );
   return {
     c() {
@@ -42523,12 +39403,12 @@ function create_fragment$y(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$5(ctx2, each_value, i);
+          const child_ctx = get_each_context$6(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block$5(child_ctx);
+            each_blocks[i] = create_each_block$6(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(table, null);
@@ -42547,7 +39427,7 @@ function create_fragment$y(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$9(ctx2);
+          if_block1 = create_if_block$a(ctx2);
           if_block1.c();
           if_block1.m(div1, null);
         }
@@ -42585,7 +39465,7 @@ function create_fragment$y(ctx) {
     }
   };
 }
-__name(create_fragment$y, "create_fragment$y");
+__name(create_fragment$A, "create_fragment$A");
 function editItem(item) {
   item.sheet.render(true);
   game.system.log.d("editItem");
@@ -42596,7 +39476,7 @@ function showItemSheet$1(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet$1, "showItemSheet$1");
-function instance$r($$self, $$props, $$invalidate) {
+function instance$t($$self, $$props, $$invalidate) {
   let items;
   let lockCSS;
   let faLockCSS;
@@ -42608,7 +39488,7 @@ function instance$r($$self, $$props, $$invalidate) {
   component_subscribe($$self, Actor2, (value) => $$invalidate(0, $Actor = value));
   const doc = new TJSDocument($Actor);
   component_subscribe($$self, doc, (value) => $$invalidate(1, $doc = value));
-  new RollCalcActor({ actor: $Actor });
+  new CONFIG.FFXIV.RollCalcActor({ actor: $Actor });
   const typeSearch = createFilterQuery("type");
   typeSearch.set(["trait", "action"]);
   let combat;
@@ -42763,24 +39643,24 @@ function instance$r($$self, $$props, $$invalidate) {
     $wildcard
   ];
 }
-__name(instance$r, "instance$r");
+__name(instance$t, "instance$t");
 class Abilities2 extends SvelteComponent {
   static {
     __name(this, "Abilities");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$r, create_fragment$y, safe_not_equal, {});
+    init$1(this, options, instance$t, create_fragment$A, safe_not_equal, {});
   }
 }
-function get_each_context$4(ctx, list, i) {
+function get_each_context$5(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[5] = list[i].code;
   child_ctx[7] = i;
   return child_ctx;
 }
-__name(get_each_context$4, "get_each_context$4");
-function create_each_block$4(ctx) {
+__name(get_each_context$5, "get_each_context$5");
+function create_each_block$5(ctx) {
   let attribute;
   let current;
   attribute = new Attribute({
@@ -42854,8 +39734,8 @@ function create_each_block$4(ctx) {
     }
   };
 }
-__name(create_each_block$4, "create_each_block$4");
-function create_fragment$x(ctx) {
+__name(create_each_block$5, "create_each_block$5");
+function create_fragment$z(ctx) {
   let div;
   let current;
   let each_value = ensure_array_like(
@@ -42864,7 +39744,7 @@ function create_fragment$x(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$4(get_each_context$4(ctx, each_value, i));
+    each_blocks[i] = create_each_block$5(get_each_context$5(ctx, each_value, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -42895,12 +39775,12 @@ function create_fragment$x(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$4(ctx2, each_value, i);
+          const child_ctx = get_each_context$5(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block$4(child_ctx);
+            each_blocks[i] = create_each_block$5(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(div, null);
@@ -42936,8 +39816,8 @@ function create_fragment$x(ctx) {
     }
   };
 }
-__name(create_fragment$x, "create_fragment$x");
-function instance$q($$self, $$props, $$invalidate) {
+__name(create_fragment$z, "create_fragment$z");
+function instance$s($$self, $$props, $$invalidate) {
   let { data } = $$props;
   let { abbreviateLabel } = $$props;
   let { key } = $$props;
@@ -42959,14 +39839,14 @@ function instance$q($$self, $$props, $$invalidate) {
   };
   return [data, abbreviateLabel, key, showSign, onclick];
 }
-__name(instance$q, "instance$q");
+__name(instance$s, "instance$s");
 class AttributeCol2 extends SvelteComponent {
   static {
     __name(this, "AttributeCol");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$q, create_fragment$x, safe_not_equal, {
+    init$1(this, options, instance$s, create_fragment$z, safe_not_equal, {
       data: 0,
       abbreviateLabel: 1,
       key: 2,
@@ -42975,7 +39855,7 @@ class AttributeCol2 extends SvelteComponent {
     });
   }
 }
-function create_fragment$w(ctx) {
+function create_fragment$y(ctx) {
   let div1;
   let div0;
   let attributecol;
@@ -43035,8 +39915,8 @@ function create_fragment$w(ctx) {
     }
   };
 }
-__name(create_fragment$w, "create_fragment$w");
-function instance$p($$self, $$props, $$invalidate) {
+__name(create_fragment$y, "create_fragment$y");
+function instance$r($$self, $$props, $$invalidate) {
   let { onclick } = $$props;
   let data = [
     { code: "str" },
@@ -43051,17 +39931,17 @@ function instance$p($$self, $$props, $$invalidate) {
   };
   return [onclick, data];
 }
-__name(instance$p, "instance$p");
+__name(instance$r, "instance$r");
 class PrimaryAttributes2 extends SvelteComponent {
   static {
     __name(this, "PrimaryAttributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$p, create_fragment$w, safe_not_equal, { onclick: 0 });
+    init$1(this, options, instance$r, create_fragment$y, safe_not_equal, { onclick: 0 });
   }
 }
-function create_fragment$v(ctx) {
+function create_fragment$x(ctx) {
   let div1;
   let div0;
   let attributecol;
@@ -43119,8 +39999,8 @@ function create_fragment$v(ctx) {
     }
   };
 }
-__name(create_fragment$v, "create_fragment$v");
-function instance$o($$self, $$props, $$invalidate) {
+__name(create_fragment$x, "create_fragment$x");
+function instance$q($$self, $$props, $$invalidate) {
   let { onclick } = $$props;
   let data = [{ code: "def" }, { code: "mag" }, { code: "vig" }, { code: "spd" }];
   $$self.$$set = ($$props2) => {
@@ -43129,17 +40009,17 @@ function instance$o($$self, $$props, $$invalidate) {
   };
   return [onclick, data];
 }
-__name(instance$o, "instance$o");
+__name(instance$q, "instance$q");
 class SecondaryAttributes2 extends SvelteComponent {
   static {
     __name(this, "SecondaryAttributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$o, create_fragment$v, safe_not_equal, { onclick: 0 });
+    init$1(this, options, instance$q, create_fragment$x, safe_not_equal, { onclick: 0 });
   }
 }
-function create_fragment$u(ctx) {
+function create_fragment$w(ctx) {
   let div6;
   let div2;
   let div0;
@@ -43233,8 +40113,8 @@ function create_fragment$u(ctx) {
     }
   };
 }
-__name(create_fragment$u, "create_fragment$u");
-function instance$n($$self, $$props, $$invalidate) {
+__name(create_fragment$w, "create_fragment$w");
+function instance$p($$self, $$props, $$invalidate) {
   let $actor;
   const sizeOptions = getSizeOptions();
   const actor = getContext("#doc");
@@ -43282,17 +40162,17 @@ function instance$n($$self, $$props, $$invalidate) {
   }, "onclick");
   return [sizeOptions, actor, onSizeChange, onclick];
 }
-__name(instance$n, "instance$n");
+__name(instance$p, "instance$p");
 class AttributeBlock2 extends SvelteComponent {
   static {
     __name(this, "AttributeBlock");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$n, create_fragment$u, safe_not_equal, {});
+    init$1(this, options, instance$p, create_fragment$w, safe_not_equal, {});
   }
 }
-function create_fragment$t(ctx) {
+function create_fragment$v(ctx) {
   let section;
   let div3;
   let div0;
@@ -43343,24 +40223,24 @@ function create_fragment$t(ctx) {
     }
   };
 }
-__name(create_fragment$t, "create_fragment$t");
-function instance$m($$self, $$props, $$invalidate) {
+__name(create_fragment$v, "create_fragment$v");
+function instance$o($$self, $$props, $$invalidate) {
   getContext("#external").application;
   const documentStore = getContext("#doc");
   component_subscribe($$self, documentStore, (value) => $$invalidate(2, value));
   return [documentStore];
 }
-__name(instance$m, "instance$m");
+__name(instance$o, "instance$o");
 class AttributeSection2 extends SvelteComponent {
   static {
     __name(this, "AttributeSection");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$m, create_fragment$t, safe_not_equal, {});
+    init$1(this, options, instance$o, create_fragment$v, safe_not_equal, {});
   }
 }
-function create_fragment$s(ctx) {
+function create_fragment$u(ctx) {
   let section;
   let div1;
   let div0;
@@ -43403,17 +40283,17 @@ function create_fragment$s(ctx) {
     }
   };
 }
-__name(create_fragment$s, "create_fragment$s");
+__name(create_fragment$u, "create_fragment$u");
 class PointsSectionNPC extends SvelteComponent {
   static {
     __name(this, "PointsSectionNPC");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$s, safe_not_equal, {});
+    init$1(this, options, null, create_fragment$u, safe_not_equal, {});
   }
 }
-function create_fragment$r(ctx) {
+function create_fragment$t(ctx) {
   let div;
   let portraitframe;
   let current;
@@ -43467,8 +40347,8 @@ function create_fragment$r(ctx) {
     }
   };
 }
-__name(create_fragment$r, "create_fragment$r");
-function instance$l($$self, $$props, $$invalidate) {
+__name(create_fragment$t, "create_fragment$t");
+function instance$n($$self, $$props, $$invalidate) {
   let $documentStore;
   const application = getContext("#external").application;
   const documentStore = getContext("#doc");
@@ -43508,14 +40388,14 @@ function instance$l($$self, $$props, $$invalidate) {
   __name(_launchTokenizer, "_launchTokenizer");
   return [$documentStore, documentStore, _editToken];
 }
-__name(instance$l, "instance$l");
+__name(instance$n, "instance$n");
 class Portrait extends SvelteComponent {
   static {
     __name(this, "Portrait");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$l, create_fragment$r, safe_not_equal, {});
+    init$1(this, options, instance$n, create_fragment$t, safe_not_equal, {});
   }
 }
 function create_default_slot$a(ctx) {
@@ -43615,7 +40495,7 @@ function create_default_slot$a(ctx) {
   };
 }
 __name(create_default_slot$a, "create_default_slot$a");
-function create_fragment$q(ctx) {
+function create_fragment$s(ctx) {
   let div5;
   let div4;
   let div0;
@@ -43683,14 +40563,14 @@ function create_fragment$q(ctx) {
     }
   };
 }
-__name(create_fragment$q, "create_fragment$q");
+__name(create_fragment$s, "create_fragment$s");
 class DescriptionBlockNPC extends SvelteComponent {
   static {
     __name(this, "DescriptionBlockNPC");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$q, safe_not_equal, {});
+    init$1(this, options, null, create_fragment$s, safe_not_equal, {});
   }
 }
 function create_default_slot_1(ctx) {
@@ -43781,7 +40661,7 @@ function create_if_block_1$6(ctx) {
   };
 }
 __name(create_if_block_1$6, "create_if_block_1$6");
-function create_if_block$8(ctx) {
+function create_if_block$9(ctx) {
   let div;
   let descriptionblocknpc;
   let current;
@@ -43815,7 +40695,7 @@ function create_if_block$8(ctx) {
     }
   };
 }
-__name(create_if_block$8, "create_if_block$8");
+__name(create_if_block$9, "create_if_block$9");
 function create_default_slot$9(ctx) {
   let effectssection;
   let current;
@@ -43845,7 +40725,7 @@ function create_default_slot$9(ctx) {
   };
 }
 __name(create_default_slot$9, "create_default_slot$9");
-function create_fragment$p(ctx) {
+function create_fragment$r(ctx) {
   let div17;
   let div10;
   let div8;
@@ -43887,7 +40767,7 @@ function create_fragment$p(ctx) {
   attributesection = new AttributeSection2({});
   let if_block1 = (
     /*smallwindow*/
-    ctx[1] && create_if_block$8()
+    ctx[1] && create_if_block$9()
   );
   portraitframe1 = new PortraitFrame({
     props: {
@@ -44032,7 +40912,7 @@ function create_fragment$p(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block$8();
+          if_block1 = create_if_block$9();
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div17, div16);
@@ -44086,8 +40966,8 @@ function create_fragment$p(ctx) {
     }
   };
 }
-__name(create_fragment$p, "create_fragment$p");
-function instance$k($$self, $$props, $$invalidate) {
+__name(create_fragment$r, "create_fragment$r");
+function instance$m($$self, $$props, $$invalidate) {
   let smallwindow;
   let largewindow;
   let $width;
@@ -44112,14 +40992,14 @@ function instance$k($$self, $$props, $$invalidate) {
   };
   return [largewindow, smallwindow, width, sheet, $width];
 }
-__name(instance$k, "instance$k");
+__name(instance$m, "instance$m");
 class Attributes2 extends SvelteComponent {
   static {
     __name(this, "Attributes");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$k, create_fragment$p, safe_not_equal, { sheet: 3 });
+    init$1(this, options, instance$m, create_fragment$r, safe_not_equal, { sheet: 3 });
   }
 }
 function create_default_slot$8(ctx) {
@@ -44168,7 +41048,7 @@ function create_default_slot$8(ctx) {
   };
 }
 __name(create_default_slot$8, "create_default_slot$8");
-function create_fragment$o(ctx) {
+function create_fragment$q(ctx) {
   let applicationshell;
   let updating_elementRoot;
   let updating_stylesApp;
@@ -44247,9 +41127,9 @@ function create_fragment$o(ctx) {
     }
   };
 }
-__name(create_fragment$o, "create_fragment$o");
+__name(create_fragment$q, "create_fragment$q");
 let activeTab = "attributes";
-function instance$j($$self, $$props, $$invalidate) {
+function instance$l($$self, $$props, $$invalidate) {
   let tabs;
   let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(9, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
   let $applicationWindowHeaderIconsOnly;
@@ -44325,14 +41205,14 @@ function instance$j($$self, $$props, $$invalidate) {
     applicationshell_stylesApp_binding
   ];
 }
-__name(instance$j, "instance$j");
+__name(instance$l, "instance$l");
 class NPCSheetShell extends SvelteComponent {
   static {
     __name(this, "NPCSheetShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$j, create_fragment$o, safe_not_equal, { elementRoot: 0, documentStore: 1 });
+    init$1(this, options, instance$l, create_fragment$q, safe_not_equal, { elementRoot: 0, documentStore: 1 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -44685,7 +41565,7 @@ class FFXIVActorSheet2 extends SvelteDocumentSheet {
     return actor.updateEmbeddedDocuments("Item", updateData);
   }
 }
-function create_fragment$n(ctx) {
+function create_fragment$p(ctx) {
   let div1;
   let div0;
   let prosemirror;
@@ -44724,8 +41604,8 @@ function create_fragment$n(ctx) {
     }
   };
 }
-__name(create_fragment$n, "create_fragment$n");
-function instance$i($$self, $$props, $$invalidate) {
+__name(create_fragment$p, "create_fragment$p");
+function instance$k($$self, $$props, $$invalidate) {
   let { sheet } = $$props;
   $$self.$$set = ($$props2) => {
     if ("sheet" in $$props2)
@@ -44733,23 +41613,23 @@ function instance$i($$self, $$props, $$invalidate) {
   };
   return [sheet];
 }
-__name(instance$i, "instance$i");
+__name(instance$k, "instance$k");
 class DescriptionTab extends SvelteComponent {
   static {
     __name(this, "DescriptionTab");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$i, create_fragment$n, safe_not_equal, { sheet: 0 });
+    init$1(this, options, instance$k, create_fragment$p, safe_not_equal, { sheet: 0 });
   }
 }
-function get_each_context$3(ctx, list, i) {
+function get_each_context$4(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[8] = list[i];
   return child_ctx;
 }
-__name(get_each_context$3, "get_each_context$3");
-function create_if_block$7(ctx) {
+__name(get_each_context$4, "get_each_context$4");
+function create_if_block$8(ctx) {
   let each_1_anchor;
   let each_value = ensure_array_like(
     /*options*/
@@ -44757,7 +41637,7 @@ function create_if_block$7(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$3(get_each_context$3(ctx, each_value, i));
+    each_blocks[i] = create_each_block$4(get_each_context$4(ctx, each_value, i));
   }
   return {
     c() {
@@ -44783,11 +41663,11 @@ function create_if_block$7(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$3(ctx2, each_value, i);
+          const child_ctx = get_each_context$4(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block$3(child_ctx);
+            each_blocks[i] = create_each_block$4(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
           }
@@ -44806,8 +41686,8 @@ function create_if_block$7(ctx) {
     }
   };
 }
-__name(create_if_block$7, "create_if_block$7");
-function create_each_block$3(ctx) {
+__name(create_if_block$8, "create_if_block$8");
+function create_each_block$4(ctx) {
   let option_1;
   let t0_value = (
     /*option*/
@@ -44849,8 +41729,8 @@ function create_each_block$3(ctx) {
     }
   };
 }
-__name(create_each_block$3, "create_each_block$3");
-function create_fragment$m(ctx) {
+__name(create_each_block$4, "create_each_block$4");
+function create_fragment$o(ctx) {
   let select;
   let option_1;
   let t;
@@ -44862,7 +41742,7 @@ function create_fragment$m(ctx) {
   let if_block = (
     /*options*/
     ctx[0] && /*options*/
-    ctx[0].length && create_if_block$7(ctx)
+    ctx[0].length && create_if_block$8(ctx)
   );
   const default_slot_template = (
     /*#slots*/
@@ -44943,7 +41823,7 @@ function create_fragment$m(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$7(ctx2);
+          if_block = create_if_block$8(ctx2);
           if_block.c();
           if_block.m(select, if_block_anchor);
         }
@@ -45012,8 +41892,8 @@ function create_fragment$m(ctx) {
     }
   };
 }
-__name(create_fragment$m, "create_fragment$m");
-function instance$h($$self, $$props, $$invalidate) {
+__name(create_fragment$o, "create_fragment$o");
+function instance$j($$self, $$props, $$invalidate) {
   const omit_props_names = ["options", "value", "disabled"];
   let $$restProps = compute_rest_props($$props, omit_props_names);
   let { $$slots: slots = {}, $$scope } = $$props;
@@ -45039,24 +41919,24 @@ function instance$h($$self, $$props, $$invalidate) {
   };
   return [options, value, disabled, handleChange, $$restProps, $$scope, slots];
 }
-__name(instance$h, "instance$h");
+__name(instance$j, "instance$j");
 class ArraySelect extends SvelteComponent {
   static {
     __name(this, "ArraySelect");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$h, create_fragment$m, safe_not_equal, { options: 0, value: 1, disabled: 2 });
+    init$1(this, options, instance$j, create_fragment$o, safe_not_equal, { options: 0, value: 1, disabled: 2 });
   }
 }
-function get_each_context$2(ctx, list, i) {
+function get_each_context$3(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[15] = list[i];
   child_ctx[17] = i;
   return child_ctx;
 }
-__name(get_each_context$2, "get_each_context$2");
-function create_if_block$6(ctx) {
+__name(get_each_context$3, "get_each_context$3");
+function create_if_block$7(ctx) {
   let each_1_anchor;
   let current;
   let each_value = ensure_array_like(
@@ -45065,7 +41945,7 @@ function create_if_block$6(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
+    each_blocks[i] = create_each_block$3(get_each_context$3(ctx, each_value, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -45095,12 +41975,12 @@ function create_if_block$6(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$2(ctx2, each_value, i);
+          const child_ctx = get_each_context$3(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block$2(child_ctx);
+            each_blocks[i] = create_each_block$3(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(each_1_anchor.parentNode, each_1_anchor);
@@ -45136,7 +42016,7 @@ function create_if_block$6(ctx) {
     }
   };
 }
-__name(create_if_block$6, "create_if_block$6");
+__name(create_if_block$7, "create_if_block$7");
 function create_if_block_1$5(ctx) {
   let div2;
   let div0;
@@ -45605,7 +42485,7 @@ function create_if_block_2$4(ctx) {
   };
 }
 __name(create_if_block_2$4, "create_if_block_2$4");
-function create_each_block$2(ctx) {
+function create_each_block$3(ctx) {
   let div6;
   let div2;
   let div0;
@@ -45771,8 +42651,8 @@ function create_each_block$2(ctx) {
     }
   };
 }
-__name(create_each_block$2, "create_each_block$2");
-function create_fragment$l(ctx) {
+__name(create_each_block$3, "create_each_block$3");
+function create_fragment$n(ctx) {
   let div3;
   let div2;
   let div0;
@@ -45784,7 +42664,7 @@ function create_fragment$l(ctx) {
   let if_block = (
     /*durations*/
     ctx[0] && /*durations*/
-    ctx[0].length > 0 && create_if_block$6(ctx)
+    ctx[0].length > 0 && create_if_block$7(ctx)
   );
   return {
     c() {
@@ -45835,7 +42715,7 @@ function create_fragment$l(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$6(ctx2);
+          if_block = create_if_block$7(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div3, null);
@@ -45869,8 +42749,8 @@ function create_fragment$l(ctx) {
     }
   };
 }
-__name(create_fragment$l, "create_fragment$l");
-function instance$g($$self, $$props, $$invalidate) {
+__name(create_fragment$n, "create_fragment$n");
+function instance$i($$self, $$props, $$invalidate) {
   let durations;
   let $item;
   const item = getContext("#doc");
@@ -45935,14 +42815,14 @@ function instance$g($$self, $$props, $$invalidate) {
     change_handler_3
   ];
 }
-__name(instance$g, "instance$g");
+__name(instance$i, "instance$i");
 class Duration2 extends SvelteComponent {
   static {
     __name(this, "Duration");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$g, create_fragment$l, safe_not_equal, {});
+    init$1(this, options, instance$i, create_fragment$n, safe_not_equal, {});
   }
 }
 function create_else_block(ctx) {
@@ -47223,7 +44103,7 @@ function create_if_block_1$4(ctx) {
   };
 }
 __name(create_if_block_1$4, "create_if_block_1$4");
-function create_if_block$5(ctx) {
+function create_if_block$6(ctx) {
   let div2;
   let div0;
   let div1;
@@ -47272,8 +44152,8 @@ function create_if_block$5(ctx) {
     }
   };
 }
-__name(create_if_block$5, "create_if_block$5");
-function create_fragment$k(ctx) {
+__name(create_if_block$6, "create_if_block$6");
+function create_fragment$m(ctx) {
   let div40;
   let div39;
   let h30;
@@ -47489,7 +44369,7 @@ function create_fragment$k(ctx) {
   );
   let if_block14 = (
     /*$item*/
-    ctx[0].system.hasDirectHit && create_if_block$5()
+    ctx[0].system.hasDirectHit && create_if_block$6()
   );
   return {
     c() {
@@ -48063,7 +44943,7 @@ function create_fragment$k(ctx) {
             transition_in(if_block14, 1);
           }
         } else {
-          if_block14 = create_if_block$5();
+          if_block14 = create_if_block$6();
           if_block14.c();
           transition_in(if_block14, 1);
           if_block14.m(div39, null);
@@ -48190,8 +45070,8 @@ function create_fragment$k(ctx) {
     }
   };
 }
-__name(create_fragment$k, "create_fragment$k");
-function instance$f($$self, $$props, $$invalidate) {
+__name(create_fragment$m, "create_fragment$m");
+function instance$h($$self, $$props, $$invalidate) {
   let checkOptions;
   let $item;
   const item = getContext("#doc");
@@ -48272,14 +45152,14 @@ function instance$f($$self, $$props, $$invalidate) {
     costOptions
   ];
 }
-__name(instance$f, "instance$f");
+__name(instance$h, "instance$h");
 let Details$5 = class Details extends SvelteComponent {
   static {
     __name(this, "Details");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$f, create_fragment$k, safe_not_equal, {});
+    init$1(this, options, instance$h, create_fragment$m, safe_not_equal, {});
   }
 };
 class FolderProcessor {
@@ -48438,13 +45318,13 @@ class FolderProcessor {
     return groups;
   }
 }
-function get_each_context$1(ctx, list, i) {
+function get_each_context$2(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[11] = list[i];
   child_ctx[22] = i;
   return child_ctx;
 }
-__name(get_each_context$1, "get_each_context$1");
+__name(get_each_context$2, "get_each_context$2");
 function get_each_context_1(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[23] = list[i];
@@ -48478,7 +45358,7 @@ function create_if_block_2$2(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
+    each_blocks[i] = create_each_block$2(get_each_context$2(ctx, each_value, i));
   }
   return {
     c() {
@@ -48556,11 +45436,11 @@ function create_if_block_2$2(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context$1(ctx2, each_value, i);
+          const child_ctx = get_each_context$2(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
           } else {
-            each_blocks[i] = create_each_block$1(child_ctx);
+            each_blocks[i] = create_each_block$2(child_ctx);
             each_blocks[i].c();
             each_blocks[i].m(table, null);
           }
@@ -48658,7 +45538,7 @@ function create_each_block_1(ctx) {
   };
 }
 __name(create_each_block_1, "create_each_block_1");
-function create_each_block$1(ctx) {
+function create_each_block$2(ctx) {
   let tr;
   let td0;
   let img;
@@ -48845,7 +45725,7 @@ function create_each_block$1(ctx) {
     }
   };
 }
-__name(create_each_block$1, "create_each_block$1");
+__name(create_each_block$2, "create_each_block$2");
 function create_if_block_1$3(ctx) {
   let button;
   let mounted;
@@ -48879,7 +45759,7 @@ function create_if_block_1$3(ctx) {
   };
 }
 __name(create_if_block_1$3, "create_if_block_1$3");
-function create_if_block$4(ctx) {
+function create_if_block$5(ctx) {
   let div;
   return {
     c() {
@@ -48897,8 +45777,8 @@ function create_if_block$4(ctx) {
     }
   };
 }
-__name(create_if_block$4, "create_if_block$4");
-function create_fragment$j(ctx) {
+__name(create_if_block$5, "create_if_block$5");
+function create_fragment$l(ctx) {
   let div3;
   let div2;
   let div0;
@@ -48949,7 +45829,7 @@ function create_fragment$j(ctx) {
   let if_block2 = (
     /*checkboxValue*/
     ctx[4] && /*localList*/
-    ctx[3].length === 0 && create_if_block$4()
+    ctx[3].length === 0 && create_if_block$5()
   );
   return {
     c() {
@@ -49095,7 +45975,7 @@ function create_fragment$j(ctx) {
         if (if_block2)
           ;
         else {
-          if_block2 = create_if_block$4();
+          if_block2 = create_if_block$5();
           if_block2.c();
           if_block2.m(div3, null);
         }
@@ -49139,12 +46019,12 @@ function create_fragment$j(ctx) {
     }
   };
 }
-__name(create_fragment$j, "create_fragment$j");
+__name(create_fragment$l, "create_fragment$l");
 function showItemSheet(item) {
   item.sheet.render(true);
 }
 __name(showItemSheet, "showItemSheet");
-function instance$e($$self, $$props, $$invalidate) {
+function instance$g($$self, $$props, $$invalidate) {
   let checkboxValue;
   let activeClass;
   let hasItems;
@@ -49306,14 +46186,14 @@ function instance$e($$self, $$props, $$invalidate) {
     click_handler_1
   ];
 }
-__name(instance$e, "instance$e");
+__name(instance$g, "instance$g");
 class ItemBucket extends SvelteComponent {
   static {
     __name(this, "ItemBucket");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$e, create_fragment$j, safe_not_equal, {
+    init$1(this, options, instance$g, create_fragment$l, safe_not_equal, {
       title: 0,
       key: 12,
       valuePath: 1,
@@ -49323,13 +46203,13 @@ class ItemBucket extends SvelteComponent {
     });
   }
 }
-function get_each_context(ctx, list, i) {
+function get_each_context$1(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[6] = list[i];
   return child_ctx;
 }
-__name(get_each_context, "get_each_context");
-function create_each_block(ctx) {
+__name(get_each_context$1, "get_each_context$1");
+function create_each_block$1(ctx) {
   let div;
   let tag_1;
   let current;
@@ -49379,8 +46259,8 @@ function create_each_block(ctx) {
     }
   };
 }
-__name(create_each_block, "create_each_block");
-function create_fragment$i(ctx) {
+__name(create_each_block$1, "create_each_block$1");
+function create_fragment$k(ctx) {
   let div0;
   let input;
   let div1;
@@ -49393,7 +46273,7 @@ function create_fragment$i(ctx) {
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
-    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+    each_blocks[i] = create_each_block$1(get_each_context$1(ctx, each_value, i));
   }
   const out = /* @__PURE__ */ __name((i) => transition_out(each_blocks[i], 1, 1, () => {
     each_blocks[i] = null;
@@ -49461,12 +46341,12 @@ function create_fragment$i(ctx) {
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
-          const child_ctx = get_each_context(ctx2, each_value, i);
+          const child_ctx = get_each_context$1(ctx2, each_value, i);
           if (each_blocks[i]) {
             each_blocks[i].p(child_ctx, dirty);
             transition_in(each_blocks[i], 1);
           } else {
-            each_blocks[i] = create_each_block(child_ctx);
+            each_blocks[i] = create_each_block$1(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
             each_blocks[i].m(div1, null);
@@ -49505,8 +46385,8 @@ function create_fragment$i(ctx) {
     }
   };
 }
-__name(create_fragment$i, "create_fragment$i");
-function instance$d($$self, $$props, $$invalidate) {
+__name(create_fragment$k, "create_fragment$k");
+function instance$f($$self, $$props, $$invalidate) {
   let $doc;
   const doc = getContext("#doc");
   component_subscribe($$self, doc, (value) => $$invalidate(1, $doc = value));
@@ -49544,14 +46424,14 @@ function instance$d($$self, $$props, $$invalidate) {
   };
   return [newTag, $doc, doc, addTagDebounce, input_input_handler];
 }
-__name(instance$d, "instance$d");
+__name(instance$f, "instance$f");
 class TagInput extends SvelteComponent {
   static {
     __name(this, "TagInput");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$d, create_fragment$i, safe_not_equal, {});
+    init$1(this, options, instance$f, create_fragment$k, safe_not_equal, {});
   }
 }
 function create_if_block_1$2(ctx) {
@@ -49673,7 +46553,7 @@ function create_default_slot$7(ctx) {
   };
 }
 __name(create_default_slot$7, "create_default_slot$7");
-function create_if_block$3(ctx) {
+function create_if_block$4(ctx) {
   let div;
   let taginput;
   let current;
@@ -49707,8 +46587,8 @@ function create_if_block$3(ctx) {
     }
   };
 }
-__name(create_if_block$3, "create_if_block$3");
-function create_fragment$h(ctx) {
+__name(create_if_block$4, "create_if_block$4");
+function create_fragment$j(ctx) {
   let div6;
   let div1;
   let div0;
@@ -49770,7 +46650,7 @@ function create_fragment$h(ctx) {
   });
   let if_block = (
     /*$item*/
-    ctx[0].system.hasTags && create_if_block$3()
+    ctx[0].system.hasTags && create_if_block$4()
   );
   return {
     c() {
@@ -49836,7 +46716,7 @@ function create_fragment$h(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$3();
+          if_block = create_if_block$4();
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div6, div5);
@@ -49889,21 +46769,21 @@ function create_fragment$h(ctx) {
     }
   };
 }
-__name(create_fragment$h, "create_fragment$h");
-function instance$c($$self, $$props, $$invalidate) {
+__name(create_fragment$j, "create_fragment$j");
+function instance$e($$self, $$props, $$invalidate) {
   let $item;
   const item = getContext("#doc");
   component_subscribe($$self, item, (value) => $$invalidate(0, $item = value));
   return [$item, item];
 }
-__name(instance$c, "instance$c");
+__name(instance$e, "instance$e");
 class Links extends SvelteComponent {
   static {
     __name(this, "Links");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$c, create_fragment$h, safe_not_equal, {});
+    init$1(this, options, instance$e, create_fragment$j, safe_not_equal, {});
   }
 }
 function create_default_slot$6(ctx) {
@@ -49965,7 +46845,7 @@ function create_default_slot$6(ctx) {
   };
 }
 __name(create_default_slot$6, "create_default_slot$6");
-function create_fragment$g(ctx) {
+function create_fragment$i(ctx) {
   let div;
   let portraitframe;
   let current;
@@ -50013,8 +46893,8 @@ function create_fragment$g(ctx) {
     }
   };
 }
-__name(create_fragment$g, "create_fragment$g");
-function instance$b($$self, $$props, $$invalidate) {
+__name(create_fragment$i, "create_fragment$i");
+function instance$d($$self, $$props, $$invalidate) {
   let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     {
@@ -50044,17 +46924,17 @@ function instance$b($$self, $$props, $$invalidate) {
   };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
-__name(instance$b, "instance$b");
+__name(instance$d, "instance$d");
 let Tabs_1$4 = class Tabs_1 extends SvelteComponent {
   static {
     __name(this, "Tabs_1");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$b, create_fragment$g, safe_not_equal, { activeTab: 0 });
+    init$1(this, options, instance$d, create_fragment$i, safe_not_equal, { activeTab: 0 });
   }
 };
-function create_fragment$f(ctx) {
+function create_fragment$h(ctx) {
   let div;
   return {
     c() {
@@ -50074,17 +46954,17 @@ function create_fragment$f(ctx) {
     }
   };
 }
-__name(create_fragment$f, "create_fragment$f");
+__name(create_fragment$h, "create_fragment$h");
 let Header$4 = class Header2 extends SvelteComponent {
   static {
     __name(this, "Header");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$f, safe_not_equal, {});
+    init$1(this, options, null, create_fragment$h, safe_not_equal, {});
   }
 };
-function create_if_block$2(ctx) {
+function create_if_block$3(ctx) {
   let div2;
   let div0;
   let div1;
@@ -50133,8 +47013,8 @@ function create_if_block$2(ctx) {
     }
   };
 }
-__name(create_if_block$2, "create_if_block$2");
-function create_fragment$e(ctx) {
+__name(create_if_block$3, "create_if_block$3");
+function create_fragment$g(ctx) {
   let div4;
   let div3;
   let h3;
@@ -50159,7 +47039,7 @@ function create_fragment$e(ctx) {
   });
   let if_block = (
     /*parentIsActor*/
-    ctx[0] && create_if_block$2()
+    ctx[0] && create_if_block$3()
   );
   return {
     c() {
@@ -50207,7 +47087,7 @@ function create_fragment$e(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$2();
+          if_block = create_if_block$3();
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div3, null);
@@ -50242,8 +47122,8 @@ function create_fragment$e(ctx) {
     }
   };
 }
-__name(create_fragment$e, "create_fragment$e");
-function instance$a($$self, $$props, $$invalidate) {
+__name(create_fragment$g, "create_fragment$g");
+function instance$c($$self, $$props, $$invalidate) {
   let parentIsActor;
   let $item;
   const item = getContext("#doc");
@@ -50257,14 +47137,14 @@ function instance$a($$self, $$props, $$invalidate) {
   };
   return [parentIsActor, item, typeOptions, $item];
 }
-__name(instance$a, "instance$a");
+__name(instance$c, "instance$c");
 let Details$4 = class Details2 extends SvelteComponent {
   static {
     __name(this, "Details");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$a, create_fragment$e, safe_not_equal, {});
+    init$1(this, options, instance$c, create_fragment$g, safe_not_equal, {});
   }
 };
 function create_default_slot$5(ctx) {
@@ -50327,7 +47207,7 @@ function create_default_slot$5(ctx) {
   };
 }
 __name(create_default_slot$5, "create_default_slot$5");
-function create_fragment$d(ctx) {
+function create_fragment$f(ctx) {
   let div;
   let portraitframe;
   let current;
@@ -50374,8 +47254,8 @@ function create_fragment$d(ctx) {
     }
   };
 }
-__name(create_fragment$d, "create_fragment$d");
-function instance$9($$self, $$props, $$invalidate) {
+__name(create_fragment$f, "create_fragment$f");
+function instance$b($$self, $$props, $$invalidate) {
   let parentIsActor;
   let $item;
   let activeTab2 = "description";
@@ -50426,17 +47306,17 @@ function instance$9($$self, $$props, $$invalidate) {
   };
   return [activeTab2, tabs, item, parentIsActor, $item, tabs_1_activeTab_binding];
 }
-__name(instance$9, "instance$9");
+__name(instance$b, "instance$b");
 class EquipmentTabs extends SvelteComponent {
   static {
     __name(this, "EquipmentTabs");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$9, create_fragment$d, safe_not_equal, {});
+    init$1(this, options, instance$b, create_fragment$f, safe_not_equal, {});
   }
 }
-function create_fragment$c(ctx) {
+function create_fragment$e(ctx) {
   let div3;
   let div2;
   let div1;
@@ -50507,24 +47387,24 @@ function create_fragment$c(ctx) {
     }
   };
 }
-__name(create_fragment$c, "create_fragment$c");
-function instance$8($$self, $$props, $$invalidate) {
+__name(create_fragment$e, "create_fragment$e");
+function instance$a($$self, $$props, $$invalidate) {
   let $item;
   const item = getContext("#doc");
   component_subscribe($$self, item, (value) => $$invalidate(0, $item = value));
   return [$item, item];
 }
-__name(instance$8, "instance$8");
+__name(instance$a, "instance$a");
 let Header$3 = class Header3 extends SvelteComponent {
   static {
     __name(this, "Header");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$8, create_fragment$c, safe_not_equal, {});
+    init$1(this, options, instance$a, create_fragment$e, safe_not_equal, {});
   }
 };
-function create_fragment$b(ctx) {
+function create_fragment$d(ctx) {
   let div9;
   let div8;
   let div6;
@@ -50630,21 +47510,21 @@ function create_fragment$b(ctx) {
     }
   };
 }
-__name(create_fragment$b, "create_fragment$b");
-function instance$7($$self) {
+__name(create_fragment$d, "create_fragment$d");
+function instance$9($$self) {
   getContext("#doc");
   localize(`${SYSTEM_CODE}.Types.Item.Types.job.Level`);
   localize(`${SYSTEM_CODE}.Types.Item.Types.job.Role`);
   return [];
 }
-__name(instance$7, "instance$7");
+__name(instance$9, "instance$9");
 let Details$3 = class Details3 extends SvelteComponent {
   static {
     __name(this, "Details");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$7, create_fragment$b, safe_not_equal, {});
+    init$1(this, options, instance$9, create_fragment$d, safe_not_equal, {});
   }
 };
 function create_default_slot$4(ctx) {
@@ -50706,7 +47586,7 @@ function create_default_slot$4(ctx) {
   };
 }
 __name(create_default_slot$4, "create_default_slot$4");
-function create_fragment$a(ctx) {
+function create_fragment$c(ctx) {
   let div;
   let portraitframe;
   let current;
@@ -50754,8 +47634,8 @@ function create_fragment$a(ctx) {
     }
   };
 }
-__name(create_fragment$a, "create_fragment$a");
-function instance$6($$self, $$props, $$invalidate) {
+__name(create_fragment$c, "create_fragment$c");
+function instance$8($$self, $$props, $$invalidate) {
   let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     {
@@ -50780,17 +47660,17 @@ function instance$6($$self, $$props, $$invalidate) {
   };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
-__name(instance$6, "instance$6");
+__name(instance$8, "instance$8");
 let Tabs_1$3 = class Tabs_12 extends SvelteComponent {
   static {
     __name(this, "Tabs_1");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$6, create_fragment$a, safe_not_equal, { activeTab: 0 });
+    init$1(this, options, instance$8, create_fragment$c, safe_not_equal, { activeTab: 0 });
   }
 };
-function create_fragment$9(ctx) {
+function create_fragment$b(ctx) {
   let div;
   return {
     c() {
@@ -50810,14 +47690,14 @@ function create_fragment$9(ctx) {
     }
   };
 }
-__name(create_fragment$9, "create_fragment$9");
+__name(create_fragment$b, "create_fragment$b");
 let Header$2 = class Header4 extends SvelteComponent {
   static {
     __name(this, "Header");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$9, safe_not_equal, {});
+    init$1(this, options, null, create_fragment$b, safe_not_equal, {});
   }
 };
 function create_if_block_2$1(ctx) {
@@ -50932,7 +47812,7 @@ function create_if_block_1$1(ctx) {
   };
 }
 __name(create_if_block_1$1, "create_if_block_1$1");
-function create_if_block$1(ctx) {
+function create_if_block$2(ctx) {
   let div2;
   let div0;
   let div1;
@@ -50989,8 +47869,8 @@ function create_if_block$1(ctx) {
     }
   };
 }
-__name(create_if_block$1, "create_if_block$1");
-function create_fragment$8(ctx) {
+__name(create_if_block$2, "create_if_block$2");
+function create_fragment$a(ctx) {
   let div14;
   let div13;
   let h30;
@@ -51039,7 +47919,7 @@ function create_fragment$8(ctx) {
   });
   let if_block2 = (
     /*$item*/
-    ctx[0].system.hasTrigger && create_if_block$1(ctx)
+    ctx[0].system.hasTrigger && create_if_block$2(ctx)
   );
   prosemirror = new ProseMirror$1({ props: { attr: "system.baseEffect" } });
   return {
@@ -51173,7 +48053,7 @@ function create_fragment$8(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block$1(ctx2);
+          if_block2 = create_if_block$2(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(div13, div11);
@@ -51225,8 +48105,8 @@ function create_fragment$8(ctx) {
     }
   };
 }
-__name(create_fragment$8, "create_fragment$8");
-function instance$5($$self, $$props, $$invalidate) {
+__name(create_fragment$a, "create_fragment$a");
+function instance$7($$self, $$props, $$invalidate) {
   let $item;
   const item = getContext("#doc");
   component_subscribe($$self, item, (value) => $$invalidate(0, $item = value));
@@ -51291,14 +48171,14 @@ function instance$5($$self, $$props, $$invalidate) {
   schemaFieldKeys.map((key) => ({ value: key, label: key.toUpperCase() }));
   return [$item, item, targetOptions, triggerOptions, rangeOptions];
 }
-__name(instance$5, "instance$5");
+__name(instance$7, "instance$7");
 let Details$2 = class Details4 extends SvelteComponent {
   static {
     __name(this, "Details");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$5, create_fragment$8, safe_not_equal, {});
+    init$1(this, options, instance$7, create_fragment$a, safe_not_equal, {});
   }
 };
 function create_default_slot$3(ctx) {
@@ -51360,7 +48240,7 @@ function create_default_slot$3(ctx) {
   };
 }
 __name(create_default_slot$3, "create_default_slot$3");
-function create_fragment$7(ctx) {
+function create_fragment$9(ctx) {
   let div;
   let portraitframe;
   let current;
@@ -51408,8 +48288,8 @@ function create_fragment$7(ctx) {
     }
   };
 }
-__name(create_fragment$7, "create_fragment$7");
-function instance$4($$self, $$props, $$invalidate) {
+__name(create_fragment$9, "create_fragment$9");
+function instance$6($$self, $$props, $$invalidate) {
   let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     // { label: localize(`${SYSTEM_CODE}.Description`), id: "description", component: Description },
@@ -51435,17 +48315,17 @@ function instance$4($$self, $$props, $$invalidate) {
   };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
-__name(instance$4, "instance$4");
+__name(instance$6, "instance$6");
 let Tabs_1$2 = class Tabs_13 extends SvelteComponent {
   static {
     __name(this, "Tabs_1");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$4, create_fragment$7, safe_not_equal, { activeTab: 0 });
+    init$1(this, options, instance$6, create_fragment$9, safe_not_equal, { activeTab: 0 });
   }
 };
-function create_fragment$6(ctx) {
+function create_fragment$8(ctx) {
   let div;
   return {
     c() {
@@ -51465,14 +48345,14 @@ function create_fragment$6(ctx) {
     }
   };
 }
-__name(create_fragment$6, "create_fragment$6");
+__name(create_fragment$8, "create_fragment$8");
 let Header$1 = class Header5 extends SvelteComponent {
   static {
     __name(this, "Header");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$6, safe_not_equal, {});
+    init$1(this, options, null, create_fragment$8, safe_not_equal, {});
   }
 };
 function create_if_block_3(ctx) {
@@ -51701,7 +48581,7 @@ function create_if_block_1(ctx) {
   };
 }
 __name(create_if_block_1, "create_if_block_1");
-function create_if_block(ctx) {
+function create_if_block$1(ctx) {
   let div0;
   let taginput;
   let div1;
@@ -51741,8 +48621,8 @@ function create_if_block(ctx) {
     }
   };
 }
-__name(create_if_block, "create_if_block");
-function create_fragment$5(ctx) {
+__name(create_if_block$1, "create_if_block$1");
+function create_fragment$7(ctx) {
   let div19;
   let div18;
   let h30;
@@ -51831,7 +48711,7 @@ function create_fragment$5(ctx) {
   });
   let if_block3 = (
     /*$item*/
-    ctx[0].system.hasTags && create_if_block()
+    ctx[0].system.hasTags && create_if_block$1()
   );
   return {
     c() {
@@ -52025,7 +48905,7 @@ function create_fragment$5(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block();
+          if_block3 = create_if_block$1();
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(div18, null);
@@ -52090,8 +48970,8 @@ function create_fragment$5(ctx) {
     }
   };
 }
-__name(create_fragment$5, "create_fragment$5");
-function instance$3($$self, $$props, $$invalidate) {
+__name(create_fragment$7, "create_fragment$7");
+function instance$5($$self, $$props, $$invalidate) {
   let $item;
   const item = getContext("#doc");
   component_subscribe($$self, item, (value) => $$invalidate(0, $item = value));
@@ -52146,14 +49026,14 @@ function instance$3($$self, $$props, $$invalidate) {
     operatorOptions
   ];
 }
-__name(instance$3, "instance$3");
+__name(instance$5, "instance$5");
 let Details$1 = class Details5 extends SvelteComponent {
   static {
     __name(this, "Details");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$3, create_fragment$5, safe_not_equal, {});
+    init$1(this, options, instance$5, create_fragment$7, safe_not_equal, {});
   }
 };
 function create_default_slot$2(ctx) {
@@ -52215,7 +49095,7 @@ function create_default_slot$2(ctx) {
   };
 }
 __name(create_default_slot$2, "create_default_slot$2");
-function create_fragment$4(ctx) {
+function create_fragment$6(ctx) {
   let div;
   let portraitframe;
   let current;
@@ -52263,8 +49143,8 @@ function create_fragment$4(ctx) {
     }
   };
 }
-__name(create_fragment$4, "create_fragment$4");
-function instance$2($$self, $$props, $$invalidate) {
+__name(create_fragment$6, "create_fragment$6");
+function instance$4($$self, $$props, $$invalidate) {
   let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     {
@@ -52294,17 +49174,17 @@ function instance$2($$self, $$props, $$invalidate) {
   };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
-__name(instance$2, "instance$2");
+__name(instance$4, "instance$4");
 let Tabs_1$1 = class Tabs_14 extends SvelteComponent {
   static {
     __name(this, "Tabs_1");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$2, create_fragment$4, safe_not_equal, { activeTab: 0 });
+    init$1(this, options, instance$4, create_fragment$6, safe_not_equal, { activeTab: 0 });
   }
 };
-function create_fragment$3(ctx) {
+function create_fragment$5(ctx) {
   let div;
   return {
     c() {
@@ -52324,17 +49204,17 @@ function create_fragment$3(ctx) {
     }
   };
 }
-__name(create_fragment$3, "create_fragment$3");
+__name(create_fragment$5, "create_fragment$5");
 class Header6 extends SvelteComponent {
   static {
     __name(this, "Header");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$3, safe_not_equal, {});
+    init$1(this, options, null, create_fragment$5, safe_not_equal, {});
   }
 }
-function create_fragment$2(ctx) {
+function create_fragment$4(ctx) {
   let div;
   let durationcomponent;
   let current;
@@ -52369,14 +49249,14 @@ function create_fragment$2(ctx) {
     }
   };
 }
-__name(create_fragment$2, "create_fragment$2");
+__name(create_fragment$4, "create_fragment$4");
 class Details6 extends SvelteComponent {
   static {
     __name(this, "Details");
   }
   constructor(options) {
     super();
-    init$1(this, options, null, create_fragment$2, safe_not_equal, {});
+    init$1(this, options, null, create_fragment$4, safe_not_equal, {});
   }
 }
 function create_default_slot$1(ctx) {
@@ -52438,7 +49318,7 @@ function create_default_slot$1(ctx) {
   };
 }
 __name(create_default_slot$1, "create_default_slot$1");
-function create_fragment$1(ctx) {
+function create_fragment$3(ctx) {
   let div;
   let portraitframe;
   let current;
@@ -52486,8 +49366,8 @@ function create_fragment$1(ctx) {
     }
   };
 }
-__name(create_fragment$1, "create_fragment$1");
-function instance$1($$self, $$props, $$invalidate) {
+__name(create_fragment$3, "create_fragment$3");
+function instance$3($$self, $$props, $$invalidate) {
   let { activeTab: activeTab2 = "description" } = $$props;
   const tabs = [
     {
@@ -52517,14 +49397,14 @@ function instance$1($$self, $$props, $$invalidate) {
   };
   return [activeTab2, tabs, tabs_1_activeTab_binding];
 }
-__name(instance$1, "instance$1");
+__name(instance$3, "instance$3");
 class Tabs_15 extends SvelteComponent {
   static {
     __name(this, "Tabs_1");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance$1, create_fragment$1, safe_not_equal, { activeTab: 0 });
+    init$1(this, options, instance$3, create_fragment$3, safe_not_equal, { activeTab: 0 });
   }
 }
 function create_default_slot(ctx) {
@@ -52793,7 +49673,7 @@ function create_default_slot(ctx) {
   };
 }
 __name(create_default_slot, "create_default_slot");
-function create_fragment(ctx) {
+function create_fragment$2(ctx) {
   let applicationshell;
   let updating_elementRoot;
   let current;
@@ -52852,8 +49732,8 @@ function create_fragment(ctx) {
     }
   };
 }
-__name(create_fragment, "create_fragment");
-function instance($$self, $$props, $$invalidate) {
+__name(create_fragment$2, "create_fragment$2");
+function instance$2($$self, $$props, $$invalidate) {
   let item;
   let $documentStore, $$unsubscribe_documentStore = noop, $$subscribe_documentStore = /* @__PURE__ */ __name(() => ($$unsubscribe_documentStore(), $$unsubscribe_documentStore = subscribe(documentStore, ($$value) => $$invalidate(2, $documentStore = $$value)), documentStore), "$$subscribe_documentStore");
   $$self.$$.on_destroy.push(() => $$unsubscribe_documentStore());
@@ -52936,14 +49816,14 @@ function instance($$self, $$props, $$invalidate) {
     applicationshell_elementRoot_binding
   ];
 }
-__name(instance, "instance");
+__name(instance$2, "instance$2");
 class ItemSheetShell extends SvelteComponent {
   static {
     __name(this, "ItemSheetShell");
   }
   constructor(options) {
     super();
-    init$1(this, options, instance, create_fragment, safe_not_equal, { elementRoot: 0, documentStore: 1 });
+    init$1(this, options, instance$2, create_fragment$2, safe_not_equal, { elementRoot: 0, documentStore: 1 });
   }
   get elementRoot() {
     return this.$$.ctx[0];
@@ -53149,41 +50029,1856 @@ function init() {
 __name(init, "init");
 const hooks = {
   renderChatMessage,
-  preDeleteChatMessage,
-  targetToken,
-  deleteCombat,
+  renderCombatTracker,
   updateCombatant,
-  updateCombat,
-  preUpdateToken,
   canvasReady: canvasReady$1,
-  updateActiveEffect,
   ready: canvasReady,
-  init,
-  onDamage,
-  onAbilityUse
+  init
 };
 console.log("[FFXIV] | [HOOKS] Setting up hooks");
-function onDamage() {
-  Hooks.on("FFXIV.onDamage", async (event) => {
-    const actor = event.actor;
-    if (!actor)
-      return;
-    const durationManager = new effects.DurationManager(actor);
-    await durationManager.onDamage(event);
-  });
+function get_each_context(ctx, list, i) {
+  const child_ctx = ctx.slice();
+  child_ctx[15] = list[i];
+  child_ctx[17] = i;
+  return child_ctx;
 }
-__name(onDamage, "onDamage");
-function onAbilityUse() {
-  console.log("[FFXIV] | [HOOKS] Registering onAbilityUse hook");
-  Hooks.on("FFXIV.onAbilityUse", async (event) => {
-    console.log("[FFXIV] | [ABILITY USE HOOK] Hook triggered", {
-      itemName: event.item?.name,
-      isNewAbilityUse: event.isNewAbilityUse,
-      stack: new Error().stack
+__name(get_each_context, "get_each_context");
+function create_if_block(ctx) {
+  let label_1;
+  let t;
+  return {
+    c() {
+      label_1 = element("label");
+      t = text(
+        /*label*/
+        ctx[2]
+      );
+      attr(label_1, "for", "star-rating-group");
+    },
+    m(target, anchor) {
+      insert(target, label_1, anchor);
+      append(label_1, t);
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*label*/
+      4)
+        set_data(
+          t,
+          /*label*/
+          ctx2[2]
+        );
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(label_1);
+      }
+    }
+  };
+}
+__name(create_if_block, "create_if_block");
+function create_each_block(ctx) {
+  let i_1;
+  let i_1_class_value;
+  let i_1_aria_label_value;
+  let mounted;
+  let dispose;
+  function mouseover_handler() {
+    return (
+      /*mouseover_handler*/
+      ctx[10](
+        /*i*/
+        ctx[17]
+      )
+    );
+  }
+  __name(mouseover_handler, "mouseover_handler");
+  function focus_handler() {
+    return (
+      /*focus_handler*/
+      ctx[11](
+        /*i*/
+        ctx[17]
+      )
+    );
+  }
+  __name(focus_handler, "focus_handler");
+  function click_handler2() {
+    return (
+      /*click_handler*/
+      ctx[12](
+        /*i*/
+        ctx[17]
+      )
+    );
+  }
+  __name(click_handler2, "click_handler");
+  function keydown_handler(...args) {
+    return (
+      /*keydown_handler*/
+      ctx[13](
+        /*i*/
+        ctx[17],
+        ...args
+      )
+    );
+  }
+  __name(keydown_handler, "keydown_handler");
+  return {
+    c() {
+      i_1 = element("i");
+      attr(i_1, "class", i_1_class_value = /*icon*/
+      ctx[1] + " " + /*star*/
+      (ctx[15].active ? "active" : "") + " svelte-FFXIV-qjrcij");
+      attr(i_1, "role", "button");
+      attr(i_1, "tabindex", "0");
+      set_style(
+        i_1,
+        "--active-color",
+        /*activeColor*/
+        ctx[3]
+      );
+      attr(i_1, "aria-label", i_1_aria_label_value = /*i*/
+      ctx[17] + 1 + " of " + /*maxStars*/
+      ctx[0] + " stars");
+    },
+    m(target, anchor) {
+      insert(target, i_1, anchor);
+      if (!mounted) {
+        dispose = [
+          listen(i_1, "mouseover", mouseover_handler),
+          listen(i_1, "focus", focus_handler),
+          listen(i_1, "click", click_handler2),
+          listen(i_1, "keydown", keydown_handler)
+        ];
+        mounted = true;
+      }
+    },
+    p(new_ctx, dirty) {
+      ctx = new_ctx;
+      if (dirty & /*icon, stars*/
+      18 && i_1_class_value !== (i_1_class_value = /*icon*/
+      ctx[1] + " " + /*star*/
+      (ctx[15].active ? "active" : "") + " svelte-FFXIV-qjrcij")) {
+        attr(i_1, "class", i_1_class_value);
+      }
+      if (dirty & /*activeColor*/
+      8) {
+        set_style(
+          i_1,
+          "--active-color",
+          /*activeColor*/
+          ctx[3]
+        );
+      }
+      if (dirty & /*maxStars*/
+      1 && i_1_aria_label_value !== (i_1_aria_label_value = /*i*/
+      ctx[17] + 1 + " of " + /*maxStars*/
+      ctx[0] + " stars")) {
+        attr(i_1, "aria-label", i_1_aria_label_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(i_1);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
+}
+__name(create_each_block, "create_each_block");
+function create_fragment$1(ctx) {
+  let div1;
+  let t;
+  let div0;
+  let div1_aria_label_value;
+  let mounted;
+  let dispose;
+  let if_block = (
+    /*label*/
+    ctx[2] && create_if_block(ctx)
+  );
+  let each_value = ensure_array_like(
+    /*stars*/
+    ctx[4]
+  );
+  let each_blocks = [];
+  for (let i = 0; i < each_value.length; i += 1) {
+    each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+  }
+  return {
+    c() {
+      div1 = element("div");
+      if (if_block)
+        if_block.c();
+      t = space();
+      div0 = element("div");
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        each_blocks[i].c();
+      }
+      attr(div0, "class", "stars svelte-FFXIV-qjrcij");
+      attr(div0, "id", "star-rating-group");
+      attr(div1, "class", "star-rating svelte-FFXIV-qjrcij");
+      attr(div1, "role", "group");
+      attr(div1, "aria-label", div1_aria_label_value = /*label*/
+      ctx[2] || "Rating");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      if (if_block)
+        if_block.m(div1, null);
+      append(div1, t);
+      append(div1, div0);
+      for (let i = 0; i < each_blocks.length; i += 1) {
+        if (each_blocks[i]) {
+          each_blocks[i].m(div0, null);
+        }
+      }
+      if (!mounted) {
+        dispose = listen(
+          div1,
+          "mouseleave",
+          /*handleMouseLeave*/
+          ctx[6]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, [dirty]) {
+      if (
+        /*label*/
+        ctx2[2]
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block(ctx2);
+          if_block.c();
+          if_block.m(div1, t);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
+      if (dirty & /*icon, stars, activeColor, maxStars, handleMouseOver, handleClick*/
+      187) {
+        each_value = ensure_array_like(
+          /*stars*/
+          ctx2[4]
+        );
+        let i;
+        for (i = 0; i < each_value.length; i += 1) {
+          const child_ctx = get_each_context(ctx2, each_value, i);
+          if (each_blocks[i]) {
+            each_blocks[i].p(child_ctx, dirty);
+          } else {
+            each_blocks[i] = create_each_block(child_ctx);
+            each_blocks[i].c();
+            each_blocks[i].m(div0, null);
+          }
+        }
+        for (; i < each_blocks.length; i += 1) {
+          each_blocks[i].d(1);
+        }
+        each_blocks.length = each_value.length;
+      }
+      if (dirty & /*label*/
+      4 && div1_aria_label_value !== (div1_aria_label_value = /*label*/
+      ctx2[2] || "Rating")) {
+        attr(div1, "aria-label", div1_aria_label_value);
+      }
+    },
+    i: noop,
+    o: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      if (if_block)
+        if_block.d();
+      destroy_each(each_blocks, detaching);
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_fragment$1, "create_fragment$1");
+function instance$1($$self, $$props, $$invalidate) {
+  let stars;
+  let { maxStars = 5 } = $$props;
+  let { icon = "fas fa-star" } = $$props;
+  let { value = 0 } = $$props;
+  let { label = "" } = $$props;
+  let { activeColor = "#ffd700" } = $$props;
+  let hoverValue = 0;
+  const dispatch2 = createEventDispatcher();
+  function handleMouseOver(index) {
+    $$invalidate(9, hoverValue = index + 1);
+  }
+  __name(handleMouseOver, "handleMouseOver");
+  function handleMouseLeave() {
+    $$invalidate(9, hoverValue = 0);
+  }
+  __name(handleMouseLeave, "handleMouseLeave");
+  function handleClick(index) {
+    $$invalidate(8, value = index + 1);
+    dispatch2("change", value);
+  }
+  __name(handleClick, "handleClick");
+  const mouseover_handler = /* @__PURE__ */ __name((i) => handleMouseOver(i), "mouseover_handler");
+  const focus_handler = /* @__PURE__ */ __name((i) => handleMouseOver(i), "focus_handler");
+  const click_handler2 = /* @__PURE__ */ __name((i) => handleClick(i), "click_handler");
+  const keydown_handler = /* @__PURE__ */ __name((i, e) => e.key === "Enter" && handleClick(i), "keydown_handler");
+  $$self.$$set = ($$props2) => {
+    if ("maxStars" in $$props2)
+      $$invalidate(0, maxStars = $$props2.maxStars);
+    if ("icon" in $$props2)
+      $$invalidate(1, icon = $$props2.icon);
+    if ("value" in $$props2)
+      $$invalidate(8, value = $$props2.value);
+    if ("label" in $$props2)
+      $$invalidate(2, label = $$props2.label);
+    if ("activeColor" in $$props2)
+      $$invalidate(3, activeColor = $$props2.activeColor);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*maxStars, hoverValue, value*/
+    769) {
+      $$invalidate(4, stars = Array(maxStars).fill(0).map((_, i) => ({
+        active: hoverValue ? i < hoverValue : i < value
+      })));
+    }
+  };
+  return [
+    maxStars,
+    icon,
+    label,
+    activeColor,
+    stars,
+    handleMouseOver,
+    handleMouseLeave,
+    handleClick,
+    value,
+    hoverValue,
+    mouseover_handler,
+    focus_handler,
+    click_handler2,
+    keydown_handler
+  ];
+}
+__name(instance$1, "instance$1");
+class StarRating extends SvelteComponent {
+  static {
+    __name(this, "StarRating");
+  }
+  constructor(options) {
+    super();
+    init$1(this, options, instance$1, create_fragment$1, safe_not_equal, {
+      maxStars: 0,
+      icon: 1,
+      value: 8,
+      label: 2,
+      activeColor: 3
     });
-  });
+  }
 }
-__name(onAbilityUse, "onAbilityUse");
+function create_fragment(ctx) {
+  let form;
+  let div4;
+  let div1;
+  let div0;
+  let switch_instance0;
+  let div3;
+  let div2;
+  let switch_instance1;
+  let current;
+  var switch_value = StarRating;
+  function switch_props(ctx2, dirty) {
+    return {
+      props: {
+        label: localize$1("Modifiers.Penalty"),
+        value: (
+          /*penalty*/
+          ctx2[0]
+        ),
+        maxStars: 8,
+        icon: "fas fa-burst",
+        activeColor: "var(--color-negative)"
+      }
+    };
+  }
+  __name(switch_props, "switch_props");
+  if (switch_value) {
+    switch_instance0 = construct_svelte_component(switch_value, switch_props(ctx));
+    switch_instance0.$on(
+      "change",
+      /*change_handler*/
+      ctx[5]
+    );
+  }
+  var switch_value_1 = StarRating;
+  function switch_props_1(ctx2, dirty) {
+    return {
+      props: {
+        label: localize$1("Modifiers.Advantage"),
+        value: (
+          /*bonusDice*/
+          ctx2[1]
+        ),
+        maxStars: 8,
+        icon: "fas fa-dice-d20",
+        activeColor: "var(--ff-border-color)"
+      }
+    };
+  }
+  __name(switch_props_1, "switch_props_1");
+  if (switch_value_1) {
+    switch_instance1 = construct_svelte_component(switch_value_1, switch_props_1(ctx));
+    switch_instance1.$on(
+      "change",
+      /*change_handler_1*/
+      ctx[6]
+    );
+  }
+  return {
+    c() {
+      form = element("form");
+      div4 = element("div");
+      div1 = element("div");
+      div0 = element("div");
+      if (switch_instance0)
+        create_component(switch_instance0.$$.fragment);
+      div3 = element("div");
+      div2 = element("div");
+      if (switch_instance1)
+        create_component(switch_instance1.$$.fragment);
+      attr(div0, "class", "flexcol");
+      attr(div1, "class", "flex1");
+      attr(div2, "class", "flexcol");
+      attr(div3, "class", "flex1");
+      attr(div4, "class", "flexrow gap-15");
+      attr(form, "class", "modifier-dialog svelte-FFXIV-paczb8");
+    },
+    m(target, anchor) {
+      insert(target, form, anchor);
+      append(form, div4);
+      append(div4, div1);
+      append(div1, div0);
+      if (switch_instance0)
+        mount_component(switch_instance0, div0, null);
+      append(div4, div3);
+      append(div3, div2);
+      if (switch_instance1)
+        mount_component(switch_instance1, div2, null);
+      current = true;
+    },
+    p(ctx2, [dirty]) {
+      if (switch_value !== (switch_value = StarRating)) {
+        if (switch_instance0) {
+          group_outros();
+          const old_component = switch_instance0;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value) {
+          switch_instance0 = construct_svelte_component(switch_value, switch_props(ctx2));
+          switch_instance0.$on(
+            "change",
+            /*change_handler*/
+            ctx2[5]
+          );
+          create_component(switch_instance0.$$.fragment);
+          transition_in(switch_instance0.$$.fragment, 1);
+          mount_component(switch_instance0, div0, null);
+        } else {
+          switch_instance0 = null;
+        }
+      } else if (switch_value) {
+        const switch_instance0_changes = {};
+        if (dirty & /*penalty*/
+        1)
+          switch_instance0_changes.value = /*penalty*/
+          ctx2[0];
+        switch_instance0.$set(switch_instance0_changes);
+      }
+      if (switch_value_1 !== (switch_value_1 = StarRating)) {
+        if (switch_instance1) {
+          group_outros();
+          const old_component = switch_instance1;
+          transition_out(old_component.$$.fragment, 1, 0, () => {
+            destroy_component(old_component, 1);
+          });
+          check_outros();
+        }
+        if (switch_value_1) {
+          switch_instance1 = construct_svelte_component(switch_value_1, switch_props_1(ctx2));
+          switch_instance1.$on(
+            "change",
+            /*change_handler_1*/
+            ctx2[6]
+          );
+          create_component(switch_instance1.$$.fragment);
+          transition_in(switch_instance1.$$.fragment, 1);
+          mount_component(switch_instance1, div2, null);
+        } else {
+          switch_instance1 = null;
+        }
+      } else if (switch_value_1) {
+        const switch_instance1_changes = {};
+        if (dirty & /*bonusDice*/
+        2)
+          switch_instance1_changes.value = /*bonusDice*/
+          ctx2[1];
+        switch_instance1.$set(switch_instance1_changes);
+      }
+    },
+    i(local) {
+      if (current)
+        return;
+      if (switch_instance0)
+        transition_in(switch_instance0.$$.fragment, local);
+      if (switch_instance1)
+        transition_in(switch_instance1.$$.fragment, local);
+      current = true;
+    },
+    o(local) {
+      if (switch_instance0)
+        transition_out(switch_instance0.$$.fragment, local);
+      if (switch_instance1)
+        transition_out(switch_instance1.$$.fragment, local);
+      current = false;
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(form);
+      }
+      if (switch_instance0)
+        destroy_component(switch_instance0);
+      if (switch_instance1)
+        destroy_component(switch_instance1);
+    }
+  };
+}
+__name(create_fragment, "create_fragment");
+function instance($$self, $$props, $$invalidate) {
+  let { penalty = 0 } = $$props;
+  let { bonusDice = 0 } = $$props;
+  let { mutuallyExclusive = false } = $$props;
+  function handlePenaltyChange(value) {
+    $$invalidate(0, penalty = value);
+    if (mutuallyExclusive && value > 0)
+      $$invalidate(1, bonusDice = 0);
+  }
+  __name(handlePenaltyChange, "handlePenaltyChange");
+  function handleBonusChange(value) {
+    $$invalidate(1, bonusDice = value);
+    if (mutuallyExclusive && value > 0)
+      $$invalidate(0, penalty = 0);
+  }
+  __name(handleBonusChange, "handleBonusChange");
+  const change_handler = /* @__PURE__ */ __name((e) => handlePenaltyChange(e.detail), "change_handler");
+  const change_handler_1 = /* @__PURE__ */ __name((e) => handleBonusChange(e.detail), "change_handler_1");
+  $$self.$$set = ($$props2) => {
+    if ("penalty" in $$props2)
+      $$invalidate(0, penalty = $$props2.penalty);
+    if ("bonusDice" in $$props2)
+      $$invalidate(1, bonusDice = $$props2.bonusDice);
+    if ("mutuallyExclusive" in $$props2)
+      $$invalidate(4, mutuallyExclusive = $$props2.mutuallyExclusive);
+  };
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*penalty, bonusDice*/
+    3) {
+      if (window._modifierDialogComponent) {
+        window._modifierDialogComponent._state = { penalty, bonusDice };
+      }
+    }
+  };
+  return [
+    penalty,
+    bonusDice,
+    handlePenaltyChange,
+    handleBonusChange,
+    mutuallyExclusive,
+    change_handler,
+    change_handler_1
+  ];
+}
+__name(instance, "instance");
+class ModifierDialog extends SvelteComponent {
+  static {
+    __name(this, "ModifierDialog");
+  }
+  constructor(options) {
+    super();
+    init$1(this, options, instance, create_fragment, safe_not_equal, {
+      penalty: 0,
+      bonusDice: 1,
+      mutuallyExclusive: 4
+    });
+  }
+}
+class RollGuards {
+  static {
+    __name(this, "RollGuards");
+  }
+  /** @type {Actor} The actor associated with these roll guards */
+  actor;
+  /** 
+   * Shuttle object used to pass data from guards to roll calculator
+   * @type {Object} 
+   */
+  shuttle = {
+    hasModifiers: {
+      extraModifiers: null
+    }
+  };
+  /**
+   * Create a new RollGuards instance
+   * @param {Actor} actor - The actor to check guards for
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Dialog to allow extra modifiers to be added to the roll
+   * @param {Item} item - The item being rolled
+   * @return {Promise<Object>} The modifier data from the dialog
+   * @private
+   */
+  async _showModifierDialog(item) {
+    return new Promise((resolve, reject) => {
+      new Dialog({
+        title: "Extra Modifiers",
+        content: `<div id="modifier-dialog-container"></div>`,
+        buttons: {
+          roll: {
+            label: "Roll",
+            callback: (html) => {
+              resolve({
+                penalty: window._modifierDialogComponent?._state?.penalty || 0,
+                bonusDice: window._modifierDialogComponent?._state?.bonusDice || 0,
+                confirmed: true
+              });
+            }
+          },
+          cancel: {
+            label: "Cancel",
+            callback: () => reject(new Error("Dialog cancelled"))
+          }
+        },
+        render: (html) => {
+          const container = html.find("#modifier-dialog-container")[0];
+          window._modifierDialogComponent = new ModifierDialog({
+            target: container,
+            props: {
+              mutuallyExclusive: false
+            }
+          });
+        },
+        close: () => {
+          window._modifierDialogComponent?.$destroy();
+          delete window._modifierDialogComponent;
+          reject(new Error("Dialog closed"));
+        }
+      }).render(true);
+    });
+  }
+  /**
+   * Check if the item is an action
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item is an action
+   */
+  async isAction(item) {
+    return item.type === "action";
+  }
+  /**
+   * Check if there is an active combat
+   * @return {Promise<boolean>} Whether there is an active combat
+   */
+  async isCombat() {
+    return game.combat;
+  }
+  /**
+   * Check if there are valid targets selected
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether there are valid targets
+   */
+  async hasTargets(item) {
+    const targets = game.user.targets;
+    const hasTargets = targets.size > 0;
+    if (!hasTargets) {
+      ui.notifications.warn(`${item.name} has no targets. Please select targets and roll again.`);
+      return false;
+    }
+    return true;
+  }
+  /**
+   * Check if the selected targets match the action's targeting requirements
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether the targets match the requirements
+   */
+  async targetsMatchActionIntent(item) {
+    const target = item.system.target;
+    const targets = game.user.targets;
+    const size = targets.size;
+    const originalTargets = new Set(game.user.targets);
+    let token;
+    try {
+      if (target === "self") {
+        token = this.actor.activeToken;
+        if (!token) {
+          ui.notifications.warn("No token found for self-targeting");
+          return false;
+        }
+        await token.setTarget(true, { user: game.user, releaseOthers: true });
+        return true;
+      }
+      switch (target) {
+        case "single":
+          if (size !== 1) {
+            ui.notifications.warn("This ability requires exactly one target");
+            return false;
+          }
+          token = this.actor.activeToken;
+          if (targets.has(token)) {
+            ui.notifications.warn("This ability cannot target yourself");
+            return false;
+          }
+          break;
+        case "enemy":
+          if (size < 1) {
+            ui.notifications.warn("This ability requires at least one enemy target");
+            return false;
+          }
+          token = this.actor.activeToken;
+          if (targets.has(token)) {
+            ui.notifications.warn("This ability cannot target yourself");
+            return false;
+          }
+          break;
+        case "ally":
+          if (size < 1) {
+            ui.notifications.warn("This ability requires at least one ally target");
+            return false;
+          }
+          break;
+        case "all":
+          if (size < 1) {
+            ui.notifications.warn("This ability requires at least one target");
+            return false;
+          }
+          break;
+      }
+      return true;
+    } catch (error) {
+      game.system.log.e("Error in targetsMatchActionIntent:", error);
+      return false;
+    } finally {
+      if (target !== "self" && originalTargets.size > 0) {
+        game.user.targets.forEach((t) => t.setTarget(false, { user: game.user, releaseOthers: false }));
+        originalTargets.forEach((t) => t.setTarget(true, { user: game.user, releaseOthers: false }));
+      }
+    }
+  }
+  /**
+   * Check if the item has remaining uses available
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item has uses remaining
+   */
+  async hasRemainingUses(item) {
+    if (item.system.hasLimitation && game.combat) {
+      const maxUses = item.system.limitation;
+      const remainingUses = maxUses - (item.system.uses || 0);
+      if (remainingUses <= 0) {
+        ui.notifications.warn(`${item.name} has no remaining uses.`);
+        return false;
+      }
+      const confirmed = await Dialog.confirm({
+        title: "Confirm Ability Use",
+        content: `<p>Use ${item.name}? (${remainingUses} use${remainingUses > 1 ? "s" : ""} remaining)</p>`,
+        yes: () => true,
+        no: () => false,
+        defaultYes: true
+      });
+      if (!confirmed)
+        return false;
+      const systemData = foundry.utils.deepClone(item.system);
+      systemData.uses = (systemData.uses || 0) + 1;
+      await item.update({ system: systemData });
+    }
+    return true;
+  }
+  /**
+   * Check and handle any modifiers for the roll
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether modifiers were successfully handled
+   */
+  async hasModifiers(item) {
+    if (!item.system.hasCR) {
+      return true;
+    }
+    this.shuttle.hasModifiers.extraModifiers = await this._showModifierDialog(item);
+    if (!this.shuttle.hasModifiers.extraModifiers?.confirmed) {
+      for (const effect of this.actor.effects) {
+        if (effect.getFlag(SYSTEM_ID, "pendingDeletion")) {
+          await effect.unsetFlag(SYSTEM_ID, "pendingDeletion");
+        }
+      }
+      return false;
+    }
+    for (const effect of this.actor.effects) {
+      if (effect.getFlag(SYSTEM_ID, "pendingDeletion")) {
+        await effect.delete();
+      }
+    }
+    Hooks.call("FFXIV.processTargetRollAdditionalModifiers", { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
+    return true;
+  }
+  /**
+   * Check if the item has any enablers
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item has enablers
+   */
+  async hasEnablers(item) {
+    if (!game.combat || !item.system.enables?.value) {
+      return false;
+    }
+    const enablesList = item.system.enables.list;
+    if (!enablesList?.length) {
+      return false;
+    }
+    return true;
+  }
+  /**
+   * Check if there is an appropriate action slot available
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether an enabler slot is available
+   */
+  async hasAvailableActionSlot(item) {
+    if (item.system.type === "reaction")
+      return true;
+    const { actionState } = this.actor.system;
+    const actionType = item.system.type || "primary";
+    game.system.log.cyan("[SLOT:USAGE] Checking available action slot:", actionType);
+    const enablerSlots = actionState.available.filter(
+      (slot) => slot !== "primary" && slot !== "secondary"
+    );
+    game.system.log.cyan("[SLOT:USAGE] Enabler slots:", enablerSlots);
+    if (item.system.tags?.some((tag) => enablerSlots.includes(tag))) {
+      return true;
+    }
+    game.system.log.cyan("[SLOT:USAGE] No enabler slots match:", item.system.tags);
+    if (actionState.available.includes(actionType)) {
+      return true;
+    }
+    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
+    if (actionType === "secondary" && actionState.available.filter((slot) => slot === "secondary" || slot === "primary").length) {
+      return true;
+    }
+    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
+    if (await this.hasEnablers(item)) {
+      const enabledEffects = this.actor.effects.filter(
+        (effect) => effect.system.tags?.includes("enabler")
+      );
+      game.system.log.cyan("[SLOT:USAGE] Enabled effects:", enabledEffects);
+      if (enabledEffects?.length) {
+        const enabledEffectsLinkedToEnablerSlots = enabledEffects.filter(
+          (effect) => enablerSlots.some((slot) => {
+            const originItem = fromUuidSync(effect.origin);
+            return originItem?.system.tags?.includes(slot);
+          })
+        );
+        if (enabledEffectsLinkedToEnablerSlots.length) {
+          return true;
+        }
+      }
+    }
+    const msg = localize$1("Types.Item.Types.action.SlotNotAvailable").replace("%s", actionType);
+    ui.notifications.warn(msg);
+    return false;
+  }
+  /**
+   * Check if the item matches any enabler effects
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item matches enabler effects
+   */
+  async matchesEnablerEffect(item) {
+    return this.actor.itemTagsMatchEnablerEffectTags(item);
+  }
+  /**
+   * Check if the actor has all required effects for the item
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether all required effects are present
+   */
+  async hasRequiredEffects(item) {
+    if (!item.system.requires?.value) {
+      return true;
+    }
+    for (const requireRef of item.system.requires.list) {
+      const requiredItem = await fromUuid(requireRef.uuid);
+      if (!requiredItem)
+        continue;
+      let hasActiveEffect = false;
+      for (const effect of this.actor.effects) {
+        if (effect.name === requiredItem.name) {
+          hasActiveEffect = true;
+          await effect.setFlag(SYSTEM_ID, "pendingDeletion", true);
+          break;
+        }
+      }
+      if (!hasActiveEffect) {
+        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+   * Check if it is currently the actor's turn
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether it is the actor's turn
+   */
+  async isActorsTurn(item) {
+    if (!game.combat)
+      return true;
+    const currentCombatant = game.combat.combatant;
+    if (!currentCombatant)
+      return true;
+    if (item.system.type === "reaction")
+      return true;
+    const isCurrentTurn = currentCombatant.actor.id === this.actor.id;
+    if (!isCurrentTurn) {
+      ui.notifications.warn("Cannot use this action outside of your turn.");
+    }
+    return isCurrentTurn;
+  }
+  /**
+   * Check if the item is a reaction
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether the item is a reaction
+   */
+  async isReaction(item) {
+    if (item.system.type !== "reaction")
+      return true;
+    if (!game.combat)
+      return true;
+    const actionState = this.actor.system.actionState;
+    if (actionState.usedReaction) {
+      ui.notifications.warn("Cannot use multiple reactions in the same turn.");
+      return false;
+    }
+    return true;
+  }
+  /**
+   * Check if there is an available action slot for the item
+   * @param {Item} item - The item to check
+   * @return {Promise<boolean>} Whether an action slot is available
+   */
+  async hasAvailableSlot(item) {
+    if (item.system.type === "reaction")
+      return true;
+    const actionState = this.actor.system.actionState;
+    const available = actionState.available || [];
+    const actionType = item.system.type;
+    const hasSlot = available.includes(actionType);
+    if (!hasSlot) {
+      ui.notifications.warn(`No ${actionType} action slot available.`);
+    }
+    return hasSlot;
+  }
+  /**
+   * Check if there are any unapplied damage results in chat messages
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether there are no unapplied damage results
+   */
+  async hasNoUnappliedDamage(item) {
+    if (!item.system.baseEffectDamage && !item.system.directHitDamage)
+      return true;
+    const messages = game.messages.filter((m) => {
+      const data = m.flags?.[SYSTEM_ID]?.data;
+      return data?.chatTemplate === "ActionRollChat" && (data?.item?.system?.baseEffectDamage || data?.item?.system?.directHitDamage);
+    });
+    for (const message of messages) {
+      const state = message.flags?.[SYSTEM_ID]?.state;
+      if (!state?.damageResults)
+        continue;
+      const hasUnappliedDamage = Object.values(state.damageResults).some((result) => !result.applied);
+      if (hasUnappliedDamage) {
+        ui.notifications.warn("There are unapplied damage results in chat. Please apply or undo them before making another action roll.");
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+   * Check if the actor has enough MP to use the action
+   * @param {Item} item - The item being used
+   * @return {Promise<boolean>} Whether the actor has enough MP
+   */
+  async meetsMPCost(item) {
+    if (!item.system.hasCostMP || !item.system.costMP) {
+      return true;
+    }
+    let currentMP;
+    currentMP = this.actor.system.points.MP.val;
+    const cost = item.system.costMP;
+    if (currentMP < cost) {
+      ui.notifications.warn(`Not enough MP to use ${item.name}. Required: ${cost} MP, Current: ${currentMP} MP`);
+      return false;
+    }
+    return true;
+  }
+}
+class RollCalc {
+  static {
+    __name(this, "RollCalc");
+  }
+  /**
+   * Creates a new RollCalc instance
+   * @param {object} params - The parameters for the roll calculation
+   */
+  constructor(params) {
+    this.params = params;
+    this.store = writable({});
+    this.subscribe = this.store.subscribe;
+    this.set = this.store.set;
+    this.update = this.store.update;
+    this.RG = new CONFIG.FFXIV.RollGuards(this.params.actor);
+  }
+  /**
+   * Send the roll to chat
+   * @return {Promise<void>} Returns a promise that resolves when the message is sent
+   */
+  async send() {
+    if (this.params.rollType) {
+      let message = await this[this.params.rollType](this.params);
+      if (message === false)
+        return;
+      message.sound = "sounds/dice.wav";
+      message.rollType = this.params.rollType;
+      message.applied = false;
+      message = Object.assign({}, this.message, message);
+      await this.createChatMessage(message);
+    }
+  }
+  /**
+   * Perform a dice roll
+   * @param {number} die - The die size
+   * @param {number} noOfDice - Number of dice to roll
+   * @param {number} modifier - Roll modifier
+   * @param {string} keep - Keep modifier
+   * @return {Promise<object>} Returns a promise that resolves with the roll result
+   */
+  async roll(die = 4, noOfDice = 1, modifier = 0, keep = "") {
+    const rollString = `max(${noOfDice}d${die}${keep}${modifier === 0 ? "" : modifier > 0 ? "+" + modifier : modifier},1)`;
+    const roll = new Roll(rollString);
+    if (game.version < 12) {
+      await roll.roll({ async: true });
+    } else {
+      await roll.roll();
+    }
+    if (game.modules.get("dice-so-nice")?.active) {
+      await game.dice3d.showForRoll(roll);
+    }
+    return { roll, die, noOfDice, error: false };
+  }
+  /**
+   * Play a sound for the message
+   * @param {string} soundPath - Path to the sound file
+   * @return {void} Nothing
+   */
+  playMessageSound(soundPath) {
+    const customSound = game.settings.get(SYSTEM_ID, "chatMessageSound").trim();
+    if (!soundPath && customSound !== "") {
+      soundPath = customSound;
+    }
+    if (soundPath) {
+      foundry.audio.AudioHelper.play({ src: soundPath, volume: 1, autoplay: true, loop: false });
+    }
+  }
+  /**
+   * Create a chat message for the roll
+   * @param {object} props - The message properties
+   * @return {Promise<void>} Returns a promise that resolves when the message is created
+   */
+  async createChatMessage(props) {
+    const data = { ...props };
+    const item = props.Item ? props.Item : fromUuidSync(props.itemUuid);
+    const actor = fromUuidSync(props.actorUuid);
+    if (!item) {
+      ui.notifications.error("Item cannot be used from a compendium Actor.");
+      return;
+    }
+    if (!actor) {
+      ui.notifications.error("Actor not found");
+      return;
+    }
+    await ChatMessage.create({
+      user: game.user.id,
+      flags: { [SYSTEM_ID]: { data } },
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor }) : null
+    });
+    this.playMessageSound();
+  }
+}
+class ActionHandler {
+  static {
+    __name(this, "ActionHandler");
+  }
+  /**
+   * @param {Actor} actor - The actor this handler is for
+   */
+  constructor(actor) {
+    this.actor = actor;
+    this.DefaultChat = new DefaultChatHandler(actor);
+  }
+  /**
+   * Handle an action ability
+   * @param {Item} item - The action item
+   * @param {Object} [options={}] - Additional options
+   * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
+   */
+  async handle(item, options = {}) {
+    console.log("[FFXIV] | [ACTION HANDLER] Starting handle", {
+      itemName: item?.name,
+      options,
+      stack: new Error().stack
+      // This will show us the call stack
+    });
+    try {
+      this.options = options;
+      const { targets, hasTargets, targetIds } = this._getActionTargets();
+      const limiterType = this._checkAbilityLimiter();
+      let roll;
+      let isCritical = false;
+      let d20Result = null;
+      let isSuccess;
+      let message;
+      await this._handleCostMP(item);
+      if (item.system.hasCR) {
+        ({ message, roll, isCritical, d20Result, isSuccess } = await this._rollWithCR(item, targets, hasTargets, targetIds));
+      } else {
+        if (item.system.hasBaseEffectDamage || item.system.hasBaseEffectHealing || item.system.hasBaseEffectRestoreMP) {
+          message = await ChatMessage.create(this._createActionMessageData(item, hasTargets, targetIds));
+        } else {
+          this.DefaultChat.handle(item);
+        }
+      }
+      if (limiterType !== "DamageOnly") {
+        if (item.system.baseEffectHealing) {
+          await this._handleHealing(item, this.actor, isCritical);
+        }
+        if (item.system.hasBaseEffectRestoreMP && item.system.baseEffectRestoreMP) {
+          await this._handleMPRestoration(item);
+        }
+        if (item.system.hasBaseEffectBarrier && item.system.baseEffectBP) {
+          await this._handleBarrier(item);
+        }
+      }
+      await Hooks.callAll("FFXIV.onAbilityUse", {
+        actor: this.actor,
+        item,
+        isNewAbilityUse: true
+      });
+      console.log("[FFXIV] | [ACTION HANDLER] Calling ability use hook", {
+        itemName: item?.name,
+        isNewAbilityUse: true,
+        stack: new Error().stack
+      });
+      return {
+        handledSuccessfully: true,
+        isCritical,
+        roll,
+        d20Result,
+        hasTargets,
+        targets,
+        isSuccess,
+        message
+      };
+    } catch (error) {
+      game.system.log.e("Error in action handler", error);
+      ui.notifications.error(
+        game.i18n.format("FFXIV.Errors.ActionHandlingFailed", { target: this.actor.name })
+      );
+      return { handledSuccessfully: false };
+    }
+  }
+  /**
+   * @internal
+   * Retrieves targets from the user and checks if they exist.
+   */
+  _getActionTargets() {
+    const targets = game.user.targets;
+    const hasTargets = targets.size > 0;
+    const targetIds = Array.from(targets).map((target) => target.id);
+    return { targets, hasTargets, targetIds };
+  }
+  /**
+   * @internal
+   * Creates and returns the final message, roll, and critical data if an item uses CR checks.
+   */
+  async _rollWithCR(item, targets, hasTargets, targetIds) {
+    const { roll, isCritical, d20Result } = await this._handleRollWithModifiers(item);
+    let isSuccess = false;
+    const messageData = this._createActionMessageData(item, hasTargets, targetIds, roll, isCritical);
+    messageData.flags[SYSTEM_ID].data.isCritical = isCritical;
+    messageData.flags[SYSTEM_ID].data.d20Result = d20Result;
+    if (hasTargets) {
+      const {
+        crValue,
+        targetActor
+      } = this._getTargetCRValue(item, targets);
+      isSuccess = this._evaluateSuccess({ roll, crValue, isCritical });
+      game.system.log.o("[ABILITY:ROLL] CR check isSuccess:", isSuccess);
+      messageData.flags[SYSTEM_ID].data.isSuccess = isSuccess;
+      game.system.log.o("[ABILITY:ROLL] CR check:", {
+        itemName: item.name,
+        rollTotal: roll.total,
+        CR: item.system.CR,
+        crValue,
+        isSuccess,
+        isCritical,
+        d20Result
+      });
+    }
+    const message = await roll.toMessage(messageData);
+    return { message, roll, isCritical, d20Result, isSuccess };
+  }
+  /**
+   * @internal
+   * Handle healing from an action
+   * @param {Item} item - The action item
+   * @param {Actor} targetActor - The actor to heal
+   * @param {boolean} isCritical - Whether this was a critical hit
+   * @return {Promise<void>} A promise that resolves when healing is complete
+   */
+  async _handleHealing(item, targetActor, isCritical = false) {
+    if (!item.system.baseEffectHealing)
+      return;
+    const healingRoll = await new Roll(item.system.baseEffectHealing).evaluate();
+    const healingAmount = healingRoll.total;
+    game.system.log.o("[HEALING] Applying healing:", {
+      itemName: item.name,
+      targetName: targetActor.name,
+      healingAmount,
+      isCritical
+    });
+    const currentHP = targetActor.system.points.HP.val;
+    const maxHP = targetActor.system.points.HP.max;
+    const newHP = Math.min(currentHP + healingAmount, maxHP);
+    game.system.log.o("[HEALING] HP values:", {
+      currentHP,
+      maxHP,
+      newHP,
+      healingApplied: newHP - currentHP
+    });
+    await targetActor.update({ "system.points.HP.val": newHP });
+  }
+  /**
+   * @internal
+   * Retrieves the CR value from the first target if available.
+   */
+  _getTargetCRValue(item, targets) {
+    const target = targets.values().next().value;
+    const targetActor = target?.actor;
+    let crValue = 0;
+    if (targetActor) {
+      if (targetActor.type === "npc") {
+        crValue = targetActor.system.attributes[item.system.CR]?.val || 0;
+      } else {
+        crValue = targetActor.system.attributes.secondary[item.system.CR]?.val || 0;
+      }
+    }
+    return { crValue, targetActor };
+  }
+  /**
+   * @internal
+   * Evaluates if a roll is successful based on CR and critical.
+   */
+  _evaluateSuccess({ roll, crValue, isCritical }) {
+    return isCritical || roll.total >= crValue;
+  }
+  /**
+   * @internal
+   * Create message data for an action
+   */
+  _createActionMessageData(item, hasTargets, targets, roll = null, isCritical = false) {
+    const messageData = {
+      id: `${SYSTEM_ID}--actor-sheet-${generateRandomElementId()}`,
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
+      flavor: `${item.name}`,
+      rolls: roll ? [roll] : void 0,
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "ActionRollChat",
+            actor: this._buildActorData(this.actor),
+            item: this._buildItemData(item),
+            hasTargets,
+            targets,
+            isSuccess: false,
+            isCritical: false,
+            d20Result: null
+          },
+          state: {
+            damageResults: false,
+            initialised: false,
+            mpCost: item.system.hasCostMP ? item.system.costMP : 0,
+            mpRestored: false
+          },
+          css: `leather ${isCritical ? "crit" : ""}`
+        }
+      }
+    };
+    if (roll) {
+      messageData.flags[SYSTEM_ID].data.roll = roll.total;
+    }
+    return messageData;
+  }
+  /**
+   * @internal
+   * Builds a minimal data object for the actor to embed in a chat flag.
+   */
+  _buildActorData(actor) {
+    return {
+      _id: actor._id,
+      uuid: actor.uuid,
+      name: actor.name,
+      img: actor.img
+    };
+  }
+  /**
+   * @internal
+   * Builds a minimal data object for the item to embed in a chat flag.
+   */
+  _buildItemData(item) {
+    return {
+      _id: item._id,
+      uuid: item.uuid,
+      name: item.name,
+      img: item.img,
+      type: item.type,
+      system: {
+        baseEffectHealing: item.system?.baseEffectHealing,
+        baseEffectDamage: item.system?.baseEffectDamage,
+        baseEffectRestoreMP: item.system?.baseEffectRestoreMP,
+        baseEffectBP: item.system?.baseEffectBP,
+        hasBaseEffectBarrier: item.system?.hasBaseEffectBarrier,
+        directHitDamage: item.system?.directHitDamage,
+        hasDirectHit: item.system?.hasDirectHit,
+        CR: item.system?.CR,
+        isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
+      }
+    };
+  }
+  /**
+   * @internal
+   * Handle roll with modifiers
+   */
+  async _handleRollWithModifiers(item) {
+    const formula = this._constructRollFormulaFromModifiers(item);
+    const { rollFormula, rollData } = await this._handleAttributeCheck(item, formula);
+    const roll = await new Roll(rollFormula, rollData).evaluate();
+    const { isCritical, d20Result } = await this._handleCriticalHit(roll, item);
+    game.system.log.o("[ABILITY:ROLL] Roll result:", {
+      itemName: item.name,
+      rollTotal: roll.total,
+      isCritical,
+      d20Result
+    });
+    return { roll, isCritical, d20Result };
+  }
+  /**
+   * @internal
+   * Constructs the roll formula by reading actor's extra modifiers.
+   */
+  _constructRollFormulaFromModifiers(item) {
+    let [diceCount, diceType] = [1, 20];
+    let formula = "";
+    const { bonusDice, penalty } = this.options?.extraModifiers || {};
+    if (bonusDice) {
+      diceCount += parseInt(bonusDice, 10);
+      diceType = "20kh1";
+    }
+    formula = `${diceCount}d${diceType}${penalty ? ` - ${penalty}` : ""}`;
+    return formula;
+  }
+  /**
+   * @internal
+   * Handle critical hit detection and processing
+   */
+  async _handleCriticalHit(roll, item) {
+    const d20Term = roll.terms?.[0];
+    if (!d20Term) {
+      game.system.log.w("[CRITICAL] No d20 term found in roll:", roll);
+      return { isCritical: false, d20Result: 0 };
+    }
+    const d20Result = d20Term.modifiers?.includes("kh1") ? Math.max(...d20Term.results.map((r) => r.result)) : d20Term.results?.[0]?.result ?? 0;
+    const isCritical = d20Result === 20;
+    game.system.log.d("[CRITICAL] Critical hit check:", {
+      d20Result,
+      isCritical,
+      itemName: item.name,
+      isHealerRecovery: Boolean(item?.system?.baseEffectHealing)
+    });
+    if (isCritical) {
+      this._doubleCriticalDamageIfNeeded(item);
+    }
+    return { isCritical, d20Result };
+  }
+  /**
+   * @internal
+   * Doubles relevant "dice" fields if item is a critical hit.
+   */
+  _doubleCriticalDamageIfNeeded(item) {
+    let formulaFields = [];
+    if (Boolean(item?.system?.baseEffectHealing)) {
+      formulaFields.push("baseEffectHealing");
+    }
+    if (!formulaFields.length) {
+      formulaFields = ["directHitDamage", "baseEffectDamage"];
+    }
+    game.system.log.o("[CRITICAL] Doubling damage/healing for critical hit:", {
+      itemName: item.name,
+      formulaFields
+    });
+    for (const field of formulaFields) {
+      const formula = item.system?.[field];
+      game.system.log.o("[CRITICAL] Formula:", {
+        field,
+        formula
+      });
+      if (formula) {
+        const modifiedFormula = formula.replace(/(\d+)d(\d+)/g, (match, count, sides) => {
+          return `${parseInt(count, 10) * 2}d${sides}`;
+        });
+        game.system.log.o("[CRITICAL] Modified formula:", {
+          field,
+          formula,
+          modifiedFormula
+        });
+        item.system[field] = modifiedFormula;
+      }
+    }
+  }
+  /**
+   * @internal
+   * Handle attribute check
+   */
+  async _handleAttributeCheck(item, rollFormula, rollData = {}) {
+    if (item.system.hasCheck) {
+      const attrVal = this.actor.system.attributes.primary[item.system.checkAttribute]?.val || 0;
+      rollData[item.system.checkAttribute] = attrVal;
+      rollFormula += ` + @${item.system.checkAttribute}`;
+    }
+    return { rollFormula, rollData };
+  }
+  /**
+   * @internal
+   * Handle MP cost for an action
+   * @param {Item} item - The action item
+   * @return {Promise<void>} A promise that resolves when MP cost is handled
+   */
+  async _handleCostMP(item) {
+    if (!item.system.hasCostMP || !item.system.costMP) {
+      return;
+    }
+    const cost = item.system.costMP;
+    const currentMP = this.actor.system.points.MP.val;
+    try {
+      await this.actor.update({
+        "system.points.MP.val": currentMP - cost
+      });
+    } catch (error) {
+      game.system.log.e("[MP:COST] Error deducting MP cost:", error);
+      throw error;
+    }
+  }
+  /**
+   * @internal
+   * Handle MP restoration from an action (self only)
+   * @param {Item} item - The action item
+   * @return {Promise<void>} A promise that resolves when MP restoration is complete
+   */
+  async _handleMPRestoration(item) {
+    if (!item.system.baseEffectRestoreMP) {
+      return;
+    }
+    const formula = String(item.system.baseEffectRestoreMP);
+    const mpRoll = await new Roll(formula).evaluate();
+    const mpAmount = mpRoll.total;
+    const currentMP = this.actor.system.points.MP.val;
+    const maxMP = this.actor.system.points.MP.max;
+    const newMP = Math.min(currentMP + mpAmount, maxMP);
+    try {
+      await this.actor.update({ "system.points.MP.val": newMP });
+    } catch (error) {
+      game.system.log.e("[MP:RESTORE] Error restoring MP:", error);
+      throw error;
+    }
+  }
+  /**
+   * @internal
+   * Handle barrier points from an action
+   * @param {Item} item - The action item
+   * @return {Promise<void>} A promise that resolves when barrier is applied
+   */
+  async _handleBarrier(item) {
+    if (!item.system.baseEffectBP) {
+      return;
+    }
+    const barrierAmount = item.system.baseEffectBP;
+    const currentBP = this.actor.system.points.BP.val;
+    const newBP = currentBP + barrierAmount;
+    try {
+      await this.actor.update({ "system.points.BP.val": newBP });
+      const updatedBP = this.actor.system.points.BP.val;
+    } catch (error) {
+      game.system.log.e("[BARRIER] Error applying barrier points:", error);
+      throw error;
+    }
+  }
+  /**
+   * @internal
+   * Check if there are any ability limiters active on the actor
+   * @return {string|null} The type of limitation, if any
+   */
+  _checkAbilityLimiter() {
+    const limiterEffect = this.actor.effects.find(
+      (e) => e.changes.some((c) => c.key === "AbilitiesLimiter")
+    );
+    if (!limiterEffect)
+      return null;
+    const limiterChange = limiterEffect.changes.find((c) => c.key === "AbilitiesLimiter");
+    return limiterChange?.value || null;
+  }
+}
+class AttributeHandler {
+  static {
+    __name(this, "AttributeHandler");
+  }
+  /**
+   * @param {Actor} actor - The actor this handler is for
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Handle an action ability
+   * @param {Object} [options={}] -  options
+   * @return {Promise<{success: boolean, message: ChatMessage|null}>} Returns result of action handling
+   */
+  async handle(options = {}) {
+    const { key, code } = options;
+    const attributeValue = this.actor.system.attributes[key][code].val;
+    const rollFormula = `1d20 + ${attributeValue}`;
+    const attributeName = game.i18n.localize(`FFXIV.Types.Actor.Types.PC.Attributes.${key}.${code}.Abbreviation`);
+    const roll = await new Roll(rollFormula).evaluate({ async: true });
+    const isCritical = roll.total === 20;
+    const messageData = {
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.actor }) : null,
+      flavor: `${attributeName} ${game.i18n.localize("FFXIV.Check")}`,
+      type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+      roll,
+      flags: {
+        [SYSTEM_ID]: {
+          data: {
+            chatTemplate: "AttributeRollChat",
+            actor: {
+              _id: this.actor._id,
+              name: this.actor.name,
+              img: this.actor.img
+            },
+            flavor: `${attributeName} ${game.i18n.localize("FFXIV.Check")}`,
+            key,
+            code,
+            modifier: attributeValue,
+            isCritical
+          },
+          css: `attribute-roll ${isCritical ? "crit" : ""}`
+        }
+      }
+    };
+    await roll.toMessage(messageData);
+  }
+}
+class CombatSlotManager {
+  static {
+    __name(this, "CombatSlotManager");
+  }
+  /**
+   * @param {Actor} actor - The actor this handler is for
+   */
+  constructor(actor) {
+    this.actor = actor;
+  }
+  /**
+   * Mark a slot as used in the combat tracker
+   * @param {Item} item - The item being used
+   * @param {Object} result - The result from the action handler
+   * @return {Promise<void>} Returns a promise that resolves when the slot is marked
+   */
+  async markSlotUsed(item, result) {
+    const { message } = result;
+    const actionType = item.system.type || "primary";
+    const state = message?.flags?.[SYSTEM_ID]?.state;
+    if (state?.damageResults) {
+      const hasAppliedDamage = Object.values(state.damageResults).some((result2) => result2.applied);
+      if (hasAppliedDamage) {
+        game.system.log.w("[SLOT:USAGE] Message already has applied damage results, skipping slot update");
+        return;
+      }
+    }
+    if (item.system.type === "reaction") {
+      await this.actor.update({
+        "system.actionState.usedReaction": true
+      });
+      return;
+    }
+    let slotToUse;
+    game.system.log.o("[SLOT:USAGE] Checking slots:", {
+      itemName: item.name,
+      actionType,
+      itemTags: item.system.tags,
+      itemSystem: item.system,
+      requires: item.system.requires
+    });
+    if (this.actor.system.actionState.available.includes(actionType)) {
+      slotToUse = actionType;
+      game.system.log.o("[SLOT:USAGE] Using default action type slot:", actionType);
+    } else if (actionType === "secondary" && this.actor.system.actionState.available.includes("primary")) {
+      slotToUse = "primary";
+      game.system.log.o("[SLOT:USAGE] Using primary slot for secondary action");
+    }
+    if (!slotToUse && item.system.tags?.length) {
+      const customSlots = this.actor.system.actionState.available.filter(
+        (slot) => slot !== "primary" && slot !== "secondary"
+      );
+      const matchingSlot = customSlots.find(
+        (slot) => item.system.tags.includes(slot)
+      );
+      if (matchingSlot) {
+        slotToUse = matchingSlot;
+        game.system.log.o("[SLOT:USAGE] Found matching slot:", {
+          slot: matchingSlot,
+          itemName: item.name,
+          itemTags: item.system.tags
+        });
+        const enablerEffectForThisSlot = this.actor.enablerEffects.find(
+          (effect) => effect.changes.some(
+            (change) => change.value === matchingSlot
+          )
+        );
+        if (enablerEffectForThisSlot) {
+          game.system.log.o("[SLOT:USAGE] Found enabler effect:", {
+            effectName: enablerEffectForThisSlot.name,
+            changes: enablerEffectForThisSlot.changes,
+            origin: enablerEffectForThisSlot.origin
+          });
+          const originItemUuid = enablerEffectForThisSlot.getFlag(SYSTEM_ID, "originEffect.uuid")?.split(".").slice(0, -2).join(".");
+          if (originItemUuid) {
+            const originItem = fromUuidSync(originItemUuid);
+            if (originItem) {
+              game.system.log.o("[SLOT:USAGE] Found origin item:", {
+                name: originItem.name,
+                currentUses: originItem.system.uses,
+                maxUses: originItem.system.maxUses
+              });
+              const uses = (originItem.system.uses || 0) + 1;
+              await originItem.update({ system: { uses } });
+            }
+            game.system.log.o("[SLOT:USAGE] Removing enabler effect:", enablerEffectForThisSlot.name);
+            await enablerEffectForThisSlot.delete();
+          }
+        }
+      }
+    }
+    if (!slotToUse) {
+      game.system.log.w("[SLOT:USAGE] No slot found to use for:", item.name);
+      return;
+    }
+    const newAvailable = [...this.actor.system.actionState.available];
+    const indexToRemove = newAvailable.findIndex((slot) => slot === slotToUse);
+    if (indexToRemove !== -1) {
+      newAvailable.splice(indexToRemove, 1);
+    }
+    const newUsed = [...this.actor.system.actionState.used, {
+      type: slotToUse,
+      messageId: message?.id
+    }];
+    game.system.log.o("[SLOT:USAGE] Updating action state:", {
+      oldAvailable: this.actor.system.actionState.available,
+      newAvailable,
+      oldUsed: this.actor.system.actionState.used,
+      newUsed,
+      itemName: item.name,
+      slotUsed: slotToUse
+    });
+    await this.actor.update({
+      "system.actionState.available": newAvailable,
+      "system.actionState.used": newUsed
+    });
+  }
+}
+class GuardManager {
+  static {
+    __name(this, "GuardManager");
+  }
+  /**
+   * @param {Actor} actor - The actor this handler is for
+   * @param {RollGuards} rollGuards - The RollGuards instance to use for checks
+   */
+  constructor(actor) {
+    this.actor = actor;
+    this.RG = new RollGuards(actor);
+  }
+  /**
+   * Handle guards for an item
+   * @param {Item} item - The item to check guards for
+   * @param {Array<string>} guardMethodNames - Array of guard method names to check
+   * @return {Promise<boolean>} Returns true if all guards pass, false otherwise
+   */
+  async handleGuards(item, guardMethodNames) {
+    for (const methodName of guardMethodNames) {
+      const guardMethod = this.RG[methodName];
+      if (!guardMethod) {
+        game.system.log.w(`[GUARD] Guard method ${methodName} not found`);
+        continue;
+      }
+      try {
+        const result = await guardMethod.call(this.RG, item);
+        if (!result) {
+          game.system.log.d(`[GUARD] ${methodName} check failed for ${item.name}`);
+          return false;
+        }
+      } catch (error) {
+        game.system.log.e(`[GUARD] Error in ${methodName} check:`, error);
+        return false;
+      }
+    }
+    return true;
+  }
+}
+class RollCalcActor extends RollCalc {
+  static {
+    __name(this, "RollCalcActor");
+  }
+  constructor(params) {
+    super(params);
+    this.params = params;
+    this.ActionHandler = new ActionHandler(params.actor);
+    this.AttributeHandler = new AttributeHandler(params.actor);
+    this.EffectManager = new EffectManager(params.actor);
+    this.CombatSlotManager = new CombatSlotManager(params.actor);
+    this.GuardManager = new GuardManager(params.actor);
+    this.DefaultChat = new DefaultChatHandler(params.actor);
+  }
+  /**
+   * @param {Item} item - The item to create a chat message for
+   */
+  defaultChat(item) {
+    this.DefaultChat.handle(item);
+  }
+  /**
+   * @param {Item} item - The equipment item
+   */
+  equipment(item) {
+    this.params.item = item;
+    ChatMessage.create({
+      user: game.user.id,
+      speaker: game.settings.get(SYSTEM_ID, "chatMessageSenderIsActorOwner") ? ChatMessage.getSpeaker({ actor: this.params.actor }) : null,
+      flags: { [SYSTEM_ID]: { data: { ...this.params, chatTemplate: "EquipmentChat" } } }
+    });
+  }
+  /**
+   * @param {string} key - The attribute key
+   * @param {string} code - The attribute code
+   */
+  attribute(key, code) {
+    this.AttributeHandler.handle({ key, code });
+  }
+  /**
+   * @param {string} type - The type of ability
+   * @param {Item} item - The ability item
+   */
+  ability(type, item) {
+    console.log("[FFXIV] | [ABILITY CHAIN] Starting ability chain", {
+      // Add relevant details
+    });
+    this._routeAbility(item);
+  }
+  /**
+   * @param {Item} item - The trait item
+   */
+  abilityTrait(item) {
+    this.defaultChat(item);
+  }
+  /**
+   * @param {Item} item - The action item
+   * @param {Object} [options={}] - Additional options
+   */
+  async abilityAction(item, options = {}) {
+    console.log("[FFXIV] | [ROLL CALC] abilityAction call stack:", {
+      stack: new Error().stack,
+      itemName: item?.name,
+      options
+    });
+    try {
+      if (!await this.GuardManager.handleGuards(item, [
+        "isAction",
+        "hasNoUnappliedDamage",
+        "isActorsTurn",
+        "isReaction",
+        "targetsMatchActionIntent",
+        "hasRequiredEffects",
+        "hasAvailableActionSlot",
+        "hasRemainingUses",
+        "meetsMPCost",
+        "hasModifiers"
+      ])) {
+        return;
+      }
+      const extraModifiers = this.GuardManager.RG.shuttle.hasModifiers.extraModifiers;
+      const result = await this.ActionHandler.handle(item, { ...options, extraModifiers });
+      if (!result.handledSuccessfully) {
+        return;
+      }
+      if (item.system.procTrigger) {
+        Hooks.callAll("FFXIV.ProcTrigger", {
+          actor: this.params.actor,
+          item,
+          roll: result.roll,
+          targets: result.targets
+        });
+      }
+      await this.EffectManager.handleEffects(item, result);
+      await this.CombatSlotManager.markSlotUsed(item, result);
+    } catch (error) {
+      game.system.log.e("Error in ability action", error);
+      ui.notifications.error(game.i18n.format("FFXIV.Errors.AbilityActionFailed", { target: this.params.actor.name }));
+    }
+  }
+  /**
+   * Route ability to appropriate handler
+   * @param {Item} item - The item to route
+   * @return {Promise<void>} Returns a promise that resolves when the ability has been routed and handled
+   */
+  _routeAbility(item) {
+    if (item.type === "action") {
+      this.abilityAction(item);
+    } else if (item.type === "trait") {
+      this.abilityTrait(item);
+    }
+  }
+}
+CONFIG.FFXIV = {
+  RollGuards,
+  RollCalcActor,
+  EffectManager
+};
 CONFIG.Actor.documentClass = FFXIVActor;
 CONFIG.Item.documentClass = FFXIVItem;
 CONFIG.Combat.documentClass = FFCombat;
@@ -53198,10 +51893,8 @@ CONFIG.Combat.initiative = {
 hooks.init();
 hooks.ready();
 hooks.canvasReady();
-hooks.preDeleteChatMessage();
-hooks.preUpdateToken();
+hooks.renderCombatTracker();
 hooks.renderChatMessage();
-hooks.targetToken();
 hooks.updateCombat();
 hooks.updateCombatant();
 hooks.deleteCombat();

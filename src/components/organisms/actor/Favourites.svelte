@@ -10,7 +10,6 @@
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
   import InventoryRow from "~/src/components/molecules/InventoryRow.svelte";
-  import RollCalcActor from "~/src/helpers/rolls/RollCalcActor";
   import Badge from "~/src/components/atoms/Badge.svelte";
 
   const Actor = getContext("#doc");
@@ -101,15 +100,15 @@
   function useItem(item) {
     switch (item.type) {
       case 'action':
-        new RollCalcActor({ actor: $Actor}).ability(item.type, item);
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor}).ability(item.type, item);
         break;
 
       case 'trait':
-        new RollCalcActor({ actor: $Actor}).ability(item.type, item);
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor}).ability(item.type, item);
         break;
 
       case 'equipment':
-        new RollCalcActor({ actor: $Actor }).equipment(item);
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).equipment(item);
         break;
 
       case 'effect':
@@ -121,12 +120,12 @@
         break;
 
       case 'limitbreak':
-        new RollCalcActor({ actor: $Actor}).ability(item.type, item);
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor}).ability(item.type, item);
         break;
 
       default:
         console.warn(`Unhandled item type: ${item.type}`);
-        new RollCalcActor({ actor: $Actor }).send();
+        new CONFIG.FFXIV.RollCalcActor({ actor: $Actor }).send();
     }
   }
   function toggleLock(event) {
