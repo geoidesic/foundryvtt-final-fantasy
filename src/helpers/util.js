@@ -324,7 +324,9 @@ export const resetUses = async (items) => {
 }
 
 /**
- * Resets the action state for an actor
+ * Resets the action state (or slots) for an actor. 
+ * This is used to reset the action slots for an actor, e.g when they enter combat.
+ * @todo probably should be moved to Actor class
  * @param {Actor} actor The actor to reset
  * @return {Promise<void>} A promise that resolves when the actor is updated
  */
