@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../FoundryVTT-12"
+		},
+		{
+			"path": "../FoundryVTT-Data-12"
 		}
 	],
 	"settings": {}
