@@ -7304,9 +7304,9 @@ function create_fragment$1i(ctx) {
       attr(div0, "class", "flex4 inset");
       attr(div0, "id", "chat-description");
       attr(div1, "class", div1_class_value = "flexrow " + /*showDescription*/
-      (ctx[1] ? "visible" : "") + " svelte-FFXIV-v5diha");
+      (ctx[1] ? "visible" : "") + " svelte-FFXIV-bdfh4i");
       attr(div2, "class", div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[1] ? "expanded" : "") + " svelte-FFXIV-v5diha");
+      (ctx[1] ? "expanded" : "") + " svelte-FFXIV-bdfh4i");
       attr(div3, "class", "chat");
     },
     m(target, anchor) {
@@ -7325,12 +7325,12 @@ function create_fragment$1i(ctx) {
         div0.innerHTML = raw_value;
       if (!current || dirty & /*showDescription*/
       2 && div1_class_value !== (div1_class_value = "flexrow " + /*showDescription*/
-      (ctx2[1] ? "visible" : "") + " svelte-FFXIV-v5diha")) {
+      (ctx2[1] ? "visible" : "") + " svelte-FFXIV-bdfh4i")) {
         attr(div1, "class", div1_class_value);
       }
       if (!current || dirty & /*showDescription*/
       2 && div2_class_value !== (div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[1] ? "expanded" : "") + " svelte-FFXIV-v5diha")) {
+      (ctx2[1] ? "expanded" : "") + " svelte-FFXIV-bdfh4i")) {
         attr(div2, "class", div2_class_value);
       }
     },
@@ -8877,8 +8877,8 @@ function create_if_block$s(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "target-list svelte-FFXIV-1uhww5r");
-      attr(div1, "class", "action-result svelte-FFXIV-1uhww5r");
+      attr(div0, "class", "target-list svelte-FFXIV-ugr7oj");
+      attr(div1, "class", "action-result svelte-FFXIV-ugr7oj");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -9045,9 +9045,9 @@ function create_if_block_1$h(ctx) {
       div12 = element("div");
       button1 = element("button");
       i1 = element("i");
-      attr(div0, "class", "texture svelte-FFXIV-1uhww5r");
-      attr(div1, "class", "flex0 target-info pointer svelte-FFXIV-1uhww5r");
-      attr(div2, "class", "col target-name font-cinzel smaller svelte-FFXIV-1uhww5r");
+      attr(div0, "class", "texture svelte-FFXIV-ugr7oj");
+      attr(div1, "class", "flex0 target-info pointer svelte-FFXIV-ugr7oj");
+      attr(div2, "class", "col target-name font-cinzel smaller svelte-FFXIV-ugr7oj");
       attr(div3, "class", "flex1 left font-cinzel");
       attr(div3, "data-tooltip-class", "FFXIV-tooltip");
       attr(div3, "data-tooltip", "Defense");
@@ -9064,7 +9064,7 @@ function create_if_block_1$h(ctx) {
       ) ? "bg-silver" : "bg-gold"));
       set_style(div10, "min-height", "2.6rem");
       attr(i0, "class", "fa-solid fa-check");
-      attr(button0, "class", "stealth apply-trait svelte-FFXIV-1uhww5r");
+      attr(button0, "class", "stealth apply-trait svelte-FFXIV-ugr7oj");
       button0.disabled = button0_disabled_value = /*isApplyDisabled*/
       ctx[2](
         /*target*/
@@ -9072,7 +9072,7 @@ function create_if_block_1$h(ctx) {
       );
       attr(div11, "class", "flex1");
       attr(i1, "class", "fa-solid fa-refresh");
-      attr(button1, "class", "stealth apply-trait svelte-FFXIV-1uhww5r");
+      attr(button1, "class", "stealth apply-trait svelte-FFXIV-ugr7oj");
       button1.disabled = button1_disabled_value = !/*isApplyDisabled*/
       ctx[2](
         /*target*/
@@ -9082,9 +9082,9 @@ function create_if_block_1$h(ctx) {
       attr(div13, "class", "flexcol");
       attr(div14, "class", "flex0");
       attr(div15, "class", div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FFXIV-1uhww5r");
-      attr(div16, "class", "background svelte-FFXIV-1uhww5r");
-      attr(div17, "class", "leatherbook svelte-FFXIV-1uhww5r");
+      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FFXIV-ugr7oj");
+      attr(div16, "class", "background svelte-FFXIV-ugr7oj");
+      attr(div17, "class", "leatherbook svelte-FFXIV-ugr7oj");
     },
     m(target, anchor) {
       insert(target, div17, anchor);
@@ -9236,7 +9236,7 @@ function create_if_block_1$h(ctx) {
       }
       if (!current || dirty[0] & /*targetTokens*/
       8 && div15_class_value !== (div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FFXIV-1uhww5r")) {
+      (ctx[33].isUnlinked ? "unlinked" : "") + " svelte-FFXIV-ugr7oj")) {
         attr(div15, "class", div15_class_value);
       }
     },
@@ -9276,7 +9276,7 @@ function create_if_block_5$2(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "target-img clickable svelte-FFXIV-1uhww5r");
+      attr(img, "class", "target-img clickable svelte-FFXIV-ugr7oj");
       if (!src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
         ctx[33]
@@ -9340,7 +9340,7 @@ function create_else_block$6(ctx) {
       (ctx[14](
         /*target*/
         ctx[33]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-1uhww5r");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-ugr7oj");
       attr(i, "data-tooltip", i_data_tooltip_value = /*isHit*/
       ctx[14](
         /*target*/
@@ -9356,7 +9356,7 @@ function create_else_block$6(ctx) {
       (ctx2[14](
         /*target*/
         ctx2[33]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-1uhww5r")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-ugr7oj")) {
         attr(i, "class", i_class_value);
       }
       if (dirty[0] & /*targetTokens*/
@@ -9404,13 +9404,13 @@ function create_if_block_4$5(ctx) {
       (ctx[14](
         /*target*/
         ctx[33]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-1uhww5r");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-ugr7oj");
       attr(i, "data-tooltip", localize$1("CriticalSuccess"));
-      attr(div0, "class", "overlay svelte-FFXIV-1uhww5r");
+      attr(div0, "class", "overlay svelte-FFXIV-ugr7oj");
       set_style(div0, "margin", "0");
       set_style(div0, "font-size", "1rem");
       set_style(div0, "color", "#fff");
-      attr(div1, "class", "critical svelte-FFXIV-1uhww5r");
+      attr(div1, "class", "critical svelte-FFXIV-ugr7oj");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -9425,7 +9425,7 @@ function create_if_block_4$5(ctx) {
       (ctx2[14](
         /*target*/
         ctx2[33]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-1uhww5r")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-ugr7oj")) {
         attr(i, "class", i_class_value);
       }
     },
@@ -9703,12 +9703,12 @@ function create_fragment$1d(ctx) {
       attr(div0, "class", "pointer");
       attr(div0, "role", "button");
       html_tag.a = html_anchor;
-      attr(div1, "class", "flex4 inset svelte-FFXIV-1uhww5r");
+      attr(div1, "class", "flex4 inset svelte-FFXIV-ugr7oj");
       attr(div1, "id", "chat-description");
       attr(div2, "class", div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx[4] ? "visible" : "") + " svelte-FFXIV-1uhww5r");
+      (ctx[4] ? "visible" : "") + " svelte-FFXIV-ugr7oj");
       attr(div3, "class", div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[4] ? "expanded" : "") + " svelte-FFXIV-1uhww5r");
+      (ctx[4] ? "expanded" : "") + " svelte-FFXIV-ugr7oj");
       attr(div4, "class", "chat");
     },
     m(target, anchor) {
@@ -9740,12 +9740,12 @@ function create_fragment$1d(ctx) {
     p(ctx2, dirty) {
       if (!current || dirty[0] & /*showDescription*/
       16 && div2_class_value !== (div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx2[4] ? "visible" : "") + " svelte-FFXIV-1uhww5r")) {
+      (ctx2[4] ? "visible" : "") + " svelte-FFXIV-ugr7oj")) {
         attr(div2, "class", div2_class_value);
       }
       if (!current || dirty[0] & /*showDescription*/
       16 && div3_class_value !== (div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[4] ? "expanded" : "") + " svelte-FFXIV-1uhww5r")) {
+      (ctx2[4] ? "expanded" : "") + " svelte-FFXIV-ugr7oj")) {
         attr(div3, "class", div3_class_value);
       }
       if (
@@ -52778,7 +52778,7 @@ function create_default_slot(ctx) {
       section = element("section");
       if (switch_instance1)
         create_component(switch_instance1.$$.fragment);
-      attr(img, "class", "profile svelte-FFXIV-1dnncaq");
+      attr(img, "class", "profile svelte-FFXIV-18qgyfp");
       if (!src_url_equal(img.src, img_src_value = /*$documentStore*/
       ctx[2]?.img))
         attr(img, "src", img_src_value);
@@ -52790,7 +52790,7 @@ function create_default_slot(ctx) {
       attr(div0, "class", "flex0");
       set_style(table, "text-align", "center");
       attr(div2, "class", "flexcol");
-      attr(div3, "class", "flex1 profile-wrap svelte-FFXIV-1dnncaq");
+      attr(div3, "class", "flex1 profile-wrap svelte-FFXIV-18qgyfp");
       attr(div4, "class", "left wide");
       attr(header, "class", "wide");
       attr(section, "class", "mt-sm high");
