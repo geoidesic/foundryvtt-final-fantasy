@@ -448,7 +448,7 @@
 .FFXIV .panel.overflow {
   overflow: auto;
 }
-.FFXIV .nooverflow {
+.FFXIV .no-overflow {
   overflow: hidden;
 }
 .FFXIV .overflow {

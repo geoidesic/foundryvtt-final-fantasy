@@ -41,7 +41,7 @@
     // Initial combat state
     combat = game.combat;
     
-    // Subscribe to combat updates
+    // Subscribe to combat updates @why? – 
     Hooks.on('createCombat', onCombatUpdate);
     Hooks.on('deleteCombat', onCombatUpdate);
     Hooks.on('updateCombat', onCombatUpdate);

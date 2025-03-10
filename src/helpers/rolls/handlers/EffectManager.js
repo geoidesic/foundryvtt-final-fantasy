@@ -55,6 +55,7 @@ export default class EffectManager {
 
   /**
    * Handle all effects for an action
+   * @override
    * @param {Item} item - The item being used
    * @param {Object} result - The result from the action handler
    * @return {Promise<void>} Returns a promise that resolves when all effects are handled

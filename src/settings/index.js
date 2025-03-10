@@ -43,6 +43,7 @@ function automaticUses() {
   });
 }
 
+
 /**
  * Controls whether chat messages should display the actor owner as the sender.
  * When enabled, chat messages will show the owner of the associated actor

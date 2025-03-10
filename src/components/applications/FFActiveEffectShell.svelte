@@ -51,7 +51,7 @@
 
 <template lang="pug">
    ApplicationShell(bind:elementRoot)
-    .flexrow.gap-15.wide.high.nooverflow.nowrap
+    .flexrow.gap-15.wide.high.no-overflow.nowrap
       .flex4.wide.mr-sm.high
         section.mt-sm.high
           .flex1.portrait-frame
