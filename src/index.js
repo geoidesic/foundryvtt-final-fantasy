@@ -8,12 +8,19 @@ import FFToken from "~/src/extensions/token.js"
 import FFCombat from './extensions/combat.js'
 import FFCombatant from './extensions/combatant.js'
 import hooks from "~/src/hooks";
+import RollGuards from "~/src/helpers/rolls/RollGuards";
 
 /* eslint-disable-next-line no-unused-vars */
 import { setupDSN } from "~/src/helpers/dsnSetup.js";
 
 //- debug hooks
 // CONFIG.debug.hooks = true;
+
+
+CONFIG.FFXIV = {
+  RollGuards: RollGuards
+}
+
 
 //- Foundry Class Extensions
 CONFIG.Actor.documentClass = FFXIVActor
