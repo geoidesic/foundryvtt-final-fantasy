@@ -177,8 +177,8 @@
     Hooks.off('deleteActiveEffect', resetEffectList);
     Hooks.off('updateActiveEffect', resetEffectList);
 
-    game.system.log.d("EffectsTab onDestroy");
-    game.system.log.d(ActiveEffects);
+    // game.system.log.d("EffectsTab onDestroy");
+    // game.system.log.d(ActiveEffects);
   });
 
   // $: ActiveEffects = $filterDoc.effects;

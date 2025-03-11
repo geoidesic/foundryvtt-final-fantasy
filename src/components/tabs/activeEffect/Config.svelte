@@ -20,7 +20,7 @@ const stackingOptions = [
 $: statusOptions = getDefaultStatusEffects().map(status => status.id);
 
 onMount(async () => {
-  console.log('ActiveEffectSheet Config');
+  console.log('ActiveEffectSheet Config', $doc);
 });
 </script>
 <template lang="pug">
@@ -35,7 +35,7 @@ onMount(async () => {
         .flex1
           label.gold(for="name") {localize("Name")}
         .flex4.right
-          DocInput(name="name" alwaysEditable="{true}" valuePath="name" fullWidth="{true}" placeholder="Effect Name")
+          DocInput(name="name" valuePath="name" fullWidth="{true}" placeholder="Effect Name" alwaysEditable="{true}" updateOnBlur="{true}")
     .flex0.mt-sm
       .flexrow.justify-vertical
         .flex4
