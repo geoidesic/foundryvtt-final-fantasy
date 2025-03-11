@@ -689,6 +689,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   flex-wrap: nowrap;
+  -webkit-line-clamp: 1;
 }
 .FFXIV .bold {
   font-weight: 700;

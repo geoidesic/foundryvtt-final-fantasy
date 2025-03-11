@@ -81,11 +81,5 @@
   "manifest": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/system.json",
   "download": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/module.zip",
   "license": "LICENSE.txt",
-  "socket": true,
-  "system": [
-    "style.css"
-  ],
-  "styles": [
-    "style.css"
-  ]
+  "socket": true
 }
