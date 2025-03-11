@@ -10,16 +10,22 @@ const MODULE_ID = path.join(__dirname, '..');
 const yaml = true;
 
 const packs = await fs.readdir(path.join(MODULE_ID, "packs"));
+
 for (const pack of packs) {
-  if (pack === ".gitattributes") continue;
+  const packPath = path.join(MODULE_ID, 'src', 'packs', pack);
+
+  const stat = await fs.stat(packPath);
+  if (pack === '.gitattributes' || !stat.isDirectory()) continue; // Skip non-directory entries
   console.log("packs", packs);
   console.log("__dirname", __dirname);
   console.log("__filename", __filename);
   console.log("MODULE_ID", MODULE_ID);
   console.log("Unpacking " + pack);
   const directory = path.join(MODULE_ID, "src", "packs", pack);
+  console.log("directory", directory);
   try {
     for (const file of await fs.readdir(directory)) {
+      console.log("file", file);
       await fs.unlink(path.join(directory, file));
     }
   } catch (error) {
