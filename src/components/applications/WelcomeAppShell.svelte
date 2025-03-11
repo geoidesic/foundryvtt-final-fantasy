@@ -57,7 +57,7 @@
         img.pt-sm.white(src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;")
       .flex2.left.pt-sm
         h4 {localize(`${SYSTEM_CODE}.Title`)} {localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} 
-        a(href="https://www.round-table.games") Round Table Games ©2024
+        a(href="https://www.round-table.games") Round Table Games ©2025
     
 </template>
 <style lang="sass">
