@@ -76,7 +76,7 @@ async function onDrop(event) {
     await FolderProcessor.processFolder(folder, list, isJob, {
       preventDuplicates,
       warnOnCompendiumDrops
-    });
+    }, $item);
 
     game.system.log.o("ItemBucket:onDrop", "Final list after folder processing:", list.map(x => x.uuid));
     await $item.update({ [`system.${key}.list`]: list });
@@ -88,7 +88,7 @@ async function onDrop(event) {
   await FolderProcessor.processItem(droppedItem, list, isJob, {
     preventDuplicates,
     warnOnCompendiumDrops
-  });
+  }, $item);
   
   game.system.log.o("ItemBucket:onDrop", "Final list after item processing:", list.map(x => x.uuid));
   await $item.update({ [`system.${key}.list`]: list });

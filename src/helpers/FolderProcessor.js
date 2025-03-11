@@ -47,6 +47,20 @@ export default class FolderProcessor {
       if (!confirmed) return false;
     }
 
+    // Check for shared limitation
+    game.system.log.o("[FOLDER PROCESSOR] Checking for shared limitation:", { item, type: item.type, sharedLimitation: item.system.sharedLimitation });
+    if (item.type === 'action' && item.system.sharedLimitation?.value) {
+      if(!item.system.hasLimitation) {
+        ui.notifications.notify(`The dropped action item, ${item.name}, does not have a limitation.`, 'error');
+        return false;
+      }
+      if (item.system.limitation !== sourceContext.system.limitation || item.system.limitationUnits !== sourceContext.system.limitationUnits) {
+        ui.notifications.notify(`Dropped item, ${item.name}, has a limitation of "${item.system.limitation} per ${item.system.limitationUnits}", but ${sourceContext.name} has a limitation of "${sourceContext.system.limitation} per ${sourceContext.system.limitationUnits}". These do not match and thus cannot be shared.`, 'error');
+        game.system.log.w("[FOLDER PROCESSOR] Shared limitation mismatch:", item.uuid);
+        return false;
+      }
+    }
+
     // Add item to list
     game.system.log.o("[FOLDER PROCESSOR] Adding item to list:", { uuid: item.uuid });
     list.push({ uuid: item.uuid });

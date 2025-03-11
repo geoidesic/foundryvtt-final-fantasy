@@ -33,6 +33,11 @@
         title="{localize('Source')} {localize('Effects')}",
         key="sourceGrants",
       )
+      +if("$item.system.hasLimitation && $item.system.limitation && $item.system.limitationUnits")
+        ItemBucket(
+          title="{localize('Types.Item.SharedLimitation')}",
+          key="sharedLimitation",
+        )
       ItemBucket(
         title="{localize('Enabled')} {localize('Traits')}",
         key="enables",
