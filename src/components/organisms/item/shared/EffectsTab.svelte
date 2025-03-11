@@ -163,13 +163,11 @@
     }
   }
 
-  function getAvatarForVersion(source, version) {
-    return version < 12 ? source.icon : source.img;
-  }
   
   onMount(() => {
     Hooks.on('createActiveEffect', resetEffectList);
     Hooks.on('deleteActiveEffect', resetEffectList);
+    Hooks.on('updateActiveEffect', resetEffectList);
 
     game.system.log.d("EffectsTab mounted");
     game.system.log.d(ActiveEffects);
@@ -177,6 +175,7 @@
   onDestroy(() => {
     Hooks.off('createActiveEffect', resetEffectList);
     Hooks.off('deleteActiveEffect', resetEffectList);
+    Hooks.off('updateActiveEffect', resetEffectList);
 
     game.system.log.d("EffectsTab onDestroy");
     game.system.log.d(ActiveEffects);
@@ -212,7 +211,7 @@
           td.img
             img.icon(
               class="{effect.isSuppressed ? 'suspended' : 'active'}" 
-              src="{getAvatarForVersion(effect, effect.getFlag(SYSTEM_ID, 'version') || 0)}" 
+              src="{effect.img}" 
               alt="avatar for game version"
             )
           td.left.expand.no-wrap {effect.name}

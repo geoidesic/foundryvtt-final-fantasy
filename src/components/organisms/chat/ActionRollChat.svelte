@@ -16,7 +16,7 @@
   export let FFMessageState
   export let content
   export let classes = ''
-  export let messageId
+  // export let messageId
 
   const item = fromUuidSync(FFMessage.item.uuid);
   if(item) {
@@ -412,7 +412,7 @@
 <template lang="pug">
 
 .chat
-  div.pointer(role="button" on:click!="{log}") 
+  div.pointer(role="button" on:click!="{log}" class="{classes}") 
     i.fa-solid.fa-bug
   ChatTitle(on:toggleDescription="{handleToggleDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")

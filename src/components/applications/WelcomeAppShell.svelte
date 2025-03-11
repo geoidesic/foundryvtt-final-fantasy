@@ -7,7 +7,7 @@
   import { gameSettings } from '~/src/config/gameSettings';
 
   export let elementRoot = void 0;
-  // export let version = void 0;
+  export let version = void 0;
 
   const application = getContext('#external').application;
   const dontShowWelcomeStore = gameSettings.getStore('dontShowWelcome');
