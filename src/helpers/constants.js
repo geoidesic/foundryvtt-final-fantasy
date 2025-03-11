@@ -119,6 +119,7 @@ export const getAspectedOptions = () => [
   { value: "lightning", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.lightning") },
   { value: "wind", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.wind") },
   { value: "ice", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.ice") },
+  { value: "fire", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.fire") },
 ];
 
 export const getUsesUnitOptions = () => [
