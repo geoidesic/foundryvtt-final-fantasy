@@ -71,6 +71,15 @@ system:
     - invoked
   isMagic: false
   type: primary
+  durations:
+    - type: hasQualifier
+      amount: null
+      units: rounds
+      qualifier: untilDamage
+    - type: hasQualifier
+      amount: null
+      units: rounds
+      qualifier: endOfThis
 effects: []
 sort: 0
 ownership:
@@ -84,7 +93,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: 1736682181180
-  modifiedTime: 1736682660056
-  lastModifiedBy: A3f8BsJ7eYm0X14M
+  modifiedTime: 1741695288829
+  lastModifiedBy: 8dEnyNKe0FW8W0w1
 _key: '!items!dYxRIc7ty2r0BsTu'
 
