@@ -162,6 +162,7 @@
         "Target": "Target",
         "Effect": "Effect",
         "Trigger": "Trigger",
+        "SharedLimitation": "Shared Limitation",
         "Size": "Size",
         "Duration": {
           "Label": "Duration",
@@ -264,7 +265,8 @@
               "earth": "Earth",
               "lightning": "Lightning",
               "wind": "Wind",
-              "ice": "Ice"
+              "ice": "Ice",
+              "fire": "Fire"
             },
             "Limitation": {
               "once": "Once per",
@@ -320,7 +322,7 @@
               "primary": "Primary",
               "secondary": "Secondary",
               "reaction": "Reaction",
-              "limit": "Limit",
+              "limit": "Limit break",
               "combo": "Combo",
               "volley": "Volley"
             },
