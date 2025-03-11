@@ -1,11 +1,11 @@
-name: Traits
+name: Limit Break
 sorting: a
-folder: aQbFpe0PKDBZvem5
+folder: dpJYhaE1TJhP4NlC
 type: Item
-_id: azjbT1oG4gIxHZrO
+_id: 2czjjOwRMkqxKD4T
 description: ''
-sort: 200000
-color: '#696b6d'
+sort: 0
+color: '#a46346'
 flags: {}
 _stats:
   compendiumSource: null
@@ -14,7 +14,7 @@ _stats:
   systemId: foundryvtt-final-fantasy
   systemVersion: 0.0.1
   createdTime: null
-  modifiedTime: 1741721142561
-  lastModifiedBy: vlEBG0iiUKKFP45a
-_key: '!folders!azjbT1oG4gIxHZrO'
+  modifiedTime: null
+  lastModifiedBy: null
+_key: '!folders!2czjjOwRMkqxKD4T'
 

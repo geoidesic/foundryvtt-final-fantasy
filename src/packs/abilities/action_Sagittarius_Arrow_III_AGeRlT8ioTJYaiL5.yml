@@ -1,0 +1,93 @@
+folder: gtpkWS6kaBzQVKKD
+name: Sagittarius Arrow III
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/limit-breaker.webp
+system:
+  description: >-
+    <p>Deals 8d6 damage divided evenly (rounded up) amongst all targets and
+    inflicts a <strong>DOT (6)</strong> on all targets.</p>
+  favourite: false
+  effectActionsLocked: false
+  durations: []
+  hasAspected: false
+  aspected: ''
+  hasRanged: true
+  rangeType: 5x5i
+  hasTrigger: true
+  trigger: any
+  hasTarget: true
+  target: all
+  baseEffectHealing: ''
+  baseEffectHealingType: ''
+  baseEffectDamage: 8d6
+  hasBaseEffect: true
+  hasBaseEffectHealing: false
+  hasBaseEffectDamage: true
+  hasBaseEffectRestoreMP: false
+  baseEffectRestoreMP: 0
+  hasBaseEffectBarrier: false
+  baseEffectBP: 0
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCostMP: false
+  costMP: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list:
+      - uuid: Compendium.foundryvtt-final-fantasy.effect.Item.rkVMZj38ba2D7oxF
+    value: true
+  sourceGrants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  sharedLimitation:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  type: limit
+effects: []
+ownership:
+  default: 0
+  vlEBG0iiUKKFP45a: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1741719996551
+  modifiedTime: 1741719996551
+  lastModifiedBy: vlEBG0iiUKKFP45a
+_id: AGeRlT8ioTJYaiL5
+sort: 0
+_key: '!items!AGeRlT8ioTJYaiL5'
+

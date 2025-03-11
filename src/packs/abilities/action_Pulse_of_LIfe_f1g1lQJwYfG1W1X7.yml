@@ -1,0 +1,97 @@
+name: Pulse of LIfe
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/limit-breaker.webp
+system:
+  description: >-
+    <p>Removes all enfeeblements from all targets and fully restores their HP
+    and MP. Pulse of Life can remove <strong>Knocked Out</strong>,
+    <strong>Weakness</strong>, and <strong>Brink of Death</strong>. </p><p>*This
+    ability also targets characters not present on the encounter map. When doing
+    so, place them in an empty square within 5 squares of you after resolving
+    the ability's effects.</p>
+  favourite: false
+  effectActionsLocked: false
+  durations: []
+  hasAspected: false
+  aspected: ''
+  hasRanged: false
+  rangeType: ''
+  hasTrigger: false
+  trigger: ''
+  hasTarget: false
+  target: ''
+  baseEffectHealing: all
+  baseEffectHealingType: target
+  baseEffectDamage: ''
+  hasBaseEffect: true
+  hasBaseEffectHealing: true
+  hasBaseEffectDamage: false
+  hasBaseEffectRestoreMP: true
+  baseEffectRestoreMP: all
+  hasBaseEffectBarrier: false
+  baseEffectBP: 0
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCostMP: false
+  costMP: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  sourceGrants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  sharedLimitation:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - magic
+  isMagic: false
+  type: limit
+effects: []
+folder: Qh0SCj1VIRRVWS1w
+ownership:
+  default: 0
+  vlEBG0iiUKKFP45a: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1741721141712
+  modifiedTime: 1741721141712
+  lastModifiedBy: vlEBG0iiUKKFP45a
+_id: f1g1lQJwYfG1W1X7
+sort: 0
+_key: '!items!f1g1lQJwYfG1W1X7'
+

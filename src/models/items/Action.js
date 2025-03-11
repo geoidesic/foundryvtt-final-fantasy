@@ -32,7 +32,7 @@ export class ActionModel extends FFItemDataModel {
       hasBaseEffectHealing: new BooleanField({ required: false, initial: false }),
       hasBaseEffectDamage: new BooleanField({ required: false, initial: false }),
       hasBaseEffectRestoreMP: new BooleanField({ required: false, initial: false }),
-      baseEffectRestoreMP: new NumberField({ required: false, initial: 0 }),
+      baseEffectRestoreMP: new StringField({ required: false, initial: '' }),
       hasBaseEffectBarrier: new BooleanField({ required: false, initial: false }),
       baseEffectBP: new NumberField({ required: false, initial: 0 }),
       hasCheck: new BooleanField({ required: false, initial: false }),

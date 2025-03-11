@@ -1,0 +1,93 @@
+folder: SZ0pvniiBr4FNqaW
+name: Meteor
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/limit-breaker.webp
+system:
+  description: >-
+    <p>Deals 4d6 damage to all targets. While under the effect of <strong>Astral
+    Fire</strong>, <em>Meteor</em> deals an additional 1d6 damage.</p>
+  favourite: false
+  effectActionsLocked: false
+  durations: []
+  hasAspected: true
+  aspected: fire
+  hasRanged: true
+  rangeType: 5x5e
+  hasTrigger: true
+  trigger: any
+  hasTarget: true
+  target: all
+  baseEffectHealing: ''
+  baseEffectHealingType: ''
+  baseEffectDamage: 4d6
+  hasBaseEffect: true
+  hasBaseEffectHealing: false
+  hasBaseEffectDamage: true
+  hasBaseEffectRestoreMP: false
+  baseEffectRestoreMP: 0
+  hasBaseEffectBarrier: false
+  baseEffectBP: 0
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCostMP: false
+  costMP: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  sourceGrants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  sharedLimitation:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: true
+  tags:
+    - magic
+  isMagic: false
+  type: limit
+effects: []
+ownership:
+  default: 0
+  vlEBG0iiUKKFP45a: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1741720671725
+  modifiedTime: 1741720671725
+  lastModifiedBy: vlEBG0iiUKKFP45a
+_id: EA3iRzzruw70VxUY
+sort: 0
+_key: '!items!EA3iRzzruw70VxUY'
+

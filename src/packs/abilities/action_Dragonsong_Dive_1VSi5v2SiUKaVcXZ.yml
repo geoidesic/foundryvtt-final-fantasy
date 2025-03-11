@@ -1,0 +1,93 @@
+folder: uGYScLkVxWiyLgxr
+name: Dragonsong Dive
+type: action
+img: systems/foundryvtt-final-fantasy/assets/icons/limit-breaker.webp
+system:
+  description: >-
+    <p>Deal 6d6 damage to the target, then move to an empty square adjacent to
+    the target if one is available. This ability can be used to evade enemy
+    attacks.</p>
+  favourite: false
+  effectActionsLocked: false
+  durations: []
+  hasAspected: false
+  aspected: fire
+  hasRanged: true
+  rangeType: 5sq
+  hasTrigger: true
+  trigger: any
+  hasTarget: true
+  target: single
+  baseEffectHealing: ''
+  baseEffectHealingType: ''
+  baseEffectDamage: 6d6
+  hasBaseEffect: true
+  hasBaseEffectHealing: false
+  hasBaseEffectDamage: true
+  hasBaseEffectRestoreMP: false
+  baseEffectRestoreMP: 0
+  hasBaseEffectBarrier: false
+  baseEffectBP: 0
+  hasCheck: false
+  checkAttribute: ''
+  checkBonus: 0
+  hasCR: false
+  CR: ''
+  hasDirectHit: false
+  directHitType: ''
+  directHitDamage: ''
+  directHitText: ''
+  directHitCondition: ''
+  hasHeavierShot: false
+  heavierShot: ''
+  hasLimitation: false
+  limitation: 0
+  limitationUnits: phase
+  uses: 0
+  hasSplitDamage: false
+  hasCostMP: false
+  costMP: 0
+  procTrigger: null
+  procs:
+    list: []
+    value: false
+  grants:
+    list: []
+    value: false
+  sourceGrants:
+    list: []
+    value: false
+  requires:
+    list: []
+    value: false
+  sharedLimitation:
+    list: []
+    value: false
+  removes:
+    list: []
+    value: false
+  enables:
+    list: []
+    value: false
+  hasTags: false
+  tags: []
+  isMagic: false
+  type: limit
+effects: []
+ownership:
+  default: 0
+  vlEBG0iiUKKFP45a: 3
+flags: {}
+_stats:
+  compendiumSource: null
+  duplicateSource: null
+  coreVersion: '12.331'
+  systemId: foundryvtt-final-fantasy
+  systemVersion: 0.0.1
+  createdTime: 1741720789564
+  modifiedTime: 1741720789564
+  lastModifiedBy: vlEBG0iiUKKFP45a
+_id: 1VSi5v2SiUKaVcXZ
+sort: 0
+_key: '!items!1VSi5v2SiUKaVcXZ'
+
