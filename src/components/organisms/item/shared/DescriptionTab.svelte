@@ -2,7 +2,8 @@
 import { onMount } from 'svelte';
 import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
 
-export let sheet;
+export let sheet; //- avoid's build errors
+sheet; //- avoid's build errors
 
 </script>
 <template lang="pug">
