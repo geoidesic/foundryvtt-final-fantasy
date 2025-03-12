@@ -51,6 +51,64 @@ const incrementVersion = (version, type) => {
     return parts.join('.');
 };
 
+// Function to generate release notes from git log
+const generateReleaseNotes = (previousTag) => {
+    try {
+        // Get the range to use for git log
+        let range = '';
+        if (previousTag) {
+            range = `${previousTag}..HEAD`;
+        }
+        
+        // Get commit messages since the last tag
+        const gitLogCommand = range 
+            ? `git log ${range} --pretty=format:"%s" --no-merges`
+            : `git log --pretty=format:"%s" --no-merges -n 50`; // Limit to last 50 commits if no previous tag
+        
+        const commitMessages = execSync(gitLogCommand).toString().trim().split('\n');
+        
+        // Extract issue numbers from commit messages
+        const issueRegex = /#(\d+)/g;
+        const issues = new Set();
+        
+        const formattedCommits = commitMessages.map(message => {
+            // Extract issue numbers
+            let match;
+            while ((match = issueRegex.exec(message)) !== null) {
+                issues.add(match[1]);
+            }
+            
+            return `- ${message}`;
+        });
+        
+        // Create release notes
+        let releaseNotes = "## What's Changed\n\n";
+        releaseNotes += formattedCommits.join('\n');
+        
+        if (issues.size > 0) {
+            releaseNotes += '\n\n## Issues Addressed\n\n';
+            Array.from(issues).forEach(issue => {
+                releaseNotes += `- #${issue}\n`;
+            });
+        }
+        
+        return releaseNotes;
+    } catch (error) {
+        console.error('Error generating release notes:', error);
+        return "## Release Notes\n\nAutomated release";
+    }
+};
+
+// Function to get the previous tag
+const getPreviousTag = () => {
+    try {
+        return execSync('git describe --tags --abbrev=0').toString().trim();
+    } catch (error) {
+        console.log('No previous tag found.');
+        return null;
+    }
+};
+
 // Update package.json
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
 const newVersion = incrementVersion(packageJson.version, versionType);
@@ -62,9 +120,40 @@ const systemJson = JSON.parse(fs.readFileSync(systemJsonPath, 'utf8'));
 systemJson.version = newVersion;
 fs.writeFileSync(systemJsonPath, JSON.stringify(systemJson, null, 2));
 
-// Commit and push changes
+// Commit changes
 execSync('git add .');
 execSync(`git commit -m "Release v${newVersion}"`);
+
+// Create tag
+execSync(`git tag -a v${newVersion} -m "Release version ${newVersion}"`);
+
+// Push changes and tag
 execSync('git push origin main');
+execSync(`git push origin v${newVersion}`);
+
+// Get previous tag for release notes
+const previousTag = getPreviousTag();
+const releaseNotes = generateReleaseNotes(previousTag);
+
+// Create a temporary file for release notes
+const releaseNotesPath = path.join(__dirname, '../release-notes.md');
+fs.writeFileSync(releaseNotesPath, releaseNotes);
+
+// Create GitHub release
+try {
+    execSync(`gh release create v${newVersion} --title "Version ${newVersion}" --notes-file ${releaseNotesPath}`);
+    console.log(`GitHub release created for v${newVersion}`);
+} catch (error) {
+    console.error('Error creating GitHub release:', error.message);
+    console.log('You may need to install GitHub CLI (gh) or authenticate it.');
+    console.log(`You can manually create a release with: gh release create v${newVersion}`);
+}
+
+// Clean up release notes file
+try {
+    fs.unlinkSync(releaseNotesPath);
+} catch (error) {
+    console.error('Error removing temporary release notes file:', error);
+}
 
 console.log(`Released version ${newVersion}`);
