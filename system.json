@@ -13,7 +13,7 @@
   "readme": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/README.md",
   "bugs": "https://github.com/geoidesic/foundryvtt-final-fantasy/issues",
   "changelog": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/CHANGELOG.md",
-  "version": "0.1.18",
+  "version": "0.1.19",
   "compatibility": {
     "minimum": "11",
     "verified": "12",
