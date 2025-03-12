@@ -52,6 +52,33 @@ const incrementVersion = (version, type) => {
     return parts.join('.');
 };
 
+// Function to call the AI model
+const callCursorSmallAI = async (commitMessages) => {
+    try {
+        const payload = {
+            messages: commitMessages,
+        };
+
+        const response = await fetch('YOUR_AI_API_URL', { // Replace with your actual AI API URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+            throw new Error(`AI API error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        return data.releaseNotes || "## Release Notes\n\nAutomated release"; // Fallback if no notes are returned
+    } catch (error) {
+        console.error('Error calling AI model:', error);
+        return null; // Return null to indicate failure
+    }
+};
+
 // Function to generate release notes using cursor-small AI with a fallback
 const generateReleaseNotesWithFallback = async (previousTag) => {
     let commitMessages; // Declare here to make it accessible in both scopes
@@ -146,37 +173,3 @@ try {
 }
 
 console.log(`Released version ${newVersion}`);
-
-// Function to call the AI model
-const callCursorSmallAI = async (commitMessages) => {
-    try {
-        // Prepare the request payload
-        const payload = {
-            messages: commitMessages,
-        };
-
-        // Make the API call to the AI model
-        const response = await fetch('YOUR_AI_API_URL', { // Replace with your actual AI API URL
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add any other headers required by your API, e.g., Authorization
-            },
-            body: JSON.stringify(payload),
-        });
-
-        // Check if the response is OK
-        if (!response.ok) {
-            throw new Error(`AI API error: ${response.statusText}`);
-        }
-
-        // Parse the response
-        const data = await response.json();
-
-        // Assuming the AI returns the release notes in a field called 'releaseNotes'
-        return data.releaseNotes || "## Release Notes\n\nAutomated release"; // Fallback if no notes are returned
-    } catch (error) {
-        console.error('Error calling AI model:', error);
-        return null; // Return null to indicate failure
-    }
-};
