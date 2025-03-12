@@ -56,7 +56,7 @@ jobs:
       # Create a zip file with all files required by the module to add to the release
       - name: Echo Start Zip Creation
         run: echo "Starting zip creation..."
-      - run: zip -r ./system.zip system.json LICENSE index.js dist/ template.json lang/ assets/ src/extensions/templates
+      - run: zip -r ./system.zip system.json LICENSE index.js dist/ template.json lang/ assets/ src/extensions/templates /packs
       - name: Echo End Zip Creation
         run: echo "Zip creation completed."
 
