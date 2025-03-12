@@ -2,7 +2,10 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fetch from 'node-fetch'; // Import fetch for making API calls
+import { exec } from 'child_process';
+import util from 'util';
+
+const execAsync = util.promisify(exec);
 
 // Get the current directory of the script
 const __filename = fileURLToPath(import.meta.url);
@@ -20,18 +23,14 @@ if (!versionType) {
 }
 
 // Function to validate version format
-const isValidVersion = (version) => {
-    return /^\d+\.\d+\.\d+$/.test(version);
-};
+const isValidVersion = (version) => /^\d+\.\d+\.\d+$/.test(version);
 
 // Function to increment version
 const incrementVersion = (version, type) => {
-    // If version is invalid, start with a default version
     if (!isValidVersion(version)) {
         console.log(`Invalid version format: "${version}". Using default version 0.1.0 as base.`);
         version = '0.1.0';
     }
-    
     const parts = version.split('.').map(Number);
     switch (type) {
         case 'major':
@@ -52,67 +51,70 @@ const incrementVersion = (version, type) => {
     return parts.join('.');
 };
 
-// Function to call the AI model
-const callCursorSmallAI = async (commitMessages) => {
-    try {
-        const payload = {
-            messages: commitMessages,
-        };
-
-        const response = await fetch('YOUR_AI_API_URL', { // Replace with your actual AI API URL
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-        });
-
-        if (!response.ok) {
-            throw new Error(`AI API error: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data.releaseNotes || "## Release Notes\n\nAutomated release"; // Fallback if no notes are returned
-    } catch (error) {
-        console.error('Error calling AI model:', error);
-        return null; // Return null to indicate failure
-    }
+// Function to call Apple Intelligence via Shortcuts
+const callAppleIntelligence = async (commitMessages) => {
+  try {
+      const inputText = commitMessages.join('\n');
+      const appleScript = `
+          tell application "Notes"
+              activate
+              set newNote to make new note
+              tell newNote
+                  set body to "${inputText.replace(/"/g, '\\"')}"
+              end tell
+              delay 1 -- Wait for note to be created
+              tell application "System Events"
+                  tell process "Notes"
+                      click menu item "Show Writing Tools" of menu 1 of menu bar item "Edit" of menu bar 1
+                      delay 1
+                      click button "Summary" of window 1
+                      delay 1
+                      set summary to value of text area 1 of scroll area 1 of window 1
+                      click button "Done" of window 1
+                  end tell
+              end tell
+              delete newNote
+              return summary
+          end tell
+      `;
+      const { stdout, stderr } = await execAsync(`osascript -e '${appleScript}'`);
+      if (stderr) throw new Error(`AppleScript error: ${stderr}`);
+      return stdout.trim();
+  } catch (error) {
+      console.error('Error calling Apple Intelligence:', error);
+      return null;
+  }
 };
 
-// Function to generate release notes using cursor-small AI with a fallback
+// Function to generate release notes with Apple Intelligence and fallback
 const generateReleaseNotesWithFallback = async (previousTag) => {
-    let commitMessages; // Declare here to make it accessible in both scopes
+    let commitMessages;
     try {
         let range = previousTag ? `${previousTag}..HEAD` : '';
-        const gitLogCommand = range 
+        const gitLogCommand = range
             ? `git log ${range} --pretty=format:"%s" --no-merges`
             : `git log --pretty=format:"%s" --no-merges -n 50`;
-        
         commitMessages = execSync(gitLogCommand).toString().trim().split('\n');
 
-        // Attempt to generate release notes using AI
-        const aiResponse = await callCursorSmallAI(commitMessages);
-        if (aiResponse) {
-            console.log("Release notes successfully generated using AI.");
-            return aiResponse; // Return AI-generated notes if successful
+        const aiSummary = await callAppleIntelligence(commitMessages);
+        if (aiSummary) {
+            console.log("Release notes successfully generated using Apple Intelligence.");
+            return `## Release Notes\n\n${aiSummary}`;
         } else {
-            console.log("AI did not return a valid response.");
+            console.log("Apple Intelligence did not return a valid summary.");
         }
     } catch (error) {
-        console.error('Error generating release notes with AI:', error);
+        console.error('Error generating release notes with Apple Intelligence:', error);
     }
 
-    // Fallback to generating release notes from commit messages
     console.log("Falling back to generating release notes from commit messages.");
     return generateReleaseNotes(commitMessages);
 };
 
-// Function to generate release notes from commit messages
+// Function to generate fallback release notes
 const generateReleaseNotes = (commitMessages) => {
     const formattedCommits = commitMessages.map(message => `- ${message}`);
-    let releaseNotes = "## What's Changed\n\n";
-    releaseNotes += formattedCommits.join('\n');
-    return releaseNotes;
+    return `## What's Changed\n\n${formattedCommits.join('\n')}`;
 };
 
 // Function to get the previous tag
@@ -147,7 +149,7 @@ execSync(`git tag -a v${newVersion} -m "Release version ${newVersion}"`);
 execSync('git push origin main');
 execSync(`git push origin v${newVersion}`);
 
-// Get previous tag for release notes
+// Generate release notes
 const previousTag = getPreviousTag();
 const releaseNotes = await generateReleaseNotesWithFallback(previousTag);
 
@@ -162,10 +164,9 @@ try {
 } catch (error) {
     console.error('Error creating GitHub release:', error.message);
     console.log('You may need to install GitHub CLI (gh) or authenticate it.');
-    console.log(`You can manually create a release with: gh release create v${newVersion}`);
 }
 
-// Clean up release notes file
+// Clean up
 try {
     fs.unlinkSync(releaseNotesPath);
 } catch (error) {
