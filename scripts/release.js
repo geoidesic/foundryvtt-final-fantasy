@@ -51,52 +51,39 @@ const incrementVersion = (version, type) => {
     return parts.join('.');
 };
 
-// Function to generate release notes from git log
-const generateReleaseNotes = (previousTag) => {
+// Function to generate release notes using cursor-small AI with a fallback
+const generateReleaseNotesWithFallback = async (previousTag) => {
     try {
-        // Get the range to use for git log
-        let range = '';
-        if (previousTag) {
-            range = `${previousTag}..HEAD`;
-        }
-        
-        // Get commit messages since the last tag
+        let range = previousTag ? `${previousTag}..HEAD` : '';
         const gitLogCommand = range 
             ? `git log ${range} --pretty=format:"%s" --no-merges`
-            : `git log --pretty=format:"%s" --no-merges -n 50`; // Limit to last 50 commits if no previous tag
+            : `git log --pretty=format:"%s" --no-merges -n 50`;
         
         const commitMessages = execSync(gitLogCommand).toString().trim().split('\n');
-        
-        // Extract issue numbers from commit messages
-        const issueRegex = /#(\d+)/g;
-        const issues = new Set();
-        
-        const formattedCommits = commitMessages.map(message => {
-            // Extract issue numbers
-            let match;
-            while ((match = issueRegex.exec(message)) !== null) {
-                issues.add(match[1]);
-            }
-            
-            return `- ${message}`;
-        });
-        
-        // Create release notes
-        let releaseNotes = "## What's Changed\n\n";
-        releaseNotes += formattedCommits.join('\n');
-        
-        if (issues.size > 0) {
-            releaseNotes += '\n\n## Issues Addressed\n\n';
-            Array.from(issues).forEach(issue => {
-                releaseNotes += `- #${issue}\n`;
-            });
+
+        // Attempt to generate release notes using AI
+        const aiResponse = await callCursorSmallAI(commitMessages); // Placeholder for AI call
+        if (aiResponse) {
+            console.log("Release notes successfully generated using AI.");
+            return aiResponse; // Return AI-generated notes if successful
+        } else {
+            console.log("AI did not return a valid response.");
         }
-        
-        return releaseNotes;
     } catch (error) {
-        console.error('Error generating release notes:', error);
-        return "## Release Notes\n\nAutomated release";
+        console.error('Error generating release notes with AI:', error);
     }
+
+    // Fallback to generating release notes from commit messages
+    console.log("Falling back to generating release notes from commit messages.");
+    return generateReleaseNotes(commitMessages);
+};
+
+// Function to generate release notes from commit messages
+const generateReleaseNotes = (commitMessages) => {
+    const formattedCommits = commitMessages.map(message => `- ${message}`);
+    let releaseNotes = "## What's Changed\n\n";
+    releaseNotes += formattedCommits.join('\n');
+    return releaseNotes;
 };
 
 // Function to get the previous tag
@@ -133,7 +120,7 @@ execSync(`git push origin v${newVersion}`);
 
 // Get previous tag for release notes
 const previousTag = getPreviousTag();
-const releaseNotes = generateReleaseNotes(previousTag);
+const releaseNotes = await generateReleaseNotesWithFallback(previousTag);
 
 // Create a temporary file for release notes
 const releaseNotesPath = path.join(__dirname, '../release-notes.md');
