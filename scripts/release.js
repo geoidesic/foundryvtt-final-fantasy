@@ -198,7 +198,7 @@ fs.writeFileSync(releaseNotesPath, releaseNotes);
 
 // Create GitHub release
 try {
-    execSync(`gh release create v${newVersion} --title "Version ${newVersion}" --notes-file ${releaseNotesPath}`);
+    execSync(`gh release create ${newVersion} --title "Version ${newVersion}" --notes-file ${releaseNotesPath}`);
     console.log(`GitHub release created for ${newVersion}`);
 } catch (error) {
     console.error('Error creating GitHub release:', error.message);
