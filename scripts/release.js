@@ -2,6 +2,7 @@ import fs from 'fs';
 import { execSync } from 'child_process';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fetch from 'node-fetch';
 import { exec } from 'child_process';
 import util from 'util';
 
@@ -51,68 +52,70 @@ const incrementVersion = (version, type) => {
     return parts.join('.');
 };
 
-// Function to call Apple Intelligence via Shortcuts
-const callAppleIntelligence = async (commitMessages) => {
-  try {
-      const inputText = commitMessages.join('\n');
-      const appleScript = `
-          tell application "Notes"
-              activate
-              set newNote to make new note
-              tell newNote
-                  set body to "${inputText.replace(/"/g, '\\"')}"
-              end tell
-              delay 1 -- Wait for note to be created
-              tell application "System Events"
-                  tell process "Notes"
-                      click menu item "Show Writing Tools" of menu 1 of menu bar item "Edit" of menu bar 1
-                      delay 1
-                      click button "Summary" of window 1
-                      delay 1
-                      set summary to value of text area 1 of scroll area 1 of window 1
-                      click button "Done" of window 1
-                  end tell
-              end tell
-              delete newNote
-              return summary
-          end tell
-      `;
-      const { stdout, stderr } = await execAsync(`osascript -e '${appleScript}'`);
-      if (stderr) throw new Error(`AppleScript error: ${stderr}`);
-      return stdout.trim();
-  } catch (error) {
-      console.error('Error calling Apple Intelligence:', error);
-      return null;
-  }
+// Function to call Ollama for summarization
+const callOllama = async (commitMessages) => {
+    try {
+        if (!commitMessages || commitMessages.length === 0) {
+            throw new Error('No commit messages to summarize.');
+        }
+        const prompt = `Summarize the following commit messages in a concise paragraph:\n\n${commitMessages.join('\n')}`;
+        const payload = {
+            model: 'qwen2.5:7b',
+            prompt: prompt,
+            max_tokens: 150,
+            temperature: 0.7
+        };
+        const response = await fetch('http://localhost:11434/v1/completions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error(`Ollama error: ${response.statusText}`);
+        const data = await response.json();
+        return data.choices[0].text.trim();
+    } catch (error) {
+        console.error('Error calling Ollama:', error);
+        return null;
+    }
 };
 
-// Function to generate release notes with Apple Intelligence and fallback
+// Function to generate release notes with Ollama and fallback
 const generateReleaseNotesWithFallback = async (previousTag) => {
-    let commitMessages;
+    let commitMessages = [];
     try {
+        // Adjust Git log command to include merges if necessary and ensure commits are captured
         let range = previousTag ? `${previousTag}..HEAD` : '';
         const gitLogCommand = range
-            ? `git log ${range} --pretty=format:"%s" --no-merges`
-            : `git log --pretty=format:"%s" --no-merges -n 50`;
-        commitMessages = execSync(gitLogCommand).toString().trim().split('\n');
+            ? `git log ${range} --pretty=format:"%s"`
+            : `git log --pretty=format:"%s" -n 50`;
+        const logOutput = execSync(gitLogCommand).toString().trim();
+        commitMessages = logOutput ? logOutput.split('\n').filter(msg => !msg.startsWith('Release v')) : [];
+        
+        if (commitMessages.length === 0) {
+            console.log('No new commits found since the last tag.');
+            return '## Release Notes\n\nNo significant changes in this release.';
+        }
 
-        const aiSummary = await callAppleIntelligence(commitMessages);
+        const aiSummary = await callOllama(commitMessages);
         if (aiSummary) {
-            console.log("Release notes successfully generated using Apple Intelligence.");
+            console.log('Release notes successfully generated using Ollama.');
             return `## Release Notes\n\n${aiSummary}`;
         } else {
-            console.log("Apple Intelligence did not return a valid summary.");
+            console.log('Ollama did not return a valid summary.');
         }
     } catch (error) {
-        console.error('Error generating release notes with Apple Intelligence:', error);
+        console.error('Error generating release notes with Ollama:', error);
     }
 
-    console.log("Falling back to generating release notes from commit messages.");
+    console.log('Falling back to generating release notes from commit messages.');
     return generateReleaseNotes(commitMessages);
 };
 
 // Function to generate fallback release notes
 const generateReleaseNotes = (commitMessages) => {
+    if (!commitMessages || commitMessages.length === 0) {
+        return '## Release Notes\n\nNo significant changes in this release.';
+    }
     const formattedCommits = commitMessages.map(message => `- ${message}`);
     return `## What's Changed\n\n${formattedCommits.join('\n')}`;
 };
