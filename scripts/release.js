@@ -18,8 +18,19 @@ if (!versionType) {
     process.exit(1);
 }
 
+// Function to validate version format
+const isValidVersion = (version) => {
+    return /^\d+\.\d+\.\d+$/.test(version);
+};
+
 // Function to increment version
 const incrementVersion = (version, type) => {
+    // If version is invalid, start with a default version
+    if (!isValidVersion(version)) {
+        console.log(`Invalid version format: "${version}". Using default version 0.1.0 as base.`);
+        version = '0.1.0';
+    }
+    
     const parts = version.split('.').map(Number);
     switch (type) {
         case 'major':
