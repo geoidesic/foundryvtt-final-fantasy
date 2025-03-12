@@ -17,7 +17,6 @@
     equipment: components.EquipmentHeader,
     job: components.JobHeader,
     trait: components.TraitHeader,
-    limitbreak: components.LimitbreakHeader,
     effect: components.EffectHeader
   }
   const tabMap = {
@@ -25,7 +24,6 @@
     equipment: components.EquipmentTabs,
     job: components.JobTabs,
     trait: components.TraitTabs,
-    limitbreak: components.LimitbreakTabs,
     effect: components.EffectTabs
   }
 
