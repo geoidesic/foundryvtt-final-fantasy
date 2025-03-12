@@ -25,7 +25,7 @@ jobs:
         with:
           files: 'system.json'
         env:
-          version: ${{github.event.release.tag_name}}
+          version: ${{ github.event.release.tag_name }}
           # url: https://github.com/${{github.repository}}
           # manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
           # download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
@@ -45,7 +45,7 @@ jobs:
         with:
           files: 'system.json'
         env:
-          version: ${{github.event.release.tag_name}}
+          version: ${{ github.event.release.tag_name }}
           # url: https://github.com/${{github.repository}}
           # manifest: https://raw.githubusercontent.com/${{github.repository}}/next/system.json
           # download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
@@ -56,7 +56,7 @@ jobs:
       # Create a zip file with all files required by the module to add to the release
       - name: Echo Start Zip Creation
         run: echo "Starting zip creation..."
-      - run: zip -r ./system.zip system.json LICENSE index.js dist/ templates/ lang/ assets/ style.css
+      - run: zip -r ./system.zip system.json LICENSE index.js dist/ templates/ lang/ assets/
       - name: Echo End Zip Creation
         run: echo "Zip creation completed."
 

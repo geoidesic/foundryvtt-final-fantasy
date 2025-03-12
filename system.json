@@ -83,6 +83,6 @@
   "license": "LICENSE.txt",
   "socket": true,
   "styles": [
-    "style.css"
+    "dist/style.css"
   ]
 }

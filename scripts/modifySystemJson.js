@@ -32,7 +32,7 @@ function restoreStyles() {
     const jsonData = JSON.parse(data);
     
     // Set the styles property
-    jsonData.styles = ["style.css"];
+    jsonData.styles = ["dist/style.css"];
     
     // Write back the formatted JSON
     fs.writeFileSync(systemJsonPath, JSON.stringify(jsonData, null, 2) + '\n', 'utf8');

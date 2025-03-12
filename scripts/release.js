@@ -179,18 +179,18 @@ fs.writeFileSync(systemJsonPath, JSON.stringify(systemJson, null, 2));
 
 // Commit changes
 execSync('git add .');
-execSync(`git commit -m "Release v${newVersion}"`);
+execSync(`git commit -m "Release ${newVersion}"`);
 
 // Generate release notes *before* creating the tag
 const previousTag = getPreviousTag();
 const releaseNotes = await generateReleaseNotesWithFallback(previousTag);
 
 // Create tag
-execSync(`git tag -a v${newVersion} -m "Release version ${newVersion}"`);
+execSync(`git tag -a ${newVersion} -m "Release version ${newVersion}"`);
 
 // Push changes and tag
 execSync('git push origin main');
-execSync(`git push origin v${newVersion}`);
+execSync(`git push origin ${newVersion}`);
 
 // Create a temporary file for release notes
 const releaseNotesPath = path.join(__dirname, '../release-notes.md');
@@ -199,7 +199,7 @@ fs.writeFileSync(releaseNotesPath, releaseNotes);
 // Create GitHub release
 try {
     execSync(`gh release create v${newVersion} --title "Version ${newVersion}" --notes-file ${releaseNotesPath}`);
-    console.log(`GitHub release created for v${newVersion}`);
+    console.log(`GitHub release created for ${newVersion}`);
 } catch (error) {
     console.error('Error creating GitHub release:', error.message);
     console.log('You may need to install GitHub CLI (gh) or authenticate it.');
