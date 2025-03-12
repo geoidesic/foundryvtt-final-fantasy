@@ -18,13 +18,13 @@ jobs:
       # for a FULL RELEASE
       - name: Echo Start Full Release Substitution
         run: echo "Starting full release substitution..."
-      - name: Substitute Manifest and Download Links For Versioned Ones
-        if: "!github.event.release.prerelease"
-        id: sub_release_manifest_version
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: 'system.json'
-        env:
+      # - name: Substitute Manifest and Download Links For Versioned Ones
+      #   if: "!github.event.release.prerelease"
+      #   id: sub_release_manifest_version
+      #   uses: microsoft/variable-substitution@v1
+      #   with:
+      #     files: 'system.json'
+      #   env:
           # version: ${{ github.event.release.tag_name }}
           # url: https://github.com/${{github.repository}}
           # manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
@@ -38,13 +38,13 @@ jobs:
       # which is updated after tag.
       - name: Echo Start Pre Release Substitution
         run: echo "Starting pre release substitution..."
-      - name: Substitute Manifest and Download Links For Versioned Ones
-        if: "github.event.release.prerelease"
-        id: sub_prerelease_manifest_version
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: 'system.json'
-        env:
+      # - name: Substitute Manifest and Download Links For Versioned Ones
+      #   if: "github.event.release.prerelease"
+      #   id: sub_prerelease_manifest_version
+      #   uses: microsoft/variable-substitution@v1
+      #   with:
+      #     files: 'system.json'
+      #   env:
           # version: ${{ github.event.release.tag_name }}
           # url: https://github.com/${{github.repository}}
           # manifest: https://raw.githubusercontent.com/${{github.repository}}/next/system.json
