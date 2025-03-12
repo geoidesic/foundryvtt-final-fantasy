@@ -26245,7 +26245,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.1.16";
+const version = "0.1.17";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -49290,7 +49290,6 @@ function instance$2($$self, $$props, $$invalidate) {
     equipment: Header$3,
     job: Header$2,
     trait: Header$1,
-    limitbreak: void 0,
     effect: Header5
   };
   const tabMap = {
@@ -49298,7 +49297,6 @@ function instance$2($$self, $$props, $$invalidate) {
     equipment: EquipmentTabs,
     job: Tabs_1$2,
     trait: Tabs_1$1,
-    limitbreak: void 0,
     effect: Tabs_14
   };
   const application = getContext("#external").application;
