@@ -20,7 +20,7 @@
     "maximum": "12"
   },
   "esmodules": [
-    "index.js"
+    "dist/index.js"
   ],
   "packs": [
     {
