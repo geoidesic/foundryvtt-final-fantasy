@@ -186,7 +186,7 @@ const previousTag = getPreviousTag();
 const releaseNotes = await generateReleaseNotesWithFallback(previousTag);
 
 // Create tag
-// execSync(`git tag -a ${newVersion} -m "Release version ${newVersion}"`);
+execSync(`git tag -a ${newVersion} -m "Release version ${newVersion}"`);
 
 // Push changes and tag
 execSync('git push origin main');
