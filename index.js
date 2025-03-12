@@ -108,7 +108,8 @@ const getAspectedOptions = /* @__PURE__ */ __name(() => [
   { value: "earth", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.earth") },
   { value: "lightning", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.lightning") },
   { value: "wind", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.wind") },
-  { value: "ice", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.ice") }
+  { value: "ice", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.ice") },
+  { value: "fire", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Aspected.fire") }
 ], "getAspectedOptions");
 const getTriggerOptions = /* @__PURE__ */ __name(() => [
   { value: "any", label: game.i18n.localize("FFXIV.Types.Item.Types.Options.Trigger.any") },
@@ -26244,7 +26245,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.0.1";
+const version = "0.1.15";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -26684,7 +26685,7 @@ class ActionModel extends FFItemDataModel {
       hasBaseEffectHealing: new BooleanField$2({ required: false, initial: false }),
       hasBaseEffectDamage: new BooleanField$2({ required: false, initial: false }),
       hasBaseEffectRestoreMP: new BooleanField$2({ required: false, initial: false }),
-      baseEffectRestoreMP: new NumberField$3({ required: false, initial: 0 }),
+      baseEffectRestoreMP: new StringField$3({ required: false, initial: "" }),
       hasBaseEffectBarrier: new BooleanField$2({ required: false, initial: false }),
       baseEffectBP: new NumberField$3({ required: false, initial: 0 }),
       hasCheck: new BooleanField$2({ required: false, initial: false }),
