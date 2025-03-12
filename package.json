@@ -2,7 +2,7 @@
   "name": "foundryvtt-final-fantasy",
   "description": "A VTT-first RPG system.",
   "license": "MIT License",
-  "version": "patch",
+  "version": "NaN..NaN",
   "node": ">=20.0.0",
   "private": true,
   "type": "module",
