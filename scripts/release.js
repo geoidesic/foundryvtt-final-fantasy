@@ -11,26 +11,49 @@ const __dirname = path.dirname(__filename);
 const packageJsonPath = path.join(__dirname, '../package.json');
 const systemJsonPath = path.join(__dirname, '../system.json');
 
-const version = process.argv[2];
+const versionType = process.argv[2];
 
-if (!version) {
-    console.error('Please provide a version argument.');
+if (!versionType) {
+    console.error('Please provide a version argument (major, minor, patch).');
     process.exit(1);
 }
 
+// Function to increment version
+const incrementVersion = (version, type) => {
+    const parts = version.split('.').map(Number);
+    switch (type) {
+        case 'major':
+            parts[0]++;
+            parts[1] = 0;
+            parts[2] = 0;
+            break;
+        case 'minor':
+            parts[1]++;
+            parts[2] = 0;
+            break;
+        case 'patch':
+            parts[2]++;
+            break;
+        default:
+            throw new Error('Invalid version type. Use major, minor, or patch.');
+    }
+    return parts.join('.');
+};
+
 // Update package.json
 const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-packageJson.version = version;
+const newVersion = incrementVersion(packageJson.version, versionType);
+packageJson.version = newVersion;
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
 // Update system.json
 const systemJson = JSON.parse(fs.readFileSync(systemJsonPath, 'utf8'));
-systemJson.version = version;
+systemJson.version = newVersion;
 fs.writeFileSync(systemJsonPath, JSON.stringify(systemJson, null, 2));
 
 // Commit and push changes
 execSync('git add .');
-execSync(`git commit -m "Release v${version}"`);
+execSync(`git commit -m "Release v${newVersion}"`);
 execSync('git push origin main');
 
-console.log(`Released version ${version}`);
+console.log(`Released version ${newVersion}`);
