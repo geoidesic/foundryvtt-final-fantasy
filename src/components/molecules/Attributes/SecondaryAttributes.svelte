@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { localize } from "~/src/helpers/util";
   import AttributeCol from "~/src/components/molecules/Attributes/AttributeCol.svelte";
 
   export let onclick;

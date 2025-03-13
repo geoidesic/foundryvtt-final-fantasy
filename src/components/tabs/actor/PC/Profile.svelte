@@ -1,5 +1,6 @@
 <script>
 import { onMount } from 'svelte'
+import { localize } from "~/src/helpers/util";
 import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
 import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
 import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";

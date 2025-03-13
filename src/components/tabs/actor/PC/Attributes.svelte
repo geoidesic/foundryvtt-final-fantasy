@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { SYSTEM_CODE } from "~/src/helpers/constants";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import AttributeSection from "~/src/components/organisms/actor/AttributeSection.svelte";
   import PointsSection from "~/src/components/organisms/actor/PointsSection.svelte";
   import EffectsSection from "~/src/components/organisms/actor/EffectsSection.svelte";
@@ -28,7 +28,7 @@
                     PortraitFrame(size="40" style="min-width: 182px;")
                       .flexcol.wide.gold
                         .flex1
-                          h2.font-cinzel {localize(`${SYSTEM_CODE}.Description`)}
+                          h2.font-cinzel {localize("Description")}
                         .flex1
                           .left.panel.borderless.overflow
                             ProseMirror( editable="{false}" attr="system.description" )
@@ -42,7 +42,7 @@
                   PortraitFrame(size="40" style="min-width: 182px;")
                     .flexcol.wide
                       .flex1
-                        h2.font-cinzel {localize(`${SYSTEM_CODE}.Points`)}
+                        h2.font-cinzel {localize("Points")}
                       .flex1
                         .left.panel.borderless.overflow
                           PointsSection

@@ -1,5 +1,6 @@
 <script>
   import { onMount, getContext } from 'svelte';
+  import { localize } from "~/src/helpers/util";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
 
   const actor = getContext("#doc");
