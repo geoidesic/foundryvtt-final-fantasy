@@ -4525,7 +4525,7 @@ function create_if_block$w(ctx) {
     c() {
       div = element("div");
       div.innerHTML = `<i class="fas fa-xmark"></i>`;
-      attr(div, "class", "remove right svelte-FFXIV-1y0mhim");
+      attr(div, "class", "remove right svelte-1y0mhim");
       attr(div, "aria-label", "Remove tag");
       attr(div, "role", "button");
     },
@@ -4581,7 +4581,7 @@ function create_fragment$1k(ctx) {
         if_block.c();
       attr(div0, "class", "label");
       set_attributes(div1, div_data_1);
-      toggle_class(div1, "svelte-FFXIV-1y0mhim", true);
+      toggle_class(div1, "svelte-1y0mhim", true);
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -4619,7 +4619,7 @@ function create_fragment$1k(ctx) {
         16 && /*$$restProps*/
         ctx2[4]
       ]));
-      toggle_class(div1, "svelte-FFXIV-1y0mhim", true);
+      toggle_class(div1, "svelte-1y0mhim", true);
     },
     i: noop,
     o: noop,
@@ -4778,8 +4778,8 @@ function create_if_block$v(ctx) {
       if (if_block1)
         if_block1.c();
       if_block2.c();
-      attr(div0, "class", "texture svelte-FFXIV-1ouu4ln");
-      attr(div1, "class", "flex4 link actor-name svelte-FFXIV-1ouu4ln");
+      attr(div0, "class", "texture svelte-1ouu4ln");
+      attr(div1, "class", "flex4 link actor-name svelte-1ouu4ln");
       attr(div1, "role", "button");
       attr(div1, "aria-label", div1_aria_label_value = "Open " + /*FFMessage*/
       ctx[1].actor.name + "'s character sheet");
@@ -4788,20 +4788,20 @@ function create_if_block$v(ctx) {
       attr(a, "role", "button");
       attr(a, "aria-label", a_aria_label_value = "Open " + /*FFMessage*/
       ctx[1].item.name + " item sheet");
-      attr(a, "class", "svelte-FFXIV-1ouu4ln");
-      attr(div4, "class", "col font-cinzel smaller item-name no-overflow svelte-FFXIV-1ouu4ln");
+      attr(a, "class", "svelte-1ouu4ln");
+      attr(div4, "class", "col font-cinzel smaller item-name no-overflow svelte-1ouu4ln");
       attr(div4, "role", "button");
       attr(div4, "aria-label", div4_aria_label_value = "Open " + /*FFMessage*/
       ctx[1].item.name + " item sheet");
       attr(div5, "class", div5_class_value = "flex3 flexcol no-overflow " + /*showProfileImage*/
       (ctx[4] ? "text" : ""));
-      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-FFXIV-1ouu4ln");
+      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-1ouu4ln");
       attr(div7, "class", "flexcol");
       attr(div8, "class", div8_class_value = null_to_empty(
         /*tagsColumnClass*/
         ctx[3]
-      ) + " svelte-FFXIV-1ouu4ln");
-      attr(div9, "class", "flexrow title svelte-FFXIV-1ouu4ln");
+      ) + " svelte-1ouu4ln");
+      attr(div9, "class", "flexrow title svelte-1ouu4ln");
       attr(div9, "role", "button");
       attr(div9, "aria-label", "Toggle description");
     },
@@ -4925,7 +4925,7 @@ function create_if_block$v(ctx) {
       8 && div8_class_value !== (div8_class_value = null_to_empty(
         /*tagsColumnClass*/
         ctx2[3]
-      ) + " svelte-FFXIV-1ouu4ln")) {
+      ) + " svelte-1ouu4ln")) {
         attr(div8, "class", div8_class_value);
       }
       if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block2) {
@@ -4976,7 +4976,7 @@ function create_if_block_3$a(ctx) {
     c() {
       div = element("div");
       img = element("img");
-      attr(img, "class", "icon avatar svelte-FFXIV-1ouu4ln");
+      attr(img, "class", "icon avatar svelte-1ouu4ln");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[1].actor.img))
         attr(img, "src", img_src_value);
@@ -5175,7 +5175,7 @@ function create_else_block$8(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "icon right item pointer svelte-FFXIV-1ouu4ln");
+      attr(img, "class", "icon right item pointer svelte-1ouu4ln");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[1].item.img))
         attr(img, "src", img_src_value);
@@ -5213,7 +5213,7 @@ function create_if_block_1$i(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "icon right item pointer svelte-FFXIV-1ouu4ln");
+      attr(img, "class", "icon right item pointer svelte-1ouu4ln");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[1].item.img))
         attr(img, "src", img_src_value);
@@ -5256,7 +5256,7 @@ function create_fragment$1j(ctx) {
       div = element("div");
       if (if_block)
         if_block.c();
-      attr(div, "class", "chat-title svelte-FFXIV-1ouu4ln");
+      attr(div, "class", "chat-title svelte-1ouu4ln");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -5423,10 +5423,10 @@ function create_fragment$1i(ctx) {
       attr(div0, "class", "flex3 pa-sm");
       attr(div1, "class", "flex0");
       attr(button, "class", button_class_value = "short wide stealth gold rowimgbezelbutton flexrow " + /*buttonCss*/
-      ctx[2] + " svelte-FFXIV-vsw1te");
-      attr(div2, "class", "flex4 buttons svelte-FFXIV-vsw1te");
+      ctx[2] + " svelte-vsw1te");
+      attr(div2, "class", "flex4 buttons svelte-vsw1te");
       attr(div3, "class", "flexrow justify-vertical mt-sm");
-      attr(div4, "class", "chat svelte-FFXIV-vsw1te");
+      attr(div4, "class", "chat svelte-vsw1te");
       attr(div5, "class", "FFXIV");
     },
     m(target, anchor) {
@@ -5468,7 +5468,7 @@ function create_fragment$1i(ctx) {
         set_data(t, t_value);
       if (!current || dirty & /*buttonCss*/
       4 && button_class_value !== (button_class_value = "short wide stealth gold rowimgbezelbutton flexrow " + /*buttonCss*/
-      ctx2[2] + " svelte-FFXIV-vsw1te")) {
+      ctx2[2] + " svelte-vsw1te")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -5667,9 +5667,9 @@ function create_fragment$1h(ctx) {
       attr(div0, "class", "flex4 inset");
       attr(div0, "id", "chat-description");
       attr(div1, "class", div1_class_value = "flexrow " + /*showDescription*/
-      (ctx[1] ? "visible" : "") + " svelte-FFXIV-bdfh4i");
+      (ctx[1] ? "visible" : "") + " svelte-bdfh4i");
       attr(div2, "class", div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[1] ? "expanded" : "") + " svelte-FFXIV-bdfh4i");
+      (ctx[1] ? "expanded" : "") + " svelte-bdfh4i");
       attr(div3, "class", "chat");
     },
     m(target, anchor) {
@@ -5694,12 +5694,12 @@ function create_fragment$1h(ctx) {
         div0.innerHTML = raw_value;
       if (!current || dirty & /*showDescription*/
       2 && div1_class_value !== (div1_class_value = "flexrow " + /*showDescription*/
-      (ctx2[1] ? "visible" : "") + " svelte-FFXIV-bdfh4i")) {
+      (ctx2[1] ? "visible" : "") + " svelte-bdfh4i")) {
         attr(div1, "class", div1_class_value);
       }
       if (!current || dirty & /*showDescription*/
       2 && div2_class_value !== (div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[1] ? "expanded" : "") + " svelte-FFXIV-bdfh4i")) {
+      (ctx2[1] ? "expanded" : "") + " svelte-bdfh4i")) {
         attr(div2, "class", div2_class_value);
       }
     },
@@ -5833,9 +5833,9 @@ function create_fragment$1g(ctx) {
       path0 = svg_element("path");
       path1 = svg_element("path");
       attr(path0, "d", "M81.3438 77.9688C81.1465 78.3361 81.0124 78.7302 80.8125 79.0938C81.1317 78.9786 81.4026 78.8896 81.7188 78.7812C81.5892 78.5192 81.4693 78.1846 81.3438 77.9688Z");
-      attr(path0, "class", "svelte-FFXIV-6fk7cz");
+      attr(path0, "class", "svelte-6fk7cz");
       attr(path1, "d", "M105.562-0.09375L101.594 2.9375L101.562 9.40625C100.176 11.8292 96.6661 18.0195 94.4375 21.25C91.9565 24.844 85.5632 31.5625 85.5625 31.5625C85.5625 31.5625 86.2142 39.4735 85.5312 44.1875C84.9762 48.0195 83.0215 57.3338 81.6875 60.9688C80.0565 65.4144 78.969 68.6598 76.75 73.375C74.2739 74.1356 71.1542 75.7678 68.7188 77.0938C65.8498 78.6567 61.6277 82.2972 58.4688 84.2812C54.9897 86.4662 52.005 88.4043 48.25 90.6562C44.578 92.8583 40.7035 94.9483 37.1875 96.7812C33.9525 98.4692 31.748 99.4527 28.375 100.844C24.968 102.249 21.2595 103.187 17.6875 104.312C16.1979 104.781 14.8079 105.122 12.5 105.781L2.71875 105.812L0.21875 109.656L0 110L0.03125 114L99.0938 114L110 102.438L110 64.9375L110 0L105.562-0.09375ZM101.5 22.8438L101.375 69.1875C99.4872 69.1884 95.5264 69.1648 93.0625 69.5312C90.3515 69.9343 87.4145 70.324 84.8438 70.75C84.815 70.7548 84.779 70.7761 84.75 70.7812C84.7015 70.9048 84.674 71.0658 84.625 71.1875C84.5719 71.0159 84.5813 71.0035 84.5312 70.8438C84.5989 70.8305 84.6833 70.7931 84.75 70.7812C86.8489 65.4361 88.5838 58.421 89.9688 53.8125C91.1018 50.0435 91.6521 45.5913 91.9688 42.1562C92.2438 39.1772 91.8747 33.1875 91.875 33.1875C91.875 33.1875 96.4028 29.0543 97.5938 27.6562C98.8107 26.2262 100.412 24.2097 101.5 22.8438ZM94.6562 76.6562C97.516 76.6333 100.082 76.748 101.344 76.8125L101.281 99L95.1562 105.562L60.5625 105.656C62.7372 103.386 66.1864 99.8114 68.5625 97C69.5049 95.8849 70.4357 94.7502 71.375 93.625C71.6949 93.637 71.897 93.6024 72.1562 93.625C74.5343 93.832 78.4323 94.0907 81.1562 94.8438C83.7372 95.5577 88.5 98.1562 88.5 98.1562L90.2188 96.5C90.2188 96.5 88.273 93.0432 87.5 90.1562C86.749 87.3533 86.8763 80.8318 86.4062 77.9688C86.3789 77.8025 86.2852 77.5255 86.25 77.3438C88.6428 76.8397 91.7965 76.6792 94.6562 76.6562ZM81.3438 77.9688C81.4694 78.1846 81.5892 78.5192 81.7188 78.7812C81.9761 79.3017 82.2442 79.7392 82.4375 80.4062C82.7985 81.6513 82.6952 85.5942 83.0312 87.2812C83.4852 89.5562 84.2812 91.8438 84.2812 91.8438C84.2812 91.8438 81.3383 90.2571 79.7812 89.9688C79.1209 89.8468 76.606 89.2347 74.8438 89C75.4858 88.0766 76.1973 87.1987 76.75 86.2188C77.9875 84.0246 79.4247 81.6174 80.8125 79.0938C81.0124 78.7302 81.1465 78.3361 81.3438 77.9688ZM70.7188 83.9062C70.0811 84.8651 69.4293 85.9537 68.8125 86.7812C66.3415 90.0943 62.1708 94.7322 59.25 97.6562C56.9022 100.007 53.0594 103.512 50.6875 105.688L34.0625 105.719C36.1231 105.042 38.1655 104.468 40.125 103.594C43.643 102.024 47.9697 99.7545 51.7188 97.5312C55.5907 95.2352 60.3202 92.1225 63.375 89.8125C65.3525 88.3175 68.236 85.6926 70.7188 83.9062Z");
-      attr(path1, "class", "svelte-FFXIV-6fk7cz");
+      attr(path1, "class", "svelte-6fk7cz");
       set_style(
         g,
         "fill",
@@ -5855,7 +5855,7 @@ function create_fragment$1g(ctx) {
         ctx[1]
       );
       set_svg_attributes(svg, svg_data);
-      toggle_class(svg, "svelte-FFXIV-6fk7cz", true);
+      toggle_class(svg, "svelte-6fk7cz", true);
     },
     m(target, anchor) {
       insert(target, svg, anchor);
@@ -5907,7 +5907,7 @@ function create_fragment$1g(ctx) {
         ctx2[5] === "both" ? "-1" : "1") + ") rotate(" + /*rotation*/
         ctx2[3] + "deg);") && { style: svg_style_value }
       ]));
-      toggle_class(svg, "svelte-FFXIV-6fk7cz", true);
+      toggle_class(svg, "svelte-6fk7cz", true);
     },
     i: noop,
     o: noop,
@@ -6039,7 +6039,7 @@ function create_if_block$u(ctx) {
       ctx[1]))
         attr(img_1, "src", img_1_src_value);
       attr(img_1, "alt", "avatar");
-      attr(img_1, "class", "svelte-FFXIV-13e0b37");
+      attr(img_1, "class", "svelte-13e0b37");
     },
     m(target, anchor) {
       insert(target, img_1, anchor);
@@ -6174,7 +6174,7 @@ function create_fragment$1f(ctx) {
       create_component(corner2.$$.fragment);
       create_component(corner3.$$.fragment);
       set_attributes(div0, div_data);
-      toggle_class(div0, "svelte-FFXIV-13e0b37", true);
+      toggle_class(div0, "svelte-13e0b37", true);
       attr(div1, "class", div1_class_value = "atom " + /*$$restProps*/
       (ctx[5]?.class?.includes("high") ? "high" : ""));
     },
@@ -6253,7 +6253,7 @@ function create_fragment$1f(ctx) {
       set_attributes(div0, div_data = get_spread_update(div0_levels, [{ class: "frame" }, dirty & /*$$restProps*/
       32 && /*$$restProps*/
       ctx2[5]]));
-      toggle_class(div0, "svelte-FFXIV-13e0b37", true);
+      toggle_class(div0, "svelte-13e0b37", true);
       if (!current || dirty & /*$$restProps*/
       32 && div1_class_value !== (div1_class_value = "atom " + /*$$restProps*/
       (ctx2[5]?.class?.includes("high") ? "high" : ""))) {
@@ -6787,10 +6787,10 @@ function create_fragment$1e(ctx) {
       if (if_block8)
         if_block8.c();
       attr(li, "class", "bg-gold white border-gold");
-      attr(ol, "class", "properties-list svelte-FFXIV-1j7mfxl");
-      attr(div0, "class", "flexcol flex1 left svelte-FFXIV-1j7mfxl");
-      attr(div1, "class", "flexrow svelte-FFXIV-1j7mfxl");
-      attr(div2, "class", "flexcol description-tab svelte-FFXIV-1j7mfxl");
+      attr(ol, "class", "properties-list svelte-1j7mfxl");
+      attr(div0, "class", "flexcol flex1 left svelte-1j7mfxl");
+      attr(div1, "class", "flexrow svelte-1j7mfxl");
+      attr(div2, "class", "flexcol description-tab svelte-1j7mfxl");
       attr(div3, "class", "item-header");
     },
     m(target, anchor) {
@@ -7073,7 +7073,7 @@ function create_fragment$1d(ctx) {
       attr(path1, "stroke", "none");
       attr(path1, "d", "M145.391006,328.313843 C145.749557,333.124908 145.836517,337.974457 146.512604,342.740479 C149.844406,366.228180 157.764481,388.064362 172.454330,406.796448 C207.885147,451.976837 253.545258,473.913361 311.208374,462.542816 C394.724213,446.074402 448.898895,358.338837 413.354034,272.423553 C383.390564,199.999008 304.321991,171.473511 237.636749,195.441040 C182.528870,215.247513 146.276688,267.715546 145.391006,328.313843 z");
       set_svg_attributes(svg, svg_data);
-      toggle_class(svg, "svelte-FFXIV-y040ka", true);
+      toggle_class(svg, "svelte-y040ka", true);
     },
     m(target, anchor) {
       insert(target, svg, anchor);
@@ -7134,7 +7134,7 @@ function create_fragment$1d(ctx) {
           ctx2[0]
         ) }
       ]));
-      toggle_class(svg, "svelte-FFXIV-y040ka", true);
+      toggle_class(svg, "svelte-y040ka", true);
     },
     i: noop,
     o: noop,
@@ -7246,8 +7246,8 @@ function create_if_block$s(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "target-list svelte-FFXIV-ugr7oj");
-      attr(div1, "class", "action-result svelte-FFXIV-ugr7oj");
+      attr(div0, "class", "target-list svelte-ugr7oj");
+      attr(div1, "class", "action-result svelte-ugr7oj");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -7414,9 +7414,9 @@ function create_if_block_1$g(ctx) {
       div12 = element("div");
       button1 = element("button");
       i1 = element("i");
-      attr(div0, "class", "texture svelte-FFXIV-ugr7oj");
-      attr(div1, "class", "flex0 target-info pointer svelte-FFXIV-ugr7oj");
-      attr(div2, "class", "col target-name font-cinzel smaller svelte-FFXIV-ugr7oj");
+      attr(div0, "class", "texture svelte-ugr7oj");
+      attr(div1, "class", "flex0 target-info pointer svelte-ugr7oj");
+      attr(div2, "class", "col target-name font-cinzel smaller svelte-ugr7oj");
       attr(div3, "class", "flex1 left font-cinzel");
       attr(div3, "data-tooltip-class", "FFXIV-tooltip");
       attr(div3, "data-tooltip", "Defense");
@@ -7433,7 +7433,7 @@ function create_if_block_1$g(ctx) {
       ) ? "bg-silver" : "bg-gold"));
       set_style(div10, "min-height", "2.6rem");
       attr(i0, "class", "fa-solid fa-check");
-      attr(button0, "class", "stealth apply-trait svelte-FFXIV-ugr7oj");
+      attr(button0, "class", "stealth apply-trait svelte-ugr7oj");
       button0.disabled = button0_disabled_value = /*isApplyDisabled*/
       ctx[3](
         /*target*/
@@ -7441,7 +7441,7 @@ function create_if_block_1$g(ctx) {
       );
       attr(div11, "class", "flex1");
       attr(i1, "class", "fa-solid fa-refresh");
-      attr(button1, "class", "stealth apply-trait svelte-FFXIV-ugr7oj");
+      attr(button1, "class", "stealth apply-trait svelte-ugr7oj");
       button1.disabled = button1_disabled_value = !/*isApplyDisabled*/
       ctx[3](
         /*target*/
@@ -7451,9 +7451,9 @@ function create_if_block_1$g(ctx) {
       attr(div13, "class", "flexcol");
       attr(div14, "class", "flex0");
       attr(div15, "class", div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-FFXIV-ugr7oj");
-      attr(div16, "class", "background svelte-FFXIV-ugr7oj");
-      attr(div17, "class", "leatherbook svelte-FFXIV-ugr7oj");
+      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-ugr7oj");
+      attr(div16, "class", "background svelte-ugr7oj");
+      attr(div17, "class", "leatherbook svelte-ugr7oj");
     },
     m(target, anchor) {
       insert(target, div17, anchor);
@@ -7605,7 +7605,7 @@ function create_if_block_1$g(ctx) {
       }
       if (!current || dirty[0] & /*targetTokens*/
       16 && div15_class_value !== (div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-FFXIV-ugr7oj")) {
+      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-ugr7oj")) {
         attr(div15, "class", div15_class_value);
       }
     },
@@ -7645,7 +7645,7 @@ function create_if_block_5$2(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "target-img clickable svelte-FFXIV-ugr7oj");
+      attr(img, "class", "target-img clickable svelte-ugr7oj");
       if (!src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
         ctx[32]
@@ -7709,7 +7709,7 @@ function create_else_block$6(ctx) {
       (ctx[15](
         /*target*/
         ctx[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-ugr7oj");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj");
       attr(i, "data-tooltip", i_data_tooltip_value = /*isHit*/
       ctx[15](
         /*target*/
@@ -7725,7 +7725,7 @@ function create_else_block$6(ctx) {
       (ctx2[15](
         /*target*/
         ctx2[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-ugr7oj")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj")) {
         attr(i, "class", i_class_value);
       }
       if (dirty[0] & /*targetTokens*/
@@ -7773,13 +7773,13 @@ function create_if_block_4$5(ctx) {
       (ctx[15](
         /*target*/
         ctx[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-ugr7oj");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj");
       attr(i, "data-tooltip", localize$1("CriticalSuccess"));
-      attr(div0, "class", "overlay svelte-FFXIV-ugr7oj");
+      attr(div0, "class", "overlay svelte-ugr7oj");
       set_style(div0, "margin", "0");
       set_style(div0, "font-size", "1rem");
       set_style(div0, "color", "#fff");
-      attr(div1, "class", "critical svelte-FFXIV-ugr7oj");
+      attr(div1, "class", "critical svelte-ugr7oj");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -7794,7 +7794,7 @@ function create_if_block_4$5(ctx) {
       (ctx2[15](
         /*target*/
         ctx2[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-FFXIV-ugr7oj")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj")) {
         attr(i, "class", i_class_value);
       }
     },
@@ -8073,15 +8073,15 @@ function create_fragment$1c(ctx) {
         if_block1.c();
       attr(i, "class", "fa-solid fa-bug");
       attr(div0, "class", div0_class_value = "pointer " + /*classes*/
-      ctx[2] + " svelte-FFXIV-ugr7oj");
+      ctx[2] + " svelte-ugr7oj");
       attr(div0, "role", "button");
       html_tag.a = html_anchor;
-      attr(div1, "class", "flex4 inset svelte-FFXIV-ugr7oj");
+      attr(div1, "class", "flex4 inset svelte-ugr7oj");
       attr(div1, "id", "chat-description");
       attr(div2, "class", div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx[5] ? "visible" : "") + " svelte-FFXIV-ugr7oj");
+      (ctx[5] ? "visible" : "") + " svelte-ugr7oj");
       attr(div3, "class", div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[5] ? "expanded" : "") + " svelte-FFXIV-ugr7oj");
+      (ctx[5] ? "expanded" : "") + " svelte-ugr7oj");
       attr(div4, "class", "chat");
     },
     m(target, anchor) {
@@ -8114,17 +8114,17 @@ function create_fragment$1c(ctx) {
     p(ctx2, dirty) {
       if (!current || dirty[0] & /*classes*/
       4 && div0_class_value !== (div0_class_value = "pointer " + /*classes*/
-      ctx2[2] + " svelte-FFXIV-ugr7oj")) {
+      ctx2[2] + " svelte-ugr7oj")) {
         attr(div0, "class", div0_class_value);
       }
       if (!current || dirty[0] & /*showDescription*/
       32 && div2_class_value !== (div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx2[5] ? "visible" : "") + " svelte-FFXIV-ugr7oj")) {
+      (ctx2[5] ? "visible" : "") + " svelte-ugr7oj")) {
         attr(div2, "class", div2_class_value);
       }
       if (!current || dirty[0] & /*showDescription*/
       32 && div3_class_value !== (div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[5] ? "expanded" : "") + " svelte-FFXIV-ugr7oj")) {
+      (ctx2[5] ? "expanded" : "") + " svelte-ugr7oj")) {
         attr(div3, "class", div3_class_value);
       }
       if (
@@ -8577,13 +8577,13 @@ function create_if_block_2$b(ctx) {
     c() {
       div = element("div");
       img = element("img");
-      attr(img, "class", "actor-img svelte-FFXIV-84n429");
+      attr(img, "class", "actor-img svelte-84n429");
       if (!src_url_equal(img.src, img_src_value = /*data*/
       ctx[0].actor.img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*data*/
       ctx[0].actor.name);
-      attr(div, "class", "portrait left svelte-FFXIV-84n429");
+      attr(div, "class", "portrait left svelte-84n429");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -8634,7 +8634,7 @@ function create_if_block$r(ctx) {
       rightImage_slot_or_fallback.c();
       if (if_block)
         if_block.c();
-      attr(div, "class", "portrait right svelte-FFXIV-84n429");
+      attr(div, "class", "portrait right svelte-84n429");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -8718,7 +8718,7 @@ function fallback_block(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "actor-img svelte-FFXIV-84n429");
+      attr(img, "class", "actor-img svelte-84n429");
       if (!src_url_equal(img.src, img_src_value = /*data*/
       ctx[0].item?.img || /*data*/
       ctx[0].actor.img))
@@ -8762,7 +8762,7 @@ function create_if_block_1$f(ctx) {
         /*overlayValue*/
         ctx[1]
       );
-      attr(div, "class", "overlay svelte-FFXIV-84n429");
+      attr(div, "class", "overlay svelte-84n429");
       set_style(
         div,
         "margin",
@@ -8857,9 +8857,9 @@ function create_fragment$1b(ctx) {
       );
       if (if_block1)
         if_block1.c();
-      attr(div0, "class", "flavor svelte-FFXIV-84n429");
-      attr(div1, "class", "flex4 title-block font-cinzel svelte-FFXIV-84n429");
-      attr(div2, "class", "chat-title flexrow justify-vertical mx-sm svelte-FFXIV-84n429");
+      attr(div0, "class", "flavor svelte-84n429");
+      attr(div1, "class", "flex4 title-block font-cinzel svelte-84n429");
+      attr(div2, "class", "chat-title flexrow justify-vertical mx-sm svelte-84n429");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -21067,7 +21067,7 @@ function create_if_block$o(ctx) {
         /*label*/
         ctx[3]
       );
-      attr(span, "class", "svelte-FFXIV-acci");
+      attr(span, "class", "svelte-acci");
       toggle_class(
         span,
         "has-icon",
@@ -21126,7 +21126,7 @@ function create_fragment$18(ctx) {
         if_block.c();
       html_tag.a = html_anchor;
       attr(a, "class", a_class_value = "header-button " + /*button*/
-      ctx[0].class + " svelte-FFXIV-acci");
+      ctx[0].class + " svelte-acci");
       attr(
         a,
         "aria-label",
@@ -21208,7 +21208,7 @@ function create_fragment$18(ctx) {
       }
       if (dirty & /*button*/
       1 && a_class_value !== (a_class_value = "header-button " + /*button*/
-      ctx2[0].class + " svelte-FFXIV-acci")) {
+      ctx2[0].class + " svelte-acci")) {
         attr(a, "class", a_class_value);
       }
       if (dirty & /*label*/
@@ -21372,7 +21372,7 @@ function create_if_block$n(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "tjs-app-icon keep-minimized svelte-FFXIV-5lh4qo");
+      attr(img, "class", "tjs-app-icon keep-minimized svelte-5lh4qo");
       if (!src_url_equal(img.src, img_src_value = /*$storeHeaderIcon*/
       ctx[6]))
         attr(img, "src", img_src_value);
@@ -21642,15 +21642,15 @@ function create_key_block(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(h4, "class", "window-title svelte-FFXIV-5lh4qo");
+      attr(h4, "class", "window-title svelte-5lh4qo");
       set_style(
         h4,
         "display",
         /*displayHeaderTitle*/
         ctx[4]
       );
-      attr(span, "class", "tjs-window-header-spacer keep-minimized svelte-FFXIV-5lh4qo");
-      attr(header, "class", "window-header flexrow svelte-FFXIV-5lh4qo");
+      attr(span, "class", "tjs-window-header-spacer keep-minimized svelte-5lh4qo");
+      attr(header, "class", "window-header flexrow svelte-5lh4qo");
     },
     m(target, anchor) {
       insert(target, header, anchor);
@@ -22061,8 +22061,8 @@ function create_fragment$16(ctx) {
   return {
     c() {
       div = element("div");
-      div.innerHTML = `<i class="fas fa-arrows-alt-h svelte-FFXIV-gtiiil"></i>`;
-      attr(div, "class", "window-resizable-handle svelte-FFXIV-gtiiil");
+      div.innerHTML = `<i class="fas fa-arrows-alt-h svelte-gtiiil"></i>`;
+      attr(div, "class", "window-resizable-handle svelte-gtiiil");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -22272,7 +22272,7 @@ function create_fragment$15(ctx) {
   return {
     c() {
       div = element("div");
-      attr(div, "class", "tjs-focus-wrap svelte-FFXIV-kjcljd");
+      attr(div, "class", "tjs-focus-wrap svelte-kjcljd");
       attr(div, "tabindex", "0");
     },
     m(target, anchor) {
@@ -22419,12 +22419,12 @@ function create_else_block$4(ctx) {
       create_component(resizablehandle.$$.fragment);
       t2 = space();
       create_component(tjsfocuswrap.$$.fragment);
-      attr(section, "class", "window-content svelte-FFXIV-90z1oq");
+      attr(section, "class", "window-content svelte-90z1oq");
       attr(section, "tabindex", "-1");
       attr(div, "id", div_id_value = /*application*/
       ctx[10].id);
       attr(div, "class", div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FFXIV-90z1oq");
+      ctx[10].options.classes.join(" ") + " svelte-90z1oq");
       attr(div, "data-appid", div_data_appid_value = /*application*/
       ctx[10].appId);
       attr(div, "role", "application");
@@ -22559,7 +22559,7 @@ function create_else_block$4(ctx) {
       }
       if (!current || dirty[0] & /*application*/
       1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
-      ctx2[10].options.classes.join(" ") + " svelte-FFXIV-90z1oq")) {
+      ctx2[10].options.classes.join(" ") + " svelte-90z1oq")) {
         attr(div, "class", div_class_value);
       }
       if (!current || dirty[0] & /*application*/
@@ -22677,12 +22677,12 @@ function create_if_block$m(ctx) {
       create_component(resizablehandle.$$.fragment);
       t2 = space();
       create_component(tjsfocuswrap.$$.fragment);
-      attr(section, "class", "window-content svelte-FFXIV-90z1oq");
+      attr(section, "class", "window-content svelte-90z1oq");
       attr(section, "tabindex", "-1");
       attr(div, "id", div_id_value = /*application*/
       ctx[10].id);
       attr(div, "class", div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FFXIV-90z1oq");
+      ctx[10].options.classes.join(" ") + " svelte-90z1oq");
       attr(div, "data-appid", div_data_appid_value = /*application*/
       ctx[10].appId);
       attr(div, "role", "application");
@@ -22814,7 +22814,7 @@ function create_if_block$m(ctx) {
       }
       if (!current || dirty[0] & /*application*/
       1024 && div_class_value !== (div_class_value = "app window-app " + /*application*/
-      ctx[10].options.classes.join(" ") + " svelte-FFXIV-90z1oq")) {
+      ctx[10].options.classes.join(" ") + " svelte-90z1oq")) {
         attr(div, "class", div_class_value);
       }
       if (!current || dirty[0] & /*application*/
@@ -23806,7 +23806,7 @@ function create_default_slot$g(ctx) {
     c() {
       main = element("main");
       div1 = element("div");
-      div1.innerHTML = `<div class="texture svelte-FFXIV-eou7jl"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
+      div1.innerHTML = `<div class="texture svelte-eou7jl"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
       p0 = element("p");
       p0.textContent = `${localize("FFXIV.Welcome.To")} ${localize(`${SYSTEM_CODE}.Title`)}!`;
       h10 = element("h1");
@@ -23831,13 +23831,13 @@ function create_default_slot$g(ctx) {
       span1.textContent = `${localize("FFXIV.Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
       div5 = element("div");
-      div5.innerHTML = `<img class="pt-sm white svelte-FFXIV-eou7jl" src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
+      div5.innerHTML = `<img class="pt-sm white svelte-eou7jl" src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
       div6 = element("div");
       h4 = element("h4");
       h4.textContent = `${localize(`${SYSTEM_CODE}.Title`)} ${localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
       a2 = element("a");
       a2.textContent = "Round Table Games ©2025";
-      attr(div1, "class", "logo-background svelte-FFXIV-eou7jl");
+      attr(div1, "class", "logo-background svelte-eou7jl");
       attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
       attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
       attr(input, "type", "checkbox");
@@ -23846,12 +23846,12 @@ function create_default_slot$g(ctx) {
       attr(div3, "class", "flex");
       attr(div4, "class", "flexrow inset justify-vertical mb-sm");
       attr(div4, "data-tooltip", localize("FFXIV.Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-FFXIV-eou7jl");
+      attr(main, "class", "svelte-eou7jl");
       attr(div5, "class", "flex2 right");
       attr(a2, "href", "https://www.round-table.games");
-      attr(a2, "class", "svelte-FFXIV-eou7jl");
+      attr(a2, "class", "svelte-eou7jl");
       attr(div6, "class", "flex2 left pt-sm");
-      attr(footer, "class", "svelte-FFXIV-eou7jl");
+      attr(footer, "class", "svelte-eou7jl");
     },
     m(target, anchor) {
       insert(target, main, anchor);
@@ -26245,7 +26245,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.1.32";
+const version = "0.1.33";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -27063,7 +27063,7 @@ function create_fragment$12(ctx) {
           /*select_change_handler*/
           ctx[14].call(select)
         ));
-      toggle_class(select, "svelte-FFXIV-76qduf", true);
+      toggle_class(select, "svelte-76qduf", true);
     },
     m(target, anchor) {
       insert(target, select, anchor);
@@ -27169,7 +27169,7 @@ function create_fragment$12(ctx) {
           ctx2[2]
         );
       }
-      toggle_class(select, "svelte-FFXIV-76qduf", true);
+      toggle_class(select, "svelte-76qduf", true);
     },
     i(local) {
       if (current)
@@ -27404,10 +27404,10 @@ function create_if_block_3$7(ctx) {
       div0 = element("div");
       input = element("input");
       set_attributes(input, input_data);
-      toggle_class(input, "svelte-FFXIV-12ghg75", true);
-      attr(div0, "class", "flex5 wide svelte-FFXIV-12ghg75");
+      toggle_class(input, "svelte-12ghg75", true);
+      attr(div0, "class", "flex5 wide svelte-12ghg75");
       attr(div1, "class", div1_class_value = "flexrow gap-15 " + /*fullWidth*/
-      (ctx[8] ? "wide" : "") + " svelte-FFXIV-12ghg75");
+      (ctx[8] ? "wide" : "") + " svelte-12ghg75");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -27483,10 +27483,10 @@ function create_if_block_3$7(ctx) {
       if ("value" in input_data) {
         input.value = input_data.value;
       }
-      toggle_class(input, "svelte-FFXIV-12ghg75", true);
+      toggle_class(input, "svelte-12ghg75", true);
       if (dirty[0] & /*fullWidth*/
       256 && div1_class_value !== (div1_class_value = "flexrow gap-15 " + /*fullWidth*/
-      (ctx[8] ? "wide" : "") + " svelte-FFXIV-12ghg75")) {
+      (ctx[8] ? "wide" : "") + " svelte-12ghg75")) {
         attr(div1, "class", div1_class_value);
       }
     },
@@ -27521,7 +27521,7 @@ function create_if_block_4$4(ctx) {
       attr(label_1, "class", "bold gold");
       attr(label_1, "for", label_1_for_value = /*inputElement*/
       ctx[10]?.id);
-      attr(div, "class", "flex1 wide svelte-FFXIV-12ghg75");
+      attr(div, "class", "flex1 wide svelte-12ghg75");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -27581,10 +27581,10 @@ function create_if_block$k(ctx) {
         if_block0.c();
       if_block0_anchor = empty();
       if_block1.c();
-      attr(div, "class", "flexrow gap-15 wide doc-input svelte-FFXIV-12ghg75");
+      attr(div, "class", "flexrow gap-15 wide doc-input svelte-12ghg75");
       attr(button, "class", button_class_value = "stealth " + /*$$props*/
       (ctx[19]?.class?.includes("widebutton") ? "wide" : " " + /*$$props*/
-      ctx[19]?.class?.includes("left") ? "left" : " ") + " svelte-FFXIV-12ghg75");
+      ctx[19]?.class?.includes("left") ? "left" : " ") + " svelte-12ghg75");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -27631,7 +27631,7 @@ function create_if_block$k(ctx) {
       if (dirty[0] & /*$$props*/
       524288 && button_class_value !== (button_class_value = "stealth " + /*$$props*/
       (ctx[19]?.class?.includes("widebutton") ? "wide" : " " + /*$$props*/
-      ctx[19]?.class?.includes("left") ? "left" : " ") + " svelte-FFXIV-12ghg75")) {
+      ctx[19]?.class?.includes("left") ? "left" : " ") + " svelte-12ghg75")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -27666,7 +27666,7 @@ function create_if_block_2$a(ctx) {
       attr(label_1, "class", "bold gold");
       attr(label_1, "for", label_1_for_value = /*inputElement*/
       ctx[10]?.id);
-      attr(div, "class", "flex1 wide svelte-FFXIV-12ghg75");
+      attr(div, "class", "flex1 wide svelte-12ghg75");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -27716,7 +27716,7 @@ function create_else_block$3(ctx) {
       t = text(t_value);
       attr(div, "class", div_class_value = "output " + /*pulseClass*/
       ctx[11] + " " + /*textClasses*/
-      ctx[6] + " svelte-FFXIV-12ghg75");
+      ctx[6] + " svelte-12ghg75");
       toggle_class(
         div,
         "empty",
@@ -27742,7 +27742,7 @@ function create_else_block$3(ctx) {
       if (dirty[0] & /*pulseClass, textClasses*/
       2112 && div_class_value !== (div_class_value = "output " + /*pulseClass*/
       ctx2[11] + " " + /*textClasses*/
-      ctx2[6] + " svelte-FFXIV-12ghg75")) {
+      ctx2[6] + " svelte-12ghg75")) {
         attr(div, "class", div_class_value);
       }
       if (dirty[0] & /*pulseClass, textClasses, isEmpty*/
@@ -27798,8 +27798,8 @@ function create_if_block_1$e(ctx) {
       div = element("div");
       input = element("input");
       set_attributes(input, input_data);
-      toggle_class(input, "svelte-FFXIV-12ghg75", true);
-      attr(div, "class", "flex5 wide svelte-FFXIV-12ghg75");
+      toggle_class(input, "svelte-12ghg75", true);
+      attr(div, "class", "flex5 wide svelte-12ghg75");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -27867,7 +27867,7 @@ function create_if_block_1$e(ctx) {
       if ("value" in input_data) {
         input.value = input_data.value;
       }
-      toggle_class(input, "svelte-FFXIV-12ghg75", true);
+      toggle_class(input, "svelte-12ghg75", true);
     },
     d(detaching) {
       if (detaching) {
@@ -28345,7 +28345,7 @@ function create_each_block$f(ctx) {
       attr(td1, "class", "shrink");
       attr(button, "class", "stealth");
       attr(td3, "class", "buttons");
-      attr(tr, "class", "svelte-FFXIV-9qqs1");
+      attr(tr, "class", "svelte-9qqs1");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -28459,13 +28459,13 @@ function create_fragment$10(ctx) {
       attr(button0, "class", "stealth");
       attr(th3, "class", "buttons");
       attr(th3, "scope", "col");
-      attr(tr, "class", "gold svelte-FFXIV-9qqs1");
-      attr(table, "class", "borderless svelte-FFXIV-9qqs1");
+      attr(tr, "class", "gold svelte-9qqs1");
+      attr(table, "class", "borderless svelte-9qqs1");
       attr(button1, "class", button1_class_value = "glossy-button gold-light hover-shine " + /*buttonAnimation*/
-      ctx[1] + " svelte-FFXIV-9qqs1");
+      ctx[1] + " svelte-9qqs1");
       attr(div0, "class", "flexrow mt-sm");
       attr(div1, "class", "flexcol flex3 left high wide mb-md");
-      attr(div2, "class", "item-sheet details overflow wide inset mt-sm svelte-FFXIV-9qqs1");
+      attr(div2, "class", "item-sheet details overflow wide inset mt-sm svelte-9qqs1");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -28541,7 +28541,7 @@ function create_fragment$10(ctx) {
       }
       if (!current || dirty & /*buttonAnimation*/
       2 && button1_class_value !== (button1_class_value = "glossy-button gold-light hover-shine " + /*buttonAnimation*/
-      ctx2[1] + " svelte-FFXIV-9qqs1")) {
+      ctx2[1] + " svelte-9qqs1")) {
         attr(button1, "class", button1_class_value);
       }
     },
@@ -28682,7 +28682,7 @@ function create_if_block_2$9(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "tab-icon svelte-FFXIV-cf8qmp");
+      attr(img, "class", "tab-icon svelte-cf8qmp");
       if (!src_url_equal(img.src, img_src_value = /*tab*/
       ctx[5].img))
         attr(img, "src", img_src_value);
@@ -28778,7 +28778,7 @@ function create_each_block_1$3(ctx) {
         if_block.c();
       attr(button, "class", button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-FFXIV-cf8qmp");
+      ctx[0] ? "active" : "") + " svelte-cf8qmp");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -28805,7 +28805,7 @@ function create_each_block_1$3(ctx) {
       if (dirty & /*tabs, activeTab*/
       3 && button_class_value !== (button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-FFXIV-cf8qmp")) {
+      ctx[0] ? "active" : "") + " svelte-cf8qmp")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -29005,11 +29005,11 @@ function create_fragment$$(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "tabs-list svelte-FFXIV-cf8qmp");
+      attr(div0, "class", "tabs-list svelte-cf8qmp");
       attr(div1, "class", div1_class_value = null_to_empty(`tab-content ${/*$$props*/
       ctx[3]?.class?.includes("small") ? "tab-content--small" : ""} ${/*$$props*/
-      ctx[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-FFXIV-cf8qmp");
-      attr(div2, "class", "tabs svelte-FFXIV-cf8qmp");
+      ctx[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-cf8qmp");
+      attr(div2, "class", "tabs svelte-cf8qmp");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -29078,7 +29078,7 @@ function create_fragment$$(ctx) {
       if (!current || dirty & /*$$props*/
       8 && div1_class_value !== (div1_class_value = null_to_empty(`tab-content ${/*$$props*/
       ctx2[3]?.class?.includes("small") ? "tab-content--small" : ""} ${/*$$props*/
-      ctx2[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-FFXIV-cf8qmp")) {
+      ctx2[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-cf8qmp")) {
         attr(div1, "class", div1_class_value);
       }
     },
@@ -29204,7 +29204,7 @@ function create_fragment$_(ctx) {
       attr(div, "class", div_class_value = null_to_empty(
         /*$$props*/
         ctx[6].class
-      ) + " svelte-FFXIV-8l8ndv");
+      ) + " svelte-8l8ndv");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -29270,7 +29270,7 @@ function create_fragment$_(ctx) {
       64 && div_class_value !== (div_class_value = null_to_empty(
         /*$$props*/
         ctx2[6].class
-      ) + " svelte-FFXIV-8l8ndv")) {
+      ) + " svelte-8l8ndv")) {
         attr(div, "class", div_class_value);
       }
     },
@@ -29602,7 +29602,7 @@ function create_fragment$Z(ctx) {
       button.textContent = `${localize(`EDITOR.${/*revealed*/
       ctx[2] ? "Hide" : "Reveal"}`)}`;
       attr(button, "type", "button");
-      attr(button, "class", "reveal svelte-FFXIV-1e62bm0");
+      attr(button, "class", "reveal svelte-1e62bm0");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -29900,7 +29900,7 @@ function create_if_block_1$c(ctx) {
     c() {
       a = element("a");
       a.innerHTML = `<i class="fas fa-edit"></i>`;
-      attr(a, "class", "editor-edit svelte-FFXIV-yxbnoz");
+      attr(a, "class", "editor-edit svelte-yxbnoz");
       attr(a, "role", "button");
       attr(a, "tabindex", "-1");
     },
@@ -29932,7 +29932,7 @@ function create_else_block$2(ctx) {
   return {
     c() {
       div = element("div");
-      attr(div, "class", "editor-enriched svelte-FFXIV-yxbnoz");
+      attr(div, "class", "editor-enriched svelte-yxbnoz");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -29958,7 +29958,7 @@ function create_if_block$h(ctx) {
   return {
     c() {
       div = element("div");
-      attr(div, "class", "editor-content svelte-FFXIV-yxbnoz");
+      attr(div, "class", "editor-content svelte-yxbnoz");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -30010,7 +30010,7 @@ function create_fragment$Y(ctx) {
       ) ? (
         /*options*/
         ctx[0].classes.join(" ")
-      ) : "") + " svelte-FFXIV-yxbnoz");
+      ) : "") + " svelte-yxbnoz");
       attr(div, "role", "textbox");
       attr(div, "tabindex", "0");
       toggle_class(
@@ -30106,7 +30106,7 @@ function create_fragment$Y(ctx) {
       ) ? (
         /*options*/
         ctx2[0].classes.join(" ")
-      ) : "") + " svelte-FFXIV-yxbnoz")) {
+      ) : "") + " svelte-yxbnoz")) {
         attr(div, "class", div_class_value);
       }
       if (applyStyles_action && is_function(applyStyles_action.update) && dirty & /*options*/
@@ -30851,7 +30851,7 @@ function create_fragment$W(ctx) {
       }
       option.__value = "";
       set_input_value(option, option.__value);
-      attr(select, "class", "tag-select svelte-FFXIV-sprb3l");
+      attr(select, "class", "tag-select svelte-sprb3l");
       if (
         /*selectedTag*/
         ctx[2] === void 0
@@ -30861,7 +30861,7 @@ function create_fragment$W(ctx) {
           ctx[8].call(select)
         ));
       attr(div0, "class", "flexcol");
-      attr(div1, "class", "flexrow gap-4 mt-sm wrap justify-vertical svelte-FFXIV-sprb3l");
+      attr(div1, "class", "flexrow gap-4 mt-sm wrap justify-vertical svelte-sprb3l");
     },
     m(target, anchor) {
       insert(target, div0, anchor);
@@ -31256,13 +31256,13 @@ function create_fragment$V(ctx) {
       attr(h1, "class", "center");
       attr(div0, "class", "flex4");
       attr(div1, "class", "flexrow justify-vertical");
-      attr(label0, "class", "gold svelte-FFXIV-16c3i1w");
+      attr(label0, "class", "gold svelte-16c3i1w");
       attr(label0, "for", "name");
       attr(div2, "class", "flex1");
       attr(div3, "class", "flex4 right");
       attr(div4, "class", "flexrow justify-vertical");
       attr(div5, "class", "flex0");
-      attr(label1, "class", "gold svelte-FFXIV-16c3i1w");
+      attr(label1, "class", "gold svelte-16c3i1w");
       attr(label1, "for", "transfer");
       attr(div6, "class", "flex4");
       attr(div7, "class", "flex0 right");
@@ -31270,7 +31270,7 @@ function create_fragment$V(ctx) {
       attr(p0, "class", "caption");
       attr(div9, "class", "flex4");
       attr(div10, "class", "flexrow justify-vertical");
-      attr(label2, "class", "gold svelte-FFXIV-16c3i1w");
+      attr(label2, "class", "gold svelte-16c3i1w");
       attr(label2, "for", "overlay");
       attr(div11, "class", "flex4");
       attr(div12, "class", "flex0 right");
@@ -31278,7 +31278,7 @@ function create_fragment$V(ctx) {
       attr(p1, "class", "caption");
       attr(div14, "class", "flex4");
       attr(div15, "class", "flexrow justify-vertical");
-      attr(label3, "class", "gold svelte-FFXIV-16c3i1w");
+      attr(label3, "class", "gold svelte-16c3i1w");
       attr(label3, "for", "stackable");
       attr(div16, "class", "flex4");
       attr(div17, "class", "flex4 right");
@@ -31286,7 +31286,7 @@ function create_fragment$V(ctx) {
       attr(p2, "class", "caption");
       attr(div19, "class", "flex4");
       attr(div20, "class", "flexrow justify-vertical");
-      attr(label4, "class", "gold svelte-FFXIV-16c3i1w");
+      attr(label4, "class", "gold svelte-16c3i1w");
       attr(label4, "for", "suspended");
       attr(div21, "class", "flex4");
       attr(div22, "class", "flex0 right");
@@ -31294,14 +31294,14 @@ function create_fragment$V(ctx) {
       attr(p3, "class", "caption");
       attr(div24, "class", "flex4");
       attr(div25, "class", "flexrow justify-vertical");
-      attr(label5, "class", "gold svelte-FFXIV-16c3i1w");
+      attr(label5, "class", "gold svelte-16c3i1w");
       attr(label5, "for", "statuses");
       attr(div26, "class", "flex4");
       attr(div27, "class", "flexrow justify-vertical");
       attr(div28, "class", "flex2 left");
       attr(div29, "class", "flexcol sheet-row justify-vertical");
       attr(div30, "class", "flex0 mt-sm");
-      attr(label6, "class", "gold svelte-FFXIV-16c3i1w");
+      attr(label6, "class", "gold svelte-16c3i1w");
       attr(label6, "for", "description");
       attr(div31, "class", "flex4");
       attr(div32, "class", "flexrow justify-vertical");
@@ -31309,7 +31309,7 @@ function create_fragment$V(ctx) {
       attr(div34, "class", "flexcol sheet-row justify-vertical high");
       attr(div35, "class", "flex1 mb-xl");
       attr(div36, "class", "flexcol flex3 left high wide mb-md");
-      attr(div37, "class", "item-sheet details overflow wide inset mt-sm high svelte-FFXIV-16c3i1w");
+      attr(div37, "class", "item-sheet details overflow wide inset mt-sm high svelte-16c3i1w");
     },
     m(target, anchor) {
       insert(target, div37, anchor);
@@ -31576,37 +31576,37 @@ function create_fragment$U(ctx) {
       create_component(docinput4.$$.fragment);
       attr(h3, "class", "left");
       attr(label0, "for", "durationType");
-      attr(label0, "class", "svelte-FFXIV-qerul5");
+      attr(label0, "class", "svelte-qerul5");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
       attr(label1, "for", "startTime");
-      attr(label1, "class", "svelte-FFXIV-qerul5");
+      attr(label1, "class", "svelte-qerul5");
       attr(div3, "class", "flex1");
       attr(div4, "class", "flex4 right wide");
       attr(div5, "class", "flexrow sheet-row justify-vertical wide");
       attr(label2, "for", "turns");
-      attr(label2, "class", "svelte-FFXIV-qerul5");
+      attr(label2, "class", "svelte-qerul5");
       attr(div6, "class", "flex1");
       attr(div7, "class", "flex4 right wide");
       attr(div8, "class", "flexrow sheet-row justify-vertical wide");
       attr(label3, "for", "rounds");
-      attr(label3, "class", "svelte-FFXIV-qerul5");
+      attr(label3, "class", "svelte-qerul5");
       attr(div9, "class", "flex1");
       attr(div10, "class", "flex4 right wide");
       attr(div11, "class", "flexrow sheet-row justify-vertical wide");
       attr(label4, "for", "startRound");
-      attr(label4, "class", "svelte-FFXIV-qerul5");
+      attr(label4, "class", "svelte-qerul5");
       attr(div12, "class", "flex1");
       attr(div13, "class", "flex4 right wide");
       attr(div14, "class", "flexrow sheet-row justify-vertical wide");
       attr(label5, "for", "startTurn");
-      attr(label5, "class", "svelte-FFXIV-qerul5");
+      attr(label5, "class", "svelte-qerul5");
       attr(div15, "class", "flex1");
       attr(div16, "class", "flex4 right wide");
       attr(div17, "class", "flexrow sheet-row justify-vertical wide");
       attr(div18, "class", "flexcol flex3 left high wide");
-      attr(div19, "class", "item-sheet details overflow svelte-FFXIV-qerul5");
+      attr(div19, "class", "item-sheet details overflow svelte-qerul5");
     },
     m(target, anchor) {
       insert(target, div19, anchor);
@@ -31790,7 +31790,7 @@ function create_default_slot$f(ctx) {
       section = element("section");
       div0 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "flex1 portrait-frame svelte-FFXIV-maqqt9");
+      attr(div0, "class", "flex1 portrait-frame svelte-maqqt9");
       attr(section, "class", "mt-sm high");
       attr(div1, "class", "flex4 wide mr-sm high");
       attr(div2, "class", "flexrow gap-15 wide high no-overflow nowrap");
@@ -32161,7 +32161,7 @@ function create_fragment$S(ctx) {
       if (default_slot)
         default_slot.c();
       attr(div, "class", div_class_value = "badge " + /*badgeClasses*/
-      ctx[0] + " svelte-FFXIV-qkzukj");
+      ctx[0] + " svelte-qkzukj");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -32196,7 +32196,7 @@ function create_fragment$S(ctx) {
       }
       if (!current || dirty & /*badgeClasses*/
       1 && div_class_value !== (div_class_value = "badge " + /*badgeClasses*/
-      ctx2[0] + " svelte-FFXIV-qkzukj")) {
+      ctx2[0] + " svelte-qkzukj")) {
         attr(div, "class", div_class_value);
       }
     },
@@ -32301,7 +32301,7 @@ function create_if_block_4$3(ctx) {
       button = element("button");
       button.innerHTML = `<i class="fa-solid fa-trash"></i>`;
       attr(h1, "class", "left gold");
-      attr(img, "class", "icon svelte-FFXIV-1g13pt8");
+      attr(img, "class", "icon svelte-1g13pt8");
       if (!src_url_equal(img.src, img_src_value = /*$Actor*/
       ctx[0].system.job?.img))
         attr(img, "src", img_src_value);
@@ -32408,7 +32408,7 @@ function create_if_block_3$6(ctx) {
     c() {
       div = element("div");
       create_component(badge.$$.fragment);
-      attr(div, "class", "flex0 right ml-sm pt-s svelte-FFXIV-1g13pt8");
+      attr(div, "class", "flex0 right ml-sm pt-s svelte-1g13pt8");
       attr(div, "data-tooltip-class", "FFXIV-tooltip");
       attr(div, "data-tooltip", localize("FFXIV.Types.Item.Types.action.UsesRemaining"));
     },
@@ -32613,18 +32613,18 @@ function create_if_block_1$b(ctx) {
   return {
     c() {
       button0 = element("button");
-      button0.innerHTML = `<i class="left fa fa-edit svelte-FFXIV-1g13pt8" role="button"></i>`;
+      button0.innerHTML = `<i class="left fa fa-edit svelte-1g13pt8" role="button"></i>`;
       button1 = element("button");
-      button1.innerHTML = `<i class="left fa fa-copy svelte-FFXIV-1g13pt8" role="button"></i>`;
+      button1.innerHTML = `<i class="left fa fa-copy svelte-1g13pt8" role="button"></i>`;
       button2 = element("button");
-      button2.innerHTML = `<i class="left fa fa-trash svelte-FFXIV-1g13pt8" role="button"></i>`;
-      attr(button0, "class", "stealth svelte-FFXIV-1g13pt8");
+      button2.innerHTML = `<i class="left fa fa-trash svelte-1g13pt8" role="button"></i>`;
+      attr(button0, "class", "stealth svelte-1g13pt8");
       attr(button0, "data-tooltip-class", "FFXIV-tooltip");
       attr(button0, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Edit"));
-      attr(button1, "class", "stealth svelte-FFXIV-1g13pt8");
+      attr(button1, "class", "stealth svelte-1g13pt8");
       attr(button1, "data-tooltip-class", "FFXIV-tooltip");
       attr(button1, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Duplicate"));
-      attr(button2, "class", "stealth svelte-FFXIV-1g13pt8");
+      attr(button2, "class", "stealth svelte-1g13pt8");
       attr(button2, "data-tooltip-class", "FFXIV-tooltip");
       attr(button2, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Delete"));
     },
@@ -32755,41 +32755,41 @@ function create_each_block$c(ctx) {
       td4 = element("td");
       if (if_block2)
         if_block2.c();
-      attr(img, "class", "icon svelte-FFXIV-1g13pt8");
+      attr(img, "class", "icon svelte-1g13pt8");
       if (!src_url_equal(img.src, img_src_value = /*item*/
       ctx[21].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
       ctx[21].name);
-      attr(td0, "class", "img svelte-FFXIV-1g13pt8");
+      attr(td0, "class", "img svelte-1g13pt8");
       attr(td0, "data-tooltip-class", "FFXIV-tooltip");
       attr(td0, "data-tooltip", localize("FFXIV.Use"));
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1g13pt8");
+      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-1g13pt8");
       attr(a, "role", "button");
-      attr(div0, "class", "flex3 left svelte-FFXIV-1g13pt8");
+      attr(div0, "class", "flex3 left svelte-1g13pt8");
       attr(div0, "data-tooltip-class", "FFXIV-tooltip wordy");
       attr(div0, "data-tooltip", div0_data_tooltip_value = /*item*/
       ctx[21].system.description);
-      attr(div1, "class", "flexrow svelte-FFXIV-1g13pt8");
-      attr(td1, "class", "left text ellipsis svelte-FFXIV-1g13pt8");
-      attr(td2, "class", "right no-wrap svelte-FFXIV-1g13pt8");
+      attr(div1, "class", "flexrow svelte-1g13pt8");
+      attr(td1, "class", "left text ellipsis svelte-1g13pt8");
+      attr(td2, "class", "right no-wrap svelte-1g13pt8");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1g13pt8");
+      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1g13pt8");
       attr(i, "role", "button");
-      attr(button, "class", "stealth svelte-FFXIV-1g13pt8");
-      attr(td3, "class", "shrink svelte-FFXIV-1g13pt8");
+      attr(button, "class", "stealth svelte-1g13pt8");
+      attr(td3, "class", "shrink svelte-1g13pt8");
       attr(td3, "data-tooltip-class", "FFXIV-tooltip");
       attr(td3, "data-tooltip", localize("FFXIV.Bookmark"));
-      attr(td4, "class", "min buttons right svelte-FFXIV-1g13pt8");
+      attr(td4, "class", "min buttons right svelte-1g13pt8");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*actionTypeClass*/
         ctx[17](
           /*item*/
           ctx[21]
         )
-      ) + " svelte-FFXIV-1g13pt8");
+      ) + " svelte-1g13pt8");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -32873,7 +32873,7 @@ function create_each_block$c(ctx) {
         set_data(t, t_value);
       if (!current || dirty & /*items*/
       32 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1g13pt8")) {
+      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-1g13pt8")) {
         attr(a, "class", a_class_value);
       }
       if (!current || dirty & /*items*/
@@ -32929,7 +32929,7 @@ function create_each_block$c(ctx) {
       }
       if (!current || dirty & /*items*/
       32 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1g13pt8")) {
+      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1g13pt8")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -32952,7 +32952,7 @@ function create_each_block$c(ctx) {
           /*item*/
           ctx[21]
         )
-      ) + " svelte-FFXIV-1g13pt8")) {
+      ) + " svelte-1g13pt8")) {
         attr(tr, "class", tr_class_value);
       }
     },
@@ -33099,17 +33099,17 @@ function create_fragment$R(ctx) {
       attr(th2, "scope", "col");
       attr(th2, "colspan", "1");
       attr(i, "class", i_class_value = "fa " + /*faLockCSS*/
-      ctx[3] + " svelte-FFXIV-1g13pt8");
+      ctx[3] + " svelte-1g13pt8");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[4] + " svelte-FFXIV-1g13pt8");
+      ctx[4] + " svelte-1g13pt8");
       attr(th3, "class", th3_class_value = "buttons " + /*lockCSS*/
-      ctx[4] + " svelte-FFXIV-1g13pt8");
+      ctx[4] + " svelte-1g13pt8");
       attr(th3, "scope", "col");
       attr(th3, "colspan", "2");
       attr(tr, "class", "gold");
-      attr(table, "class", "borderless even svelte-FFXIV-1g13pt8");
-      attr(div0, "class", "padded svelte-FFXIV-1g13pt8");
-      attr(div1, "class", "panel overflow containerx svelte-FFXIV-1g13pt8");
+      attr(table, "class", "borderless even svelte-1g13pt8");
+      attr(div0, "class", "padded svelte-1g13pt8");
+      attr(div1, "class", "panel overflow containerx svelte-1g13pt8");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -33161,17 +33161,17 @@ function create_fragment$R(ctx) {
       }
       if (!current || dirty & /*faLockCSS*/
       8 && i_class_value !== (i_class_value = "fa " + /*faLockCSS*/
-      ctx2[3] + " svelte-FFXIV-1g13pt8")) {
+      ctx2[3] + " svelte-1g13pt8")) {
         attr(i, "class", i_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       16 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[4] + " svelte-FFXIV-1g13pt8")) {
+      ctx2[4] + " svelte-1g13pt8")) {
         attr(button, "class", button_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       16 && th3_class_value !== (th3_class_value = "buttons " + /*lockCSS*/
-      ctx2[4] + " svelte-FFXIV-1g13pt8")) {
+      ctx2[4] + " svelte-1g13pt8")) {
         attr(th3, "class", th3_class_value);
       }
       if (dirty & /*actionTypeClass, items, deleteItem, duplicateItem, editItem, $doc, badgeType, game, showItemSheet, RollCalc*/
@@ -33448,7 +33448,7 @@ function create_if_block$f(ctx) {
       div = element("div");
       button = element("button");
       button.innerHTML = `<i class="fas fa-dice"></i>`;
-      attr(button, "class", "wide stealth flex dice svelte-FFXIV-3qeig2");
+      attr(button, "class", "wide stealth flex dice svelte-3qeig2");
       attr(div, "class", "flex0");
     },
     m(target, anchor) {
@@ -33528,15 +33528,15 @@ function create_fragment$Q(ctx) {
         /*value*/
         ctx[4]
       );
-      attr(div0, "class", "flex2 header svelte-FFXIV-3qeig2");
-      attr(div1, "class", "flex0 header svelte-FFXIV-3qeig2");
+      attr(div0, "class", "flex2 header svelte-3qeig2");
+      attr(div1, "class", "flex0 header svelte-3qeig2");
       attr(button, "class", button_class_value = "left wide tall stealth flexrow " + /*disabled*/
-      ctx[5] + " svelte-FFXIV-3qeig2");
+      ctx[5] + " svelte-3qeig2");
       attr(button, "data-tooltip", button_data_tooltip_value = /*isEditing*/
       ctx[3] ? localize(`${SYSTEM_CODE}.Types.Actor.EditAttribute.Tooltip`) : void 0);
       attr(div2, "class", "flex3 left");
-      attr(div3, "class", "underscore flexrow justify-vertical svelte-FFXIV-3qeig2");
-      attr(div4, "class", "attribute svelte-FFXIV-3qeig2");
+      attr(div3, "class", "underscore flexrow justify-vertical svelte-3qeig2");
+      attr(div4, "class", "attribute svelte-3qeig2");
     },
     m(target, anchor) {
       insert(target, div4, anchor);
@@ -33606,7 +33606,7 @@ function create_fragment$Q(ctx) {
         );
       if (dirty & /*disabled*/
       32 && button_class_value !== (button_class_value = "left wide tall stealth flexrow " + /*disabled*/
-      ctx2[5] + " svelte-FFXIV-3qeig2")) {
+      ctx2[5] + " svelte-3qeig2")) {
         attr(button, "class", button_class_value);
       }
       if (dirty & /*isEditing*/
@@ -33970,8 +33970,8 @@ function create_fragment$O(ctx) {
       div0 = element("div");
       div0.textContent = "Primary Attributes";
       create_component(attributecol.$$.fragment);
-      attr(div0, "class", "flexrow header underscore mb-md svelte-FFXIV-1noexin");
-      attr(div1, "class", "molecule svelte-FFXIV-1noexin");
+      attr(div0, "class", "flexrow header underscore mb-md svelte-1noexin");
+      attr(div1, "class", "molecule svelte-1noexin");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -34055,8 +34055,8 @@ function create_fragment$N(ctx) {
       div0 = element("div");
       div0.textContent = "Secondary Attributes";
       create_component(attributecol.$$.fragment);
-      attr(div0, "class", "flexrow header underscore mb-md svelte-FFXIV-9f9n3s");
-      attr(div1, "class", "molecule svelte-FFXIV-9f9n3s");
+      attr(div0, "class", "flexrow header underscore mb-md svelte-9f9n3s");
+      attr(div1, "class", "molecule svelte-9f9n3s");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -34134,7 +34134,7 @@ function create_fragment$M(ctx) {
       create_component(secondaryattributes.$$.fragment);
       attr(div0, "class", "flex");
       attr(div1, "class", "flex");
-      attr(div2, "class", "molecule flexrow svelte-FFXIV-xanq5m");
+      attr(div2, "class", "molecule flexrow svelte-xanq5m");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -34214,7 +34214,7 @@ function create_fragment$L(ctx) {
       div1 = element("div");
       div0 = element("div");
       button = element("button");
-      button.innerHTML = `<img class="rest-icon svelte-FFXIV-1ab4iud" src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="${localize("FFXIV.TitleBlock.Rest")}"/>`;
+      button.innerHTML = `<img class="rest-icon svelte-1ab4iud" src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="${localize("FFXIV.TitleBlock.Rest")}"/>`;
       div4 = element("div");
       div2 = element("div");
       div2.textContent = `${localize("FFXIV.LV")} `;
@@ -34237,15 +34237,15 @@ function create_fragment$L(ctx) {
       attr(button, "data-tooltip", localize("FFXIV.TitleBlock.Rest"));
       attr(button, "aria-label", localize("FFXIV.TitleBlock.Rest"));
       attr(div0, "class", "left mt-xxs");
-      attr(div1, "class", "flex1 rest-button svelte-FFXIV-1ab4iud");
+      attr(div1, "class", "flex1 rest-button svelte-1ab4iud");
       attr(div2, "class", "scaleup");
       attr(div3, "class", "scaleup");
-      attr(div4, "class", "flex4 nowrap font-inter lvcontainer glow svelte-FFXIV-1ab4iud");
+      attr(div4, "class", "flex4 nowrap font-inter lvcontainer glow svelte-1ab4iud");
       attr(div5, "class", "flexrow no-wrap");
       attr(div6, "class", "flex4 no-wrap");
-      attr(div7, "class", "flex4 no-wrap font-cinzel job svelte-FFXIV-1ab4iud");
+      attr(div7, "class", "flex4 no-wrap font-cinzel job svelte-1ab4iud");
       attr(div8, "class", "flexrow");
-      attr(div9, "class", "px-sm panel pt-xs containerx wide svelte-FFXIV-1ab4iud");
+      attr(div9, "class", "px-sm panel pt-xs containerx wide svelte-1ab4iud");
     },
     m(target, anchor) {
       insert(target, div9, anchor);
@@ -34403,11 +34403,11 @@ function create_fragment$K(ctx) {
       create_component(attributeblock.$$.fragment);
       div2 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-FFXIV-89vfdl");
+      attr(div0, "class", "texture svelte-89vfdl");
       attr(div1, "class", "flex2");
-      attr(div2, "class", "flex1 portrait-frame svelte-FFXIV-89vfdl");
+      attr(div2, "class", "flex1 portrait-frame svelte-89vfdl");
       attr(div3, "class", "flexrow panel borderless");
-      attr(div4, "class", "flexcol background svelte-FFXIV-89vfdl");
+      attr(div4, "class", "flexcol background svelte-89vfdl");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -34548,10 +34548,10 @@ function create_fragment$J(ctx) {
     c() {
       div13 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-FFXIV-rxqier"><div class="header svelte-FFXIV-rxqier">HP</div></div><div class="sub-header svelte-FFXIV-rxqier"><div class="header svelte-FFXIV-rxqier">(Hit Points)</div></div>`;
+      div4.innerHTML = `<div class="header svelte-rxqier"><div class="header svelte-rxqier">HP</div></div><div class="sub-header svelte-rxqier"><div class="header svelte-rxqier">(Hit Points)</div></div>`;
       div9 = element("div");
       div6 = element("div");
-      div6.innerHTML = `<div class="header svelte-FFXIV-rxqier">Max</div>`;
+      div6.innerHTML = `<div class="header svelte-rxqier">Max</div>`;
       div8 = element("div");
       div7 = element("div");
       create_component(docinput0.$$.fragment);
@@ -34560,14 +34560,14 @@ function create_fragment$J(ctx) {
       div10 = element("div");
       create_component(docinput1.$$.fragment);
       attr(div4, "class", "flex3");
-      attr(div6, "class", "flex sub-header svelte-FFXIV-rxqier");
-      attr(div7, "class", "header svelte-FFXIV-rxqier");
-      attr(div8, "class", "flex max header svelte-FFXIV-rxqier");
+      attr(div6, "class", "flex sub-header svelte-rxqier");
+      attr(div7, "class", "header svelte-rxqier");
+      attr(div8, "class", "flex max header svelte-rxqier");
       attr(div9, "class", "flex2");
-      attr(div10, "class", "header svelte-FFXIV-rxqier");
-      attr(div11, "class", "header val svelte-FFXIV-rxqier");
+      attr(div10, "class", "header svelte-rxqier");
+      attr(div11, "class", "header val svelte-rxqier");
       attr(div12, "class", "flex2 left");
-      attr(div13, "class", "hp flexrow justify-vertical svelte-FFXIV-rxqier");
+      attr(div13, "class", "hp flexrow justify-vertical svelte-rxqier");
     },
     m(target, anchor) {
       insert(target, div13, anchor);
@@ -34674,10 +34674,10 @@ function create_fragment$I(ctx) {
     c() {
       div13 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-FFXIV-rxqifo"><div class="header svelte-FFXIV-rxqifo">MP</div></div><div class="sub-header svelte-FFXIV-rxqifo"><div class="header svelte-FFXIV-rxqifo">(Magic Points)</div></div>`;
+      div4.innerHTML = `<div class="header svelte-rxqifo"><div class="header svelte-rxqifo">MP</div></div><div class="sub-header svelte-rxqifo"><div class="header svelte-rxqifo">(Magic Points)</div></div>`;
       div9 = element("div");
       div6 = element("div");
-      div6.innerHTML = `<div class="header svelte-FFXIV-rxqifo">Max</div>`;
+      div6.innerHTML = `<div class="header svelte-rxqifo">Max</div>`;
       div8 = element("div");
       div7 = element("div");
       create_component(docinput0.$$.fragment);
@@ -34686,14 +34686,14 @@ function create_fragment$I(ctx) {
       div10 = element("div");
       create_component(docinput1.$$.fragment);
       attr(div4, "class", "flex3");
-      attr(div6, "class", "flex sub-header svelte-FFXIV-rxqifo");
-      attr(div7, "class", "header svelte-FFXIV-rxqifo");
-      attr(div8, "class", "flex max header svelte-FFXIV-rxqifo");
+      attr(div6, "class", "flex sub-header svelte-rxqifo");
+      attr(div7, "class", "header svelte-rxqifo");
+      attr(div8, "class", "flex max header svelte-rxqifo");
       attr(div9, "class", "flex2");
-      attr(div10, "class", "header svelte-FFXIV-rxqifo");
-      attr(div11, "class", "header val svelte-FFXIV-rxqifo");
+      attr(div10, "class", "header svelte-rxqifo");
+      attr(div11, "class", "header val svelte-rxqifo");
       attr(div12, "class", "flex2 left");
-      attr(div13, "class", "mp flexrow justify-vertical svelte-FFXIV-rxqifo");
+      attr(div13, "class", "mp flexrow justify-vertical svelte-rxqifo");
     },
     m(target, anchor) {
       insert(target, div13, anchor);
@@ -34784,16 +34784,16 @@ function create_fragment$H(ctx) {
     c() {
       div8 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-FFXIV-rxqik9"><div class="header svelte-FFXIV-rxqik9">BP</div></div><div class="sub-header svelte-FFXIV-rxqik9"><div class="header svelte-FFXIV-rxqik9">(Barrier Points)</div></div>`;
+      div4.innerHTML = `<div class="header svelte-rxqik9"><div class="header svelte-rxqik9">BP</div></div><div class="sub-header svelte-rxqik9"><div class="header svelte-rxqik9">(Barrier Points)</div></div>`;
       div7 = element("div");
       div6 = element("div");
       div5 = element("div");
       create_component(docinput.$$.fragment);
       attr(div4, "class", "flex3");
-      attr(div5, "class", "header svelte-FFXIV-rxqik9");
-      attr(div6, "class", "header val svelte-FFXIV-rxqik9");
+      attr(div5, "class", "header svelte-rxqik9");
+      attr(div6, "class", "header val svelte-rxqik9");
       attr(div7, "class", "flex2 left");
-      attr(div8, "class", "bp flexrow justify-vertical svelte-FFXIV-rxqik9");
+      attr(div8, "class", "bp flexrow justify-vertical svelte-rxqik9");
     },
     m(target, anchor) {
       insert(target, div8, anchor);
@@ -34872,10 +34872,10 @@ function create_fragment$G(ctx) {
       create_component(mp.$$.fragment);
       div2 = element("div");
       create_component(bp.$$.fragment);
-      attr(div0, "class", "flex hp pa-md svelte-FFXIV-1bm9vzb");
-      attr(div1, "class", "flex mp pa-md svelte-FFXIV-1bm9vzb");
-      attr(div2, "class", "flex bp pa-md svelte-FFXIV-1bm9vzb");
-      attr(div3, "class", "flexrow section svelte-FFXIV-1bm9vzb");
+      attr(div0, "class", "flex hp pa-md svelte-1bm9vzb");
+      attr(div1, "class", "flex mp pa-md svelte-1bm9vzb");
+      attr(div2, "class", "flex bp pa-md svelte-1bm9vzb");
+      attr(div3, "class", "flexrow section svelte-1bm9vzb");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -35139,7 +35139,7 @@ function create_fragment$F(ctx) {
       if_block0_anchor = empty();
       if (if_block1)
         if_block1.c();
-      attr(div, "class", "effects svelte-FFXIV-1fqib39");
+      attr(div, "class", "effects svelte-1fqib39");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -35304,16 +35304,16 @@ function create_if_block$d(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(h2, "class", "font-cinzel svelte-FFXIV-1i7v647");
-      attr(th0, "class", "img shrink svelte-FFXIV-1i7v647");
+      attr(h2, "class", "font-cinzel svelte-1i7v647");
+      attr(th0, "class", "img shrink svelte-1i7v647");
       attr(th0, "scope", "col");
-      attr(th1, "class", "left expand svelte-FFXIV-1i7v647");
+      attr(th1, "class", "left expand svelte-1i7v647");
       attr(th1, "scope", "col");
-      attr(th2, "class", "shrink svelte-FFXIV-1i7v647");
+      attr(th2, "class", "shrink svelte-1i7v647");
       attr(th2, "scope", "col");
-      attr(tr, "class", "svelte-FFXIV-1i7v647");
-      attr(table, "class", "borderless low-contrast svelte-FFXIV-1i7v647");
-      attr(div, "class", "pa-xs svelte-FFXIV-1i7v647");
+      attr(tr, "class", "svelte-1i7v647");
+      attr(table, "class", "borderless low-contrast svelte-1i7v647");
+      attr(div, "class", "pa-xs svelte-1i7v647");
     },
     m(target, anchor) {
       insert(target, h2, anchor);
@@ -35406,7 +35406,7 @@ function create_if_block_3$5(ctx) {
   return {
     c() {
       th = element("th");
-      attr(th, "class", "svelte-FFXIV-1i7v647");
+      attr(th, "class", "svelte-1i7v647");
     },
     m(target, anchor) {
       insert(target, th, anchor);
@@ -35431,7 +35431,7 @@ function create_if_block_1$9(ctx) {
       td = element("td");
       if (if_block)
         if_block.c();
-      attr(td, "class", "left svelte-FFXIV-1i7v647");
+      attr(td, "class", "left svelte-1i7v647");
     },
     m(target, anchor) {
       insert(target, td, anchor);
@@ -35610,23 +35610,23 @@ function create_each_block$9(ctx) {
       td2 = element("td");
       button = element("button");
       i = element("i");
-      attr(img, "class", "icon svelte-FFXIV-1i7v647");
+      attr(img, "class", "icon svelte-1i7v647");
       if (!src_url_equal(img.src, img_src_value = /*item*/
       ctx[20].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
       ctx[20].name);
-      attr(td0, "class", "img svelte-FFXIV-1i7v647");
+      attr(td0, "class", "img svelte-1i7v647");
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "ml-sm stealth link " + /*item*/
-      (ctx[20].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1i7v647");
+      (ctx[20].system.isMagic ? "pulse" : "") + " svelte-1i7v647");
       attr(a, "role", "button");
-      attr(td1, "class", "left clip svelte-FFXIV-1i7v647");
+      attr(td1, "class", "left clip svelte-1i7v647");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[20].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1i7v647");
-      attr(button, "class", "stealth svelte-FFXIV-1i7v647");
-      attr(td2, "class", "svelte-FFXIV-1i7v647");
-      attr(tr, "class", "svelte-FFXIV-1i7v647");
+      (ctx[20].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1i7v647");
+      attr(button, "class", "stealth svelte-1i7v647");
+      attr(td2, "class", "svelte-1i7v647");
+      attr(tr, "class", "svelte-1i7v647");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -35698,7 +35698,7 @@ function create_each_block$9(ctx) {
         set_data(t, t_value);
       if (!current || dirty & /*items*/
       4 && a_class_value !== (a_class_value = "ml-sm stealth link " + /*item*/
-      (ctx[20].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1i7v647")) {
+      (ctx[20].system.isMagic ? "pulse" : "") + " svelte-1i7v647")) {
         attr(a, "class", a_class_value);
       }
       if (
@@ -35726,7 +35726,7 @@ function create_each_block$9(ctx) {
       }
       if (!current || dirty & /*items*/
       4 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[20].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1i7v647")) {
+      (ctx[20].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1i7v647")) {
         attr(i, "class", i_class_value);
       }
     },
@@ -35775,7 +35775,7 @@ function create_fragment$E(ctx) {
       if (if_block)
         if_block.c();
       set_attributes(div, div_data);
-      toggle_class(div, "svelte-FFXIV-1i7v647", true);
+      toggle_class(div, "svelte-1i7v647", true);
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -35814,7 +35814,7 @@ function create_fragment$E(ctx) {
         512 && /*$$restProps*/
         ctx2[9]
       ]));
-      toggle_class(div, "svelte-FFXIV-1i7v647", true);
+      toggle_class(div, "svelte-1i7v647", true);
     },
     i(local) {
       if (current)
@@ -35975,12 +35975,12 @@ function create_if_block_1$8(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-FFXIV-43aj1a");
-      attr(div1, "class", "portrait-frame pr-xs wide svelte-FFXIV-43aj1a");
+      attr(div0, "class", "texture svelte-43aj1a");
+      attr(div1, "class", "portrait-frame pr-xs wide svelte-43aj1a");
       attr(div2, "class", "flex2 wide");
       attr(div3, "class", "flexrow panel borderless wide");
-      attr(div4, "class", "background svelte-FFXIV-43aj1a");
-      attr(div5, "class", "flexcol navy svelte-FFXIV-43aj1a");
+      attr(div4, "class", "background svelte-43aj1a");
+      attr(div5, "class", "flexcol navy svelte-43aj1a");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -36148,12 +36148,12 @@ function create_if_block$c(ctx) {
       div3 = element("div");
       div2 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-FFXIV-43aj1a");
+      attr(div0, "class", "texture svelte-43aj1a");
       attr(div1, "class", "flexrow panel borderless wide");
-      attr(div2, "class", "portrait-frame pr-xs svelte-FFXIV-43aj1a");
+      attr(div2, "class", "portrait-frame pr-xs svelte-43aj1a");
       attr(div3, "class", "flex2 gold");
-      attr(div4, "class", "background svelte-FFXIV-43aj1a");
-      attr(div5, "class", "flexcol burgundy svelte-FFXIV-43aj1a");
+      attr(div4, "class", "background svelte-43aj1a");
+      attr(div5, "class", "flexcol burgundy svelte-43aj1a");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -36315,18 +36315,18 @@ function create_fragment$D(ctx) {
       div8 = element("div");
       create_component(portraitframe1.$$.fragment);
       attr(div0, "class", "flex3");
-      attr(div1, "class", "texture svelte-FFXIV-43aj1a");
-      attr(div2, "class", "portrait-frame pr-xs wide svelte-FFXIV-43aj1a");
+      attr(div1, "class", "texture svelte-43aj1a");
+      attr(div2, "class", "portrait-frame pr-xs wide svelte-43aj1a");
       attr(div3, "class", "flex2 wide");
       attr(div4, "class", "flexrow panel borderless wide");
-      attr(div5, "class", "background svelte-FFXIV-43aj1a");
-      attr(div6, "class", "flexcol purple svelte-FFXIV-43aj1a");
-      attr(div7, "class", "texture svelte-FFXIV-43aj1a");
-      attr(div8, "class", "portrait-frame pr-xs svelte-FFXIV-43aj1a");
+      attr(div5, "class", "background svelte-43aj1a");
+      attr(div6, "class", "flexcol purple svelte-43aj1a");
+      attr(div7, "class", "texture svelte-43aj1a");
+      attr(div8, "class", "portrait-frame pr-xs svelte-43aj1a");
       attr(div9, "class", "flex2 gold");
       attr(div10, "class", "flexrow panel borderless wide");
-      attr(div11, "class", "background svelte-FFXIV-43aj1a");
-      attr(div12, "class", "flexcol teal svelte-FFXIV-43aj1a");
+      attr(div11, "class", "background svelte-43aj1a");
+      attr(div12, "class", "flexcol teal svelte-43aj1a");
       attr(div13, "class", "flex2");
       attr(div14, "class", "flexrow high");
       attr(div15, "class", "panel overflow");
@@ -36734,14 +36734,14 @@ function create_each_block$8(ctx) {
       attr(td0, "data-tooltip", localize("FFXIV.Use"));
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1xqs78");
+      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-1xqs78");
       attr(a, "role", "button");
       attr(td1, "class", "left");
       attr(td1, "data-tooltip", localize("FFXIV.View"));
-      attr(button0, "class", "stealth clickable wide svelte-FFXIV-1xqs78");
+      attr(button0, "class", "stealth clickable wide svelte-1xqs78");
       attr(button0, "data-tooltip", "Left click + / Right Click -");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1xqs78");
+      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1xqs78");
       attr(button1, "class", "stealth");
       attr(td3, "data-tooltip", localize("FFXIV.Bookmark"));
       attr(td4, "class", "min buttons right");
@@ -36839,7 +36839,7 @@ function create_each_block$8(ctx) {
         set_data(t0, t0_value);
       if (dirty & /*items*/
       8 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1xqs78")) {
+      (ctx[16].system.isMagic ? "pulse" : "") + " svelte-1xqs78")) {
         attr(a, "class", a_class_value);
       }
       if (dirty & /*items*/
@@ -36848,7 +36848,7 @@ function create_each_block$8(ctx) {
         set_data(t1, t1_value);
       if (dirty & /*items*/
       8 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1xqs78")) {
+      (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1xqs78")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -36918,7 +36918,7 @@ function create_fragment$B(ctx) {
       th2 = element("th");
       th2.textContent = `${localize("FFXIV.Quantity")}`;
       th3 = element("th");
-      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FFXIV-1xqs78"></i>`;
+      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-1xqs78"></i>`;
       th4 = element("th");
       button0 = element("button");
       i1 = element("i");
@@ -36937,19 +36937,19 @@ function create_fragment$B(ctx) {
       attr(th3, "class", "shrink");
       attr(th3, "scope", "col");
       attr(i1, "class", i1_class_value = "fa " + /*faLockCSS*/
-      ctx[1] + " svelte-FFXIV-1xqs78");
+      ctx[1] + " svelte-1xqs78");
       attr(button0, "class", button0_class_value = "stealth " + /*lockCSS*/
-      ctx[2] + " svelte-FFXIV-1xqs78");
+      ctx[2] + " svelte-1xqs78");
       attr(th4, "class", th4_class_value = null_to_empty(
         /*lockCSS*/
         ctx[2]
-      ) + " svelte-FFXIV-1xqs78");
+      ) + " svelte-1xqs78");
       attr(th4, "scope", "col");
       attr(tr, "class", "gold");
       attr(table, "class", "borderless");
-      attr(div0, "class", "padded svelte-FFXIV-1xqs78");
+      attr(div0, "class", "padded svelte-1xqs78");
       attr(button1, "class", "mt-sm glossy-button gold-light hover-shine");
-      attr(div1, "class", "panel overflow containerx svelte-FFXIV-1xqs78");
+      attr(div1, "class", "panel overflow containerx svelte-1xqs78");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -36991,19 +36991,19 @@ function create_fragment$B(ctx) {
     p(ctx2, [dirty]) {
       if (dirty & /*faLockCSS*/
       2 && i1_class_value !== (i1_class_value = "fa " + /*faLockCSS*/
-      ctx2[1] + " svelte-FFXIV-1xqs78")) {
+      ctx2[1] + " svelte-1xqs78")) {
         attr(i1, "class", i1_class_value);
       }
       if (dirty & /*lockCSS*/
       4 && button0_class_value !== (button0_class_value = "stealth " + /*lockCSS*/
-      ctx2[2] + " svelte-FFXIV-1xqs78")) {
+      ctx2[2] + " svelte-1xqs78")) {
         attr(button0, "class", button0_class_value);
       }
       if (dirty & /*lockCSS*/
       4 && th4_class_value !== (th4_class_value = null_to_empty(
         /*lockCSS*/
         ctx2[2]
-      ) + " svelte-FFXIV-1xqs78")) {
+      ) + " svelte-1xqs78")) {
         attr(th4, "class", th4_class_value);
       }
       if (dirty & /*deleteItem, items, duplicateItem, editItem, $doc, addQuantity, removeQuantity, showItemSheet, useItem*/
@@ -37418,7 +37418,7 @@ function create_each_block$7(ctx) {
       attr(tr, "class", tr_class_value = null_to_empty(
         /*effect*/
         ctx[33].disabled ? "disabled" : ""
-      ) + " svelte-FFXIV-1af8azc");
+      ) + " svelte-1af8azc");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -37480,7 +37480,7 @@ function create_each_block$7(ctx) {
       2 && tr_class_value !== (tr_class_value = null_to_empty(
         /*effect*/
         ctx2[33].disabled ? "disabled" : ""
-      ) + " svelte-FFXIV-1af8azc")) {
+      ) + " svelte-1af8azc")) {
         attr(tr, "class", tr_class_value);
       }
     },
@@ -37606,11 +37606,11 @@ function create_fragment$A(ctx) {
       attr(th1, "class", "left expand ml-sm");
       attr(th1, "scope", "col");
       attr(i, "class", i_class_value = "fa " + /*faLockCSS*/
-      ctx[3] + " svelte-FFXIV-1af8azc");
+      ctx[3] + " svelte-1af8azc");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[4] + " svelte-FFXIV-1af8azc");
+      ctx[4] + " svelte-1af8azc");
       attr(th2, "class", th2_class_value = "buttons " + /*lockCSS*/
-      ctx[4] + " svelte-FFXIV-1af8azc");
+      ctx[4] + " svelte-1af8azc");
       attr(th2, "scope", "col");
       attr(tr, "class", "gold");
       attr(table, "class", "borderless even");
@@ -37665,17 +37665,17 @@ function create_fragment$A(ctx) {
       }
       if (dirty[0] & /*faLockCSS*/
       8 && i_class_value !== (i_class_value = "fa " + /*faLockCSS*/
-      ctx2[3] + " svelte-FFXIV-1af8azc")) {
+      ctx2[3] + " svelte-1af8azc")) {
         attr(i, "class", i_class_value);
       }
       if (dirty[0] & /*lockCSS*/
       16 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[4] + " svelte-FFXIV-1af8azc")) {
+      ctx2[4] + " svelte-1af8azc")) {
         attr(button, "class", button_class_value);
       }
       if (dirty[0] & /*lockCSS*/
       16 && th2_class_value !== (th2_class_value = "buttons " + /*lockCSS*/
-      ctx2[4] + " svelte-FFXIV-1af8azc")) {
+      ctx2[4] + " svelte-1af8azc")) {
         attr(th2, "class", th2_class_value);
       }
       if (dirty[0] & /*ActiveEffects, deleteItem, $doc, showDelete, parentIsActor*/
@@ -39188,11 +39188,11 @@ function create_each_block$6(ctx) {
       ctx[23].name);
       attr(td0, "class", "img");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1omalaq");
+      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-1omalaq");
       attr(a, "role", "button");
       attr(td1, "class", "left");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1omalaq");
+      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1omalaq");
       attr(button, "class", "stealth");
       attr(td4, "class", "min buttons right");
     },
@@ -39258,7 +39258,7 @@ function create_each_block$6(ctx) {
         set_data(t0, t0_value);
       if (!current || dirty & /*items*/
       64 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-FFXIV-1omalaq")) {
+      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-1omalaq")) {
         attr(a, "class", a_class_value);
       }
       if (
@@ -39293,7 +39293,7 @@ function create_each_block$6(ctx) {
         set_data(t1, t1_value);
       if (!current || dirty & /*items*/
       64 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-FFXIV-1omalaq")) {
+      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1omalaq")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -39421,7 +39421,7 @@ function create_fragment$x(ctx) {
       th2 = element("th");
       th2.textContent = `${localize("FFXIV.Type")}`;
       th3 = element("th");
-      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-FFXIV-1omalaq"></i>`;
+      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-1omalaq"></i>`;
       th4 = element("th");
       button = element("button");
       i1 = element("i");
@@ -39440,15 +39440,15 @@ function create_fragment$x(ctx) {
       attr(th3, "class", "shrink");
       attr(th3, "scope", "col");
       attr(i1, "class", i1_class_value = "fa " + /*faLockCSS*/
-      ctx[4] + " svelte-FFXIV-1omalaq");
+      ctx[4] + " svelte-1omalaq");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[5] + " svelte-FFXIV-1omalaq");
+      ctx[5] + " svelte-1omalaq");
       attr(th4, "class", th4_class_value = "buttons " + /*lockCSS*/
-      ctx[5] + " svelte-FFXIV-1omalaq");
+      ctx[5] + " svelte-1omalaq");
       attr(th4, "scope", "col");
       attr(table, "class", "borderless");
-      attr(div0, "class", "padded svelte-FFXIV-1omalaq");
-      attr(div1, "class", "panel overflow containerx svelte-FFXIV-1omalaq");
+      attr(div0, "class", "padded svelte-1omalaq");
+      attr(div1, "class", "panel overflow containerx svelte-1omalaq");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -39501,17 +39501,17 @@ function create_fragment$x(ctx) {
       }
       if (!current || dirty & /*faLockCSS*/
       16 && i1_class_value !== (i1_class_value = "fa " + /*faLockCSS*/
-      ctx2[4] + " svelte-FFXIV-1omalaq")) {
+      ctx2[4] + " svelte-1omalaq")) {
         attr(i1, "class", i1_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       32 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[5] + " svelte-FFXIV-1omalaq")) {
+      ctx2[5] + " svelte-1omalaq")) {
         attr(button, "class", button_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       32 && th4_class_value !== (th4_class_value = "buttons " + /*lockCSS*/
-      ctx2[5] + " svelte-FFXIV-1omalaq")) {
+      ctx2[5] + " svelte-1omalaq")) {
         attr(th4, "class", th4_class_value);
       }
       if (dirty & /*deleteItem, items, duplicateItem, editItem, $doc, badgeType, remaining, combat, showItemSheet*/
@@ -40000,7 +40000,7 @@ function create_fragment$v(ctx) {
       div0 = element("div");
       create_component(attributecol.$$.fragment);
       attr(div0, "class", "flexrow mb-md");
-      attr(div1, "class", "molecule svelte-FFXIV-1x6bbhr");
+      attr(div1, "class", "molecule svelte-1x6bbhr");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -40084,7 +40084,7 @@ function create_fragment$u(ctx) {
       div0 = element("div");
       create_component(attributecol.$$.fragment);
       attr(div0, "class", "flexrow mb-md");
-      attr(div1, "class", "molecule svelte-FFXIV-3bnbep");
+      attr(div1, "class", "molecule svelte-3bnbep");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -40192,7 +40192,7 @@ function create_fragment$t(ctx) {
       attr(div3, "class", "flex");
       attr(div4, "class", "flex");
       attr(div5, "class", "flexrow");
-      attr(div6, "class", "molecule svelte-FFXIV-xanq5m");
+      attr(div6, "class", "molecule svelte-xanq5m");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -40308,10 +40308,10 @@ function create_fragment$s(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(attributeblock.$$.fragment);
-      attr(div0, "class", "texture svelte-FFXIV-1j11oxv");
+      attr(div0, "class", "texture svelte-1j11oxv");
       attr(div1, "class", "flex2");
       attr(div2, "class", "flexrow panel borderless");
-      attr(div3, "class", "flexcol background svelte-FFXIV-1j11oxv");
+      attr(div3, "class", "flexcol background svelte-1j11oxv");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -40372,8 +40372,8 @@ function create_fragment$r(ctx) {
       div1 = element("div");
       div0 = element("div");
       create_component(hp.$$.fragment);
-      attr(div0, "class", "flex hp pa-md svelte-FFXIV-w11pgv");
-      attr(div1, "class", "flexrow section svelte-FFXIV-w11pgv");
+      attr(div0, "class", "flex hp pa-md svelte-w11pgv");
+      attr(div1, "class", "flexrow section svelte-w11pgv");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -40433,7 +40433,7 @@ function create_fragment$q(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "portrait-frame svelte-FFXIV-1cb780d");
+      attr(div, "class", "portrait-frame svelte-1cb780d");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -40639,12 +40639,12 @@ function create_fragment$p(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-FFXIV-1l2lk3v");
-      attr(div1, "class", "portrait-frame pr-xs wide svelte-FFXIV-1l2lk3v");
+      attr(div0, "class", "texture svelte-1l2lk3v");
+      attr(div1, "class", "portrait-frame pr-xs wide svelte-1l2lk3v");
       attr(div2, "class", "flex2 wide");
       attr(div3, "class", "flexrow panel borderless wide");
-      attr(div4, "class", "background svelte-FFXIV-1l2lk3v");
-      attr(div5, "class", "navy svelte-FFXIV-1l2lk3v");
+      attr(div4, "class", "background svelte-1l2lk3v");
+      attr(div5, "class", "navy svelte-1l2lk3v");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -40924,15 +40924,15 @@ function create_fragment$o(ctx) {
       div13 = element("div");
       div12 = element("div");
       create_component(portraitframe1.$$.fragment);
-      attr(div0, "class", "texture svelte-FFXIV-73oti1");
+      attr(div0, "class", "texture svelte-73oti1");
       attr(div1, "class", "flex1");
       attr(div1, "style", div1_style_value = /*smallwindow*/
       ctx[1] ? "min-width: 120px;" : "");
-      attr(div2, "class", "portrait-frame pr-xs wide svelte-FFXIV-73oti1");
+      attr(div2, "class", "portrait-frame pr-xs wide svelte-73oti1");
       attr(div3, "class", "flex2 wide");
       attr(div4, "class", "flexrow panel borderless wide");
-      attr(div5, "class", "background svelte-FFXIV-73oti1");
-      attr(div6, "class", "purple svelte-FFXIV-73oti1");
+      attr(div5, "class", "background svelte-73oti1");
+      attr(div6, "class", "purple svelte-73oti1");
       attr(div7, "class", "flexcol");
       attr(div8, "class", div8_class_value = /*smallwindow*/
       ctx[1] ? "flex2" : "flex3");
@@ -40940,12 +40940,12 @@ function create_fragment$o(ctx) {
       ctx[0] ? "flex2" : "flex3");
       set_style(div9, "min-width", "250px");
       attr(div10, "class", "flexrow");
-      attr(div11, "class", "texture svelte-FFXIV-73oti1");
-      attr(div12, "class", "portrait-frame pr-xs svelte-FFXIV-73oti1");
+      attr(div11, "class", "texture svelte-73oti1");
+      attr(div12, "class", "portrait-frame pr-xs svelte-73oti1");
       attr(div13, "class", "flex2 gold");
       attr(div14, "class", "flexrow panel borderless wide");
-      attr(div15, "class", "background svelte-FFXIV-73oti1");
-      attr(div16, "class", "flexcol teal svelte-FFXIV-73oti1");
+      attr(div15, "class", "background svelte-73oti1");
+      attr(div16, "class", "flexcol teal svelte-73oti1");
       attr(div17, "class", "panel overflow");
     },
     m(target, anchor) {
@@ -41691,7 +41691,7 @@ function create_fragment$m(ctx) {
       div0 = element("div");
       create_component(prosemirror.$$.fragment);
       attr(div0, "class", "flexcol flex3 left high");
-      attr(div1, "class", "item-sheet details overflow high svelte-FFXIV-1hen0dc");
+      attr(div1, "class", "item-sheet details overflow high svelte-1hen0dc");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -41897,7 +41897,7 @@ function create_fragment$l(ctx) {
       option_1.selected = option_1_selected_value = !/*value*/
       ctx[1];
       set_attributes(select, select_data);
-      toggle_class(select, "svelte-FFXIV-76qduf", true);
+      toggle_class(select, "svelte-76qduf", true);
     },
     m(target, anchor) {
       insert(target, select, anchor);
@@ -41981,7 +41981,7 @@ function create_fragment$l(ctx) {
       if (dirty & /*$$restProps, disabled*/
       20 && "value" in select_data)
         (select_data.multiple ? select_options : select_option)(select, select_data.value);
-      toggle_class(select, "svelte-FFXIV-76qduf", true);
+      toggle_class(select, "svelte-76qduf", true);
     },
     i(local) {
       if (current)
@@ -42355,7 +42355,7 @@ function create_if_block_6$1(ctx) {
       label.textContent = `${localize$1("Types.Item.Types.Options.DurationAmount.label")}`;
       attr(label, "for", `durationAmount${/*i*/
       ctx[17]}`);
-      attr(label, "class", "svelte-FFXIV-sihn49");
+      attr(label, "class", "svelte-sihn49");
     },
     m(target, anchor) {
       insert(target, label, anchor);
@@ -42376,7 +42376,7 @@ function create_if_block_5$1(ctx) {
       label.textContent = `${localize$1("Types.Item.Types.Options.DurationQualifier.label")}`;
       attr(label, "for", `durationQualifier${/*i*/
       ctx[17]}`);
-      attr(label, "class", "svelte-FFXIV-sihn49");
+      attr(label, "class", "svelte-sihn49");
     },
     m(target, anchor) {
       insert(target, label, anchor);
@@ -42666,7 +42666,7 @@ function create_each_block$3(ctx) {
       ctx[17] + 1}`;
       div1 = element("div");
       button = element("button");
-      button.innerHTML = `<i class="fas fa-times svelte-FFXIV-sihn49"></i>`;
+      button.innerHTML = `<i class="fas fa-times svelte-sihn49"></i>`;
       div5 = element("div");
       div3 = element("div");
       label = element("label");
@@ -42677,16 +42677,16 @@ function create_each_block$3(ctx) {
         if_block.c();
       attr(h3, "class", "left");
       attr(div0, "class", "flex4");
-      attr(button, "class", "small gold svelte-FFXIV-sihn49");
+      attr(button, "class", "small gold svelte-sihn49");
       attr(div1, "class", "flex0 right");
       attr(div2, "class", "flexrow justify-vertical wide");
       attr(label, "for", `durationType${/*i*/
       ctx[17]}`);
-      attr(label, "class", "svelte-FFXIV-sihn49");
+      attr(label, "class", "svelte-sihn49");
       attr(div3, "class", "flex1");
       attr(div4, "class", "flex1");
       attr(div5, "class", "flexrow sheet-row justify-vertical wide px-sm");
-      attr(div6, "class", "subsection svelte-FFXIV-sihn49");
+      attr(div6, "class", "subsection svelte-sihn49");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -42788,11 +42788,11 @@ function create_fragment$k(ctx) {
       div0.innerHTML = `<h2 class="left">Duration</h2>`;
       div1 = element("div");
       button = element("button");
-      button.innerHTML = `<i class="fas fa-plus svelte-FFXIV-sihn49"></i>`;
+      button.innerHTML = `<i class="fas fa-plus svelte-sihn49"></i>`;
       if (if_block)
         if_block.c();
       attr(div0, "class", "flex4");
-      attr(button, "class", "small gold svelte-FFXIV-sihn49");
+      attr(button, "class", "small gold svelte-sihn49");
       attr(div1, "class", "flex0 right");
       attr(div2, "class", "flexrow justify-vertical");
       attr(div3, "class", "duration");
@@ -43091,7 +43091,7 @@ function create_if_block_13(ctx) {
       attr(div9, "class", "flex4");
       attr(div10, "class", "flex0 right");
       attr(div11, "class", "flexrow justify-vertical");
-      attr(div12, "class", "subsection svelte-FFXIV-mf8ncy");
+      attr(div12, "class", "subsection svelte-mf8ncy");
     },
     m(target, anchor) {
       insert(target, div12, anchor);
@@ -43277,7 +43277,7 @@ function create_if_block_17(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectBP" class="svelte-FFXIV-mf8ncy">Barrier Points</label>`;
+      div0.innerHTML = `<label for="baseEffectBP" class="svelte-mf8ncy">Barrier Points</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
@@ -43327,7 +43327,7 @@ function create_if_block_16(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectDamage" class="svelte-FFXIV-mf8ncy">Damage</label>`;
+      div0.innerHTML = `<label for="baseEffectDamage" class="svelte-mf8ncy">Damage</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
@@ -43393,12 +43393,12 @@ function create_if_block_15(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectHealing" class="svelte-FFXIV-mf8ncy">Type</label>`;
+      div0.innerHTML = `<label for="baseEffectHealing" class="svelte-mf8ncy">Type</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       div5 = element("div");
       div3 = element("div");
-      div3.innerHTML = `<label for="baseEffectHealing" class="svelte-FFXIV-mf8ncy">Amount</label>`;
+      div3.innerHTML = `<label for="baseEffectHealing" class="svelte-mf8ncy">Amount</label>`;
       div4 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
@@ -43460,7 +43460,7 @@ function create_if_block_14(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectRestoreMP" class="svelte-FFXIV-mf8ncy">Restore MP</label>`;
+      div0.innerHTML = `<label for="baseEffectRestoreMP" class="svelte-mf8ncy">Restore MP</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex3");
@@ -43521,7 +43521,7 @@ function create_if_block_12(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "target");
-      attr(label, "class", "svelte-FFXIV-mf8ncy");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -43582,7 +43582,7 @@ function create_if_block_11(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "rangeType");
-      attr(label, "class", "svelte-FFXIV-mf8ncy");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -43637,7 +43637,7 @@ function create_if_block_10(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="checkAttribute" class="svelte-FFXIV-mf8ncy">Check Attribute</label>`;
+      div0.innerHTML = `<label for="checkAttribute" class="svelte-mf8ncy">Check Attribute</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(div0, "class", "flex2");
@@ -43706,7 +43706,7 @@ function create_if_block_9(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "CR");
-      attr(label, "class", "svelte-FFXIV-mf8ncy");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -43836,7 +43836,7 @@ function create_if_block_7(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="aspected" class="svelte-FFXIV-mf8ncy">Aspected</label>`;
+      div0.innerHTML = `<label for="aspected" class="svelte-mf8ncy">Aspected</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(div0, "class", "flex1");
@@ -43899,7 +43899,7 @@ function create_if_block_6(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "trigger");
-      attr(label, "class", "svelte-FFXIV-mf8ncy");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -43955,7 +43955,7 @@ function create_if_block_5(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="cost" class="svelte-FFXIV-mf8ncy">MP</label>`;
+      div0.innerHTML = `<label for="cost" class="svelte-mf8ncy">MP</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(div0, "class", "flex1");
@@ -44017,7 +44017,7 @@ function create_if_block_4(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "heavierShot");
-      attr(label, "class", "svelte-FFXIV-mf8ncy");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -44078,7 +44078,7 @@ function create_if_block_3$1(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "directHitType");
-      attr(label, "class", "svelte-FFXIV-mf8ncy");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -44128,7 +44128,7 @@ function create_if_block_2$3(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="directHitDamage" class="svelte-FFXIV-mf8ncy">Damage</label>`;
+      div0.innerHTML = `<label for="directHitDamage" class="svelte-mf8ncy">Damage</label>`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       attr(div0, "class", "flex2");
@@ -44183,7 +44183,7 @@ function create_if_block_1$3(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="directHitCondition" class="svelte-FFXIV-mf8ncy">Condition</label>`;
+      div0.innerHTML = `<label for="directHitCondition" class="svelte-mf8ncy">Condition</label>`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(div0, "class", "flex2");
@@ -44596,7 +44596,7 @@ function create_fragment$j(ctx) {
         if_block14.c();
       attr(h30, "class", "left");
       attr(label, "for", "type");
-      attr(label, "class", "svelte-FFXIV-mf8ncy");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -44641,7 +44641,7 @@ function create_fragment$j(ctx) {
       attr(div37, "class", "flex0 right");
       attr(div38, "class", "flexrow justify-vertical");
       attr(div39, "class", "flexcol flex3 left high wide");
-      attr(div40, "class", "item-sheet details overflow wide svelte-FFXIV-mf8ncy");
+      attr(div40, "class", "item-sheet details overflow wide svelte-mf8ncy");
     },
     m(target, anchor) {
       insert(target, div40, anchor);
@@ -45499,19 +45499,19 @@ function create_if_block_2$2(ctx) {
         each_blocks_1[i].c();
       }
       th3 = element("th");
-      th3.innerHTML = `<button class="stealth svelte-FFXIV-1wb0kvt"></button>`;
+      th3.innerHTML = `<button class="stealth svelte-1wb0kvt"></button>`;
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(th0, "class", "img expand svelte-FFXIV-1wb0kvt");
+      attr(th0, "class", "img expand svelte-1wb0kvt");
       attr(th0, "scope", "col");
-      attr(th1, "class", "left expand no-wrap svelte-FFXIV-1wb0kvt");
+      attr(th1, "class", "left expand no-wrap svelte-1wb0kvt");
       attr(th1, "scope", "col");
-      attr(th2, "class", "left shrink svelte-FFXIV-1wb0kvt");
+      attr(th2, "class", "left shrink svelte-1wb0kvt");
       attr(th2, "scope", "col");
-      attr(th3, "class", "buttons svelte-FFXIV-1wb0kvt");
-      attr(tr, "class", "svelte-FFXIV-1wb0kvt");
-      attr(table, "class", "standard-list small-text borderless svelte-FFXIV-1wb0kvt");
+      attr(th3, "class", "buttons svelte-1wb0kvt");
+      attr(tr, "class", "svelte-1wb0kvt");
+      attr(table, "class", "standard-list small-text borderless svelte-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, table, anchor);
@@ -45598,7 +45598,7 @@ function create_each_block_2(ctx) {
     c() {
       th = element("th");
       t = text(t_value);
-      attr(th, "class", "left fixed svelte-FFXIV-1wb0kvt");
+      attr(th, "class", "left fixed svelte-1wb0kvt");
       attr(th, "scope", "col");
     },
     m(target, anchor) {
@@ -45637,7 +45637,7 @@ function create_each_block_1(ctx) {
     c() {
       td = element("td");
       t = text(t_value);
-      attr(td, "class", "left svelte-FFXIV-1wb0kvt");
+      attr(td, "class", "left svelte-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, td, anchor);
@@ -45738,22 +45738,22 @@ function create_each_block$2(ctx) {
       td3 = element("td");
       button = element("button");
       button.innerHTML = `<i class="left fa fa-trash pointer"></i>`;
-      attr(img, "class", "icon nopointer svelte-FFXIV-1wb0kvt");
+      attr(img, "class", "icon nopointer svelte-1wb0kvt");
       if (!src_url_equal(img.src, img_src_value = /*item*/
       ctx[11].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
       ctx[11].name);
-      attr(td0, "class", "img svelte-FFXIV-1wb0kvt");
+      attr(td0, "class", "img svelte-1wb0kvt");
       attr(td1, "class", td1_class_value = "left pointer no-wrap " + /*item*/
-      (ctx[11].isMissing ? "missing-text" : "") + " svelte-FFXIV-1wb0kvt");
-      attr(td2, "class", "left svelte-FFXIV-1wb0kvt");
-      attr(button, "class", "stealth svelte-FFXIV-1wb0kvt");
-      attr(td3, "class", "buttons right svelte-FFXIV-1wb0kvt");
+      (ctx[11].isMissing ? "missing-text" : "") + " svelte-1wb0kvt");
+      attr(td2, "class", "left svelte-1wb0kvt");
+      attr(button, "class", "stealth svelte-1wb0kvt");
+      attr(td3, "class", "buttons right svelte-1wb0kvt");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*item*/
         ctx[11].isMissing ? "missing-item" : ""
-      ) + " svelte-FFXIV-1wb0kvt");
+      ) + " svelte-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -45802,7 +45802,7 @@ function create_each_block$2(ctx) {
         set_data(t0, t0_value);
       if (dirty & /*localList*/
       8 && td1_class_value !== (td1_class_value = "left pointer no-wrap " + /*item*/
-      (ctx[11].isMissing ? "missing-text" : "") + " svelte-FFXIV-1wb0kvt")) {
+      (ctx[11].isMissing ? "missing-text" : "") + " svelte-1wb0kvt")) {
         attr(td1, "class", td1_class_value);
       }
       if (dirty & /*localList*/
@@ -45837,7 +45837,7 @@ function create_each_block$2(ctx) {
       8 && tr_class_value !== (tr_class_value = null_to_empty(
         /*item*/
         ctx[11].isMissing ? "missing-item" : ""
-      ) + " svelte-FFXIV-1wb0kvt")) {
+      ) + " svelte-1wb0kvt")) {
         attr(tr, "class", tr_class_value);
       }
     },
@@ -45860,7 +45860,7 @@ function create_if_block_1$2(ctx) {
     c() {
       button = element("button");
       button.textContent = "- Remove All";
-      attr(button, "class", "mt-sm glossy-button gold-light hover-shine svelte-FFXIV-1wb0kvt");
+      attr(button, "class", "mt-sm glossy-button gold-light hover-shine svelte-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -45891,7 +45891,7 @@ function create_if_block$4(ctx) {
     c() {
       div = element("div");
       div.innerHTML = `<p class="empty-list-text">Drop items here to add them to the list.</p>`;
-      attr(div, "class", "empty-list svelte-FFXIV-1wb0kvt");
+      attr(div, "class", "empty-list svelte-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -45984,7 +45984,7 @@ function create_fragment$i(ctx) {
       attr(div1, "class", "flex0 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical");
       attr(div3, "class", div3_class_value = "item-bucket " + /*activeClass*/
-      ctx[6] + " svelte-FFXIV-1wb0kvt");
+      ctx[6] + " svelte-1wb0kvt");
       attr(div3, "role", "application");
       attr(div3, "aria-dropeffect", "link");
     },
@@ -46111,7 +46111,7 @@ function create_fragment$i(ctx) {
       }
       if (!current || dirty & /*activeClass*/
       64 && div3_class_value !== (div3_class_value = "item-bucket " + /*activeClass*/
-      ctx2[6] + " svelte-FFXIV-1wb0kvt")) {
+      ctx2[6] + " svelte-1wb0kvt")) {
         attr(div3, "class", div3_class_value);
       }
     },
@@ -46847,7 +46847,7 @@ function create_fragment$g(ctx) {
       attr(div3, "class", "flex0 right");
       attr(div4, "class", "flexrow sheet-row justify-vertical px-sm");
       attr(div5, "class", "pb-lg");
-      attr(div6, "class", "item-sheet details overflow high svelte-FFXIV-z5zfiu");
+      attr(div6, "class", "item-sheet details overflow high svelte-z5zfiu");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -47060,7 +47060,7 @@ function create_fragment$f(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -47261,7 +47261,7 @@ function create_fragment$d(ctx) {
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
       attr(div3, "class", "flexcol flex3 left high wide");
-      attr(div4, "class", "item-sheet details svelte-FFXIV-1kd5sxn");
+      attr(div4, "class", "item-sheet details svelte-1kd5sxn");
     },
     m(target, anchor) {
       insert(target, div4, anchor);
@@ -47421,7 +47421,7 @@ function create_fragment$c(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -47549,10 +47549,10 @@ function create_fragment$b(ctx) {
       li1 = element("li");
       t2 = text("LV ");
       t3 = text(t3_value);
-      attr(ol, "class", "properties-list svelte-FFXIV-1j7mfxl");
-      attr(div0, "class", "flexcol flex1 left svelte-FFXIV-1j7mfxl");
-      attr(div1, "class", "flexrow svelte-FFXIV-1j7mfxl");
-      attr(div2, "class", "flexcol description-tab svelte-FFXIV-1j7mfxl");
+      attr(ol, "class", "properties-list svelte-1j7mfxl");
+      attr(div0, "class", "flexcol flex1 left svelte-1j7mfxl");
+      attr(div1, "class", "flexrow svelte-1j7mfxl");
+      attr(div2, "class", "flexcol description-tab svelte-1j7mfxl");
       attr(div3, "class", "item-header");
     },
     m(target, anchor) {
@@ -47667,7 +47667,7 @@ function create_fragment$a(ctx) {
       attr(div6, "class", "flex0 pa-sm");
       attr(div7, "class", "flex3 left high");
       attr(div8, "class", "flexcol");
-      attr(div9, "class", "item-sheet details overflow high svelte-FFXIV-9bf1m7");
+      attr(div9, "class", "item-sheet details overflow high svelte-9bf1m7");
     },
     m(target, anchor) {
       insert(target, div9, anchor);
@@ -47801,7 +47801,7 @@ function create_fragment$9(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -48327,7 +48327,7 @@ function create_fragment$7(ctx) {
       attr(div16, "class", "flex0 right");
       attr(div17, "class", "flexrow sheet-row justify-vertical");
       attr(div18, "class", "flexcol flex3 left high bigbottom");
-      attr(div19, "class", "item-sheet details overflow svelte-FFXIV-7hc7it");
+      attr(div19, "class", "item-sheet details overflow svelte-7hc7it");
     },
     m(target, anchor) {
       insert(target, div19, anchor);
@@ -48655,7 +48655,7 @@ function create_fragment$6(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -48768,7 +48768,7 @@ function create_fragment$4(ctx) {
     c() {
       div = element("div");
       create_component(durationcomponent.$$.fragment);
-      attr(div, "class", "item-sheet details overflow svelte-FFXIV-7hc7it");
+      attr(div, "class", "item-sheet details overflow svelte-7hc7it");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -48878,7 +48878,7 @@ function create_fragment$3(ctx) {
     c() {
       div = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div, "class", "flex1 portrait-frame svelte-FFXIV-96hhfg");
+      attr(div, "class", "flex1 portrait-frame svelte-96hhfg");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -49055,7 +49055,7 @@ function create_default_slot(ctx) {
       section = element("section");
       if (switch_instance1)
         create_component(switch_instance1.$$.fragment);
-      attr(img, "class", "profile svelte-FFXIV-18qgyfp");
+      attr(img, "class", "profile svelte-18qgyfp");
       if (!src_url_equal(img.src, img_src_value = /*$documentStore*/
       ctx[2]?.img))
         attr(img, "src", img_src_value);
@@ -49067,7 +49067,7 @@ function create_default_slot(ctx) {
       attr(div0, "class", "flex0");
       set_style(table, "text-align", "center");
       attr(div2, "class", "flexcol");
-      attr(div3, "class", "flex1 profile-wrap svelte-FFXIV-18qgyfp");
+      attr(div3, "class", "flex1 profile-wrap svelte-18qgyfp");
       attr(div4, "class", "left wide");
       attr(header, "class", "wide");
       attr(section, "class", "mt-sm high");
@@ -49671,7 +49671,7 @@ function create_each_block(ctx) {
       i_1 = element("i");
       attr(i_1, "class", i_1_class_value = /*icon*/
       ctx[1] + " " + /*star*/
-      (ctx[15].active ? "active" : "") + " svelte-FFXIV-qjrcij");
+      (ctx[15].active ? "active" : "") + " svelte-qjrcij");
       attr(i_1, "role", "button");
       attr(i_1, "tabindex", "0");
       set_style(
@@ -49701,7 +49701,7 @@ function create_each_block(ctx) {
       if (dirty & /*icon, stars*/
       18 && i_1_class_value !== (i_1_class_value = /*icon*/
       ctx[1] + " " + /*star*/
-      (ctx[15].active ? "active" : "") + " svelte-FFXIV-qjrcij")) {
+      (ctx[15].active ? "active" : "") + " svelte-qjrcij")) {
         attr(i_1, "class", i_1_class_value);
       }
       if (dirty & /*activeColor*/
@@ -49759,9 +49759,9 @@ function create_fragment$1(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "stars svelte-FFXIV-qjrcij");
+      attr(div0, "class", "stars svelte-qjrcij");
       attr(div0, "id", "star-rating-group");
-      attr(div1, "class", "star-rating svelte-FFXIV-qjrcij");
+      attr(div1, "class", "star-rating svelte-qjrcij");
       attr(div1, "role", "group");
       attr(div1, "aria-label", div1_aria_label_value = /*label*/
       ctx[2] || "Rating");
@@ -50000,7 +50000,7 @@ function create_fragment(ctx) {
       attr(div2, "class", "flexcol");
       attr(div3, "class", "flex1");
       attr(div4, "class", "flexrow gap-15");
-      attr(form, "class", "modifier-dialog svelte-FFXIV-paczb8");
+      attr(form, "class", "modifier-dialog svelte-paczb8");
     },
     m(target, anchor) {
       insert(target, form, anchor);
