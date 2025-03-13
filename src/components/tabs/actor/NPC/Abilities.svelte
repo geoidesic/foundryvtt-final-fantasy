@@ -238,7 +238,7 @@
                     i.left.fa.fa-trash
             
       +if("hasItems")
-        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
+        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") {localize("Instructions.RemoveAll")}
 
 </template>
 

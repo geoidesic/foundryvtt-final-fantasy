@@ -121,7 +121,7 @@ onMount(async () => {
         class="{buttonAnimation}"
         on:click="{save}"
         on:mouseleave="{handleMouseLeave}"
-      ) Save Changes
+      ) {localize("Instructions.SaveChanges")}
 
 </template>
 <style lang="sass">

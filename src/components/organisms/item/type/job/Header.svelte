@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-
+  import { localize } from "~/src/helpers/util";
 const item = getContext("#doc");
 
 </script>
@@ -11,8 +11,8 @@ const item = getContext("#doc");
     .flexrow
       .flexcol.flex1.left
         ol.properties-list
-          li Role: {$item?.system?.role?.capitalize()}
-          li LV {$item?.system?.level}
+          li {localize("Role")}: {$item?.system?.role?.capitalize()}
+          li {localize("Level")}: {$item?.system?.level}
     
 </template>
 <style lang='sass'>

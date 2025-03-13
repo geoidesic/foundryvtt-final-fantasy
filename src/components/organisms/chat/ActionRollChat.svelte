@@ -441,7 +441,7 @@
                       .flex1.flexcol.thin-border
                         .col.target-name.font-cinzel.smaller {target.name}
                         .col.flexrow.justify-vertical.no-wrap
-                          .flex1.left.font-cinzel(data-tooltip-class="FFXIV-tooltip" data-tooltip="Defense") DEF 
+                          .flex1.left.font-cinzel(data-tooltip-class="FFXIV-tooltip" data-tooltip="Defense") {localize("Types.Actor.Types.PC.Attributes.secondary.def.Abbreviation")} 
                           .flex1.m1-xs.left {getDefenseValue(target)}
                           .flex1.relative.right
                             +if("FFMessage?.isCritical")
@@ -450,16 +450,16 @@
                                 .overlay(style="margin: 0; font-size: 1rem; color: #fff") 
                                   i.icon.fa-solid.bg-white.round(data-tooltip="{localize('CriticalSuccess')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                               +else
-                                i.icon.fa-solid.bg-white.round(data-tooltip="{isHit(target) ? localize('DirectHit') : localize('DirectHitMissed')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
+                                i.icon.fa-solid.bg-white.round(data-tooltip="{isHit(target) ? localize('DirectHit') : localize('Types.Item.Types.action.DirectHitMissed')}" class="{isHit(target) ? 'fa-circle-check positive' : 'fa-circle-xmark negative'}")
                   
                   .flex2.thin-border.offwhite(style="min-height: 2.6rem" class="{isApplyDisabled(target) ? 'bg-silver' : 'bg-gold'}")
                     +if("item?.system?.baseEffectDamage")
                       .flex1.formula.flexrow.justify-vertical.active(data-tooltip-class="FFXIV-tooltip" data-tooltip="{displayDamageFormula(target)}")
-                        .flex3.left.font-cinzel.smaller Damage 
+                        .flex3.left.font-cinzel.smaller {localize("Damage")}
                         .flex1.right.no-wrap {displayDamage(target)}
                     +if("item?.system?.hasDirectHit")
                       .flex1.formula.flexrow.justify-vertical.smaller(data-tooltip-class="FFXIV-tooltip" data-tooltip="{displayDirectHitDisplayFormula(target)}")
-                        .flex3.left.font-cinzel.even-smaller Direct Hit 
+                        .flex3.left.font-cinzel.even-smaller {localize("Types.Item.Types.action.DirectHit")}
                         .flex1.right.no-wrap {isHit(target) ? displayDirectHitDamage(target) : 'N/A'}
                   .flex0
                     .flexcol

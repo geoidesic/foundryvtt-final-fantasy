@@ -1,5 +1,6 @@
 <script>
   import { onMount, getContext } from 'svelte';
+  import { localize } from '~/src/helpers/util';
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
 
   const actor = getContext("#doc");
@@ -12,9 +13,9 @@
     .bp.flexrow.justify-vertical
       .flex3
         .header 
-          .header BP
+          .header {localize("Types.Actor.Points.BP.short")}
         .sub-header
-          .header (Barrier Points)
+          .header {localize("Types.Actor.Points.BP.Label")}
 
       .flex2.left
         .header.val

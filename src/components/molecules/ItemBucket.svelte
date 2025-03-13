@@ -154,10 +154,10 @@ $: hasItems = localList.length > 0;
               button.stealth(on:click!="{() => deleteLink(index)}")
                 i.left.fa.fa-trash.pointer
     +if("checkboxValue && hasItems")
-      button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
+      button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") {localize("Instructions.RemoveAll")}
     +if("checkboxValue && localList.length === 0")
       .empty-list
-        p.empty-list-text Drop items here to add them to the list.
+        p.empty-list-text {localize("Instructions.DropItemList")}
 
 </template>
 

@@ -12,9 +12,9 @@
     .hp.flexrow.justify-vertical
       .flex3
         .header 
-          .header HP
+          .header {localize("Types.Actor.Points.HP.short")}
         .sub-header
-          .header (Hit Points)
+          .header {localize("Types.Actor.Points.HP.Label")}
 
       .flex2
         .flex.sub-header 

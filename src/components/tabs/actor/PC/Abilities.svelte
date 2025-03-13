@@ -6,7 +6,7 @@
   import { TJSInput } from "#standard/component/form";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { toggleBookmark, ucfirst } from "~/src/helpers/util";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
@@ -18,7 +18,7 @@
   
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
-  const RollCalc = new CONFIG.FFXIV.RollCalcActor({ actor: $Actor });
+  const RollCalc = new CONFIG.RollCalcActor({ actor: $Actor });
   const typeSearch = createFilterQuery("type");
   typeSearch.set(["trait", "action"]); // Updated to filter for both types
   const input = {
@@ -74,7 +74,7 @@
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Abilities.confirmDeleteItem`));
+      okToDelete = confirm(game.i18n.localize("Types.Actor.Abilities.confirmDeleteItem"));
     }
     if (okToDelete) {
       item.delete();
@@ -83,8 +83,8 @@
 
   async function removeAllItems() {
     const okToDelete = await Dialog.confirm({
-      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAllTitle"),
-      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAll"),
+      title: localize("Types.Actor.Abilities.confirmDeleteAllTitle"),
+      content: localize("Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {  
         await $Actor.deleteAllItems(["trait", "action"]);
       },
@@ -130,8 +130,8 @@
     }
 
     const okToDelete = await Dialog.confirm({
-      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJobTitle"),
-      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJob"),
+      title: localize("Types.Actor.Abilities.confirmDeleteJobTitle"),
+      content: localize("Types.Actor.Abilities.confirmDeleteJob"),
       yes: async () => {
         //- get the job by uuid
         const job = await fromUuid($doc.system.job.uuid);
@@ -206,7 +206,7 @@
       .padded
         //- add in the job item if it exists
         +if("$Actor.system.job?.name")
-          h1.left.gold {localize('FFXIV.Job')}
+          h1.left.gold {localize('Job')}
           table.borderless
             tr
               th.img.shrink(scope="col")
@@ -218,26 +218,26 @@
                   i.fa-solid.fa-trash
 
 
-        h1.gold {localize('FFXIV.Abilities')}
+        h1.gold {localize('Abilities')}
         table.borderless.even
           tr.gold
             th.img.shrink(scope="col")
-            th.left.expand.ml-sm(scope="col") {localize('FFXIV.Name')}
-            th(scope="col" colspan="1") Tags
+            th.left.expand.ml-sm(scope="col") {localize('Name')}
+            th(scope="col" colspan="1") {localize('Tags')}
             th.buttons(scope="col" class="{lockCSS}" colspan="2")
               button.stealth(class="{lockCSS}" on:click="{toggleLock}")
                 i.fa(class="{faLockCSS}")
           +each("items as item, index")
             //- pre item.type {item.type}
             tr(class="{actionTypeClass(item)}")
-              td.img(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('FFXIV.Use')}" on:click!="{RollCalc.ability(item.type, item)}" role="button")
+              td.img(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Use')}" on:click!="{RollCalc.ability(item.type, item)}" role="button")
                 img.icon(src="{item.img}" alt="{item.name}")
               td.left.text.ellipsis
                 .flexrow
                   .flex3.left(data-tooltip-class="FFXIV-tooltip wordy" data-tooltip="{item.system.description}")
                     a.stealth.link(class="{item.system.isMagic ? 'pulse' : ''}" role="button" on:click="{showItemSheet(item)}") {item.name}
                   +if("item.system.hasLimitation && game.combat")
-                    .flex0.right.ml-sm.pt-s(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('FFXIV.Types.Item.Types.action.UsesRemaining')}")
+                    .flex0.right.ml-sm.pt-s(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Types.Item.Types.action.UsesRemaining')}")
                       Badge(type!="{badgeType(item)}") {item.usesRemaining}
               //- td.left {ucfirst(item.type)}
               //- td.left {item.type === 'action' ? ucfirst(item.system?.type || '') : ''}
@@ -245,21 +245,21 @@
                 +if("item.system.tags") 
                   +each("item.system.tags as tag")
                     Tag.badge.small.square({tag}, remover="{false}")
-              td.shrink(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('FFXIV.Bookmark')}")
+              td.shrink(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" role="button")
               td.min.buttons.right
                 +if("!$doc.system.inventoryLocked")
-                  button.stealth(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                  button.stealth(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
                     i.left.fa.fa-edit(role="button")
-                  button.stealth(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                  button.stealth(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
                     i.left.fa.fa-copy(role="button")
-                  button.stealth(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                  button.stealth(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
                     i.left.fa.fa-trash(role="button")
             
       +if("hasItems")
-        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
-        button.glossy-button.gold-light.hover-shine.ml-sm(on:click="{resetAllUses}") Reset Uses
+        button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") {localize("Instructions.RemoveAll")}
+        button.glossy-button.gold-light.hover-shine.ml-sm(on:click="{resetAllUses}") {localize("Instructions.ResetUses")}
 
 </template>
 

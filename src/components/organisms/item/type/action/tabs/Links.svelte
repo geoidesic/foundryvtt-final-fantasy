@@ -57,7 +57,7 @@
 
   .flexrow.sheet-row.justify-vertical.px-sm
     .flex4
-      h2.left Tags
+      h2.left {localize("Tags")}
     .flex0.right
       DocCheckbox( name="hasTags" valuePath="system.hasTags")
   +if("$item.system.hasTags")

@@ -53,7 +53,7 @@ async function updateDuration(index, field, value) {
       .subsection
         .flexrow.justify-vertical.wide
           .flex4
-            h3.left Duration {i + 1}
+            h3.left {localize("EFFECT.Duration.Title")} {i + 1}
           .flex0.right
             button.small.gold(on:click!="{() => removeDuration(i)}")
               i.fas.fa-times

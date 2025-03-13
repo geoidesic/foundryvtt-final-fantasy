@@ -2,6 +2,7 @@
   import { onMount, getContext } from "svelte";
   import { getSizeOptions } from "~/src/helpers/constants";
   import { SYSTEM_ID } from "~/src/helpers/constants";
+  import { localize } from "~/src/helpers/util";
   import PrimaryAttributes from "~/src/components/molecules/Attributes/NPC/PrimaryAttributes.svelte";
   import SecondaryAttributes from "~/src/components/molecules/Attributes/NPC/SecondaryAttributes.svelte";
   import DocSelect from "~/src/components/atoms/controls/DocSelect.svelte";
@@ -68,7 +69,7 @@
 .molecule
   .flexrow.sheet-row.justify-vertical
     .flex1.ml-md.mt-md.left.white
-      label(for="size") Size
+      label(for="size") {localize("Size")}
     .flex1.mt-md.mr-md.right
       DocSelect.right.white(
         name="size" 

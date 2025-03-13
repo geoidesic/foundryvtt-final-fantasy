@@ -1,5 +1,6 @@
 <script>
 import { onMount } from 'svelte';
+import { localize } from '~/src/helpers/util';
 import AttributeCol from "~/src/components/molecules/Attributes/AttributeCol.svelte";
 
 export let onclick;
@@ -14,7 +15,7 @@ let data = [
 </script>
 <template lang='pug'>
   .molecule
-    .flexrow.header.underscore.mb-md Primary Attributes
+    .flexrow.header.underscore.mb-md {localize("Primary")} {localize("Attributes")}
     AttributeCol( key="primary" showSign="{true}" abbreviateLabel="{true}" data="{data}" onclick="{onclick}")
 </template>
 

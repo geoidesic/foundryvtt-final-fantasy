@@ -12,13 +12,13 @@
     .mp.flexrow.justify-vertical
       .flex3
         .header 
-          .header MP
+          .header {localize("Types.Actor.Points.MP.short")}
         .sub-header
-          .header (Magic Points)
+          .header {localize("Types.Actor.Points.MP.Label")}
 
       .flex2
         .flex.sub-header 
-          .header Max
+          .header {localize("Max")}
         .flex.max.header 
           .header
             DocInput.wide(clickType="click" pulse="{true}" type="number" name="MP" min=0 valuePath="system.points.MP.max")

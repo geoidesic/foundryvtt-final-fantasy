@@ -235,8 +235,8 @@
 
     +if("showAddRemoveButtons")
       .flexrow.mt-sm(style="justify-content: space-evenly")
-        button.glossy-button.gold-light.hover-shine.no-wrap(on:click="{openActiveEffectEditor}") + Add Effect
-        button.glossy-button.gold-light.hover-shine.no-wrap(on:click="{removeAllEffects}") - Remove All Effects
+        button.glossy-button.gold-light.hover-shine.no-wrap(on:click="{openActiveEffectEditor}") {localize("Instructions.AddEffect")}
+        button.glossy-button.gold-light.hover-shine.no-wrap(on:click="{removeAllEffects}") {localize("Instructions.RemoveAllEffects")}
 </template>
 
 <style lang="sass">

@@ -13,7 +13,7 @@
   </script>
   <template lang='pug'>
     .molecule
-      .flexrow.header.underscore.mb-md Secondary Attributes
+      .flexrow.header.underscore.mb-md {localize("Secondary")} {localize("Attributes")}
       AttributeCol(key="secondary" data="{data}" onclick="{onclick}")
       
   </template>

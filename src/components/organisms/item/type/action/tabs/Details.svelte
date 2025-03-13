@@ -81,9 +81,9 @@
       .flexrow.justify-vertical
         .flex4 
           +if("$item.system.hasBaseEffect")
-            h2.left Base Effect
+            h2.left {localize("Types.Item.Types.action.BaseEffect")}
             +else
-              h3.left Base Effect
+              h3.left {localize("Types.Item.Types.action.BaseEffect")}
         
         .flex0.right
           DocCheckbox( name="hasBaseEffect" valuePath="system.hasBaseEffect")
@@ -97,7 +97,7 @@
           +if("$item.system.hasBaseEffectBarrier")
             .flexrow.sheet-row.justify-vertical.px-sm
               .flex3
-                label(for="baseEffectBP") Barrier Points
+                label(for="baseEffectBP") {localize("Types.Actor.Points.BP.Label")}
               .flex2.right
                 DocInput(id="baseEffectBP" name="baseEffectBP" valuePath="system.baseEffectBP")
           .flexrow.justify-vertical
@@ -108,7 +108,7 @@
           +if("$item.system.hasBaseEffectDamage")
             .flexrow.sheet-row.justify-vertical.px-sm
               .flex3
-                label(for="baseEffectDamage") Damage
+                label(for="baseEffectDamage") {localize("Damage")}
               .flex2.right
                 DocInput(id="baseEffectDamage" name="baseEffectDamage" valuePath="system.baseEffectDamage")
 
@@ -120,12 +120,12 @@
           +if("$item.system.hasBaseEffectHealing")
             .flexrow.sheet-row.justify-vertical.px-sm
               .flex3
-                label(for="baseEffectHealing") Type
+                label(for="baseEffectHealing") {localize("Type")}
               .flex4.right
                 DocSelect.wide.right(id="baseEffectHealingType" name="baseEffectHealingType" options="{baseEffectHealingTypeOptions}" valuePath="system.baseEffectHealingType")
             .flexrow.sheet-row.justify-vertical.px-sm
               .flex3
-                label(for="baseEffectHealing") Amount
+                label(for="baseEffectHealing") {localize("Amount")}
               .flex4.right
                 DocInput(id="baseEffectHealing" name="baseEffectHealing" valuePath="system.baseEffectHealing")
           
@@ -138,7 +138,7 @@
           +if("$item.system.hasBaseEffectRestoreMP")
             .flexrow.sheet-row.justify-vertical.px-sm
               .flex3
-                label(for="baseEffectRestoreMP") Restore MP
+                label(for="baseEffectRestoreMP") {localize("Types.Item.Types.action.BaseEffectRestoreMP")}
               .flex2.right
                 DocInput(id="baseEffectRestoreMP" name="baseEffectRestoreMP" valuePath="system.baseEffectRestoreMP")
 
@@ -179,7 +179,7 @@
       +if("$item.system.hasCheck")
         .flexrow.sheet-row.justify-vertical.wide
           .flex2
-            label(for="checkAttribute") Check Attribute
+            label(for="checkAttribute") {localize("Check")} {localize("Attribute")}
           .flex4.right.wide
             DocSelect.wide.right(id="checkAttribute" name="checkAttribute" options="{checkOptions}" valuePath="system.checkAttribute")
 
@@ -202,7 +202,7 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left Limitation
+          h3.left {localize("Limitation")}
         .flex0.right
           DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
 
@@ -217,13 +217,13 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left Aspected
+          h3.left {localize("Aspected")}
         .flex0.right
           DocCheckbox( name="hasAspected" valuePath="system.hasAspected")
       +if("$item.system.hasAspected")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="aspected") Aspected
+            label(for="aspected") {localize("Aspected")}
           .flex4.right.wide
             DocSelect.wide.right(id="aspected" name="aspected" type="number" options="{aspectedOptions}" valuePath="system.aspected")
 
@@ -244,21 +244,21 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left Cost
+          h3.left {localize("Cost")}
         .flex0.right
           DocCheckbox( name="hasCostMP" valuePath="system.hasCostMP")
 
       +if("$item.system.hasCostMP")
         .flexrow.sheet-row.justify-vertical.wide
           .flex1
-            label(for="cost") MP
+            label(for="cost") {localize("Types.Actor.Points.MP.short")}
           .flex4.right.wide
             DocSelect.wide.right(id="cost" name="cost" type="number" options="{costOptions}" valuePath="system.costMP")
       
 
       .flexrow.justify-vertical
         .flex4
-          h3.left Heavier Shot
+          h3.left {localize("HeavierShot")}
         .flex0.right
           DocCheckbox( name="hasHeavierShot" valuePath="system.hasHeavierShot")
 
@@ -271,13 +271,13 @@
 
       .flexrow.justify-vertical
         .flex4
-          h3.left Split Damage
+          h3.left {localize("Types.Item.Types.action.SplitDamage")}
         .flex0.right
           DocCheckbox(name="hasSplitDamage" valuePath="system.hasSplitDamage")
 
       .flexrow.justify-vertical
         .flex4
-          h3.left Direct Hit
+          h3.left {localize("Types.Item.Types.action.DirectHit")}
         .flex0.right
           DocCheckbox( name="hasDirectHit" valuePath="system.hasDirectHit")
 
@@ -291,21 +291,21 @@
       +if("$item.system.directHitType === 'damage'")
         .flexrow.sheet-row.justify-vertical
           .flex2
-            label(for="directHitDamage") Damage
+            label(for="directHitDamage") {localize("Damage")}
           .flex2.right
             DocInput(id="directHitDamage" name="directHitDamage" valuePath="system.directHitDamage")
 
       +if("$item.system.directHitType === 'condition'")
         .flexrow.sheet-row.justify-vertical.wide
           .flex2
-            label(for="directHitCondition") Condition
+            label(for="directHitCondition") {localize("Condition")}
           .flex2.right.wide
             DocSelect.wide.right(id="directHitCondition" name="directHitCondition" options="{directHitConditionOptions}" valuePath="system.directHitCondition")
 
       +if("$item.system.hasDirectHit")
         .flexcol.sheet-row.justify-vertical.high
           .flex2
-            h3.left Direct Hit Text 
+            h3.left {localize("Types.Item.Types.action.DirectHit")} {localize("Text")} 
           .flex2.left.prose.high
             ProseMirror( id="directHitText" name="directHitText" attr="system.directHitText")
 

@@ -31,7 +31,7 @@
       +if("parentIsActor")
         .flexrow.sheet-row
           .flex2
-            label(for="quantity") Quantity 
+            label(for="quantity") {localize("Quantity")}
           .flex2.right
             DocInput(id="quantity" name="quantity" valuePath="system.quantity")
 

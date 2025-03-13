@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import { getCROptions, getLimitationOptions } from "~/src/helpers/constants.js";
-
+  import { localize } from "~/src/helpers/util";
   const item = getContext("#doc");
 
   const CROptions = getCROptions();
@@ -22,17 +22,17 @@
             +if("$item?.system?.hasCheck")
               li {$item?.system?.checkAttribute.toUpperCase()}
             +if("$item?.system?.hasHeavierShot")
-              li Heavier Shot Type: {$item?.system?.heavierShotType}
+              li {localize("Types.Item.Types.action.HeavierShotType")}: {$item?.system?.heavierShotType}
             +if("$item?.system?.hasLimitation")
               li {limitationOptions.find((option) => option.value === $item?.system?.limitation)?.label}
             +if("$item?.system?.hasRanged")
-              li Range: {$item?.system?.rangeType}
+              li {localize("Types.Item.Range")}: {$item?.system?.rangeType}
             +if("$item?.system?.hasTarget")
-              li Target: {$item?.system?.target.capitalize()}
+              li {localize("Types.Item.Target")}: {$item?.system?.target.capitalize()}
             +if("$item?.system?.hasTrigger")
-              li Trigger: {$item?.system?.trigger.capitalize()}
+              li {localize("Types.Item.Trigger")}: {$item?.system?.trigger.capitalize()}
             +if("$item?.system?.directHitType")
-              li Direct Hit: {$item?.system?.directHitType.capitalize()}
+              li {localize("Types.Item.Types.action.DirectHit")}: {$item?.system?.directHitType.capitalize()}
                 +if("$item?.system?.directHitDamage")
                   | : {$item?.system?.directHitDamage}
 

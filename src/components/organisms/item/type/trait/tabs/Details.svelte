@@ -36,16 +36,16 @@
 <template lang="pug">
 .item-sheet.details.overflow
   .flexcol.flex3.left.high.bigbottom
-    h3.left General
+    h3.left {localize("General")}
     .flexrow.sheet-row.justify-vertical
       .flex3
-        label(for="type") Type
+        label(for="type") {localize("Type")}
       .flex2.right
         DocSelect.right(id="type" name="type" options="{typeOptions}" valuePath="system.type")
       
     .flexrow.justify-vertical
       .flex4
-        h3.left Limitation
+        h3.left {localize("Limitation")}
       .flex0.right
         DocCheckbox( name="hasLimitation" valuePath="system.hasLimitation")
     +if("$item.system.hasLimitation")
@@ -59,7 +59,7 @@
       
     .flexrow.justify-vertical
       .flex4
-        h3.left Modifier
+        h3.left {localize("Modifier")}
       .flex0.right
         DocCheckbox( name="hasModifier" valuePath="system.hasModifier")
     +if("$item.system.hasModifier")
@@ -81,7 +81,7 @@
       
     .flexrow.justify-vertical
       .flex4
-        h3.left Reroll Damage Dice
+        h3.left {localize("Types.Item.Types.Options.DamageDiceReroll.label")}
       .flex0.right
         DocCheckbox( name="hasDamageDiceReroll" valuePath="system.hasDamageDiceReroll")
     +if("$item.system.hasDamageDiceReroll")
@@ -94,7 +94,7 @@
   
     .flexrow.sheet-row.justify-vertical
       .flex4
-        h3.left Tags
+        h3.left {localize("Tags")}
       .flex0.right
         DocCheckbox( name="hasTags" valuePath="system.hasTags")
     +if("$item.system.hasTags")

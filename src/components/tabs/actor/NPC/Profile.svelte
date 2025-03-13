@@ -12,13 +12,13 @@ const proseMirrorClasses2 = ['left']
 h1.gold Details
 .flexrow.justify-vertical
   .flex2 
-    label.gold(for="name") Character Name:
+    label.gold(for="name") {localize("Character")} {localize("Name")}:
   .flex2.wide
     DocInput.wide(id="name" name="name" valuePath="name")
 
-h1.gold Description
+h1.gold {localize("Description")}
 ProseMirror(classes="{proseMirrorClasses}" attr="system.description" )
-h1.gold Notes
+h1.gold {localize("Notes")}
 ProseMirror(classes="{proseMirrorClasses2}" attr="system.biography" )
 
 //- .panel.heightcol

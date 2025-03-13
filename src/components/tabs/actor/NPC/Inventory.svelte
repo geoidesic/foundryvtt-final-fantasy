@@ -6,7 +6,7 @@
   import { TJSInput } from "#standard/component/form";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { toggleBookmark, ucfirst } from "~/src/helpers/util";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
@@ -61,7 +61,7 @@
   }
 
   async function removeAllItems() {
-    const okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteAll`));
+    const okToDelete = confirm(game.i18n.localize("Types.Actor.Inventory.confirmDeleteAll"));
     if (okToDelete) {
       await $Actor.deleteAllItems('equipment');
     }
@@ -70,7 +70,7 @@
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteItem`));
+      okToDelete = confirm(game.i18n.localize("Types.Actor.Inventory.confirmDeleteItem"));
     }
     if (okToDelete) {
       item.delete();
@@ -132,8 +132,8 @@
         table.borderless
           tr
             th.img.shrink(scope="col")
-            th.left.expand(scope="col") Name
-            th.fixed(scope="col") Quantity
+            th.left.expand(scope="col") {localize("Name")}
+            th.fixed(scope="col") {localize("Quantity")}
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
@@ -160,7 +160,7 @@
                   button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
                     i.left.fa.fa-trash
             
-      button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") - Remove All
+      button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") {localize("Instructions.RemoveAll")}
             
 </template>
 

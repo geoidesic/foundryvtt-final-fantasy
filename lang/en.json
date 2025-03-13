@@ -19,33 +19,43 @@
     "three": "3",
     "four": "4",
     "Abilities": "Abilities",
+    "Amount": "Amount",
+    "Aspected": "Aspected",
+    "Attributes": "Attributes",
     "Action": "Action",
     "Bookmark": "Bookmark",
+    "Character": "Character",
     "ChatText": "Chat Text",
     "Check": "Check",
     "Collapse": "Collapse details",
     "Combos": "Combos",
-    "CriticalSuccess": "Critical Success!",
+    "Condition": "Condition",
     "Config": "Configuration",
+    "Cost": "Cost",
     "CR": "CR",
+    "CriticalSuccess": "Critical Success!",
+    "Damage": "Damage",
     "Description": "Description",
     "Details": "Details",
-    "DirectHit": "Direct Hit",
-    "DirectHitMissed": "Direct Hit Missed",
     "Effects": "Effects",
     "Enabled": "Enabled",
     "Expand": "Expand details",
     "Favourite": "Favourite",
     "General": "General",
     "Grants": "Grants",
+    "HeavierShot": "Heavier Shot",
     "Inventory": "Inventory",
     "Job": "Job",
     "Links": "Links",
+    "Limitation": "Limitation",
     "Level": "Level",
     "LV": "LV",
+    "Max": "Max",
+    "Modifier": "Modifier",
     "Name": "Name",
     "NoEffects": "No Effects",
     "None": "None",
+    "Notes": "Notes",
     "Other": "Other",
     "Origin": "Origin",
     "Points": "Points",
@@ -55,11 +65,15 @@
     "Quantity": "Quantity",
     "Removes": "Removes",
     "Requires": "Requires",
+    "Role": "Role",
     "Round": "Round",
     "Search": "Search",
     "Secondary": "Secondary",
+    "Size": "Size",
     "Source": "Source",
+    "Tags": "Tags",
     "Target": "Target",
+    "Text": "Text",
     "Traits": "Traits",
     "Turn": "Turn",
     "Threshold": "Threshold",
@@ -76,6 +90,14 @@
         "ApplyItemToTarget": "Apply {0} to target(s)",
         "AppliedTo": "Applied to {1}"
       }
+    },
+    "Instructions": {
+      "DropItemList": "Drop items here to add them to the list.",
+      "RemoveAll": "Remove All",
+      "AddEffect": "Add Effect",
+      "RemoveAllEffects": "Remove All Effects",
+      "SaveChanges": "Save Changes",
+      "ResetUses": "Reset Uses"
     },
     "Modifiers": {
       "Penalty": "Penalty Modifier",
@@ -163,7 +185,6 @@
         "Effect": "Effect",
         "Trigger": "Trigger",
         "SharedLimitation": "Shared Limitation",
-        "Size": "Size",
         "Duration": {
           "Label": "Duration",
           "DurationQualifier": "Duration Qualifier",
@@ -192,7 +213,11 @@
             "BaseEffectDamage": "Damage",
             "BaseEffectHealing": "Healing",
             "BaseEffectRestoreMP": "Restore MP",
-            "BaseEffectBarrier": "Barrier"
+            "BaseEffectBarrier": "Barrier",
+            "SplitDamage": "Split Damage",
+            "HeavierShotType": "Heavier Shot Type",
+            "DirectHit": "Direct Hit",
+            "DirectHitMissed": "Direct Hit Missed"
           },
           "equipment": {
             "Label": "Equipment",
@@ -377,6 +402,23 @@
           "confirmDeleteAllTitle": "Delete All Abilities",
           "confirmDeleteJob": "Are you sure you want to delete this job?",
           "confirmDeleteJobTitle": "Delete Job"
+        },
+        "Points": {
+          "BP": {
+            "short": "BP",
+            "Label": "Barrier Points",
+            "Description": "A measure of physical resistance."
+          },
+          "MP": {
+            "short": "MP",
+            "Label": "Magic Points",
+            "Description": "A measure of magical power."
+          },
+          "HP": {
+            "short": "HP",
+            "Label": "Hit Points",
+            "Description": "A measure of physical endurance."
+          }
         },
         "Types": {
           "PC": {
