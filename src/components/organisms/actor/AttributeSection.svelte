@@ -53,7 +53,7 @@ function _launchStandardProfileEditor(event) {
         .flex2
           AttributeBlock
         .flex1.portrait-frame
-          PortraitFrame(img="{true}" imgSrc="{$documentStore?.img}" onClick="{_editToken}")
+          PortraitFrame(img="{true}" imgSrc="{$documentStore?.img}" onclick="{_editToken}")
       
 </template>
 <style lang='sass'>

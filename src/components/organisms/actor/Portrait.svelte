@@ -45,7 +45,8 @@
 <template lang="pug">
 
 .portrait-frame
-  PortraitFrame(img="{true}" imgSrc="{$documentStore?.img}" onClick="{_editToken}")
+  pre bo
+  PortraitFrame(img="{true}" imgSrc="{$documentStore?.img}" onclick="{_editToken}")
 
 </template>
 
