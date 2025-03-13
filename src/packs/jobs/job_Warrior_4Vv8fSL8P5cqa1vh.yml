@@ -12,6 +12,8 @@ system:
   role: Tank
   grants:
     list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.YSfOmFuJ8CTLFSUR
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.xtvAEVOUwOSQiBCX
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.6MXpuNE14pvtYZyf
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.7OXdI6HnneCtypSv
@@ -24,7 +26,6 @@ system:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.UWFtd28onJ30zMPR
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.UaFBsmpoJjrh1sBI
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.Xlxv7wQR2qQD7ol8
-      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
     value: true
 effects: []
 flags: {}
@@ -33,10 +34,10 @@ _stats:
   duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
-  systemVersion: 0.0.1
+  systemVersion: 0.1.33
   createdTime: 1736007802758
-  modifiedTime: 1738973655494
-  lastModifiedBy: A3f8BsJ7eYm0X14M
+  modifiedTime: 1741825262768
+  lastModifiedBy: vlEBG0iiUKKFP45a
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3

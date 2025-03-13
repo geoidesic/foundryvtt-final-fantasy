@@ -20,12 +20,15 @@ system:
   grants:
     value: true
     list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.0VCbJxo0W8TKgWmd
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.oQsOHfIQ0MjtsXQc
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.0PyBz2JbLmaHgXTk
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.GnC0gNeJNZ4k4xkf
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.WijSfA8sktXfrbML
-      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.8Vzw6HsA1CB6iS4X
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.oV2DeA8pgJMJwF93
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.8Vzw6HsA1CB6iS4X
   level: 40
   role: DPS
   favourite: false
@@ -37,10 +40,10 @@ _stats:
   duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
-  systemVersion: 0.0.1
+  systemVersion: 0.1.33
   createdTime: 1736694935892
-  modifiedTime: 1736694935892
-  lastModifiedBy: A3f8BsJ7eYm0X14M
+  modifiedTime: 1741825186089
+  lastModifiedBy: vlEBG0iiUKKFP45a
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3

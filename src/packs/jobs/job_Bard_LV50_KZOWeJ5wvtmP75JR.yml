@@ -23,6 +23,7 @@ system:
   grants:
     value: true
     list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.AGeRlT8ioTJYaiL5
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.e8FuBnJ6MO0HKZky
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.LrvNQjxf9DkgEaHI
@@ -41,10 +42,10 @@ _stats:
   duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
-  systemVersion: 0.0.1
+  systemVersion: 0.1.33
   createdTime: 1736695056122
-  modifiedTime: 1736695056122
-  lastModifiedBy: A3f8BsJ7eYm0X14M
+  modifiedTime: 1741825208992
+  lastModifiedBy: vlEBG0iiUKKFP45a
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3

@@ -14,9 +14,10 @@ system:
   grants:
     value: true
     list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.DK29UuM2xmMaLY6j
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.6iHsLOdAnIYGKyzi
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.jB4QfYbiVP0j1glr
-      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.9LfoH8u8M9PkXIeD
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.ujNEoE8uWxTPYoWl
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.hbK5XMIJmhVM4SZe
@@ -29,7 +30,7 @@ system:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.m4wMEsgPq8s3vrHG
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.JzV3ZcAj2KIl6ClN
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.bj2fFclWqjgWL8Ib
-      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.G9iqmYpF1SPAZvuC
   level: 30
   role: DPS
   favourite: false
@@ -41,10 +42,10 @@ _stats:
   duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
-  systemVersion: 0.0.1
+  systemVersion: 0.1.33
   createdTime: 1736007797746
-  modifiedTime: 1738973624935
-  lastModifiedBy: A3f8BsJ7eYm0X14M
+  modifiedTime: 1741825158168
+  lastModifiedBy: vlEBG0iiUKKFP45a
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3

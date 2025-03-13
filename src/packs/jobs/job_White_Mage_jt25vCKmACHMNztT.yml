@@ -14,6 +14,8 @@ system:
   role: Healer
   grants:
     list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.f1g1lQJwYfG1W1X7
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.r20omFAyHKfJ3E6d
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.WvJufPHglzMiQwRx
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.uI2ZJqZWR4bWsLhs
@@ -26,7 +28,6 @@ system:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.duvRBOpwWigYWnji
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.42yYsYvYBipnNWtn
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.g48GLdiRyrw4d1hm
-      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
     value: true
 effects: []
 flags: {}
@@ -35,10 +36,10 @@ _stats:
   duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
-  systemVersion: 0.0.1
+  systemVersion: 0.1.33
   createdTime: 1736007803709
-  modifiedTime: 1738973662354
-  lastModifiedBy: A3f8BsJ7eYm0X14M
+  modifiedTime: 1741825285670
+  lastModifiedBy: vlEBG0iiUKKFP45a
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3

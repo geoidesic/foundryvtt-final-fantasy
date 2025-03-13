@@ -14,12 +14,14 @@ system:
   role: DPS
   grants:
     list:
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.EA3iRzzruw70VxUY
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.071tdS2xlHxZBx6v
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.630MXX5ijjDuA6xM
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.9CkOObcCd4ZWDXqh
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.hgT1EkQkOlxx1Xvh
-      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.xJMiEFzmQAFZoQzx
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.S93BYNNYNSDE99rc
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.xJMiEFzmQAFZoQzx
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.dYxRIc7ty2r0BsTu
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.CwBrLF6KZltypDhO
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.TZ04wKEZee7WcmyC
@@ -32,7 +34,7 @@ system:
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.WG7TTZvJQBgwGvba
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.H56n66hVzwY1PJ9b
       - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.VU45filpiLFCz4RU
-      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.sTLWOZPfGWVOj1G0
+      - uuid: Compendium.foundryvtt-final-fantasy.abilities.Item.D0NkatEm5ii9MtT1
     value: true
 effects: []
 flags: {}
@@ -41,10 +43,10 @@ _stats:
   duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
-  systemVersion: 0.0.1
+  systemVersion: 0.1.33
   createdTime: 1736007800736
-  modifiedTime: 1738973636698
-  lastModifiedBy: A3f8BsJ7eYm0X14M
+  modifiedTime: 1741825231012
+  lastModifiedBy: vlEBG0iiUKKFP45a
 ownership:
   default: 0
   A3f8BsJ7eYm0X14M: 3
