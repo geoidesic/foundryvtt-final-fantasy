@@ -4,6 +4,7 @@ import preprocess from "svelte-preprocess";
 import { SYSTEM_ID, SYSTEM_CODE } from "./src/helpers/constants.js";
 import { postcssConfig, terserConfig, typhonjsRuntime } from "#runtime/rollup";
 import * as path from "path";
+import sass from 'sass'; // Import sass for svelte preprocessing
 
 const s_COMPRESS = false; // Set to true to compress the module bundle.
 const s_SOURCEMAPS = true; // Generate sourcemaps for the bundle (recommended).
@@ -58,10 +59,6 @@ export default () => {
       // Creates a standard configuration for PostCSS with autoprefixer & postcss-preset-env.
       postcss: postcssConfig({ compress: s_COMPRESS, sourceMap: s_SOURCEMAPS }),
       url: false,
-      // Extract CSS into a separate file during build
-      extract: {
-        filename: 'style.css'
-      }
     },
 
     // About server options:
@@ -75,8 +72,19 @@ export default () => {
       port: 30001,
       // open: "/game",
       open: false,
+      // Force Vite to expose style.css at the expected path
+      fs: {
+        allow: ['..']  // Allow serving files from one level up (project root)
+      },
       proxy: {
-        [`^(/systems/${SYSTEM_ID}/(lang|packs|assets|dist/style.css))`]: "http://localhost:30000",
+        // Redirect specific requests to the main Foundry server
+        [`^(/systems/${SYSTEM_ID}/(lang|packs|assets))`]: "http://localhost:30000",
+        // Special handling for index.js in dev mode - map dist/index.js to our Vite-served index.js
+        [`^/systems/${SYSTEM_ID}/dist/index.js`]: {
+          target: "http://localhost:30001",
+          rewrite: (path) => `/systems/${SYSTEM_ID}/index.js`
+        },
+        // All other requests go to the main Foundry server
         [`^(?!/systems/${SYSTEM_ID}/)`]: "http://localhost:30000",
         "/socket.io": { target: "ws://localhost:30000", ws: true }
       },
@@ -108,12 +116,17 @@ export default () => {
     },
     
     plugins: [
+      // Note: Vite handles style injection automatically in development mode
+      // No custom middleware needed for style injection
+      
       svelte({
-        compilerOptions: {
-          cssHash: ({ hash, css }) => `svelte-${SYSTEM_CODE}-${hash(css)}`
-        },
         preprocess: preprocess({
-          pug: true
+          pug: true,
+          sass: {
+            // This ensures imported SASS files are correctly processed
+            renderSync: true,
+            implementation: sass
+          }
         }),
         onwarn: (warning, handler) => {
           // Suppress `a11y-missing-attribute` for missing href in <a> links.

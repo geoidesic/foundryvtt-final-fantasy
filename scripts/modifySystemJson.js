@@ -12,21 +12,26 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const systemJsonPath = path.join(__dirname, '..', 'system.json');
 
-// Function to remove the styles line
+// Function to modify the system.json for development mode
 function removeStyles() {
     const data = fs.readFileSync(systemJsonPath, 'utf8');
     const jsonData = JSON.parse(data);
     
+    // Save a backup of the original values for later restoration
+    jsonData._original_esmodules = jsonData.esmodules;
+    
     // Remove the styles property if it exists
     delete jsonData.styles;
-
+    
+    // Keep the esmodules pointing to dist/index.js for compatibility
+    // The development server will handle redirecting this path
     
     // Write back the formatted JSON
     fs.writeFileSync(systemJsonPath, JSON.stringify(jsonData, null, 2) + '\n', 'utf8');
-    console.log('Removed styles from system.json');
+    console.log('Development mode: Removed styles from system.json');
 }
 
-// Function to restore the styles line
+// Function to restore the system.json for production mode
 function restoreStyles() {
     const data = fs.readFileSync(systemJsonPath, 'utf8');
     const jsonData = JSON.parse(data);
@@ -34,9 +39,15 @@ function restoreStyles() {
     // Set the styles property
     jsonData.styles = ["dist/style.css"];
     
+    // Restore the original esmodules if they were saved
+    if (jsonData._original_esmodules) {
+        jsonData.esmodules = jsonData._original_esmodules;
+        delete jsonData._original_esmodules;
+    }
+    
     // Write back the formatted JSON
     fs.writeFileSync(systemJsonPath, JSON.stringify(jsonData, null, 2) + '\n', 'utf8');
-    console.log('Restored styles in system.json');
+    console.log('Production mode: Restored styles and paths in system.json');
 }
 
 // Check command line arguments

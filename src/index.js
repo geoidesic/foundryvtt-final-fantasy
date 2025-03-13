@@ -1,5 +1,8 @@
 import './styles/Main.sass';
 
+// Vite will handle styles in development mode automatically by injecting them into the document
+// No manual CSS injection needed
+
 import EffectManager from "~/src/helpers/rolls/handlers/EffectManager.js";
 import FFXIVActor from '~/src/extensions/actor.js'
 import FFXIVItem from '~/src/extensions/item.js'
