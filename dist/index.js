@@ -4703,46 +4703,45 @@ function get_each_context$j(ctx, list, i) {
   return child_ctx;
 }
 __name(get_each_context$j, "get_each_context$j");
+function create_if_block_3$a(ctx) {
+  return { c: noop, m: noop, d: noop };
+}
+__name(create_if_block_3$a, "create_if_block_3$a");
 function create_if_block$v(ctx) {
-  let div9;
   let div0;
-  let div5;
+  let img;
+  let img_src_value;
+  let img_alt_value;
+  let div0_aria_label_value;
   let div3;
-  let div2;
   let div1;
+  let a0;
   let t0_value = (
     /*FFMessage*/
     ctx[1].actor.name + ""
   );
   let t0;
-  let div1_aria_label_value;
-  let div4;
-  let a;
+  let a0_aria_label_value;
+  let div2;
+  let a1;
   let t1_value = (
     /*FFMessage*/
     ctx[1].item.name + ""
   );
   let t1;
-  let a_aria_label_value;
-  let div4_aria_label_value;
-  let div5_class_value;
-  let div8;
-  let div7;
-  let div6;
+  let a1_aria_label_value;
+  let div5;
+  let div4;
   let t2_value = (
     /*FFMessage*/
     ctx[1].item.type + ""
   );
   let t2;
-  let div8_class_value;
+  let if_block1_anchor;
   let current;
   let mounted;
   let dispose;
   let if_block0 = (
-    /*showProfileImage*/
-    ctx[4] && create_if_block_3$a(ctx)
-  );
-  let if_block1 = (
     /*item*/
     ctx[2]?.system?.tags?.length > 0 && create_if_block_2$e(ctx)
   );
@@ -4756,143 +4755,120 @@ function create_if_block$v(ctx) {
   }
   __name(select_block_type, "select_block_type");
   let current_block_type = select_block_type(ctx);
-  let if_block2 = current_block_type(ctx);
+  let if_block1 = current_block_type(ctx);
   return {
     c() {
-      div9 = element("div");
       div0 = element("div");
+      img = element("img");
+      div3 = element("div");
+      div1 = element("div");
+      a0 = element("a");
+      t0 = text(t0_value);
+      div2 = element("div");
+      a1 = element("a");
+      t1 = text(t1_value);
+      div5 = element("div");
+      div4 = element("div");
+      t2 = text(t2_value);
       if (if_block0)
         if_block0.c();
-      div5 = element("div");
-      div3 = element("div");
-      div2 = element("div");
-      div1 = element("div");
-      t0 = text(t0_value);
-      div4 = element("div");
-      a = element("a");
-      t1 = text(t1_value);
-      div8 = element("div");
-      div7 = element("div");
-      div6 = element("div");
-      t2 = text(t2_value);
-      if (if_block1)
-        if_block1.c();
-      if_block2.c();
-      attr(div0, "class", "texture svelte-1ouu4ln");
-      attr(div1, "class", "flex4 link actor-name svelte-1ouu4ln");
-      attr(div1, "role", "button");
-      attr(div1, "aria-label", div1_aria_label_value = "Open " + /*FFMessage*/
+      if_block1.c();
+      if_block1_anchor = empty();
+      attr(img, "class", "icon avatar svelte-n656zp");
+      if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx[1].actor.img))
+        attr(img, "src", img_src_value);
+      attr(img, "alt", img_alt_value = /*FFMessage*/
+      ctx[1].actor.name);
+      attr(div0, "role", "button");
+      attr(div0, "aria-label", div0_aria_label_value = "Open " + /*FFMessage*/
       ctx[1].actor.name + "'s character sheet");
-      attr(div2, "class", "flexrow");
-      attr(div3, "class", "col");
-      attr(a, "role", "button");
-      attr(a, "aria-label", a_aria_label_value = "Open " + /*FFMessage*/
+      attr(a0, "role", "button");
+      attr(a0, "aria-label", a0_aria_label_value = "Open " + /*FFMessage*/
+      ctx[1].actor.name + "'s character sheet");
+      attr(div1, "class", "col actor-name no-overflow ellipsis");
+      attr(a1, "role", "button");
+      attr(a1, "aria-label", a1_aria_label_value = "Open " + /*FFMessage*/
       ctx[1].item.name + " item sheet");
-      attr(a, "class", "svelte-1ouu4ln");
-      attr(div4, "class", "col font-cinzel smaller item-name no-overflow svelte-1ouu4ln");
-      attr(div4, "role", "button");
-      attr(div4, "aria-label", div4_aria_label_value = "Open " + /*FFMessage*/
-      ctx[1].item.name + " item sheet");
-      attr(div5, "class", div5_class_value = "flex3 flexcol no-overflow " + /*showProfileImage*/
-      (ctx[4] ? "text" : ""));
-      attr(div6, "class", "flex1 mr-xl-h right type-label smaller gold svelte-1ouu4ln");
-      attr(div7, "class", "flexcol");
-      attr(div8, "class", div8_class_value = null_to_empty(
-        /*tagsColumnClass*/
-        ctx[3]
-      ) + " svelte-1ouu4ln");
-      attr(div9, "class", "flexrow title svelte-1ouu4ln");
-      attr(div9, "role", "button");
-      attr(div9, "aria-label", "Toggle description");
+      attr(div2, "class", "col font-cinzel smaller item-name no-overflow ellipsis");
+      attr(div3, "class", "flexcol no-overflow names svelte-n656zp");
+      attr(div4, "class", "right type-label smaller gold");
     },
     m(target, anchor) {
-      insert(target, div9, anchor);
-      append(div9, div0);
-      if (if_block0)
-        if_block0.m(div9, null);
-      append(div9, div5);
-      append(div5, div3);
+      insert(target, div0, anchor);
+      append(div0, img);
+      insert(target, div3, anchor);
+      append(div3, div1);
+      append(div1, a0);
+      append(a0, t0);
       append(div3, div2);
-      append(div2, div1);
-      append(div1, t0);
+      append(div2, a1);
+      append(a1, t1);
+      insert(target, div5, anchor);
       append(div5, div4);
-      append(div4, a);
-      append(a, t1);
-      append(div9, div8);
-      append(div8, div7);
-      append(div7, div6);
-      append(div6, t2);
-      if (if_block1)
-        if_block1.m(div7, null);
-      if_block2.m(div9, null);
+      append(div4, t2);
+      if (if_block0)
+        if_block0.m(div5, null);
+      if_block1.m(target, anchor);
+      insert(target, if_block1_anchor, anchor);
       current = true;
       if (!mounted) {
         dispose = [
           listen(
-            div1,
+            div0,
             "click",
             /*openActorSheet*/
             ctx[7]
           ),
           listen(
-            a,
+            a0,
+            "click",
+            /*openActorSheet*/
+            ctx[7]
+          ),
+          listen(
+            a1,
             "click",
             /*click_handler*/
             ctx[10]
-          ),
-          listen(
-            div9,
-            "click",
-            /*handleTitleClick*/
-            ctx[8]
           )
         ];
         mounted = true;
       }
     },
     p(ctx2, dirty) {
-      if (
-        /*showProfileImage*/
-        ctx2[4]
-      ) {
-        if (if_block0) {
-          if_block0.p(ctx2, dirty);
-        } else {
-          if_block0 = create_if_block_3$a(ctx2);
-          if_block0.c();
-          if_block0.m(div9, div5);
-        }
-      } else if (if_block0) {
-        if_block0.d(1);
-        if_block0 = null;
+      if (!current || dirty & /*FFMessage*/
+      2 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx2[1].actor.img)) {
+        attr(img, "src", img_src_value);
+      }
+      if (!current || dirty & /*FFMessage*/
+      2 && img_alt_value !== (img_alt_value = /*FFMessage*/
+      ctx2[1].actor.name)) {
+        attr(img, "alt", img_alt_value);
+      }
+      if (!current || dirty & /*FFMessage*/
+      2 && div0_aria_label_value !== (div0_aria_label_value = "Open " + /*FFMessage*/
+      ctx2[1].actor.name + "'s character sheet")) {
+        attr(div0, "aria-label", div0_aria_label_value);
       }
       if ((!current || dirty & /*FFMessage*/
       2) && t0_value !== (t0_value = /*FFMessage*/
       ctx2[1].actor.name + ""))
         set_data(t0, t0_value);
       if (!current || dirty & /*FFMessage*/
-      2 && div1_aria_label_value !== (div1_aria_label_value = "Open " + /*FFMessage*/
+      2 && a0_aria_label_value !== (a0_aria_label_value = "Open " + /*FFMessage*/
       ctx2[1].actor.name + "'s character sheet")) {
-        attr(div1, "aria-label", div1_aria_label_value);
+        attr(a0, "aria-label", a0_aria_label_value);
       }
       if ((!current || dirty & /*FFMessage*/
       2) && t1_value !== (t1_value = /*FFMessage*/
       ctx2[1].item.name + ""))
         set_data(t1, t1_value);
       if (!current || dirty & /*FFMessage*/
-      2 && a_aria_label_value !== (a_aria_label_value = "Open " + /*FFMessage*/
+      2 && a1_aria_label_value !== (a1_aria_label_value = "Open " + /*FFMessage*/
       ctx2[1].item.name + " item sheet")) {
-        attr(a, "aria-label", a_aria_label_value);
-      }
-      if (!current || dirty & /*FFMessage*/
-      2 && div4_aria_label_value !== (div4_aria_label_value = "Open " + /*FFMessage*/
-      ctx2[1].item.name + " item sheet")) {
-        attr(div4, "aria-label", div4_aria_label_value);
-      }
-      if (!current || dirty & /*showProfileImage*/
-      16 && div5_class_value !== (div5_class_value = "flex3 flexcol no-overflow " + /*showProfileImage*/
-      (ctx2[4] ? "text" : ""))) {
-        attr(div5, "class", div5_class_value);
+        attr(a1, "aria-label", a1_aria_label_value);
       }
       if ((!current || dirty & /*FFMessage*/
       2) && t2_value !== (t2_value = /*FFMessage*/
@@ -4902,131 +4878,62 @@ function create_if_block$v(ctx) {
         /*item*/
         ctx2[2]?.system?.tags?.length > 0
       ) {
-        if (if_block1) {
-          if_block1.p(ctx2, dirty);
+        if (if_block0) {
+          if_block0.p(ctx2, dirty);
           if (dirty & /*item*/
           4) {
-            transition_in(if_block1, 1);
+            transition_in(if_block0, 1);
           }
         } else {
-          if_block1 = create_if_block_2$e(ctx2);
-          if_block1.c();
-          transition_in(if_block1, 1);
-          if_block1.m(div7, null);
+          if_block0 = create_if_block_2$e(ctx2);
+          if_block0.c();
+          transition_in(if_block0, 1);
+          if_block0.m(div5, null);
         }
-      } else if (if_block1) {
+      } else if (if_block0) {
         group_outros();
-        transition_out(if_block1, 1, 1, () => {
-          if_block1 = null;
+        transition_out(if_block0, 1, 1, () => {
+          if_block0 = null;
         });
         check_outros();
       }
-      if (!current || dirty & /*tagsColumnClass*/
-      8 && div8_class_value !== (div8_class_value = null_to_empty(
-        /*tagsColumnClass*/
-        ctx2[3]
-      ) + " svelte-1ouu4ln")) {
-        attr(div8, "class", div8_class_value);
-      }
-      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block2) {
-        if_block2.p(ctx2, dirty);
+      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block1) {
+        if_block1.p(ctx2, dirty);
       } else {
-        if_block2.d(1);
-        if_block2 = current_block_type(ctx2);
-        if (if_block2) {
-          if_block2.c();
-          if_block2.m(div9, null);
+        if_block1.d(1);
+        if_block1 = current_block_type(ctx2);
+        if (if_block1) {
+          if_block1.c();
+          if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
         }
       }
     },
     i(local) {
       if (current)
         return;
-      transition_in(if_block1);
+      transition_in(if_block0);
       current = true;
     },
     o(local) {
-      transition_out(if_block1);
+      transition_out(if_block0);
       current = false;
     },
     d(detaching) {
       if (detaching) {
-        detach(div9);
+        detach(div0);
+        detach(div3);
+        detach(div5);
+        detach(if_block1_anchor);
       }
       if (if_block0)
         if_block0.d();
-      if (if_block1)
-        if_block1.d();
-      if_block2.d();
+      if_block1.d(detaching);
       mounted = false;
       run_all(dispose);
     }
   };
 }
 __name(create_if_block$v, "create_if_block$v");
-function create_if_block_3$a(ctx) {
-  let div;
-  let img;
-  let img_src_value;
-  let img_alt_value;
-  let div_aria_label_value;
-  let mounted;
-  let dispose;
-  return {
-    c() {
-      div = element("div");
-      img = element("img");
-      attr(img, "class", "icon avatar svelte-1ouu4ln");
-      if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
-      ctx[1].actor.img))
-        attr(img, "src", img_src_value);
-      attr(img, "alt", img_alt_value = /*FFMessage*/
-      ctx[1].actor.name);
-      attr(div, "class", "flex1");
-      attr(div, "role", "button");
-      attr(div, "aria-label", div_aria_label_value = "Open " + /*FFMessage*/
-      ctx[1].actor.name + "'s character sheet");
-    },
-    m(target, anchor) {
-      insert(target, div, anchor);
-      append(div, img);
-      if (!mounted) {
-        dispose = listen(
-          div,
-          "click",
-          /*openActorSheet*/
-          ctx[7]
-        );
-        mounted = true;
-      }
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*FFMessage*/
-      2 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
-      ctx2[1].actor.img)) {
-        attr(img, "src", img_src_value);
-      }
-      if (dirty & /*FFMessage*/
-      2 && img_alt_value !== (img_alt_value = /*FFMessage*/
-      ctx2[1].actor.name)) {
-        attr(img, "alt", img_alt_value);
-      }
-      if (dirty & /*FFMessage*/
-      2 && div_aria_label_value !== (div_aria_label_value = "Open " + /*FFMessage*/
-      ctx2[1].actor.name + "'s character sheet")) {
-        attr(div, "aria-label", div_aria_label_value);
-      }
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div);
-      }
-      mounted = false;
-      dispose();
-    }
-  };
-}
-__name(create_if_block_3$a, "create_if_block_3$a");
 function create_if_block_2$e(ctx) {
   let div1;
   let div0;
@@ -5049,11 +4956,10 @@ function create_if_block_2$e(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "flexrow right");
+      attr(div0, "class", "flexrow right no-overflow");
       set_style(div0, "justify-content", "flex-end");
       set_style(div0, "gap", "2px");
-      attr(div1, "class", "flex3 right");
-      set_style(div1, "margin-right", "2.2rem");
+      attr(div1, "class", "right");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -5175,7 +5081,7 @@ function create_else_block$8(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "icon right item pointer svelte-1ouu4ln");
+      attr(img, "class", "icon right item pointer svelte-n656zp");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[1].item.img))
         attr(img, "src", img_src_value);
@@ -5213,7 +5119,7 @@ function create_if_block_1$i(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "icon right item pointer svelte-1ouu4ln");
+      attr(img, "class", "icon right item pointer svelte-n656zp");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[1].item.img))
         attr(img, "src", img_src_value);
@@ -5245,66 +5151,121 @@ function create_if_block_1$i(ctx) {
 }
 __name(create_if_block_1$i, "create_if_block_1$i");
 function create_fragment$1j(ctx) {
-  let div;
+  let div2;
+  let div1;
+  let div0;
+  let div1_class_value;
   let current;
-  let if_block = (
+  let mounted;
+  let dispose;
+  let if_block0 = (
     /*FFMessage*/
-    ctx[1] && create_if_block$v(ctx)
+    ctx[1] && create_if_block_3$a()
+  );
+  let if_block1 = (
+    /*showProfileImage*/
+    ctx[4] && create_if_block$v(ctx)
   );
   return {
     c() {
-      div = element("div");
-      if (if_block)
-        if_block.c();
-      attr(div, "class", "chat-title svelte-1ouu4ln");
+      div2 = element("div");
+      if (if_block0)
+        if_block0.c();
+      div1 = element("div");
+      div0 = element("div");
+      if (if_block1)
+        if_block1.c();
+      attr(div0, "class", "texture svelte-n656zp");
+      attr(div1, "class", div1_class_value = "title " + /*tagsColumnClass*/
+      ctx[3] + " svelte-n656zp");
+      attr(div1, "role", "button");
+      attr(div1, "aria-label", "Toggle description");
+      attr(div2, "class", "chat-title svelte-n656zp");
     },
     m(target, anchor) {
-      insert(target, div, anchor);
-      if (if_block)
-        if_block.m(div, null);
+      insert(target, div2, anchor);
+      if (if_block0)
+        if_block0.m(div2, null);
+      append(div2, div1);
+      append(div1, div0);
+      if (if_block1)
+        if_block1.m(div1, null);
       current = true;
+      if (!mounted) {
+        dispose = listen(
+          div1,
+          "click",
+          /*handleTitleClick*/
+          ctx[8]
+        );
+        mounted = true;
+      }
     },
     p(ctx2, [dirty]) {
       if (
         /*FFMessage*/
         ctx2[1]
       ) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
-          if (dirty & /*FFMessage*/
-          2) {
-            transition_in(if_block, 1);
+        if (if_block0)
+          ;
+        else {
+          if_block0 = create_if_block_3$a();
+          if_block0.c();
+          if_block0.m(div2, div1);
+        }
+      } else if (if_block0) {
+        if_block0.d(1);
+        if_block0 = null;
+      }
+      if (
+        /*showProfileImage*/
+        ctx2[4]
+      ) {
+        if (if_block1) {
+          if_block1.p(ctx2, dirty);
+          if (dirty & /*showProfileImage*/
+          16) {
+            transition_in(if_block1, 1);
           }
         } else {
-          if_block = create_if_block$v(ctx2);
-          if_block.c();
-          transition_in(if_block, 1);
-          if_block.m(div, null);
+          if_block1 = create_if_block$v(ctx2);
+          if_block1.c();
+          transition_in(if_block1, 1);
+          if_block1.m(div1, null);
         }
-      } else if (if_block) {
+      } else if (if_block1) {
         group_outros();
-        transition_out(if_block, 1, 1, () => {
-          if_block = null;
+        transition_out(if_block1, 1, 1, () => {
+          if_block1 = null;
         });
         check_outros();
+      }
+      if (!current || dirty & /*tagsColumnClass*/
+      8 && div1_class_value !== (div1_class_value = "title " + /*tagsColumnClass*/
+      ctx2[3] + " svelte-n656zp")) {
+        attr(div1, "class", div1_class_value);
       }
     },
     i(local) {
       if (current)
         return;
-      transition_in(if_block);
+      transition_in(if_block1);
       current = true;
     },
     o(local) {
-      transition_out(if_block);
+      transition_out(if_block1);
       current = false;
     },
     d(detaching) {
       if (detaching) {
-        detach(div);
+        detach(div2);
       }
-      if (if_block)
-        if_block.d();
+      if (if_block0)
+        if_block0.d();
+      if (if_block1)
+        if_block1.d();
+      mounted = false;
+      dispose();
     }
   };
 }
@@ -7250,7 +7211,7 @@ function create_if_block$s(ctx) {
   let current;
   let each_value = ensure_array_like(
     /*targetTokens*/
-    ctx[4]
+    ctx[3]
   );
   let each_blocks = [];
   for (let i = 0; i < each_value.length; i += 1) {
@@ -7281,10 +7242,10 @@ function create_if_block$s(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*targetTokens, isApplyDisabled, undoResult, applyResult, displayDirectHitDisplayFormula, isHit, displayDirectHitDamage, item, displayDamageFormula, displayDamage, FFMessage, openActorSheet*/
-      124889) {
+      31725) {
         each_value = ensure_array_like(
           /*targetTokens*/
-          ctx2[4]
+          ctx2[3]
         );
         let i;
         for (i = 0; i < each_value.length; i += 1) {
@@ -7393,11 +7354,11 @@ function create_if_block_1$g(ctx) {
   if_block1 = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
   let if_block2 = (
     /*item*/
-    ctx[10]?.system?.baseEffectDamage && create_if_block_3$8(ctx)
+    ctx[9]?.system?.baseEffectDamage && create_if_block_3$8(ctx)
   );
   let if_block3 = (
     /*item*/
-    ctx[10]?.system?.hasDirectHit && create_if_block_2$c(ctx)
+    ctx[9]?.system?.hasDirectHit && create_if_block_2$c(ctx)
   );
   return {
     c() {
@@ -7447,7 +7408,7 @@ function create_if_block_1$g(ctx) {
       attr(div8, "class", "flexrow justify-vertical gap-4");
       attr(div9, "class", "flex3");
       attr(div10, "class", div10_class_value = "flex2 thin-border offwhite " + /*isApplyDisabled*/
-      (ctx[3](
+      (ctx[2](
         /*target*/
         ctx[32]
       ) ? "bg-silver" : "bg-gold"));
@@ -7455,7 +7416,7 @@ function create_if_block_1$g(ctx) {
       attr(i0, "class", "fa-solid fa-check");
       attr(button0, "class", "stealth apply-trait svelte-ugr7oj");
       button0.disabled = button0_disabled_value = /*isApplyDisabled*/
-      ctx[3](
+      ctx[2](
         /*target*/
         ctx[32]
       );
@@ -7463,7 +7424,7 @@ function create_if_block_1$g(ctx) {
       attr(i1, "class", "fa-solid fa-refresh");
       attr(button1, "class", "stealth apply-trait svelte-ugr7oj");
       button1.disabled = button1_disabled_value = !/*isApplyDisabled*/
-      ctx[3](
+      ctx[2](
         /*target*/
         ctx[32]
       );
@@ -7514,12 +7475,12 @@ function create_if_block_1$g(ctx) {
           listen(button0, "click", function() {
             if (is_function(
               /*applyResult*/
-              ctx[13](
+              ctx[11](
                 /*target*/
                 ctx[32]
               )
             ))
-              ctx[13](
+              ctx[11](
                 /*target*/
                 ctx[32]
               ).apply(this, arguments);
@@ -7527,12 +7488,12 @@ function create_if_block_1$g(ctx) {
           listen(button1, "click", function() {
             if (is_function(
               /*undoResult*/
-              ctx[14](
+              ctx[12](
                 /*target*/
                 ctx[32]
               )
             ))
-              ctx[14](
+              ctx[12](
                 /*target*/
                 ctx[32]
               ).apply(this, arguments);
@@ -7560,11 +7521,11 @@ function create_if_block_1$g(ctx) {
         if_block0 = null;
       }
       if ((!current || dirty[0] & /*targetTokens*/
-      16) && t0_value !== (t0_value = /*target*/
+      8) && t0_value !== (t0_value = /*target*/
       ctx[32].name + ""))
         set_data(t0, t0_value);
       if ((!current || dirty[0] & /*targetTokens*/
-      16) && t3_value !== (t3_value = getDefenseValue(
+      8) && t3_value !== (t3_value = getDefenseValue(
         /*target*/
         ctx[32]
       ) + ""))
@@ -7591,40 +7552,40 @@ function create_if_block_1$g(ctx) {
       }
       if (
         /*item*/
-        ctx[10]?.system?.baseEffectDamage
+        ctx[9]?.system?.baseEffectDamage
       )
         if_block2.p(ctx, dirty);
       if (
         /*item*/
-        ctx[10]?.system?.hasDirectHit
+        ctx[9]?.system?.hasDirectHit
       )
         if_block3.p(ctx, dirty);
       if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
-      24 && div10_class_value !== (div10_class_value = "flex2 thin-border offwhite " + /*isApplyDisabled*/
-      (ctx[3](
+      12 && div10_class_value !== (div10_class_value = "flex2 thin-border offwhite " + /*isApplyDisabled*/
+      (ctx[2](
         /*target*/
         ctx[32]
       ) ? "bg-silver" : "bg-gold"))) {
         attr(div10, "class", div10_class_value);
       }
       if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
-      24 && button0_disabled_value !== (button0_disabled_value = /*isApplyDisabled*/
-      ctx[3](
+      12 && button0_disabled_value !== (button0_disabled_value = /*isApplyDisabled*/
+      ctx[2](
         /*target*/
         ctx[32]
       ))) {
         button0.disabled = button0_disabled_value;
       }
       if (!current || dirty[0] & /*isApplyDisabled, targetTokens*/
-      24 && button1_disabled_value !== (button1_disabled_value = !/*isApplyDisabled*/
-      ctx[3](
+      12 && button1_disabled_value !== (button1_disabled_value = !/*isApplyDisabled*/
+      ctx[2](
         /*target*/
         ctx[32]
       ))) {
         button1.disabled = button1_disabled_value;
       }
       if (!current || dirty[0] & /*targetTokens*/
-      16 && div15_class_value !== (div15_class_value = "target-row flexrow " + /*target*/
+      8 && div15_class_value !== (div15_class_value = "target-row flexrow " + /*target*/
       (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-ugr7oj")) {
         attr(div15, "class", div15_class_value);
       }
@@ -7680,12 +7641,12 @@ function create_if_block_5$2(ctx) {
         dispose = listen(img, "click", function() {
           if (is_function(
             /*openActorSheet*/
-            ctx[16](
+            ctx[14](
               /*target*/
               ctx[32].actor
             )
           ))
-            ctx[16](
+            ctx[14](
               /*target*/
               ctx[32].actor
             ).apply(this, arguments);
@@ -7696,14 +7657,14 @@ function create_if_block_5$2(ctx) {
     p(new_ctx, dirty) {
       ctx = new_ctx;
       if (dirty[0] & /*targetTokens*/
-      16 && !src_url_equal(img.src, img_src_value = getTargetImage(
+      8 && !src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
         ctx[32]
       ))) {
         attr(img, "src", img_src_value);
       }
       if (dirty[0] & /*targetTokens*/
-      16 && img_alt_value !== (img_alt_value = /*target*/
+      8 && img_alt_value !== (img_alt_value = /*target*/
       ctx[32].name)) {
         attr(img, "alt", img_alt_value);
       }
@@ -7726,12 +7687,12 @@ function create_else_block$6(ctx) {
     c() {
       i = element("i");
       attr(i, "class", i_class_value = "icon fa-solid bg-white round " + /*isHit*/
-      (ctx[15](
+      (ctx[13](
         /*target*/
         ctx[32]
       ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj");
       attr(i, "data-tooltip", i_data_tooltip_value = /*isHit*/
-      ctx[15](
+      ctx[13](
         /*target*/
         ctx[32]
       ) ? localize$1("DirectHit") : localize$1("Types.Item.Types.action.DirectHitMissed"));
@@ -7741,16 +7702,16 @@ function create_else_block$6(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*targetTokens*/
-      16 && i_class_value !== (i_class_value = "icon fa-solid bg-white round " + /*isHit*/
-      (ctx2[15](
+      8 && i_class_value !== (i_class_value = "icon fa-solid bg-white round " + /*isHit*/
+      (ctx2[13](
         /*target*/
         ctx2[32]
       ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj")) {
         attr(i, "class", i_class_value);
       }
       if (dirty[0] & /*targetTokens*/
-      16 && i_data_tooltip_value !== (i_data_tooltip_value = /*isHit*/
-      ctx2[15](
+      8 && i_data_tooltip_value !== (i_data_tooltip_value = /*isHit*/
+      ctx2[13](
         /*target*/
         ctx2[32]
       ) ? localize$1("DirectHit") : localize$1("Types.Item.Types.action.DirectHitMissed"))) {
@@ -7790,7 +7751,7 @@ function create_if_block_4$5(ctx) {
       div0 = element("div");
       i = element("i");
       attr(i, "class", i_class_value = "icon fa-solid bg-white round " + /*isHit*/
-      (ctx[15](
+      (ctx[13](
         /*target*/
         ctx[32]
       ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj");
@@ -7810,8 +7771,8 @@ function create_if_block_4$5(ctx) {
     },
     p(ctx2, dirty) {
       if (!current || dirty[0] & /*targetTokens*/
-      16 && i_class_value !== (i_class_value = "icon fa-solid bg-white round " + /*isHit*/
-      (ctx2[15](
+      8 && i_class_value !== (i_class_value = "icon fa-solid bg-white round " + /*isHit*/
+      (ctx2[13](
         /*target*/
         ctx2[32]
       ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj")) {
@@ -7843,7 +7804,7 @@ function create_if_block_3$8(ctx) {
   let div1;
   let t1_value = (
     /*displayDamage*/
-    ctx[9](
+    ctx[8](
       /*target*/
       ctx[32]
     ) + ""
@@ -7862,7 +7823,7 @@ function create_if_block_3$8(ctx) {
       attr(div2, "class", "flex1 formula flexrow justify-vertical active");
       attr(div2, "data-tooltip-class", "FFXIV-tooltip");
       attr(div2, "data-tooltip", div2_data_tooltip_value = /*displayDamageFormula*/
-      ctx[8](
+      ctx[7](
         /*target*/
         ctx[32]
       ));
@@ -7875,15 +7836,15 @@ function create_if_block_3$8(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*displayDamage, targetTokens*/
-      528 && t1_value !== (t1_value = /*displayDamage*/
-      ctx2[9](
+      264 && t1_value !== (t1_value = /*displayDamage*/
+      ctx2[8](
         /*target*/
         ctx2[32]
       ) + ""))
         set_data(t1, t1_value);
       if (dirty[0] & /*displayDamageFormula, targetTokens*/
-      272 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDamageFormula*/
-      ctx2[8](
+      136 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDamageFormula*/
+      ctx2[7](
         /*target*/
         ctx2[32]
       ))) {
@@ -7904,12 +7865,12 @@ function create_if_block_2$c(ctx) {
   let div1;
   let t1_value = (
     /*isHit*/
-    (ctx[15](
+    (ctx[13](
       /*target*/
       ctx[32]
     ) ? (
       /*displayDirectHitDamage*/
-      ctx[7](
+      ctx[6](
         /*target*/
         ctx[32]
       )
@@ -7929,7 +7890,7 @@ function create_if_block_2$c(ctx) {
       attr(div2, "class", "flex1 formula flexrow justify-vertical smaller");
       attr(div2, "data-tooltip-class", "FFXIV-tooltip");
       attr(div2, "data-tooltip", div2_data_tooltip_value = /*displayDirectHitDisplayFormula*/
-      ctx[6](
+      ctx[5](
         /*target*/
         ctx[32]
       ));
@@ -7942,21 +7903,21 @@ function create_if_block_2$c(ctx) {
     },
     p(ctx2, dirty) {
       if (dirty[0] & /*targetTokens, displayDirectHitDamage*/
-      144 && t1_value !== (t1_value = /*isHit*/
-      (ctx2[15](
+      72 && t1_value !== (t1_value = /*isHit*/
+      (ctx2[13](
         /*target*/
         ctx2[32]
       ) ? (
         /*displayDirectHitDamage*/
-        ctx2[7](
+        ctx2[6](
           /*target*/
           ctx2[32]
         )
       ) : "N/A") + ""))
         set_data(t1, t1_value);
       if (dirty[0] & /*displayDirectHitDisplayFormula, targetTokens*/
-      80 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDirectHitDisplayFormula*/
-      ctx2[6](
+      40 && div2_data_tooltip_value !== (div2_data_tooltip_value = /*displayDirectHitDisplayFormula*/
+      ctx2[5](
         /*target*/
         ctx2[32]
       ))) {
@@ -7998,7 +7959,7 @@ function create_each_block$i(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
           if (dirty[0] & /*targetTokens*/
-          16) {
+          8) {
             transition_in(if_block, 1);
           }
         } else {
@@ -8036,32 +7997,27 @@ function create_each_block$i(ctx) {
 }
 __name(create_each_block$i, "create_each_block$i");
 function create_fragment$1c(ctx) {
-  let div4;
-  let div0;
-  let i;
-  let div0_class_value;
-  let chattitle;
   let div3;
+  let chattitle;
   let div2;
   let div1;
+  let div0;
   let html_tag;
   let raw_value = (
     /*item*/
-    ctx[10]?.system?.description + ""
+    ctx[9]?.system?.description + ""
   );
   let html_anchor;
   let header;
+  let div1_class_value;
   let div2_class_value;
-  let div3_class_value;
   let if_block0_anchor;
   let current;
-  let mounted;
-  let dispose;
   chattitle = new ChatTitle$1({});
   chattitle.$on(
     "toggleDescription",
     /*handleToggleDescription*/
-    ctx[17]
+    ctx[15]
   );
   header = new Header$4({});
   let if_block0 = (
@@ -8071,18 +8027,16 @@ function create_fragment$1c(ctx) {
   let if_block1 = (
     /*FFMessage*/
     ctx[0]?.item?.type === "action" && /*item*/
-    ctx[10] && /*targetTokens*/
-    ctx[4].length && create_if_block$s(ctx)
+    ctx[9] && /*targetTokens*/
+    ctx[3].length && create_if_block$s(ctx)
   );
   return {
     c() {
-      div4 = element("div");
-      div0 = element("div");
-      i = element("i");
-      create_component(chattitle.$$.fragment);
       div3 = element("div");
+      create_component(chattitle.$$.fragment);
       div2 = element("div");
       div1 = element("div");
+      div0 = element("div");
       html_tag = new HtmlTag(false);
       html_anchor = empty();
       create_component(header.$$.fragment);
@@ -8091,61 +8045,41 @@ function create_fragment$1c(ctx) {
       if_block0_anchor = empty();
       if (if_block1)
         if_block1.c();
-      attr(i, "class", "fa-solid fa-bug");
-      attr(div0, "class", div0_class_value = "pointer " + /*classes*/
-      ctx[2] + " svelte-ugr7oj");
-      attr(div0, "role", "button");
       html_tag.a = html_anchor;
-      attr(div1, "class", "flex4 inset svelte-ugr7oj");
-      attr(div1, "id", "chat-description");
-      attr(div2, "class", div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx[5] ? "visible" : "") + " svelte-ugr7oj");
-      attr(div3, "class", div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[5] ? "expanded" : "") + " svelte-ugr7oj");
-      attr(div4, "class", "chat");
+      attr(div0, "class", "flex4 inset svelte-ugr7oj");
+      attr(div0, "id", "chat-description");
+      attr(div1, "class", div1_class_value = "flexrow mt-xs " + /*showDescription*/
+      (ctx[4] ? "visible" : "") + " svelte-ugr7oj");
+      attr(div2, "class", div2_class_value = "description-wrapper " + /*showDescription*/
+      (ctx[4] ? "expanded" : "") + " svelte-ugr7oj");
+      attr(div3, "class", "chat");
     },
     m(target, anchor) {
-      insert(target, div4, anchor);
-      append(div4, div0);
-      append(div0, i);
-      mount_component(chattitle, div4, null);
-      append(div4, div3);
+      insert(target, div3, anchor);
+      mount_component(chattitle, div3, null);
       append(div3, div2);
       append(div2, div1);
-      html_tag.m(raw_value, div1);
-      append(div1, html_anchor);
-      mount_component(header, div1, null);
+      append(div1, div0);
+      html_tag.m(raw_value, div0);
+      append(div0, html_anchor);
+      mount_component(header, div0, null);
       if (if_block0)
-        if_block0.m(div4, null);
-      append(div4, if_block0_anchor);
+        if_block0.m(div3, null);
+      append(div3, if_block0_anchor);
       if (if_block1)
-        if_block1.m(div4, null);
+        if_block1.m(div3, null);
       current = true;
-      if (!mounted) {
-        dispose = listen(
-          div0,
-          "click",
-          /*log*/
-          ctx[12]
-        );
-        mounted = true;
-      }
     },
     p(ctx2, dirty) {
-      if (!current || dirty[0] & /*classes*/
-      4 && div0_class_value !== (div0_class_value = "pointer " + /*classes*/
-      ctx2[2] + " svelte-ugr7oj")) {
-        attr(div0, "class", div0_class_value);
+      if (!current || dirty[0] & /*showDescription*/
+      16 && div1_class_value !== (div1_class_value = "flexrow mt-xs " + /*showDescription*/
+      (ctx2[4] ? "visible" : "") + " svelte-ugr7oj")) {
+        attr(div1, "class", div1_class_value);
       }
       if (!current || dirty[0] & /*showDescription*/
-      32 && div2_class_value !== (div2_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx2[5] ? "visible" : "") + " svelte-ugr7oj")) {
+      16 && div2_class_value !== (div2_class_value = "description-wrapper " + /*showDescription*/
+      (ctx2[4] ? "expanded" : "") + " svelte-ugr7oj")) {
         attr(div2, "class", div2_class_value);
-      }
-      if (!current || dirty[0] & /*showDescription*/
-      32 && div3_class_value !== (div3_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[5] ? "expanded" : "") + " svelte-ugr7oj")) {
-        attr(div3, "class", div3_class_value);
       }
       if (
         /*content*/
@@ -8156,7 +8090,7 @@ function create_fragment$1c(ctx) {
         } else {
           if_block0 = create_if_block_6$2(ctx2);
           if_block0.c();
-          if_block0.m(div4, if_block0_anchor);
+          if_block0.m(div3, if_block0_anchor);
         }
       } else if (if_block0) {
         if_block0.d(1);
@@ -8165,20 +8099,20 @@ function create_fragment$1c(ctx) {
       if (
         /*FFMessage*/
         ctx2[0]?.item?.type === "action" && /*item*/
-        ctx2[10] && /*targetTokens*/
-        ctx2[4].length
+        ctx2[9] && /*targetTokens*/
+        ctx2[3].length
       ) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
           if (dirty[0] & /*FFMessage, targetTokens*/
-          17) {
+          9) {
             transition_in(if_block1, 1);
           }
         } else {
           if_block1 = create_if_block$s(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
-          if_block1.m(div4, null);
+          if_block1.m(div3, null);
         }
       } else if (if_block1) {
         group_outros();
@@ -8204,7 +8138,7 @@ function create_fragment$1c(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div4);
+        detach(div3);
       }
       destroy_component(chattitle);
       destroy_component(header);
@@ -8212,13 +8146,10 @@ function create_fragment$1c(ctx) {
         if_block0.d();
       if (if_block1)
         if_block1.d();
-      mounted = false;
-      dispose();
     }
   };
 }
 __name(create_fragment$1c, "create_fragment$1c");
-let totalDamage = 0;
 function getDefenseValue(target) {
   if (target?.isUnlinked || !target?.actor?.system?.attributes)
     return 0;
@@ -8258,27 +8189,12 @@ function instance$15($$self, $$props, $$invalidate) {
     setContext("#doc", Item2);
   }
   const message = getContext("message");
-  component_subscribe($$self, message, (value) => $$invalidate(27, $message = value));
+  component_subscribe($$self, message, (value) => $$invalidate(26, $message = value));
   let isMounted = false;
   let targetTokens = false;
   let showDescription = false;
   let roll = 0;
   let hasTargets = false;
-  function log2() {
-    game.system.log.b("RollChat roll", roll);
-    game.system.log.b("RollChat penalty", penalty);
-    game.system.log.b("RollChat totalRoll", totalRoll);
-    game.system.log.b("RollChat totalDamage", totalDamage);
-    game.system.log.b("RollChat hasTargets", hasTargets);
-    game.system.log.b("RollChat item?.system?.hasDirectHit", item?.system?.hasDirectHit);
-    game.system.log.b("RollChat item?.system?.directHitDamage", item?.system?.directHitDamage);
-    game.system.log.b("RollChat item?.currentUses", item?.currentUses);
-    game.system.log.b("RollChat $message", $message);
-    game.system.log.b("RollChat FFMessage", FFMessage);
-    game.system.log.b("RollChat FFMessage.isCritical", FFMessage.isCritical);
-    game.system.log.b("RollChat item", item);
-  }
-  __name(log2, "log");
   function getDamageResults(passedTargets) {
     const DamageResults = /* @__PURE__ */ new Map();
     for (const id of passedTargets) {
@@ -8338,10 +8254,10 @@ function instance$15($$self, $$props, $$invalidate) {
           }
         }
         if (canvas.ready) {
-          $$invalidate(4, targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)).filter(Boolean));
+          $$invalidate(3, targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)).filter(Boolean));
         } else {
           Hooks.once("canvasReady", () => {
-            $$invalidate(4, targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)).filter(Boolean));
+            $$invalidate(3, targetTokens = FFMessage.targets.map((id) => canvas.tokens.get(id)).filter(Boolean));
           });
         }
       }
@@ -8483,17 +8399,17 @@ function instance$15($$self, $$props, $$invalidate) {
   }
   __name(openActorSheet, "openActorSheet");
   const handleToggleDescription = /* @__PURE__ */ __name(() => {
-    $$invalidate(5, showDescription = !showDescription);
+    $$invalidate(4, showDescription = !showDescription);
   }, "handleToggleDescription");
   $$self.$$set = ($$props2) => {
     if ("FFMessage" in $$props2)
       $$invalidate(0, FFMessage = $$props2.FFMessage);
     if ("FFMessageState" in $$props2)
-      $$invalidate(18, FFMessageState = $$props2.FFMessageState);
+      $$invalidate(16, FFMessageState = $$props2.FFMessageState);
     if ("content" in $$props2)
       $$invalidate(1, content = $$props2.content);
     if ("classes" in $$props2)
-      $$invalidate(2, classes = $$props2.classes);
+      $$invalidate(17, classes = $$props2.classes);
   };
   $$self.$$.update = () => {
     if ($$self.$$.dirty[0] & /*FFMessage*/
@@ -8501,35 +8417,35 @@ function instance$15($$self, $$props, $$invalidate) {
       actor = game.actors.get(FFMessage?.actor?._id);
     }
     if ($$self.$$.dirty[0] & /*FFMessageState*/
-    262144) {
-      $$invalidate(3, isApplyDisabled = /* @__PURE__ */ __name((target) => target.isUnlinked || FFMessageState.damageResults[target.id]?.applied, "isApplyDisabled"));
+    65536) {
+      $$invalidate(2, isApplyDisabled = /* @__PURE__ */ __name((target) => target.isUnlinked || FFMessageState.damageResults[target.id]?.applied, "isApplyDisabled"));
     }
     if ($$self.$$.dirty[0] & /*FFMessageState*/
-    262144) {
-      $$invalidate(9, displayDamage = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.damage, "displayDamage"));
+    65536) {
+      $$invalidate(8, displayDamage = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.damage, "displayDamage"));
     }
     if ($$self.$$.dirty[0] & /*FFMessageState*/
-    262144) {
-      $$invalidate(8, displayDamageFormula = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.baseDamageFormula, "displayDamageFormula"));
+    65536) {
+      $$invalidate(7, displayDamageFormula = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.baseDamageFormula, "displayDamageFormula"));
     }
     if ($$self.$$.dirty[0] & /*isApplyDisabled, FFMessageState*/
-    262152) {
-      $$invalidate(7, displayDirectHitDamage = /* @__PURE__ */ __name((target) => isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit, "displayDirectHitDamage"));
+    65540) {
+      $$invalidate(6, displayDirectHitDamage = /* @__PURE__ */ __name((target) => isApplyDisabled(target) ? FFMessageState.damageResults[target.id]?.directHitResult : FFMessageState.damageResults[target.id]?.directHit, "displayDirectHitDamage"));
     }
     if ($$self.$$.dirty[0] & /*FFMessageState*/
-    262144) {
-      $$invalidate(6, displayDirectHitDisplayFormula = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.directHitDisplayFormula, "displayDirectHitDisplayFormula"));
+    65536) {
+      $$invalidate(5, displayDirectHitDisplayFormula = /* @__PURE__ */ __name((target) => FFMessageState.damageResults[target.id]?.directHitDisplayFormula, "displayDirectHitDisplayFormula"));
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
     1) {
-      $$invalidate(19, roll = FFMessage?.roll || 0);
+      $$invalidate(18, roll = FFMessage?.roll || 0);
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
     1) {
-      $$invalidate(20, penalty = FFMessage?.extraModifiers?.penalty || 0);
+      $$invalidate(19, penalty = FFMessage?.extraModifiers?.penalty || 0);
     }
     if ($$self.$$.dirty[0] & /*roll, penalty*/
-    1572864) {
+    786432) {
       totalRoll = roll - penalty;
     }
     if ($$self.$$.dirty[0] & /*FFMessage*/
@@ -8541,7 +8457,6 @@ function instance$15($$self, $$props, $$invalidate) {
   return [
     FFMessage,
     content,
-    classes,
     isApplyDisabled,
     targetTokens,
     showDescription,
@@ -8551,13 +8466,13 @@ function instance$15($$self, $$props, $$invalidate) {
     displayDamage,
     item,
     message,
-    log2,
     applyResult,
     undoResult,
     isHit,
     openActorSheet,
     handleToggleDescription,
     FFMessageState,
+    classes,
     roll,
     penalty
   ];
@@ -8577,9 +8492,9 @@ class ActionRollChat extends SvelteComponent {
       safe_not_equal,
       {
         FFMessage: 0,
-        FFMessageState: 18,
+        FFMessageState: 16,
         content: 1,
-        classes: 2
+        classes: 17
       },
       null,
       [-1, -1]
@@ -9683,8 +9598,14 @@ class FFChat extends SvelteComponent {
 }
 function renderChatMessage() {
   Hooks.on("renderChatMessage", (message, html) => {
+    console.log("renderChatMessage HOOK TRIGGERED");
     const FFMessage = message.getFlag(SYSTEM_ID, "data");
     const FFMessageState = message.getFlag(SYSTEM_ID, "state");
+    game.system.log.p(">>>>>> race renderChatMessage HOOK TRIGGERED <<<<<<", {
+      messageId: message.id,
+      hasFFMessage: !!FFMessage,
+      flags: message.flags[SYSTEM_ID]
+    });
     const messageHeader = html.find(".message-header");
     if (messageHeader.length) {
       messageHeader.prepend('<div class="texture"></div>');
@@ -9699,7 +9620,16 @@ function renderChatMessage() {
       const header = tempDiv.querySelector(".message-header");
       if (header) {
         const sourceActor = game.actors.get(FFMessage.actor._id);
-        const ownerColor = getActorOwner(sourceActor).color;
+        const actorOwner = getActorOwner(sourceActor);
+        const messageSender = header.querySelector(".message-sender");
+        if (messageSender) {
+          messageSender.textContent = actorOwner.name;
+        }
+        if (messageSender.length) {
+          game.system.log.p("messageSender", messageSender);
+          messageSender[0].textContent = actorOwner.name;
+        }
+        const ownerColor = actorOwner.color;
         const colorCalc = new ColourContrastCalculator(ownerColor);
         const cssVars = colorCalc.getCSSVariables();
         header.style.setProperty("--message-color", cssVars.color);
@@ -26265,7 +26195,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.1.35";
+const version = "0.1.36";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
