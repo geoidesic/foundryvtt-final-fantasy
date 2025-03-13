@@ -18,7 +18,7 @@
   
   const Actor = getContext("#doc");
   const doc = new TJSDocument($Actor);
-  const RollCalc = new CONFIG.RollCalcActor({ actor: $Actor });
+  const RollCalc = new CONFIG.FFXIV.RollCalcActor({ actor: $Actor });
   const typeSearch = createFilterQuery("type");
   typeSearch.set(["trait", "action"]); // Updated to filter for both types
   const input = {
