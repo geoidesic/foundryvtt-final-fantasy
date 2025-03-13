@@ -4432,6 +4432,8 @@ function getEffectOrigin(effect, tryFromUuidSync = false) {
 }
 __name(getEffectOrigin, "getEffectOrigin");
 function localize$1(string) {
+  if (typeof game === "undefined")
+    return string;
   return game.i18n.localize(`${SYSTEM_CODE}.${string}`);
 }
 __name(localize$1, "localize$1");
@@ -4703,16 +4705,28 @@ function get_each_context$j(ctx, list, i) {
   return child_ctx;
 }
 __name(get_each_context$j, "get_each_context$j");
-function create_if_block_3$a(ctx) {
-  return { c: noop, m: noop, d: noop };
+function create_if_block_4$7(ctx) {
+  let div;
+  return {
+    c() {
+      div = element("div");
+      div.textContent = "loading...";
+      attr(div, "class", "title flex1 svelte-n656zp");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+    }
+  };
 }
-__name(create_if_block_3$a, "create_if_block_3$a");
+__name(create_if_block_4$7, "create_if_block_4$7");
 function create_if_block$v(ctx) {
+  let div6;
   let div0;
-  let img;
-  let img_src_value;
-  let img_alt_value;
-  let div0_aria_label_value;
   let div3;
   let div1;
   let a0;
@@ -4737,11 +4751,15 @@ function create_if_block$v(ctx) {
     ctx[1].item.type + ""
   );
   let t2;
-  let if_block1_anchor;
+  let div6_class_value;
   let current;
   let mounted;
   let dispose;
   let if_block0 = (
+    /*showProfileImage*/
+    ctx[4] && create_if_block_3$a(ctx)
+  );
+  let if_block1 = (
     /*item*/
     ctx[2]?.system?.tags?.length > 0 && create_if_block_2$e(ctx)
   );
@@ -4755,11 +4773,13 @@ function create_if_block$v(ctx) {
   }
   __name(select_block_type, "select_block_type");
   let current_block_type = select_block_type(ctx);
-  let if_block1 = current_block_type(ctx);
+  let if_block2 = current_block_type(ctx);
   return {
     c() {
+      div6 = element("div");
       div0 = element("div");
-      img = element("img");
+      if (if_block0)
+        if_block0.c();
       div3 = element("div");
       div1 = element("div");
       a0 = element("a");
@@ -4770,19 +4790,10 @@ function create_if_block$v(ctx) {
       div5 = element("div");
       div4 = element("div");
       t2 = text(t2_value);
-      if (if_block0)
-        if_block0.c();
-      if_block1.c();
-      if_block1_anchor = empty();
-      attr(img, "class", "icon avatar svelte-n656zp");
-      if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
-      ctx[1].actor.img))
-        attr(img, "src", img_src_value);
-      attr(img, "alt", img_alt_value = /*FFMessage*/
-      ctx[1].actor.name);
-      attr(div0, "role", "button");
-      attr(div0, "aria-label", div0_aria_label_value = "Open " + /*FFMessage*/
-      ctx[1].actor.name + "'s character sheet");
+      if (if_block1)
+        if_block1.c();
+      if_block2.c();
+      attr(div0, "class", "texture svelte-n656zp");
       attr(a0, "role", "button");
       attr(a0, "aria-label", a0_aria_label_value = "Open " + /*FFMessage*/
       ctx[1].actor.name + "'s character sheet");
@@ -4793,33 +4804,32 @@ function create_if_block$v(ctx) {
       attr(div2, "class", "col font-cinzel smaller item-name no-overflow ellipsis");
       attr(div3, "class", "flexcol no-overflow names svelte-n656zp");
       attr(div4, "class", "right type-label smaller gold");
+      attr(div6, "class", div6_class_value = "title " + /*tagsColumnClass*/
+      ctx[3] + " svelte-n656zp");
+      attr(div6, "role", "button");
+      attr(div6, "aria-label", "Toggle description");
     },
     m(target, anchor) {
-      insert(target, div0, anchor);
-      append(div0, img);
-      insert(target, div3, anchor);
+      insert(target, div6, anchor);
+      append(div6, div0);
+      if (if_block0)
+        if_block0.m(div6, null);
+      append(div6, div3);
       append(div3, div1);
       append(div1, a0);
       append(a0, t0);
       append(div3, div2);
       append(div2, a1);
       append(a1, t1);
-      insert(target, div5, anchor);
+      append(div6, div5);
       append(div5, div4);
       append(div4, t2);
-      if (if_block0)
-        if_block0.m(div5, null);
-      if_block1.m(target, anchor);
-      insert(target, if_block1_anchor, anchor);
+      if (if_block1)
+        if_block1.m(div5, null);
+      if_block2.m(div6, null);
       current = true;
       if (!mounted) {
         dispose = [
-          listen(
-            div0,
-            "click",
-            /*openActorSheet*/
-            ctx[7]
-          ),
           listen(
             a0,
             "click",
@@ -4831,26 +4841,32 @@ function create_if_block$v(ctx) {
             "click",
             /*click_handler*/
             ctx[10]
+          ),
+          listen(
+            div6,
+            "click",
+            /*handleTitleClick*/
+            ctx[8]
           )
         ];
         mounted = true;
       }
     },
     p(ctx2, dirty) {
-      if (!current || dirty & /*FFMessage*/
-      2 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
-      ctx2[1].actor.img)) {
-        attr(img, "src", img_src_value);
-      }
-      if (!current || dirty & /*FFMessage*/
-      2 && img_alt_value !== (img_alt_value = /*FFMessage*/
-      ctx2[1].actor.name)) {
-        attr(img, "alt", img_alt_value);
-      }
-      if (!current || dirty & /*FFMessage*/
-      2 && div0_aria_label_value !== (div0_aria_label_value = "Open " + /*FFMessage*/
-      ctx2[1].actor.name + "'s character sheet")) {
-        attr(div0, "aria-label", div0_aria_label_value);
+      if (
+        /*showProfileImage*/
+        ctx2[4]
+      ) {
+        if (if_block0) {
+          if_block0.p(ctx2, dirty);
+        } else {
+          if_block0 = create_if_block_3$a(ctx2);
+          if_block0.c();
+          if_block0.m(div6, div3);
+        }
+      } else if (if_block0) {
+        if_block0.d(1);
+        if_block0 = null;
       }
       if ((!current || dirty & /*FFMessage*/
       2) && t0_value !== (t0_value = /*FFMessage*/
@@ -4878,62 +4894,128 @@ function create_if_block$v(ctx) {
         /*item*/
         ctx2[2]?.system?.tags?.length > 0
       ) {
-        if (if_block0) {
-          if_block0.p(ctx2, dirty);
+        if (if_block1) {
+          if_block1.p(ctx2, dirty);
           if (dirty & /*item*/
           4) {
-            transition_in(if_block0, 1);
+            transition_in(if_block1, 1);
           }
         } else {
-          if_block0 = create_if_block_2$e(ctx2);
-          if_block0.c();
-          transition_in(if_block0, 1);
-          if_block0.m(div5, null);
+          if_block1 = create_if_block_2$e(ctx2);
+          if_block1.c();
+          transition_in(if_block1, 1);
+          if_block1.m(div5, null);
         }
-      } else if (if_block0) {
+      } else if (if_block1) {
         group_outros();
-        transition_out(if_block0, 1, 1, () => {
-          if_block0 = null;
+        transition_out(if_block1, 1, 1, () => {
+          if_block1 = null;
         });
         check_outros();
       }
-      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block1) {
-        if_block1.p(ctx2, dirty);
+      if (current_block_type === (current_block_type = select_block_type(ctx2)) && if_block2) {
+        if_block2.p(ctx2, dirty);
       } else {
-        if_block1.d(1);
-        if_block1 = current_block_type(ctx2);
-        if (if_block1) {
-          if_block1.c();
-          if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+        if_block2.d(1);
+        if_block2 = current_block_type(ctx2);
+        if (if_block2) {
+          if_block2.c();
+          if_block2.m(div6, null);
         }
+      }
+      if (!current || dirty & /*tagsColumnClass*/
+      8 && div6_class_value !== (div6_class_value = "title " + /*tagsColumnClass*/
+      ctx2[3] + " svelte-n656zp")) {
+        attr(div6, "class", div6_class_value);
       }
     },
     i(local) {
       if (current)
         return;
-      transition_in(if_block0);
+      transition_in(if_block1);
       current = true;
     },
     o(local) {
-      transition_out(if_block0);
+      transition_out(if_block1);
       current = false;
     },
     d(detaching) {
       if (detaching) {
-        detach(div0);
-        detach(div3);
-        detach(div5);
-        detach(if_block1_anchor);
+        detach(div6);
       }
       if (if_block0)
         if_block0.d();
-      if_block1.d(detaching);
+      if (if_block1)
+        if_block1.d();
+      if_block2.d();
       mounted = false;
       run_all(dispose);
     }
   };
 }
 __name(create_if_block$v, "create_if_block$v");
+function create_if_block_3$a(ctx) {
+  let div;
+  let img;
+  let img_src_value;
+  let img_alt_value;
+  let div_aria_label_value;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      img = element("img");
+      attr(img, "class", "icon avatar svelte-n656zp");
+      if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx[1].actor.img))
+        attr(img, "src", img_src_value);
+      attr(img, "alt", img_alt_value = /*FFMessage*/
+      ctx[1].actor.name);
+      attr(div, "role", "button");
+      attr(div, "aria-label", div_aria_label_value = "Open " + /*FFMessage*/
+      ctx[1].actor.name + "'s character sheet");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      append(div, img);
+      if (!mounted) {
+        dispose = listen(
+          div,
+          "click",
+          /*openActorSheet*/
+          ctx[7]
+        );
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*FFMessage*/
+      2 && !src_url_equal(img.src, img_src_value = /*FFMessage*/
+      ctx2[1].actor.img)) {
+        attr(img, "src", img_src_value);
+      }
+      if (dirty & /*FFMessage*/
+      2 && img_alt_value !== (img_alt_value = /*FFMessage*/
+      ctx2[1].actor.name)) {
+        attr(img, "alt", img_alt_value);
+      }
+      if (dirty & /*FFMessage*/
+      2 && div_aria_label_value !== (div_aria_label_value = "Open " + /*FFMessage*/
+      ctx2[1].actor.name + "'s character sheet")) {
+        attr(div, "aria-label", div_aria_label_value);
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+__name(create_if_block_3$a, "create_if_block_3$a");
 function create_if_block_2$e(ctx) {
   let div1;
   let div0;
@@ -5151,87 +5233,63 @@ function create_if_block_1$i(ctx) {
 }
 __name(create_if_block_1$i, "create_if_block_1$i");
 function create_fragment$1j(ctx) {
-  let div2;
-  let div1;
-  let div0;
-  let div1_class_value;
+  let div;
+  let if_block0_anchor;
   let current;
-  let mounted;
-  let dispose;
-  let if_block0 = (
-    /*FFMessage*/
-    ctx[1] && create_if_block_3$a()
-  );
+  let if_block0 = !/*FFMessage*/
+  ctx[1] && create_if_block_4$7();
   let if_block1 = (
-    /*showProfileImage*/
-    ctx[4] && create_if_block$v(ctx)
+    /*FFMessage*/
+    ctx[1] && create_if_block$v(ctx)
   );
   return {
     c() {
-      div2 = element("div");
+      div = element("div");
       if (if_block0)
         if_block0.c();
-      div1 = element("div");
-      div0 = element("div");
+      if_block0_anchor = empty();
       if (if_block1)
         if_block1.c();
-      attr(div0, "class", "texture svelte-n656zp");
-      attr(div1, "class", div1_class_value = "title " + /*tagsColumnClass*/
-      ctx[3] + " svelte-n656zp");
-      attr(div1, "role", "button");
-      attr(div1, "aria-label", "Toggle description");
-      attr(div2, "class", "chat-title svelte-n656zp");
+      attr(div, "class", "chat-title svelte-n656zp");
     },
     m(target, anchor) {
-      insert(target, div2, anchor);
+      insert(target, div, anchor);
       if (if_block0)
-        if_block0.m(div2, null);
-      append(div2, div1);
-      append(div1, div0);
+        if_block0.m(div, null);
+      append(div, if_block0_anchor);
       if (if_block1)
-        if_block1.m(div1, null);
+        if_block1.m(div, null);
       current = true;
-      if (!mounted) {
-        dispose = listen(
-          div1,
-          "click",
-          /*handleTitleClick*/
-          ctx[8]
-        );
-        mounted = true;
-      }
     },
     p(ctx2, [dirty]) {
-      if (
-        /*FFMessage*/
-        ctx2[1]
-      ) {
+      if (!/*FFMessage*/
+      ctx2[1]) {
         if (if_block0)
           ;
         else {
-          if_block0 = create_if_block_3$a();
+          if_block0 = create_if_block_4$7();
           if_block0.c();
-          if_block0.m(div2, div1);
+          if_block0.m(div, if_block0_anchor);
         }
       } else if (if_block0) {
         if_block0.d(1);
         if_block0 = null;
       }
       if (
-        /*showProfileImage*/
-        ctx2[4]
+        /*FFMessage*/
+        ctx2[1]
       ) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
-          if (dirty & /*showProfileImage*/
-          16) {
+          if (dirty & /*FFMessage*/
+          2) {
             transition_in(if_block1, 1);
           }
         } else {
           if_block1 = create_if_block$v(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
-          if_block1.m(div1, null);
+          if_block1.m(div, null);
         }
       } else if (if_block1) {
         group_outros();
@@ -5239,11 +5297,6 @@ function create_fragment$1j(ctx) {
           if_block1 = null;
         });
         check_outros();
-      }
-      if (!current || dirty & /*tagsColumnClass*/
-      8 && div1_class_value !== (div1_class_value = "title " + /*tagsColumnClass*/
-      ctx2[3] + " svelte-n656zp")) {
-        attr(div1, "class", div1_class_value);
       }
     },
     i(local) {
@@ -5258,14 +5311,12 @@ function create_fragment$1j(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div2);
+        detach(div);
       }
       if (if_block0)
         if_block0.d();
       if (if_block1)
         if_block1.d();
-      mounted = false;
-      dispose();
     }
   };
 }
@@ -26195,7 +26246,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.1.36";
+const version = "0.1.37";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");

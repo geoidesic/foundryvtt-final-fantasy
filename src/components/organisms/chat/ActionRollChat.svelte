@@ -16,6 +16,7 @@
   export let FFMessageState
   export let content
   export let classes = ''
+  classes //- avoid lint error
   // export let messageId
 
   const item = fromUuidSync(FFMessage.item.uuid);

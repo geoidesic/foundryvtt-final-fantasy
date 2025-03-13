@@ -92,6 +92,7 @@ export function getEffectOrigin(effect, tryFromUuidSync = false) {
  * @return {string} The localized string
  */
 export function localize(string) {
+  if (typeof game === 'undefined') return string; //- avoid lint error
   return game.i18n.localize(`${SYSTEM_CODE}.${string}`);
 }
 

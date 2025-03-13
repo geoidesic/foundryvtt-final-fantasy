@@ -52,19 +52,21 @@
 
 <template lang="pug">
 .chat-title
+  +if("!FFMessage")
+    .title.flex1 loading...
   +if("FFMessage")
-  .title(class="{tagsColumnClass}" on:click="{handleTitleClick}" role="button" aria-label="Toggle description")
-    .texture
-    +if("showProfileImage")
-      div(
-        role="button" 
-        on:click="{openActorSheet}" 
-        aria-label="Open {FFMessage.actor.name}'s character sheet"
-      )
-        img.icon.avatar(
-          src="{FFMessage.actor.img}" 
-          alt="{FFMessage.actor.name}"
-        ) 
+    .title(class="{tagsColumnClass}" on:click="{handleTitleClick}" role="button" aria-label="Toggle description")
+      .texture
+      +if("showProfileImage")
+        div(
+          role="button" 
+          on:click="{openActorSheet}" 
+          aria-label="Open {FFMessage.actor.name}'s character sheet"
+        )
+          img.icon.avatar(
+            src="{FFMessage.actor.img}" 
+            alt="{FFMessage.actor.name}"
+          ) 
       .flexcol.no-overflow.names
         .col.actor-name.no-overflow.ellipsis(
           ) 
