@@ -74,7 +74,7 @@ export default () => {
       open: false,
       // Force Vite to expose style.css at the expected path
       fs: {
-        allow: ['..']  // Allow serving files from one level up (project root)
+        allow: ['..', 'dist']  // Allow serving files from the dist directory
       },
       proxy: {
         // Redirect specific requests to the main Foundry server
@@ -83,6 +83,11 @@ export default () => {
         [`^/systems/${SYSTEM_ID}/dist/index.js`]: {
           target: "http://localhost:30001",
           rewrite: (path) => `/systems/${SYSTEM_ID}/index.js`
+        },
+        // Add a specific rule for style.css - redirect to the CSS file that Vite is actually serving
+        [`^/systems/${SYSTEM_ID}/dist/style.css`]: {
+          target: "http://localhost:30001",
+          rewrite: (path) => `/css/style.css`
         },
         // All other requests go to the main Foundry server
         [`^(?!/systems/${SYSTEM_ID}/)`]: "http://localhost:30000",
@@ -118,6 +123,25 @@ export default () => {
     plugins: [
       // Note: Vite handles style injection automatically in development mode
       // No custom middleware needed for style injection
+      
+      // Custom plugin to handle CSS loading in development mode
+      {
+        name: 'css-redirect',
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            // If Foundry is requesting the CSS file from the dist directory
+            if (req.url === `/systems/${SYSTEM_ID}/dist/style.css`) {
+              // In development mode, we want to prevent loading both CSS files
+              // Return an empty CSS file with proper headers to satisfy the request
+              // without actually loading duplicate styles
+              res.setHeader('Content-Type', 'text/css');
+              res.end('/* CSS is loaded via Vite\'s hot module replacement in development mode */');
+              return;
+            }
+            next();
+          });
+        }
+      },
       
       svelte({
         preprocess: preprocess({

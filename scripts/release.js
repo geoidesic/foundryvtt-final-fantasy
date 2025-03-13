@@ -53,7 +53,7 @@ const incrementVersion = (version, type) => {
 };
 
 // Add this line to run yarn build before versioning
-execSync('yarn build', { stdio: 'inherit' }); // Run yarn build
+execSync('yarn build:prod', { stdio: 'inherit' }); // Run yarn build
 
 // Function to check if Ollama is running
 const checkOllamaStatus = async () => {
@@ -72,7 +72,7 @@ const callOllama = async (commitMessages) => {
         if (!commitMessages || commitMessages.length === 0) {
             throw new Error('No commit messages to summarize.');
         }
-        const prompt = `Summarize the following commit messages in a concise paragraph. Use definitive, factual statements based solely on the content of the messages, avoiding speculative language such as "likely due to," "possibly," or "might have." Write in a professional tone suitable for release notes:\n\n${commitMessages.join('\n')}`;        const payload = {
+        const prompt = `Summarize the following commit messages in a concise paragraph or (if more relevant) in a list of bullet points. Use definitive, factual statements based solely on the content of the messages, avoiding speculative language such as "likely due to," "possibly," or "might have." Write in a professional tone suitable for release notes:\n\n${commitMessages.join('\n')}`;        const payload = {
             model: 'qwen2.5:7b',
             prompt: prompt,
             max_tokens: 150,
