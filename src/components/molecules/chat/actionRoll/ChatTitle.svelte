@@ -107,6 +107,7 @@
 @use '../../../../styles/_mixins' as mixins
 .chat-title
   .actor-name
+    color: white
     &:hover
       text-decoration: underline
       cursor: pointer
@@ -116,6 +117,7 @@
     line-height: 1rem
     max-height: 1rem
     white-space: nowrap
+    color: white
     a
       &:hover
         text-decoration: underline
