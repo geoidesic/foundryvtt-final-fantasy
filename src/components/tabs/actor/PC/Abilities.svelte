@@ -328,6 +328,9 @@ table tr
   &.trait
     background-color: var(--color-trait)
     color: white
+  &.limit
+    background-color: var(--color-limitbreak-action)
+    color: white
 
 .itemrow
   height: 1.9rem
