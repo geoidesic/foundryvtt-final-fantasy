@@ -14,15 +14,15 @@ import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
 export default function renderChatMessage() {
 
   Hooks.on('renderChatMessage', (message, html) => {
-
+    console.log('renderChatMessage HOOK TRIGGERED');
     const FFMessage = message.getFlag(SYSTEM_ID, 'data');
     const FFMessageState = message.getFlag(SYSTEM_ID, 'state');
 
-    // game.system.log.p(">>>>>> race renderChatMessage HOOK TRIGGERED <<<<<<", {
-    //   messageId: message.id,
-    //   hasFFMessage: !!FFMessage,
-    //   flags: message.flags[SYSTEM_ID]
-    // });
+    game.system.log.p(">>>>>> race renderChatMessage HOOK TRIGGERED <<<<<<", {
+      messageId: message.id,
+      hasFFMessage: !!FFMessage,
+      flags: message.flags[SYSTEM_ID]
+    });
 
     // Add texture div to message header if it exists
     const messageHeader = html.find('.message-header');
@@ -46,7 +46,19 @@ export default function renderChatMessage() {
       if (header) {
         // Get actor color variables
         const sourceActor = game.actors.get(FFMessage.actor._id);
-        const ownerColor = getActorOwner(sourceActor).color;
+        const actorOwner = getActorOwner(sourceActor);
+        
+        // Update the message sender in the header
+        const messageSender = header.querySelector('.message-sender');
+        if (messageSender) {
+          messageSender.textContent = actorOwner.name;
+        }
+        // Check if the messageSender exists and set its text content
+        if (messageSender.length) {
+          game.system.log.p('messageSender', messageSender);
+          messageSender[0].textContent = actorOwner.name; // Set the text content to actorOwner.name
+        }
+        const ownerColor = actorOwner.color;
         const colorCalc = new ColourContrast(ownerColor);
         const cssVars = colorCalc.getCSSVariables();
 

@@ -712,13 +712,6 @@
 #chat-log
   background: rgba(252, 222, 222, 0.44)
 
-.chat-message
-  .message-header
-    line-height: 20px
-    color: var(--color-text-light)
-    background: rgba(144, 29, 20, 0.7)
-    padding: 0 0.3rem
-    
 @keyframes pulse
   0%
     opacity: 1
@@ -784,12 +777,17 @@
     padding: 0
 
 //- default chat message header content - add texture background
+
 .chat-message
   .message-header
-    border: 1px ridge var(--ff-border-color)
+    padding: 0 0.3rem
+    line-height: 20px
+    // border: 1px ridge var(--ff-border-color)
     border-radius: var(--border-radius)
     position: relative
     overflow: hidden
+    // background: var(--message-contrast)
+    // color: var(--message-color)
     background: var(--message-color)
     color: var(--message-contrast)
     margin-bottom: 0.3rem

@@ -412,8 +412,8 @@
 <template lang="pug">
 
 .chat
-  div.pointer(role="button" on:click!="{log}" class="{classes}") 
-    i.fa-solid.fa-bug
+  //- div.pointer(role="button" on:click!="{log}" class="{classes}") 
+  //-   i.fa-solid.fa-bug
   ChatTitle(on:toggleDescription="{handleToggleDescription}")
   .description-wrapper(class="{showDescription ? 'expanded' : ''}")
     .flexrow.mt-xs(class="{showDescription ? 'visible' : ''}")
@@ -491,8 +491,6 @@
   line-height: 1.2rem
   font-family: "Trirong", serif
 
-
-
 .action-result
   margin-top: 0.2em
   background: rgba(0, 0, 0, 0.05)
@@ -526,7 +524,6 @@
   img.target-img
     object-fit: cover
     border-radius: var(--border-radius)
-
 
 button:disabled
   opacity: 0.3
