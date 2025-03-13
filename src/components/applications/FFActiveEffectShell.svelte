@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext, setContext } from "svelte";
   import { ApplicationShell } from "#runtime/svelte/component/application";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { SYSTEM_ID } from "~/src/helpers/constants";
   import Changes from "~/src/components/tabs/activeEffect/Changes.svelte";
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
@@ -26,7 +26,7 @@
       img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/cog.webp'
     },
     {
-      label: localize('FFXIV.Duration.Title'),
+      label: localize('Duration.Title'),
       id: "duration",
       component: Duration,
       img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/duration.webp'

@@ -1,7 +1,7 @@
 import PCSheetShell from "./PCSheetShell.svelte";
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
-import { localize } from "#runtime/util/i18n";
+import { localize } from "~/src/helpers/util";
 import { generateRandomElementId } from "~/src/helpers/util";
 
 /**
@@ -64,7 +64,7 @@ export default class FFXIVActorSheet extends SvelteDocumentSheet {
     const canEdit = game.user.isGM || (this.reactive.document.isOwner);
     if (canEdit) {
       buttons.unshift({
-        label: localize("FFXIV.Types.Actor.HeaderButtons.Edit"),
+        label: localize("Types.Actor.HeaderButtons.Edit"),
         class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
         icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
         // onclick: (ev) => this._onToggleEdit(ev),

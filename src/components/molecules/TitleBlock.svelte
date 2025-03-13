@@ -1,7 +1,7 @@
 <script>
   import { onMount, getContext } from "svelte";
   import DocInput from "~/src/components/atoms/controls/DocInput.svelte";
-  import { localize } from "#runtime/util/i18n"; // Import the localize function
+  import { localize } from "~/src/helpers/util";
 
   let levelEnabled = false;
 
@@ -20,7 +20,7 @@
   async function rest(event) {
     const confirmed = await Dialog.confirm({
       title: "",
-      content: localize("FFXIV.TitleBlock.ConfirmRest"),
+      content: localize("TitleBlock.ConfirmRest"),
       yes: async () => {
         await $actor.update({
           system: {
@@ -31,7 +31,7 @@
             BP: { val: $actor.system.points.BP.max },
           },
         });
-        ui.notifications.info(localize("FFXIV.TitleBlock.PointsRestored")); // Use localized string
+        ui.notifications.info(localize("TitleBlock.PointsRestored")); // Use localized string
       },
       no: () => {},
     });
@@ -45,11 +45,11 @@
       .flexrow.no-wrap
         .flex1.rest-button
           .left.mt-xxs
-            button.stealth(on:click|preventDefault="{rest}" data-tooltip="{localize('FFXIV.TitleBlock.Rest')}" aria-label="{localize('FFXIV.TitleBlock.Rest')}")
-              img.rest-icon(src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="{localize('FFXIV.TitleBlock.Rest')}")
+            button.stealth(on:click|preventDefault="{rest}" data-tooltip="{localize('TitleBlock.Rest')}" aria-label="{localize('TitleBlock.Rest')}")
+              img.rest-icon(src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="{localize('TitleBlock.Rest')}")
 
         .flex4.nowrap.font-inter.lvcontainer.glow
-          .scaleup {localize('FFXIV.LV')} 
+          .scaleup {localize('LV')} 
           .scaleup {level}
 
     .flex4.no-wrap.font-cinzel.job  {roleName} /  {jobName}

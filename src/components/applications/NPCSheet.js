@@ -1,7 +1,7 @@
 import NPCSheetShell from "./NPCSheetShell.svelte";
 import SvelteDocumentSheet from "~/src/documents/DocumentSheet";
 import { SYSTEM_CODE, SYSTEM_ID } from "~/src/helpers/constants";
-import { localize } from "#runtime/util/i18n";
+import { localize } from "~/src/helpers/util";
 import { generateRandomElementId } from "~/src/helpers/util";
 
 /**
@@ -65,7 +65,7 @@ export default class FFXIVActorSheet extends SvelteDocumentSheet {
     const canEdit = game.user.isGM || (this.reactive.document.isOwner);
     if (canEdit) {
       buttons.unshift({
-        label: localize("FFXIV.Types.Actor.HeaderButtons.Edit"),
+        label: localize("Types.Actor.HeaderButtons.Edit"),
         class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
         icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
         // onclick: (ev) => this._onToggleEdit(ev),
@@ -257,7 +257,7 @@ export default class FFXIVActorSheet extends SvelteDocumentSheet {
     const actor = this.reactive.document;
 
     if (!actor.isOwner) {
-      ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.NotOwner`))
+      ui.notifications.error(localize("Errors.NotOwner"))
       return false;
     }
 
@@ -270,7 +270,7 @@ export default class FFXIVActorSheet extends SvelteDocumentSheet {
 
     //- effect items are not to be dropped directly on the actor
     if (droppedItem.type === "effect") {
-      ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`))
+      ui.notifications.error(localize("Errors.EffectItemsNotAllowed"))
       return false;
     }
     

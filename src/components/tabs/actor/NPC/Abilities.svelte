@@ -6,7 +6,7 @@
   import { TJSInput } from "#standard/component/form";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { toggleBookmark, ucfirst } from "~/src/helpers/util";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
@@ -88,7 +88,7 @@
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Abilities.confirmDeleteItem`));
+      okToDelete = confirm(localize("Types.Actor.Abilities.confirmDeleteItem"));
     }
     if (okToDelete) {
       item.delete();
@@ -97,8 +97,8 @@
 
   async function removeAllItems() {
     const okToDelete = await Dialog.confirm({
-      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAllTitle"),
-      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAll"),
+      title: localize("Types.Actor.Abilities.confirmDeleteAllTitle"),
+      content: localize("Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {  
         await $Actor.deleteAllItems(["trait", "action"]);
       },
@@ -143,8 +143,8 @@
 
     //- confirm by Dialog
     const okToDelete = await Dialog.confirm({
-      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJobTitle"),
-      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJob"),
+      title: localize("Types.Actor.Abilities.confirmDeleteJobTitle"),
+      content: localize("Types.Actor.Abilities.confirmDeleteJob"),
       yes: async () => {
         //- get the job by uuid
         const job = await fromUuid($doc.system.job.uuid);
@@ -192,7 +192,7 @@
       .padded
         //- add in the job item if it exists
         +if("$Actor.system.job?.name")
-          h1.left.gold {localize('FFXIV.Job')}
+          h1.left.gold {localize('Job')}
           table.borderless
             tr
               th.img.shrink(scope="col")
@@ -207,8 +207,8 @@
         table.borderless
           tr
             th.img.shrink(scope="col")
-            th.left.expand.ml-sm(scope="col") {localize('FFXIV.Name')}
-            th.fixed(scope="col") {localize('FFXIV.Type')}
+            th.left.expand.ml-sm(scope="col") {localize('Name')}
+            th.fixed(scope="col") {localize('Type')}
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th.buttons(scope="col" class="{lockCSS}")
@@ -230,11 +230,11 @@
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
               td.min.buttons.right
                 +if("!$doc.system.inventoryLocked")
-                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                  button.stealth( data-tooltip="{localize('Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
                     i.left.fa.fa-edit
-                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                  button.stealth( data-tooltip="{localize('Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
                     i.left.fa.fa-copy
-                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                  button.stealth( data-tooltip="{localize('Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
                     i.left.fa.fa-trash
             
       +if("hasItems")

@@ -127,12 +127,12 @@
 
     .panel.overflow.containerx
       .padded
-        h1.gold {localize('FFXIV.Inventory')}
+        h1.gold {localize('Inventory')}
         table.borderless
           tr.gold
             th.img.shrink(scope="col")
-            th.left.expand(scope="col") {localize('FFXIV.Name')}
-            th.fixed(scope="col") {localize('FFXIV.Quantity')}
+            th.left.expand(scope="col") {localize('Name')}
+            th.fixed(scope="col") {localize('Quantity')}
             th.shrink(scope="col")
               i.fa-solid.fa-bookmark
             th(scope="col" class="{lockCSS}")
@@ -141,22 +141,22 @@
           +each("items as item, index")
             //- pre item.type {item.type}
             tr
-              td.img(data-tooltip="{localize('FFXIV.Use')}" on:click="{useItem(item)}" role="button")
+              td.img(data-tooltip="{localize('Use')}" on:click="{useItem(item)}" role="button")
                 img.icon(src="{item.img}" alt="{item.name}" )
-              td.left(data-tooltip="{localize('FFXIV.View')}")
+              td.left(data-tooltip="{localize('View')}")
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}" role="button") {item.name}
               td 
                 button.stealth.clickable.wide(data-tooltip="Left click + / Right Click -" on:click!="{addQuantity(item)}" on:contextmenu!="{removeQuantity(item)}") {item.system.quantity}
-              td( data-tooltip="{localize('FFXIV.Bookmark')}")
+              td( data-tooltip="{localize('Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}")
               td.min.buttons.right
                 +if("!$doc.system.inventoryLocked")
-                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
+                  button.stealth( data-tooltip="{localize('Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
                     i.left.fa.fa-edit
-                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
+                  button.stealth( data-tooltip="{localize('Types.Actor.ActionButtons.Duplicate')}" on:click="{duplicateItem(index, item)}")
                     i.left.fa.fa-copy
-                  button.stealth( data-tooltip="{localize('FFXIV.Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
+                  button.stealth( data-tooltip="{localize('Types.Actor.ActionButtons.Delete')}" on:click="{deleteItem(index, item)}")
                     i.left.fa.fa-trash
             
       button.mt-sm.glossy-button.gold-light.hover-shine(on:click="{removeAllItems}") {localize("Instructions.RemoveAll")}

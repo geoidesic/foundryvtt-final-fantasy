@@ -5,7 +5,7 @@
   import { setContext, getContext, onMount, tick } from "svelte";
   import { getActorOwner, ucfirst } from "~/src/helpers/util";
   import { SYSTEM_ID } from "~/src/helpers/constants";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { gameSettings } from '~/src/config/gameSettings';
 
   import Tabs from "~/src/components/molecules/Tabs.svelte";
@@ -28,11 +28,11 @@
 
   // Tabs
   const defaultTabs = [
-    { label: localize("FFXIV.Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp' },
-    { label: localize("FFXIV.Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp' },
-    { label: localize("FFXIV.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
-    { label: localize("FFXIV.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
-    { label: localize("FFXIV.Tabs.Effects"), id: "effect", component: Effects, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp' }
+    { label: localize("Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp' },
+    { label: localize("Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp' },
+    { label: localize("Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
+    { label: localize("Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
+    { label: localize("Tabs.Effects"), id: "effect", component: Effects, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp' }
   ];
 
   // set the sheet color

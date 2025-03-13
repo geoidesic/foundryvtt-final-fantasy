@@ -6,7 +6,7 @@
   import { TJSInput } from "#standard/component/form";
   import { createFilterQuery } from "~/src/filters/itemFilterQuery";
   import { getEffectOrigin } from "~/src/helpers/util";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { SYSTEM_ID, SYSTEM_CODE } from "~/src/helpers/constants";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
   import ScrollingContainer from "~/src/helpers/svelte-components/ScrollingContainer.svelte";
@@ -102,7 +102,7 @@
 <template lang="pug">
 .effects&attributes($$restProps)
   +if("ActiveEffects.length > 0")
-    h2.font-cinzel {localize('FFXIV.Effects')}
+    h2.font-cinzel {localize('Effects')}
     .px-xs
       table.borderless.low-contrast
         +each("ActiveEffects as item, index")
@@ -117,7 +117,7 @@
                 tabindex="0"
               ) {localize(item.name)}
   +if("!ActiveEffects.length")
-    p(style="margin-top: -2px; margin-bottom: 0px;") {localize("FFXIV.NoEffects")}
+    p(style="margin-top: -2px; margin-bottom: 0px;") {localize("NoEffects")}
 </template>
 
 <style lang="sass">

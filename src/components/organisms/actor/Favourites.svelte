@@ -75,18 +75,15 @@
   }
 
   function duplicateItem(item) {
-    game.system.log.d("duplicateItem");
-    game.system.log.d(item);
     const itemData = item.toObject();
     delete itemData._id;
-    game.system.log.d("itemData", itemData);
     $Actor.sheet._onDropItemCreate(itemData);
   }
 
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize("Types.Actor.Inventory.confirmDeleteItem"));
+      okToDelete = confirm(localize("Types.Actor.Inventory.confirmDeleteItem"));
     }
     if (okToDelete) {
       item.delete();

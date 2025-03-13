@@ -1,6 +1,6 @@
 <script>
   import { onMount, getContext } from "svelte";
-  import { localize } from "#runtime/util/i18n";
+  import { localize } from "~/src/helpers/util";
   import { isParentActor} from "~/src/helpers/util";
   import { getTypeOptions } from "~/src/helpers/constants.js";
   import ProseMirror from "~/src/components/molecules/ProseMirror.svelte";
@@ -21,10 +21,10 @@
 <template lang="pug">
   .item-sheet.details
     .flexcol.flex3.left.high.wide
-      h3.left {localize("FFXIV.General")}
+      h3.left {localize("General")}
       .flexrow.sheet-row.justify-vertical.wide
         .flex1
-          label(for="type") {localize("FFXIV.Action")} {localize("FFXIV.Type")}
+          label(for="type") {localize("Action")} {localize("Type")}
         .flex4.right.wide
           DocSelect.wide.right(id="type" name="type" type="number" options="{typeOptions}" valuePath="system.type")
       
