@@ -2,7 +2,7 @@
   "name": "foundryvtt-final-fantasy",
   "description": "A VTT-first RPG system.",
   "license": "MIT License",
-  "version": "0.1.34",
+  "version": "0.1.33",
   "node": ">=20.0.0",
   "private": true,
   "type": "module",
@@ -54,8 +54,8 @@
     "not IE 11"
   ],
   "scripts": {
-    "dev": "node scripts/modifySystemJson.js remove && vite",
-    "build": "vite build && node scripts/modifySystemJson.js restore",
+    "dev": "vite",
+    "build": "vite build",
     "eslint": "eslint .",
     "test:unit": "vitest",
     "pack": "node scripts/db-pack.js",
