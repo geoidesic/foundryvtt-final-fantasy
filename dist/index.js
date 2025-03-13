@@ -6440,28 +6440,32 @@ function create_if_block_7$1(ctx) {
 __name(create_if_block_7$1, "create_if_block_7$1");
 function create_if_block_6$3(ctx) {
   let li;
+  let t0_value = localize$1("Types.Item.Types.action.HeavierShotType") + "";
   let t0;
-  let t1_value = (
+  let t1;
+  let t2_value = (
     /*$item*/
     ctx[0]?.system?.heavierShotType + ""
   );
-  let t1;
+  let t2;
   return {
     c() {
       li = element("li");
-      t0 = text("Heavier Shot Type: ");
-      t1 = text(t1_value);
+      t0 = text(t0_value);
+      t1 = text(": ");
+      t2 = text(t2_value);
     },
     m(target, anchor) {
       insert(target, li, anchor);
       append(li, t0);
       append(li, t1);
+      append(li, t2);
     },
     p(ctx2, dirty) {
       if (dirty & /*$item*/
-      1 && t1_value !== (t1_value = /*$item*/
+      1 && t2_value !== (t2_value = /*$item*/
       ctx2[0]?.system?.heavierShotType + ""))
-        set_data(t1, t1_value);
+        set_data(t2, t2_value);
     },
     d(detaching) {
       if (detaching) {
@@ -6509,28 +6513,32 @@ function create_if_block_5$3(ctx) {
 __name(create_if_block_5$3, "create_if_block_5$3");
 function create_if_block_4$6(ctx) {
   let li;
+  let t0_value = localize$1("Types.Item.Range") + "";
   let t0;
-  let t1_value = (
+  let t1;
+  let t2_value = (
     /*$item*/
     ctx[0]?.system?.rangeType + ""
   );
-  let t1;
+  let t2;
   return {
     c() {
       li = element("li");
-      t0 = text("Range: ");
-      t1 = text(t1_value);
+      t0 = text(t0_value);
+      t1 = text(": ");
+      t2 = text(t2_value);
     },
     m(target, anchor) {
       insert(target, li, anchor);
       append(li, t0);
       append(li, t1);
+      append(li, t2);
     },
     p(ctx2, dirty) {
       if (dirty & /*$item*/
-      1 && t1_value !== (t1_value = /*$item*/
+      1 && t2_value !== (t2_value = /*$item*/
       ctx2[0]?.system?.rangeType + ""))
-        set_data(t1, t1_value);
+        set_data(t2, t2_value);
     },
     d(detaching) {
       if (detaching) {
@@ -6542,28 +6550,32 @@ function create_if_block_4$6(ctx) {
 __name(create_if_block_4$6, "create_if_block_4$6");
 function create_if_block_3$9(ctx) {
   let li;
+  let t0_value = localize$1("Types.Item.Target") + "";
   let t0;
-  let t1_value = (
+  let t1;
+  let t2_value = (
     /*$item*/
     ctx[0]?.system?.target.capitalize() + ""
   );
-  let t1;
+  let t2;
   return {
     c() {
       li = element("li");
-      t0 = text("Target: ");
-      t1 = text(t1_value);
+      t0 = text(t0_value);
+      t1 = text(": ");
+      t2 = text(t2_value);
     },
     m(target, anchor) {
       insert(target, li, anchor);
       append(li, t0);
       append(li, t1);
+      append(li, t2);
     },
     p(ctx2, dirty) {
       if (dirty & /*$item*/
-      1 && t1_value !== (t1_value = /*$item*/
+      1 && t2_value !== (t2_value = /*$item*/
       ctx2[0]?.system?.target.capitalize() + ""))
-        set_data(t1, t1_value);
+        set_data(t2, t2_value);
     },
     d(detaching) {
       if (detaching) {
@@ -6575,28 +6587,32 @@ function create_if_block_3$9(ctx) {
 __name(create_if_block_3$9, "create_if_block_3$9");
 function create_if_block_2$d(ctx) {
   let li;
+  let t0_value = localize$1("Types.Item.Trigger") + "";
   let t0;
-  let t1_value = (
+  let t1;
+  let t2_value = (
     /*$item*/
     ctx[0]?.system?.trigger.capitalize() + ""
   );
-  let t1;
+  let t2;
   return {
     c() {
       li = element("li");
-      t0 = text("Trigger: ");
-      t1 = text(t1_value);
+      t0 = text(t0_value);
+      t1 = text(": ");
+      t2 = text(t2_value);
     },
     m(target, anchor) {
       insert(target, li, anchor);
       append(li, t0);
       append(li, t1);
+      append(li, t2);
     },
     p(ctx2, dirty) {
       if (dirty & /*$item*/
-      1 && t1_value !== (t1_value = /*$item*/
+      1 && t2_value !== (t2_value = /*$item*/
       ctx2[0]?.system?.trigger.capitalize() + ""))
-        set_data(t1, t1_value);
+        set_data(t2, t2_value);
     },
     d(detaching) {
       if (detaching) {
@@ -6608,12 +6624,14 @@ function create_if_block_2$d(ctx) {
 __name(create_if_block_2$d, "create_if_block_2$d");
 function create_if_block$t(ctx) {
   let li;
+  let t0_value = localize$1("Types.Item.Types.action.DirectHit") + "";
   let t0;
-  let t1_value = (
+  let t1;
+  let t2_value = (
     /*$item*/
     ctx[0]?.system?.directHitType.capitalize() + ""
   );
-  let t1;
+  let t2;
   let if_block = (
     /*$item*/
     ctx[0]?.system?.directHitDamage && create_if_block_1$h(ctx)
@@ -6621,8 +6639,9 @@ function create_if_block$t(ctx) {
   return {
     c() {
       li = element("li");
-      t0 = text("Direct Hit: ");
-      t1 = text(t1_value);
+      t0 = text(t0_value);
+      t1 = text(": ");
+      t2 = text(t2_value);
       if (if_block)
         if_block.c();
     },
@@ -6630,14 +6649,15 @@ function create_if_block$t(ctx) {
       insert(target, li, anchor);
       append(li, t0);
       append(li, t1);
+      append(li, t2);
       if (if_block)
         if_block.m(li, null);
     },
     p(ctx2, dirty) {
       if (dirty & /*$item*/
-      1 && t1_value !== (t1_value = /*$item*/
+      1 && t2_value !== (t2_value = /*$item*/
       ctx2[0]?.system?.directHitType.capitalize() + ""))
-        set_data(t1, t1_value);
+        set_data(t2, t2_value);
       if (
         /*$item*/
         ctx2[0]?.system?.directHitDamage
@@ -7328,11 +7348,11 @@ function create_if_block_1$g(ctx) {
   let div6;
   let div3;
   let div4;
-  let t2_value = getDefenseValue(
+  let t3_value = getDefenseValue(
     /*target*/
     ctx[32]
   ) + "";
-  let t2;
+  let t3;
   let div5;
   let current_block_type_index;
   let if_block1;
@@ -7395,9 +7415,9 @@ function create_if_block_1$g(ctx) {
       t0 = text(t0_value);
       div6 = element("div");
       div3 = element("div");
-      div3.textContent = "DEF ";
+      div3.textContent = `${localize$1("Types.Actor.Types.PC.Attributes.secondary.def.Abbreviation")} `;
       div4 = element("div");
-      t2 = text(t2_value);
+      t3 = text(t3_value);
       div5 = element("div");
       if_block1.c();
       div10 = element("div");
@@ -7471,7 +7491,7 @@ function create_if_block_1$g(ctx) {
       append(div7, div6);
       append(div6, div3);
       append(div6, div4);
-      append(div4, t2);
+      append(div4, t3);
       append(div6, div5);
       if_blocks[current_block_type_index].m(div5, null);
       append(div15, div10);
@@ -7544,11 +7564,11 @@ function create_if_block_1$g(ctx) {
       ctx[32].name + ""))
         set_data(t0, t0_value);
       if ((!current || dirty[0] & /*targetTokens*/
-      16) && t2_value !== (t2_value = getDefenseValue(
+      16) && t3_value !== (t3_value = getDefenseValue(
         /*target*/
         ctx[32]
       ) + ""))
-        set_data(t2, t2_value);
+        set_data(t3, t3_value);
       let previous_block_index = current_block_type_index;
       current_block_type_index = select_block_type(ctx);
       if (current_block_type_index === previous_block_index) {
@@ -7714,7 +7734,7 @@ function create_else_block$6(ctx) {
       ctx[15](
         /*target*/
         ctx[32]
-      ) ? localize$1("DirectHit") : localize$1("DirectHitMissed"));
+      ) ? localize$1("DirectHit") : localize$1("Types.Item.Types.action.DirectHitMissed"));
     },
     m(target, anchor) {
       insert(target, i, anchor);
@@ -7733,7 +7753,7 @@ function create_else_block$6(ctx) {
       ctx2[15](
         /*target*/
         ctx2[32]
-      ) ? localize$1("DirectHit") : localize$1("DirectHitMissed"))) {
+      ) ? localize$1("DirectHit") : localize$1("Types.Item.Types.action.DirectHitMissed"))) {
         attr(i, "data-tooltip", i_data_tooltip_value);
       }
     },
@@ -7834,7 +7854,7 @@ function create_if_block_3$8(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.textContent = "Damage ";
+      div0.textContent = `${localize$1("Damage")}`;
       div1 = element("div");
       t1 = text(t1_value);
       attr(div0, "class", "flex3 left font-cinzel smaller");
@@ -7901,7 +7921,7 @@ function create_if_block_2$c(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.textContent = "Direct Hit ";
+      div0.textContent = `${localize$1("Types.Item.Types.action.DirectHit")}`;
       div1 = element("div");
       t1 = text(t1_value);
       attr(div0, "class", "flex3 left font-cinzel even-smaller");
@@ -23784,7 +23804,7 @@ function create_default_slot$g(ctx) {
   let p1;
   let a0;
   let t6;
-  let t7_value = localize(`${SYSTEM_CODE}.Welcome.Released`) + "";
+  let t7_value = localize$1(`${SYSTEM_CODE}.Welcome.Released`) + "";
   let t7;
   let h11;
   let p2;
@@ -23808,44 +23828,44 @@ function create_default_slot$g(ctx) {
       div1 = element("div");
       div1.innerHTML = `<div class="texture svelte-eou7jl"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
       p0 = element("p");
-      p0.textContent = `${localize("FFXIV.Welcome.To")} ${localize(`${SYSTEM_CODE}.Title`)}!`;
+      p0.textContent = `${localize$1("Welcome.To")} ${localize$1(`${SYSTEM_CODE}.Title`)}!`;
       h10 = element("h1");
-      h10.textContent = `${localize("FFXIV.Welcome.Introduction")}`;
+      h10.textContent = `${localize$1("Welcome.Introduction")}`;
       p1 = element("p");
       a0 = element("a");
-      a0.textContent = `${localize(`${SYSTEM_CODE}.Title`)}`;
+      a0.textContent = `${localize$1(`${SYSTEM_CODE}.Title`)}`;
       t6 = text(" ");
       t7 = text(t7_value);
       h11 = element("h1");
       h11.textContent = "Help";
       p2 = element("p");
       span0 = element("span");
-      span0.textContent = `${localize("FFXIV.Welcome.Issues")}`;
+      span0.textContent = `${localize$1("Welcome.Issues")}`;
       a1 = element("a");
-      a1.textContent = `${localize("FFXIV.Welcome.Github")}`;
+      a1.textContent = `${localize$1("Welcome.Github")}`;
       div4 = element("div");
       div2 = element("div");
       input = element("input");
       div3 = element("div");
       span1 = element("span");
-      span1.textContent = `${localize("FFXIV.Setting.DontShowWelcome.Name")}`;
+      span1.textContent = `${localize$1("Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
       div5 = element("div");
       div5.innerHTML = `<img class="pt-sm white svelte-eou7jl" src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
       div6 = element("div");
       h4 = element("h4");
-      h4.textContent = `${localize(`${SYSTEM_CODE}.Title`)} ${localize(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
+      h4.textContent = `${localize$1(`${SYSTEM_CODE}.Title`)} ${localize$1(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
       a2 = element("a");
       a2.textContent = "Round Table Games ©2025";
       attr(div1, "class", "logo-background svelte-eou7jl");
       attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
       attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
       attr(input, "type", "checkbox");
-      attr(input, "label", localize("FFXIV.Setting.DontShowWelcome.Name"));
+      attr(input, "label", localize$1("Setting.DontShowWelcome.Name"));
       attr(div2, "class", "flex0");
       attr(div3, "class", "flex");
       attr(div4, "class", "flexrow inset justify-vertical mb-sm");
-      attr(div4, "data-tooltip", localize("FFXIV.Setting.DontShowWelcome.Hint"));
+      attr(div4, "data-tooltip", localize$1("Setting.DontShowWelcome.Hint"));
       attr(main, "class", "svelte-eou7jl");
       attr(div5, "class", "flex2 right");
       attr(a2, "href", "https://www.round-table.games");
@@ -26245,7 +26265,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.1.34";
+const version = "0.1.35";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -28408,6 +28428,7 @@ function create_fragment$10(ctx) {
   let tbody;
   let div0;
   let button1;
+  let t4_value = localize$1("Instructions.SaveChanges") + "";
   let t4;
   let button1_class_value;
   let current;
@@ -28448,7 +28469,7 @@ function create_fragment$10(ctx) {
       }
       div0 = element("div");
       button1 = element("button");
-      t4 = text("Save Changes");
+      t4 = text(t4_value);
       attr(h1, "class", "font-cinzel center");
       attr(th0, "class", "left expand");
       attr(th0, "scope", "col");
@@ -31898,19 +31919,19 @@ function instance$M($$self, $$props, $$invalidate) {
   let activeTab2 = "config";
   const tabs = [
     {
-      label: localize("EFFECT.Config"),
+      label: localize$1("EFFECT.Config"),
       id: "config",
       component: Config,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/cog.webp"
     },
     {
-      label: localize("FFXIV.Duration.Title"),
+      label: localize$1("Duration.Title"),
       id: "duration",
       component: Duration$1,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/duration.webp"
     },
     {
-      label: localize("EFFECT.Changes"),
+      label: localize$1("EFFECT.Changes"),
       id: "changes",
       component: Changes,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/list.webp"
@@ -32288,7 +32309,7 @@ function create_if_block_4$3(ctx) {
   return {
     c() {
       h1 = element("h1");
-      h1.textContent = `${localize("FFXIV.Job")}`;
+      h1.textContent = `${localize$1("Job")}`;
       table = element("table");
       tr = element("tr");
       th0 = element("th");
@@ -32301,7 +32322,7 @@ function create_if_block_4$3(ctx) {
       button = element("button");
       button.innerHTML = `<i class="fa-solid fa-trash"></i>`;
       attr(h1, "class", "left gold");
-      attr(img, "class", "icon svelte-1g13pt8");
+      attr(img, "class", "icon svelte-1tqlt0i");
       if (!src_url_equal(img.src, img_src_value = /*$Actor*/
       ctx[0].system.job?.img))
         attr(img, "src", img_src_value);
@@ -32408,9 +32429,9 @@ function create_if_block_3$6(ctx) {
     c() {
       div = element("div");
       create_component(badge.$$.fragment);
-      attr(div, "class", "flex0 right ml-sm pt-s svelte-1g13pt8");
+      attr(div, "class", "flex0 right ml-sm pt-s svelte-1tqlt0i");
       attr(div, "data-tooltip-class", "FFXIV-tooltip");
-      attr(div, "data-tooltip", localize("FFXIV.Types.Item.Types.action.UsesRemaining"));
+      attr(div, "data-tooltip", localize$1("Types.Item.Types.action.UsesRemaining"));
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -32613,20 +32634,20 @@ function create_if_block_1$b(ctx) {
   return {
     c() {
       button0 = element("button");
-      button0.innerHTML = `<i class="left fa fa-edit svelte-1g13pt8" role="button"></i>`;
+      button0.innerHTML = `<i class="left fa fa-edit svelte-1tqlt0i" role="button"></i>`;
       button1 = element("button");
-      button1.innerHTML = `<i class="left fa fa-copy svelte-1g13pt8" role="button"></i>`;
+      button1.innerHTML = `<i class="left fa fa-copy svelte-1tqlt0i" role="button"></i>`;
       button2 = element("button");
-      button2.innerHTML = `<i class="left fa fa-trash svelte-1g13pt8" role="button"></i>`;
-      attr(button0, "class", "stealth svelte-1g13pt8");
+      button2.innerHTML = `<i class="left fa fa-trash svelte-1tqlt0i" role="button"></i>`;
+      attr(button0, "class", "stealth svelte-1tqlt0i");
       attr(button0, "data-tooltip-class", "FFXIV-tooltip");
-      attr(button0, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Edit"));
-      attr(button1, "class", "stealth svelte-1g13pt8");
+      attr(button0, "data-tooltip", localize$1("Types.Actor.ActionButtons.Edit"));
+      attr(button1, "class", "stealth svelte-1tqlt0i");
       attr(button1, "data-tooltip-class", "FFXIV-tooltip");
-      attr(button1, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Duplicate"));
-      attr(button2, "class", "stealth svelte-1g13pt8");
+      attr(button1, "data-tooltip", localize$1("Types.Actor.ActionButtons.Duplicate"));
+      attr(button2, "class", "stealth svelte-1tqlt0i");
       attr(button2, "data-tooltip-class", "FFXIV-tooltip");
-      attr(button2, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Delete"));
+      attr(button2, "data-tooltip", localize$1("Types.Actor.ActionButtons.Delete"));
     },
     m(target, anchor) {
       insert(target, button0, anchor);
@@ -32755,41 +32776,41 @@ function create_each_block$c(ctx) {
       td4 = element("td");
       if (if_block2)
         if_block2.c();
-      attr(img, "class", "icon svelte-1g13pt8");
+      attr(img, "class", "icon svelte-1tqlt0i");
       if (!src_url_equal(img.src, img_src_value = /*item*/
       ctx[21].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
       ctx[21].name);
-      attr(td0, "class", "img svelte-1g13pt8");
+      attr(td0, "class", "img svelte-1tqlt0i");
       attr(td0, "data-tooltip-class", "FFXIV-tooltip");
-      attr(td0, "data-tooltip", localize("FFXIV.Use"));
+      attr(td0, "data-tooltip", localize$1("Use"));
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-1g13pt8");
+      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-1tqlt0i");
       attr(a, "role", "button");
-      attr(div0, "class", "flex3 left svelte-1g13pt8");
+      attr(div0, "class", "flex3 left svelte-1tqlt0i");
       attr(div0, "data-tooltip-class", "FFXIV-tooltip wordy");
       attr(div0, "data-tooltip", div0_data_tooltip_value = /*item*/
       ctx[21].system.description);
-      attr(div1, "class", "flexrow svelte-1g13pt8");
-      attr(td1, "class", "left text ellipsis svelte-1g13pt8");
-      attr(td2, "class", "right no-wrap svelte-1g13pt8");
+      attr(div1, "class", "flexrow svelte-1tqlt0i");
+      attr(td1, "class", "left text ellipsis svelte-1tqlt0i");
+      attr(td2, "class", "right no-wrap svelte-1tqlt0i");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1g13pt8");
+      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1tqlt0i");
       attr(i, "role", "button");
-      attr(button, "class", "stealth svelte-1g13pt8");
-      attr(td3, "class", "shrink svelte-1g13pt8");
+      attr(button, "class", "stealth svelte-1tqlt0i");
+      attr(td3, "class", "shrink svelte-1tqlt0i");
       attr(td3, "data-tooltip-class", "FFXIV-tooltip");
-      attr(td3, "data-tooltip", localize("FFXIV.Bookmark"));
-      attr(td4, "class", "min buttons right svelte-1g13pt8");
+      attr(td3, "data-tooltip", localize$1("Bookmark"));
+      attr(td4, "class", "min buttons right svelte-1tqlt0i");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*actionTypeClass*/
         ctx[17](
           /*item*/
           ctx[21]
         )
-      ) + " svelte-1g13pt8");
+      ) + " svelte-1tqlt0i");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -32873,7 +32894,7 @@ function create_each_block$c(ctx) {
         set_data(t, t_value);
       if (!current || dirty & /*items*/
       32 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-1g13pt8")) {
+      (ctx[21].system.isMagic ? "pulse" : "") + " svelte-1tqlt0i")) {
         attr(a, "class", a_class_value);
       }
       if (!current || dirty & /*items*/
@@ -32929,7 +32950,7 @@ function create_each_block$c(ctx) {
       }
       if (!current || dirty & /*items*/
       32 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1g13pt8")) {
+      (ctx[21].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1tqlt0i")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -32952,7 +32973,7 @@ function create_each_block$c(ctx) {
           /*item*/
           ctx[21]
         )
-      ) + " svelte-1g13pt8")) {
+      ) + " svelte-1tqlt0i")) {
         attr(tr, "class", tr_class_value);
       }
     },
@@ -32992,9 +33013,9 @@ function create_if_block$g(ctx) {
   return {
     c() {
       button0 = element("button");
-      button0.textContent = "- Remove All";
+      button0.textContent = `${localize$1("Instructions.RemoveAll")}`;
       button1 = element("button");
-      button1.textContent = "Reset Uses";
+      button1.textContent = `${localize$1("Instructions.ResetUses")}`;
       attr(button0, "class", "mt-sm glossy-button gold-light hover-shine");
       attr(button1, "class", "glossy-button gold-light hover-shine ml-sm");
     },
@@ -33075,14 +33096,14 @@ function create_fragment$R(ctx) {
       if (if_block0)
         if_block0.c();
       h1 = element("h1");
-      h1.textContent = `${localize("FFXIV.Abilities")}`;
+      h1.textContent = `${localize$1("Abilities")}`;
       table = element("table");
       tr = element("tr");
       th0 = element("th");
       th1 = element("th");
-      th1.textContent = `${localize("FFXIV.Name")}`;
+      th1.textContent = `${localize$1("Name")}`;
       th2 = element("th");
-      th2.textContent = "Tags";
+      th2.textContent = `${localize$1("Tags")}`;
       th3 = element("th");
       button = element("button");
       i = element("i");
@@ -33099,17 +33120,17 @@ function create_fragment$R(ctx) {
       attr(th2, "scope", "col");
       attr(th2, "colspan", "1");
       attr(i, "class", i_class_value = "fa " + /*faLockCSS*/
-      ctx[3] + " svelte-1g13pt8");
+      ctx[3] + " svelte-1tqlt0i");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[4] + " svelte-1g13pt8");
+      ctx[4] + " svelte-1tqlt0i");
       attr(th3, "class", th3_class_value = "buttons " + /*lockCSS*/
-      ctx[4] + " svelte-1g13pt8");
+      ctx[4] + " svelte-1tqlt0i");
       attr(th3, "scope", "col");
       attr(th3, "colspan", "2");
       attr(tr, "class", "gold");
-      attr(table, "class", "borderless even svelte-1g13pt8");
-      attr(div0, "class", "padded svelte-1g13pt8");
-      attr(div1, "class", "panel overflow containerx svelte-1g13pt8");
+      attr(table, "class", "borderless even svelte-1tqlt0i");
+      attr(div0, "class", "padded svelte-1tqlt0i");
+      attr(div1, "class", "panel overflow containerx svelte-1tqlt0i");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -33161,17 +33182,17 @@ function create_fragment$R(ctx) {
       }
       if (!current || dirty & /*faLockCSS*/
       8 && i_class_value !== (i_class_value = "fa " + /*faLockCSS*/
-      ctx2[3] + " svelte-1g13pt8")) {
+      ctx2[3] + " svelte-1tqlt0i")) {
         attr(i, "class", i_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       16 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[4] + " svelte-1g13pt8")) {
+      ctx2[4] + " svelte-1tqlt0i")) {
         attr(button, "class", button_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       16 && th3_class_value !== (th3_class_value = "buttons " + /*lockCSS*/
-      ctx2[4] + " svelte-1g13pt8")) {
+      ctx2[4] + " svelte-1tqlt0i")) {
         attr(th3, "class", th3_class_value);
       }
       if (dirty & /*actionTypeClass, items, deleteItem, duplicateItem, editItem, $doc, badgeType, game, showItemSheet, RollCalc*/
@@ -33294,7 +33315,7 @@ function instance$K($$self, $$props, $$invalidate) {
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Abilities.confirmDeleteItem`));
+      okToDelete = confirm(game.i18n.localize("Types.Actor.Abilities.confirmDeleteItem"));
     }
     if (okToDelete) {
       item.delete();
@@ -33303,8 +33324,8 @@ function instance$K($$self, $$props, $$invalidate) {
   __name(deleteItem, "deleteItem");
   async function removeAllItems() {
     await Dialog.confirm({
-      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAllTitle"),
-      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAll"),
+      title: localize$1("Types.Actor.Abilities.confirmDeleteAllTitle"),
+      content: localize$1("Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {
         await $Actor.deleteAllItems(["trait", "action"]);
       },
@@ -33341,8 +33362,8 @@ function instance$K($$self, $$props, $$invalidate) {
       return;
     }
     await Dialog.confirm({
-      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJobTitle"),
-      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJob"),
+      title: localize$1("Types.Actor.Abilities.confirmDeleteJobTitle"),
+      content: localize$1("Types.Actor.Abilities.confirmDeleteJob"),
       yes: async () => {
         const job = await fromUuid($doc.system.job.uuid);
         const grants = job?.system?.grants;
@@ -33968,7 +33989,7 @@ function create_fragment$O(ctx) {
     c() {
       div1 = element("div");
       div0 = element("div");
-      div0.textContent = "Primary Attributes";
+      div0.textContent = `${localize$1("Primary")} ${localize$1("Attributes")}`;
       create_component(attributecol.$$.fragment);
       attr(div0, "class", "flexrow header underscore mb-md svelte-1noexin");
       attr(div1, "class", "molecule svelte-1noexin");
@@ -34053,7 +34074,7 @@ function create_fragment$N(ctx) {
     c() {
       div1 = element("div");
       div0 = element("div");
-      div0.textContent = "Secondary Attributes";
+      div0.textContent = `${localize$1("Secondary")} ${localize$1("Attributes")}`;
       create_component(attributecol.$$.fragment);
       attr(div0, "class", "flexrow header underscore mb-md svelte-9f9n3s");
       attr(div1, "class", "molecule svelte-9f9n3s");
@@ -34214,10 +34235,10 @@ function create_fragment$L(ctx) {
       div1 = element("div");
       div0 = element("div");
       button = element("button");
-      button.innerHTML = `<img class="rest-icon svelte-1ab4iud" src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="${localize("FFXIV.TitleBlock.Rest")}"/>`;
+      button.innerHTML = `<img class="rest-icon svelte-1ab4iud" src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="${localize$1("TitleBlock.Rest")}"/>`;
       div4 = element("div");
       div2 = element("div");
-      div2.textContent = `${localize("FFXIV.LV")} `;
+      div2.textContent = `${localize$1("LV")} `;
       div3 = element("div");
       t2 = text(
         /*level*/
@@ -34234,8 +34255,8 @@ function create_fragment$L(ctx) {
         ctx[2]
       );
       attr(button, "class", "stealth");
-      attr(button, "data-tooltip", localize("FFXIV.TitleBlock.Rest"));
-      attr(button, "aria-label", localize("FFXIV.TitleBlock.Rest"));
+      attr(button, "data-tooltip", localize$1("TitleBlock.Rest"));
+      attr(button, "aria-label", localize$1("TitleBlock.Rest"));
       attr(div0, "class", "left mt-xxs");
       attr(div1, "class", "flex1 rest-button svelte-1ab4iud");
       attr(div2, "class", "scaleup");
@@ -34318,7 +34339,7 @@ function instance$E($$self, $$props, $$invalidate) {
   async function rest(event) {
     await Dialog.confirm({
       title: "",
-      content: localize("FFXIV.TitleBlock.ConfirmRest"),
+      content: localize$1("TitleBlock.ConfirmRest"),
       yes: async () => {
         await $actor.update({
           system: {
@@ -34329,7 +34350,7 @@ function instance$E($$self, $$props, $$invalidate) {
             BP: { val: $actor.system.points.BP.max }
           }
         });
-        ui.notifications.info(localize("FFXIV.TitleBlock.PointsRestored"));
+        ui.notifications.info(localize$1("TitleBlock.PointsRestored"));
       },
       no: () => {
       }
@@ -34386,7 +34407,7 @@ function create_fragment$K(ctx) {
         /*$documentStore*/
         ctx[0]?.img
       ),
-      onClick: (
+      onclick: (
         /*_editToken*/
         ctx[2]
       )
@@ -34508,6 +34529,10 @@ let AttributeSection$1 = class AttributeSection extends SvelteComponent {
 function create_fragment$J(ctx) {
   let div13;
   let div4;
+  let div1;
+  let div0;
+  let div3;
+  let div2;
   let div9;
   let div6;
   let div8;
@@ -34548,7 +34573,12 @@ function create_fragment$J(ctx) {
     c() {
       div13 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-rxqier"><div class="header svelte-rxqier">HP</div></div><div class="sub-header svelte-rxqier"><div class="header svelte-rxqier">(Hit Points)</div></div>`;
+      div1 = element("div");
+      div0 = element("div");
+      div0.textContent = `${localize$1("Types.Actor.Points.HP.short")}`;
+      div3 = element("div");
+      div2 = element("div");
+      div2.textContent = `${localize$1("Types.Actor.Points.HP.Label")}`;
       div9 = element("div");
       div6 = element("div");
       div6.innerHTML = `<div class="header svelte-rxqier">Max</div>`;
@@ -34559,6 +34589,10 @@ function create_fragment$J(ctx) {
       div11 = element("div");
       div10 = element("div");
       create_component(docinput1.$$.fragment);
+      attr(div0, "class", "header svelte-rxqier");
+      attr(div1, "class", "header svelte-rxqier");
+      attr(div2, "class", "header svelte-rxqier");
+      attr(div3, "class", "sub-header svelte-rxqier");
       attr(div4, "class", "flex3");
       attr(div6, "class", "flex sub-header svelte-rxqier");
       attr(div7, "class", "header svelte-rxqier");
@@ -34572,6 +34606,10 @@ function create_fragment$J(ctx) {
     m(target, anchor) {
       insert(target, div13, anchor);
       append(div13, div4);
+      append(div4, div1);
+      append(div1, div0);
+      append(div4, div3);
+      append(div3, div2);
       append(div13, div9);
       append(div9, div6);
       append(div9, div8);
@@ -34634,8 +34672,13 @@ class HP extends SvelteComponent {
 function create_fragment$I(ctx) {
   let div13;
   let div4;
+  let div1;
+  let div0;
+  let div3;
+  let div2;
   let div9;
   let div6;
+  let div5;
   let div8;
   let div7;
   let docinput0;
@@ -34674,10 +34717,16 @@ function create_fragment$I(ctx) {
     c() {
       div13 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-rxqifo"><div class="header svelte-rxqifo">MP</div></div><div class="sub-header svelte-rxqifo"><div class="header svelte-rxqifo">(Magic Points)</div></div>`;
+      div1 = element("div");
+      div0 = element("div");
+      div0.textContent = `${localize$1("Types.Actor.Points.MP.short")}`;
+      div3 = element("div");
+      div2 = element("div");
+      div2.textContent = `${localize$1("Types.Actor.Points.MP.Label")}`;
       div9 = element("div");
       div6 = element("div");
-      div6.innerHTML = `<div class="header svelte-rxqifo">Max</div>`;
+      div5 = element("div");
+      div5.textContent = `${localize$1("Max")}`;
       div8 = element("div");
       div7 = element("div");
       create_component(docinput0.$$.fragment);
@@ -34685,7 +34734,12 @@ function create_fragment$I(ctx) {
       div11 = element("div");
       div10 = element("div");
       create_component(docinput1.$$.fragment);
+      attr(div0, "class", "header svelte-rxqifo");
+      attr(div1, "class", "header svelte-rxqifo");
+      attr(div2, "class", "header svelte-rxqifo");
+      attr(div3, "class", "sub-header svelte-rxqifo");
       attr(div4, "class", "flex3");
+      attr(div5, "class", "header svelte-rxqifo");
       attr(div6, "class", "flex sub-header svelte-rxqifo");
       attr(div7, "class", "header svelte-rxqifo");
       attr(div8, "class", "flex max header svelte-rxqifo");
@@ -34698,8 +34752,13 @@ function create_fragment$I(ctx) {
     m(target, anchor) {
       insert(target, div13, anchor);
       append(div13, div4);
+      append(div4, div1);
+      append(div1, div0);
+      append(div4, div3);
+      append(div3, div2);
       append(div13, div9);
       append(div9, div6);
+      append(div6, div5);
       append(div9, div8);
       append(div8, div7);
       mount_component(docinput0, div7, null);
@@ -34760,6 +34819,10 @@ class MP extends SvelteComponent {
 function create_fragment$H(ctx) {
   let div8;
   let div4;
+  let div1;
+  let div0;
+  let div3;
+  let div2;
   let div7;
   let div6;
   let div5;
@@ -34784,11 +34847,20 @@ function create_fragment$H(ctx) {
     c() {
       div8 = element("div");
       div4 = element("div");
-      div4.innerHTML = `<div class="header svelte-rxqik9"><div class="header svelte-rxqik9">BP</div></div><div class="sub-header svelte-rxqik9"><div class="header svelte-rxqik9">(Barrier Points)</div></div>`;
+      div1 = element("div");
+      div0 = element("div");
+      div0.textContent = `${localize$1("Types.Actor.Points.BP.short")}`;
+      div3 = element("div");
+      div2 = element("div");
+      div2.textContent = `${localize$1("Types.Actor.Points.BP.Label")}`;
       div7 = element("div");
       div6 = element("div");
       div5 = element("div");
       create_component(docinput.$$.fragment);
+      attr(div0, "class", "header svelte-rxqik9");
+      attr(div1, "class", "header svelte-rxqik9");
+      attr(div2, "class", "header svelte-rxqik9");
+      attr(div3, "class", "sub-header svelte-rxqik9");
       attr(div4, "class", "flex3");
       attr(div5, "class", "header svelte-rxqik9");
       attr(div6, "class", "header val svelte-rxqik9");
@@ -34798,6 +34870,10 @@ function create_fragment$H(ctx) {
     m(target, anchor) {
       insert(target, div8, anchor);
       append(div8, div4);
+      append(div4, div1);
+      append(div1, div0);
+      append(div4, div3);
+      append(div3, div2);
       append(div8, div7);
       append(div7, div6);
       append(div6, div5);
@@ -34946,7 +35022,7 @@ function create_if_block_1$a(ctx) {
   return {
     c() {
       h2 = element("h2");
-      h2.textContent = `${localize("FFXIV.Effects")}`;
+      h2.textContent = `${localize$1("Effects")}`;
       div = element("div");
       table = element("table");
       for (let i = 0; i < each_blocks.length; i += 1) {
@@ -35008,7 +35084,7 @@ function create_each_block$a(ctx) {
   let img_alt_value;
   let td;
   let a;
-  let t_value = localize(
+  let t_value = localize$1(
     /*item*/
     ctx[20].name
   ) + "";
@@ -35086,7 +35162,7 @@ function create_each_block$a(ctx) {
         attr(img, "alt", img_alt_value);
       }
       if (dirty & /*ActiveEffects*/
-      1 && t_value !== (t_value = localize(
+      1 && t_value !== (t_value = localize$1(
         /*item*/
         ctx[20].name
       ) + ""))
@@ -35107,7 +35183,7 @@ function create_if_block$e(ctx) {
   return {
     c() {
       p = element("p");
-      p.textContent = `${localize("FFXIV.NoEffects")}`;
+      p.textContent = `${localize$1("NoEffects")}`;
       set_style(p, "margin-top", "-2px");
       set_style(p, "margin-bottom", "0px");
     },
@@ -36030,7 +36106,7 @@ function create_default_slot_3(ctx) {
       div3 = element("div");
       div0 = element("div");
       h2 = element("h2");
-      h2.textContent = `${localize(`${SYSTEM_CODE}.Description`)}`;
+      h2.textContent = `${localize$1("Description")}`;
       div2 = element("div");
       div1 = element("div");
       create_component(prosemirror.$$.fragment);
@@ -36083,7 +36159,7 @@ function create_default_slot_2(ctx) {
       div3 = element("div");
       div0 = element("div");
       h2 = element("h2");
-      h2.textContent = `${localize(`${SYSTEM_CODE}.Points`)}`;
+      h2.textContent = `${localize$1("Points")}`;
       div2 = element("div");
       div1 = element("div");
       create_component(pointssection.$$.fragment);
@@ -36469,6 +36545,7 @@ function create_fragment$C(ctx) {
   let h10;
   let div2;
   let div0;
+  let label;
   let div1;
   let docinput;
   let h11;
@@ -36505,19 +36582,22 @@ function create_fragment$C(ctx) {
   return {
     c() {
       h10 = element("h1");
-      h10.textContent = "Details";
+      h10.textContent = `${localize$1("Details")}`;
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label class="gold" for="character-name">Character Name:</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Character")} ${localize$1("Name")}:`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
       h11 = element("h1");
-      h11.textContent = "Description";
+      h11.textContent = `${localize$1("Description")}`;
       create_component(prosemirror0.$$.fragment);
       h12 = element("h1");
-      h12.textContent = "Notes";
+      h12.textContent = `${localize$1("Notes")}`;
       create_component(prosemirror1.$$.fragment);
       attr(h10, "class", "gold");
+      attr(label, "class", "gold");
+      attr(label, "for", "character-name");
       attr(div0, "class", "flex2");
       attr(div1, "class", "flex2 wide");
       attr(div2, "class", "flexrow justify-vertical");
@@ -36528,6 +36608,7 @@ function create_fragment$C(ctx) {
       insert(target, h10, anchor);
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docinput, div1, null);
       insert(target, h11, anchor);
@@ -36602,11 +36683,11 @@ function create_if_block$b(ctx) {
       button2 = element("button");
       button2.innerHTML = `<i class="left fa fa-trash"></i>`;
       attr(button0, "class", "stealth");
-      attr(button0, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Edit"));
+      attr(button0, "data-tooltip", localize$1("Types.Actor.ActionButtons.Edit"));
       attr(button1, "class", "stealth");
-      attr(button1, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Duplicate"));
+      attr(button1, "data-tooltip", localize$1("Types.Actor.ActionButtons.Duplicate"));
       attr(button2, "class", "stealth");
-      attr(button2, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Delete"));
+      attr(button2, "data-tooltip", localize$1("Types.Actor.ActionButtons.Delete"));
     },
     m(target, anchor) {
       insert(target, button0, anchor);
@@ -36731,19 +36812,19 @@ function create_each_block$8(ctx) {
       attr(img, "alt", img_alt_value = /*item*/
       ctx[16].name);
       attr(td0, "class", "img");
-      attr(td0, "data-tooltip", localize("FFXIV.Use"));
+      attr(td0, "data-tooltip", localize$1("Use"));
       attr(td0, "role", "button");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
       (ctx[16].system.isMagic ? "pulse" : "") + " svelte-1xqs78");
       attr(a, "role", "button");
       attr(td1, "class", "left");
-      attr(td1, "data-tooltip", localize("FFXIV.View"));
+      attr(td1, "data-tooltip", localize$1("View"));
       attr(button0, "class", "stealth clickable wide svelte-1xqs78");
       attr(button0, "data-tooltip", "Left click + / Right Click -");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
       (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1xqs78");
       attr(button1, "class", "stealth");
-      attr(td3, "data-tooltip", localize("FFXIV.Bookmark"));
+      attr(td3, "data-tooltip", localize$1("Bookmark"));
       attr(td4, "class", "min buttons right");
     },
     m(target, anchor) {
@@ -36909,14 +36990,14 @@ function create_fragment$B(ctx) {
       div1 = element("div");
       div0 = element("div");
       h1 = element("h1");
-      h1.textContent = `${localize("FFXIV.Inventory")}`;
+      h1.textContent = `${localize$1("Inventory")}`;
       table = element("table");
       tr = element("tr");
       th0 = element("th");
       th1 = element("th");
-      th1.textContent = `${localize("FFXIV.Name")}`;
+      th1.textContent = `${localize$1("Name")}`;
       th2 = element("th");
-      th2.textContent = `${localize("FFXIV.Quantity")}`;
+      th2.textContent = `${localize$1("Quantity")}`;
       th3 = element("th");
       th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-1xqs78"></i>`;
       th4 = element("th");
@@ -36926,7 +37007,7 @@ function create_fragment$B(ctx) {
         each_blocks[i].c();
       }
       button1 = element("button");
-      button1.textContent = "- Remove All";
+      button1.textContent = `${localize$1("Instructions.RemoveAll")}`;
       attr(h1, "class", "gold");
       attr(th0, "class", "img shrink");
       attr(th0, "scope", "col");
@@ -37093,7 +37174,7 @@ function instance$v($$self, $$props, $$invalidate) {
   }
   __name(duplicateItem, "duplicateItem");
   async function removeAllItems() {
-    const okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteAll`));
+    const okToDelete = confirm(localize$1("Types.Actor.Inventory.confirmDeleteAll"));
     if (okToDelete) {
       await $Actor.deleteAllItems("equipment");
     }
@@ -37102,7 +37183,7 @@ function instance$v($$self, $$props, $$invalidate) {
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Inventory.confirmDeleteItem`));
+      okToDelete = confirm(localize$1("Types.Actor.Inventory.confirmDeleteItem"));
     }
     if (okToDelete) {
       item.delete();
@@ -37506,9 +37587,9 @@ function create_if_block$a(ctx) {
     c() {
       div = element("div");
       button0 = element("button");
-      button0.textContent = "+ Add Effect";
+      button0.textContent = `${localize$1("Instructions.AddEffect")}`;
       button1 = element("button");
-      button1.textContent = "- Remove All Effects";
+      button1.textContent = `${localize$1("Instructions.RemoveAllEffects")}`;
       attr(button0, "class", "glossy-button gold-light hover-shine no-wrap");
       attr(button1, "class", "glossy-button gold-light hover-shine no-wrap");
       attr(div, "class", "flexrow mt-sm");
@@ -38073,31 +38154,31 @@ function instance$t($$self, $$props, $$invalidate) {
   component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(10, $headerButtonNoLabel = value));
   const defaultTabs = [
     {
-      label: localize("FFXIV.Tabs.Attributes"),
+      label: localize$1("Tabs.Attributes"),
       id: "attributes",
       component: Attributes$1,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp"
     },
     {
-      label: localize("FFXIV.Tabs.Abilities"),
+      label: localize$1("Tabs.Abilities"),
       id: "abilities",
       component: Abilities$1,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp"
     },
     {
-      label: localize("FFXIV.Tabs.Inventory"),
+      label: localize$1("Tabs.Inventory"),
       id: "inventory",
       component: Inventory,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp"
     },
     {
-      label: localize("FFXIV.Tabs.Profile"),
+      label: localize$1("Tabs.Profile"),
       id: "profile",
       component: Profile,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp"
     },
     {
-      label: localize("FFXIV.Tabs.Effects"),
+      label: localize$1("Tabs.Effects"),
       id: "effect",
       component: EffectsTab,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp"
@@ -38433,7 +38514,7 @@ let FFXIVActorSheet$1 = class FFXIVActorSheet extends SvelteDocumentSheet {
     const canEdit = game.user.isGM || this.reactive.document.isOwner;
     if (canEdit) {
       buttons.unshift({
-        label: localize("FFXIV.Types.Actor.HeaderButtons.Edit"),
+        label: localize$1("Types.Actor.HeaderButtons.Edit"),
         class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
         icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
         // onclick: (ev) => this._onToggleEdit(ev),
@@ -38595,7 +38676,7 @@ let FFXIVActorSheet$1 = class FFXIVActorSheet extends SvelteDocumentSheet {
   async _onDropItem(event, data, ignoreValidation = false) {
     const actor = this.reactive.document;
     if (!actor.isOwner) {
-      ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.NotOwner`));
+      ui.notifications.error(localize$1(`${SYSTEM_CODE}.Errors.NotOwner`));
       return false;
     }
     const droppedItem = await fromUuid(data.uuid);
@@ -38603,7 +38684,7 @@ let FFXIVActorSheet$1 = class FFXIVActorSheet extends SvelteDocumentSheet {
       return this._onDropJob(event, data);
     }
     if (droppedItem.type === "effect") {
-      ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`));
+      ui.notifications.error(localize$1(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`));
       return false;
     }
     const duplicate = actor.items.find((x) => x.name == droppedItem.name && x.type == droppedItem.type);
@@ -38853,7 +38934,7 @@ function create_if_block_3$3(ctx) {
   return {
     c() {
       h1 = element("h1");
-      h1.textContent = `${localize("FFXIV.Job")}`;
+      h1.textContent = `${localize$1("Job")}`;
       table = element("table");
       tr = element("tr");
       th0 = element("th");
@@ -39052,11 +39133,11 @@ function create_if_block_1$6(ctx) {
       button2 = element("button");
       button2.innerHTML = `<i class="left fa fa-trash"></i>`;
       attr(button0, "class", "stealth");
-      attr(button0, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Edit"));
+      attr(button0, "data-tooltip", localize$1("Types.Actor.ActionButtons.Edit"));
       attr(button1, "class", "stealth");
-      attr(button1, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Duplicate"));
+      attr(button1, "data-tooltip", localize$1("Types.Actor.ActionButtons.Duplicate"));
       attr(button2, "class", "stealth");
-      attr(button2, "data-tooltip", localize("FFXIV.Types.Actor.ActionButtons.Delete"));
+      attr(button2, "data-tooltip", localize$1("Types.Actor.ActionButtons.Delete"));
     },
     m(target, anchor) {
       insert(target, button0, anchor);
@@ -39341,7 +39422,7 @@ function create_if_block$9(ctx) {
   return {
     c() {
       button = element("button");
-      button.textContent = "- Remove All";
+      button.textContent = `${localize$1("Instructions.RemoveAll")}`;
       attr(button, "class", "mt-sm glossy-button gold-light hover-shine");
     },
     m(target, anchor) {
@@ -39417,9 +39498,9 @@ function create_fragment$x(ctx) {
       tr = element("tr");
       th0 = element("th");
       th1 = element("th");
-      th1.textContent = `${localize("FFXIV.Name")}`;
+      th1.textContent = `${localize$1("Name")}`;
       th2 = element("th");
-      th2.textContent = `${localize("FFXIV.Type")}`;
+      th2.textContent = `${localize$1("Type")}`;
       th3 = element("th");
       th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-1omalaq"></i>`;
       th4 = element("th");
@@ -39644,7 +39725,7 @@ function instance$r($$self, $$props, $$invalidate) {
   function deleteItem(index, item) {
     let okToDelete = true;
     if (game.settings.get(SYSTEM_ID, "confirmBeforeDeletingActorItem")) {
-      okToDelete = confirm(game.i18n.localize(`${SYSTEM_CODE}.Types.Actor.Abilities.confirmDeleteItem`));
+      okToDelete = confirm(localize$1("Types.Actor.Abilities.confirmDeleteItem"));
     }
     if (okToDelete) {
       item.delete();
@@ -39653,8 +39734,8 @@ function instance$r($$self, $$props, $$invalidate) {
   __name(deleteItem, "deleteItem");
   async function removeAllItems() {
     await Dialog.confirm({
-      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAllTitle"),
-      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteAll"),
+      title: localize$1("Types.Actor.Abilities.confirmDeleteAllTitle"),
+      content: localize$1("Types.Actor.Abilities.confirmDeleteAll"),
       yes: async () => {
         await $Actor.deleteAllItems(["trait", "action"]);
       },
@@ -39684,8 +39765,8 @@ function instance$r($$self, $$props, $$invalidate) {
       return;
     }
     await Dialog.confirm({
-      title: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJobTitle"),
-      content: localize("FFXIV.Types.Actor.Abilities.confirmDeleteJob"),
+      title: localize$1("Types.Actor.Abilities.confirmDeleteJobTitle"),
+      content: localize$1("Types.Actor.Abilities.confirmDeleteJob"),
       yes: async () => {
         const job = await fromUuid($doc.system.job.uuid);
         const grants = job.system.grants;
@@ -40142,6 +40223,7 @@ function create_fragment$t(ctx) {
   let div6;
   let div2;
   let div0;
+  let label;
   let div1;
   let docselect;
   let div5;
@@ -40178,7 +40260,8 @@ function create_fragment$t(ctx) {
       div6 = element("div");
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="size">Size</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Size")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       div5 = element("div");
@@ -40186,6 +40269,7 @@ function create_fragment$t(ctx) {
       create_component(primaryattributes.$$.fragment);
       div4 = element("div");
       create_component(secondaryattributes.$$.fragment);
+      attr(label, "for", "size");
       attr(div0, "class", "flex1 ml-md mt-md left white");
       attr(div1, "class", "flex1 mt-md mr-md right");
       attr(div2, "class", "flexrow sheet-row justify-vertical");
@@ -40198,6 +40282,7 @@ function create_fragment$t(ctx) {
       insert(target, div6, anchor);
       append(div6, div2);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docselect, div1, null);
       append(div6, div5);
@@ -40414,6 +40499,7 @@ class PointsSectionNPC extends SvelteComponent {
 }
 function create_fragment$q(ctx) {
   let div;
+  let pre;
   let portraitframe;
   let current;
   portraitframe = new PortraitFrame({
@@ -40423,7 +40509,7 @@ function create_fragment$q(ctx) {
         /*$documentStore*/
         ctx[0]?.img
       ),
-      onClick: (
+      onclick: (
         /*_editToken*/
         ctx[2]
       )
@@ -40432,11 +40518,14 @@ function create_fragment$q(ctx) {
   return {
     c() {
       div = element("div");
+      pre = element("pre");
+      pre.textContent = "bo";
       create_component(portraitframe.$$.fragment);
       attr(div, "class", "portrait-frame svelte-1cb780d");
     },
     m(target, anchor) {
       insert(target, div, anchor);
+      append(div, pre);
       mount_component(portraitframe, div, null);
       current = true;
     },
@@ -41260,21 +41349,21 @@ function instance$j($$self, $$props, $$invalidate) {
   component_subscribe($$self, headerButtonNoLabel, (value) => $$invalidate(10, $headerButtonNoLabel = value));
   const defaultTabs = [
     {
-      label: localize("FFXIV.Tabs.Attributes"),
+      label: localize$1("Tabs.Attributes"),
       id: "attributes",
       component: Attributes2,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp"
     },
     {
-      label: localize("FFXIV.Tabs.Abilities"),
+      label: localize$1("Tabs.Abilities"),
       id: "abilities",
       component: Abilities2,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp"
     },
-    // { label: localize("FFXIV.Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
-    // { label: localize("FFXIV.Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
+    // { label: localize("Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
+    // { label: localize("Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
     {
-      label: localize("FFXIV.Tabs.Effects"),
+      label: localize$1("Tabs.Effects"),
       id: "effect",
       component: EffectsTab,
       img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp"
@@ -41399,7 +41488,7 @@ class FFXIVActorSheet2 extends SvelteDocumentSheet {
     const canEdit = game.user.isGM || this.reactive.document.isOwner;
     if (canEdit) {
       buttons.unshift({
-        label: localize("FFXIV.Types.Actor.HeaderButtons.Edit"),
+        label: localize$1("Types.Actor.HeaderButtons.Edit"),
         class: "edit-sheet" + (this.reactive.document.system.isEditing ? " active" : ""),
         icon: "fas " + (this.reactive.document.system.isEditing ? "fa-toggle-on" : "fa-toggle-off"),
         // onclick: (ev) => this._onToggleEdit(ev),
@@ -41560,7 +41649,7 @@ class FFXIVActorSheet2 extends SvelteDocumentSheet {
   async _onDropItem(event, data, ignoreValidation = false) {
     const actor = this.reactive.document;
     if (!actor.isOwner) {
-      ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.NotOwner`));
+      ui.notifications.error(localize$1("Errors.NotOwner"));
       return false;
     }
     const droppedItem = await fromUuid(data.uuid);
@@ -41568,7 +41657,7 @@ class FFXIVActorSheet2 extends SvelteDocumentSheet {
       return this._onDropJob(event, data);
     }
     if (droppedItem.type === "effect") {
-      ui.notifications.error(localize(`${SYSTEM_CODE}.Errors.EffectItemsNotAllowed`));
+      ui.notifications.error(localize$1("Errors.EffectItemsNotAllowed"));
       return false;
     }
     const duplicate = actor.items.find((x) => x.name == droppedItem.name);
@@ -42662,7 +42751,7 @@ function create_each_block$3(ctx) {
       div2 = element("div");
       div0 = element("div");
       h3 = element("h3");
-      h3.textContent = `Duration ${/*i*/
+      h3.textContent = `${localize$1("EFFECT.Duration.Title")} ${/*i*/
       ctx[17] + 1}`;
       div1 = element("div");
       button = element("button");
@@ -42944,7 +43033,7 @@ function create_else_block(ctx) {
   return {
     c() {
       h3 = element("h3");
-      h3.textContent = "Base Effect";
+      h3.textContent = `${localize$1("Types.Item.Types.action.BaseEffect")}`;
       attr(h3, "class", "left");
     },
     m(target, anchor) {
@@ -42963,7 +43052,7 @@ function create_if_block_18(ctx) {
   return {
     c() {
       h2 = element("h2");
-      h2.textContent = "Base Effect";
+      h2.textContent = `${localize$1("Types.Item.Types.action.BaseEffect")}`;
       attr(h2, "class", "left");
     },
     m(target, anchor) {
@@ -43263,6 +43352,7 @@ __name(create_if_block_13, "create_if_block_13");
 function create_if_block_17(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docinput;
   let current;
@@ -43277,9 +43367,12 @@ function create_if_block_17(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectBP" class="svelte-mf8ncy">Barrier Points</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Types.Actor.Points.BP.Label")}`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
+      attr(label, "for", "baseEffectBP");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex3");
       attr(div1, "class", "flex2 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical px-sm");
@@ -43287,6 +43380,7 @@ function create_if_block_17(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docinput, div1, null);
       current = true;
@@ -43313,6 +43407,7 @@ __name(create_if_block_17, "create_if_block_17");
 function create_if_block_16(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docinput;
   let current;
@@ -43327,9 +43422,12 @@ function create_if_block_16(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectDamage" class="svelte-mf8ncy">Damage</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Damage")}`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
+      attr(label, "for", "baseEffectDamage");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex3");
       attr(div1, "class", "flex2 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical px-sm");
@@ -43337,6 +43435,7 @@ function create_if_block_16(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docinput, div1, null);
       current = true;
@@ -43363,10 +43462,12 @@ __name(create_if_block_16, "create_if_block_16");
 function create_if_block_15(ctx) {
   let div2;
   let div0;
+  let label0;
   let div1;
   let docselect;
   let div5;
   let div3;
+  let label1;
   let div4;
   let docinput;
   let current;
@@ -43393,17 +43494,23 @@ function create_if_block_15(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectHealing" class="svelte-mf8ncy">Type</label>`;
+      label0 = element("label");
+      label0.textContent = `${localize$1("Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       div5 = element("div");
       div3 = element("div");
-      div3.innerHTML = `<label for="baseEffectHealing" class="svelte-mf8ncy">Amount</label>`;
+      label1 = element("label");
+      label1.textContent = `${localize$1("Amount")}`;
       div4 = element("div");
       create_component(docinput.$$.fragment);
+      attr(label0, "for", "baseEffectHealing");
+      attr(label0, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex3");
       attr(div1, "class", "flex4 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical px-sm");
+      attr(label1, "for", "baseEffectHealing");
+      attr(label1, "class", "svelte-mf8ncy");
       attr(div3, "class", "flex3");
       attr(div4, "class", "flex4 right");
       attr(div5, "class", "flexrow sheet-row justify-vertical px-sm");
@@ -43411,10 +43518,12 @@ function create_if_block_15(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label0);
       append(div2, div1);
       mount_component(docselect, div1, null);
       insert(target, div5, anchor);
       append(div5, div3);
+      append(div3, label1);
       append(div5, div4);
       mount_component(docinput, div4, null);
       current = true;
@@ -43446,6 +43555,7 @@ __name(create_if_block_15, "create_if_block_15");
 function create_if_block_14(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docinput;
   let current;
@@ -43460,9 +43570,12 @@ function create_if_block_14(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="baseEffectRestoreMP" class="svelte-mf8ncy">Restore MP</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Types.Item.Types.action.BaseEffectRestoreMP")}`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
+      attr(label, "for", "baseEffectRestoreMP");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex3");
       attr(div1, "class", "flex2 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical px-sm");
@@ -43470,6 +43583,7 @@ function create_if_block_14(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docinput, div1, null);
       current = true;
@@ -43618,6 +43732,7 @@ __name(create_if_block_11, "create_if_block_11");
 function create_if_block_10(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docselect;
   let current;
@@ -43637,9 +43752,12 @@ function create_if_block_10(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="checkAttribute" class="svelte-mf8ncy">Check Attribute</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Check")} ${localize$1("Attribute")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
+      attr(label, "for", "checkAttribute");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex2");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -43647,6 +43765,7 @@ function create_if_block_10(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docselect, div1, null);
       current = true;
@@ -43816,6 +43935,7 @@ __name(create_if_block_8, "create_if_block_8");
 function create_if_block_7(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docselect;
   let current;
@@ -43836,9 +43956,12 @@ function create_if_block_7(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="aspected" class="svelte-mf8ncy">Aspected</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Aspected")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
+      attr(label, "for", "aspected");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -43846,6 +43969,7 @@ function create_if_block_7(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docselect, div1, null);
       current = true;
@@ -43935,6 +44059,7 @@ __name(create_if_block_6, "create_if_block_6");
 function create_if_block_5(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docselect;
   let current;
@@ -43955,9 +44080,12 @@ function create_if_block_5(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="cost" class="svelte-mf8ncy">MP</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Types.Actor.Points.MP.short")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
+      attr(label, "for", "cost");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -43965,6 +44093,7 @@ function create_if_block_5(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docselect, div1, null);
       current = true;
@@ -44114,6 +44243,7 @@ __name(create_if_block_3$1, "create_if_block_3$1");
 function create_if_block_2$3(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docinput;
   let current;
@@ -44128,9 +44258,12 @@ function create_if_block_2$3(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="directHitDamage" class="svelte-mf8ncy">Damage</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Damage")}`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
+      attr(label, "for", "directHitDamage");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex2");
       attr(div1, "class", "flex2 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical");
@@ -44138,6 +44271,7 @@ function create_if_block_2$3(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docinput, div1, null);
       current = true;
@@ -44164,6 +44298,7 @@ __name(create_if_block_2$3, "create_if_block_2$3");
 function create_if_block_1$3(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docselect;
   let current;
@@ -44183,9 +44318,12 @@ function create_if_block_1$3(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="directHitCondition" class="svelte-mf8ncy">Condition</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Condition")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
+      attr(label, "for", "directHitCondition");
+      attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex2");
       attr(div1, "class", "flex2 right wide");
       attr(div2, "class", "flexrow sheet-row justify-vertical wide");
@@ -44193,6 +44331,7 @@ function create_if_block_1$3(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docselect, div1, null);
       current = true;
@@ -44220,6 +44359,7 @@ __name(create_if_block_1$3, "create_if_block_1$3");
 function create_if_block$5(ctx) {
   let div2;
   let div0;
+  let h3;
   let div1;
   let prosemirror;
   let current;
@@ -44234,9 +44374,11 @@ function create_if_block$5(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<h3 class="left">Direct Hit Text </h3>`;
+      h3 = element("h3");
+      h3.textContent = `${localize$1("Types.Item.Types.action.DirectHit")} ${localize$1("Text")} `;
       div1 = element("div");
       create_component(prosemirror.$$.fragment);
+      attr(h3, "class", "left");
       attr(div0, "class", "flex2");
       attr(div1, "class", "flex2 left prose high");
       attr(div2, "class", "flexcol sheet-row justify-vertical high");
@@ -44244,6 +44386,7 @@ function create_if_block$5(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, h3);
       append(div2, div1);
       mount_component(prosemirror, div1, null);
       current = true;
@@ -44301,12 +44444,14 @@ function create_fragment$j(ctx) {
   let doccheckbox4;
   let div20;
   let div18;
+  let h35;
   let div19;
   let doccheckbox5;
   let if_block6_anchor;
   let durationcomponent;
   let div23;
   let div21;
+  let h36;
   let div22;
   let doccheckbox6;
   let div26;
@@ -44316,18 +44461,22 @@ function create_fragment$j(ctx) {
   let doccheckbox7;
   let div29;
   let div27;
+  let h38;
   let div28;
   let doccheckbox8;
   let div32;
   let div30;
+  let h39;
   let div31;
   let doccheckbox9;
   let div35;
   let div33;
+  let h310;
   let div34;
   let doccheckbox10;
   let div38;
   let div36;
+  let h311;
   let div37;
   let doccheckbox11;
   let if_block11_anchor;
@@ -44537,7 +44686,8 @@ function create_fragment$j(ctx) {
         if_block5.c();
       div20 = element("div");
       div18 = element("div");
-      div18.innerHTML = `<h3 class="left">Limitation</h3>`;
+      h35 = element("h3");
+      h35.textContent = `${localize$1("Limitation")}`;
       div19 = element("div");
       create_component(doccheckbox5.$$.fragment);
       if (if_block6)
@@ -44546,7 +44696,8 @@ function create_fragment$j(ctx) {
       create_component(durationcomponent.$$.fragment);
       div23 = element("div");
       div21 = element("div");
-      div21.innerHTML = `<h3 class="left">Aspected</h3>`;
+      h36 = element("h3");
+      h36.textContent = `${localize$1("Aspected")}`;
       div22 = element("div");
       create_component(doccheckbox6.$$.fragment);
       if (if_block7)
@@ -44561,26 +44712,30 @@ function create_fragment$j(ctx) {
         if_block8.c();
       div29 = element("div");
       div27 = element("div");
-      div27.innerHTML = `<h3 class="left">Cost</h3>`;
+      h38 = element("h3");
+      h38.textContent = `${localize$1("Cost")}`;
       div28 = element("div");
       create_component(doccheckbox8.$$.fragment);
       if (if_block9)
         if_block9.c();
       div32 = element("div");
       div30 = element("div");
-      div30.innerHTML = `<h3 class="left">Heavier Shot</h3>`;
+      h39 = element("h3");
+      h39.textContent = `${localize$1("HeavierShot")}`;
       div31 = element("div");
       create_component(doccheckbox9.$$.fragment);
       if (if_block10)
         if_block10.c();
       div35 = element("div");
       div33 = element("div");
-      div33.innerHTML = `<h3 class="left">Split Damage</h3>`;
+      h310 = element("h3");
+      h310.textContent = `${localize$1("Types.Item.Types.action.SplitDamage")}`;
       div34 = element("div");
       create_component(doccheckbox10.$$.fragment);
       div38 = element("div");
       div36 = element("div");
-      div36.innerHTML = `<h3 class="left">Direct Hit</h3>`;
+      h311 = element("h3");
+      h311.textContent = `${localize$1("Types.Item.Types.action.DirectHit")}`;
       div37 = element("div");
       create_component(doccheckbox11.$$.fragment);
       if (if_block11)
@@ -44618,9 +44773,11 @@ function create_fragment$j(ctx) {
       attr(div15, "class", "flex4");
       attr(div16, "class", "flex0 right");
       attr(div17, "class", "flexrow justify-vertical");
+      attr(h35, "class", "left");
       attr(div18, "class", "flex4");
       attr(div19, "class", "flex0 right");
       attr(div20, "class", "flexrow justify-vertical");
+      attr(h36, "class", "left");
       attr(div21, "class", "flex4");
       attr(div22, "class", "flex0 right");
       attr(div23, "class", "flexrow justify-vertical");
@@ -44628,15 +44785,19 @@ function create_fragment$j(ctx) {
       attr(div24, "class", "flex4");
       attr(div25, "class", "flex0 right");
       attr(div26, "class", "flexrow justify-vertical");
+      attr(h38, "class", "left");
       attr(div27, "class", "flex4");
       attr(div28, "class", "flex0 right");
       attr(div29, "class", "flexrow justify-vertical");
+      attr(h39, "class", "left");
       attr(div30, "class", "flex4");
       attr(div31, "class", "flex0 right");
       attr(div32, "class", "flexrow justify-vertical");
+      attr(h310, "class", "left");
       attr(div33, "class", "flex4");
       attr(div34, "class", "flex0 right");
       attr(div35, "class", "flexrow justify-vertical");
+      attr(h311, "class", "left");
       attr(div36, "class", "flex4");
       attr(div37, "class", "flex0 right");
       attr(div38, "class", "flexrow justify-vertical");
@@ -44688,6 +44849,7 @@ function create_fragment$j(ctx) {
         if_block5.m(div39, null);
       append(div39, div20);
       append(div20, div18);
+      append(div18, h35);
       append(div20, div19);
       mount_component(doccheckbox5, div19, null);
       if (if_block6)
@@ -44696,6 +44858,7 @@ function create_fragment$j(ctx) {
       mount_component(durationcomponent, div39, null);
       append(div39, div23);
       append(div23, div21);
+      append(div21, h36);
       append(div23, div22);
       mount_component(doccheckbox6, div22, null);
       if (if_block7)
@@ -44709,22 +44872,26 @@ function create_fragment$j(ctx) {
         if_block8.m(div39, null);
       append(div39, div29);
       append(div29, div27);
+      append(div27, h38);
       append(div29, div28);
       mount_component(doccheckbox8, div28, null);
       if (if_block9)
         if_block9.m(div39, null);
       append(div39, div32);
       append(div32, div30);
+      append(div30, h39);
       append(div32, div31);
       mount_component(doccheckbox9, div31, null);
       if (if_block10)
         if_block10.m(div39, null);
       append(div39, div35);
       append(div35, div33);
+      append(div33, h310);
       append(div35, div34);
       mount_component(doccheckbox10, div34, null);
       append(div39, div38);
       append(div38, div36);
+      append(div36, h311);
       append(div38, div37);
       mount_component(doccheckbox11, div37, null);
       if (if_block11)
@@ -45859,7 +46026,7 @@ function create_if_block_1$2(ctx) {
   return {
     c() {
       button = element("button");
-      button.textContent = "- Remove All";
+      button.textContent = `${localize$1("Instructions.RemoveAll")}`;
       attr(button, "class", "mt-sm glossy-button gold-light hover-shine svelte-1wb0kvt");
     },
     m(target, anchor) {
@@ -45887,14 +46054,18 @@ function create_if_block_1$2(ctx) {
 __name(create_if_block_1$2, "create_if_block_1$2");
 function create_if_block$4(ctx) {
   let div;
+  let p;
   return {
     c() {
       div = element("div");
-      div.innerHTML = `<p class="empty-list-text">Drop items here to add them to the list.</p>`;
+      p = element("p");
+      p.textContent = `${localize$1("Instructions.DropItemList")}`;
+      attr(p, "class", "empty-list-text");
       attr(div, "class", "empty-list svelte-1wb0kvt");
     },
     m(target, anchor) {
       insert(target, div, anchor);
+      append(div, p);
     },
     d(detaching) {
       if (detaching) {
@@ -46760,6 +46931,7 @@ function create_fragment$g(ctx) {
   let itembucket5;
   let div4;
   let div2;
+  let h2;
   let div3;
   let doccheckbox;
   let div5;
@@ -46834,7 +47006,8 @@ function create_fragment$g(ctx) {
       create_component(itembucket5.$$.fragment);
       div4 = element("div");
       div2 = element("div");
-      div2.innerHTML = `<h2 class="left">Tags</h2>`;
+      h2 = element("h2");
+      h2.textContent = `${localize$1("Tags")}`;
       div3 = element("div");
       create_component(doccheckbox.$$.fragment);
       if (if_block1)
@@ -46843,6 +47016,7 @@ function create_fragment$g(ctx) {
       div5.innerHTML = ``;
       attr(div0, "class", "flex3 left high");
       attr(div1, "class", "flexcol");
+      attr(h2, "class", "left");
       attr(div2, "class", "flex4");
       attr(div3, "class", "flex0 right");
       attr(div4, "class", "flexrow sheet-row justify-vertical px-sm");
@@ -46864,6 +47038,7 @@ function create_fragment$g(ctx) {
       mount_component(itembucket5, div0, null);
       append(div6, div4);
       append(div4, div2);
+      append(div2, h2);
       append(div4, div3);
       mount_component(doccheckbox, div3, null);
       if (if_block1)
@@ -47167,6 +47342,7 @@ let Header$3 = class Header2 extends SvelteComponent {
 function create_if_block$2(ctx) {
   let div2;
   let div0;
+  let label;
   let div1;
   let docinput;
   let current;
@@ -47181,9 +47357,11 @@ function create_if_block$2(ctx) {
     c() {
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="quantity">Quantity </label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Quantity")}`;
       div1 = element("div");
       create_component(docinput.$$.fragment);
+      attr(label, "for", "quantity");
       attr(div0, "class", "flex2");
       attr(div1, "class", "flex2 right");
       attr(div2, "class", "flexrow sheet-row");
@@ -47191,6 +47369,7 @@ function create_if_block$2(ctx) {
     m(target, anchor) {
       insert(target, div2, anchor);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docinput, div1, null);
       current = true;
@@ -47246,11 +47425,11 @@ function create_fragment$d(ctx) {
       div4 = element("div");
       div3 = element("div");
       h3 = element("h3");
-      h3.textContent = `${localize("FFXIV.General")}`;
+      h3.textContent = `${localize$1("General")}`;
       div2 = element("div");
       div0 = element("div");
       label = element("label");
-      label.textContent = `${localize("FFXIV.Action")} ${localize("FFXIV.Type")}`;
+      label.textContent = `${localize$1("Action")} ${localize$1("Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       if (if_block)
@@ -47523,19 +47702,23 @@ function create_fragment$b(ctx) {
   let div0;
   let ol;
   let li0;
+  let t0_value = localize$1("Role") + "";
   let t0;
-  let t1_value = (
+  let t1;
+  let t2_value = (
     /*$item*/
     ctx[0]?.system?.role?.capitalize() + ""
   );
-  let t1;
-  let li1;
   let t2;
-  let t3_value = (
+  let li1;
+  let t3_value = localize$1("Level") + "";
+  let t3;
+  let t4;
+  let t5_value = (
     /*$item*/
     ctx[0]?.system?.level + ""
   );
-  let t3;
+  let t5;
   return {
     c() {
       div3 = element("div");
@@ -47544,11 +47727,13 @@ function create_fragment$b(ctx) {
       div0 = element("div");
       ol = element("ol");
       li0 = element("li");
-      t0 = text("Role: ");
-      t1 = text(t1_value);
+      t0 = text(t0_value);
+      t1 = text(": ");
+      t2 = text(t2_value);
       li1 = element("li");
-      t2 = text("LV ");
       t3 = text(t3_value);
+      t4 = text(": ");
+      t5 = text(t5_value);
       attr(ol, "class", "properties-list svelte-1j7mfxl");
       attr(div0, "class", "flexcol flex1 left svelte-1j7mfxl");
       attr(div1, "class", "flexrow svelte-1j7mfxl");
@@ -47564,19 +47749,21 @@ function create_fragment$b(ctx) {
       append(ol, li0);
       append(li0, t0);
       append(li0, t1);
+      append(li0, t2);
       append(ol, li1);
-      append(li1, t2);
       append(li1, t3);
+      append(li1, t4);
+      append(li1, t5);
     },
     p(ctx2, [dirty]) {
       if (dirty & /*$item*/
-      1 && t1_value !== (t1_value = /*$item*/
+      1 && t2_value !== (t2_value = /*$item*/
       ctx2[0]?.system?.role?.capitalize() + ""))
-        set_data(t1, t1_value);
+        set_data(t2, t2_value);
       if (dirty & /*$item*/
-      1 && t3_value !== (t3_value = /*$item*/
+      1 && t5_value !== (t5_value = /*$item*/
       ctx2[0]?.system?.level + ""))
-        set_data(t3, t3_value);
+        set_data(t5, t5_value);
     },
     i: noop,
     o: noop,
@@ -48173,16 +48360,19 @@ function create_fragment$7(ctx) {
   let h30;
   let div2;
   let div0;
+  let label;
   let div1;
   let docselect;
   let div5;
   let div3;
+  let h31;
   let div4;
   let doccheckbox0;
   let if_block0_anchor;
   let durationcomponent;
   let div8;
   let div6;
+  let h32;
   let div7;
   let doccheckbox1;
   let div11;
@@ -48192,10 +48382,12 @@ function create_fragment$7(ctx) {
   let doccheckbox2;
   let div14;
   let div12;
+  let h34;
   let div13;
   let doccheckbox3;
   let div17;
   let div15;
+  let h35;
   let div16;
   let doccheckbox4;
   let current;
@@ -48263,15 +48455,17 @@ function create_fragment$7(ctx) {
       div19 = element("div");
       div18 = element("div");
       h30 = element("h3");
-      h30.textContent = "General";
+      h30.textContent = `${localize$1("General")}`;
       div2 = element("div");
       div0 = element("div");
-      div0.innerHTML = `<label for="type">Type</label>`;
+      label = element("label");
+      label.textContent = `${localize$1("Type")}`;
       div1 = element("div");
       create_component(docselect.$$.fragment);
       div5 = element("div");
       div3 = element("div");
-      div3.innerHTML = `<h3 class="left">Limitation</h3>`;
+      h31 = element("h3");
+      h31.textContent = `${localize$1("Limitation")}`;
       div4 = element("div");
       create_component(doccheckbox0.$$.fragment);
       if (if_block0)
@@ -48280,7 +48474,8 @@ function create_fragment$7(ctx) {
       create_component(durationcomponent.$$.fragment);
       div8 = element("div");
       div6 = element("div");
-      div6.innerHTML = `<h3 class="left">Modifier</h3>`;
+      h32 = element("h3");
+      h32.textContent = `${localize$1("Modifier")}`;
       div7 = element("div");
       create_component(doccheckbox1.$$.fragment);
       if (if_block1)
@@ -48293,25 +48488,30 @@ function create_fragment$7(ctx) {
       create_component(doccheckbox2.$$.fragment);
       div14 = element("div");
       div12 = element("div");
-      div12.innerHTML = `<h3 class="left">Reroll Damage Dice</h3>`;
+      h34 = element("h3");
+      h34.textContent = `${localize$1("Types.Item.Types.Options.DamageDiceReroll.label")}`;
       div13 = element("div");
       create_component(doccheckbox3.$$.fragment);
       if (if_block2)
         if_block2.c();
       div17 = element("div");
       div15 = element("div");
-      div15.innerHTML = `<h3 class="left">Tags</h3>`;
+      h35 = element("h3");
+      h35.textContent = `${localize$1("Tags")}`;
       div16 = element("div");
       create_component(doccheckbox4.$$.fragment);
       if (if_block3)
         if_block3.c();
       attr(h30, "class", "left");
+      attr(label, "for", "type");
       attr(div0, "class", "flex3");
       attr(div1, "class", "flex2 right");
       attr(div2, "class", "flexrow sheet-row justify-vertical");
+      attr(h31, "class", "left");
       attr(div3, "class", "flex4");
       attr(div4, "class", "flex0 right");
       attr(div5, "class", "flexrow justify-vertical");
+      attr(h32, "class", "left");
       attr(div6, "class", "flex4");
       attr(div7, "class", "flex0 right");
       attr(div8, "class", "flexrow justify-vertical");
@@ -48320,9 +48520,11 @@ function create_fragment$7(ctx) {
       attr(div9, "class", "flex4");
       attr(div10, "class", "flex0 right");
       attr(div11, "class", "flexrow justify-vertical");
+      attr(h34, "class", "left");
       attr(div12, "class", "flex4");
       attr(div13, "class", "flex0 right");
       attr(div14, "class", "flexrow justify-vertical");
+      attr(h35, "class", "left");
       attr(div15, "class", "flex4");
       attr(div16, "class", "flex0 right");
       attr(div17, "class", "flexrow sheet-row justify-vertical");
@@ -48335,10 +48537,12 @@ function create_fragment$7(ctx) {
       append(div18, h30);
       append(div18, div2);
       append(div2, div0);
+      append(div0, label);
       append(div2, div1);
       mount_component(docselect, div1, null);
       append(div18, div5);
       append(div5, div3);
+      append(div3, h31);
       append(div5, div4);
       mount_component(doccheckbox0, div4, null);
       if (if_block0)
@@ -48347,6 +48551,7 @@ function create_fragment$7(ctx) {
       mount_component(durationcomponent, div18, null);
       append(div18, div8);
       append(div8, div6);
+      append(div6, h32);
       append(div8, div7);
       mount_component(doccheckbox1, div7, null);
       if (if_block1)
@@ -48358,12 +48563,14 @@ function create_fragment$7(ctx) {
       mount_component(doccheckbox2, div10, null);
       append(div18, div14);
       append(div14, div12);
+      append(div12, h34);
       append(div14, div13);
       mount_component(doccheckbox3, div13, null);
       if (if_block2)
         if_block2.m(div18, null);
       append(div18, div17);
       append(div17, div15);
+      append(div15, h35);
       append(div17, div16);
       mount_component(doccheckbox4, div16, null);
       if (if_block3)

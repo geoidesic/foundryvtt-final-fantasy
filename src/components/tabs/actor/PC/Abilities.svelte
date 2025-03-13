@@ -313,6 +313,12 @@ i.disable
 //       color: var(--color-secondary-action)
 
 table tr
+  td:first-child
+    border-top-left-radius: var(--border-radius)
+    border-bottom-left-radius: var(--border-radius)
+  td:last-child
+    border-top-right-radius: var(--border-radius)
+    border-bottom-right-radius: var(--border-radius)
   td
     vertical-align: middle
     line-height: 1.7rem
