@@ -34,7 +34,7 @@ export default class RollGuards {
    * @private
    */
   async _showModifierDialog(item) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       new Dialog({
         title: "Extra Modifiers",
         content: `<div id="modifier-dialog-container"></div>`,
@@ -51,7 +51,7 @@ export default class RollGuards {
           },
           cancel: {
             label: "Cancel",
-            callback: () => reject(new Error('Dialog cancelled'))
+            callback: () => resolve({ confirmed: false })
           }
         },
         render: (html) => {
@@ -67,7 +67,7 @@ export default class RollGuards {
         close: () => {
           window._modifierDialogComponent?.$destroy();
           delete window._modifierDialogComponent;
-          reject(new Error('Dialog closed'));
+          resolve({ confirmed: false });
         }
       }).render(true);
     });
