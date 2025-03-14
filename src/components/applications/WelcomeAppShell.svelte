@@ -64,7 +64,7 @@
     footer
       div.right
         a(href="https://www.aardvark.games")
-          img.white(src="/systems/foundryvtt-final-fantasy/assets/aardvark-studios-logo.svg" alt="Aardvark Game Studios Logo" height="50" width="50" style="fill: white; border: none; width: auto;")
+          img.white(src="/systems/foundryvtt-final-fantasy/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="50" width="50" style="fill: white; border: none; width: auto;")
       div.left
         h4 {localize("Title")} {localize("Welcome.CreatedBy")} 
         //- a(href="https://www.round-table.games") Round Table Games
