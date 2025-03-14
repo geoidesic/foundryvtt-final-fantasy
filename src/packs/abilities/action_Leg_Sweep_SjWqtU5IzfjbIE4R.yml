@@ -66,6 +66,11 @@ system:
   tags: []
   isMagic: false
   type: secondary
+  durations:
+    - type: hasQualifier
+      amount: 1
+      units: turn
+      qualifier: endOfThis
 effects: []
 sort: 0
 ownership:
@@ -77,9 +82,9 @@ _stats:
   duplicateSource: null
   coreVersion: '12.331'
   systemId: foundryvtt-final-fantasy
-  systemVersion: 0.0.1
+  systemVersion: 0.1.38
   createdTime: 1736687377969
-  modifiedTime: 1736687443300
-  lastModifiedBy: A3f8BsJ7eYm0X14M
+  modifiedTime: 1741916508401
+  lastModifiedBy: vlEBG0iiUKKFP45a
 _key: '!items!SjWqtU5IzfjbIE4R'
 
