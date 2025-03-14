@@ -533,7 +533,7 @@ class FFXIVActor extends Actor {
           }))
         }))
       });
-      this.handlePluginOverrides();
+      this.handlePluginOverrides(movementSacrificingTraits);
     }
     if (["ko", "dead", "comatose", "brink", "surprised", "bind", "stun"].includes(statusId)) {
       options = { ...options, overlay: true };
@@ -6348,7 +6348,7 @@ class PortraitFrame extends SvelteComponent {
     });
   }
 }
-function create_if_block_9$1(ctx) {
+function create_if_block_8$1(ctx) {
   let li;
   let t0;
   let t1_value = (
@@ -6383,14 +6383,14 @@ function create_if_block_9$1(ctx) {
     }
   };
 }
-__name(create_if_block_9$1, "create_if_block_9$1");
-function create_if_block_8$1(ctx) {
+__name(create_if_block_8$1, "create_if_block_8$1");
+function create_if_block_7$1(ctx) {
   let li;
   let t_value = (
     /*CROptions*/
     ctx[2].find(
       /*func*/
-      ctx[4]
+      ctx[5]
     )?.label + ""
   );
   let t;
@@ -6408,7 +6408,7 @@ function create_if_block_8$1(ctx) {
       1 && t_value !== (t_value = /*CROptions*/
       ctx2[2].find(
         /*func*/
-        ctx2[4]
+        ctx2[5]
       )?.label + ""))
         set_data(t, t_value);
     },
@@ -6419,8 +6419,8 @@ function create_if_block_8$1(ctx) {
     }
   };
 }
-__name(create_if_block_8$1, "create_if_block_8$1");
-function create_if_block_7$1(ctx) {
+__name(create_if_block_7$1, "create_if_block_7$1");
+function create_if_block_6$3(ctx) {
   let li;
   let t_value = (
     /*$item*/
@@ -6449,43 +6449,6 @@ function create_if_block_7$1(ctx) {
     }
   };
 }
-__name(create_if_block_7$1, "create_if_block_7$1");
-function create_if_block_6$3(ctx) {
-  let li;
-  let t0_value = localize$1("Types.Item.Types.action.HeavierShotType") + "";
-  let t0;
-  let t1;
-  let t2_value = (
-    /*$item*/
-    ctx[0]?.system?.heavierShotType + ""
-  );
-  let t2;
-  return {
-    c() {
-      li = element("li");
-      t0 = text(t0_value);
-      t1 = text(": ");
-      t2 = text(t2_value);
-    },
-    m(target, anchor) {
-      insert(target, li, anchor);
-      append(li, t0);
-      append(li, t1);
-      append(li, t2);
-    },
-    p(ctx2, dirty) {
-      if (dirty & /*$item*/
-      1 && t2_value !== (t2_value = /*$item*/
-      ctx2[0]?.system?.heavierShotType + ""))
-        set_data(t2, t2_value);
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(li);
-      }
-    }
-  };
-}
 __name(create_if_block_6$3, "create_if_block_6$3");
 function create_if_block_5$3(ctx) {
   let li;
@@ -6493,7 +6456,7 @@ function create_if_block_5$3(ctx) {
     /*limitationOptions*/
     ctx[3].find(
       /*func_1*/
-      ctx[5]
+      ctx[6]
     )?.label + ""
   );
   let t;
@@ -6511,7 +6474,7 @@ function create_if_block_5$3(ctx) {
       1 && t_value !== (t_value = /*limitationOptions*/
       ctx2[3].find(
         /*func_1*/
-        ctx2[5]
+        ctx2[6]
       )?.label + ""))
         set_data(t, t_value);
     },
@@ -6533,12 +6496,18 @@ function create_if_block_4$6(ctx) {
     ctx[0]?.system?.rangeType + ""
   );
   let t2;
+  let li_data_tooltip_value;
   return {
     c() {
       li = element("li");
       t0 = text(t0_value);
       t1 = text(": ");
       t2 = text(t2_value);
+      attr(li, "data-tooltip", li_data_tooltip_value = /*rangeDescription*/
+      ctx[4](
+        /*$item*/
+        ctx[0]?.system?.rangeType
+      ));
     },
     m(target, anchor) {
       insert(target, li, anchor);
@@ -6551,6 +6520,14 @@ function create_if_block_4$6(ctx) {
       1 && t2_value !== (t2_value = /*$item*/
       ctx2[0]?.system?.rangeType + ""))
         set_data(t2, t2_value);
+      if (dirty & /*$item*/
+      1 && li_data_tooltip_value !== (li_data_tooltip_value = /*rangeDescription*/
+      ctx2[4](
+        /*$item*/
+        ctx2[0]?.system?.rangeType
+      ))) {
+        attr(li, "data-tooltip", li_data_tooltip_value);
+      }
     },
     d(detaching) {
       if (detaching) {
@@ -6746,40 +6723,35 @@ function create_fragment$1e(ctx) {
   let if_block4_anchor;
   let if_block5_anchor;
   let if_block6_anchor;
-  let if_block7_anchor;
   let if_block0 = (
     /*$item*/
-    ctx[0]?.system?.hasCostMP && create_if_block_9$1(ctx)
+    ctx[0]?.system?.hasCostMP && create_if_block_8$1(ctx)
   );
   let if_block1 = (
     /*$item*/
-    ctx[0]?.system?.hasCR && create_if_block_8$1(ctx)
+    ctx[0]?.system?.hasCR && create_if_block_7$1(ctx)
   );
   let if_block2 = (
     /*$item*/
-    ctx[0]?.system?.hasCheck && create_if_block_7$1(ctx)
+    ctx[0]?.system?.hasCheck && create_if_block_6$3(ctx)
   );
   let if_block3 = (
     /*$item*/
-    ctx[0]?.system?.hasHeavierShot && create_if_block_6$3(ctx)
+    ctx[0]?.system?.hasLimitation && create_if_block_5$3(ctx)
   );
   let if_block4 = (
     /*$item*/
-    ctx[0]?.system?.hasLimitation && create_if_block_5$3(ctx)
+    ctx[0]?.system?.hasRanged && create_if_block_4$6(ctx)
   );
   let if_block5 = (
     /*$item*/
-    ctx[0]?.system?.hasRanged && create_if_block_4$6(ctx)
+    ctx[0]?.system?.hasTarget && create_if_block_3$9(ctx)
   );
   let if_block6 = (
     /*$item*/
-    ctx[0]?.system?.hasTarget && create_if_block_3$9(ctx)
-  );
-  let if_block7 = (
-    /*$item*/
     ctx[0]?.system?.hasTrigger && create_if_block_2$d(ctx)
   );
-  let if_block8 = (
+  let if_block7 = (
     /*$item*/
     ctx[0]?.system?.directHitType && create_if_block$t(ctx)
   );
@@ -6815,9 +6787,6 @@ function create_fragment$1e(ctx) {
       if_block6_anchor = empty();
       if (if_block7)
         if_block7.c();
-      if_block7_anchor = empty();
-      if (if_block8)
-        if_block8.c();
       attr(li, "class", "bg-gold white border-gold");
       attr(ol, "class", "properties-list svelte-1j7mfxl");
       attr(div0, "class", "flexcol flex1 left svelte-1j7mfxl");
@@ -6856,9 +6825,6 @@ function create_fragment$1e(ctx) {
       append(ol, if_block6_anchor);
       if (if_block7)
         if_block7.m(ol, null);
-      append(ol, if_block7_anchor);
-      if (if_block8)
-        if_block8.m(ol, null);
     },
     p(ctx2, [dirty]) {
       if (dirty & /*$item*/
@@ -6872,7 +6838,7 @@ function create_fragment$1e(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_9$1(ctx2);
+          if_block0 = create_if_block_8$1(ctx2);
           if_block0.c();
           if_block0.m(ol, if_block0_anchor);
         }
@@ -6887,7 +6853,7 @@ function create_fragment$1e(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block_8$1(ctx2);
+          if_block1 = create_if_block_7$1(ctx2);
           if_block1.c();
           if_block1.m(ol, if_block1_anchor);
         }
@@ -6902,7 +6868,7 @@ function create_fragment$1e(ctx) {
         if (if_block2) {
           if_block2.p(ctx2, dirty);
         } else {
-          if_block2 = create_if_block_7$1(ctx2);
+          if_block2 = create_if_block_6$3(ctx2);
           if_block2.c();
           if_block2.m(ol, if_block2_anchor);
         }
@@ -6912,12 +6878,12 @@ function create_fragment$1e(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0]?.system?.hasHeavierShot
+        ctx2[0]?.system?.hasLimitation
       ) {
         if (if_block3) {
           if_block3.p(ctx2, dirty);
         } else {
-          if_block3 = create_if_block_6$3(ctx2);
+          if_block3 = create_if_block_5$3(ctx2);
           if_block3.c();
           if_block3.m(ol, if_block3_anchor);
         }
@@ -6927,12 +6893,12 @@ function create_fragment$1e(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0]?.system?.hasLimitation
+        ctx2[0]?.system?.hasRanged
       ) {
         if (if_block4) {
           if_block4.p(ctx2, dirty);
         } else {
-          if_block4 = create_if_block_5$3(ctx2);
+          if_block4 = create_if_block_4$6(ctx2);
           if_block4.c();
           if_block4.m(ol, if_block4_anchor);
         }
@@ -6942,12 +6908,12 @@ function create_fragment$1e(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0]?.system?.hasRanged
+        ctx2[0]?.system?.hasTarget
       ) {
         if (if_block5) {
           if_block5.p(ctx2, dirty);
         } else {
-          if_block5 = create_if_block_4$6(ctx2);
+          if_block5 = create_if_block_3$9(ctx2);
           if_block5.c();
           if_block5.m(ol, if_block5_anchor);
         }
@@ -6957,12 +6923,12 @@ function create_fragment$1e(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0]?.system?.hasTarget
+        ctx2[0]?.system?.hasTrigger
       ) {
         if (if_block6) {
           if_block6.p(ctx2, dirty);
         } else {
-          if_block6 = create_if_block_3$9(ctx2);
+          if_block6 = create_if_block_2$d(ctx2);
           if_block6.c();
           if_block6.m(ol, if_block6_anchor);
         }
@@ -6972,33 +6938,18 @@ function create_fragment$1e(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0]?.system?.hasTrigger
+        ctx2[0]?.system?.directHitType
       ) {
         if (if_block7) {
           if_block7.p(ctx2, dirty);
         } else {
-          if_block7 = create_if_block_2$d(ctx2);
+          if_block7 = create_if_block$t(ctx2);
           if_block7.c();
-          if_block7.m(ol, if_block7_anchor);
+          if_block7.m(ol, null);
         }
       } else if (if_block7) {
         if_block7.d(1);
         if_block7 = null;
-      }
-      if (
-        /*$item*/
-        ctx2[0]?.system?.directHitType
-      ) {
-        if (if_block8) {
-          if_block8.p(ctx2, dirty);
-        } else {
-          if_block8 = create_if_block$t(ctx2);
-          if_block8.c();
-          if_block8.m(ol, null);
-        }
-      } else if (if_block8) {
-        if_block8.d(1);
-        if_block8 = null;
       }
     },
     i: noop,
@@ -7023,8 +6974,6 @@ function create_fragment$1e(ctx) {
         if_block6.d();
       if (if_block7)
         if_block7.d();
-      if (if_block8)
-        if_block8.d();
     }
   };
 }
@@ -7035,9 +6984,14 @@ function instance$17($$self, $$props, $$invalidate) {
   component_subscribe($$self, item, (value) => $$invalidate(0, $item = value));
   const CROptions = getCROptions();
   const limitationOptions = getLimitationOptions();
+  const rangeOptions = getRangeOptions();
+  const rangeDescription = /* @__PURE__ */ __name((range) => {
+    const rangeOption = rangeOptions.find((option) => option.value === range);
+    return rangeOption ? rangeOption.label : range;
+  }, "rangeDescription");
   const func = /* @__PURE__ */ __name((option) => option.value === $item?.system?.CR, "func");
   const func_1 = /* @__PURE__ */ __name((option) => option.value === $item?.system?.limitation, "func_1");
-  return [$item, item, CROptions, limitationOptions, func, func_1];
+  return [$item, item, CROptions, limitationOptions, rangeDescription, func, func_1];
 }
 __name(instance$17, "instance$17");
 let Header$4 = class Header extends SvelteComponent {
@@ -23780,105 +23734,143 @@ const gameSettings = new TJSGameSettings(SYSTEM_ID);
 function create_default_slot$g(ctx) {
   let main;
   let div1;
+  let h1;
   let p0;
-  let h10;
-  let p1;
+  let i0;
   let a0;
+  let t3_value = localize$1("Welcome.Released") + "";
+  let t3;
+  let t4;
+  let t5_value = localize$1("Setting.DontShowWelcome.Introduction") + "";
+  let t5;
+  let p1;
+  let i1;
+  let t6_value = localize$1("Setting.DontShowWelcome.Bugs") + "";
   let t6;
-  let t7_value = localize$1(`${SYSTEM_CODE}.Welcome.Released`) + "";
   let t7;
-  let h11;
-  let p2;
-  let span0;
   let a1;
+  let p2;
+  let i2;
+  let t10_value = localize$1("Setting.DontShowWelcome.Support") + "";
+  let t10;
+  let t11;
+  let a2;
+  let t13;
+  let a3;
   let div4;
   let div2;
   let input;
   let div3;
-  let span1;
+  let span;
   let footer;
   let div5;
   let div6;
   let h4;
-  let a2;
+  let a5;
   let mounted;
   let dispose;
   return {
     c() {
       main = element("main");
       div1 = element("div");
-      div1.innerHTML = `<div class="texture svelte-eou7jl"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
+      div1.innerHTML = `<div class="texture svelte-14cktfx"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
+      h1 = element("h1");
+      h1.textContent = `${localize$1("Welcome.Introduction")}`;
       p0 = element("p");
-      p0.textContent = `${localize$1("Welcome.To")} ${localize$1(`${SYSTEM_CODE}.Title`)}!`;
-      h10 = element("h1");
-      h10.textContent = `${localize$1("Welcome.Introduction")}`;
-      p1 = element("p");
+      i0 = element("i");
       a0 = element("a");
-      a0.textContent = `${localize$1(`${SYSTEM_CODE}.Title`)}`;
-      t6 = text(" ");
-      t7 = text(t7_value);
-      h11 = element("h1");
-      h11.textContent = "Help";
-      p2 = element("p");
-      span0 = element("span");
-      span0.textContent = `${localize$1("Welcome.Issues")}`;
+      a0.textContent = `${localize$1("Title")} `;
+      t3 = text(t3_value);
+      t4 = space();
+      t5 = text(t5_value);
+      p1 = element("p");
+      i1 = element("i");
+      t6 = text(t6_value);
+      t7 = space();
       a1 = element("a");
-      a1.textContent = `${localize$1("Welcome.Github")}`;
+      a1.textContent = `${localize$1("Setting.DontShowWelcome.IssuesLinkText")} `;
+      p2 = element("p");
+      i2 = element("i");
+      t10 = text(t10_value);
+      t11 = space();
+      a2 = element("a");
+      a2.textContent = `${localize$1("Setting.DontShowWelcome.SponsorLinkText")}`;
+      t13 = text(" or ");
+      a3 = element("a");
+      a3.textContent = "PayPal";
       div4 = element("div");
       div2 = element("div");
       input = element("input");
       div3 = element("div");
-      span1 = element("span");
-      span1.textContent = `${localize$1("Setting.DontShowWelcome.Name")}`;
+      span = element("span");
+      span.textContent = `${localize$1("Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
       div5 = element("div");
-      div5.innerHTML = `<img class="pt-sm white svelte-eou7jl" src="/systems/foundryvtt-final-fantasy/assets/round-table-games-logo.svg" alt="Round Table Games Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/>`;
+      div5.innerHTML = `<a href="https://www.aardvark.games" class="svelte-14cktfx"><img class="white svelte-14cktfx" src="/systems/foundryvtt-final-fantasy/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/></a>`;
       div6 = element("div");
       h4 = element("h4");
-      h4.textContent = `${localize$1(`${SYSTEM_CODE}.Title`)} ${localize$1(`${SYSTEM_CODE}.Welcome.CreatedBy`)} `;
-      a2 = element("a");
-      a2.textContent = "Round Table Games ©2025";
-      attr(div1, "class", "logo-background svelte-eou7jl");
+      h4.textContent = `${localize$1("Title")} ${localize$1("Welcome.CreatedBy")} `;
+      a5 = element("a");
+      a5.textContent = "Aardvark Game Studios";
+      attr(div1, "class", "logo-background svelte-14cktfx");
+      attr(i0, "class", "fa-solid fa-info-circle mr-sm");
       attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
+      attr(p0, "class", "lightest");
+      attr(i1, "class", "fa-solid fa-bug mr-sm");
       attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
+      attr(p1, "class", "lighter");
+      attr(i2, "class", "fa-solid fa-heart mr-sm");
+      set_style(i2, "color", "#660000");
+      attr(a2, "href", "https://github.com/sponsors/geoidesic");
+      attr(a3, "href", "https://https://paypal.me/geoidesic");
       attr(input, "type", "checkbox");
       attr(input, "label", localize$1("Setting.DontShowWelcome.Name"));
+      attr(input, "class", "svelte-14cktfx");
       attr(div2, "class", "flex0");
       attr(div3, "class", "flex");
-      attr(div4, "class", "flexrow inset justify-vertical mb-sm");
+      attr(div4, "class", "flexrow inset justify-vertical mb-sm dont-show svelte-14cktfx");
       attr(div4, "data-tooltip", localize$1("Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-eou7jl");
-      attr(div5, "class", "flex2 right");
-      attr(a2, "href", "https://www.round-table.games");
-      attr(a2, "class", "svelte-eou7jl");
-      attr(div6, "class", "flex2 left pt-sm");
-      attr(footer, "class", "svelte-eou7jl");
+      attr(main, "class", "svelte-14cktfx");
+      attr(div5, "class", "right");
+      attr(a5, "href", "https://www.aardvark.games");
+      attr(a5, "class", "svelte-14cktfx");
+      attr(div6, "class", "left");
+      attr(footer, "class", "svelte-14cktfx");
     },
     m(target, anchor) {
       insert(target, main, anchor);
       append(main, div1);
+      append(main, h1);
       append(main, p0);
-      append(main, h10);
+      append(p0, i0);
+      append(p0, a0);
+      append(p0, t3);
+      append(p0, t4);
+      append(p0, t5);
       append(main, p1);
-      append(p1, a0);
+      append(p1, i1);
       append(p1, t6);
       append(p1, t7);
-      append(main, h11);
+      append(p1, a1);
       append(main, p2);
-      append(p2, span0);
-      append(p2, a1);
+      append(p2, i2);
+      append(p2, t10);
+      append(p2, t11);
+      append(p2, a2);
+      append(p2, t13);
+      append(p2, a3);
       append(main, div4);
       append(div4, div2);
       append(div2, input);
       input.checked = /*dontShowWelcome*/
       ctx[1];
       append(div4, div3);
-      append(div3, span1);
+      append(div3, span);
       insert(target, footer, anchor);
       append(footer, div5);
       append(footer, div6);
       append(div6, h4);
-      append(div6, a2);
+      append(div6, a5);
       if (!mounted) {
         dispose = [
           listen(
@@ -26246,7 +26238,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.1.37";
+const version = "0.1.38";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -26699,8 +26691,6 @@ class ActionModel extends FFItemDataModel {
       directHitDamage: new StringField$3({ required: false, initial: "" }),
       directHitText: new StringField$3({ required: false, initial: "" }),
       directHitCondition: new StringField$3({ required: false, initial: "" }),
-      hasHeavierShot: new BooleanField$2({ required: false, initial: false }),
-      heavierShot: new StringField$3({ required: false, initial: "" }),
       hasLimitation: new BooleanField$2({ required: false, initial: false }),
       limitation: new NumberField$3({ required: false, initial: 0, integer: true, min: 0, max: 3 }),
       limitationUnits: new StringField$3({ required: false, initial: "phase" }),
@@ -43028,7 +43018,7 @@ function create_else_block(ctx) {
   };
 }
 __name(create_else_block, "create_else_block");
-function create_if_block_18(ctx) {
+function create_if_block_17(ctx) {
   let h2;
   return {
     c() {
@@ -43046,8 +43036,8 @@ function create_if_block_18(ctx) {
     }
   };
 }
-__name(create_if_block_18, "create_if_block_18");
-function create_if_block_13(ctx) {
+__name(create_if_block_17, "create_if_block_17");
+function create_if_block_12(ctx) {
   let div12;
   let div2;
   let div0;
@@ -43078,7 +43068,7 @@ function create_if_block_13(ctx) {
   });
   let if_block0 = (
     /*$item*/
-    ctx[0].system.hasBaseEffectBarrier && create_if_block_17()
+    ctx[0].system.hasBaseEffectBarrier && create_if_block_16()
   );
   doccheckbox1 = new DocCheckbox({
     props: {
@@ -43088,7 +43078,7 @@ function create_if_block_13(ctx) {
   });
   let if_block1 = (
     /*$item*/
-    ctx[0].system.hasBaseEffectDamage && create_if_block_16()
+    ctx[0].system.hasBaseEffectDamage && create_if_block_15()
   );
   doccheckbox2 = new DocCheckbox({
     props: {
@@ -43098,7 +43088,7 @@ function create_if_block_13(ctx) {
   });
   let if_block2 = (
     /*$item*/
-    ctx[0].system.hasBaseEffectHealing && create_if_block_15(ctx)
+    ctx[0].system.hasBaseEffectHealing && create_if_block_14(ctx)
   );
   doccheckbox3 = new DocCheckbox({
     props: {
@@ -43108,7 +43098,7 @@ function create_if_block_13(ctx) {
   });
   let if_block3 = (
     /*$item*/
-    ctx[0].system.hasBaseEffectRestoreMP && create_if_block_14()
+    ctx[0].system.hasBaseEffectRestoreMP && create_if_block_13()
   );
   return {
     c() {
@@ -43206,7 +43196,7 @@ function create_if_block_13(ctx) {
             transition_in(if_block0, 1);
           }
         } else {
-          if_block0 = create_if_block_17();
+          if_block0 = create_if_block_16();
           if_block0.c();
           transition_in(if_block0, 1);
           if_block0.m(div12, div5);
@@ -43228,7 +43218,7 @@ function create_if_block_13(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_16();
+          if_block1 = create_if_block_15();
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div12, div8);
@@ -43251,7 +43241,7 @@ function create_if_block_13(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_15(ctx2);
+          if_block2 = create_if_block_14(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(div12, div11);
@@ -43273,7 +43263,7 @@ function create_if_block_13(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block_14();
+          if_block3 = create_if_block_13();
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(div12, null);
@@ -43329,8 +43319,8 @@ function create_if_block_13(ctx) {
     }
   };
 }
-__name(create_if_block_13, "create_if_block_13");
-function create_if_block_17(ctx) {
+__name(create_if_block_12, "create_if_block_12");
+function create_if_block_16(ctx) {
   let div2;
   let div0;
   let label;
@@ -43384,8 +43374,8 @@ function create_if_block_17(ctx) {
     }
   };
 }
-__name(create_if_block_17, "create_if_block_17");
-function create_if_block_16(ctx) {
+__name(create_if_block_16, "create_if_block_16");
+function create_if_block_15(ctx) {
   let div2;
   let div0;
   let label;
@@ -43439,8 +43429,8 @@ function create_if_block_16(ctx) {
     }
   };
 }
-__name(create_if_block_16, "create_if_block_16");
-function create_if_block_15(ctx) {
+__name(create_if_block_15, "create_if_block_15");
+function create_if_block_14(ctx) {
   let div2;
   let div0;
   let label0;
@@ -43459,7 +43449,7 @@ function create_if_block_15(ctx) {
       name: "baseEffectHealingType",
       options: (
         /*baseEffectHealingTypeOptions*/
-        ctx[13]
+        ctx[12]
       ),
       valuePath: "system.baseEffectHealingType"
     }
@@ -43532,8 +43522,8 @@ function create_if_block_15(ctx) {
     }
   };
 }
-__name(create_if_block_15, "create_if_block_15");
-function create_if_block_14(ctx) {
+__name(create_if_block_14, "create_if_block_14");
+function create_if_block_13(ctx) {
   let div2;
   let div0;
   let label;
@@ -43587,8 +43577,8 @@ function create_if_block_14(ctx) {
     }
   };
 }
-__name(create_if_block_14, "create_if_block_14");
-function create_if_block_12(ctx) {
+__name(create_if_block_13, "create_if_block_13");
+function create_if_block_11(ctx) {
   let div2;
   let div0;
   let label;
@@ -43602,7 +43592,7 @@ function create_if_block_12(ctx) {
       name: "target",
       options: (
         /*targetOptions*/
-        ctx[9]
+        ctx[8]
       ),
       valuePath: "system.target"
     }
@@ -43648,8 +43638,8 @@ function create_if_block_12(ctx) {
     }
   };
 }
-__name(create_if_block_12, "create_if_block_12");
-function create_if_block_11(ctx) {
+__name(create_if_block_11, "create_if_block_11");
+function create_if_block_10(ctx) {
   let div2;
   let div0;
   let label;
@@ -43709,8 +43699,8 @@ function create_if_block_11(ctx) {
     }
   };
 }
-__name(create_if_block_11, "create_if_block_11");
-function create_if_block_10(ctx) {
+__name(create_if_block_10, "create_if_block_10");
+function create_if_block_9(ctx) {
   let div2;
   let div0;
   let label;
@@ -43777,8 +43767,8 @@ function create_if_block_10(ctx) {
     }
   };
 }
-__name(create_if_block_10, "create_if_block_10");
-function create_if_block_9(ctx) {
+__name(create_if_block_9, "create_if_block_9");
+function create_if_block_8(ctx) {
   let div2;
   let div0;
   let label;
@@ -43838,8 +43828,8 @@ function create_if_block_9(ctx) {
     }
   };
 }
-__name(create_if_block_9, "create_if_block_9");
-function create_if_block_8(ctx) {
+__name(create_if_block_8, "create_if_block_8");
+function create_if_block_7(ctx) {
   let div2;
   let div0;
   let docselect0;
@@ -43912,8 +43902,8 @@ function create_if_block_8(ctx) {
     }
   };
 }
-__name(create_if_block_8, "create_if_block_8");
-function create_if_block_7(ctx) {
+__name(create_if_block_7, "create_if_block_7");
+function create_if_block_6(ctx) {
   let div2;
   let div0;
   let label;
@@ -43928,7 +43918,7 @@ function create_if_block_7(ctx) {
       type: "number",
       options: (
         /*aspectedOptions*/
-        ctx[10]
+        ctx[9]
       ),
       valuePath: "system.aspected"
     }
@@ -43974,8 +43964,8 @@ function create_if_block_7(ctx) {
     }
   };
 }
-__name(create_if_block_7, "create_if_block_7");
-function create_if_block_6(ctx) {
+__name(create_if_block_6, "create_if_block_6");
+function create_if_block_5(ctx) {
   let div2;
   let div0;
   let label;
@@ -43990,7 +43980,7 @@ function create_if_block_6(ctx) {
       type: "number",
       options: (
         /*triggerOptions*/
-        ctx[8]
+        ctx[7]
       ),
       valuePath: "system.trigger"
     }
@@ -44036,8 +44026,8 @@ function create_if_block_6(ctx) {
     }
   };
 }
-__name(create_if_block_6, "create_if_block_6");
-function create_if_block_5(ctx) {
+__name(create_if_block_5, "create_if_block_5");
+function create_if_block_4(ctx) {
   let div2;
   let div0;
   let label;
@@ -44052,7 +44042,7 @@ function create_if_block_5(ctx) {
       type: "number",
       options: (
         /*costOptions*/
-        ctx[15]
+        ctx[14]
       ),
       valuePath: "system.costMP"
     }
@@ -44066,67 +44056,6 @@ function create_if_block_5(ctx) {
       div1 = element("div");
       create_component(docselect.$$.fragment);
       attr(label, "for", "cost");
-      attr(label, "class", "svelte-mf8ncy");
-      attr(div0, "class", "flex1");
-      attr(div1, "class", "flex4 right wide");
-      attr(div2, "class", "flexrow sheet-row justify-vertical wide");
-    },
-    m(target, anchor) {
-      insert(target, div2, anchor);
-      append(div2, div0);
-      append(div0, label);
-      append(div2, div1);
-      mount_component(docselect, div1, null);
-      current = true;
-    },
-    p: noop,
-    i(local) {
-      if (current)
-        return;
-      transition_in(docselect.$$.fragment, local);
-      current = true;
-    },
-    o(local) {
-      transition_out(docselect.$$.fragment, local);
-      current = false;
-    },
-    d(detaching) {
-      if (detaching) {
-        detach(div2);
-      }
-      destroy_component(docselect);
-    }
-  };
-}
-__name(create_if_block_5, "create_if_block_5");
-function create_if_block_4(ctx) {
-  let div2;
-  let div0;
-  let label;
-  let div1;
-  let docselect;
-  let current;
-  docselect = new DocSelect({
-    props: {
-      class: "wide right",
-      id: "heavierShot",
-      name: "heavierShot",
-      options: (
-        /*heavyshotOptions*/
-        ctx[7]
-      ),
-      valuePath: "system.heavierShot"
-    }
-  });
-  return {
-    c() {
-      div2 = element("div");
-      div0 = element("div");
-      label = element("label");
-      label.textContent = `${localize$1("Type")}`;
-      div1 = element("div");
-      create_component(docselect.$$.fragment);
-      attr(label, "for", "heavierShot");
       attr(label, "class", "svelte-mf8ncy");
       attr(div0, "class", "flex1");
       attr(div1, "class", "flex4 right wide");
@@ -44174,7 +44103,7 @@ function create_if_block_3$1(ctx) {
       name: "directHitType",
       options: (
         /*directHitOptions*/
-        ctx[14]
+        ctx[13]
       ),
       valuePath: "system.directHitType"
     }
@@ -44290,7 +44219,7 @@ function create_if_block_1$3(ctx) {
       name: "directHitCondition",
       options: (
         /*directHitConditionOptions*/
-        ctx[12]
+        ctx[11]
       ),
       valuePath: "system.directHitCondition"
     }
@@ -44460,9 +44389,9 @@ function create_fragment$j(ctx) {
   let h311;
   let div37;
   let doccheckbox11;
+  let if_block10_anchor;
   let if_block11_anchor;
   let if_block12_anchor;
-  let if_block13_anchor;
   let current;
   docselect = new DocSelect({
     props: {
@@ -44472,7 +44401,7 @@ function create_fragment$j(ctx) {
       type: "number",
       options: (
         /*typeOptions*/
-        ctx[11]
+        ctx[10]
       ),
       valuePath: "system.type"
     }
@@ -44482,7 +44411,7 @@ function create_fragment$j(ctx) {
       /*$item*/
       ctx2[0].system.hasBaseEffect
     )
-      return create_if_block_18;
+      return create_if_block_17;
     return create_else_block;
   }
   __name(select_block_type, "select_block_type");
@@ -44496,7 +44425,7 @@ function create_fragment$j(ctx) {
   });
   let if_block1 = (
     /*$item*/
-    ctx[0].system.hasBaseEffect && create_if_block_13(ctx)
+    ctx[0].system.hasBaseEffect && create_if_block_12(ctx)
   );
   doccheckbox1 = new DocCheckbox({
     props: {
@@ -44507,7 +44436,7 @@ function create_fragment$j(ctx) {
   });
   let if_block2 = (
     /*$item*/
-    ctx[0].system.hasTarget && create_if_block_12(ctx)
+    ctx[0].system.hasTarget && create_if_block_11(ctx)
   );
   doccheckbox2 = new DocCheckbox({
     props: {
@@ -44517,7 +44446,7 @@ function create_fragment$j(ctx) {
   });
   let if_block3 = (
     /*$item*/
-    ctx[0].system.hasRanged && create_if_block_11(ctx)
+    ctx[0].system.hasRanged && create_if_block_10(ctx)
   );
   doccheckbox3 = new DocCheckbox({
     props: {
@@ -44527,14 +44456,14 @@ function create_fragment$j(ctx) {
   });
   let if_block4 = (
     /*$item*/
-    ctx[0].system.hasCheck && create_if_block_10(ctx)
+    ctx[0].system.hasCheck && create_if_block_9(ctx)
   );
   doccheckbox4 = new DocCheckbox({
     props: { name: "hasCR", valuePath: "system.hasCR" }
   });
   let if_block5 = (
     /*$item*/
-    ctx[0].system.hasCR && create_if_block_9(ctx)
+    ctx[0].system.hasCR && create_if_block_8(ctx)
   );
   doccheckbox5 = new DocCheckbox({
     props: {
@@ -44544,7 +44473,7 @@ function create_fragment$j(ctx) {
   });
   let if_block6 = (
     /*$item*/
-    ctx[0].system.hasLimitation && create_if_block_8(ctx)
+    ctx[0].system.hasLimitation && create_if_block_7(ctx)
   );
   durationcomponent = new Duration2({});
   doccheckbox6 = new DocCheckbox({
@@ -44555,7 +44484,7 @@ function create_fragment$j(ctx) {
   });
   let if_block7 = (
     /*$item*/
-    ctx[0].system.hasAspected && create_if_block_7(ctx)
+    ctx[0].system.hasAspected && create_if_block_6(ctx)
   );
   doccheckbox7 = new DocCheckbox({
     props: {
@@ -44565,7 +44494,7 @@ function create_fragment$j(ctx) {
   });
   let if_block8 = (
     /*$item*/
-    ctx[0].system.hasTrigger && create_if_block_6(ctx)
+    ctx[0].system.hasTrigger && create_if_block_5(ctx)
   );
   doccheckbox8 = new DocCheckbox({
     props: {
@@ -44575,7 +44504,7 @@ function create_fragment$j(ctx) {
   });
   let if_block9 = (
     /*$item*/
-    ctx[0].system.hasCostMP && create_if_block_5(ctx)
+    ctx[0].system.hasCostMP && create_if_block_4(ctx)
   );
   doccheckbox9 = new DocCheckbox({
     props: {
@@ -44583,10 +44512,6 @@ function create_fragment$j(ctx) {
       valuePath: "system.hasHeavierShot"
     }
   });
-  let if_block10 = (
-    /*$item*/
-    ctx[0].system.hasHeavierShot && create_if_block_4(ctx)
-  );
   doccheckbox10 = new DocCheckbox({
     props: {
       name: "hasSplitDamage",
@@ -44599,19 +44524,19 @@ function create_fragment$j(ctx) {
       valuePath: "system.hasDirectHit"
     }
   });
-  let if_block11 = (
+  let if_block10 = (
     /*$item*/
     ctx[0].system.hasDirectHit && create_if_block_3$1(ctx)
   );
-  let if_block12 = (
+  let if_block11 = (
     /*$item*/
     ctx[0].system.directHitType === "damage" && create_if_block_2$3()
   );
-  let if_block13 = (
+  let if_block12 = (
     /*$item*/
     ctx[0].system.directHitType === "condition" && create_if_block_1$3(ctx)
   );
-  let if_block14 = (
+  let if_block13 = (
     /*$item*/
     ctx[0].system.hasDirectHit && create_if_block$5()
   );
@@ -44705,8 +44630,6 @@ function create_fragment$j(ctx) {
       h39.textContent = `${localize$1("HeavierShot")}`;
       div31 = element("div");
       create_component(doccheckbox9.$$.fragment);
-      if (if_block10)
-        if_block10.c();
       div35 = element("div");
       div33 = element("div");
       h310 = element("h3");
@@ -44719,6 +44642,9 @@ function create_fragment$j(ctx) {
       h311.textContent = `${localize$1("Types.Item.Types.action.DirectHit")}`;
       div37 = element("div");
       create_component(doccheckbox11.$$.fragment);
+      if (if_block10)
+        if_block10.c();
+      if_block10_anchor = empty();
       if (if_block11)
         if_block11.c();
       if_block11_anchor = empty();
@@ -44727,9 +44653,6 @@ function create_fragment$j(ctx) {
       if_block12_anchor = empty();
       if (if_block13)
         if_block13.c();
-      if_block13_anchor = empty();
-      if (if_block14)
-        if_block14.c();
       attr(h30, "class", "left");
       attr(label, "for", "type");
       attr(label, "class", "svelte-mf8ncy");
@@ -44863,8 +44786,6 @@ function create_fragment$j(ctx) {
       append(div30, h39);
       append(div32, div31);
       mount_component(doccheckbox9, div31, null);
-      if (if_block10)
-        if_block10.m(div39, null);
       append(div39, div35);
       append(div35, div33);
       append(div33, h310);
@@ -44875,6 +44796,9 @@ function create_fragment$j(ctx) {
       append(div36, h311);
       append(div38, div37);
       mount_component(doccheckbox11, div37, null);
+      if (if_block10)
+        if_block10.m(div39, null);
+      append(div39, if_block10_anchor);
       if (if_block11)
         if_block11.m(div39, null);
       append(div39, if_block11_anchor);
@@ -44883,9 +44807,6 @@ function create_fragment$j(ctx) {
       append(div39, if_block12_anchor);
       if (if_block13)
         if_block13.m(div39, null);
-      append(div39, if_block13_anchor);
-      if (if_block14)
-        if_block14.m(div39, null);
       current = true;
     },
     p(ctx2, [dirty]) {
@@ -44908,7 +44829,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block1, 1);
           }
         } else {
-          if_block1 = create_if_block_13(ctx2);
+          if_block1 = create_if_block_12(ctx2);
           if_block1.c();
           transition_in(if_block1, 1);
           if_block1.m(div39, div8);
@@ -44931,7 +44852,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block2, 1);
           }
         } else {
-          if_block2 = create_if_block_12(ctx2);
+          if_block2 = create_if_block_11(ctx2);
           if_block2.c();
           transition_in(if_block2, 1);
           if_block2.m(div39, div11);
@@ -44954,7 +44875,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block3, 1);
           }
         } else {
-          if_block3 = create_if_block_11(ctx2);
+          if_block3 = create_if_block_10(ctx2);
           if_block3.c();
           transition_in(if_block3, 1);
           if_block3.m(div39, div14);
@@ -44977,7 +44898,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block4, 1);
           }
         } else {
-          if_block4 = create_if_block_10(ctx2);
+          if_block4 = create_if_block_9(ctx2);
           if_block4.c();
           transition_in(if_block4, 1);
           if_block4.m(div39, div17);
@@ -45000,7 +44921,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block5, 1);
           }
         } else {
-          if_block5 = create_if_block_9(ctx2);
+          if_block5 = create_if_block_8(ctx2);
           if_block5.c();
           transition_in(if_block5, 1);
           if_block5.m(div39, div20);
@@ -45023,7 +44944,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block6, 1);
           }
         } else {
-          if_block6 = create_if_block_8(ctx2);
+          if_block6 = create_if_block_7(ctx2);
           if_block6.c();
           transition_in(if_block6, 1);
           if_block6.m(div39, if_block6_anchor);
@@ -45046,7 +44967,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block7, 1);
           }
         } else {
-          if_block7 = create_if_block_7(ctx2);
+          if_block7 = create_if_block_6(ctx2);
           if_block7.c();
           transition_in(if_block7, 1);
           if_block7.m(div39, div26);
@@ -45069,7 +44990,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block8, 1);
           }
         } else {
-          if_block8 = create_if_block_6(ctx2);
+          if_block8 = create_if_block_5(ctx2);
           if_block8.c();
           transition_in(if_block8, 1);
           if_block8.m(div39, div29);
@@ -45092,7 +45013,7 @@ function create_fragment$j(ctx) {
             transition_in(if_block9, 1);
           }
         } else {
-          if_block9 = create_if_block_5(ctx2);
+          if_block9 = create_if_block_4(ctx2);
           if_block9.c();
           transition_in(if_block9, 1);
           if_block9.m(div39, div32);
@@ -45106,7 +45027,7 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasHeavierShot
+        ctx2[0].system.hasDirectHit
       ) {
         if (if_block10) {
           if_block10.p(ctx2, dirty);
@@ -45115,10 +45036,10 @@ function create_fragment$j(ctx) {
             transition_in(if_block10, 1);
           }
         } else {
-          if_block10 = create_if_block_4(ctx2);
+          if_block10 = create_if_block_3$1(ctx2);
           if_block10.c();
           transition_in(if_block10, 1);
-          if_block10.m(div39, div35);
+          if_block10.m(div39, if_block10_anchor);
         }
       } else if (if_block10) {
         group_outros();
@@ -45129,16 +45050,15 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.hasDirectHit
+        ctx2[0].system.directHitType === "damage"
       ) {
         if (if_block11) {
-          if_block11.p(ctx2, dirty);
           if (dirty & /*$item*/
           1) {
             transition_in(if_block11, 1);
           }
         } else {
-          if_block11 = create_if_block_3$1(ctx2);
+          if_block11 = create_if_block_2$3();
           if_block11.c();
           transition_in(if_block11, 1);
           if_block11.m(div39, if_block11_anchor);
@@ -45152,15 +45072,16 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.directHitType === "damage"
+        ctx2[0].system.directHitType === "condition"
       ) {
         if (if_block12) {
+          if_block12.p(ctx2, dirty);
           if (dirty & /*$item*/
           1) {
             transition_in(if_block12, 1);
           }
         } else {
-          if_block12 = create_if_block_2$3();
+          if_block12 = create_if_block_1$3(ctx2);
           if_block12.c();
           transition_in(if_block12, 1);
           if_block12.m(div39, if_block12_anchor);
@@ -45174,46 +45095,23 @@ function create_fragment$j(ctx) {
       }
       if (
         /*$item*/
-        ctx2[0].system.directHitType === "condition"
+        ctx2[0].system.hasDirectHit
       ) {
         if (if_block13) {
-          if_block13.p(ctx2, dirty);
           if (dirty & /*$item*/
           1) {
             transition_in(if_block13, 1);
           }
         } else {
-          if_block13 = create_if_block_1$3(ctx2);
+          if_block13 = create_if_block$5();
           if_block13.c();
           transition_in(if_block13, 1);
-          if_block13.m(div39, if_block13_anchor);
+          if_block13.m(div39, null);
         }
       } else if (if_block13) {
         group_outros();
         transition_out(if_block13, 1, 1, () => {
           if_block13 = null;
-        });
-        check_outros();
-      }
-      if (
-        /*$item*/
-        ctx2[0].system.hasDirectHit
-      ) {
-        if (if_block14) {
-          if (dirty & /*$item*/
-          1) {
-            transition_in(if_block14, 1);
-          }
-        } else {
-          if_block14 = create_if_block$5();
-          if_block14.c();
-          transition_in(if_block14, 1);
-          if_block14.m(div39, null);
-        }
-      } else if (if_block14) {
-        group_outros();
-        transition_out(if_block14, 1, 1, () => {
-          if_block14 = null;
         });
         check_outros();
       }
@@ -45242,13 +45140,12 @@ function create_fragment$j(ctx) {
       transition_in(doccheckbox8.$$.fragment, local);
       transition_in(if_block9);
       transition_in(doccheckbox9.$$.fragment, local);
-      transition_in(if_block10);
       transition_in(doccheckbox10.$$.fragment, local);
       transition_in(doccheckbox11.$$.fragment, local);
+      transition_in(if_block10);
       transition_in(if_block11);
       transition_in(if_block12);
       transition_in(if_block13);
-      transition_in(if_block14);
       current = true;
     },
     o(local) {
@@ -45273,13 +45170,12 @@ function create_fragment$j(ctx) {
       transition_out(doccheckbox8.$$.fragment, local);
       transition_out(if_block9);
       transition_out(doccheckbox9.$$.fragment, local);
-      transition_out(if_block10);
       transition_out(doccheckbox10.$$.fragment, local);
       transition_out(doccheckbox11.$$.fragment, local);
+      transition_out(if_block10);
       transition_out(if_block11);
       transition_out(if_block12);
       transition_out(if_block13);
-      transition_out(if_block14);
       current = false;
     },
     d(detaching) {
@@ -45317,18 +45213,16 @@ function create_fragment$j(ctx) {
       if (if_block9)
         if_block9.d();
       destroy_component(doccheckbox9);
-      if (if_block10)
-        if_block10.d();
       destroy_component(doccheckbox10);
       destroy_component(doccheckbox11);
+      if (if_block10)
+        if_block10.d();
       if (if_block11)
         if_block11.d();
       if (if_block12)
         if_block12.d();
       if (if_block13)
         if_block13.d();
-      if (if_block14)
-        if_block14.d();
     }
   };
 }
@@ -45351,7 +45245,7 @@ function instance$f($$self, $$props, $$invalidate) {
   getDurationOptions();
   getDurationUnits();
   const rangeOptions = getRangeOptions();
-  const heavyshotOptions = getHeavyshotOptions();
+  getHeavyshotOptions();
   const triggerOptions = getTriggerOptions();
   const targetOptions = getTargetOptions();
   const aspectedOptions = getAspectedOptions();
@@ -45403,7 +45297,6 @@ function instance$f($$self, $$props, $$invalidate) {
     limitationOptions,
     limitationUnitsOptions,
     rangeOptions,
-    heavyshotOptions,
     triggerOptions,
     targetOptions,
     aspectedOptions,
@@ -50380,7 +50273,7 @@ class RollGuards {
    * @private
    */
   async _showModifierDialog(item) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       new Dialog({
         title: "Extra Modifiers",
         content: `<div id="modifier-dialog-container"></div>`,
@@ -50397,7 +50290,7 @@ class RollGuards {
           },
           cancel: {
             label: "Cancel",
-            callback: () => reject(new Error("Dialog cancelled"))
+            callback: () => resolve({ confirmed: false })
           }
         },
         render: (html) => {
@@ -50412,135 +50305,10 @@ class RollGuards {
         close: () => {
           window._modifierDialogComponent?.$destroy();
           delete window._modifierDialogComponent;
-          reject(new Error("Dialog closed"));
+          resolve({ confirmed: false });
         }
       }).render(true);
     });
-  }
-  /**
-   * Check if the item is an action
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item is an action
-   */
-  async isAction(item) {
-    return item.type === "action";
-  }
-  /**
-   * Check if there is an active combat
-   * @return {Promise<boolean>} Whether there is an active combat
-   */
-  async isCombat() {
-    return game.combat;
-  }
-  /**
-   * Check if there are valid targets selected
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether there are valid targets
-   */
-  async hasTargets(item) {
-    const targets = game.user.targets;
-    const hasTargets = targets.size > 0;
-    if (!hasTargets) {
-      ui.notifications.warn(`${item.name} has no targets. Please select targets and roll again.`);
-      return false;
-    }
-    return true;
-  }
-  /**
-   * Check if the selected targets match the action's targeting requirements
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether the targets match the requirements
-   */
-  async targetsMatchActionIntent(item) {
-    const target = item.system.target;
-    const targets = game.user.targets;
-    const size = targets.size;
-    const originalTargets = new Set(game.user.targets);
-    let token;
-    try {
-      if (target === "self") {
-        token = this.actor.activeToken;
-        if (!token) {
-          ui.notifications.warn("No token found for self-targeting");
-          return false;
-        }
-        await token.setTarget(true, { user: game.user, releaseOthers: true });
-        return true;
-      }
-      switch (target) {
-        case "single":
-          if (size !== 1) {
-            ui.notifications.warn("This ability requires exactly one target");
-            return false;
-          }
-          token = this.actor.activeToken;
-          if (targets.has(token)) {
-            ui.notifications.warn("This ability cannot target yourself");
-            return false;
-          }
-          break;
-        case "enemy":
-          if (size < 1) {
-            ui.notifications.warn("This ability requires at least one enemy target");
-            return false;
-          }
-          token = this.actor.activeToken;
-          if (targets.has(token)) {
-            ui.notifications.warn("This ability cannot target yourself");
-            return false;
-          }
-          break;
-        case "ally":
-          if (size < 1) {
-            ui.notifications.warn("This ability requires at least one ally target");
-            return false;
-          }
-          break;
-        case "all":
-          if (size < 1) {
-            ui.notifications.warn("This ability requires at least one target");
-            return false;
-          }
-          break;
-      }
-      return true;
-    } catch (error) {
-      game.system.log.e("Error in targetsMatchActionIntent:", error);
-      return false;
-    } finally {
-      if (target !== "self" && originalTargets.size > 0) {
-        game.user.targets.forEach((t) => t.setTarget(false, { user: game.user, releaseOthers: false }));
-        originalTargets.forEach((t) => t.setTarget(true, { user: game.user, releaseOthers: false }));
-      }
-    }
-  }
-  /**
-   * Check if the item has remaining uses available
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item has uses remaining
-   */
-  async hasRemainingUses(item) {
-    if (item.system.hasLimitation && game.combat) {
-      const maxUses = item.system.limitation;
-      const remainingUses = maxUses - (item.system.uses || 0);
-      if (remainingUses <= 0) {
-        ui.notifications.warn(`${item.name} has no remaining uses.`);
-        return false;
-      }
-      const confirmed = await Dialog.confirm({
-        title: "Confirm Ability Use",
-        content: `<p>Use ${item.name}? (${remainingUses} use${remainingUses > 1 ? "s" : ""} remaining)</p>`,
-        yes: () => true,
-        no: () => false,
-        defaultYes: true
-      });
-      if (!confirmed)
-        return false;
-      const systemData = foundry.utils.deepClone(item.system);
-      systemData.uses = (systemData.uses || 0) + 1;
-      await item.update({ system: systemData });
-    }
-    return true;
   }
   /**
    * Check and handle any modifiers for the roll
@@ -50566,200 +50334,6 @@ class RollGuards {
       }
     }
     Hooks.call("FFXIV.processTargetRollAdditionalModifiers", { item, extraModifiers: this.shuttle.hasModifiers.extraModifiers, actor: this.actor });
-    return true;
-  }
-  /**
-   * Check if the item has any enablers
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item has enablers
-   */
-  async hasEnablers(item) {
-    if (!game.combat || !item.system.enables?.value) {
-      return false;
-    }
-    const enablesList = item.system.enables.list;
-    if (!enablesList?.length) {
-      return false;
-    }
-    return true;
-  }
-  /**
-   * Check if there is an appropriate action slot available
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether an enabler slot is available
-   */
-  async hasAvailableActionSlot(item) {
-    if (item.system.type === "reaction")
-      return true;
-    const { actionState } = this.actor.system;
-    const actionType = item.system.type || "primary";
-    game.system.log.cyan("[SLOT:USAGE] Checking available action slot:", actionType);
-    const enablerSlots = actionState.available.filter(
-      (slot) => slot !== "primary" && slot !== "secondary"
-    );
-    game.system.log.cyan("[SLOT:USAGE] Enabler slots:", enablerSlots);
-    if (item.system.tags?.some((tag) => enablerSlots.includes(tag))) {
-      return true;
-    }
-    game.system.log.cyan("[SLOT:USAGE] No enabler slots match:", item.system.tags);
-    if (actionState.available.includes(actionType)) {
-      return true;
-    }
-    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
-    if (actionType === "secondary" && actionState.available.filter((slot) => slot === "secondary" || slot === "primary").length) {
-      return true;
-    }
-    game.system.log.cyan("[SLOT:USAGE] No matching action slot:", actionType);
-    if (await this.hasEnablers(item)) {
-      const enabledEffects = this.actor.effects.filter(
-        (effect) => effect.system.tags?.includes("enabler")
-      );
-      game.system.log.cyan("[SLOT:USAGE] Enabled effects:", enabledEffects);
-      if (enabledEffects?.length) {
-        const enabledEffectsLinkedToEnablerSlots = enabledEffects.filter(
-          (effect) => enablerSlots.some((slot) => {
-            const originItem = fromUuidSync(effect.origin);
-            return originItem?.system.tags?.includes(slot);
-          })
-        );
-        if (enabledEffectsLinkedToEnablerSlots.length) {
-          return true;
-        }
-      }
-    }
-    const msg = localize$1("Types.Item.Types.action.SlotNotAvailable").replace("%s", actionType);
-    ui.notifications.warn(msg);
-    return false;
-  }
-  /**
-   * Check if the item matches any enabler effects
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item matches enabler effects
-   */
-  async matchesEnablerEffect(item) {
-    return this.actor.itemTagsMatchEnablerEffectTags(item);
-  }
-  /**
-   * Check if the actor has all required effects for the item
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether all required effects are present
-   */
-  async hasRequiredEffects(item) {
-    if (!item.system.requires?.value) {
-      return true;
-    }
-    for (const requireRef of item.system.requires.list) {
-      const requiredItem = await fromUuid(requireRef.uuid);
-      if (!requiredItem)
-        continue;
-      let hasActiveEffect = false;
-      for (const effect of this.actor.effects) {
-        if (effect.name === requiredItem.name) {
-          hasActiveEffect = true;
-          await effect.setFlag(SYSTEM_ID, "pendingDeletion", true);
-          break;
-        }
-      }
-      if (!hasActiveEffect) {
-        ui.notifications.warn(game.i18n.format("FFXIV.Warnings.RequiredEffectNotActive", { name: requiredItem.name }));
-        return false;
-      }
-    }
-    return true;
-  }
-  /**
-   * Check if it is currently the actor's turn
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether it is the actor's turn
-   */
-  async isActorsTurn(item) {
-    if (!game.combat)
-      return true;
-    const currentCombatant = game.combat.combatant;
-    if (!currentCombatant)
-      return true;
-    if (item.system.type === "reaction")
-      return true;
-    const isCurrentTurn = currentCombatant.actor.id === this.actor.id;
-    if (!isCurrentTurn) {
-      ui.notifications.warn("Cannot use this action outside of your turn.");
-    }
-    return isCurrentTurn;
-  }
-  /**
-   * Check if the item is a reaction
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether the item is a reaction
-   */
-  async isReaction(item) {
-    if (item.system.type !== "reaction")
-      return true;
-    if (!game.combat)
-      return true;
-    const actionState = this.actor.system.actionState;
-    if (actionState.usedReaction) {
-      ui.notifications.warn("Cannot use multiple reactions in the same turn.");
-      return false;
-    }
-    return true;
-  }
-  /**
-   * Check if there is an available action slot for the item
-   * @param {Item} item - The item to check
-   * @return {Promise<boolean>} Whether an action slot is available
-   */
-  async hasAvailableSlot(item) {
-    if (item.system.type === "reaction")
-      return true;
-    const actionState = this.actor.system.actionState;
-    const available = actionState.available || [];
-    const actionType = item.system.type;
-    const hasSlot = available.includes(actionType);
-    if (!hasSlot) {
-      ui.notifications.warn(`No ${actionType} action slot available.`);
-    }
-    return hasSlot;
-  }
-  /**
-   * Check if there are any unapplied damage results in chat messages
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether there are no unapplied damage results
-   */
-  async hasNoUnappliedDamage(item) {
-    if (!item.system.baseEffectDamage && !item.system.directHitDamage)
-      return true;
-    const messages = game.messages.filter((m) => {
-      const data = m.flags?.[SYSTEM_ID]?.data;
-      return data?.chatTemplate === "ActionRollChat" && (data?.item?.system?.baseEffectDamage || data?.item?.system?.directHitDamage);
-    });
-    for (const message of messages) {
-      const state = message.flags?.[SYSTEM_ID]?.state;
-      if (!state?.damageResults)
-        continue;
-      const hasUnappliedDamage = Object.values(state.damageResults).some((result) => !result.applied);
-      if (hasUnappliedDamage) {
-        ui.notifications.warn("There are unapplied damage results in chat. Please apply or undo them before making another action roll.");
-        return false;
-      }
-    }
-    return true;
-  }
-  /**
-   * Check if the actor has enough MP to use the action
-   * @param {Item} item - The item being used
-   * @return {Promise<boolean>} Whether the actor has enough MP
-   */
-  async meetsMPCost(item) {
-    if (!item.system.hasCostMP || !item.system.costMP) {
-      return true;
-    }
-    let currentMP;
-    currentMP = this.actor.system.points.MP.val;
-    const cost = item.system.costMP;
-    if (currentMP < cost) {
-      ui.notifications.warn(`Not enough MP to use ${item.name}. Required: ${cost} MP, Current: ${currentMP} MP`);
-      return false;
-    }
     return true;
   }
 }
