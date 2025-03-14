@@ -150,7 +150,7 @@ export default class FFXIVActor extends Actor {
         }))
       });
       
-      this.handlePluginOverrides()
+      this.handlePluginOverrides(movementSacrificingTraits)
     }
 
     if(['ko', 'dead', 'comatose', 'brink', 'surprised', 'bind', 'stun'].includes(statusId)) {
