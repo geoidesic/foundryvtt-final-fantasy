@@ -203,7 +203,6 @@
           "action": {
             "Label": "Action",
             "Description": "An ability that can be used in combat.",
-            "SlotNotAvailable": "No matching action slot available.",
             "SingleTarget": "%s requires a single target. Please select just one target and roll again.",
             "SingleTargetNotSelf": "%s requires a single target. Please select just one target that is not yourself and roll again.",
             "TargetSelf": "%s requires you to target yourself. Please target your own actor's token and roll again.",
