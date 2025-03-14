@@ -45,8 +45,6 @@ export class ActionModel extends FFItemDataModel {
       directHitDamage: new StringField({ required: false, initial: '' }),
       directHitText: new StringField({ required: false, initial: '' }),
       directHitCondition: new StringField({ required: false, initial: '' }),
-      hasHeavierShot: new BooleanField({ required: false, initial: false }),
-      heavierShot: new StringField({ required: false, initial: '' }),
       hasLimitation: new BooleanField({ required: false, initial: false }),
       limitation: new NumberField({  required: false, initial: 0, integer: true, min: 0, max: 3 }),
       limitationUnits: new StringField({ required: false, initial: "phase" }),

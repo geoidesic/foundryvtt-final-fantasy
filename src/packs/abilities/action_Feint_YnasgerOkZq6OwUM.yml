@@ -35,8 +35,6 @@ system:
   directHitDamage: ''
   directHitText: ''
   directHitCondition: ''
-  hasHeavierShot: false
-  heavierShot: ''
   hasLimitation: false
   limitation: 0
   limitationUnits: phase

@@ -35,8 +35,6 @@ system:
   directHitDamage: 1d6
   directHitText: <p>Deals an additional 1d6 damage.</p>
   directHitCondition: ''
-  hasHeavierShot: false
-  heavierShot: ''
   hasLimitation: false
   limitation: 0
   limitationUnits: phase

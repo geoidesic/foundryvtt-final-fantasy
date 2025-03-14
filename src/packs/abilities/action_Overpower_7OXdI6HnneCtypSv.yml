@@ -35,8 +35,6 @@ system:
   directHitDamage: '2'
   directHitText: <p> Deals 2 damage to all targets.</p>
   directHitCondition: ''
-  hasHeavierShot: false
-  heavierShot: ''
   hasLimitation: false
   limitation: 0
   limitationUnits: phase

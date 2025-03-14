@@ -262,13 +262,6 @@
         .flex0.right
           DocCheckbox( name="hasHeavierShot" valuePath="system.hasHeavierShot")
 
-      +if("$item.system.hasHeavierShot")
-        .flexrow.sheet-row.justify-vertical.wide
-          .flex1
-            label(for="heavierShot") {localize("Type")}
-          .flex4.right.wide
-            DocSelect.wide.right(id="heavierShot" name="heavierShot" options="{heavyshotOptions}" valuePath="system.heavierShot")
-
       .flexrow.justify-vertical
         .flex4
           h3.left {localize("Types.Item.Types.action.SplitDamage")}
