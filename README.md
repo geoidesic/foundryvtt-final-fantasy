@@ -1,6 +1,9 @@
 # Final Fantasy TTRPG System for Foundry VTT
 
 A Foundry VTT system implementation for the Square Enix TTRPG Final Fantasy XIV.
+This system conversion is not affiliated with Square Enix or Final Fantasy XIV. All trademarks and copyrights are property of their respective owners.
+This system is a community project that was able to be built by @geoidesic thanks to donations by brothersharp https://www.youtube.com/c/BrotherSharp
+@geoidesic is launching a new service for those who would like to see their creations come to life in FoundryVTT: https://aardvark.games
 
 ## Features
 
@@ -12,9 +15,6 @@ A Foundry VTT system implementation for the Square Enix TTRPG Final Fantasy XIV.
 - Attribute-based skill checks
 
 ## Technical Documentation
-
-
-
 The following diagram shows how the chat system processes rolls and renders messages:
 
 ```mermaid
