@@ -51,7 +51,8 @@
       p 
         i.fa-solid.fa-heart.mr-sm(style="color: #660000;")
         | {localize('Setting.DontShowWelcome.Support')} <a href='https://github.com/sponsors/geoidesic'> {localize('Setting.DontShowWelcome.SponsorLinkText')} </a> or <a href='https://https://paypal.me/geoidesic'>PayPal</a>
-      
+      p.smallest
+        | {localize('Welcome.Disclaimer')}
       //- h1 Help
       //- p
       //-   span {localize('Welcome.Issues')}
@@ -62,11 +63,12 @@
         .flex
           span {localize('Setting.DontShowWelcome.Name')}
     footer
-      div.right
+      div.right.mr-md
         a(href="https://www.aardvark.games")
-          img.white(src="/systems/foundryvtt-final-fantasy/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="50" width="50" style="fill: white; border: none; width: auto;")
+          img(src="/systems/foundryvtt-final-fantasy/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="40" width="40" style="fill: white; border: none; width: auto;")
       div.left
-        h4 {localize("Title")} {localize("Welcome.CreatedBy")} 
+        h4 {localize("Title")} 
+        span {localize("Welcome.CreatedBy")} 
         //- a(href="https://www.round-table.games") Round Table Games
         a(href="https://www.aardvark.games") Aardvark Game Studios
     
@@ -110,8 +112,6 @@
     padding: 1em
     font-size: 0.8em
     z-index: 3
-    img
-      min-width: 100px
     a
       color: white
       text-decoration: underline

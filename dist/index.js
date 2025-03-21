@@ -23757,15 +23757,17 @@ function create_default_slot$g(ctx) {
   let a2;
   let t13;
   let a3;
+  let p3;
   let div4;
   let div2;
   let input;
   let div3;
-  let span;
+  let span0;
   let footer;
   let div5;
   let div6;
   let h4;
+  let span1;
   let a5;
   let mounted;
   let dispose;
@@ -23773,7 +23775,7 @@ function create_default_slot$g(ctx) {
     c() {
       main = element("main");
       div1 = element("div");
-      div1.innerHTML = `<div class="texture svelte-14cktfx"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
+      div1.innerHTML = `<div class="texture svelte-pyn9ka"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
       h1 = element("h1");
       h1.textContent = `${localize$1("Welcome.Introduction")}`;
       p0 = element("p");
@@ -23798,21 +23800,25 @@ function create_default_slot$g(ctx) {
       t13 = text(" or ");
       a3 = element("a");
       a3.textContent = "PayPal";
+      p3 = element("p");
+      p3.textContent = `${localize$1("Welcome.Disclaimer")}`;
       div4 = element("div");
       div2 = element("div");
       input = element("input");
       div3 = element("div");
-      span = element("span");
-      span.textContent = `${localize$1("Setting.DontShowWelcome.Name")}`;
+      span0 = element("span");
+      span0.textContent = `${localize$1("Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
       div5 = element("div");
-      div5.innerHTML = `<a href="https://www.aardvark.games" class="svelte-14cktfx"><img class="white svelte-14cktfx" src="/systems/foundryvtt-final-fantasy/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="50" width="50" style="fill: white; border: none; width: auto;"/></a>`;
+      div5.innerHTML = `<a href="https://www.aardvark.games" class="svelte-pyn9ka"><img src="/systems/foundryvtt-final-fantasy/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="40" width="40" style="fill: white; border: none; width: auto;"/></a>`;
       div6 = element("div");
       h4 = element("h4");
-      h4.textContent = `${localize$1("Title")} ${localize$1("Welcome.CreatedBy")} `;
+      h4.textContent = `${localize$1("Title")} `;
+      span1 = element("span");
+      span1.textContent = `${localize$1("Welcome.CreatedBy")} `;
       a5 = element("a");
       a5.textContent = "Aardvark Game Studios";
-      attr(div1, "class", "logo-background svelte-14cktfx");
+      attr(div1, "class", "logo-background svelte-pyn9ka");
       attr(i0, "class", "fa-solid fa-info-circle mr-sm");
       attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
       attr(p0, "class", "lightest");
@@ -23823,19 +23829,20 @@ function create_default_slot$g(ctx) {
       set_style(i2, "color", "#660000");
       attr(a2, "href", "https://github.com/sponsors/geoidesic");
       attr(a3, "href", "https://https://paypal.me/geoidesic");
+      attr(p3, "class", "smallest");
       attr(input, "type", "checkbox");
       attr(input, "label", localize$1("Setting.DontShowWelcome.Name"));
-      attr(input, "class", "svelte-14cktfx");
+      attr(input, "class", "svelte-pyn9ka");
       attr(div2, "class", "flex0");
       attr(div3, "class", "flex");
-      attr(div4, "class", "flexrow inset justify-vertical mb-sm dont-show svelte-14cktfx");
+      attr(div4, "class", "flexrow inset justify-vertical mb-sm dont-show svelte-pyn9ka");
       attr(div4, "data-tooltip", localize$1("Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-14cktfx");
-      attr(div5, "class", "right");
+      attr(main, "class", "svelte-pyn9ka");
+      attr(div5, "class", "right mr-md");
       attr(a5, "href", "https://www.aardvark.games");
-      attr(a5, "class", "svelte-14cktfx");
+      attr(a5, "class", "svelte-pyn9ka");
       attr(div6, "class", "left");
-      attr(footer, "class", "svelte-14cktfx");
+      attr(footer, "class", "svelte-pyn9ka");
     },
     m(target, anchor) {
       insert(target, main, anchor);
@@ -23859,17 +23866,19 @@ function create_default_slot$g(ctx) {
       append(p2, a2);
       append(p2, t13);
       append(p2, a3);
+      append(main, p3);
       append(main, div4);
       append(div4, div2);
       append(div2, input);
       input.checked = /*dontShowWelcome*/
       ctx[1];
       append(div4, div3);
-      append(div3, span);
+      append(div3, span0);
       insert(target, footer, anchor);
       append(footer, div5);
       append(footer, div6);
       append(div6, h4);
+      append(div6, span1);
       append(div6, a5);
       if (!mounted) {
         dispose = [
@@ -26238,7 +26247,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.1.41";
+const version = "0.1.42";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -26258,6 +26267,7 @@ class WelcomeApplication extends SvelteApplication {
       height: 700,
       // headerIcon: 'systems/foundryvtt-final-fantasy/assets/critical.svg',
       title: game.i18n.localize(`${SYSTEM_CODE}.SystemName`) + " v" + version,
+      headerIcon: "systems/foundryvtt-final-fantasy/assets/aardvark-claw.webp",
       svelte: {
         class: WelcomeAppShell,
         target: document.body,

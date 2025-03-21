@@ -25,6 +25,7 @@ export default class WelcomeApplication extends SvelteApplication
          height: 700,
          // headerIcon: 'systems/foundryvtt-final-fantasy/assets/critical.svg',
          title: game.i18n.localize(`${SYSTEM_CODE}.SystemName`)+' v'+version,
+         headerIcon: 'systems/foundryvtt-final-fantasy/assets/aardvark-claw.webp',
          svelte: {
             class: WelcomeAppShell,
             target: document.body,

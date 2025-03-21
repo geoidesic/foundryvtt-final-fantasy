@@ -485,7 +485,8 @@
       "Released": "was released June 2024",
       "Issues": "If you have any issues, please report them on ",
       "Github": "GitHub.",
-      "CreatedBy": "for FoundryVTT developed by "
+      "CreatedBy": "Foundry conversion by ",
+      "Disclaimer": "This system conversion is not affiliated with Square Enix or Final Fantasy XIV. All trademarks and copyrights are property of their respective owners."
     },
     "Tabs": {
       "Attributes": "Attributes",
