@@ -1,1 +1,613 @@
-{}
+{
+  "TYPES": {
+    "Actor": {
+      "PC": "PC",
+      "NPC": "NPC"
+    },
+    "Item": {
+      "action": "アクション",
+      "equipment": "所持品",
+      "job": "ジョブ",
+      "trait": "特性・補足",
+      "effect": "効果",
+      "limitbreak": "リミットブレイク"
+    }
+  },
+  "FFXIV": {
+    "one": "1",
+    "two": "2",
+    "three": "3",
+    "four": "4",
+    "Abilities": "アビリティ",
+    "Amount": "数量",
+    "Aspected": "Aspected",
+    "Attributes": "ステータス",
+    "Action": "アクション",
+    "Bookmark": "お気に入り",
+    "Character": "キャラクター",
+    "ChatText": "チャットテキスト",
+    "Check": "判定",
+    "Collapse": "詳細を最小化",
+    "Combos": "コンボ",
+    "Condition": "状態",
+    "Config": "設定",
+    "Cost": "コスト",
+    "CR": "VS",
+    "CriticalSuccess": "クリティカル成功！",
+    "Damage": "ダメージ",
+    "Description": "説明",
+    "Details": "詳細",
+    "Effects": "効果",
+    "Enabled": "有効化",
+    "Expand": "詳細を展開",
+    "Favourite": "お気に入り",
+    "General": "一般",
+    "Grants": "与える効果",
+    "HeavierShot": "Heavier Shot",
+    "Inventory": "所持品",
+    "Job": "ジョブ",
+    "Links": "リンク",
+    "Limitation": "使用制限",
+    "Level": "レベル",
+    "LV": "LV",
+    "Max": "最大",
+    "Modifier": "修正値",
+    "Name": "名前",
+    "NoEffects": "効果なし",
+    "None": "なし",
+    "Notes": "メモ",
+    "Other": "その他",
+    "Origin": "付与元",
+    "Points": "Points",
+    "Phase": "フェーズ",
+    "Primary": "メイン",
+    "ProcTriggers": "Proc Triggers",
+    "Quantity": "数量",
+    "Removes": "解除する効果",
+    "Requires": "必要な効果",
+    "Role": "ロール",
+    "Round": "ラウンド",
+    "Search": "検索",
+    "Secondary": "サブ",
+    "Size": "サイズ",
+    "Source": "ソース",
+    "Tags": "タグ",
+    "Target": "対象",
+    "Text": "テキスト",
+    "Traits": "特性・補足",
+    "Turn": "ターン",
+    "Threshold": "Threshold",
+    "Title": "Final Fantasy TTRPG",
+    "Type": "種別",
+    "Unknown": "不明",
+    "Use": "使用",
+    "Uses": "使用",
+    "View": "表示",
+    "Volley": "Volley",
+    "SystemDescription": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV.",
+    "Chat": {
+      "Buttons": {
+        "ApplyItemToTarget": "{0}を目標に付与する。",
+        "AppliedTo": "{1}に付与"
+      }
+    },
+    "Instructions": {
+      "DropItemList": "アイテムをここにドロップしてリストに追加します。",
+      "RemoveAll": "すべて削除",
+      "AddEffect": "効果を追加",
+      "RemoveAllEffects": "すべての効果を削除",
+      "SaveChanges": "変更を保存",
+      "ResetUses": "使用回数をリセット"
+    },
+    "Modifiers": {
+      "Penalty": "ペナルティ修正",
+      "Advantage": "ボーナスダイス"
+    },
+    "EFFECT": {
+      "ConfigTitle": "アクティブな効果",
+      "Changes": "変更",
+      "Config": "設定",
+      "Change": {
+        "Key": "キー",
+        "Mode": "モード",
+        "Value": "値"
+      },
+      "Description": {
+        "Label": "説明",
+        "Caption": "効果の説明。"
+      },
+      "TransferEffectToActor": {
+        "Label": "キャラクターに効果を転送",
+        "Caption": "オンにすると、この効果の親アイテムがキャラクターに作成される際、効果がキャラクターにコピーされ、アイテムが削除されるときにこの効果も削除されます。"
+      },
+      "Overlay": {
+        "Label": "オーバーレイ",
+        "Caption": "オンにすると、この効果がアクティブなとき、キャラクターのコマ上にオーバーレイ（状態アイコン）として表示されます。"
+      },
+      "Stackable": {
+        "Label": "重複の挙動",
+        "Caption": "同じ対象にあるこの効果の他のインスタンスとどのように干渉するかを制御します。",
+        "Options": {
+          "differentSource": "重複（異なるソースの場合）",
+          "anySource": "重複（ソースを問わず）",
+          "replaces": "置き換え"
+        },
+        "Descriptions": {
+          "differentSource": "この効果は異なるソースのインスタンスとは重複しますが、同じソースのインスタンスとは重複しません。",
+          "anySource": "ソースに関係なく、あらゆるインスタンスと重複します。",
+          "replaces": "この効果の新しいインスタンスが既存のものを置き換えます（例：バードソングの効果）。"
+        }
+      },
+      "Suspended": {
+        "Label": "一時停止",
+        "Caption": "オンにすると、この効果はグレー表示となり無効化されます。"
+      },
+      "Label": {
+        "Statuses": "ステータス",
+        "SelectTag": "タグを選択"
+      },
+      "Duration": {
+        "Title": "持続時間",
+        "Type": "持続時間の種別",
+        "Amount": "持続時間の値",
+        "StartRound": "開始ラウンド",
+        "StartTurn": "開始ターン",
+        "StartTime": "開始時刻",
+        "Rounds": "ラウンド",
+        "Turns": "ターン",
+        "Types": {
+          "None": "なし",
+          "Rounds": "ラウンド",
+          "Turns": "ターン",
+          "EndOfThis": "現在のラウンド/ターン終了時",
+          "EndOfNext": "次のラウンド/ターン終了時",
+          "StartOfNext": "次のラウンド/ターン開始時",
+          "UntilDamage": "ダメージを受けるまで",
+          "NextAbility": "次のアビリティを使用するまで"
+        }
+      }
+    },
+    "Errors": {
+      "NotOwner": "あなたはこのキャラクターの所有者ではありません。",
+      "EffectItemsNotAllowed": "効果アイテムは直接キャラクターにドロップできません。代わりにステータス効果コマHUDを使用するか、ほかのアイテムからキャラクターに適用してください。",
+      "GMOnly": "このアクションを行うにはGMである必要があります。",
+      "DuplicateTag": "タグは既に存在しています。",
+      "CannotMoveWhileFocused": "「focus」状態がコマに適用されている間は移動できません。",
+      "EffectApplicationFailed": "ターゲット{target}に効果を適用できませんでした。"
+    },
+    "Types": {
+      "Item": {
+        "AlreadyExists": "このコンテナにはすでにそのアイテムが含まれています。",
+        "LimitBreakAlreadyExists": "ジョブにはリミットブレイクを1つしか設定できません。",
+        "Label": "アイテム",
+        "Range": "範囲",
+        "Target": "対象",
+        "Effect": "基本効果",
+        "Trigger": "トリガー",
+        "SharedLimitation": "共有の使用制限",
+        "Duration": {
+          "Label": "持続時間",
+          "DurationQualifier": "持続時間の条件",
+          "DurationUnits": "持続時間の単位",
+          "Options": {
+            "None": "なし",
+            "Rounds": "ラウンド",
+            "Turns": "ターン",
+            "endOfThis": "現在の終了時まで",
+            "endOfNext": "次の終了時まで",
+            "startOfNext": "次の開始時まで",
+            "untilDamage": "ダメージを受けるまで",
+            "nextAbility": "次にアビリティを使用するまで"
+          }
+        },
+        "Types": {
+          "action": {
+            "Label": "アクション",
+            "Description": "戦闘時に使用できるアビリティ。",
+            "SlotNotAvailable": "該当するアクションスロットが利用できません。",
+            "SingleTarget": "%sには単体の対象が必要です。1つだけターゲットを選択して再度ロールしてください。",
+            "SingleTargetNotSelf": "%sには単体の対象が必要です。自分以外の単体を選択して再度ロールしてください。",
+            "TargetSelf": "%sには自分自身をターゲットする必要があります。自分のキャラクターのコマを選択して再度ロールしてください。",
+            "UsesRemaining": "残り使用回数",
+            "BaseEffect": "基本効果",
+            "BaseEffectDamage": "ダメージ",
+            "BaseEffectHealing": "回復",
+            "BaseEffectRestoreMP": "MP回復",
+            "BaseEffectBarrier": "バリア",
+            "SplitDamage": "頭割りダメージ",
+            "HeavierShotType": "Heavier Shotの種類",
+            "DirectHit": "ダイレクトヒット",
+            "DirectHitMissed": "ダイレクトヒット失敗"
+          },
+          "equipment": {
+            "Label": "所持品",
+            "Description": "装備できるアイテム。"
+          },
+          "job": {
+            "Label": "ジョブ",
+            "Description": "キャラクターが使用できるアビリティを定義します。",
+            "Level": "レベル",
+            "Role": "ロール",
+            "Bard": {
+              "Label": "バード",
+              "Description": "バードは楽曲によって味方を強化し、敵を弱体化させる支援特化のジョブです。歌を使ってパーティの敏捷力や筋力などを強化したり、敵にステータス異常を付与したりします。遠距離攻撃用の弦楽器を扱うこともでき、物理的には脆弱ですが、音楽の力を駆使した戦略的なサポートで戦況を有利に導きます。"
+            }
+          },
+          "trait": {
+            "Label": "特性・補足",
+            "Description": "受動的に効果を発揮するアビリティ。"
+          },
+          "effect": {
+            "Label": "効果",
+            "Description": "受動的に効果を発揮するアビリティ。"
+          },
+          "limitbreak": {
+            "Label": "リミットブレイク",
+            "Description": "各ジョブに1つだけ存在する決定的なリミットブレイクアビリティ。"
+          },
+          "Options": {
+            "DirectHit": {
+              "damage": "ダメージ",
+              "markers": "マーカーを解除",
+              "condition": "状態"
+            },
+            "Size": {
+              "small": "小型",
+              "medium": "中型",
+              "large": "大型",
+              "huge": "超大型",
+              "gargantuan": "巨大"
+            },
+            "TraitType": {
+              "Buff": "バフ",
+              "Debuff": "デバフ",
+              "Trait": "特性"
+            },
+            "BaseEffectHealingType": {
+              "self": "自分",
+              "target": "対象"
+            },
+            "Check": {
+              "critical": "クリティカル判定"
+            },
+            "CR": {
+              "def": "物理",
+              "mag": "魔法",
+              "heal": "回復",
+              "vig": "警戒",
+              "spd": "速度",
+              "special": "特殊"
+            },
+            "Target": {
+              "self": "自分",
+              "single": "単体",
+              "enemy": "このアビリティをトリガーした敵",
+              "all": "範囲内のすべての敵",
+              "allallies": "範囲内のすべての味方",
+              "ally": "味方"
+            },
+            "Aspected": {
+              "earth": "土",
+              "lightning": "雷",
+              "wind": "風",
+              "ice": "氷",
+              "fire": "火"
+            },
+            "Limitation": {
+              "once": "1回ごと",
+              "twice": "2回ごと",
+              "thrice": "3回ごと",
+              "Uses": "使用",
+              "Units": "単位"
+            },
+            "ModType": {
+              "Allchecks": "すべての判定",
+              "AllDamage": "すべてのダメージ",
+              "BonusDice": "ボーナスダイス",
+              "Movement": "移動",
+              "DOT": "DOT"
+            },
+            "DamageDiceReroll": {
+              "label": "ダメージダイスの振り直し",
+              "one": "1個",
+              "two": "2個",
+              "three": "3個"
+            },
+            "SacrificesMovement": {
+              "label": "移動を犠牲にする",
+              "description": "オンにすると、この効果を発動するためにキャラクターが移動を放棄する必要があります。"
+            },
+            "Heavyshot": {
+              "straignt": "ストレートショットの準備完了",
+              "spread": "スプレッドショットの準備完了"
+            },
+            "Trigger": {
+              "any": "いつでも",
+              "ability": "敵がアビリティ判定を行った直後",
+              "beforeresolve": "敵が使用したアビリティが解決される直前",
+              "nearby": "2マス以内にいる敵が使用したアビリティが解決される直前",
+              "move": "敵が移動を開始する直前",
+              "endturn": "任意のキャラクターがターンを終了したとき",
+              "startturn": "敵がターンを開始したとき",
+              "invoke": "このキャラクターから10マス以内にいる敵がインヴォークされたアビリティを使用する、またはマーカーを発生させるアビリティを使用しているとき",
+              "adjacentinvoke": "隣接している敵がインヴォークされたアビリティを使用する、またはマーカーを発生させるアビリティを使用しているとき",
+              "beforedamage": "あなたがダメージを受ける直前"
+            },
+            "Range": {
+              "1sq": "1マス",
+              "5sq": "5マス",
+              "10sq": "10マス",
+              "3x3a": "このキャラクターを中心とした3×3エリア",
+              "3x3aa": "このキャラクターに隣接するマスを中心とした3×3エリア",
+              "5x5a": "このキャラクターを中心とした5×5エリア",
+              "5x5e": "このキャラクターから10マス以内にある地点を中心とした5×5エリア",
+              "5x5i": "このキャラクターに隣接する1マスから一直線に延びる5×∞のエリア"
+            },
+            "Type": {
+              "primary": "メイン",
+              "secondary": "サブ",
+              "reaction": "リアクション",
+              "limit": "リミットブレイク",
+              "combo": "コンボ",
+              "volley": "ボレー"
+            },
+            "Cost": {
+              "1": "1 MP",
+              "2": "2 MP",
+              "3": "3 MP",
+              "4": "4 MP"
+            },
+            "UsesUnit": {
+              "turn": "ターン",
+              "phase": "フェーズ",
+              "round": "ラウンド"
+            },
+            "DurationAmount": {
+              "label": "持続時間の値",
+              "description": "この効果が続く時間の量。"
+            },
+            "DurationQualifier": {
+              "label": "持続時間の条件"
+            },
+            "DurationType": {
+              "label": "持続時間の種別",
+              "hasQualifier": "条件を持つ",
+              "hasAmount": "値を持つ"
+            }
+          }
+        }
+      },
+      "Actor": {
+        "Label": "キャラクター",
+        "HeaderButtons": {
+          "Edit": "編集"
+        },
+        "ActionButtons": {
+          "Edit": "編集",
+          "Duplicate": "複製",
+          "Delete": "削除",
+          "ToggleActions": "アクションの表示切替"
+        },
+        "EditAttribute": {
+          "Tooltip": "左クリックで＋ / 右クリックで－"
+        },
+        "Inventory": {
+          "confirmDeleteItem": "この所持品アイテムを削除してもよろしいですか？",
+          "confirmDeleteAll": "すべての所持品を削除してもよろしいですか？",
+          "confirmDeleteAllTitle": "すべての所持品を削除"
+        },
+        "Abilities": {
+          "confirmDeleteItem": "このアビリティを削除してもよろしいですか？",
+          "confirmDeleteAll": "すべてのアビリティを削除してもよろしいですか？",
+          "confirmDeleteAllTitle": "すべてのアビリティを削除",
+          "confirmDeleteJob": "このジョブを削除してもよろしいですか？",
+          "confirmDeleteJobTitle": "ジョブを削除"
+        },
+        "Points": {
+          "BP": {
+            "short": "バリア",
+            "Label": "HPバリア",
+            "Description": "HPより先に消費されます"
+          },
+          "MP": {
+            "short": "MP",
+            "Label": "マジックポイント",
+            "Description": "ターン終了したときに2点回復"
+          },
+          "HP": {
+            "short": "HP",
+            "Label": "ヒットポイント",
+            "Description": "0になると気絶状態となる"
+          }
+        },
+        "Types": {
+          "PC": {
+            "Label": "プレイヤーキャラクター",
+            "Attributes": {
+              "primary": {
+                "str": {
+                  "Abbreviation": "STR",
+                  "Label": "STR",
+                  "Description": "物理的な力の高さを表します。"
+                },
+                "dex": {
+                  "Abbreviation": "DEX",
+                  "Label": "DEX",
+                  "Description": "身体の素早さや器用さを表します。"
+                },
+                "vit": {
+                  "Abbreviation": "VIT",
+                  "Label": "VIT",
+                  "Description": "物理的な耐久力の高さを表します。"
+                },
+                "int": {
+                  "Abbreviation": "INT",
+                  "Label": "INT",
+                  "Description": "魔力や知的能力の高さを表します。"
+                },
+                "mnd": {
+                  "Abbreviation": "MND",
+                  "Label": "MND",
+                  "Description": "精神的・魔法的な力の高さを表します。"
+                }
+              },
+              "secondary": {
+                "def": {
+                  "Abbreviation": "DEF",
+                  "Label": "物理防御力",
+                  "Description": "物理攻撃がこの値を超えるとダイレクトヒットになります。"
+                },
+                "mag": {
+                  "Abbreviation": "MAG",
+                  "Label": "魔法防御力",
+                  "Description": "魔法攻撃がこの値を超えるとダイレクトヒットになります。"
+                },
+                "vig": {
+                  "Abbreviation": "VIG",
+                  "Label": "警戒値",
+                  "Description": "GMが各冒険者の【警戒値】を確認して何事かに気付くことができたかを判断するために用いる。"
+                },
+                "spd": {
+                  "Abbreviation": "SPD",
+                  "Label": "移動速度",
+                  "Description": "何マス移動できるかを表す"
+                }
+              }
+            },
+            "NPC": {
+              "Label": "NPC"
+            }
+          }
+        }
+      }
+    },
+    "Welcome": {
+      "To": "ようこそ",
+      "Introduction": "導入",
+      "Released": "は2024年6月にリリースされました",
+      "Issues": "問題がある場合は、次の場所で報告してください：",
+      "Github": "GitHub。",
+      "CreatedBy": "システムは以下の制作者によって作成されました："
+    },
+    "Tabs": {
+      "Attributes": "ステータス",
+      "Description": "説明",
+      "Points": "ポイント",
+      "Favourites": "お気に入り",
+      "Effects": "効果"
+    },
+    "SystemName": "Final Fantasy",
+    "Setting": {
+      "automaticUses": {
+        "Name": "自動使用管理",
+        "Hint": "オンにすると、使用回数制限のあるアビリティの回数が自動的に管理されます。オフの場合、使用回数を差し引く前に確認のダイアログが表示されます。"
+      },
+      "ShowStatusEffects": {
+        "Name": "弱体効果のラベルを表示",
+        "Hint": "オフにすると、コマHUDにはアイコンのみが表示されます。"
+      },
+      "DefaultChatDescriptionVisible": {
+        "Name": "チャット説明をデフォルトで表示",
+        "Hint": "オンにすると、チャットウィンドウに表示される説明文が常に表示状態になります。"
+      },
+      "DontShowWelcome": {
+        "Name": "このメッセージを再表示しない",
+        "Hint": "Foundry起動時にこのウェルカムメッセージを表示しなくなります。（設定画面からいつでも元に戻せます。）"
+      },
+      "applicationWindowHeaderIconsOnly": {
+        "Name": "アプリヘッダーをアイコンのみ表示",
+        "Hint": "アプリウィンドウのヘッダーでアイコンのみを表示し、ヘッダーが占める領域を減らします。"
+      },
+      "confirmBeforeDeletingActorItem": {
+        "Name": "所持品アイテム削除の確認",
+        "Hint": "オンにすると、プレイヤーやGMはキャラクターシート上で所持品を削除する際に確認が必要となります。オフの場合、ゴミ箱アイコンをクリックすると即座に削除されます。"
+      },
+      "chatMessageSound": {
+        "Name": "新規チャットメッセージのサウンドファイル",
+        "Hint": "空欄の場合は音が再生されません。ファイルを指定すると、チャットタブに新しいメッセージが届いた際に再生されます。"
+      },
+      "ManualInitiative": {
+        "Name": "イニシアチブ手動設定",
+        "Hint": "オンにすると、GMまたはプレイヤーがイニシアチブを手動で設定します。オフの場合は、1d20+DEXで自動的に算出されます。"
+      },
+      "showChatProfileImages": {
+        "Name": "チャットにプロフィール画像を表示",
+        "Hint": "オフにすると、チャットメッセージにキャラクターのプロフィール画像が表示されません。"
+      },
+      "chatMessageSenderIsActorOwner": {
+        "Name": "チャットメッセージの送信者をキャラクターのオーナーにする",
+        "Hint": "オンにすると、チャットメッセージの送信者としてキャラクターのオーナーが表示されます。オフの場合、アクションを実行したユーザーとして表示されます。"
+      }
+    },
+    "TitleBlock": {
+      "ConfirmRest": "休息してもよろしいですか？",
+      "PointsRestored": "ポイントが最大まで回復しました。",
+      "Rest": "休息"
+    },
+    "Favourites": {
+      "Title": "お気に入り"
+    },
+    "statusEffects": {
+      "dead": {
+        "name": "死亡",
+        "description": "死亡したキャラクターはゲームに参加できません。"
+      },
+      "comatose": {
+        "name": "昏睡",
+        "description": "昏睡状態のキャラクターは移動・行動・会話ができず、周囲の状況を認識できません。"
+      },
+      "transcendent": {
+        "name": "超越状態",
+        "description": "超越状態のキャラクターは敵からのダメージや弱体効果を受けません。"
+      },
+      "focus": {
+        "name": "集中",
+        "description": "キャラクターは特定の対象に集中しており、追加のサブアクションを得る代わりに移動できません。"
+      },
+      "ko": {
+        "name": "気絶",
+        "description": "気絶しているキャラクターは意識を失っており、行動できません。"
+      },
+      "surprised": {
+        "name": "不意打ち",
+        "description": "不意打ち状態のキャラクターは自分のターンに行動できません。"
+      },
+      "brink": {
+        "name": "瀕死",
+        "description": "瀕死状態のキャラクターは重度のペナルティを受けます。"
+      },
+      "bind": {
+        "name": "拘束",
+        "description": "拘束されたキャラクターは移動できません。"
+      },
+      "enmity": {
+        "name": "敵視",
+        "description": "敵視状態のキャラクターは、その対象に対する行動にペナルティを受けます。"
+      },
+      "weakness": {
+        "name": "弱体",
+        "description": "弱体状態のキャラクターは判定にペナルティを受けます。"
+      },
+      "stun": {
+        "name": "スタン",
+        "description": "スタン状態のキャラクターは自分のターンに行動できません。"
+      },
+      "prone": {
+        "name": "伏せ",
+        "description": "伏せ状態のキャラクターは地面に倒れている状態です。"
+      },
+      "blind": {
+        "name": "ブライン",
+        "description": "ブライン状態のキャラクターは視覚に関連する判定に自動的に失敗します。"
+      },
+      "slow": {
+        "name": "スロウ",
+        "description": "キャラクターの速度が半減します。"
+      }
+    },
+    "Warnings": {
+      "RequiredEffectNotActive": "このアクションは使用できません - {name}がアクティブである必要があります。",
+      "NextAbilityDamageOnly": "「次のアビリティはダメージのみ」が有効なため、ダメージ効果のみ適用されました。"
+    }
+  }
+}
