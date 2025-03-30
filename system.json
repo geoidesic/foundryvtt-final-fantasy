@@ -13,7 +13,7 @@
   "readme": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/README.md",
   "bugs": "https://github.com/geoidesic/foundryvtt-final-fantasy/issues",
   "changelog": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/CHANGELOG.md",
-  "version": "0.1.43",
+  "version": "0.1.44",
   "compatibility": {
     "minimum": "11",
     "verified": "12",
@@ -88,7 +88,7 @@
   "download": "https://round-table.games/releases/foundryvtt-final-fantasy/latest/system.zip",
   "license": "LICENSE.txt",
   "socket": true,
-  "_original_esmodules": [
-    "dist/index.js"
+  "styles": [
+    "dist/style.css"
   ]
 }
