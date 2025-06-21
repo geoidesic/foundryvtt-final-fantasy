@@ -394,6 +394,9 @@
   border-radius: var(--border-radius-icon);
   background-color: var(--color-lowlight);
 }
+.FFXIV button.flexrow {
+  display: flex;
+}
 .FFXIV button.truncate {
   overflow: hidden;
   text-overflow: ellipsis;

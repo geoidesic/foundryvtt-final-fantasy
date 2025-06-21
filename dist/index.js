@@ -9691,7 +9691,7 @@ function renderCombatTracker() {
         await combatant.update({ initiative: newInitiative });
       }
     }, 600);
-    html.find(".combatant").each((index, element2) => {
+    $(html).find(".combatant").each((index, element2) => {
       const combatantId = $(element2).data("combatant-id");
       const combatant = game.combat?.combatants.get(combatantId);
       if (combatant && !isCombatActive) {
@@ -41486,8 +41486,9 @@ class FFXIVActorSheet2 extends SvelteDocumentSheet {
    * @return {Promise<void>} Returns a promise that resolves when the edit mode is toggled
    */
   async _onToggleEdit(event) {
-    if (event) {
-      event.preventDefault();
+    game.system.log.p("[TOGGLE EDIT] _onToggleEdit event", event);
+    if (event?.event) {
+      event.event.preventDefault();
     }
     await this.reactive.document.update({ system: { isEditing: !this.reactive.document.system.isEditing } });
     this.render();
@@ -49633,6 +49634,10 @@ function init() {
     game.system.log = log$1;
     game.system.log.level = log$1.VERBOSE;
     game.system.log.i(`Starting System ${SYSTEM_ID}`);
+    if (game.version > 13) {
+      window.MIN_WINDOW_WIDTH = 200;
+      window.MIN_WINDOW_HEIGHT = 50;
+    }
     registerSettings();
     setupModels();
     game.system.config = systemconfig;

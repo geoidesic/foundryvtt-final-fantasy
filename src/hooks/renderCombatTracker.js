@@ -17,7 +17,7 @@ export default function renderCombatTracker() {
     }, 600);
 
     // Iterate through combatants
-    html.find(".combatant").each((index, element) => {
+    $(html).find(".combatant").each((index, element) => {
       const combatantId = $(element).data("combatant-id");
       const combatant = game.combat?.combatants.get(combatantId);
 

@@ -75,7 +75,7 @@ To set up the development environment:
 1. Clone the repository
 2. Run `npm install`
 3. Run `npm run dev` for development
-4. Run `npm run build` for production build
+4. Run `npm run build:prod` for production build
 
 ## License
 
