@@ -83,8 +83,10 @@ export default class FFXIVActorSheet extends SvelteDocumentSheet {
    * @return {Promise<void>} Returns a promise that resolves when the edit mode is toggled
    */
   async _onToggleEdit(event) {
-    if (event) {
-      event.preventDefault();
+    game.system.log.p("[TOGGLE EDIT] _onToggleEdit event", event);
+
+    if (event?.event) {
+      event.event.preventDefault();
     }
     await this.reactive.document.update({system: {isEditing: !this.reactive.document.system.isEditing}});
     this.render();
