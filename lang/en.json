@@ -22,6 +22,7 @@
     "Amount": "Amount",
     "Aspected": "Aspected",
     "Attributes": "Attributes",
+    "Attribute": "Attribute",
     "Action": "Action",
     "Bookmark": "Bookmark",
     "Character": "Character",
@@ -172,7 +173,8 @@
       "EffectItemsNotAllowed": "Effect items are not allowed to be dropped directly on the actor. Instead use the status effects token HUD, or effects can be applied to the actor by other items.",
       "GMOnly": "You must be a GM to perform this action.",
       "DuplicateTag": "Tag already exists",
-      "EffectApplicationFailed": "Failed to apply effects to target {target}"
+      "EffectApplicationFailed": "Failed to apply effects to target {target}",
+      "AbilityActionFailed": "Failed to apply action to target."
     },
     "Types": {
       "Item": {
