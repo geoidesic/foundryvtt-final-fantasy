@@ -225,12 +225,20 @@
       }
     }
 
-    const totalDamage = baseDamage + directHitDamage;
+    let totalDamage = baseDamage + directHitDamage;
+    
+    // Apply split damage if enabled
+    if (item?.system?.hasSplitDamage && FFMessage?.targets?.length > 1) {
+      totalDamage = Math.floor(totalDamage / FFMessage.targets.length);
+    }
     
     game.system.log.o('[DAMAGE] Calculating total:', {
       baseDamage,
       directHitDamage,
-      totalDamage
+      totalDamage: baseDamage + directHitDamage,
+      splitDamage: item?.system?.hasSplitDamage,
+      finalDamage: totalDamage,
+      targetCount: FFMessage?.targets?.length || 1
     });
     
     createDamageText(token, totalDamage);
