@@ -8310,8 +8310,18 @@ function instance$15($$self, $$props, $$invalidate) {
         directHitDamage = parseInt(damageResults.directHit) || 0;
       }
     }
-    const totalDamage2 = baseDamage + directHitDamage;
-    game.system.log.o("[DAMAGE] Calculating total:", { baseDamage, directHitDamage, totalDamage: totalDamage2 });
+    let totalDamage2 = baseDamage + directHitDamage;
+    if (item?.system?.hasSplitDamage && FFMessage?.targets?.length > 1) {
+      totalDamage2 = Math.floor(totalDamage2 / FFMessage.targets.length);
+    }
+    game.system.log.o("[DAMAGE] Calculating total:", {
+      baseDamage,
+      directHitDamage,
+      totalDamage: baseDamage + directHitDamage,
+      splitDamage: item?.system?.hasSplitDamage,
+      finalDamage: totalDamage2,
+      targetCount: FFMessage?.targets?.length || 1
+    });
     createDamageText(token, totalDamage2);
     const currentBP = token.actor.system.points.BP.val;
     let remainingDamage = totalDamage2;
@@ -26247,7 +26257,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.1.45";
+const version = "0.2.0";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -26896,6 +26906,321 @@ function setupModels() {
   CONFIG.Actor.dataModels["NPC"] = NPCModel;
 }
 __name(setupModels, "setupModels");
+function systemHooks() {
+  console.log(`[${SYSTEM_ID}] Registering Automated Animations system hooks`);
+  Hooks.on("createChatMessage", async (message) => {
+    if (message.user.id !== game.user.id)
+      return;
+    if (!isFFXIVAnimationMessage(message))
+      return;
+    try {
+      const handler = await window.AutomatedAnimations?.systemData?.make?.(message);
+      if (!handler || !handler.item || !handler.sourceToken) {
+        return;
+      }
+      if (window.AutomatedAnimations?.autoAnimations?.trafficCop) {
+        await window.AutomatedAnimations.autoAnimations.trafficCop(handler);
+      }
+    } catch (error) {
+      console.error(`[${SYSTEM_ID}] Error in Automated Animations processing:`, error);
+    }
+  });
+}
+__name(systemHooks, "systemHooks");
+function isFFXIVAnimationMessage(message) {
+  const systemData = message.flags?.[SYSTEM_ID]?.data;
+  if (!systemData)
+    return false;
+  const actionTemplates = ["ActionRollChat", "RollChat"];
+  return actionTemplates.includes(systemData.chatTemplate) && systemData.item?.type === "action";
+}
+__name(isFFXIVAnimationMessage, "isFFXIVAnimationMessage");
+function registerAutomatedAnimationsHooks() {
+  if (!game.modules.get("autoanimations")?.active) {
+    return;
+  }
+  console.log(`[${SYSTEM_ID}] Registering Automated Animations system support`);
+  systemHooks();
+}
+__name(registerAutomatedAnimationsHooks, "registerAutomatedAnimationsHooks");
+function initializeJB2AIntegration() {
+  Hooks.once("ready", () => {
+    registerAutomatedAnimationsHooks();
+  });
+}
+__name(initializeJB2AIntegration, "initializeJB2AIntegration");
+function registerJB2ASettings() {
+  if (!game.modules.get("autoanimations")?.active) {
+    return;
+  }
+  console.log(`[${SYSTEM_ID}] Registering Automated Animations settings`);
+  game.settings.register(SYSTEM_ID, "enableAutomatedAnimationsIntegration", {
+    name: "FFXIV.Settings.AutomatedAnimations.EnableIntegration.Name",
+    hint: "FFXIV.Settings.AutomatedAnimations.EnableIntegration.Hint",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: true,
+    onChange: (value) => {
+      console.log(`[${SYSTEM_ID}] Automated Animations Integration ${value ? "enabled" : "disabled"}`);
+    }
+  });
+  game.settings.register(SYSTEM_ID, "automatedAnimationsDelay", {
+    name: "FFXIV.Settings.AutomatedAnimations.AnimationDelay.Name",
+    hint: "FFXIV.Settings.AutomatedAnimations.AnimationDelay.Hint",
+    scope: "world",
+    config: true,
+    type: Number,
+    default: 500,
+    range: {
+      min: 0,
+      max: 2e3,
+      step: 100
+    }
+  });
+  game.settings.register(SYSTEM_ID, "automatedAnimationsDebugMode", {
+    name: "FFXIV.Settings.AutomatedAnimations.DebugMode.Name",
+    hint: "FFXIV.Settings.AutomatedAnimations.DebugMode.Hint",
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false
+  });
+}
+__name(registerJB2ASettings, "registerJB2ASettings");
+function getJB2ASettings() {
+  return {
+    enabled: game.settings.get(SYSTEM_ID, "enableAutomatedAnimationsIntegration"),
+    animationDelay: game.settings.get(SYSTEM_ID, "automatedAnimationsDelay"),
+    debugMode: game.settings.get(SYSTEM_ID, "automatedAnimationsDebugMode")
+  };
+}
+__name(getJB2ASettings, "getJB2ASettings");
+async function testJB2AIntegration() {
+  const results = {
+    overall: false,
+    tests: {}
+  };
+  console.log(`[${SYSTEM_ID}] Running Automated Animations integration tests...`);
+  results.tests.jb2aModuleActive = testAutomatedAnimationsModuleActive();
+  results.tests.systemSettings = testSystemSettings();
+  results.tests.jb2aAPIs = testJB2AAPIs();
+  results.tests.hookRegistration = testHookRegistration();
+  results.tests.canvasTokens = testCanvasTokens();
+  results.overall = Object.values(results.tests).every((test) => test.passed);
+  logTestResults(results);
+  return results;
+}
+__name(testJB2AIntegration, "testJB2AIntegration");
+function testAutomatedAnimationsModuleActive() {
+  const aaModule = game.modules.get("autoanimations");
+  const passed = Boolean(aaModule?.active);
+  return {
+    name: "Automated Animations Module Active",
+    passed,
+    message: passed ? "Automated Animations module is active" : "Automated Animations module is not installed or not active",
+    details: {
+      installed: Boolean(aaModule),
+      active: aaModule?.active || false,
+      version: aaModule?.version || "unknown"
+    }
+  };
+}
+__name(testAutomatedAnimationsModuleActive, "testAutomatedAnimationsModuleActive");
+function testSystemSettings() {
+  let passed = true;
+  let message = "System settings configured correctly";
+  const details = {};
+  try {
+    const settings = getJB2ASettings();
+    details.settings = settings;
+    if (typeof settings.enabled !== "boolean") {
+      passed = false;
+      message = "JB2A integration setting not properly configured";
+    }
+  } catch (error) {
+    passed = false;
+    message = `Error reading JB2A settings: ${error.message}`;
+    details.error = error.message;
+  }
+  return {
+    name: "System Settings",
+    passed,
+    message,
+    details
+  };
+}
+__name(testSystemSettings, "testSystemSettings");
+function testJB2AAPIs() {
+  const checks = {
+    automatedAnimations: Boolean(window.AutomatedAnimations),
+    playAnimation: Boolean(window.AutomatedAnimations?.playAnimation),
+    autorecManager: Boolean(window.AutomatedAnimations?.AutorecManager)
+  };
+  const passed = checks.automatedAnimations && checks.playAnimation;
+  const message = passed ? "Automated Animations APIs are available" : "Required Automated Animations APIs are missing";
+  return {
+    name: "Automated Animations APIs",
+    passed,
+    message,
+    details: checks
+  };
+}
+__name(testJB2AAPIs, "testJB2AAPIs");
+function testHookRegistration() {
+  const hooks2 = game.hooks?.events || {};
+  const hasCreateChatMessage = Boolean(hooks2.createChatMessage?.length > 0);
+  const hasFFXIVOnDamage = Boolean(hooks2["FFXIV.onDamage"]?.length > 0);
+  const passed = hasCreateChatMessage;
+  const message = passed ? "Required hooks are registered" : "Required hooks are not registered";
+  return {
+    name: "Hook Registration",
+    passed,
+    message,
+    details: {
+      createChatMessage: hasCreateChatMessage,
+      ffxivOnDamage: hasFFXIVOnDamage,
+      totalHooks: Object.keys(hooks2).length
+    }
+  };
+}
+__name(testHookRegistration, "testHookRegistration");
+function testCanvasTokens() {
+  const hasCanvas = Boolean(canvas?.ready);
+  Boolean(canvas?.tokens?.placeables?.length > 0);
+  const passed = hasCanvas;
+  const message = hasCanvas ? `Canvas ready with ${canvas?.tokens?.placeables?.length || 0} tokens` : "Canvas is not ready";
+  return {
+    name: "Canvas & Tokens",
+    passed,
+    message,
+    details: {
+      canvasReady: hasCanvas,
+      tokenCount: canvas?.tokens?.placeables?.length || 0,
+      sceneActive: Boolean(canvas?.scene)
+    }
+  };
+}
+__name(testCanvasTokens, "testCanvasTokens");
+function logTestResults(results) {
+  console.log(`[${SYSTEM_ID}] JB2A Integration Test Results:`);
+  console.log(`Overall: ${results.overall ? "✅ PASS" : "❌ FAIL"}`);
+  for (const [key, test] of Object.entries(results.tests)) {
+    const status = test.passed ? "✅" : "❌";
+    console.log(`${status} ${test.name}: ${test.message}`);
+    if (test.details && Object.keys(test.details).length > 0) {
+      console.log(`   Details:`, test.details);
+    }
+  }
+}
+__name(logTestResults, "logTestResults");
+async function createTestActionItem(actor) {
+  if (!actor) {
+    ui.notifications.warn("No actor selected for test item creation");
+    return null;
+  }
+  const testItemData = {
+    name: "JB2A Test Action",
+    type: "action",
+    system: {
+      type: "primary",
+      description: "A test action for verifying JB2A integration",
+      baseEffectDamage: "1d6",
+      hasCheck: false,
+      target: "single",
+      range: "1sq",
+      tags: ["test", "fire"]
+    }
+  };
+  try {
+    const item = await actor.createEmbeddedDocuments("Item", [testItemData]);
+    ui.notifications.info(`Test action "${testItemData.name}" created for ${actor.name}`);
+    return item[0];
+  } catch (error) {
+    console.error(`[${SYSTEM_ID}] Error creating test item:`, error);
+    ui.notifications.error("Failed to create test action item");
+    return null;
+  }
+}
+__name(createTestActionItem, "createTestActionItem");
+async function simulateTestAction(actor, item) {
+  if (!actor || !item) {
+    ui.notifications.warn("Actor and item required for test action simulation");
+    return;
+  }
+  console.log(`[${SYSTEM_ID}] Simulating action: ${item.name} by ${actor.name}`);
+  const messageData = {
+    user: game.user.id,
+    speaker: ChatMessage.getSpeaker({ actor }),
+    flags: {
+      [SYSTEM_ID]: {
+        data: {
+          chatTemplate: "ActionRollChat",
+          actor: {
+            _id: actor._id,
+            name: actor.name,
+            img: actor.img
+          },
+          item: {
+            _id: item._id,
+            uuid: item.uuid,
+            name: item.name,
+            img: item.img,
+            type: item.type,
+            system: item.system
+          },
+          hasTargets: game.user.targets.size > 0,
+          targets: Array.from(game.user.targets).map((t) => t.id),
+          isCritical: false
+        }
+      }
+    }
+  };
+  try {
+    await ChatMessage.create(messageData);
+    ui.notifications.info(`Test action executed - check for animations!`);
+  } catch (error) {
+    console.error(`[${SYSTEM_ID}] Error simulating test action:`, error);
+    ui.notifications.error("Failed to simulate test action");
+  }
+}
+__name(simulateTestAction, "simulateTestAction");
+function registerTestUtilities() {
+  if (!game.ffxiv) {
+    game.ffxiv = {};
+  }
+  game.ffxiv.jb2aTests = {
+    testIntegration: testJB2AIntegration,
+    createTestItem: createTestActionItem,
+    simulateAction: simulateTestAction
+  };
+  console.log(`[${SYSTEM_ID}] JB2A test utilities registered. Use game.ffxiv.jb2aTests in console.`);
+}
+__name(registerTestUtilities, "registerTestUtilities");
+function initializeAllIntegrations() {
+  try {
+    initializeJB2AIntegration();
+  } catch (error) {
+    console.warn(`[FFXIV] JB2A integration failed to initialize:`, error);
+  }
+}
+__name(initializeAllIntegrations, "initializeAllIntegrations");
+function registerAllIntegrationSettings() {
+  try {
+    registerJB2ASettings();
+  } catch (error) {
+    console.warn(`[FFXIV] JB2A settings failed to register:`, error);
+  }
+}
+__name(registerAllIntegrationSettings, "registerAllIntegrationSettings");
+function registerAllIntegrationTestUtils() {
+  try {
+    registerTestUtilities();
+  } catch (error) {
+    console.warn(`[FFXIV] Integration test utilities failed to register:`, error);
+  }
+}
+__name(registerAllIntegrationTestUtils, "registerAllIntegrationTestUtils");
 function get_each_context$g(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[20] = list[i];
@@ -38926,7 +39251,7 @@ function create_if_block_3$3(ctx) {
       button = element("button");
       button.innerHTML = `<i class="fa-solid fa-trash"></i>`;
       attr(h1, "class", "left gold");
-      attr(img, "class", "icon");
+      attr(img, "class", "icon svelte-oiwolp");
       if (!src_url_equal(img.src, img_src_value = /*$Actor*/
       ctx[0].system.job?.img))
         attr(img, "src", img_src_value);
@@ -38968,7 +39293,7 @@ function create_if_block_3$3(ctx) {
             button,
             "click",
             /*deleteJob*/
-            ctx[14]
+            ctx[15]
           )
         ];
         mounted = true;
@@ -39012,7 +39337,7 @@ function create_if_block_2$5(ctx) {
     props: {
       type: (
         /*badgeType*/
-        ctx[15](
+        ctx[16](
           /*item*/
           ctx[23]
         )
@@ -39037,7 +39362,7 @@ function create_if_block_2$5(ctx) {
       if (dirty & /*items*/
       64)
         badge_changes.type = /*badgeType*/
-        ctx2[15](
+        ctx2[16](
           /*item*/
           ctx2[23]
         );
@@ -39069,7 +39394,7 @@ __name(create_if_block_2$5, "create_if_block_2$5");
 function create_default_slot$a(ctx) {
   let t_value = (
     /*remaining*/
-    ctx[16](
+    ctx[17](
       /*item*/
       ctx[23]
     ) + ""
@@ -39085,7 +39410,7 @@ function create_default_slot$a(ctx) {
     p(ctx2, dirty) {
       if (dirty & /*items*/
       64 && t_value !== (t_value = /*remaining*/
-      ctx2[16](
+      ctx2[17](
         /*item*/
         ctx2[23]
       ) + ""))
@@ -39139,14 +39464,14 @@ function create_if_block_1$6(ctx) {
           listen(button1, "click", function() {
             if (is_function(
               /*duplicateItem*/
-              ctx[10](
+              ctx[11](
                 /*index*/
                 ctx[25],
                 /*item*/
                 ctx[23]
               )
             ))
-              ctx[10](
+              ctx[11](
                 /*index*/
                 ctx[25],
                 /*item*/
@@ -39156,14 +39481,14 @@ function create_if_block_1$6(ctx) {
           listen(button2, "click", function() {
             if (is_function(
               /*deleteItem*/
-              ctx[11](
+              ctx[12](
                 /*index*/
                 ctx[25],
                 /*item*/
                 ctx[23]
               )
             ))
-              ctx[11](
+              ctx[12](
                 /*index*/
                 ctx[25],
                 /*item*/
@@ -39242,19 +39567,22 @@ function create_each_block$6(ctx) {
       td4 = element("td");
       if (if_block1)
         if_block1.c();
-      attr(img, "class", "icon");
+      attr(img, "class", "icon svelte-oiwolp");
       if (!src_url_equal(img.src, img_src_value = /*item*/
       ctx[23].img))
         attr(img, "src", img_src_value);
       attr(img, "alt", img_alt_value = /*item*/
       ctx[23].name);
       attr(td0, "class", "img");
+      attr(td0, "data-tooltip-class", "FFXIV-tooltip");
+      attr(td0, "data-tooltip", localize$1("Use"));
+      attr(td0, "role", "button");
       attr(a, "class", a_class_value = "stealth link " + /*item*/
-      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-1omalaq");
+      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-oiwolp");
       attr(a, "role", "button");
       attr(td1, "class", "left");
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
-      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1omalaq");
+      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-oiwolp");
       attr(button, "class", "stealth");
       attr(td4, "class", "min buttons right");
     },
@@ -39278,6 +39606,23 @@ function create_each_block$6(ctx) {
       current = true;
       if (!mounted) {
         dispose = [
+          listen(td0, "click", function() {
+            if (is_function(
+              /*RollCalc*/
+              ctx[9].ability(
+                /*item*/
+                ctx[23].type,
+                /*item*/
+                ctx[23]
+              )
+            ))
+              ctx[9].ability(
+                /*item*/
+                ctx[23].type,
+                /*item*/
+                ctx[23]
+              ).apply(this, arguments);
+          }),
           listen(a, "click", function() {
             if (is_function(showItemSheet$1(
               /*item*/
@@ -39320,7 +39665,7 @@ function create_each_block$6(ctx) {
         set_data(t0, t0_value);
       if (!current || dirty & /*items*/
       64 && a_class_value !== (a_class_value = "stealth link " + /*item*/
-      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-1omalaq")) {
+      (ctx[23].system.isMagic ? "pulse" : "") + " svelte-oiwolp")) {
         attr(a, "class", a_class_value);
       }
       if (
@@ -39355,7 +39700,7 @@ function create_each_block$6(ctx) {
         set_data(t1, t1_value);
       if (!current || dirty & /*items*/
       64 && i_class_value !== (i_class_value = "fa-bookmark " + /*item*/
-      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1omalaq")) {
+      (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-oiwolp")) {
         attr(i, "class", i_class_value);
       }
       if (!/*$doc*/
@@ -39413,7 +39758,7 @@ function create_if_block$9(ctx) {
           button,
           "click",
           /*removeAllItems*/
-          ctx[12]
+          ctx[13]
         );
         mounted = true;
       }
@@ -39483,7 +39828,7 @@ function create_fragment$x(ctx) {
       th2 = element("th");
       th2.textContent = `${localize$1("Type")}`;
       th3 = element("th");
-      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-1omalaq"></i>`;
+      th3.innerHTML = `<i class="fa-solid fa-bookmark svelte-oiwolp"></i>`;
       th4 = element("th");
       button = element("button");
       i1 = element("i");
@@ -39502,15 +39847,15 @@ function create_fragment$x(ctx) {
       attr(th3, "class", "shrink");
       attr(th3, "scope", "col");
       attr(i1, "class", i1_class_value = "fa " + /*faLockCSS*/
-      ctx[4] + " svelte-1omalaq");
+      ctx[4] + " svelte-oiwolp");
       attr(button, "class", button_class_value = "stealth " + /*lockCSS*/
-      ctx[5] + " svelte-1omalaq");
+      ctx[5] + " svelte-oiwolp");
       attr(th4, "class", th4_class_value = "buttons " + /*lockCSS*/
-      ctx[5] + " svelte-1omalaq");
+      ctx[5] + " svelte-oiwolp");
       attr(th4, "scope", "col");
       attr(table, "class", "borderless");
-      attr(div0, "class", "padded svelte-1omalaq");
-      attr(div1, "class", "panel overflow containerx svelte-1omalaq");
+      attr(div0, "class", "padded svelte-oiwolp");
+      attr(div1, "class", "panel overflow containerx svelte-oiwolp");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -39540,7 +39885,7 @@ function create_fragment$x(ctx) {
           button,
           "click",
           /*toggleLock*/
-          ctx[13]
+          ctx[14]
         );
         mounted = true;
       }
@@ -39563,21 +39908,21 @@ function create_fragment$x(ctx) {
       }
       if (!current || dirty & /*faLockCSS*/
       16 && i1_class_value !== (i1_class_value = "fa " + /*faLockCSS*/
-      ctx2[4] + " svelte-1omalaq")) {
+      ctx2[4] + " svelte-oiwolp")) {
         attr(i1, "class", i1_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       32 && button_class_value !== (button_class_value = "stealth " + /*lockCSS*/
-      ctx2[5] + " svelte-1omalaq")) {
+      ctx2[5] + " svelte-oiwolp")) {
         attr(button, "class", button_class_value);
       }
       if (!current || dirty & /*lockCSS*/
       32 && th4_class_value !== (th4_class_value = "buttons " + /*lockCSS*/
-      ctx2[5] + " svelte-1omalaq")) {
+      ctx2[5] + " svelte-oiwolp")) {
         attr(th4, "class", th4_class_value);
       }
-      if (dirty & /*deleteItem, items, duplicateItem, editItem, $doc, badgeType, remaining, combat, showItemSheet*/
-      101446) {
+      if (dirty & /*deleteItem, items, duplicateItem, editItem, $doc, badgeType, remaining, combat, showItemSheet, RollCalc*/
+      203334) {
         each_value = ensure_array_like(
           /*items*/
           ctx2[6]
@@ -39669,7 +40014,7 @@ function instance$r($$self, $$props, $$invalidate) {
   component_subscribe($$self, Actor2, (value) => $$invalidate(0, $Actor = value));
   const doc = new TJSDocument($Actor);
   component_subscribe($$self, doc, (value) => $$invalidate(1, $doc = value));
-  new CONFIG.FFXIV.RollCalcActor({ actor: $Actor });
+  const RollCalc2 = new CONFIG.FFXIV.RollCalcActor({ actor: $Actor });
   const typeSearch = createFilterQuery("type");
   typeSearch.set(["trait", "action"]);
   let combat;
@@ -39693,7 +40038,7 @@ function instance$r($$self, $$props, $$invalidate) {
     filters: [typeSearch],
     sort: (a, b) => a.name.localeCompare(b.name)
   });
-  component_subscribe($$self, wildcard, (value) => $$invalidate(17, $wildcard = value));
+  component_subscribe($$self, wildcard, (value) => $$invalidate(18, $wildcard = value));
   function duplicateItem(item) {
     game.system.log.d("duplicateItem");
     game.system.log.d(item);
@@ -39787,7 +40132,7 @@ function instance$r($$self, $$props, $$invalidate) {
   }, "remaining");
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$wildcard*/
-    131072) {
+    262144) {
       $$invalidate(6, items = [...$wildcard]);
     }
     if ($$self.$$.dirty & /*$doc*/
@@ -39813,6 +40158,7 @@ function instance$r($$self, $$props, $$invalidate) {
     items,
     Actor2,
     doc,
+    RollCalc2,
     wildcard,
     duplicateItem,
     deleteItem,
@@ -49639,6 +49985,7 @@ function init() {
       window.MIN_WINDOW_HEIGHT = 50;
     }
     registerSettings();
+    registerAllIntegrationSettings();
     setupModels();
     game.system.config = systemconfig;
     game.system.log.d(game.system.id);
@@ -49662,6 +50009,8 @@ function init() {
       return game.settings.get(moduleName, settingKey);
     });
     Hooks.call("FFXIV.initIsComplete");
+    initializeAllIntegrations();
+    registerAllIntegrationTestUtils();
     hooks.renderCombatTracker();
   });
 }
