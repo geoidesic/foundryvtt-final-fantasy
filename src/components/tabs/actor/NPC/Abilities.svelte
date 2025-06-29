@@ -217,7 +217,7 @@
           +each("items as item, index")
             //- pre item.type {item.type}
             tr
-              td.img
+              td.img(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Use')}" on:click!="{RollCalc.ability(item.type, item)}" role="button")
                 img.icon(src="{item.img}" alt="{item.name}")
               td.left
                 a.stealth.link(on:click="{showItemSheet(item)}" class="{item.system.isMagic ? 'pulse' : ''}" role="button") {item.name}
@@ -304,6 +304,13 @@ i.disable
 .rowimgbezelbutton:active
   -webkit-box-shadow: inset 0 1px 1px #aaa, inset 0 -1px 1px #aaa
   border-color: #888 #aaa #eee
+
+.icon
+  cursor: pointer
+  margin-left: -1px
+  &:hover
+    transform: scale(1.1)
+    transition: transform 0.2s ease-in-out
 
 
 </style>
