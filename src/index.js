@@ -55,5 +55,6 @@ hooks.canvasReady(); //- custom token HUD and status effects
 hooks.renderCombatTracker();
 hooks.renderChatMessage();
 hooks.updateCombatant();
+hooks.targetToken();
 
 
