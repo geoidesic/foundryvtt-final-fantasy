@@ -176,22 +176,6 @@
       "EffectApplicationFailed": "Failed to apply effects to target {target}",
       "AbilityActionFailed": "Failed to apply action to target."
     },
-    "Settings": {
-      "AutomatedAnimations": {
-        "EnableIntegration": {
-          "Name": "Enable Automated Animations Integration",
-          "Hint": "Enable automatic animations from TheRipper93's Automated Animations module when using abilities and actions."
-        },
-        "AnimationDelay": {
-          "Name": "Animation Delay (ms)",
-          "Hint": "Delay in milliseconds before playing animations. Helps synchronize animations with chat messages."
-        },
-        "DebugMode": {
-          "Name": "Automated Animations Debug Mode",
-          "Hint": "Enable detailed logging for Automated Animations integration debugging. Only enable if you're troubleshooting issues."
-        }
-      }
-    },
     "Types": {
       "Item": {
         "AlreadyExists": "This container already contains that item",

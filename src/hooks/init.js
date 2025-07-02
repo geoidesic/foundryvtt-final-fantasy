@@ -3,11 +3,6 @@ import { log } from "~/src/helpers/util"
 
 import { registerSettings } from "~/src/settings"
 import { setupModels } from '~/src/config/models';
-import { 
-  registerAllIntegrationSettings, 
-  initializeAllIntegrations, 
-  registerAllIntegrationTestUtils 
-} from "~/src/integrations/index.js";
 
 import FFActiveEffectSheet from "~/src/components/applications/FFActiveEffectSheet";
 import FFXIVPCSheet from "~/src/components/applications/PCSheet";
@@ -37,7 +32,6 @@ export default function init() {
     }
 
     registerSettings();
-    registerAllIntegrationSettings();
     setupModels();
 
     game.system.config = systemconfig;
@@ -76,12 +70,6 @@ export default function init() {
     // });
 
     Hooks.call("FFXIV.initIsComplete");
-
-    // Initialize all integrations
-    initializeAllIntegrations();
-    
-    // Register integration test utilities
-    registerAllIntegrationTestUtils();
 
     // Override the default combat tracker behavior
     hooks.renderCombatTracker();
