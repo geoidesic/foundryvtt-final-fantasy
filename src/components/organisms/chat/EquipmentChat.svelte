@@ -4,6 +4,7 @@
   import { mappedGameTargets } from "~/src/stores";
   import { resolveDotpath } from "~/src/helpers/paths";
   import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
+  import { triggerAnimationFromItemUse } from "~/src/hooks/autoAnimationsIntegration.js";
 
   // export let messageId;
   export let FFMessage;
@@ -94,7 +95,21 @@
       }
     }
 
-
+    // Trigger AutoAnimations after applying effects
+    try {
+      const sourceActor = game.actors.get(FFMessage.actor._id);
+      const targetIds = Array.from($mappedGameTargets).map(target => {
+        // Extract token ID from the target UUID or ID
+        const targetActor = fromUuidSync(target.actorUuid);
+        // Find the token for this actor
+        const token = canvas.tokens.placeables.find(t => t.actor.id === targetActor.id);
+        return token?.id;
+      }).filter(Boolean);
+      
+      await triggerAnimationFromItemUse(itemToUpdate, sourceActor, targetIds);
+    } catch (error) {
+      console.warn(`[${SYSTEM_ID}] Failed to trigger AutoAnimations:`, error);
+    }
 
     // Update the item's quantity in the actor's inventory
     await itemToUpdate.update({ "system.quantity": itemToUpdate.system.quantity - 1 });
@@ -111,8 +126,6 @@
     game.system.log.d("FFMessage", FFMessage);
     // game.system.log.d(messageId);
   });
-  $: console.log("disabled", disabled);
-  $: console.log("$mappedGameTargets", $mappedGameTargets);
   $: hasTargets = $mappedGameTargets.size > 0;
   $: disabled = hasTargets && itemQuantity && !applied ? false : true;
   $: buttonCss = disabled || applied ? "disabled" : "";

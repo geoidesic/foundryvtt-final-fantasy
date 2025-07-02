@@ -29,6 +29,7 @@
   };
 
   const handleTitleClick = () => {
+    console.log("handleTitleClick");
     dispatch("toggleDescription");
   };
 
