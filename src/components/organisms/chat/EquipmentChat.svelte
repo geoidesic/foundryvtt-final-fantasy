@@ -4,6 +4,7 @@
   import { mappedGameTargets } from "~/src/stores";
   import { resolveDotpath } from "~/src/helpers/paths";
   import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
+  import { triggerAnimationFromItemUse } from "~/src/hooks/autoAnimationsIntegration.js";
 
   // export let messageId;
   export let FFMessage;
@@ -16,13 +17,10 @@
     game.system.log.d("messageId", messageId);
 
     //- get item from message
-    const item = FFMessage.item;
-    const itemToUpdate = game.actors.get(FFMessage.actor._id).items.get(FFMessage.item._id);
 
     game.system.log.d("FFMessage", FFMessage);
     game.system.log.d("item", item);
 
-    const itemQuantity = Number(itemToUpdate.system.quantity); // Get the current quantity of the item
 
     // Check if the item quantity is greater than 0
     if (itemQuantity <= 0) {
@@ -97,7 +95,21 @@
       }
     }
 
-
+    // Trigger AutoAnimations after applying effects
+    try {
+      const sourceActor = game.actors.get(FFMessage.actor._id);
+      const targetIds = Array.from($mappedGameTargets).map(target => {
+        // Extract token ID from the target UUID or ID
+        const targetActor = fromUuidSync(target.actorUuid);
+        // Find the token for this actor
+        const token = canvas.tokens.placeables.find(t => t.actor.id === targetActor.id);
+        return token?.id;
+      }).filter(Boolean);
+      
+      await triggerAnimationFromItemUse(itemToUpdate, sourceActor, targetIds);
+    } catch (error) {
+      console.warn(`[${SYSTEM_ID}] Failed to trigger AutoAnimations:`, error);
+    }
 
     // Update the item's quantity in the actor's inventory
     await itemToUpdate.update({ "system.quantity": itemToUpdate.system.quantity - 1 });
@@ -114,33 +126,36 @@
     game.system.log.d("FFMessage", FFMessage);
     // game.system.log.d(messageId);
   });
-
   $: hasTargets = $mappedGameTargets.size > 0;
-  $: disabled = hasTargets ? false : true;
+  $: disabled = hasTargets && itemQuantity && !applied ? false : true;
   $: buttonCss = disabled || applied ? "disabled" : "";
   $: applied = $message?.flags[SYSTEM_ID]?.data?.applied;
   $: showProfileImage = game.settings.get(SYSTEM_ID,'showChatProfileImages');
   $: senderIsOwner = game.settings.get(SYSTEM_ID,'chatMessageSenderIsActorOwner');
+  $: item = FFMessage.item;
+  $: itemToUpdate = game.actors.get(FFMessage.actor._id).items.get(FFMessage.item._id);
+  $: itemQuantity = Number(itemToUpdate.system.quantity); // Get the current quantity of the item
+
 </script>
 
 <template lang="pug">
-.FFXIV
-  .chat
-    ChatTitle(sheet="{FFMessage.item.sheet}")
-    .flexrow.justify-vertical.mt-sm
-      .flex4.buttons
-        button.short.wide.stealth.gold.rowimgbezelbutton.flexrow(class="{buttonCss}" on:click="{applyToTarget}") 
-          .flex3.pa-sm {window.game.i18n.format(`FFXIV.Chat.Buttons.${applied ? 'AppliedTo' : 'ApplyItemToTarget'}`, [FFMessage.item.name, FFMessage.actor.name])}
-          .flex0
-            i.fa.fa-crosshairs.mr-sm.right.mt-sm.gold
+
+div
+  ChatTitle(sheet="{FFMessage.item.sheet}")
+  hr
+  button.wide.off-white(on:click!="{applyToTarget}" disabled="{disabled}")
+    .flexrow
+      .flex3.pa-sm {window.game.i18n.format(`FFXIV.Chat.Buttons.${applied ? 'AppliedTo' : 'ApplyItemToTarget'}`, [FFMessage.item.name, FFMessage.actor.name])}
+      .flex0
+        i.fa.fa-crosshairs.right
+
 
 </template>
 
 <style lang="sass">
   @use '../../../styles/_mixins' as mixins
   
-  .chat
-    +mixins.buttons
+
 
       
         

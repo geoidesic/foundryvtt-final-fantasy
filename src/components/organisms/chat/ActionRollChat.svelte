@@ -534,9 +534,6 @@
     object-fit: cover
     border-radius: var(--border-radius)
 
-button:disabled
-  opacity: 0.3
-  cursor: not-allowed
 
 .leatherbook
   +mixins.background(rgb(98 49 50), 0.05, none)

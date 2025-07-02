@@ -88,7 +88,29 @@
   "download": "https://round-table.games/releases/foundryvtt-final-fantasy/latest/system.zip",
   "license": "LICENSE.txt",
   "socket": true,
-  "styles": [
-    "dist/style.css"
+  "relationships": {
+    "recommends": [
+      {
+        "id": "autoanimations",
+        "type": "module",
+        "manifest": "https://github.com/theripper93/autoanimations/releases/latest/download/module.json",
+        "compatibility": {}
+      },
+      {
+        "id": "sequencer",
+        "type": "module",
+        "manifest": "https://github.com/fantasycalendar/FoundryVTT-Sequencer/releases/latest/download/module.json",
+        "compatibility": {}
+      },
+      {
+        "id": "jb2a_patreon",
+        "type": "module",
+        "manifest": "https://foundryvtt.s3.us-west-2.amazonaws.com/modules/jb2a_patreon/module.json",
+        "compatibility": {}
+      }
+    ]
+  },
+  "_original_esmodules": [
+    "dist/index.js"
   ]
 }
