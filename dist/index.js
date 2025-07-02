@@ -5341,6 +5341,7 @@ function instance$1c($$self, $$props, $$invalidate) {
     actor.sheet.render(true);
   }, "openActorSheet");
   const handleTitleClick = /* @__PURE__ */ __name(() => {
+    console.log("handleTitleClick");
     dispatch2("toggleDescription");
   }, "handleTitleClick");
   onMount(async () => {
@@ -5393,13 +5394,56 @@ let ChatTitle$1 = class ChatTitle extends SvelteComponent {
     init$1(this, options, instance$1c, create_fragment$1j, safe_not_equal, { showDescription: 0 });
   }
 };
+let autoAnimationsActive = false;
+function initializeAutoAnimations() {
+  try {
+    const autoAnimationsModule = game.modules.get("autoanimations");
+    if (!autoAnimationsModule?.active) {
+      console.log(`[${SYSTEM_ID}] AutoAnimations module not found or not active`);
+      return;
+    }
+    if (typeof AutomatedAnimations !== "undefined" && AutomatedAnimations.playAnimation) {
+      autoAnimationsActive = true;
+      console.log(`[${SYSTEM_ID}] AutoAnimations integration initialized`);
+    } else {
+      console.warn(`[${SYSTEM_ID}] AutomatedAnimations API not available`);
+    }
+  } catch (error) {
+    console.warn(`[${SYSTEM_ID}] Failed to initialize AutoAnimations integration:`, error);
+  }
+}
+__name(initializeAutoAnimations, "initializeAutoAnimations");
+async function triggerAnimationFromItemUse(item, sourceActor, targetTokenIds = []) {
+  if (!autoAnimationsActive) {
+    console.log(`[${SYSTEM_ID}] AutoAnimations not active, skipping animation`);
+    return;
+  }
+  try {
+    const sourceToken = canvas.tokens.placeables.find((t) => t.actor?.id === sourceActor.id);
+    if (!sourceToken) {
+      console.warn(`[${SYSTEM_ID}] No source token found for actor ${sourceActor.name}`);
+      return;
+    }
+    const targetTokens = targetTokenIds.map((id) => canvas.tokens.get(id)).filter(Boolean);
+    const options = {
+      targets: targetTokens,
+      hitTargets: targetTokens,
+      // Assume all targets are "hit" for equipment items
+      playOnMiss: false
+    };
+    await AutomatedAnimations.playAnimation(sourceToken, item, options);
+    console.log(`[${SYSTEM_ID}] Triggered AutoAnimations for item: ${item.name}`);
+  } catch (error) {
+    console.warn(`[${SYSTEM_ID}] Failed to trigger AutoAnimations:`, error);
+  }
+}
+__name(triggerAnimationFromItemUse, "triggerAnimationFromItemUse");
 function create_fragment$1i(ctx) {
-  let div5;
-  let div4;
-  let chattitle;
   let div3;
-  let div2;
+  let chattitle;
+  let hr;
   let button;
+  let div2;
   let div0;
   let t_value = window.game.i18n.format(`FFXIV.Chat.Buttons.${/*applied*/
   ctx[1] ? "AppliedTo" : "ApplyItemToTarget"}`, [
@@ -5410,7 +5454,6 @@ function create_fragment$1i(ctx) {
   ]) + "";
   let t;
   let div1;
-  let button_class_value;
   let current;
   let mounted;
   let dispose;
@@ -5422,35 +5465,31 @@ function create_fragment$1i(ctx) {
   });
   return {
     c() {
-      div5 = element("div");
-      div4 = element("div");
-      create_component(chattitle.$$.fragment);
       div3 = element("div");
-      div2 = element("div");
+      create_component(chattitle.$$.fragment);
+      hr = element("hr");
       button = element("button");
+      div2 = element("div");
       div0 = element("div");
       t = text(t_value);
       div1 = element("div");
-      div1.innerHTML = `<i class="fa fa-crosshairs mr-sm right mt-sm gold"></i>`;
+      div1.innerHTML = `<i class="fa fa-crosshairs right"></i>`;
       attr(div0, "class", "flex3 pa-sm");
       attr(div1, "class", "flex0");
-      attr(button, "class", button_class_value = "short wide stealth gold rowimgbezelbutton flexrow " + /*buttonCss*/
-      ctx[2] + " svelte-vsw1te");
-      attr(div2, "class", "flex4 buttons svelte-vsw1te");
-      attr(div3, "class", "flexrow justify-vertical mt-sm");
-      attr(div4, "class", "chat svelte-vsw1te");
-      attr(div5, "class", "FFXIV");
+      attr(div2, "class", "flexrow");
+      attr(button, "class", "wide off-white");
+      button.disabled = /*disabled*/
+      ctx[2];
     },
     m(target, anchor) {
-      insert(target, div5, anchor);
-      append(div5, div4);
-      mount_component(chattitle, div4, null);
-      append(div4, div3);
-      append(div3, div2);
-      append(div2, button);
-      append(button, div0);
+      insert(target, div3, anchor);
+      mount_component(chattitle, div3, null);
+      append(div3, hr);
+      append(div3, button);
+      append(button, div2);
+      append(div2, div0);
       append(div0, t);
-      append(button, div1);
+      append(div2, div1);
       current = true;
       if (!mounted) {
         dispose = listen(
@@ -5478,10 +5517,10 @@ function create_fragment$1i(ctx) {
         ctx2[0].actor.name
       ]) + ""))
         set_data(t, t_value);
-      if (!current || dirty & /*buttonCss*/
-      4 && button_class_value !== (button_class_value = "short wide stealth gold rowimgbezelbutton flexrow " + /*buttonCss*/
-      ctx2[2] + " svelte-vsw1te")) {
-        attr(button, "class", button_class_value);
+      if (!current || dirty & /*disabled*/
+      4) {
+        button.disabled = /*disabled*/
+        ctx2[2];
       }
     },
     i(local) {
@@ -5496,7 +5535,7 @@ function create_fragment$1i(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div5);
+        detach(div3);
       }
       destroy_component(chattitle);
       mounted = false;
@@ -5508,23 +5547,22 @@ __name(create_fragment$1i, "create_fragment$1i");
 function instance$1b($$self, $$props, $$invalidate) {
   let hasTargets;
   let disabled;
-  let buttonCss;
   let applied;
+  let item;
+  let itemToUpdate;
+  let itemQuantity;
   let $message;
   let $mappedGameTargets;
-  component_subscribe($$self, mappedGameTargets, ($$value) => $$invalidate(9, $mappedGameTargets = $$value));
+  component_subscribe($$self, mappedGameTargets, ($$value) => $$invalidate(10, $mappedGameTargets = $$value));
   let { FFMessage } = $$props;
   let { messageId } = $$props;
   const message = getContext("message");
-  component_subscribe($$self, message, (value) => $$invalidate(8, $message = value));
+  component_subscribe($$self, message, (value) => $$invalidate(9, $message = value));
   async function applyToTarget() {
     game.system.log.d("applyToTarget");
     game.system.log.d("messageId", messageId);
-    const item = FFMessage.item;
-    const itemToUpdate = game.actors.get(FFMessage.actor._id).items.get(FFMessage.item._id);
     game.system.log.d("FFMessage", FFMessage);
     game.system.log.d("item", item);
-    const itemQuantity = Number(itemToUpdate.system.quantity);
     if (itemQuantity <= 0) {
       ui.notifications.error("The actor doesn't have sufficient quantity of this item to apply.");
       return;
@@ -5580,6 +5618,17 @@ function instance$1b($$self, $$props, $$invalidate) {
         game.system.log.d("actor var", resolveDotpath(actor, key));
       }
     }
+    try {
+      const sourceActor = game.actors.get(FFMessage.actor._id);
+      const targetIds = Array.from($mappedGameTargets).map((target) => {
+        const targetActor = fromUuidSync(target.actorUuid);
+        const token = canvas.tokens.placeables.find((t) => t.actor.id === targetActor.id);
+        return token?.id;
+      }).filter(Boolean);
+      await triggerAnimationFromItemUse(itemToUpdate, sourceActor, targetIds);
+    } catch (error) {
+      console.warn(`[${SYSTEM_ID}] Failed to trigger AutoAnimations:`, error);
+    }
     await itemToUpdate.update({
       "system.quantity": itemToUpdate.system.quantity - 1
     });
@@ -5602,20 +5651,31 @@ function instance$1b($$self, $$props, $$invalidate) {
   };
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$mappedGameTargets*/
-    512) {
-      $$invalidate(7, hasTargets = $mappedGameTargets.size > 0);
+    1024) {
+      $$invalidate(8, hasTargets = $mappedGameTargets.size > 0);
     }
-    if ($$self.$$.dirty & /*hasTargets*/
-    128) {
-      $$invalidate(6, disabled = hasTargets ? false : true);
+    if ($$self.$$.dirty & /*FFMessage*/
+    1) {
+      $$invalidate(6, itemToUpdate = game.actors.get(FFMessage.actor._id).items.get(FFMessage.item._id));
+    }
+    if ($$self.$$.dirty & /*itemToUpdate*/
+    64) {
+      $$invalidate(7, itemQuantity = Number(itemToUpdate.system.quantity));
     }
     if ($$self.$$.dirty & /*$message*/
-    256) {
+    512) {
       $$invalidate(1, applied = $message?.flags[SYSTEM_ID]?.data?.applied);
     }
+    if ($$self.$$.dirty & /*hasTargets, itemQuantity, applied*/
+    386) {
+      $$invalidate(2, disabled = hasTargets && itemQuantity && !applied ? false : true);
+    }
     if ($$self.$$.dirty & /*disabled, applied*/
-    66) {
-      $$invalidate(2, buttonCss = disabled || applied ? "disabled" : "");
+    6)
+      ;
+    if ($$self.$$.dirty & /*FFMessage*/
+    1) {
+      item = FFMessage.item;
     }
   };
   game.settings.get(SYSTEM_ID, "showChatProfileImages");
@@ -5623,11 +5683,12 @@ function instance$1b($$self, $$props, $$invalidate) {
   return [
     FFMessage,
     applied,
-    buttonCss,
+    disabled,
     message,
     applyToTarget,
     messageId,
-    disabled,
+    itemToUpdate,
+    itemQuantity,
     hasTargets,
     $message,
     $mappedGameTargets
@@ -7232,8 +7293,8 @@ function create_if_block$s(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "target-list svelte-ugr7oj");
-      attr(div1, "class", "action-result svelte-ugr7oj");
+      attr(div0, "class", "target-list svelte-umytg3");
+      attr(div1, "class", "action-result svelte-umytg3");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -7400,9 +7461,9 @@ function create_if_block_1$g(ctx) {
       div12 = element("div");
       button1 = element("button");
       i1 = element("i");
-      attr(div0, "class", "texture svelte-ugr7oj");
-      attr(div1, "class", "flex0 target-info pointer svelte-ugr7oj");
-      attr(div2, "class", "col target-name font-cinzel smaller svelte-ugr7oj");
+      attr(div0, "class", "texture svelte-umytg3");
+      attr(div1, "class", "flex0 target-info pointer svelte-umytg3");
+      attr(div2, "class", "col target-name font-cinzel smaller svelte-umytg3");
       attr(div3, "class", "flex1 left font-cinzel");
       attr(div3, "data-tooltip-class", "FFXIV-tooltip");
       attr(div3, "data-tooltip", "Defense");
@@ -7419,7 +7480,7 @@ function create_if_block_1$g(ctx) {
       ) ? "bg-silver" : "bg-gold"));
       set_style(div10, "min-height", "2.6rem");
       attr(i0, "class", "fa-solid fa-check");
-      attr(button0, "class", "stealth apply-trait svelte-ugr7oj");
+      attr(button0, "class", "stealth apply-trait");
       button0.disabled = button0_disabled_value = /*isApplyDisabled*/
       ctx[2](
         /*target*/
@@ -7427,7 +7488,7 @@ function create_if_block_1$g(ctx) {
       );
       attr(div11, "class", "flex1");
       attr(i1, "class", "fa-solid fa-refresh");
-      attr(button1, "class", "stealth apply-trait svelte-ugr7oj");
+      attr(button1, "class", "stealth apply-trait");
       button1.disabled = button1_disabled_value = !/*isApplyDisabled*/
       ctx[2](
         /*target*/
@@ -7437,9 +7498,9 @@ function create_if_block_1$g(ctx) {
       attr(div13, "class", "flexcol");
       attr(div14, "class", "flex0");
       attr(div15, "class", div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-ugr7oj");
-      attr(div16, "class", "background svelte-ugr7oj");
-      attr(div17, "class", "leatherbook svelte-ugr7oj");
+      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-umytg3");
+      attr(div16, "class", "background svelte-umytg3");
+      attr(div17, "class", "leatherbook svelte-umytg3");
     },
     m(target, anchor) {
       insert(target, div17, anchor);
@@ -7591,7 +7652,7 @@ function create_if_block_1$g(ctx) {
       }
       if (!current || dirty[0] & /*targetTokens*/
       8 && div15_class_value !== (div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-ugr7oj")) {
+      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-umytg3")) {
         attr(div15, "class", div15_class_value);
       }
     },
@@ -7631,7 +7692,7 @@ function create_if_block_5$2(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "target-img clickable svelte-ugr7oj");
+      attr(img, "class", "target-img clickable svelte-umytg3");
       if (!src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
         ctx[32]
@@ -7695,7 +7756,7 @@ function create_else_block$6(ctx) {
       (ctx[13](
         /*target*/
         ctx[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-umytg3");
       attr(i, "data-tooltip", i_data_tooltip_value = /*isHit*/
       ctx[13](
         /*target*/
@@ -7711,7 +7772,7 @@ function create_else_block$6(ctx) {
       (ctx2[13](
         /*target*/
         ctx2[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-umytg3")) {
         attr(i, "class", i_class_value);
       }
       if (dirty[0] & /*targetTokens*/
@@ -7759,13 +7820,13 @@ function create_if_block_4$5(ctx) {
       (ctx[13](
         /*target*/
         ctx[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-umytg3");
       attr(i, "data-tooltip", localize$1("CriticalSuccess"));
-      attr(div0, "class", "overlay svelte-ugr7oj");
+      attr(div0, "class", "overlay svelte-umytg3");
       set_style(div0, "margin", "0");
       set_style(div0, "font-size", "1rem");
       set_style(div0, "color", "#fff");
-      attr(div1, "class", "critical svelte-ugr7oj");
+      attr(div1, "class", "critical svelte-umytg3");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -7780,7 +7841,7 @@ function create_if_block_4$5(ctx) {
       (ctx2[13](
         /*target*/
         ctx2[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-ugr7oj")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-umytg3")) {
         attr(i, "class", i_class_value);
       }
     },
@@ -8051,12 +8112,12 @@ function create_fragment$1c(ctx) {
       if (if_block1)
         if_block1.c();
       html_tag.a = html_anchor;
-      attr(div0, "class", "flex4 inset svelte-ugr7oj");
+      attr(div0, "class", "flex4 inset svelte-umytg3");
       attr(div0, "id", "chat-description");
       attr(div1, "class", div1_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx[4] ? "visible" : "") + " svelte-ugr7oj");
+      (ctx[4] ? "visible" : "") + " svelte-umytg3");
       attr(div2, "class", div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[4] ? "expanded" : "") + " svelte-ugr7oj");
+      (ctx[4] ? "expanded" : "") + " svelte-umytg3");
       attr(div3, "class", "chat");
     },
     m(target, anchor) {
@@ -8078,12 +8139,12 @@ function create_fragment$1c(ctx) {
     p(ctx2, dirty) {
       if (!current || dirty[0] & /*showDescription*/
       16 && div1_class_value !== (div1_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx2[4] ? "visible" : "") + " svelte-ugr7oj")) {
+      (ctx2[4] ? "visible" : "") + " svelte-umytg3")) {
         attr(div1, "class", div1_class_value);
       }
       if (!current || dirty[0] & /*showDescription*/
       16 && div2_class_value !== (div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[4] ? "expanded" : "") + " svelte-ugr7oj")) {
+      (ctx2[4] ? "expanded" : "") + " svelte-umytg3")) {
         attr(div2, "class", div2_class_value);
       }
       if (
@@ -9956,6 +10017,25 @@ function canvasReady$1() {
   });
 }
 __name(canvasReady$1, "canvasReady$1");
+function targetToken() {
+  Hooks.on("targetToken", (User, Token2) => {
+    const targets = game.user.targets.filter((target) => {
+      if (Token2._id === target._id && target == false)
+        return false;
+      return true;
+    }).map((target) => {
+      return {
+        avatar: target.document.texture.src,
+        actorUuid: target.actor.uuid,
+        // map the token actor (not the linked actor)
+        clickedByUserId: User._id,
+        tokenUuid: target.document.uuid
+      };
+    });
+    mappedGameTargets.set(targets);
+  });
+}
+__name(targetToken, "targetToken");
 function backInOut(t) {
   const s = 1.70158 * 1.525;
   if ((t *= 2) < 1)
@@ -26257,7 +26337,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.2.0";
+const version = "0.3.0";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -26295,6 +26375,7 @@ function canvasReady() {
     if (!game.settings.get(SYSTEM_ID, "dontShowWelcome")) {
       new WelcomeApplication().render(true, { focus: true });
     }
+    initializeAutoAnimations();
   });
 }
 __name(canvasReady, "canvasReady");
@@ -26906,321 +26987,6 @@ function setupModels() {
   CONFIG.Actor.dataModels["NPC"] = NPCModel;
 }
 __name(setupModels, "setupModels");
-function systemHooks() {
-  console.log(`[${SYSTEM_ID}] Registering Automated Animations system hooks`);
-  Hooks.on("createChatMessage", async (message) => {
-    if (message.user.id !== game.user.id)
-      return;
-    if (!isFFXIVAnimationMessage(message))
-      return;
-    try {
-      const handler = await window.AutomatedAnimations?.systemData?.make?.(message);
-      if (!handler || !handler.item || !handler.sourceToken) {
-        return;
-      }
-      if (window.AutomatedAnimations?.autoAnimations?.trafficCop) {
-        await window.AutomatedAnimations.autoAnimations.trafficCop(handler);
-      }
-    } catch (error) {
-      console.error(`[${SYSTEM_ID}] Error in Automated Animations processing:`, error);
-    }
-  });
-}
-__name(systemHooks, "systemHooks");
-function isFFXIVAnimationMessage(message) {
-  const systemData = message.flags?.[SYSTEM_ID]?.data;
-  if (!systemData)
-    return false;
-  const actionTemplates = ["ActionRollChat", "RollChat"];
-  return actionTemplates.includes(systemData.chatTemplate) && systemData.item?.type === "action";
-}
-__name(isFFXIVAnimationMessage, "isFFXIVAnimationMessage");
-function registerAutomatedAnimationsHooks() {
-  if (!game.modules.get("autoanimations")?.active) {
-    return;
-  }
-  console.log(`[${SYSTEM_ID}] Registering Automated Animations system support`);
-  systemHooks();
-}
-__name(registerAutomatedAnimationsHooks, "registerAutomatedAnimationsHooks");
-function initializeJB2AIntegration() {
-  Hooks.once("ready", () => {
-    registerAutomatedAnimationsHooks();
-  });
-}
-__name(initializeJB2AIntegration, "initializeJB2AIntegration");
-function registerJB2ASettings() {
-  if (!game.modules.get("autoanimations")?.active) {
-    return;
-  }
-  console.log(`[${SYSTEM_ID}] Registering Automated Animations settings`);
-  game.settings.register(SYSTEM_ID, "enableAutomatedAnimationsIntegration", {
-    name: "FFXIV.Settings.AutomatedAnimations.EnableIntegration.Name",
-    hint: "FFXIV.Settings.AutomatedAnimations.EnableIntegration.Hint",
-    scope: "world",
-    config: true,
-    type: Boolean,
-    default: true,
-    onChange: (value) => {
-      console.log(`[${SYSTEM_ID}] Automated Animations Integration ${value ? "enabled" : "disabled"}`);
-    }
-  });
-  game.settings.register(SYSTEM_ID, "automatedAnimationsDelay", {
-    name: "FFXIV.Settings.AutomatedAnimations.AnimationDelay.Name",
-    hint: "FFXIV.Settings.AutomatedAnimations.AnimationDelay.Hint",
-    scope: "world",
-    config: true,
-    type: Number,
-    default: 500,
-    range: {
-      min: 0,
-      max: 2e3,
-      step: 100
-    }
-  });
-  game.settings.register(SYSTEM_ID, "automatedAnimationsDebugMode", {
-    name: "FFXIV.Settings.AutomatedAnimations.DebugMode.Name",
-    hint: "FFXIV.Settings.AutomatedAnimations.DebugMode.Hint",
-    scope: "world",
-    config: true,
-    type: Boolean,
-    default: false
-  });
-}
-__name(registerJB2ASettings, "registerJB2ASettings");
-function getJB2ASettings() {
-  return {
-    enabled: game.settings.get(SYSTEM_ID, "enableAutomatedAnimationsIntegration"),
-    animationDelay: game.settings.get(SYSTEM_ID, "automatedAnimationsDelay"),
-    debugMode: game.settings.get(SYSTEM_ID, "automatedAnimationsDebugMode")
-  };
-}
-__name(getJB2ASettings, "getJB2ASettings");
-async function testJB2AIntegration() {
-  const results = {
-    overall: false,
-    tests: {}
-  };
-  console.log(`[${SYSTEM_ID}] Running Automated Animations integration tests...`);
-  results.tests.jb2aModuleActive = testAutomatedAnimationsModuleActive();
-  results.tests.systemSettings = testSystemSettings();
-  results.tests.jb2aAPIs = testJB2AAPIs();
-  results.tests.hookRegistration = testHookRegistration();
-  results.tests.canvasTokens = testCanvasTokens();
-  results.overall = Object.values(results.tests).every((test) => test.passed);
-  logTestResults(results);
-  return results;
-}
-__name(testJB2AIntegration, "testJB2AIntegration");
-function testAutomatedAnimationsModuleActive() {
-  const aaModule = game.modules.get("autoanimations");
-  const passed = Boolean(aaModule?.active);
-  return {
-    name: "Automated Animations Module Active",
-    passed,
-    message: passed ? "Automated Animations module is active" : "Automated Animations module is not installed or not active",
-    details: {
-      installed: Boolean(aaModule),
-      active: aaModule?.active || false,
-      version: aaModule?.version || "unknown"
-    }
-  };
-}
-__name(testAutomatedAnimationsModuleActive, "testAutomatedAnimationsModuleActive");
-function testSystemSettings() {
-  let passed = true;
-  let message = "System settings configured correctly";
-  const details = {};
-  try {
-    const settings = getJB2ASettings();
-    details.settings = settings;
-    if (typeof settings.enabled !== "boolean") {
-      passed = false;
-      message = "JB2A integration setting not properly configured";
-    }
-  } catch (error) {
-    passed = false;
-    message = `Error reading JB2A settings: ${error.message}`;
-    details.error = error.message;
-  }
-  return {
-    name: "System Settings",
-    passed,
-    message,
-    details
-  };
-}
-__name(testSystemSettings, "testSystemSettings");
-function testJB2AAPIs() {
-  const checks = {
-    automatedAnimations: Boolean(window.AutomatedAnimations),
-    playAnimation: Boolean(window.AutomatedAnimations?.playAnimation),
-    autorecManager: Boolean(window.AutomatedAnimations?.AutorecManager)
-  };
-  const passed = checks.automatedAnimations && checks.playAnimation;
-  const message = passed ? "Automated Animations APIs are available" : "Required Automated Animations APIs are missing";
-  return {
-    name: "Automated Animations APIs",
-    passed,
-    message,
-    details: checks
-  };
-}
-__name(testJB2AAPIs, "testJB2AAPIs");
-function testHookRegistration() {
-  const hooks2 = game.hooks?.events || {};
-  const hasCreateChatMessage = Boolean(hooks2.createChatMessage?.length > 0);
-  const hasFFXIVOnDamage = Boolean(hooks2["FFXIV.onDamage"]?.length > 0);
-  const passed = hasCreateChatMessage;
-  const message = passed ? "Required hooks are registered" : "Required hooks are not registered";
-  return {
-    name: "Hook Registration",
-    passed,
-    message,
-    details: {
-      createChatMessage: hasCreateChatMessage,
-      ffxivOnDamage: hasFFXIVOnDamage,
-      totalHooks: Object.keys(hooks2).length
-    }
-  };
-}
-__name(testHookRegistration, "testHookRegistration");
-function testCanvasTokens() {
-  const hasCanvas = Boolean(canvas?.ready);
-  Boolean(canvas?.tokens?.placeables?.length > 0);
-  const passed = hasCanvas;
-  const message = hasCanvas ? `Canvas ready with ${canvas?.tokens?.placeables?.length || 0} tokens` : "Canvas is not ready";
-  return {
-    name: "Canvas & Tokens",
-    passed,
-    message,
-    details: {
-      canvasReady: hasCanvas,
-      tokenCount: canvas?.tokens?.placeables?.length || 0,
-      sceneActive: Boolean(canvas?.scene)
-    }
-  };
-}
-__name(testCanvasTokens, "testCanvasTokens");
-function logTestResults(results) {
-  console.log(`[${SYSTEM_ID}] JB2A Integration Test Results:`);
-  console.log(`Overall: ${results.overall ? "✅ PASS" : "❌ FAIL"}`);
-  for (const [key, test] of Object.entries(results.tests)) {
-    const status = test.passed ? "✅" : "❌";
-    console.log(`${status} ${test.name}: ${test.message}`);
-    if (test.details && Object.keys(test.details).length > 0) {
-      console.log(`   Details:`, test.details);
-    }
-  }
-}
-__name(logTestResults, "logTestResults");
-async function createTestActionItem(actor) {
-  if (!actor) {
-    ui.notifications.warn("No actor selected for test item creation");
-    return null;
-  }
-  const testItemData = {
-    name: "JB2A Test Action",
-    type: "action",
-    system: {
-      type: "primary",
-      description: "A test action for verifying JB2A integration",
-      baseEffectDamage: "1d6",
-      hasCheck: false,
-      target: "single",
-      range: "1sq",
-      tags: ["test", "fire"]
-    }
-  };
-  try {
-    const item = await actor.createEmbeddedDocuments("Item", [testItemData]);
-    ui.notifications.info(`Test action "${testItemData.name}" created for ${actor.name}`);
-    return item[0];
-  } catch (error) {
-    console.error(`[${SYSTEM_ID}] Error creating test item:`, error);
-    ui.notifications.error("Failed to create test action item");
-    return null;
-  }
-}
-__name(createTestActionItem, "createTestActionItem");
-async function simulateTestAction(actor, item) {
-  if (!actor || !item) {
-    ui.notifications.warn("Actor and item required for test action simulation");
-    return;
-  }
-  console.log(`[${SYSTEM_ID}] Simulating action: ${item.name} by ${actor.name}`);
-  const messageData = {
-    user: game.user.id,
-    speaker: ChatMessage.getSpeaker({ actor }),
-    flags: {
-      [SYSTEM_ID]: {
-        data: {
-          chatTemplate: "ActionRollChat",
-          actor: {
-            _id: actor._id,
-            name: actor.name,
-            img: actor.img
-          },
-          item: {
-            _id: item._id,
-            uuid: item.uuid,
-            name: item.name,
-            img: item.img,
-            type: item.type,
-            system: item.system
-          },
-          hasTargets: game.user.targets.size > 0,
-          targets: Array.from(game.user.targets).map((t) => t.id),
-          isCritical: false
-        }
-      }
-    }
-  };
-  try {
-    await ChatMessage.create(messageData);
-    ui.notifications.info(`Test action executed - check for animations!`);
-  } catch (error) {
-    console.error(`[${SYSTEM_ID}] Error simulating test action:`, error);
-    ui.notifications.error("Failed to simulate test action");
-  }
-}
-__name(simulateTestAction, "simulateTestAction");
-function registerTestUtilities() {
-  if (!game.ffxiv) {
-    game.ffxiv = {};
-  }
-  game.ffxiv.jb2aTests = {
-    testIntegration: testJB2AIntegration,
-    createTestItem: createTestActionItem,
-    simulateAction: simulateTestAction
-  };
-  console.log(`[${SYSTEM_ID}] JB2A test utilities registered. Use game.ffxiv.jb2aTests in console.`);
-}
-__name(registerTestUtilities, "registerTestUtilities");
-function initializeAllIntegrations() {
-  try {
-    initializeJB2AIntegration();
-  } catch (error) {
-    console.warn(`[FFXIV] JB2A integration failed to initialize:`, error);
-  }
-}
-__name(initializeAllIntegrations, "initializeAllIntegrations");
-function registerAllIntegrationSettings() {
-  try {
-    registerJB2ASettings();
-  } catch (error) {
-    console.warn(`[FFXIV] JB2A settings failed to register:`, error);
-  }
-}
-__name(registerAllIntegrationSettings, "registerAllIntegrationSettings");
-function registerAllIntegrationTestUtils() {
-  try {
-    registerTestUtilities();
-  } catch (error) {
-    console.warn(`[FFXIV] Integration test utilities failed to register:`, error);
-  }
-}
-__name(registerAllIntegrationTestUtils, "registerAllIntegrationTestUtils");
 function get_each_context$g(ctx, list, i) {
   const child_ctx = ctx.slice();
   child_ctx[20] = list[i];
@@ -49985,7 +49751,6 @@ function init() {
       window.MIN_WINDOW_HEIGHT = 50;
     }
     registerSettings();
-    registerAllIntegrationSettings();
     setupModels();
     game.system.config = systemconfig;
     game.system.log.d(game.system.id);
@@ -50009,8 +49774,6 @@ function init() {
       return game.settings.get(moduleName, settingKey);
     });
     Hooks.call("FFXIV.initIsComplete");
-    initializeAllIntegrations();
-    registerAllIntegrationTestUtils();
     hooks.renderCombatTracker();
   });
 }
@@ -50019,6 +49782,7 @@ const hooks = {
   renderChatMessage,
   renderCombatTracker,
   updateCombatant,
+  targetToken,
   canvasReady: canvasReady$1,
   ready: canvasReady,
   init
@@ -50992,4 +50756,5 @@ hooks.canvasReady();
 hooks.renderCombatTracker();
 hooks.renderChatMessage();
 hooks.updateCombatant();
+hooks.targetToken();
 //# sourceMappingURL=index.js.map
