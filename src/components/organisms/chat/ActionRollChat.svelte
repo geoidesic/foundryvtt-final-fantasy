@@ -6,6 +6,7 @@
   import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
   import { createDamageText } from "~/src/helpers/canvas";
   import { localize } from "~/src/helpers/util";
+  import { triggerAnimationFromItemUse } from "~/src/hooks/autoAnimationsIntegration.js";
   
   import PortraitFrame from "~/src/components/molecules/PortraitFrame.svelte";
   import ChatTitle from "~/src/components/molecules/chat/actionRoll/ChatTitle.svelte";
@@ -299,6 +300,16 @@
       game.system.log.o('[KO CHECK] Applying KO status');
       await token.actor.toggleStatusEffect("ko");
       game.system.log.o('[KO CHECK] KO status applied');
+    }
+
+    // Trigger AutoAnimations after applying effects
+    try {
+      const sourceActor = actor;
+      const targetIds = [target.id];
+      
+      await triggerAnimationFromItemUse(item, sourceActor, targetIds);
+    } catch (error) {
+      console.warn(`[${SYSTEM_ID}] Failed to trigger AutoAnimations:`, error);
     }
 
     // Update the final state with all the results
