@@ -248,7 +248,7 @@
               td.shrink(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Bookmark')}")
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" role="button")
-              td.min.buttons.right
+              td.min.buttons.right.white
                 +if("!$doc.system.inventoryLocked")
                   button.stealth(data-tooltip-class="FFXIV-tooltip" data-tooltip="{localize('Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
                     i.left.fa.fa-edit(role="button")

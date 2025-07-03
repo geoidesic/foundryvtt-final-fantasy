@@ -228,7 +228,7 @@
               td
                 button.stealth(on:click="{toggleBookmark(item)}") 
                   i.fa-bookmark(class="{item.system.favourite === true ? 'fa-solid' : 'fa-regular'}" )
-              td.min.buttons.right
+              td.min.buttons.right.white
                 +if("!$doc.system.inventoryLocked")
                   button.stealth( data-tooltip="{localize('Types.Actor.ActionButtons.Edit')}" on:click="{editItem(item)}")
                     i.left.fa.fa-edit

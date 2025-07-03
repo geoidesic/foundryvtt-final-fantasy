@@ -43,7 +43,13 @@
     height: 35px
 
 
-  .tabs 
+
+  .tabs
+    .tabs-list
+      a.button, button
+        display: flex
+        &.active
+          outline: none
     +mixins.flex-column
     +mixins.flex-group-top
     +mixins.border
@@ -51,6 +57,7 @@
     width: 100%
     background: url(/systems/foundryvtt-final-fantasy/assets/parchment4.webp) repeat
     overflow: hidden
+    
     .tabs-list 
       +mixins.flex-row
       +mixins.flex-space-evenly

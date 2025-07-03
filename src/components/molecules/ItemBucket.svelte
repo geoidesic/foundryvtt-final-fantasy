@@ -150,7 +150,7 @@ $: hasItems = localList.length > 0;
             td.left {ucfirst(item?.type)}
             +each("additionalColumns as col")
               td.left {item.type === col.itemType ? ucfirst(item.system?.[col.path] || '') : ''}
-            td.buttons.right
+            td.buttons.right.white
               button.stealth(on:click!="{() => deleteLink(index)}")
                 i.left.fa.fa-trash.pointer
     +if("checkboxValue && hasItems")

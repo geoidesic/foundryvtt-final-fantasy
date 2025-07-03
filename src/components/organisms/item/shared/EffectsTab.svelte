@@ -226,7 +226,7 @@
                 )
                 +else
                   span.no-wrap {localize('Unknown')}
-          td.buttons.right.no-wrap
+          td.buttons.right.white.no-wrap
             +if("!$doc.system.effectActionsLocked && showDelete")
               button.stealth(on:click="{editItem(index, effect)}")
                 i.left.fa.fa-edit
