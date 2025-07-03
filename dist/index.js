@@ -8258,7 +8258,7 @@ function instance$15($$self, $$props, $$invalidate) {
   component_subscribe($$self, message, (value) => $$invalidate(26, $message = value));
   let isMounted = false;
   let targetTokens = false;
-  let showDescription = false;
+  let showDescription = game.settings.get(SYSTEM_ID, "defaultChatDescriptionVisible");
   let roll = 0;
   let hasTargets = false;
   function getDamageResults(passedTargets) {
@@ -8415,6 +8415,13 @@ function instance$15($$self, $$props, $$invalidate) {
       game.system.log.o("[KO CHECK] Applying KO status");
       await token.actor.toggleStatusEffect("ko");
       game.system.log.o("[KO CHECK] KO status applied");
+    }
+    try {
+      const sourceActor = actor;
+      const targetIds = [target.id];
+      await triggerAnimationFromItemUse(item, sourceActor, targetIds);
+    } catch (error) {
+      console.warn(`[${SYSTEM_ID}] Failed to trigger AutoAnimations:`, error);
     }
     newDamageResults[target.id] = {
       ...newDamageResults[target.id],
@@ -9323,7 +9330,7 @@ function instance$13($$self, $$props, $$invalidate) {
   let { FFMessage } = $$props;
   let { content } = $$props;
   let { enableToggle = true } = $$props;
-  let isContentVisible = false;
+  let isContentVisible = game.settings.get(SYSTEM_ID, "defaultChatDescriptionVisible");
   const message = getContext("message");
   component_subscribe($$self, message, (value) => $$invalidate(4, $message = value));
   onMount(async () => {
@@ -26337,7 +26344,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.3.0";
+const version = "0.3.1";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
@@ -28775,7 +28782,7 @@ function create_if_block_2$9(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "tab-icon svelte-cf8qmp");
+      attr(img, "class", "tab-icon svelte-1k912vy");
       if (!src_url_equal(img.src, img_src_value = /*tab*/
       ctx[5].img))
         attr(img, "src", img_src_value);
@@ -28871,7 +28878,7 @@ function create_each_block_1$3(ctx) {
         if_block.c();
       attr(button, "class", button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-cf8qmp");
+      ctx[0] ? "active" : "") + " svelte-1k912vy");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -28898,7 +28905,7 @@ function create_each_block_1$3(ctx) {
       if (dirty & /*tabs, activeTab*/
       3 && button_class_value !== (button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-cf8qmp")) {
+      ctx[0] ? "active" : "") + " svelte-1k912vy")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -29098,11 +29105,11 @@ function create_fragment$$(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "tabs-list svelte-cf8qmp");
+      attr(div0, "class", "tabs-list svelte-1k912vy");
       attr(div1, "class", div1_class_value = null_to_empty(`tab-content ${/*$$props*/
       ctx[3]?.class?.includes("small") ? "tab-content--small" : ""} ${/*$$props*/
-      ctx[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-cf8qmp");
-      attr(div2, "class", "tabs svelte-cf8qmp");
+      ctx[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-1k912vy");
+      attr(div2, "class", "tabs svelte-1k912vy");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -29171,7 +29178,7 @@ function create_fragment$$(ctx) {
       if (!current || dirty & /*$$props*/
       8 && div1_class_value !== (div1_class_value = null_to_empty(`tab-content ${/*$$props*/
       ctx2[3]?.class?.includes("small") ? "tab-content--small" : ""} ${/*$$props*/
-      ctx2[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-cf8qmp")) {
+      ctx2[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-1k912vy")) {
         attr(div1, "class", div1_class_value);
       }
     },
@@ -32875,7 +32882,7 @@ function create_each_block$c(ctx) {
       attr(td3, "class", "shrink svelte-1tqlt0i");
       attr(td3, "data-tooltip-class", "FFXIV-tooltip");
       attr(td3, "data-tooltip", localize$1("Bookmark"));
-      attr(td4, "class", "min buttons right svelte-1tqlt0i");
+      attr(td4, "class", "min buttons right white svelte-1tqlt0i");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*actionTypeClass*/
         ctx[17](
@@ -36897,7 +36904,7 @@ function create_each_block$8(ctx) {
       (ctx[16].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-1xqs78");
       attr(button1, "class", "stealth");
       attr(td3, "data-tooltip", localize$1("Bookmark"));
-      attr(td4, "class", "min buttons right");
+      attr(td4, "class", "min buttons right white");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -37567,7 +37574,7 @@ function create_each_block$7(ctx) {
       attr(img, "alt", "avatar for game version");
       attr(td0, "class", "img");
       attr(td1, "class", "left expand no-wrap");
-      attr(td2, "class", "buttons right no-wrap");
+      attr(td2, "class", "buttons right white no-wrap");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*effect*/
         ctx[33].disabled ? "disabled" : ""
@@ -39350,7 +39357,7 @@ function create_each_block$6(ctx) {
       attr(i, "class", i_class_value = "fa-bookmark " + /*item*/
       (ctx[23].system.favourite === true ? "fa-solid" : "fa-regular") + " svelte-oiwolp");
       attr(button, "class", "stealth");
-      attr(td4, "class", "min buttons right");
+      attr(td4, "class", "min buttons right white");
     },
     m(target, anchor) {
       insert(target, tr, anchor);
@@ -45913,7 +45920,7 @@ function create_each_block$2(ctx) {
       (ctx[11].isMissing ? "missing-text" : "") + " svelte-1wb0kvt");
       attr(td2, "class", "left svelte-1wb0kvt");
       attr(button, "class", "stealth svelte-1wb0kvt");
-      attr(td3, "class", "buttons right svelte-1wb0kvt");
+      attr(td3, "class", "buttons right white svelte-1wb0kvt");
       attr(tr, "class", tr_class_value = null_to_empty(
         /*item*/
         ctx[11].isMissing ? "missing-item" : ""
