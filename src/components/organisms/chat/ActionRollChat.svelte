@@ -33,7 +33,7 @@
   let totalDamage = 0;
   let isMounted = false;
   let targetTokens = false;
-  let showDescription = false;
+  let showDescription = game.settings.get(SYSTEM_ID, 'defaultChatDescriptionVisible');
   let roll = 0;
   let hasTargets = false;
 

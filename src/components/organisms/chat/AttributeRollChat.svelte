@@ -8,7 +8,7 @@
   export let content;
   export let enableToggle = true;
 
-  let isContentVisible = false;
+  let isContentVisible = game.settings.get(SYSTEM_ID, 'defaultChatDescriptionVisible');
 
   const message = getContext("message");
   
