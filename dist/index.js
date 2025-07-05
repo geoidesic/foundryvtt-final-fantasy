@@ -26344,7 +26344,7 @@ class PopoutSupport {
   }
 }
 PopoutSupport.initialize();
-const version = "0.3.1";
+const version = "1.0.0";
 class WelcomeApplication extends SvelteApplication {
   static {
     __name(this, "WelcomeApplication");
