@@ -55,7 +55,7 @@
     +mixins.border
     height: 100%
     width: 100%
-    background: url(/systems/foundryvtt-final-fantasy/assets/parchment4.webp) repeat
+    background: url(/systems/foundryvtt-final-fantasy-XIV/assets/parchment4.webp) repeat
     overflow: hidden
     
     .tabs-list 

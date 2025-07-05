@@ -42,19 +42,19 @@ export default function init() {
     CONFIG.ui.combat = FFCombatTracker;
 
     //- Regiser Sheets
-    Actors.registerSheet("foundryvtt-final-fantasy", FFXIVPCSheet, {
+    Actors.registerSheet("foundryvtt-final-fantasy-XIV", FFXIVPCSheet, {
       makeDefault: true,
       types: ["PC"]
     });
-    Actors.registerSheet("foundryvtt-final-fantasy", FFXIVNPCSheet, {
+    Actors.registerSheet("foundryvtt-final-fantasy-XIV", FFXIVNPCSheet, {
       makeDefault: true,
       types: ["NPC"]
     });
-    Items.registerSheet("foundryvtt-final-fantasy", FFXIVItemSheet, {
+    Items.registerSheet("foundryvtt-final-fantasy-XIV", FFXIVItemSheet, {
       makeDefault: true,
     });
 
-    DocumentSheetConfig.registerSheet(ActiveEffect, "foundryvtt-final-fantasy", FFActiveEffectSheet, {
+    DocumentSheetConfig.registerSheet(ActiveEffect, "foundryvtt-final-fantasy-XIV", FFActiveEffectSheet, {
       makeDefault: true,
     });
 
@@ -65,7 +65,7 @@ export default function init() {
     });
 
     //- for testing without Svelte (handy when asking questions on Discord)
-    // Items.registerSheet("foundryvtt-final-fantasy", ItemSheetStandard, {
+    // Items.registerSheet("foundryvtt-final-fantasy-XIV", ItemSheetStandard, {
     //   makeDefault: true,
     // });
 

@@ -1,5 +1,5 @@
 {
-  "id": "foundryvtt-final-fantasy",
+  "id": "foundryvtt-final-fantasy-XIV",
   "title": "Final Fantasy XIV RPG",
   "description": "A Foundry VTT system for the Square Enix TTRPG Final Fantasy XIV",
   "authors": [
@@ -9,10 +9,10 @@
       "flags": {}
     }
   ],
-  "url": "https://github.com/geoidesic/foundryvtt-final-fantasy",
-  "readme": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/README.md",
-  "bugs": "https://github.com/geoidesic/foundryvtt-final-fantasy/issues",
-  "changelog": "https://github.com/geoidesic/foundryvtt-final-fantasy/releases/download/latest/CHANGELOG.md",
+  "url": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV",
+  "readme": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/latest/README.md",
+  "bugs": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/issues",
+  "changelog": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/latest/CHANGELOG.md",
   "version": "1.0.1",
   "compatibility": {
     "minimum": "11",
@@ -84,8 +84,8 @@
       "flags": {}
     }
   ],
-  "manifest": "https://round-table.games/releases/foundryvtt-final-fantasy/latest/system.json",
-  "download": "https://round-table.games/releases/foundryvtt-final-fantasy/latest/system.zip",
+  "manifest": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/1.0.1/system.json",
+  "download": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/1.0.1/system.zip",
   "license": "LICENSE.txt",
   "socket": true,
   "relationships": {

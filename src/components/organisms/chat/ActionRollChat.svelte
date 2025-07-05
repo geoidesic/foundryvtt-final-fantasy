@@ -501,7 +501,7 @@
   +mixins.inset
 
 :global(.FFXIV #chat-description)
-  background: url('/systems/foundryvtt-final-fantasy/assets/parchment4.webp')
+  background: url('/systems/foundryvtt-final-fantasy-XIV/assets/parchment4.webp')
   color: var(--color-text-dark)
   padding: 0.2rem 0.5rem
   margin-top: 0.2rem

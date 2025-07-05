@@ -172,6 +172,12 @@ fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 // Update system.json
 const systemJson = JSON.parse(fs.readFileSync(systemJsonPath, 'utf8'));
 systemJson.version = newVersion;
+if (systemJson.manifest) {
+  systemJson.manifest = systemJson.manifest.replace(/\/releases\/download\/[^/]+\//, `/releases/download/${newVersion}/`);
+}
+if (systemJson.download) {
+  systemJson.download = systemJson.download.replace(/\/releases\/download\/[^/]+\//, `/releases/download/${newVersion}/`);
+}
 fs.writeFileSync(systemJsonPath, JSON.stringify(systemJson, null, 2));
 
 // Build after version update so the new version is included in the build

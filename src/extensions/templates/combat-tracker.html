@@ -106,7 +106,7 @@
             <div class="token-initiative">
                 {{#if this.hasRolled}}
                     {{#if (not ../combat.started)}}
-                        {{#if (getSetting "foundryvtt-final-fantasy" "manual-initiative")}}
+                        {{#if (getSetting "foundryvtt-final-fantasy-XIV" "manual-initiative")}}
                             <input contenteditable="true" type="text" class="initiative" data-combatant-id="{{this.id}}" value="{{this.initiative}}" />
                         {{else}}
                             <span class="initiative">{{this.initiative}}</span>
@@ -115,7 +115,7 @@
                         <span class="initiative">{{this.initiative}}</span>
                     {{/if}}
                 {{else if this.owner}}
-                    {{#if (getSetting "foundryvtt-final-fantasy" "manual-initiative")}}
+                    {{#if (getSetting "foundryvtt-final-fantasy-XIV" "manual-initiative")}}
                         <input contenteditable="true" type="text" class="initiative" data-combatant-id="{{this.id}}" value="{{this.initiative}}" />
                     {{else}}
                         <a class="combatant-control roll" data-tooltip="COMBAT.InitiativeRoll" data-control="rollInitiative"></a>

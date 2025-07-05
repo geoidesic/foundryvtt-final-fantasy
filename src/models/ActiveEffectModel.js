@@ -24,13 +24,13 @@ export default class FFEffectModel extends foundry.abstract.TypeDataModel {
     super.prepareBaseData();
     
     // Ensure flags exist
-    if (!this.parent.flags['foundryvtt-final-fantasy']) {
-      this.parent.flags['foundryvtt-final-fantasy'] = {};
+    if (!this.parent.flags['foundryvtt-final-fantasy-XIV']) {
+      this.parent.flags['foundryvtt-final-fantasy-XIV'] = {};
     }
     
     // Set default stackable behavior if not already set
-    if (!this.parent.flags['foundryvtt-final-fantasy'].stackable) {
-      this.parent.flags['foundryvtt-final-fantasy'].stackable = 'differentSource';
+    if (!this.parent.flags['foundryvtt-final-fantasy-XIV'].stackable) {
+      this.parent.flags['foundryvtt-final-fantasy-XIV'].stackable = 'differentSource';
     }
   }
 }

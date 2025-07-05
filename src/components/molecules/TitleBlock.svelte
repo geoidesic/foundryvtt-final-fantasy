@@ -46,7 +46,7 @@
         .flex1.rest-button
           .left.mt-xxs
             button.stealth(on:click|preventDefault="{rest}" data-tooltip="{localize('TitleBlock.Rest')}" aria-label="{localize('TitleBlock.Rest')}")
-              img.rest-icon(src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="{localize('TitleBlock.Rest')}")
+              img.rest-icon(src="/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/tent.webp" alt="{localize('TitleBlock.Rest')}")
 
         .flex4.nowrap.font-inter.lvcontainer.glow
           .scaleup {localize('LV')} 

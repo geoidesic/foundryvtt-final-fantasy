@@ -116,7 +116,7 @@ export default () => {
             return '[name].[ext]';
           }
         },
-        external: (id) => id.startsWith("/systems/foundryvtt-final-fantasy/assets/"), // Correctly return `true/false`.
+        external: (id) => id.startsWith("/systems/foundryvtt-final-fantasy-XIV/assets/"), // Correctly return `true/false`.
       }
     },
     

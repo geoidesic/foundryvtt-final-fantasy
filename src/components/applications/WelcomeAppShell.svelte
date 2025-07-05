@@ -38,7 +38,7 @@
     main
       .logo-background
         .texture
-        img(src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
+        img(src="/systems/foundryvtt-final-fantasy-XIV/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;")
       h1 {localize('Welcome.Introduction')}
       p.lightest 
         i.fa-solid.fa-info-circle.mr-sm
@@ -47,7 +47,7 @@
         | {localize('Setting.DontShowWelcome.Introduction')}
       p.lighter
         i.fa-solid.fa-bug.mr-sm
-        | {localize('Setting.DontShowWelcome.Bugs')} <a href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues"> {localize('Setting.DontShowWelcome.IssuesLinkText')} </a>
+        | {localize('Setting.DontShowWelcome.Bugs')} <a href="https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/issues"> {localize('Setting.DontShowWelcome.IssuesLinkText')} </a>
       p 
         i.fa-solid.fa-heart.mr-sm(style="color: #660000;")
         | {localize('Setting.DontShowWelcome.Support')} <a href='https://github.com/sponsors/geoidesic'> {localize('Setting.DontShowWelcome.SponsorLinkText')} </a> or <a href='https://https://paypal.me/geoidesic'>PayPal</a>
@@ -56,7 +56,7 @@
       //- h1 Help
       //- p
       //-   span {localize('Welcome.Issues')}
-      //-   a(href="https://github.com/geoidesic/foundryvtt-final-fantasy/issues") {localize('Welcome.Github')}
+      //-   a(href="https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/issues") {localize('Welcome.Github')}
       .flexrow.inset.justify-vertical.mb-sm.dont-show(data-tooltip="{localize('Setting.DontShowWelcome.Hint')}")
         .flex0
           input(type="checkbox" on:change="{handleChange}" label="{localize('Setting.DontShowWelcome.Name')}" bind:checked="{dontShowWelcome}") 
@@ -65,7 +65,7 @@
     footer
       div.right.mr-md
         a(href="https://www.aardvark.games")
-          img(src="/systems/foundryvtt-final-fantasy/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="40" width="40" style="fill: white; border: none; width: auto;")
+          img(src="/systems/foundryvtt-final-fantasy-XIV/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="40" width="40" style="fill: white; border: none; width: auto;")
       div.left
         h4 {localize("Title")} 
         span {localize("Welcome.CreatedBy")} 

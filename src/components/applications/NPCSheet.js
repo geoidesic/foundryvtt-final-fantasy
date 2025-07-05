@@ -23,7 +23,7 @@ export default class FFXIVActorSheet extends SvelteDocumentSheet {
       height: 533,
       minHeight: 180,
       minWidth: 282,
-      // id: `${SYSTEM_ID}--actor-sheet`, // @deprecated: I don't know why we need an ID for this? And having a non-unique ID causes https://github.com/geoidesic/foundryvtt-final-fantasy/issues/8
+      // id: `${SYSTEM_ID}--actor-sheet`, // @deprecated: I don't know why we need an ID for this? And having a non-unique ID causes https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/issues/8
       classes: [SYSTEM_CODE],
       headerButtonNoLabel: game.settings.get(SYSTEM_ID, 'applicationWindowHeaderIconsOnly') || false, //- @why: without this the initial value on first load of this app after a page refresh will be wrong, despite a reactive setting in the .svelte template; I don't really know why
       dragDrop: [{ dragSelector: ".directory-list .item", dropSelector: null }],

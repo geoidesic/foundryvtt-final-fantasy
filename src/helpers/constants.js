@@ -1,4 +1,4 @@
-export const SYSTEM_ID = 'foundryvtt-final-fantasy';
+export const SYSTEM_ID = 'foundryvtt-final-fantasy-XIV';
 export const SYSTEM_CODE = 'FFXIV';
 export const LOG_PREFIX = `${SYSTEM_CODE} |`;
 export const LOG_PREFIX_COLOR = `%c[${SYSTEM_CODE}] |`;

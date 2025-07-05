@@ -48,7 +48,7 @@ export default class FFXIVItemSheetStandard extends FFXIVItemSheet {
    * @return {string} The path to the template file
    */
   get template() {
-    return `systems/foundryvtt-final-fantasy/assets/templates/${this.item.type}.hbs`;
+    return `systems/foundryvtt-final-fantasy-XIV/assets/templates/${this.item.type}.hbs`;
   }
 
   /**

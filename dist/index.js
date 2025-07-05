@@ -1,6 +1,6 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
-const SYSTEM_ID = "foundryvtt-final-fantasy";
+const SYSTEM_ID = "foundryvtt-final-fantasy-XIV";
 const SYSTEM_CODE = "FFXIV";
 const LOG_PREFIX = `${SYSTEM_CODE} |`;
 const LOG_PREFIX_COLOR = `%c[${SYSTEM_CODE}] |`;
@@ -785,11 +785,11 @@ class FFEffectModel extends foundry.abstract.TypeDataModel {
   /** @override */
   prepareBaseData() {
     super.prepareBaseData();
-    if (!this.parent.flags["foundryvtt-final-fantasy"]) {
-      this.parent.flags["foundryvtt-final-fantasy"] = {};
+    if (!this.parent.flags["foundryvtt-final-fantasy-XIV"]) {
+      this.parent.flags["foundryvtt-final-fantasy-XIV"] = {};
     }
-    if (!this.parent.flags["foundryvtt-final-fantasy"].stackable) {
-      this.parent.flags["foundryvtt-final-fantasy"].stackable = "differentSource";
+    if (!this.parent.flags["foundryvtt-final-fantasy-XIV"].stackable) {
+      this.parent.flags["foundryvtt-final-fantasy-XIV"].stackable = "differentSource";
     }
   }
 }
@@ -4711,7 +4711,7 @@ function create_if_block_4$7(ctx) {
     c() {
       div = element("div");
       div.textContent = "loading...";
-      attr(div, "class", "title flex1 svelte-n656zp");
+      attr(div, "class", "title flex1 svelte-nuaa2z");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -4793,7 +4793,7 @@ function create_if_block$v(ctx) {
       if (if_block1)
         if_block1.c();
       if_block2.c();
-      attr(div0, "class", "texture svelte-n656zp");
+      attr(div0, "class", "texture svelte-nuaa2z");
       attr(a0, "role", "button");
       attr(a0, "aria-label", a0_aria_label_value = "Open " + /*FFMessage*/
       ctx[1].actor.name + "'s character sheet");
@@ -4802,10 +4802,10 @@ function create_if_block$v(ctx) {
       attr(a1, "aria-label", a1_aria_label_value = "Open " + /*FFMessage*/
       ctx[1].item.name + " item sheet");
       attr(div2, "class", "col font-cinzel smaller item-name no-overflow ellipsis");
-      attr(div3, "class", "flexcol no-overflow names svelte-n656zp");
+      attr(div3, "class", "flexcol no-overflow names svelte-nuaa2z");
       attr(div4, "class", "right type-label smaller gold");
       attr(div6, "class", div6_class_value = "title " + /*tagsColumnClass*/
-      ctx[3] + " svelte-n656zp");
+      ctx[3] + " svelte-nuaa2z");
       attr(div6, "role", "button");
       attr(div6, "aria-label", "Toggle description");
     },
@@ -4925,7 +4925,7 @@ function create_if_block$v(ctx) {
       }
       if (!current || dirty & /*tagsColumnClass*/
       8 && div6_class_value !== (div6_class_value = "title " + /*tagsColumnClass*/
-      ctx2[3] + " svelte-n656zp")) {
+      ctx2[3] + " svelte-nuaa2z")) {
         attr(div6, "class", div6_class_value);
       }
     },
@@ -4966,7 +4966,7 @@ function create_if_block_3$a(ctx) {
     c() {
       div = element("div");
       img = element("img");
-      attr(img, "class", "icon avatar svelte-n656zp");
+      attr(img, "class", "icon avatar svelte-nuaa2z");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[1].actor.img))
         attr(img, "src", img_src_value);
@@ -5163,7 +5163,7 @@ function create_else_block$8(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "icon right item pointer svelte-n656zp");
+      attr(img, "class", "icon right item pointer svelte-nuaa2z");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[1].item.img))
         attr(img, "src", img_src_value);
@@ -5201,7 +5201,7 @@ function create_if_block_1$i(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "icon right item pointer svelte-n656zp");
+      attr(img, "class", "icon right item pointer svelte-nuaa2z");
       if (!src_url_equal(img.src, img_src_value = /*FFMessage*/
       ctx[1].item.img))
         attr(img, "src", img_src_value);
@@ -5250,7 +5250,7 @@ function create_fragment$1j(ctx) {
       if_block0_anchor = empty();
       if (if_block1)
         if_block1.c();
-      attr(div, "class", "chat-title svelte-n656zp");
+      attr(div, "class", "chat-title svelte-nuaa2z");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -5740,9 +5740,9 @@ function create_fragment$1h(ctx) {
       attr(div0, "class", "flex4 inset");
       attr(div0, "id", "chat-description");
       attr(div1, "class", div1_class_value = "flexrow " + /*showDescription*/
-      (ctx[1] ? "visible" : "") + " svelte-bdfh4i");
+      (ctx[1] ? "visible" : "") + " svelte-bcd5gc");
       attr(div2, "class", div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[1] ? "expanded" : "") + " svelte-bdfh4i");
+      (ctx[1] ? "expanded" : "") + " svelte-bcd5gc");
       attr(div3, "class", "chat");
     },
     m(target, anchor) {
@@ -5767,12 +5767,12 @@ function create_fragment$1h(ctx) {
         div0.innerHTML = raw_value;
       if (!current || dirty & /*showDescription*/
       2 && div1_class_value !== (div1_class_value = "flexrow " + /*showDescription*/
-      (ctx2[1] ? "visible" : "") + " svelte-bdfh4i")) {
+      (ctx2[1] ? "visible" : "") + " svelte-bcd5gc")) {
         attr(div1, "class", div1_class_value);
       }
       if (!current || dirty & /*showDescription*/
       2 && div2_class_value !== (div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[1] ? "expanded" : "") + " svelte-bdfh4i")) {
+      (ctx2[1] ? "expanded" : "") + " svelte-bcd5gc")) {
         attr(div2, "class", div2_class_value);
       }
     },
@@ -7293,8 +7293,8 @@ function create_if_block$s(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "target-list svelte-umytg3");
-      attr(div1, "class", "action-result svelte-umytg3");
+      attr(div0, "class", "target-list svelte-68x5sf");
+      attr(div1, "class", "action-result svelte-68x5sf");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -7461,9 +7461,9 @@ function create_if_block_1$g(ctx) {
       div12 = element("div");
       button1 = element("button");
       i1 = element("i");
-      attr(div0, "class", "texture svelte-umytg3");
-      attr(div1, "class", "flex0 target-info pointer svelte-umytg3");
-      attr(div2, "class", "col target-name font-cinzel smaller svelte-umytg3");
+      attr(div0, "class", "texture svelte-68x5sf");
+      attr(div1, "class", "flex0 target-info pointer svelte-68x5sf");
+      attr(div2, "class", "col target-name font-cinzel smaller svelte-68x5sf");
       attr(div3, "class", "flex1 left font-cinzel");
       attr(div3, "data-tooltip-class", "FFXIV-tooltip");
       attr(div3, "data-tooltip", "Defense");
@@ -7498,9 +7498,9 @@ function create_if_block_1$g(ctx) {
       attr(div13, "class", "flexcol");
       attr(div14, "class", "flex0");
       attr(div15, "class", div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-umytg3");
-      attr(div16, "class", "background svelte-umytg3");
-      attr(div17, "class", "leatherbook svelte-umytg3");
+      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-68x5sf");
+      attr(div16, "class", "background svelte-68x5sf");
+      attr(div17, "class", "leatherbook svelte-68x5sf");
     },
     m(target, anchor) {
       insert(target, div17, anchor);
@@ -7652,7 +7652,7 @@ function create_if_block_1$g(ctx) {
       }
       if (!current || dirty[0] & /*targetTokens*/
       8 && div15_class_value !== (div15_class_value = "target-row flexrow " + /*target*/
-      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-umytg3")) {
+      (ctx[32].isUnlinked ? "unlinked" : "") + " svelte-68x5sf")) {
         attr(div15, "class", div15_class_value);
       }
     },
@@ -7692,7 +7692,7 @@ function create_if_block_5$2(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "target-img clickable svelte-umytg3");
+      attr(img, "class", "target-img clickable svelte-68x5sf");
       if (!src_url_equal(img.src, img_src_value = getTargetImage(
         /*target*/
         ctx[32]
@@ -7756,7 +7756,7 @@ function create_else_block$6(ctx) {
       (ctx[13](
         /*target*/
         ctx[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-umytg3");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-68x5sf");
       attr(i, "data-tooltip", i_data_tooltip_value = /*isHit*/
       ctx[13](
         /*target*/
@@ -7772,7 +7772,7 @@ function create_else_block$6(ctx) {
       (ctx2[13](
         /*target*/
         ctx2[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-umytg3")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-68x5sf")) {
         attr(i, "class", i_class_value);
       }
       if (dirty[0] & /*targetTokens*/
@@ -7820,13 +7820,13 @@ function create_if_block_4$5(ctx) {
       (ctx[13](
         /*target*/
         ctx[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-umytg3");
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-68x5sf");
       attr(i, "data-tooltip", localize$1("CriticalSuccess"));
-      attr(div0, "class", "overlay svelte-umytg3");
+      attr(div0, "class", "overlay svelte-68x5sf");
       set_style(div0, "margin", "0");
       set_style(div0, "font-size", "1rem");
       set_style(div0, "color", "#fff");
-      attr(div1, "class", "critical svelte-umytg3");
+      attr(div1, "class", "critical svelte-68x5sf");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -7841,7 +7841,7 @@ function create_if_block_4$5(ctx) {
       (ctx2[13](
         /*target*/
         ctx2[32]
-      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-umytg3")) {
+      ) ? "fa-circle-check positive" : "fa-circle-xmark negative") + " svelte-68x5sf")) {
         attr(i, "class", i_class_value);
       }
     },
@@ -8112,12 +8112,12 @@ function create_fragment$1c(ctx) {
       if (if_block1)
         if_block1.c();
       html_tag.a = html_anchor;
-      attr(div0, "class", "flex4 inset svelte-umytg3");
+      attr(div0, "class", "flex4 inset svelte-68x5sf");
       attr(div0, "id", "chat-description");
       attr(div1, "class", div1_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx[4] ? "visible" : "") + " svelte-umytg3");
+      (ctx[4] ? "visible" : "") + " svelte-68x5sf");
       attr(div2, "class", div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx[4] ? "expanded" : "") + " svelte-umytg3");
+      (ctx[4] ? "expanded" : "") + " svelte-68x5sf");
       attr(div3, "class", "chat");
     },
     m(target, anchor) {
@@ -8139,12 +8139,12 @@ function create_fragment$1c(ctx) {
     p(ctx2, dirty) {
       if (!current || dirty[0] & /*showDescription*/
       16 && div1_class_value !== (div1_class_value = "flexrow mt-xs " + /*showDescription*/
-      (ctx2[4] ? "visible" : "") + " svelte-umytg3")) {
+      (ctx2[4] ? "visible" : "") + " svelte-68x5sf")) {
         attr(div1, "class", div1_class_value);
       }
       if (!current || dirty[0] & /*showDescription*/
       16 && div2_class_value !== (div2_class_value = "description-wrapper " + /*showDescription*/
-      (ctx2[4] ? "expanded" : "") + " svelte-umytg3")) {
+      (ctx2[4] ? "expanded" : "") + " svelte-68x5sf")) {
         attr(div2, "class", div2_class_value);
       }
       if (
@@ -23872,7 +23872,7 @@ function create_default_slot$g(ctx) {
     c() {
       main = element("main");
       div1 = element("div");
-      div1.innerHTML = `<div class="texture svelte-pyn9ka"></div><img src="/systems/foundryvtt-final-fantasy/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
+      div1.innerHTML = `<div class="texture svelte-kpx87c"></div><img src="/systems/foundryvtt-final-fantasy-XIV/assets/FF-logo.png" alt="Final Fantasy XIV RPG Logo" style="border: none; width: auto;"/>`;
       h1 = element("h1");
       h1.textContent = `${localize$1("Welcome.Introduction")}`;
       p0 = element("p");
@@ -23907,7 +23907,7 @@ function create_default_slot$g(ctx) {
       span0.textContent = `${localize$1("Setting.DontShowWelcome.Name")}`;
       footer = element("footer");
       div5 = element("div");
-      div5.innerHTML = `<a href="https://www.aardvark.games" class="svelte-pyn9ka"><img src="/systems/foundryvtt-final-fantasy/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="40" width="40" style="fill: white; border: none; width: auto;"/></a>`;
+      div5.innerHTML = `<a href="https://www.aardvark.games" class="svelte-kpx87c"><img src="/systems/foundryvtt-final-fantasy-XIV/assets/aardvark-logo.webp" alt="Aardvark Game Studios Logo" height="40" width="40" style="fill: white; border: none; width: auto;"/></a>`;
       div6 = element("div");
       h4 = element("h4");
       h4.textContent = `${localize$1("Title")} `;
@@ -23915,12 +23915,12 @@ function create_default_slot$g(ctx) {
       span1.textContent = `${localize$1("Welcome.CreatedBy")} `;
       a5 = element("a");
       a5.textContent = "Aardvark Game Studios";
-      attr(div1, "class", "logo-background svelte-pyn9ka");
+      attr(div1, "class", "logo-background svelte-kpx87c");
       attr(i0, "class", "fa-solid fa-info-circle mr-sm");
       attr(a0, "href", "https://www.square-enix-shop.com/ffxivttrpg/en/freetrial.html");
       attr(p0, "class", "lightest");
       attr(i1, "class", "fa-solid fa-bug mr-sm");
-      attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy/issues");
+      attr(a1, "href", "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/issues");
       attr(p1, "class", "lighter");
       attr(i2, "class", "fa-solid fa-heart mr-sm");
       set_style(i2, "color", "#660000");
@@ -23929,17 +23929,17 @@ function create_default_slot$g(ctx) {
       attr(p3, "class", "smallest");
       attr(input, "type", "checkbox");
       attr(input, "label", localize$1("Setting.DontShowWelcome.Name"));
-      attr(input, "class", "svelte-pyn9ka");
+      attr(input, "class", "svelte-kpx87c");
       attr(div2, "class", "flex0");
       attr(div3, "class", "flex");
-      attr(div4, "class", "flexrow inset justify-vertical mb-sm dont-show svelte-pyn9ka");
+      attr(div4, "class", "flexrow inset justify-vertical mb-sm dont-show svelte-kpx87c");
       attr(div4, "data-tooltip", localize$1("Setting.DontShowWelcome.Hint"));
-      attr(main, "class", "svelte-pyn9ka");
+      attr(main, "class", "svelte-kpx87c");
       attr(div5, "class", "right mr-md");
       attr(a5, "href", "https://www.aardvark.games");
-      attr(a5, "class", "svelte-pyn9ka");
+      attr(a5, "class", "svelte-kpx87c");
       attr(div6, "class", "left");
-      attr(footer, "class", "svelte-pyn9ka");
+      attr(footer, "class", "svelte-kpx87c");
     },
     m(target, anchor) {
       insert(target, main, anchor);
@@ -26362,9 +26362,9 @@ class WelcomeApplication extends SvelteApplication {
       minimizable: true,
       width: 600,
       height: 700,
-      // headerIcon: 'systems/foundryvtt-final-fantasy/assets/critical.svg',
+      // headerIcon: 'systems/foundryvtt-final-fantasy-XIV/assets/critical.svg',
       title: game.i18n.localize(`${SYSTEM_CODE}.SystemName`) + " v" + version,
-      headerIcon: "systems/foundryvtt-final-fantasy/assets/aardvark-claw.webp",
+      headerIcon: "systems/foundryvtt-final-fantasy-XIV/assets/aardvark-claw.webp",
       svelte: {
         class: WelcomeAppShell,
         target: document.body,
@@ -28782,7 +28782,7 @@ function create_if_block_2$9(ctx) {
   return {
     c() {
       img = element("img");
-      attr(img, "class", "tab-icon svelte-1k912vy");
+      attr(img, "class", "tab-icon svelte-2eumq8");
       if (!src_url_equal(img.src, img_src_value = /*tab*/
       ctx[5].img))
         attr(img, "src", img_src_value);
@@ -28878,7 +28878,7 @@ function create_each_block_1$3(ctx) {
         if_block.c();
       attr(button, "class", button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-1k912vy");
+      ctx[0] ? "active" : "") + " svelte-2eumq8");
     },
     m(target, anchor) {
       insert(target, button, anchor);
@@ -28905,7 +28905,7 @@ function create_each_block_1$3(ctx) {
       if (dirty & /*tabs, activeTab*/
       3 && button_class_value !== (button_class_value = "short gold " + /*tab*/
       (ctx[5].id === /*activeTab*/
-      ctx[0] ? "active" : "") + " svelte-1k912vy")) {
+      ctx[0] ? "active" : "") + " svelte-2eumq8")) {
         attr(button, "class", button_class_value);
       }
     },
@@ -29105,11 +29105,11 @@ function create_fragment$$(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(div0, "class", "tabs-list svelte-1k912vy");
+      attr(div0, "class", "tabs-list svelte-2eumq8");
       attr(div1, "class", div1_class_value = null_to_empty(`tab-content ${/*$$props*/
       ctx[3]?.class?.includes("small") ? "tab-content--small" : ""} ${/*$$props*/
-      ctx[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-1k912vy");
-      attr(div2, "class", "tabs svelte-1k912vy");
+      ctx[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-2eumq8");
+      attr(div2, "class", "tabs svelte-2eumq8");
     },
     m(target, anchor) {
       insert(target, div2, anchor);
@@ -29178,7 +29178,7 @@ function create_fragment$$(ctx) {
       if (!current || dirty & /*$$props*/
       8 && div1_class_value !== (div1_class_value = null_to_empty(`tab-content ${/*$$props*/
       ctx2[3]?.class?.includes("small") ? "tab-content--small" : ""} ${/*$$props*/
-      ctx2[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-1k912vy")) {
+      ctx2[3]?.class?.includes("tall") ? "tab-content--tall" : ""}`) + " svelte-2eumq8")) {
         attr(div1, "class", div1_class_value);
       }
     },
@@ -32001,19 +32001,19 @@ function instance$M($$self, $$props, $$invalidate) {
       label: localize$1("EFFECT.Config"),
       id: "config",
       component: Config,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/cog.webp"
+      img: `/systems/${SYSTEM_ID}/assets/icons/tabs/cog.webp`
     },
     {
       label: localize$1("Duration.Title"),
       id: "duration",
       component: Duration$1,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/duration.webp"
+      img: `/systems/${SYSTEM_ID}/assets/icons/tabs/duration.webp`
     },
     {
       label: localize$1("EFFECT.Changes"),
       id: "changes",
       component: Changes,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/list.webp"
+      img: `/systems/${SYSTEM_ID}/assets/icons/tabs/list.webp`
     }
   ];
   onMount(() => {
@@ -34314,7 +34314,7 @@ function create_fragment$L(ctx) {
       div1 = element("div");
       div0 = element("div");
       button = element("button");
-      button.innerHTML = `<img class="rest-icon svelte-1ab4iud" src="/systems/foundryvtt-final-fantasy/assets/icons/tabs/tent.webp" alt="${localize$1("TitleBlock.Rest")}"/>`;
+      button.innerHTML = `<img class="rest-icon svelte-1ab4iud" src="/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/tent.webp" alt="${localize$1("TitleBlock.Rest")}"/>`;
       div4 = element("div");
       div2 = element("div");
       div2.textContent = `${localize$1("LV")} `;
@@ -34503,11 +34503,11 @@ function create_fragment$K(ctx) {
       create_component(attributeblock.$$.fragment);
       div2 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-89vfdl");
+      attr(div0, "class", "texture svelte-1dxzeb7");
       attr(div1, "class", "flex2");
-      attr(div2, "class", "flex1 portrait-frame svelte-89vfdl");
+      attr(div2, "class", "flex1 portrait-frame svelte-1dxzeb7");
       attr(div3, "class", "flexrow panel borderless");
-      attr(div4, "class", "flexcol background svelte-89vfdl");
+      attr(div4, "class", "flexcol background svelte-1dxzeb7");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -36130,12 +36130,12 @@ function create_if_block_1$8(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-43aj1a");
-      attr(div1, "class", "portrait-frame pr-xs wide svelte-43aj1a");
+      attr(div0, "class", "texture svelte-8zwjm2");
+      attr(div1, "class", "portrait-frame pr-xs wide svelte-8zwjm2");
       attr(div2, "class", "flex2 wide");
       attr(div3, "class", "flexrow panel borderless wide");
-      attr(div4, "class", "background svelte-43aj1a");
-      attr(div5, "class", "flexcol navy svelte-43aj1a");
+      attr(div4, "class", "background svelte-8zwjm2");
+      attr(div5, "class", "flexcol navy svelte-8zwjm2");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -36303,12 +36303,12 @@ function create_if_block$c(ctx) {
       div3 = element("div");
       div2 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-43aj1a");
+      attr(div0, "class", "texture svelte-8zwjm2");
       attr(div1, "class", "flexrow panel borderless wide");
-      attr(div2, "class", "portrait-frame pr-xs svelte-43aj1a");
+      attr(div2, "class", "portrait-frame pr-xs svelte-8zwjm2");
       attr(div3, "class", "flex2 gold");
-      attr(div4, "class", "background svelte-43aj1a");
-      attr(div5, "class", "flexcol burgundy svelte-43aj1a");
+      attr(div4, "class", "background svelte-8zwjm2");
+      attr(div5, "class", "flexcol burgundy svelte-8zwjm2");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -36470,18 +36470,18 @@ function create_fragment$D(ctx) {
       div8 = element("div");
       create_component(portraitframe1.$$.fragment);
       attr(div0, "class", "flex3");
-      attr(div1, "class", "texture svelte-43aj1a");
-      attr(div2, "class", "portrait-frame pr-xs wide svelte-43aj1a");
+      attr(div1, "class", "texture svelte-8zwjm2");
+      attr(div2, "class", "portrait-frame pr-xs wide svelte-8zwjm2");
       attr(div3, "class", "flex2 wide");
       attr(div4, "class", "flexrow panel borderless wide");
-      attr(div5, "class", "background svelte-43aj1a");
-      attr(div6, "class", "flexcol purple svelte-43aj1a");
-      attr(div7, "class", "texture svelte-43aj1a");
-      attr(div8, "class", "portrait-frame pr-xs svelte-43aj1a");
+      attr(div5, "class", "background svelte-8zwjm2");
+      attr(div6, "class", "flexcol purple svelte-8zwjm2");
+      attr(div7, "class", "texture svelte-8zwjm2");
+      attr(div8, "class", "portrait-frame pr-xs svelte-8zwjm2");
       attr(div9, "class", "flex2 gold");
       attr(div10, "class", "flexrow panel borderless wide");
-      attr(div11, "class", "background svelte-43aj1a");
-      attr(div12, "class", "flexcol teal svelte-43aj1a");
+      attr(div11, "class", "background svelte-8zwjm2");
+      attr(div12, "class", "flexcol teal svelte-8zwjm2");
       attr(div13, "class", "flex2");
       attr(div14, "class", "flexrow high");
       attr(div15, "class", "panel overflow");
@@ -38236,31 +38236,31 @@ function instance$t($$self, $$props, $$invalidate) {
       label: localize$1("Tabs.Attributes"),
       id: "attributes",
       component: Attributes$1,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp"
+      img: "/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/tree.webp"
     },
     {
       label: localize$1("Tabs.Abilities"),
       id: "abilities",
       component: Abilities$1,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp"
+      img: "/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/sun.webp"
     },
     {
       label: localize$1("Tabs.Inventory"),
       id: "inventory",
       component: Inventory,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp"
+      img: "/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/backpack.webp"
     },
     {
       label: localize$1("Tabs.Profile"),
       id: "profile",
       component: Profile,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp"
+      img: "/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/mask.webp"
     },
     {
       label: localize$1("Tabs.Effects"),
       id: "effect",
       component: EffectsTab,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp"
+      img: "/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/spiral.webp"
     }
   ];
   let stylesApp;
@@ -38553,7 +38553,7 @@ let FFXIVActorSheet$1 = class FFXIVActorSheet extends SvelteDocumentSheet {
       height: 828,
       minHeight: 180,
       minWidth: 282,
-      // id: `${SYSTEM_ID}--actor-sheet`, // @deprecated: I don't know why we need an ID for this? And having a non-unique ID causes https://github.com/geoidesic/foundryvtt-final-fantasy/issues/8
+      // id: `${SYSTEM_ID}--actor-sheet`, // @deprecated: I don't know why we need an ID for this? And having a non-unique ID causes https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/issues/8
       classes: [SYSTEM_CODE],
       headerButtonNoLabel: game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly") || false,
       //- @why: without this the initial value on first load of this app after a page refresh will be wrong, despite a reactive setting in the .svelte template; I don't really know why
@@ -40493,10 +40493,10 @@ function create_fragment$s(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(attributeblock.$$.fragment);
-      attr(div0, "class", "texture svelte-1j11oxv");
+      attr(div0, "class", "texture svelte-m68kk1");
       attr(div1, "class", "flex2");
       attr(div2, "class", "flexrow panel borderless");
-      attr(div3, "class", "flexcol background svelte-1j11oxv");
+      attr(div3, "class", "flexcol background svelte-m68kk1");
       attr(section, "class", "organism");
     },
     m(target, anchor) {
@@ -40828,12 +40828,12 @@ function create_fragment$p(ctx) {
       div2 = element("div");
       div1 = element("div");
       create_component(portraitframe.$$.fragment);
-      attr(div0, "class", "texture svelte-1l2lk3v");
-      attr(div1, "class", "portrait-frame pr-xs wide svelte-1l2lk3v");
+      attr(div0, "class", "texture svelte-f42vuh");
+      attr(div1, "class", "portrait-frame pr-xs wide svelte-f42vuh");
       attr(div2, "class", "flex2 wide");
       attr(div3, "class", "flexrow panel borderless wide");
-      attr(div4, "class", "background svelte-1l2lk3v");
-      attr(div5, "class", "navy svelte-1l2lk3v");
+      attr(div4, "class", "background svelte-f42vuh");
+      attr(div5, "class", "navy svelte-f42vuh");
     },
     m(target, anchor) {
       insert(target, div5, anchor);
@@ -41113,15 +41113,15 @@ function create_fragment$o(ctx) {
       div13 = element("div");
       div12 = element("div");
       create_component(portraitframe1.$$.fragment);
-      attr(div0, "class", "texture svelte-73oti1");
+      attr(div0, "class", "texture svelte-ynsjqd");
       attr(div1, "class", "flex1");
       attr(div1, "style", div1_style_value = /*smallwindow*/
       ctx[1] ? "min-width: 120px;" : "");
-      attr(div2, "class", "portrait-frame pr-xs wide svelte-73oti1");
+      attr(div2, "class", "portrait-frame pr-xs wide svelte-ynsjqd");
       attr(div3, "class", "flex2 wide");
       attr(div4, "class", "flexrow panel borderless wide");
-      attr(div5, "class", "background svelte-73oti1");
-      attr(div6, "class", "purple svelte-73oti1");
+      attr(div5, "class", "background svelte-ynsjqd");
+      attr(div6, "class", "purple svelte-ynsjqd");
       attr(div7, "class", "flexcol");
       attr(div8, "class", div8_class_value = /*smallwindow*/
       ctx[1] ? "flex2" : "flex3");
@@ -41129,12 +41129,12 @@ function create_fragment$o(ctx) {
       ctx[0] ? "flex2" : "flex3");
       set_style(div9, "min-width", "250px");
       attr(div10, "class", "flexrow");
-      attr(div11, "class", "texture svelte-73oti1");
-      attr(div12, "class", "portrait-frame pr-xs svelte-73oti1");
+      attr(div11, "class", "texture svelte-ynsjqd");
+      attr(div12, "class", "portrait-frame pr-xs svelte-ynsjqd");
       attr(div13, "class", "flex2 gold");
       attr(div14, "class", "flexrow panel borderless wide");
-      attr(div15, "class", "background svelte-73oti1");
-      attr(div16, "class", "flexcol teal svelte-73oti1");
+      attr(div15, "class", "background svelte-ynsjqd");
+      attr(div16, "class", "flexcol teal svelte-ynsjqd");
       attr(div17, "class", "panel overflow");
     },
     m(target, anchor) {
@@ -41452,21 +41452,21 @@ function instance$j($$self, $$props, $$invalidate) {
       label: localize$1("Tabs.Attributes"),
       id: "attributes",
       component: Attributes2,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp"
+      img: "/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/tree.webp"
     },
     {
       label: localize$1("Tabs.Abilities"),
       id: "abilities",
       component: Abilities2,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp"
+      img: "/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/sun.webp"
     },
-    // { label: localize("Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
-    // { label: localize("Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
+    // { label: localize("Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/backpack.webp'},
+    // { label: localize("Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/mask.webp' },
     {
       label: localize$1("Tabs.Effects"),
       id: "effect",
       component: EffectsTab,
-      img: "/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp"
+      img: "/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/spiral.webp"
     }
   ];
   let stylesApp;
@@ -41548,7 +41548,7 @@ class FFXIVActorSheet2 extends SvelteDocumentSheet {
       height: 533,
       minHeight: 180,
       minWidth: 282,
-      // id: `${SYSTEM_ID}--actor-sheet`, // @deprecated: I don't know why we need an ID for this? And having a non-unique ID causes https://github.com/geoidesic/foundryvtt-final-fantasy/issues/8
+      // id: `${SYSTEM_ID}--actor-sheet`, // @deprecated: I don't know why we need an ID for this? And having a non-unique ID causes https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/issues/8
       classes: [SYSTEM_CODE],
       headerButtonNoLabel: game.settings.get(SYSTEM_ID, "applicationWindowHeaderIconsOnly") || false,
       //- @why: without this the initial value on first load of this app after a page refresh will be wrong, despite a reactive setting in the .svelte template; I don't really know why
@@ -49763,18 +49763,18 @@ function init() {
     game.system.log.d(game.system.id);
     game.system.log.d(game.system.config);
     CONFIG.ui.combat = FFCombatTracker;
-    Actors.registerSheet("foundryvtt-final-fantasy", FFXIVActorSheet$1, {
+    Actors.registerSheet("foundryvtt-final-fantasy-XIV", FFXIVActorSheet$1, {
       makeDefault: true,
       types: ["PC"]
     });
-    Actors.registerSheet("foundryvtt-final-fantasy", FFXIVActorSheet2, {
+    Actors.registerSheet("foundryvtt-final-fantasy-XIV", FFXIVActorSheet2, {
       makeDefault: true,
       types: ["NPC"]
     });
-    Items.registerSheet("foundryvtt-final-fantasy", FFXIVItemSheet, {
+    Items.registerSheet("foundryvtt-final-fantasy-XIV", FFXIVItemSheet, {
       makeDefault: true
     });
-    DocumentSheetConfig.registerSheet(ActiveEffect, "foundryvtt-final-fantasy", FFActiveEffectSheet, {
+    DocumentSheetConfig.registerSheet(ActiveEffect, "foundryvtt-final-fantasy-XIV", FFActiveEffectSheet, {
       makeDefault: true
     });
     Handlebars.registerHelper("getSetting", function(moduleName, settingKey) {

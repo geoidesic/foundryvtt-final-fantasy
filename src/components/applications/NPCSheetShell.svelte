@@ -29,11 +29,11 @@
 
   // Tabs
   const defaultTabs = [
-    { label: localize("Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/tree.webp' },
-    { label: localize("Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/sun.webp' },
-    // { label: localize("Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/backpack.webp'},
-    // { label: localize("Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/mask.webp' },
-    { label: localize("Tabs.Effects"), id: "effect", component: Effects, img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/spiral.webp' }
+    { label: localize("Tabs.Attributes"), id: "attributes", component: Attributes, img: '/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/tree.webp' },
+    { label: localize("Tabs.Abilities"), id: "abilities", component: Abilities, img: '/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/sun.webp' },
+    // { label: localize("Tabs.Inventory"), id: "inventory", component: Inventory, img: '/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/backpack.webp'},
+    // { label: localize("Tabs.Profile"), id: "profile", component: Profile, img: '/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/mask.webp' },
+    { label: localize("Tabs.Effects"), id: "effect", component: Effects, img: '/systems/foundryvtt-final-fantasy-XIV/assets/icons/tabs/spiral.webp' }
   ];
 
   // set the sheet color

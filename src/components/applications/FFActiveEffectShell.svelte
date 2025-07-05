@@ -23,19 +23,19 @@
       label: localize('EFFECT.Config'), 
       id: "config", 
       component: Config,
-      img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/cog.webp'
+      img: `/systems/${SYSTEM_ID}/assets/icons/tabs/cog.webp`
     },
     {
       label: localize('Duration.Title'),
       id: "duration",
       component: Duration,
-      img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/duration.webp'
+      img: `/systems/${SYSTEM_ID}/assets/icons/tabs/duration.webp`
     },
     { 
       label: localize('EFFECT.Changes'), 
       id: "changes", 
       component: Changes,
-      img: '/systems/foundryvtt-final-fantasy/assets/icons/tabs/list.webp'
+      img: `/systems/${SYSTEM_ID}/assets/icons/tabs/list.webp`
     },
   ];
 
