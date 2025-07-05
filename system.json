@@ -13,7 +13,7 @@
   "readme": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/latest/README.md",
   "bugs": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/issues",
   "changelog": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/latest/CHANGELOG.md",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "compatibility": {
     "minimum": "11",
     "verified": "12",
@@ -84,8 +84,8 @@
       "flags": {}
     }
   ],
-  "manifest": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/1.0.1/system.json",
-  "download": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/1.0.1/system.zip",
+  "manifest": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/1.0.2/system.json",
+  "download": "https://github.com/geoidesic/foundryvtt-final-fantasy-XIV/releases/download/1.0.2/system.zip",
   "license": "LICENSE.txt",
   "socket": true,
   "relationships": {
